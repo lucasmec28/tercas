@@ -1,0 +1,167 @@
+{
+  "scope": "small primary-source catalogue, geometric fields only; not app",
+  "entries": [
+    {
+      "id": "TUPER_U_[100, 50, 0, 2]",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100,
+        "bf": 50,
+        "lip": 0,
+        "t": 2
+      },
+      "manufacturer": "Tuper",
+      "source_url": "https://tuper-prd.s3.sa-east-1.amazonaws.com/wp-content/uploads/2021/08/11082537/Catalogo-Telhas-e-Perfis.pdf",
+      "PDF_page_1based": 36,
+      "published_properties": {
+        "A_cm2": 3.87,
+        "mass_kg_m": 3.04,
+        "Ix_cm4": 61.49,
+        "Wx_cm3": 12.55,
+        "Iy_cm4": 9.73
+      },
+      "source_fields_visually_checked": true,
+      "spreadsheet_row": 106,
+      "spreadsheet_properties": {
+        "A_cm2": 3.87,
+        "mass_kg_m": 3.04,
+        "Ix_cm4": 61.59,
+        "Wx_cm3": 12.32,
+        "Iy_cm4": 9.71
+      },
+      "delta_published_vs_sheet_percent": {
+        "A_cm2": 0.0,
+        "mass_kg_m": 0.0,
+        "Ix_cm4": -0.16236402013314333,
+        "Wx_cm3": 1.8668831168831224,
+        "Iy_cm4": 0.2059732234809486
+      },
+      "missing_for_complete_solver": [
+        "internal_radius",
+        "torsion_J",
+        "warping_Cw",
+        "shear_centre",
+        "material_grade_with_fy_fu"
+      ],
+      "material": {
+        "published_family": "SAE1006–1012 commercial; other/high-strength steels on consultation",
+        "fy_MPa": null,
+        "fu_MPa": null,
+        "not_inferred_from_name": true
+      },
+      "auto_mix_with_spreadsheet": false,
+      "ready_for_complete_design": false
+    },
+    {
+      "id": "TUPER_Ue_[100, 50, 17, 2]",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 100,
+        "bf": 50,
+        "lip": 17,
+        "t": 2
+      },
+      "manufacturer": "Tuper",
+      "source_url": "https://tuper-prd.s3.sa-east-1.amazonaws.com/wp-content/uploads/2021/08/11082537/Catalogo-Telhas-e-Perfis.pdf",
+      "PDF_page_1based": 35,
+      "published_properties": {
+        "A_cm2": 4.42,
+        "mass_kg_m": 3.47,
+        "Ix_cm4": 70.16,
+        "Wx_cm3": 14.32,
+        "Iy_cm4": 15.78
+      },
+      "source_fields_visually_checked": true,
+      "spreadsheet_row": 26,
+      "spreadsheet_properties": {
+        "A_cm2": 4.42,
+        "mass_kg_m": 3.47,
+        "Ix_cm4": 70.26,
+        "Wx_cm3": 14.05,
+        "Iy_cm4": 15.76
+      },
+      "delta_published_vs_sheet_percent": {
+        "A_cm2": 0.0,
+        "mass_kg_m": 0.0,
+        "Ix_cm4": -0.1423284941645453,
+        "Wx_cm3": 1.9217081850533724,
+        "Iy_cm4": 0.12690355329949554
+      },
+      "missing_for_complete_solver": [
+        "internal_radius",
+        "torsion_J",
+        "warping_Cw",
+        "shear_centre",
+        "material_grade_with_fy_fu"
+      ],
+      "material": {
+        "published_family": "SAE1006–1012 commercial; other/high-strength steels on consultation",
+        "fy_MPa": null,
+        "fu_MPa": null,
+        "not_inferred_from_name": true
+      },
+      "auto_mix_with_spreadsheet": false,
+      "ready_for_complete_design": false
+    },
+    {
+      "id": "TUPER_Ue_[150, 60, 20, 2]",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 150,
+        "bf": 60,
+        "lip": 20,
+        "t": 2
+      },
+      "manufacturer": "Tuper",
+      "source_url": "https://tuper-prd.s3.sa-east-1.amazonaws.com/wp-content/uploads/2021/08/11082537/Catalogo-Telhas-e-Perfis.pdf",
+      "PDF_page_1based": 35,
+      "published_properties": {
+        "A_cm2": 5.94,
+        "mass_kg_m": 4.66,
+        "Ix_cm4": 207.21,
+        "Wx_cm3": 28,
+        "Iy_cm4": 30.05
+      },
+      "source_fields_visually_checked": true,
+      "spreadsheet_row": 37,
+      "spreadsheet_properties": {
+        "A_cm2": 5.94,
+        "mass_kg_m": 4.66,
+        "Ix_cm4": 207.59,
+        "Wx_cm3": 27.68,
+        "Iy_cm4": 30.02
+      },
+      "delta_published_vs_sheet_percent": {
+        "A_cm2": 0.0,
+        "mass_kg_m": 0.0,
+        "Ix_cm4": -0.18305313358061293,
+        "Wx_cm3": 1.1560693641618602,
+        "Iy_cm4": 0.09993337774816258
+      },
+      "missing_for_complete_solver": [
+        "internal_radius",
+        "torsion_J",
+        "warping_Cw",
+        "shear_centre",
+        "material_grade_with_fy_fu"
+      ],
+      "material": {
+        "published_family": "SAE1006–1012 commercial; other/high-strength steels on consultation",
+        "fy_MPa": null,
+        "fu_MPa": null,
+        "not_inferred_from_name": true
+      },
+      "auto_mix_with_spreadsheet": false,
+      "ready_for_complete_design": false
+    }
+  ],
+  "not_found_in_this_catalogue": [
+    "Ue100x50x17x1.20 used in Table14 exemption example",
+    "Ue200x100x25x2.65 reference fixture"
+  ],
+  "notes": [
+    "No source difference is declared an official error",
+    "No missing torsional property or fy silently copied from another profile source",
+    "Source availability is not certification of actual supplied batch"
+  ]
+}
