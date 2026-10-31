@@ -1,4 +1,4 @@
-# LRO — Terças (emissão restrita — 0.4.3-estudo)
+# LRO — Terças (emissão restrita — 0.4.4-estudo)
 
 Aplicativo Streamlit para verificações parciais de um vão U/Ue, segundo o método documentado na Rev07 e NBR 14762:2010. **Não considera telha como travamento e não emite aprovação global.**
 
@@ -29,5 +29,5 @@ Projeto de ligações, torção primária, interação axial, balanços/continui
 
 `python -m pytest -q` (inclui regressões de interface e testes aritméticos).
 
-Status: emissão restrita 0.4.3. Suíte ampliada de testes automatizados incluída; houve revisão independente e comparações aritméticas. Implantação e navegador online ainda precisam de conferência. Testes não equivalem a validação experimental ou aprovação de projeto.
+Status: emissão restrita 0.4.4. Suíte ampliada de testes automatizados incluída; houve revisão independente e comparações aritméticas. Implantação e navegador online ainda precisam de conferência. Testes não equivalem a validação experimental ou aprovação de projeto.
 

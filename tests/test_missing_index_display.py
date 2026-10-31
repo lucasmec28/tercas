@@ -10,7 +10,7 @@ class MissingIndexDisplay(unittest.TestCase):
   self.assertEqual(styler._display_funcs[(3,0)](styler.data.iloc[3,0]),'1,00 (>1,00)')
   self.assertEqual(records,frozen)
   self.assertEqual(styler.data['Situação'].tolist(),[r['Situação'] for r in records])
-  self.assertEqual(styler.data.iloc[1,0],.998765)
+  self.assertEqual(styler.data.iloc[1,0],'1,00 (<1,00)');self.assertEqual(records[1]['Índice'],.998765)
  def test_nullable_sentinels(self):
   import pandas as pd
   for missing in (None,float('nan'),pd.NA):

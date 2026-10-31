@@ -61,6 +61,10 @@ def display_frame(records):
     """Format a presentation copy, including all pandas missing-value sentinels."""
     import pandas as pd
     frame = pd.DataFrame(records)
+    # Streamlit renders its own null placeholder before Styler formatting.
+    # Materialize only the displayed index column; inputs/results stay numeric.
+    if 'Índice' in frame.columns:
+        frame['Índice'] = frame['Índice'].map(lambda value: '—' if pd.isna(value) else fmt(value, limit=1.))
     def formatter(key):
         return lambda value: display_records([{key: value}])[0][key]
     return frame.style.format({key: formatter(key) for key in frame.columns}, na_rep='—')
