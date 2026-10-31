@@ -6,6 +6,32 @@ from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 from .application import rows
 
+def inclination_report(doc,evidence):
+ if not isinstance(evidence,dict):return
+ if 'states' not in evidence:
+  for label,item in evidence.items():
+   if isinstance(item,dict):
+    doc.add_heading(str(label)+' — esforços locais',2);inclination_report(doc,item)
+  return
+ angle=evidence.get('angle',{})
+ doc.add_paragraph('Inclinação: '+format(angle['degrees'],'.6f')+' graus; '+format(angle['percent'],'.6f')+' %. Valores exibidos arredondados; cálculo usa precisão completa.')
+ doc.add_paragraph(evidence.get('convention','Esforços simultâneos na mesma seção e combinação.'))
+ doc.add_paragraph(evidence.get('resistance_status','Resistência biaxial não avaliada.'))
+ doc.add_paragraph('Cargas locais: q [N/mm]='+str(evidence.get('q_vector'))+'; P [N]='+str(evidence.get('P_vector'))+'.')
+ for state in evidence.get('states',[]):
+  doc.add_paragraph('Seção x='+str(state.get('x_mm'))+' mm; lado '+{'left':'esquerda','right':'direita'}.get(state.get('side'),'—')+' (momentos concomitantes, não soma de máximos independentes):')
+  for axis,label in [('normal','Normal / eixo forte'),('parallel','Paralelo / eixo fraco')]:
+   v=state.get(axis,{})
+   doc.add_paragraph(label+': '+ '; '.join(title+'='+format(v[k]/scale,'.6g') for k,title,scale in [('M_Nmm','M [kN·m]',1e6),('V_N','V [kN]',1000),('Rleft_N','Reação esquerda [kN]',1000),('Rright_N','Reação direita [kN]',1000)] if k in v))
+ doc.add_paragraph('Seções apresentadas não constituem envelope biaxial. Não há aprovação biaxial sem resistência aplicável por eixo e sentido; os críticos fortes não são reutilizados no eixo fraco.')
+
+def inclination_inputs(doc,data):
+ ic=data.get('inclination',{'value':0.,'unit':'degrees','spacing_basis':'roof','permanent_basis':'roof','live_basis':'horizontal','wind_basis':'roof'})
+ if ic:
+  doc.add_paragraph('Inclinação e bases declaradas: '+str(ic))
+  doc.add_paragraph('Bases roof = plano da cobertura; horizontal = projeção horizontal. Vento normal à cobertura; gravidade decomposta no modo por área. No modo direto, componentes já locais não são giradas novamente. Alma perpendicular à cobertura; telha sem crédito de travamento.')
+ doc.add_paragraph('Ly superior/inferior: comprimento lateral associado à menor inércia para FLT da flexão forte. Lz: comprimento torsional; não representa a maior inércia nem cria apoio no diagrama de cargas.')
+
 def word(result):
  doc=Document()
  for name in ['Normal','Title','Heading 1','Heading 2']:
@@ -26,6 +52,9 @@ def word(result):
   doc.add_paragraph(text,style='List Bullet')
  for warning in result.get('coverage_warnings',[]):doc.add_paragraph(warning)
  if result.get('numerical_warnings'):doc.add_paragraph('Aviso numérico na integração da flecha: critério ELS não concluído.')
+ inclination_inputs(doc,result['input_data'])
+ if result.get('inclination_evidence'):
+  doc.add_heading('Solicitações locais simultâneas',1);inclination_report(doc,result['inclination_evidence'])
  doc.add_heading('Resultados por verificação',1)
  tab=doc.add_table(rows=1, cols=4);tab.style='Table Grid'
  trPr=tab.rows[0]._tr.get_or_add_trPr();repeat=OxmlElement('w:tblHeader');trPr.append(repeat)
@@ -89,16 +118,17 @@ def batch_word(result):
  doc.add_paragraph('Origem das propriedades: '+d['property_origin'])
  doc.add_paragraph('Críticos: '+d['critical_origin'])
  doc.add_paragraph('Vão [mm]: '+str(d['L_mm']))
+ inclination_inputs(doc,d)
  labels={'mass_kg_m':'Massa linear [kg/m]','spacing_m':'Distância entre terças [m]','permanent_kgf_m2':'Permanente [kgf/m²]','live_kgf_m2':'Sobrecarga [kgf/m²]','wind_up_kgf_m2':'Vento para cima [kgf/m²]','wind_down_kgf_m2':'Vento para baixo [kgf/m²]'}
  for k,v in result['load_bundle']['inputs'].items():doc.add_paragraph(f'{labels.get(k,k)}: {v}')
- doc.add_paragraph('Área → linha pela distância entre terças; PP uma única vez pela massa linear. Vento para cima negativo. As 48 combinações de origem são as fornecidas por Lucas em 31/10/2026, filtradas pelos tipos selecionados.')
+ doc.add_paragraph('Área → linha pela distância entre terças; PP uma única vez pela massa linear. Vento para cima negativo. As 48 combinações de origem são as fornecidas por Lucas em 31/10/2026, filtradas pelos tipos selecionados. Adicionam-se quatro ELU G+1,5P e uma ELS rara G+P, conforme seleção, com P=1 kN isolada de outras variáveis. FLT e flecha móvel não têm envelope completo qualificado.')
  doc.add_paragraph('Tipos selecionados: '+', '.join(d['selected_types']))
  doc.add_paragraph(f"Limites de flecha: L/{d['ELS_down_denominator']:g} descendente; L/{d['ELS_up_denominator']:g} ascendente. Critérios informados, aplicados a cada combinação ELS.")
  doc.add_paragraph('Cada combinação é recalculada. Não se somam índices resistentes ou flechas calculadas com diferentes inércias efetivas. Sem dimensionamento de torção primária, flexão biaxial, continuidade ou balanços.')
  for s in d['segments']:
   cb={'one':'Adotar Cb = 1,0','quarter_formula':'Calcular pelos momentos do trecho'}.get(s.get('Cb_mode'),s.get('Cb_mode'))
   doc.add_paragraph(f"Trecho {s['start_mm']:g} a {s['end_mm']:g} mm. Ly superior: {s.get('Ly_top_effective_mm',s.get('Ly_effective_mm'))} mm; Ly inferior: {s.get('Ly_bottom_effective_mm',s.get('Ly_effective_mm'))} mm; Lz: {s.get('Lz_effective_mm')} mm. {cb}. {s.get('restraint_provenance','')}")
- doc.add_heading('Casos característicos',1)
+ doc.add_heading('Casos característicos — componentes normais à cobertura',1)
  for k,v in result['load_bundle']['case_q_N_mm'].items():doc.add_paragraph(f'{k}: {v:.6f} kN/m')
  doc.add_heading('Resumo dos casos governantes',1)
  t=doc.add_table(rows=1,cols=4);t.style='Table Grid'
@@ -109,7 +139,8 @@ def batch_word(result):
  doc.add_heading('Todas as combinações selecionadas',1)
  for item in result['cases']:
   c=item['combination'];doc.add_heading(f"{c['id']} — {c['type']}",2)
-  doc.add_paragraph(f"{c['expression']} → q={c['q_kN_m']:.6f} kN/m. P=0. Forças/efeitos superpostos antes das verificações.")
+  doc.add_paragraph(f"{c['expression']} → q normal={c['q_kN_m']:.6f} kN/m. P normal={c.get('P_N',0)/1000:.3f} kN. Forças/efeitos superpostos antes das verificações.")
+  if item.get('evidence',{}).get('inclination'):inclination_report(doc,item['evidence']['inclination'])
   for row in item['rows']:
    index='—' if row['Índice'] is None else f"{row['Índice']:.6f}"
    doc.add_paragraph(f"{row['Verificação']}: {row['Situação']}; índice {index}; {row['Demanda / valor']}; limite/resistência {row['Resistência / limite']}. {row['Referência']}. {row['Observação']}")

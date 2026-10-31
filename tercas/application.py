@@ -8,7 +8,7 @@ from .catalogs import catalog_labels, critical_defaults, apply_material, entries
 from .core.local_table12 import local_critical
 from .load_combinations import COMBINATION_TYPES
 
-VERSION='0.2.0-estudo'
+VERSION='0.3.0-estudo'
 
 def defaults(index=0):
  s=select(index)
@@ -19,7 +19,7 @@ def defaults(index=0):
  'Ml_Nmm':None,'Mdist_Nmm':None,'critical_origin':'','ELS_limit_mm':None,'ELS_origin':'',
  'route_domain':False,'segments':[{'start_mm':0.,'end_mm':3000.,'Ly_effective_mm':None,'Lz_effective_mm':None,'Cb_mode':'one','restraint_provenance':''}],
  'left_web':False,'right_web':False,'support_origin':'','patch_mm':None,'patch_origin':'',
- 'steel_name':'ASTM A36','load_mode':'direct','selected_types':['ELU normal','ELS frequente'],
+ 'steel_name':'ASTM A36','load_mode':'direct','selected_types':['ELU normal','ELS rara','ELS frequente'],
  'area_inputs':{'spacing_m':1.5,'permanent_kgf_m2':0.,'live_kgf_m2':0.,'wind_up_kgf_m2':0.,'wind_down_kgf_m2':0.},
  'ELS_down_denominator':180.,'ELS_up_denominator':120.}
  d.update(critical_defaults(index));d=apply_material(d,'ASTM A36')
@@ -43,6 +43,10 @@ def fingerprint(data):return hashlib.sha256(json.dumps(data,sort_keys=True,allow
 def finite(x):return isinstance(x,(int,float)) and not isinstance(x,bool) and math.isfinite(x)
 
 def build_spec(data):
+ if not isinstance(data,dict):raise ValueError('O arquivo deve conter um objeto de entradas JSON.')
+ from .inclination_adapter import configuration,number
+ configuration(data)
+ for key in ('q_parallel_uls','q_parallel_sls','P_parallel_uls','P_parallel_sls'):number(data.get(key,0.),key)
  if not isinstance(data,dict):raise ValueError('O arquivo deve conter um objeto de entradas JSON.')
  if data.get('schema')!='tercas_input_v2':raise ValueError('Formato anterior não reconhecido nesta atualização de catálogo. Selecione novamente o perfil para evitar troca de seção por índice.')
  if data.get('steel_name') not in STEEL_NAMES:raise ValueError('Tipo de aço inválido.')
@@ -106,7 +110,9 @@ def build_spec(data):
  return spec
 
 def calculate(data):
+ from .inclination_adapter import direct_evidence
  spec=build_spec(data)
+ inclination_evidence=direct_evidence(data)
  with warnings.catch_warnings(record=True) as captured:
   warnings.simplefilter('always',IntegrationWarning)
   result=evaluate(spec)
@@ -120,6 +126,7 @@ def calculate(data):
  # No concentrated compressive action means this particular check is inapplicable,
  # not a missing field. Negative force is outside this compression-only adapter.
  if data['P_uls']==0:b['point']={'status':'not_applicable','reason':'Sem força concentrada de compressão no caso informado.'}
+ result['inclination_evidence']=inclination_evidence
  result['whole_member_approved']=False
  result['coverage_warnings']=[]
  intervals=[]
@@ -177,6 +184,9 @@ def rows(result):
    if els.get('deflection_mm') is not None:row['Demanda / valor']=f"{els['deflection_mm']:.6f} mm em x={els['x_mm']:.3f} mm"
    if els.get('limit_mm') is not None:row['Resistência / limite']=f"{els['limit_mm']:.6f} mm"
   elif name=='Flexão e cortante concomitantes':row['Resistência / limite']='Σ índices² ≤ 1'
+ from .inclination_adapter import pending_rows
+ for state,ev in result.get('inclination_evidence',{}).items():
+  out+=pending_rows(ev,state)
  return out
 
 
