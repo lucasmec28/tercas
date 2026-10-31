@@ -1,0 +1,16 @@
+test_07_chi_from_printed_me (test_cbca_reference_stages.CBCACommonStages.test_07_chi_from_printed_me) ... ok
+test_07_strong_elastic_critical (test_cbca_reference_stages.CBCACommonStages.test_07_strong_elastic_critical) ... ok
+test_08_annex_e_web_compressed (test_cbca_reference_stages.CBCACommonStages.test_08_annex_e_web_compressed) ... ok
+test_08_mle_not_mse_complete (test_cbca_reference_stages.CBCACommonStages.test_08_mle_not_mse_complete) ... ok
+test_09_mv_given_mle_capacity (test_cbca_reference_stages.CBCACommonStages.test_09_mv_given_mle_capacity) ... ok
+test_09_point_load_moment (test_cbca_reference_stages.CBCACommonStages.test_09_point_load_moment) ... ok
+test_09_web_shear (test_cbca_reference_stages.CBCACommonStages.test_09_web_shear) ... ok
+test_s8_annex_e_printed_discrepancy_flagged (test_cbca_reference_stages.CBCACommonStages.test_s8_annex_e_printed_discrepancy_flagged) ... ok
+test_s8_biaxial_component_only (test_cbca_reference_stages.CBCACommonStages.test_s8_biaxial_component_only) ... ok
+test_s8_cb_quarter_moments (test_cbca_reference_stages.CBCACommonStages.test_s8_cb_quarter_moments) ... ok
+test_s8_web_height_discrepancy_flagged (test_cbca_reference_stages.CBCACommonStages.test_s8_web_height_discrepancy_flagged) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.002s
+
+OK

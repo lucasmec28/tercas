@@ -20,6 +20,11 @@ def show_inclination(evidence):
   return
  st.caption(evidence.get('convention','Esforços simultâneos na mesma seção e combinação.'))
  st.warning(evidence.get('resistance_status','Resistência biaxial não avaliada; os esforços não constituem aprovação.'))
+ if evidence.get('weak_axis_capacities'):
+  caps=[]
+  for sign,c in evidence['weak_axis_capacities'].items():
+   caps.append({'Sentido':{'positive':'My positivo','negative':'My negativo'}[sign],'Estado':'Calculado com dados informados' if c.get('MRd_Nmm') else 'Dados pendentes','Me Anexo E [kN·m]':c.get('annex_e',{}).get('Me_Nmm',0)/1e6 if c.get('annex_e') else None,'MRd fraco [kN·m]':c.get('MRd_Nmm',0)/1e6 if c.get('MRd_Nmm') else None,'Origem / faltas':c.get('provenance',', '.join(c.get('missing',[])))})
+  st.dataframe(pd.DataFrame(caps),hide_index=True,width='stretch')
  records=[]
  for state in evidence.get('states',[]):
   row={'x [mm]':state.get('x_mm'),'Lado da seção':{'left':'Esquerda','right':'Direita'}.get(state.get('side'),'—')}
@@ -52,6 +57,7 @@ with left:
  if index!=st.session_state.base['catalog_index']:
   changed=copy.deepcopy(st.session_state.get('last_input',st.session_state.base));fresh=defaults(index)
   for key in ['schema','catalog_index','properties','Ml_Nmm','Mdist_Nmm','critical_origin','property_origin']:changed[key]=fresh[key]
+  changed.pop('weak_axis',None);changed.pop('weak_catalog',None)
   changed['synthetic']=False
   if changed.get('steel_name')!='Personalizado':changed['properties'].update(material(changed['steel_name'])['properties'])
   else:
@@ -63,7 +69,7 @@ b=copy.deepcopy(st.session_state.base);r=st.session_state.revision
 last=st.session_state.get('last_input',b)
 for key in ['load_mode','area_inputs','selected_types','ELS_down_denominator','ELS_up_denominator','q_uls','P_uls','x_uls','q_sls','P_sls','x_sls','actions_origin','ELS_limit_mm','ELS_origin']:
  b[key]=copy.deepcopy(last[key])
-for key in ['inclination','q_parallel_uls','q_parallel_sls','P_parallel_uls','P_parallel_sls']:
+for key in ['weak_catalog','weak_axis','inclination','q_parallel_uls','q_parallel_sls','P_parallel_uls','P_parallel_sls']:
  if key in last:b[key]=copy.deepcopy(last[key])
 d=copy.deepcopy(b)
 if b.get('synthetic'):st.warning('EXEMPLO DIDÁTICO: propriedades complementares, críticos e contatos sintéticos. Substitua pelos dados do seu caso antes de usar resultados.')
@@ -224,6 +230,41 @@ with st.expander('Estabilidade, críticos e trechos',expanded=True):
 
  st.session_state[f'last_segments_{r}']=copy.deepcopy(d['segments'])
  st.session_state[f'last_span_{r}']=d['L_mm']
+
+with st.expander('Eixo fraco — dados existentes e críticos por sentido',expanded=False):
+ st.caption('Wy, xg, x0 e r0 já estão na planilha. Área, Ix, Iy, J, Cw, E e G vêm do perfil/aço selecionados; o app calcula Nex e Nez, sem pedir estes números de novo. Lz usa o maior comprimento torsional dos trechos. Sem travamento da telha.')
+ st.caption('Convenção: My positivo comprime a alma; My negativo comprime as bordas/lábios. Os eixos locais e o sentido da seção física devem corresponder a esta convenção. Cm = 1,0 em todas as combinações; não há redução automática.')
+ raw=catalog_entry(index)['raw_source_values']
+ st.dataframe(pd.DataFrame([{'Dado':k,'Valor tabelado':raw.get(k)} for k in ['Wy cm³','xg cm','x0 cm','r0 cm','Ml,y kNm']]),hide_index=True)
+ wc=copy.deepcopy(b.get('weak_catalog',{}));gm=wc.get('mean_line',{})
+ old_weak_span=st.session_state.get(f'weak_last_span_{r}',b['L_mm'])
+ current_lx=st.session_state.get(f'weak_lx_{r}',wc.get('Lx_mm',d['L_mm']))
+ if d['L_mm']!=old_weak_span and current_lx==old_weak_span:
+  st.session_state[f'weak_lx_{r}']=d['L_mm'];wc['Lx_mm']=d['L_mm']
+ st.session_state[f'weak_last_span_{r}']=d['L_mm']
+ wc['Lx_mm']=num('Lx efetivo — instabilidade da flexão fraca','weak_lx',wc.get('Lx_mm',d['L_mm']),'mm')
+ with st.expander('Convenção geométrica de linha média — somente para j do Anexo E',expanded=False):
+  st.caption('A conversão das dimensões nominais do catálogo para am, bm e cm ainda não foi confirmada na fonte. Não são novos ensaios: são as dimensões de linha média do Anexo E. Não há valores presumidos. O app confere compatibilidade com xg, x0 e Iy da planilha; diferença acima de 3% bloqueia esta automação. Essa triagem não certifica a convenção.')
+  vals={};cols=st.columns(3)
+  for i,(key,label) in enumerate([('am_mm','am — altura na linha média'),('bm_mm','bm — largura na linha média'),('cm_mm','cm — lábio na linha média')]):
+   with cols[i]:vals[key]=num(label,'weak_geom_'+key,gm.get(key,0. if key=='cm_mm' and catalog_entry(index)['family']=='U' else None),'mm')
+  vals['origin']=txt('Origem / convenção das dimensões médias','weak_geometry_origin',gm.get('origin',''))
+  wc['mean_line']=vals
+ d['weak_catalog']=wc;d['weak_axis']={}
+ from tercas.weak_catalog import critical_hypothesis
+ provisional=critical_hypothesis(index)
+ for sign,label in [('positive','My positivo — alma comprimida'),('negative','My negativo — bordas comprimidas')]:
+  src=b.get('weak_axis',{}).get(sign,provisional[sign])
+  st.markdown('**'+label+'**');out={};cols=st.columns(2)
+  for i,(key,label2) in enumerate([('Ml_Nmm','Ml,y local'),('Mdist_Nmm','Mdist,y distorcional')]):
+   with cols[i]:
+    value=num(label2+' — '+label,'weak_'+sign+'_'+key,None if src.get(key) is None else src[key]/1e6,'kN·m');out[key]=None if value is None else value*1e6
+  out['provisional_hypothesis']=src.get('provisional_hypothesis',False) or 'HIPÓTESE PROVISÓRIA' in src.get('provenance','').upper()
+  out['plain_u_no_distortion']=catalog_entry(index)['family']=='U'
+  if out['plain_u_no_distortion']:st.caption('U simples, sem painel na mesa tracionada: não aplicabilidade distorcional conforme §9.3. Não se usa dispensa da Tabela 14 forte no eixo fraco.')
+  out['provenance']=txt('Origem dos críticos neste sentido — '+label,'weak_source_'+sign,src.get('provenance',''))
+  d['weak_axis'][sign]=out
+ st.caption('Hipótese provisória autorizada: o Ml,y tabulado preenche somente My positivo (alma comprimida), apoiado na comparação pyCUFSM, ainda a conferir com exemplos CBCA. Não é copiado no sentido oposto; Mdist,y não usa a tabela do eixo forte. A ausência de um crítico afeta só a rota correspondente.')
 
 with st.expander('Introdução de P e limite de flecha',expanded=False):
  st.caption('Apoios e ligações não são dimensionados neste app. O cálculo da terça mantém as hipóteses de introdução das forças aplicáveis; não há aprovação automática do detalhe.')

@@ -47,7 +47,7 @@ def calculate_batch(data):
   if mobile:evidence['mobile_point']=mobile
   from .inclination_adapter import pending_rows
   from .inclination_adapter import evidence as inclination_evidence
-  ev=inclination_evidence(data,combo['q_vector'],combo['P_vector'],data['L_mm']/2)
+  ev=copy.deepcopy(result['inclination_evidence'][combo['limit_state']])
   if mobile:ev['convention']+=' P móvel: estados exibidos para candidato central, não envelope biaxial móvel.'
   evidence['inclination']=ev
   # Core rows already contain ELU pending rows, but ELS filtering excludes its parallel component.
@@ -91,6 +91,12 @@ def mobile_rows(rs,result,combo):
    idx=best['index_squared'];row['Observação']=f"Envelope concomitante: posição P={best['a_mm']:.3f} mm; seção x={best['x_mm']:.3f} mm; limite de apoio={best['support_limit']}. Não soma máximos M/V independentes."
   elif name in ('Flexão local','Distorcional'):
    row['Observação']+=' Máximo global de momento com P no centro (permanentes e P no mesmo sentido).'
+  elif name=='Flexão biaxial':
+   provisional='hipótese provisória' in row['Situação']
+   central=row.get('Índice');row['Índice']=central if finite(central) and central>1 else None
+   row['Situação']='Não atende no candidato central — envelope parcial' if row['Índice'] is not None else 'Pendente — interação móvel parcial'
+   if provisional:row['Situação']+=' — hipótese provisória, a conferir'
+   row['Observação']+=' P central não certifica envelope móvel biaxial.'
   elif name.startswith('FLT —') or name=='Flecha — flexão' or name=='Carga concentrada':
    ev[name]={'central_candidate_index':row.get('Índice'),'central_candidate_value':row['Demanda / valor']}
    central_index=row.get('Índice')

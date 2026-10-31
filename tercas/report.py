@@ -17,19 +17,33 @@ def inclination_report(doc,evidence):
  doc.add_paragraph('Inclinação: '+format(angle['degrees'],'.6f')+' graus; '+format(angle['percent'],'.6f')+' %. Valores exibidos arredondados; cálculo usa precisão completa.')
  doc.add_paragraph(evidence.get('convention','Esforços simultâneos na mesma seção e combinação.'))
  doc.add_paragraph(evidence.get('resistance_status','Resistência biaxial não avaliada.'))
+ if evidence.get('weak_axis_capacities'):
+  doc.add_heading('Resistências do eixo fraco por sentido',3)
+  for sign,cap in evidence['weak_axis_capacities'].items():
+   doc.add_paragraph(('My positivo' if sign=='positive' else 'My negativo')+': '+str(cap))
+  doc.add_paragraph('Interação concomitante §9.9, N=0: '+str(evidence.get('biaxial')))
+  doc.add_paragraph('MxRd conservador adotado [Nmm]: '+str(evidence.get('strong_capacity_Nmm')))
  doc.add_paragraph('Cargas locais: q [N/mm]='+str(evidence.get('q_vector'))+'; P [N]='+str(evidence.get('P_vector'))+'.')
  for state in evidence.get('states',[]):
   doc.add_paragraph('Seção x='+str(state.get('x_mm'))+' mm; lado '+{'left':'esquerda','right':'direita'}.get(state.get('side'),'—')+' (momentos concomitantes, não soma de máximos independentes):')
   for axis,label in [('normal','Normal / eixo forte'),('parallel','Paralelo / eixo fraco')]:
    v=state.get(axis,{})
    doc.add_paragraph(label+': '+ '; '.join(title+'='+format(v[k]/scale,'.6g') for k,title,scale in [('M_Nmm','M [kN·m]',1e6),('V_N','V [kN]',1000),('Rleft_N','Reação esquerda [kN]',1000),('Rright_N','Reação direita [kN]',1000)] if k in v))
- doc.add_paragraph('Seções apresentadas não constituem envelope biaxial. Não há aprovação biaxial sem resistência aplicável por eixo e sentido; os críticos fortes não são reutilizados no eixo fraco.')
+ doc.add_paragraph('A tabela de seções ilustra solicitações locais. Quando disponível, o resultado §9.9 acima identifica o máximo concomitante para P fixa, calculado separadamente. Para P móvel, o candidato central não certifica o envelope móvel. Não há conclusão biaxial sem resistência aplicável por eixo e sentido; os críticos fortes não são reutilizados no eixo fraco.')
 
 def inclination_inputs(doc,data):
  ic=data.get('inclination',{'value':0.,'unit':'degrees','spacing_basis':'roof','permanent_basis':'roof','live_basis':'horizontal','wind_basis':'roof'})
  if ic:
   doc.add_paragraph('Inclinação e bases declaradas: '+str(ic))
   doc.add_paragraph('Bases roof = plano da cobertura; horizontal = projeção horizontal. Vento normal à cobertura; gravidade decomposta no modo por área. No modo direto, componentes já locais não são giradas novamente. Alma perpendicular à cobertura; telha sem crédito de travamento.')
+ if data.get('weak_catalog') is not None:
+  doc.add_paragraph('Automação de propriedades do catálogo / linha média explícita: '+str(data['weak_catalog']))
+  doc.add_paragraph('Nex e Nez calculados dos comprimentos e propriedades; Cs por sentido local; Cm=1. Triagens de consistência não são verificações resistentes nem certificação da convenção geométrica.')
+ if data.get('weak_axis'):
+  doc.add_heading('Dados rastreados — eixo fraco / Anexo E',2)
+  doc.add_paragraph('W é da primeira fibra a escoar; Wc da fibra comprimida. Nex/Nez em N, r0/j em mm, W/Wc em mm³, Ml/Mdist em Nmm. Cs/Cm conforme Anexo E. Dados independentes por sentido; nenhuma transposição automática bilateral da tabela.')
+  for sign,item in data['weak_axis'].items():
+   doc.add_paragraph(('My positivo' if sign=='positive' else 'My negativo')+': '+str(item))
  doc.add_paragraph('Ly superior/inferior: comprimento lateral associado à menor inércia para FLT da flexão forte. Lz: comprimento torsional; não representa a maior inércia nem cria apoio no diagrama de cargas.')
 
 def word(result):
@@ -48,7 +62,7 @@ def word(result):
  if result['synthetic']:doc.add_paragraph('EXEMPLO DIDÁTICO COM DADOS SINTÉTICOS. NÃO UTILIZAR COMO PROJETO.')
  doc.add_paragraph('Projeto: '+result['project']);doc.add_paragraph('Versão: '+result['version']);doc.add_paragraph('Gerado em UTC: '+datetime.now(timezone.utc).isoformat())
  doc.add_heading('Premissas e limites',1)
- for text in ['Um vão isostático, flexão no eixo de simetria forte. Sem dimensionamento de torção primária, flexão biaxial, axial, continuidade ou balanços nesta emissão.', 'Ações ELU e ELS já combinadas, informadas separadamente. Não há geração automática de todas as combinações.', 'Ly e Lz são comprimentos efetivos informados; coordenada de tirante não comprova vínculo torsional.', 'A flecha é componente Euler–Bernoulli com Ief por seção. Limite de flecha é informado com origem; não equivale a aprovação do sistema.', 'Propriedades e críticos fornecidos não são certificados pelo aplicativo. A convenção geométrica das propriedades do catálogo precisa ser conferida para o caso.', 'Ligações e apoios não são dimensionados ou aprovados pelo aplicativo. O usuário deve definir detalhes de introdução de força compatíveis com o modelo.']:
+ for text in ['Um vão isostático. Flexão forte e rota restrita de flexão fraca/Anexo E; interação biaxial §9.9 para N=0 quando há resistências rastreadas por eixo e sentido. Para posição fixa de P, o máximo concomitante é calculado ao longo do vão. Sem dimensionamento de torção primária, axial, continuidade ou balanços nesta emissão.', 'Ações ELU e ELS já combinadas, informadas separadamente. Não há geração automática de todas as combinações.', 'Ly e Lz são comprimentos efetivos informados; coordenada de tirante não comprova vínculo torsional.', 'A flecha é componente Euler–Bernoulli com Ief por seção. Limite de flecha é informado com origem; não equivale a aprovação do sistema.', 'Propriedades e críticos fornecidos não são certificados pelo aplicativo. A convenção geométrica das propriedades do catálogo precisa ser conferida para o caso.', 'Ligações e apoios não são dimensionados ou aprovados pelo aplicativo. O usuário deve definir detalhes de introdução de força compatíveis com o modelo.']:
   doc.add_paragraph(text,style='List Bullet')
  for warning in result.get('coverage_warnings',[]):doc.add_paragraph(warning)
  if result.get('numerical_warnings'):doc.add_paragraph('Aviso numérico na integração da flecha: critério ELS não concluído.')
@@ -124,7 +138,7 @@ def batch_word(result):
  doc.add_paragraph('Área → linha pela distância entre terças; PP uma única vez pela massa linear. Vento para cima negativo. As 48 combinações de origem são as fornecidas por Lucas em 31/10/2026, filtradas pelos tipos selecionados. Adicionam-se quatro ELU G+1,5P e uma ELS rara G+P, conforme seleção, com P=1 kN isolada de outras variáveis. FLT móvel não tem envelope completo qualificado. A flecha normal pode ser concluída por limite superior conservador no domínio declarado; fora dele permanece parcial. Não equivale a flecha exata.')
  doc.add_paragraph('Tipos selecionados: '+', '.join(d['selected_types']))
  doc.add_paragraph(f"Limites de flecha: L/{d['ELS_down_denominator']:g} descendente; L/{d['ELS_up_denominator']:g} ascendente. Critérios informados, aplicados a cada combinação ELS.")
- doc.add_paragraph('Cada combinação é recalculada. Não se somam índices resistentes ou flechas calculadas com diferentes inércias efetivas. Sem dimensionamento de torção primária, flexão biaxial, continuidade ou balanços.')
+ doc.add_paragraph('Cada combinação é recalculada. Não se somam índices resistentes ou flechas calculadas com diferentes inércias efetivas. A interação biaxial §9.9 (N=0) usa resistências rastreadas por eixo e sentido. O envelope ao longo do vão é calculado para uma posição fixa de P; nas combinações de P móvel o candidato central permanece parcial e não certifica o máximo móvel. Sem dimensionamento de torção primária, axial, continuidade ou balanços.')
  for s in d['segments']:
   cb={'one':'Adotar Cb = 1,0','quarter_formula':'Calcular pelos momentos do trecho'}.get(s.get('Cb_mode'),s.get('Cb_mode'))
   doc.add_paragraph(f"Trecho {s['start_mm']:g} a {s['end_mm']:g} mm. Ly superior: {s.get('Ly_top_effective_mm',s.get('Ly_effective_mm'))} mm; Ly inferior: {s.get('Ly_bottom_effective_mm',s.get('Ly_effective_mm'))} mm; Lz: {s.get('Lz_effective_mm')} mm. {cb}. {s.get('restraint_provenance','')}")

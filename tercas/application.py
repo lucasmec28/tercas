@@ -8,7 +8,7 @@ from .catalogs import catalog_labels, critical_defaults, apply_material, entries
 from .core.local_table12 import local_critical
 from .load_combinations import COMBINATION_TYPES
 
-VERSION='0.3.1-estudo'
+VERSION='0.4.0-estudo'
 
 def defaults(index=0):
  s=select(index)
@@ -46,6 +46,8 @@ def build_spec(data):
  if not isinstance(data,dict):raise ValueError('O arquivo deve conter um objeto de entradas JSON.')
  from .inclination_adapter import configuration,number
  configuration(data)
+ from .weak_axis import validate
+ validate(data)
  for key in ('q_parallel_uls','q_parallel_sls','P_parallel_uls','P_parallel_sls'):number(data.get(key,0.),key)
  if not isinstance(data,dict):raise ValueError('O arquivo deve conter um objeto de entradas JSON.')
  if data.get('schema')!='tercas_input_v2':raise ValueError('Formato anterior não reconhecido nesta atualização de catálogo. Selecione novamente o perfil para evitar troca de seção por índice.')
@@ -140,6 +142,8 @@ def calculate(data):
   end=max(end,b)
  if end<data['L_mm']-1e-8:result['coverage_warnings'].append('Há parte do vão sem trecho de FLT informado.')
  result['coverage_warnings']=list(dict.fromkeys(result['coverage_warnings']))
+ from .weak_axis import integrate
+ integrate(result)
  return result
 
 STATUS={'not_evaluated':'Não avaliado','invalid_inputs':'Entrada inválida','FLT_not_evaluated':'Não avaliado','route_domain_not_declared':'Domínio não informado','computed':'Calculado','computed_bending_component':'Componente de flexão calculada','computed_from_supplied_inputs':'Calculado com dados informados','computed_fixed_load_position':'Calculado na posição informada','computed_from_supplied_effective_lengths':'Calculado com comprimentos informados','not_applicable':'Não aplicável','exempt_Table14':'Dispensado pela Tabela 14','stiffener_exception_9_5_1':'Exceção de enrijecedor §9.5.1','outside_implemented_family':'Fora da versão','invalid_or_outside_implemented_domain':'Entrada inválida ou fora do domínio'}

@@ -8,7 +8,7 @@ class Tests(unittest.TestCase):
  def example(self):
   at=self.run_app();at.button[0].click().run(timeout=30);self.assertFalse(at.exception);return at
  def test_initial_render(self):
-  at=self.run_app();self.assertIn('Terças',at.title[0].value);self.assertEqual(len(at.selectbox),9)
+  at=self.run_app();self.assertIn('Terças',at.title[0].value);self.assertEqual(len(at.selectbox),9);self.assertNotIn('Cs — My positivo',[x.label for x in at.selectbox])
  def test_example_calculates_and_downloads(self):
   at=self.example();at.button[1].click().run(timeout=30);self.assertFalse(at.exception);self.assertIn('result',at.session_state);self.assertEqual(len(at.get('download_button')),3)
  def test_change_invalidates(self):
