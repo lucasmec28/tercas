@@ -6,13 +6,16 @@ from .contrato import me
 p=Path(__file__).parent
 
 def select(index=0):
- e=json.loads((p/'catalogo_documentado.json').read_text())['entries'][index]
+ es=json.loads((p/'catalogo_documentado.json').read_text(encoding='utf-8'))['entries']
+ if not isinstance(index,int) or isinstance(index,bool) or not 0<=index<len(es):raise ValueError('Perfil de catálogo inválido.')
+ e=es[index]
  fields={}
  def add(k,v,origin):fields[k]={'value':v,'origin':origin,'edited':False}
  for k,v in e['dimensions_mm'].items():add(k,v,e['source_url'])
  for k,v in e['published_properties'].items():add(k,v,e['source_url'])
- for k in ['fy_MPa','fu_MPa','ri_mm','J_mm4','Cw_mm6','E_MPa','G_MPa']:add(k,None,'not supplied by selected catalogue entry')
- return {'entry_id':e['id'],'family':e['family'],'fields':fields,'history':[],'source':e['source_url'],'source_geometry_convention_unresolved':True,'whole_member_approved':False}
+ for k in ['fy_MPa','fu_MPa','ri_mm','J_mm4','Cw_mm6','E_MPa','G_MPa']:
+  if k not in fields:add(k,None,'Não informado pelo catálogo selecionado')
+ return {'entry_id':e['id'],'family':e['family'],'fields':fields,'history':[],'source':e['source_url'],'source_geometry_convention_unresolved':e.get('source_geometry_convention_unresolved',True),'whole_member_approved':False}
 
 def edit(s,key,value,origin):
  if key not in s['fields']:raise ValueError('unknown field')
@@ -42,3 +45,4 @@ def evaluate(s,L=None,contract=None):
  else:out['elastic_Me']={'status':'computed_from_supplied_inputs','Me_Nmm':me(contract,val('E_MPa'),val('G_MPa'),val('Iy_cm4')*1e4,val('J_mm4'),val('Cw_mm6'),L)}
  out['local_FLT_resistance']={'status':'not_evaluated','reason':'resolve Wx reference convention and select local critical route for same geometry; no silent property mixing'}
  return out
+

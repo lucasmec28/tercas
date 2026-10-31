@@ -1,0 +1,514 @@
+{
+  "schema": "tercas_fixed_combinations_v1",
+  "source": "Combinações fornecidas por Lucas em 31/10/2026, geradas no app de combinações; transcrição conferida com TSV, XLSX e Word. Não é um gerador normativo universal.",
+  "source_files": {
+    "robot_combinacoes.xlsx": "83b973fa63cbe70c6dbaba9b0a29b7abe1269e149f7b05b4b7ba5e76f9847d05",
+    "robot_combinacoes.tsv": "234b0ee5f0b7afac0a8b7986c42e080d841e1d59f86ffbf0271acb6bc863fbce",
+    "combinacoes_mc(2).docx": "58a9ad2be527436862bca946c3428b5c37060989406616d91e0124c8c4e9b3e1",
+    "image(20261031-154626).png": "a88188a70877f350ff36f671203f9c477aa638d1cb3fd9dc2a686bb0c1fd1da6"
+  },
+  "case_mapping": {
+    "1": "PP",
+    "2": "CP",
+    "3": "SC",
+    "4": "V_Cima",
+    "5": "V_Baixo"
+  },
+  "combinations": [
+    {
+      "id": "ELUN_00001",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.25,
+        "CP": 1.4,
+        "SC": 1.5
+      }
+    },
+    {
+      "id": "ELUN_00002",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.25,
+        "CP": 1.4,
+        "SC": 1.5,
+        "V_Baixo": 0.84
+      }
+    },
+    {
+      "id": "ELUN_00003",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.25,
+        "CP": 1.4,
+        "SC": 1.5,
+        "V_Cima": 0.84
+      }
+    },
+    {
+      "id": "ELUN_00004",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.25,
+        "CP": 1.0,
+        "SC": 1.5
+      }
+    },
+    {
+      "id": "ELUN_00005",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.25,
+        "CP": 1.0,
+        "SC": 1.5,
+        "V_Baixo": 0.84
+      }
+    },
+    {
+      "id": "ELUN_00006",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.25,
+        "CP": 1.0,
+        "SC": 1.5,
+        "V_Cima": 0.84
+      }
+    },
+    {
+      "id": "ELUN_00007",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.4,
+        "SC": 1.5
+      }
+    },
+    {
+      "id": "ELUN_00008",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.4,
+        "SC": 1.5,
+        "V_Baixo": 0.84
+      }
+    },
+    {
+      "id": "ELUN_00009",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.4,
+        "SC": 1.5,
+        "V_Cima": 0.84
+      }
+    },
+    {
+      "id": "ELUN_00010",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.0,
+        "SC": 1.5
+      }
+    },
+    {
+      "id": "ELUN_00011",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.0,
+        "SC": 1.5,
+        "V_Baixo": 0.84
+      }
+    },
+    {
+      "id": "ELUN_00012",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.0,
+        "SC": 1.5,
+        "V_Cima": 0.84
+      }
+    },
+    {
+      "id": "ELUN_00013",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.25,
+        "CP": 1.4,
+        "V_Cima": 1.4
+      }
+    },
+    {
+      "id": "ELUN_00014",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.25,
+        "CP": 1.4,
+        "SC": 1.2,
+        "V_Cima": 1.4
+      }
+    },
+    {
+      "id": "ELUN_00015",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.25,
+        "CP": 1.0,
+        "V_Cima": 1.4
+      }
+    },
+    {
+      "id": "ELUN_00016",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.25,
+        "CP": 1.0,
+        "SC": 1.2,
+        "V_Cima": 1.4
+      }
+    },
+    {
+      "id": "ELUN_00017",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.4,
+        "V_Cima": 1.4
+      }
+    },
+    {
+      "id": "ELUN_00018",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.4,
+        "SC": 1.2,
+        "V_Cima": 1.4
+      }
+    },
+    {
+      "id": "ELUN_00019",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.0,
+        "V_Cima": 1.4
+      }
+    },
+    {
+      "id": "ELUN_00020",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.0,
+        "SC": 1.2,
+        "V_Cima": 1.4
+      }
+    },
+    {
+      "id": "ELUN_00021",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.25,
+        "CP": 1.4,
+        "V_Baixo": 1.4
+      }
+    },
+    {
+      "id": "ELUN_00022",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.25,
+        "CP": 1.4,
+        "SC": 1.2,
+        "V_Baixo": 1.4
+      }
+    },
+    {
+      "id": "ELUN_00023",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.25,
+        "CP": 1.0,
+        "V_Baixo": 1.4
+      }
+    },
+    {
+      "id": "ELUN_00024",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.25,
+        "CP": 1.0,
+        "SC": 1.2,
+        "V_Baixo": 1.4
+      }
+    },
+    {
+      "id": "ELUN_00025",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.4,
+        "V_Baixo": 1.4
+      }
+    },
+    {
+      "id": "ELUN_00026",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.4,
+        "SC": 1.2,
+        "V_Baixo": 1.4
+      }
+    },
+    {
+      "id": "ELUN_00027",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.0,
+        "V_Baixo": 1.4
+      }
+    },
+    {
+      "id": "ELUN_00028",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.0,
+        "SC": 1.2,
+        "V_Baixo": 1.4
+      }
+    },
+    {
+      "id": "ELUN_00029",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.25,
+        "CP": 1.4
+      }
+    },
+    {
+      "id": "ELUN_00030",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.25,
+        "CP": 1.0
+      }
+    },
+    {
+      "id": "ELUN_00031",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.4
+      }
+    },
+    {
+      "id": "ELUN_00032",
+      "limit_state": "ELU",
+      "type": "ELU normal",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.0
+      }
+    },
+    {
+      "id": "ELSR_00001",
+      "limit_state": "ELS",
+      "type": "ELS rara",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.0,
+        "SC": 1.0
+      }
+    },
+    {
+      "id": "ELSR_00002",
+      "limit_state": "ELS",
+      "type": "ELS rara",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.0,
+        "SC": 1.0,
+        "V_Baixo": 0.3
+      }
+    },
+    {
+      "id": "ELSR_00003",
+      "limit_state": "ELS",
+      "type": "ELS rara",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.0,
+        "SC": 1.0,
+        "V_Cima": 0.3
+      }
+    },
+    {
+      "id": "ELSR_00004",
+      "limit_state": "ELS",
+      "type": "ELS rara",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.0,
+        "V_Cima": 1.0
+      }
+    },
+    {
+      "id": "ELSR_00005",
+      "limit_state": "ELS",
+      "type": "ELS rara",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.0,
+        "SC": 0.7,
+        "V_Cima": 1.0
+      }
+    },
+    {
+      "id": "ELSR_00006",
+      "limit_state": "ELS",
+      "type": "ELS rara",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.0,
+        "V_Baixo": 1.0
+      }
+    },
+    {
+      "id": "ELSR_00007",
+      "limit_state": "ELS",
+      "type": "ELS rara",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.0,
+        "SC": 0.7,
+        "V_Baixo": 1.0
+      }
+    },
+    {
+      "id": "ELSR_00008",
+      "limit_state": "ELS",
+      "type": "ELS rara",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.0
+      }
+    },
+    {
+      "id": "ELSF_00001",
+      "limit_state": "ELS",
+      "type": "ELS frequente",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.0,
+        "SC": 0.7
+      }
+    },
+    {
+      "id": "ELSF_00002",
+      "limit_state": "ELS",
+      "type": "ELS frequente",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.0,
+        "V_Cima": 0.3
+      }
+    },
+    {
+      "id": "ELSF_00003",
+      "limit_state": "ELS",
+      "type": "ELS frequente",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.0,
+        "SC": 0.6,
+        "V_Cima": 0.3
+      }
+    },
+    {
+      "id": "ELSF_00004",
+      "limit_state": "ELS",
+      "type": "ELS frequente",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.0,
+        "V_Baixo": 0.3
+      }
+    },
+    {
+      "id": "ELSF_00005",
+      "limit_state": "ELS",
+      "type": "ELS frequente",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.0,
+        "SC": 0.6,
+        "V_Baixo": 0.3
+      }
+    },
+    {
+      "id": "ELSF_00006",
+      "limit_state": "ELS",
+      "type": "ELS frequente",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.0
+      }
+    },
+    {
+      "id": "ELSQP_00001",
+      "limit_state": "ELS",
+      "type": "ELS quase permanente",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.0
+      }
+    },
+    {
+      "id": "ELSQP_00002",
+      "limit_state": "ELS",
+      "type": "ELS quase permanente",
+      "coefficients": {
+        "PP": 1.0,
+        "CP": 1.0,
+        "SC": 0.6
+      }
+    }
+  ]
+}

@@ -4,21 +4,35 @@ from scipy.integrate import IntegrationWarning
 from .core.selecao import select, edit
 from .core.especificacao_unica import evaluate
 from .core.travamentos_nbr import segment_moments
+from .catalogs import catalog_labels, critical_defaults, apply_material, entries, STEEL_NAMES
+from .core.local_table12 import local_critical
+from .load_combinations import COMBINATION_TYPES
 
-VERSION='0.1.0-estudo'
+VERSION='0.2.0-estudo'
 
 def defaults(index=0):
  s=select(index)
- return {'schema':'tercas_input_v1','catalog_index':index,'synthetic':False,'project':'Estudo de terça',
+ d={'schema':'tercas_input_v2','catalog_index':index,'synthetic':False,'project':'Estudo de terça',
  'properties':{k:v['value'] for k,v in s['fields'].items()},'property_origin':'Informação do usuário; conferir documento do perfil e material',
  'L_mm':3000.,'q_uls':0.,'P_uls':0.,'x_uls':1500.,'q_sls':0.,'P_sls':0.,'x_sls':1500.,
  'actions_origin':'Ações de uma combinação informada pelo usuário; fatores já aplicados quando ELU',
  'Ml_Nmm':None,'Mdist_Nmm':None,'critical_origin':'','ELS_limit_mm':None,'ELS_origin':'',
  'route_domain':False,'segments':[{'start_mm':0.,'end_mm':3000.,'Ly_effective_mm':None,'Lz_effective_mm':None,'Cb_mode':'one','restraint_provenance':''}],
- 'left_web':False,'right_web':False,'support_origin':'','patch_mm':None,'patch_origin':''}
+ 'left_web':False,'right_web':False,'support_origin':'','patch_mm':None,'patch_origin':'',
+ 'steel_name':'ASTM A36','load_mode':'direct','selected_types':['ELU normal','ELS frequente'],
+ 'area_inputs':{'spacing_m':1.5,'permanent_kgf_m2':0.,'live_kgf_m2':0.,'wind_up_kgf_m2':0.,'wind_down_kgf_m2':0.},
+ 'ELS_down_denominator':180.,'ELS_up_denominator':120.}
+ d.update(critical_defaults(index));d=apply_material(d,'ASTM A36')
+ if d['Ml_Nmm'] is None:
+  f=d['properties']
+  try:
+   c=local_critical(s['family'],f['h'],f['bf'],f['t'],f['Wx_cm3']*1000,f['E_MPa'],D_mm=f['lip']);d['Ml_Nmm']=c['Ml_Nmm'];d['critical_origin']+='; Ml calculado: '+c['origin']
+  except (ValueError,TypeError):pass
+ return d
 
 def example():
- d=defaults();d['synthetic']=True;d['project']='EXEMPLO DIDÁTICO — não é projeto'
+ idx=next(i for i,e in enumerate(entries()) if e['family']=='U' and e['dimensions_mm']=={'h':100,'bf':50,'lip':0,'t':2})
+ d=defaults(idx);d['synthetic']=True;d['project']='EXEMPLO DIDÁTICO — não é projeto'
  d['properties'].update(E_MPa=200000.,G_MPa=200000/2.6,fy_MPa=250.,fu_MPa=400.,ri_mm=2.,J_mm4=520.,Cw_mm6=164780000.)
  d.update(property_origin='Dados sintéticos do teste de interface; não certificados pelo fabricante',q_uls=.30726527,P_uls=1500.,q_sls=.229812216,P_sls=1000.,Ml_Nmm=3195774.181964692,critical_origin='Crítico sintético para regressão de interface; não validado para o perfil do fabricante',ELS_limit_mm=3000/180,ELS_origin='L/180 selecionado no exemplo didático',route_domain=True,left_web=True,right_web=True,support_origin='Apoios por alma ligada assumidos no exemplo didático',patch_mm=40.,patch_origin='Contato central sintético')
  d['segments']=[dict(start_mm=0.,end_mm=3000.,Ly_effective_mm=3000.,Lz_effective_mm=3000.,Cb_mode='one',restraint_provenance='Comprimentos efetivos sintéticos de teste')]
@@ -30,8 +44,18 @@ def finite(x):return isinstance(x,(int,float)) and not isinstance(x,bool) and ma
 
 def build_spec(data):
  if not isinstance(data,dict):raise ValueError('O arquivo deve conter um objeto de entradas JSON.')
- if data.get('schema')!='tercas_input_v1':raise ValueError('Formato de arquivo não reconhecido.')
- if not isinstance(data.get('catalog_index'),int) or isinstance(data['catalog_index'],bool) or not 0<=data['catalog_index']<3:raise ValueError('Perfil de catálogo inválido.')
+ if data.get('schema')!='tercas_input_v2':raise ValueError('Formato anterior não reconhecido nesta atualização de catálogo. Selecione novamente o perfil para evitar troca de seção por índice.')
+ if data.get('steel_name') not in STEEL_NAMES:raise ValueError('Tipo de aço inválido.')
+ if data.get('load_mode') not in ('direct','area'):raise ValueError('Modo de carregamento inválido.')
+ types=data.get('selected_types')
+ if not isinstance(types,list) or any(x not in COMBINATION_TYPES for x in types) or len(set(types))!=len(types):raise ValueError('Tipos de combinação inválidos.')
+ area=data.get('area_inputs')
+ area_keys={'spacing_m','permanent_kgf_m2','live_kgf_m2','wind_up_kgf_m2','wind_down_kgf_m2'}
+ if not isinstance(area,dict) or set(area)!=area_keys:raise ValueError('Entradas de área incompletas.')
+ if any(not finite(v) or v<0 for v in area.values()) or area['spacing_m']<=0:raise ValueError('Entradas de área inválidas.')
+ for key in ['ELS_down_denominator','ELS_up_denominator']:
+  if not finite(data.get(key)) or data[key]<=0:raise ValueError('Denominador ELS inválido: '+key)
+ if not isinstance(data.get('catalog_index'),int) or isinstance(data['catalog_index'],bool) or not 0<=data['catalog_index']<len(catalog_labels()):raise ValueError('Perfil de catálogo inválido.')
  required=set(defaults(data['catalog_index']))
  missing=required-set(data)
  if missing:raise ValueError('Arquivo incompleto. Campos ausentes: '+', '.join(sorted(missing)))
@@ -43,6 +67,8 @@ def build_spec(data):
  for key in ['Ml_Nmm','Mdist_Nmm','ELS_limit_mm','patch_mm']:
   val=data.get(key)
   if val is not None and not finite(val):raise ValueError('Número inválido: '+key)
+ fy=data['properties'].get('fy_MPa');fu=data['properties'].get('fu_MPa')
+ if finite(fy) and finite(fu) and fu<fy:raise ValueError('fu não pode ser menor que fy.')
  d=copy.deepcopy(data);L=d['L_mm']
  if not finite(L) or not 0<L<=100000:raise ValueError('Informe um vão positivo, até 100.000 mm nesta versão.')
  for key in ['q_uls','P_uls','q_sls','P_sls','x_uls','x_sls']:
@@ -64,8 +90,13 @@ def build_spec(data):
  if not isinstance(segs,list) or len(segs)>20:raise ValueError('Use até 20 trechos por caso.')
  for seg in segs:
   if not isinstance(seg,dict):raise ValueError('Trecho inválido.')
-  required_segment={'start_mm','end_mm','Ly_effective_mm','Lz_effective_mm','Cb_mode','restraint_provenance'}
+  required_segment={'start_mm','end_mm','Lz_effective_mm','Cb_mode','restraint_provenance'}
+  if not ('Ly_effective_mm' in seg or {'Ly_top_effective_mm','Ly_bottom_effective_mm'}.issubset(seg)):raise ValueError('Informe os comprimentos efetivos das mesas superior e inferior.')
   if not required_segment.issubset(seg):raise ValueError('Trecho incompleto: informe início, fim, Ly, Lz, Cb e origem.')
+  if seg.get('Cb_mode') not in ('one','quarter_formula'):raise ValueError('Opção de Cb inválida no trecho.')
+  for k in ('start_mm','end_mm','Ly_effective_mm','Ly_top_effective_mm','Ly_bottom_effective_mm','Lz_effective_mm'):
+   if k in seg and seg[k] is not None and not finite(seg[k]):raise ValueError('Comprimento ou coordenada inválida no trecho: '+k)
+  if seg.get('restraint_provenance') is not None and not isinstance(seg['restraint_provenance'],str):raise ValueError('Origem dos vínculos deve ser texto.')
  spec={'selected_section':s,'L_mm':L,'route_domain':'strong_symmetry_CT_no_primary_torsion' if d.get('route_domain') is True else None,
  'Ml':critical('Ml_Nmm'),'Mdist':critical('Mdist_Nmm'),
  'ULS':{'q_Nmm':d['q_uls'],'P_N':d['P_uls'],'x_mm':d['x_uls'],'origin':d.get('actions_origin','')},
@@ -113,6 +144,7 @@ def rows(result):
   status=STATUS.get(r.get('status'),r.get('status','Não avaliado'))
   if idx is not None and finite(idx):status='Não atende' if idx>1 else 'Atende ao critério calculado'
   detail=translate(r.get('reason',r.get('missing','')))
+  if r.get('compressed_flange'):detail=f"Mesa comprimida governante: {r['compressed_flange']}; comprimento lateral efetivo: {r.get('Ly_used_mm')} mm; Lz torsional: {r.get('Lz_used_mm')} mm. "+str(detail)
   if isinstance(detail,list):detail=', '.join(map(str,detail))
   out.append({'Verificação':name,'Situação':status,'Índice':idx,'Demanda / valor':'—','Resistência / limite':'—','Referência':source,'Observação':str(detail)})
  b=result['NBR_branches'];add('Flexão local',b['local'],'NBR 14762 §9.8.2.1');add('Distorcional',b['distortional'],'§9.3 / §9.8.2.3 / Tabela 14')
@@ -121,7 +153,6 @@ def rows(result):
  add('Cortante',shear,'§9.8.3',V/shear['VRd_N'] if shear.get('VRd_N') else None)
  mv=b['MV'];add('Flexão e cortante concomitantes',mv,'§9.8.4',mv.get('result',{}).get('index_squared'))
  add('Carga concentrada',b['point'],'Anexo D')
- for key,label in [('left','esquerdo'),('right','direito')]:add('Apoio '+label,b['supports'][key],'§9.5.1; ligação não dimensionada')
  add('Flecha — flexão',result['ELS'],'§9.8.5; critério informado')
  lag=b['shear_lag_domain']
  out.append({'Verificação':'Shear lag — triagem de comprimento','Situação':'Não acionado pelo comprimento' if lag['status']=='not_triggered_by_length' else 'Enquadramento pendente','Índice':None,'Demanda / valor':f"L = {lag['L_mm']:g} mm",'Resistência / limite':f"30 bf0 (limite superior) = {30*lag['bf0_upper_bound_mm']:g} mm",'Referência':'§9.4','Observação':'Triagem suficiente, não proibição normativa. Se pendente, informar a largura livre real e enquadrar o item; os demais resultados não incluem redução adicional.' if lag['status']!='not_triggered_by_length' else 'A triagem usa um limite superior da largura livre.'})
@@ -156,7 +187,7 @@ TRANSLATIONS={
 'select actual web connection, transverse stiffener or flange-contact geometry; no new normative check invented':'Informe o detalhe real do apoio: alma ligada, enrijecedor ou contato pela mesa. Esta versão oferece a primeira alternativa.',
 'point patch geometry and origin missing':'Faltam comprimento e origem do contato da carga concentrada.',
 'outside isolated internal positive patch subset':'Contato fora do subconjunto interno de compressão isolada desta versão.',
-'current patch subset needs declared end-web connections; flange contacts need separate geometry':'Este subconjunto usa apoios por alma ligada. Contatos de apoio pela mesa precisam de outra geometria.',
+'current patch subset needs declared end-web connections; flange contacts need separate geometry':'Introdução localizada não concluída: o detalhe necessário ao adaptador do Anexo D não foi informado. Ligações e apoios estão fora do escopo do app.',
 'ULS action provenance missing':'Falta a origem das ações ELU.',
 'positive effective lengths required':'Ly e Lz efetivos devem ser positivos e finitos.',
 'subroutine requires declared NBR strong-axis expression domain; not generic any-profile stability':'Informe o domínio da expressão de Me. A rotina não representa qualquer situação de estabilidade.',
@@ -164,8 +195,9 @@ TRANSLATIONS={
 'Protocolo de máximo único limitado a ações de mesmo sentido':'A flecha desta versão cobre q e P de mesmo sentido. Este caso continua disponível nas demais verificações.',
 'invalid segment/action geometry':'Geometria do trecho ou posição da ação inválida.',
 'Ml with positive value and origin':'Ml positivo e origem', 'Ml with origin':'Ml e origem', 'SLS actions with origin':'ações ELS e origem',
-'applicable ELS limit with source':'limite ELS aplicável com origem', 'Ly_effective_mm':'Ly efetivo', 'Lz_effective_mm':'Lz efetivo', 'restraint_provenance':'origem do vínculo',
+'applicable ELS limit with source':'limite ELS aplicável com origem', 'Ly_top_effective_mm':'Comprimento efetivo da mesa superior','Ly_bottom_effective_mm':'Comprimento efetivo da mesa inferior','Ly_effective_mm':'Comprimento lateral efetivo da mesa comprimida', 'Lz_effective_mm':'Lz efetivo', 'restraint_provenance':'origem do vínculo',
 }
 def translate(value):
  if isinstance(value,list):return ', '.join(TRANSLATIONS.get(str(v),str(v)) for v in value)
  return TRANSLATIONS.get(str(value),str(value))
+

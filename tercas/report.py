@@ -22,7 +22,7 @@ def word(result):
  if result['synthetic']:doc.add_paragraph('EXEMPLO DIDÁTICO COM DADOS SINTÉTICOS. NÃO UTILIZAR COMO PROJETO.')
  doc.add_paragraph('Projeto: '+result['project']);doc.add_paragraph('Versão: '+result['version']);doc.add_paragraph('Gerado em UTC: '+datetime.now(timezone.utc).isoformat())
  doc.add_heading('Premissas e limites',1)
- for text in ['Um vão isostático, flexão no eixo de simetria forte. Sem dimensionamento de torção primária, flexão biaxial, axial, continuidade ou balanços nesta emissão.', 'Ações ELU e ELS já combinadas, informadas separadamente. Não há geração automática de todas as combinações.', 'Ly e Lz são comprimentos efetivos informados; coordenada de tirante não comprova vínculo torsional.', 'A flecha é componente Euler–Bernoulli com Ief por seção. Limite de flecha é informado com origem; não equivale a aprovação do sistema.', 'Propriedades e críticos fornecidos não são certificados pelo aplicativo. A convenção geométrica das propriedades do catálogo precisa ser conferida para o caso.', 'Apoio com alma ligada: exceção de enrijecedor do §9.5.1 não dimensiona a ligação.']:
+ for text in ['Um vão isostático, flexão no eixo de simetria forte. Sem dimensionamento de torção primária, flexão biaxial, axial, continuidade ou balanços nesta emissão.', 'Ações ELU e ELS já combinadas, informadas separadamente. Não há geração automática de todas as combinações.', 'Ly e Lz são comprimentos efetivos informados; coordenada de tirante não comprova vínculo torsional.', 'A flecha é componente Euler–Bernoulli com Ief por seção. Limite de flecha é informado com origem; não equivale a aprovação do sistema.', 'Propriedades e críticos fornecidos não são certificados pelo aplicativo. A convenção geométrica das propriedades do catálogo precisa ser conferida para o caso.', 'Ligações e apoios não são dimensionados ou aprovados pelo aplicativo. O usuário deve definir detalhes de introdução de força compatíveis com o modelo.']:
   doc.add_paragraph(text,style='List Bullet')
  for warning in result.get('coverage_warnings',[]):doc.add_paragraph(warning)
  if result.get('numerical_warnings'):doc.add_paragraph('Aviso numérico na integração da flecha: critério ELS não concluído.')
@@ -43,6 +43,7 @@ def word(result):
   doc.add_paragraph('Flexão local MSE: MRd = Wef × fy / 1,1. Wef obtido do crítico local Ml informado para a mesma seção.')
  for i,flt in enumerate(result['FLT_segments'],1):
   if flt.get('FLT'):
+   if flt.get('compressed_flange'):doc.add_paragraph(f"Mesa comprimida governante: {flt['compressed_flange']}; comprimento lateral efetivo usado: {flt.get('Ly_used_mm')} mm; Lz torsional: {flt.get('Lz_used_mm')} mm.")
    f=flt['FLT'];doc.add_paragraph(f"FLT trecho {i}: Me = {flt['Me_Nmm']/1e6:.6f} kN·m; Cb = {flt['Cb_used']:.6f}; λ0 = {f['lambda0']:.6f}; χFLT = {f['chi_flt']:.6f}; λp na tensão reduzida = {f['lambda_p_reduced_stress']:.6f}; Wef = {f['Wceff_mm3']:.6f} mm³; γ = {f['gamma']}.")
  shear=result['section_checks'].get('shear',{})
  if shear.get('VRd_N'):doc.add_paragraph(f"Cortante: h plano = {shear['flat_web_mm']:.6f} mm; h/t = {shear['h_over_t']:.6f}; kv = {shear['kv']}; γ = {shear['gamma']}.")
@@ -56,10 +57,62 @@ def word(result):
   cells=prop.add_row().cells
   for c,t in zip(cells,[k,str(v['value']) if v['value'] is not None else 'Não informado',str(sources.index(v['origin'])+1)]):c.text=t
  d=result['input_data']
- labels={'L_mm':'Vão [mm]','q_uls':'q ELU [N/mm]','P_uls':'P ELU [N]','x_uls':'Posição P ELU [mm]','q_sls':'q ELS [N/mm]','P_sls':'P ELS [N]','x_sls':'Posição P ELS [mm]','actions_origin':'Origem das combinações','Ml_Nmm':'Ml [N·mm]','Mdist_Nmm':'Mdist [N·mm]','critical_origin':'Origem dos críticos','support_origin':'Origem dos apoios','patch_mm':'Contato longitudinal [mm]','patch_origin':'Origem do contato','ELS_limit_mm':'Limite de flecha [mm]','ELS_origin':'Origem do limite de flecha'}
+ labels={'L_mm':'Vão [mm]','q_uls':'q ELU [N/mm]','P_uls':'P ELU [N]','x_uls':'Posição P ELU [mm]','q_sls':'q ELS [N/mm]','P_sls':'P ELS [N]','x_sls':'Posição P ELS [mm]','actions_origin':'Origem das combinações','Ml_Nmm':'Ml [N·mm]','Mdist_Nmm':'Mdist [N·mm]','critical_origin':'Origem dos críticos','patch_mm':'Contato longitudinal [mm]','patch_origin':'Origem do contato','ELS_limit_mm':'Limite de flecha [mm]','ELS_origin':'Origem do limite de flecha'}
  for k,label in labels.items():
   value=d.get(k)
   doc.add_paragraph(f'{label}: '+('Não informado' if value is None else (f'{value:.6g}' if isinstance(value,(int,float)) else str(value))))
- for i,seg in enumerate(d['segments'],1):doc.add_paragraph(f"Trecho {i}: {seg.get('start_mm')} a {seg.get('end_mm')} mm; Ly efetivo {seg.get('Ly_effective_mm')} mm; Lz efetivo {seg.get('Lz_effective_mm')} mm; Cb {seg.get('Cb_mode')}. Origem: {seg.get('restraint_provenance')}")
+ for i,seg in enumerate(d['segments'],1):
+  cb={'one':'Adotar Cb = 1,0','quarter_formula':'Calcular pelos momentos do trecho'}.get(seg.get('Cb_mode'),seg.get('Cb_mode'))
+  if 'Ly_top_effective_mm' in seg:
+   lateral=f"mesa superior {seg.get('Ly_top_effective_mm')} mm; mesa inferior {seg.get('Ly_bottom_effective_mm')} mm"
+  else:lateral=f"mesa comprimida (entrada anterior) {seg.get('Ly_effective_mm')} mm"
+  doc.add_paragraph(f"Trecho {i}: {seg.get('start_mm')} a {seg.get('end_mm')} mm; comprimentos efetivos: {lateral}; Lz torsional {seg.get('Lz_effective_mm')} mm; {cb}. Origem: {seg.get('restraint_provenance')}")
+ doc.add_paragraph('Identificação das entradas: '+result['input_fingerprint'])
+ out=BytesIO();doc.save(out);return out.getvalue()
+
+
+def batch_word(result):
+ """One report for selected families, retaining all per-case checks."""
+ doc=Document();doc.styles['Normal'].font.name='Arial';doc.styles['Normal'].font.size=Pt(10)
+ for name in ['Normal','Title','Heading 1','Heading 2']:
+  doc.styles[name].font.color.rgb=RGBColor(0,0,0)
+ for style in doc.styles:
+  for border in style.element.xpath('.//w:pBdr'):border.getparent().remove(border)
+ doc.styles['Normal'].paragraph_format.space_after=Pt(5)
+ doc.add_heading('LRO Engenharia Terças por combinações',0)
+ doc.add_paragraph('NBR 14762:2010 · estudo parcial · sem travamento da telha. NÃO É APROVAÇÃO GLOBAL. Ligações e apoios fora do escopo.')
+ doc.add_paragraph('Projeto: '+result['project']+' | versão: '+result['version'])
+ if result['synthetic']:doc.add_paragraph('EXEMPLO DIDÁTICO — DADOS SINTÉTICOS.')
+ doc.add_heading('Entradas e premissas',1)
+ d=result['input_data'];from .catalogs import catalog_labels
+ doc.add_paragraph('Perfil: '+catalog_labels()[d['catalog_index']]+'; aço: '+d['steel_name'])
+ doc.add_paragraph('Origem das propriedades: '+d['property_origin'])
+ doc.add_paragraph('Críticos: '+d['critical_origin'])
+ doc.add_paragraph('Vão [mm]: '+str(d['L_mm']))
+ labels={'mass_kg_m':'Massa linear [kg/m]','spacing_m':'Distância entre terças [m]','permanent_kgf_m2':'Permanente [kgf/m²]','live_kgf_m2':'Sobrecarga [kgf/m²]','wind_up_kgf_m2':'Vento para cima [kgf/m²]','wind_down_kgf_m2':'Vento para baixo [kgf/m²]'}
+ for k,v in result['load_bundle']['inputs'].items():doc.add_paragraph(f'{labels.get(k,k)}: {v}')
+ doc.add_paragraph('Área → linha pela distância entre terças; PP uma única vez pela massa linear. Vento para cima negativo. As 48 combinações de origem são as fornecidas por Lucas em 31/10/2026, filtradas pelos tipos selecionados.')
+ doc.add_paragraph('Tipos selecionados: '+', '.join(d['selected_types']))
+ doc.add_paragraph(f"Limites de flecha: L/{d['ELS_down_denominator']:g} descendente; L/{d['ELS_up_denominator']:g} ascendente. Critérios informados, aplicados a cada combinação ELS.")
+ doc.add_paragraph('Cada combinação é recalculada. Não se somam índices resistentes ou flechas calculadas com diferentes inércias efetivas. Sem dimensionamento de torção primária, flexão biaxial, continuidade ou balanços.')
+ for s in d['segments']:
+  cb={'one':'Adotar Cb = 1,0','quarter_formula':'Calcular pelos momentos do trecho'}.get(s.get('Cb_mode'),s.get('Cb_mode'))
+  doc.add_paragraph(f"Trecho {s['start_mm']:g} a {s['end_mm']:g} mm. Ly superior: {s.get('Ly_top_effective_mm',s.get('Ly_effective_mm'))} mm; Ly inferior: {s.get('Ly_bottom_effective_mm',s.get('Ly_effective_mm'))} mm; Lz: {s.get('Lz_effective_mm')} mm. {cb}. {s.get('restraint_provenance','')}")
+ doc.add_heading('Casos característicos',1)
+ for k,v in result['load_bundle']['case_q_N_mm'].items():doc.add_paragraph(f'{k}: {v:.6f} kN/m')
+ doc.add_heading('Resumo dos casos governantes',1)
+ t=doc.add_table(rows=1,cols=4);t.style='Table Grid'
+ t.rows[0]._tr.get_or_add_trPr().append(OxmlElement('w:tblHeader'))
+ for c,v in zip(t.rows[0].cells,['Critério','Combinação','Índice','Situação']):c.text=v
+ for r in result['summary']:
+  for c,v in zip(t.add_row().cells,[r['Verificação'],r['Combinação'],'—' if r['Índice'] is None else f"{r['Índice']:.6f}",r['Situação']]):c.text=str(v)
+ doc.add_heading('Todas as combinações selecionadas',1)
+ for item in result['cases']:
+  c=item['combination'];doc.add_heading(f"{c['id']} — {c['type']}",2)
+  doc.add_paragraph(f"{c['expression']} → q={c['q_kN_m']:.6f} kN/m. P=0. Forças/efeitos superpostos antes das verificações.")
+  for row in item['rows']:
+   index='—' if row['Índice'] is None else f"{row['Índice']:.6f}"
+   doc.add_paragraph(f"{row['Verificação']}: {row['Situação']}; índice {index}; {row['Demanda / valor']}; limite/resistência {row['Resistência / limite']}. {row['Referência']}. {row['Observação']}")
+  for warning in item['warnings']:doc.add_paragraph('Aviso: '+warning)
  doc.add_paragraph('Identificação das entradas: '+result['input_fingerprint'])
  out=BytesIO();doc.save(out);return out.getvalue()
