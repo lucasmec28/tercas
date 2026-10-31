@@ -1,3 +1,4 @@
+from tercas.presentation import fmt, display, display_records, measurement_text, DISPLAY_NOTE
 """Streamlit entry point. User inputs are untrusted; no global approval state."""
 import copy,json,math
 import pandas as pd
@@ -9,6 +10,13 @@ from tercas.catalogs import catalog_labels,STEEL_NAMES,material,critical_default
 from tercas.batch import calculate_batch,area_bundle,case_inputs
 from tercas.load_combinations import COMBINATION_TYPES
 from tercas.ux_inputs import CB_LABELS,cb_code,flange_segments,whole_span
+
+def display_frame(records):
+ # Styler changes visible text only: numeric sorting and column types survive.
+ frame=pd.DataFrame(records)
+ def formatter(key):
+  return lambda value: '—' if value is None or (isinstance(value,float) and math.isnan(value)) else display_records([{key:value}])[0][key]
+ return frame.style.format({key:formatter(key) for key in frame.columns})
 
 def show_inclination(evidence):
  """Display concurrent effects; never interpret missing resistance as approval."""
@@ -24,7 +32,7 @@ def show_inclination(evidence):
   caps=[]
   for sign,c in evidence['weak_axis_capacities'].items():
    caps.append({'Sentido':{'positive':'My positivo','negative':'My negativo'}[sign],'Estado':'Calculado com dados informados' if c.get('MRd_Nmm') else 'Dados pendentes','Me Anexo E [kN·m]':c.get('annex_e',{}).get('Me_Nmm',0)/1e6 if c.get('annex_e') else None,'MRd fraco [kN·m]':c.get('MRd_Nmm',0)/1e6 if c.get('MRd_Nmm') else None,'Origem / faltas':c.get('provenance',', '.join(c.get('missing',[])))})
-  st.dataframe(pd.DataFrame(caps),hide_index=True,width='stretch')
+  st.dataframe(display_frame(caps),hide_index=True,width='stretch')
  records=[]
  for state in evidence.get('states',[]):
   row={'x [mm]':state.get('x_mm'),'Lado da seção':{'left':'Esquerda','right':'Direita'}.get(state.get('side'),'—')}
@@ -33,12 +41,13 @@ def show_inclination(evidence):
    for k,title,scale in [('M_Nmm','M [kN·m]',1e6),('V_N','V [kN]',1000),('Rleft_N','Reação esquerda [kN]',1000),('Rright_N','Reação direita [kN]',1000)]:
     if k in v:row[label+' — '+title]=v[k]/scale
   records.append(row)
- if records:st.dataframe(pd.DataFrame(records),hide_index=True,width='stretch')
+ if records:st.dataframe(display_frame(records),hide_index=True,width='stretch')
  st.caption('Valores nas seções listadas; não são envelope biaxial nem resistência. P e q são considerados juntos na mesma combinação.')
 
 st.set_page_config(page_title='LRO | Terças',page_icon='🏗️',layout='wide')
 st.markdown('<style>.block-container{max-width:1200px} h1,h2,h3{color:#25334a} div.stButton>button[kind="primary"]{background:#d96516;border:0}</style>',unsafe_allow_html=True)
 st.title('LRO | Terças')
+with st.expander('Precisão dos números exibidos',expanded=False):st.caption(DISPLAY_NOTE)
 st.caption(f'NBR 14762:2010 · {VERSION} · primeira emissão restrita')
 st.info('Um vão, perfis U/Ue. Solicitações nos dois eixos; resistências desta emissão restritas às rotas disponíveis. A telha não é considerada como travamento. Resultados por verificação, sem aprovação global automática.')
 
@@ -75,9 +84,11 @@ d=copy.deepcopy(b)
 if b.get('synthetic'):st.warning('EXEMPLO DIDÁTICO: propriedades complementares, críticos e contatos sintéticos. Substitua pelos dados do seu caso antes de usar resultados.')
 
 def num(label,key,value,unit='',step=None):
- kw={'label':label+(f' [{unit}]' if unit else ''),'value':None if value is None else float(value),'key':f'{key}_{r}','format':'%.6f'}
+ kw={'label':label+(f' [{unit}]' if unit else ''),'value':None if value is None else float(value),'key':f'{key}_{r}','format':'%.2f'}
  if step is not None:kw['step']=step
- return st.number_input(**kw)
+ out=st.number_input(**kw)
+ if out is not None and out != 0 and abs(out)<0.005:st.caption('Valor não nulo: '+fmt(out)+' '+unit+'; precisão preservada.')
+ return out
 
 def txt(label,key,value):return st.text_input(label,value=str(value),key=f'{key}_{r}')
 
@@ -97,7 +108,7 @@ if d['steel_name']=='Personalizado':
 else:mat=material(d['steel_name'])
 if mat:
  d['properties'].update(mat['properties']);d['property_origin']=f"{mat['name']}: {mat['origin']}; {mat['physical_origin']}"
- st.caption(f"fy = {mat['properties']['fy_MPa']:g} MPa · fu = {mat['properties']['fu_MPa']:g} MPa. Conferir especificação do produto.")
+ st.caption(f"fy = {fmt(mat['properties']['fy_MPa'])} MPa · fu = {fmt(mat['properties']['fu_MPa'])} MPa. Conferir especificação do produto.")
 
 with st.expander('Perfil, aço e origem dos dados',expanded=False):
  st.caption('209 perfis da planilha V03 fornecida por Lucas; fontes e linha de origem preservadas. Críticos tabulados de Pierin/DimPerfil quando disponíveis. A transcrição não é certificação do produto.')
@@ -107,7 +118,7 @@ with st.expander('Perfil, aço e origem dos dados',expanded=False):
   with cols[i%3]:d['properties'][key]=num(label,key,b['properties'][key])
  extra_origin=txt('Origem dos dados complementares / alterações','property_origin',b['property_origin'])
  d['property_origin']=(f"Aço {mat['name']}: {mat['origin']}; {mat['physical_origin']}; " if mat else '')+extra_origin
- st.caption(f"E = {d['properties']['E_MPa']} MPa · G = {d['properties']['G_MPa']} MPa — NBR 14762.")
+ st.caption(f"E = {fmt(d['properties']['E_MPa'])} MPa · G = {fmt(d['properties']['G_MPa'])} MPa — NBR 14762.")
  st.caption('Fonte: '+catalog_entry(index)['source_url']+'; linha '+str(catalog_entry(index)['source_workbook_row'])+' da planilha original.')
  st.caption('Conferir a convenção de Wx e das propriedades usadas em conjunto. Editar valores não comprova a correspondência física.')
 
@@ -129,7 +140,7 @@ with c2:
 ic['unit']='percent' if unit_label=='Porcentagem' else 'degrees'
 if ic.get('value') is not None:
  theta=math.atan(ic['value']/100) if ic['unit']=='percent' else math.radians(ic['value'])
- if abs(theta)<math.pi/2:st.caption(f'Ângulo equivalente: {math.degrees(theta):.6f}° = {100*math.tan(theta):.6f}%. Exibição arredondada; cálculo com precisão completa. Trocar a unidade mantém a inclinação física.')
+ if abs(theta)<math.pi/2:st.caption(f'Ângulo equivalente: {fmt(math.degrees(theta))}° = {fmt(100*math.tan(theta))}%. Exibição arredondada; cálculo com precisão completa. Trocar a unidade mantém a inclinação física.')
 st.caption('Alma perpendicular ao plano da cobertura. No modo por área, vento normal à cobertura; gravidade e peso próprio decompostos em normal e paralelo. Sem travamento pela telha.')
 with st.expander('Bases de área e distância entre terças',expanded=False):
  basis_labels={'roof':'No plano da cobertura','horizontal':'Na projeção horizontal'}
@@ -170,12 +181,12 @@ else:
  d['area_inputs']=area
  d['selected_types']=st.multiselect('Tipos de combinações consideradas',COMBINATION_TYPES,default=b['selected_types'],key=f'combo_types_{r}')
  st.caption('P = 1 kN de manutenção é incluída automaticamente nas famílias ELU normal e ELS rara selecionadas, apenas com permanentes; não se soma a SC ou vento. FLT móvel permanece parcial; na flecha normal, um limite superior conservador pode concluir o critério do modelo quando aplicável, sem calcular a flecha móvel exata.')
- st.caption(f"Massa linear selecionada: {d['properties']['mass_kg_m']} kg/m. Matriz fixa fornecida por Lucas: 32 ELU normal, 8 ELS rara, 6 frequente e 2 quase permanente.")
+ st.caption(f"Massa linear selecionada: {fmt(d['properties']['mass_kg_m'])} kg/m. Matriz fixa fornecida por Lucas: 32 ELU normal, 8 ELS rara, 6 frequente e 2 quase permanente.")
  with st.expander('Casos e combinações que serão calculados'):
   try:
    preview=area_bundle(d)
-   st.dataframe(pd.DataFrame([{'Caso':k,'q normal [kN/m]':v,'q paralelo [kN/m]':preview.get('case_vectors_N_mm',{}).get(k,{}).get('parallel',0)} for k,v in preview['case_q_N_mm'].items()]),hide_index=True)
-   st.dataframe(pd.DataFrame([{'ID':c['id'],'Tipo':c['type'],'Expressão':c['expression'],'q normal [kN/m]':c['q_kN_m'],'q paralelo [kN/m]':c.get('q_vector',{}).get('parallel',0),'P normal [kN]':c.get('P_N',0)/1000,'P paralelo [kN]':c.get('P_vector',{}).get('parallel',0)/1000} for c in preview['combinations']]),hide_index=True)
+   st.dataframe(display_frame([{'Caso':k,'q normal [kN/m]':v,'q paralelo [kN/m]':preview.get('case_vectors_N_mm',{}).get(k,{}).get('parallel',0)} for k,v in preview['case_q_N_mm'].items()]),hide_index=True)
+   st.dataframe(display_frame([{'ID':c['id'],'Tipo':c['type'],'Expressão':c['expression'],'q normal [kN/m]':c['q_kN_m'],'q paralelo [kN/m]':c.get('q_vector',{}).get('parallel',0),'P normal [kN]':c.get('P_N',0)/1000,'P paralelo [kN]':c.get('P_vector',{}).get('parallel',0)/1000} for c in preview['combinations']]),hide_index=True)
   except (ValueError,TypeError,KeyError) as exc:st.warning(str(exc))
 
 with st.expander('Estabilidade, críticos e trechos',expanded=True):
@@ -219,11 +230,12 @@ with st.expander('Estabilidade, críticos e trechos',expanded=True):
    st.warning('Cb = 1,0 adotado neste modo: os comprimentos efetivos não informam a posição física dos trechos. Para calcular Cb pelos momentos, defina os limites físicos em trechos específicos (avançado).')
    effective_cb='one'
   d['segments']=whole_span(d['L_mm'],upper,lower,torsion,effective_cb,origin)
-  st.caption(f'Trecho de cálculo automático: 0 até {d["L_mm"] if d["L_mm"] is not None else "—"} mm, conforme o vão informado acima.')
+  st.caption(f'Trecho de cálculo automático: 0 até {fmt(d["L_mm"])} mm, conforme o vão informado acima.')
  else:
   for seg in source_segments:seg['Cb_mode']=CB_LABELS[seg['Cb_mode']]
   df=pd.DataFrame(source_segments,columns=['start_mm','end_mm','Ly_top_effective_mm','Ly_bottom_effective_mm','Lz_effective_mm','Cb_mode','restraint_provenance'])
-  edited=st.data_editor(df,num_rows='dynamic',hide_index=True,key=f'segments_{r}',column_config={'start_mm':'Início [mm]','end_mm':'Fim [mm]','Ly_top_effective_mm':'Mesa superior — comprimento efetivo [mm]','Ly_bottom_effective_mm':'Mesa inferior — comprimento efetivo [mm]','Lz_effective_mm':'Lz torsional [mm]','restraint_provenance':'Origem / hipótese do vínculo','Cb_mode':st.column_config.SelectboxColumn('Cb',options=list(CB_LABELS.values()))},width='stretch')
+  edited=st.data_editor(df,num_rows='dynamic',hide_index=True,key=f'segments_{r}',column_config={'start_mm':st.column_config.NumberColumn('Início [mm]',format='%.2f'),'end_mm':st.column_config.NumberColumn('Fim [mm]',format='%.2f'),'Ly_top_effective_mm':st.column_config.NumberColumn('Mesa superior — comprimento efetivo [mm]',format='%.2f'),'Ly_bottom_effective_mm':st.column_config.NumberColumn('Mesa inferior — comprimento efetivo [mm]',format='%.2f'),'Lz_effective_mm':st.column_config.NumberColumn('Lz torsional [mm]',format='%.2f'),'restraint_provenance':'Origem / hipótese do vínculo','Cb_mode':st.column_config.SelectboxColumn('Cb',options=list(CB_LABELS.values()))},width='stretch')
+  if any(0<abs(float(v))<0.005 for v in edited.select_dtypes(include='number').to_numpy().ravel()):st.caption('Há comprimento não nulo abaixo de 0,01 mm na tabela. O valor completo foi preservado; confira a entrada.')
   d['segments']=edited.astype(object).where(pd.notna(edited),None).to_dict('records')
   for seg in d['segments']:seg['Cb_mode']=cb_code(seg.get('Cb_mode') or 'one')
   st.caption('Início e fim são os limites físicos do diagrama usado no Cb; Ly e Lz são comprimentos efetivos e podem diferir desse intervalo por condição de vínculo. Trechos representam o diagrama usado no Cb; não criam apoios verticais nem comprovam travamentos. Uma inversão do momento não é um travamento.')
@@ -235,7 +247,7 @@ with st.expander('Eixo fraco — dados existentes e críticos por sentido',expan
  st.caption('Wy, xg, x0 e r0 já estão na planilha. Área, Ix, Iy, J, Cw, E e G vêm do perfil/aço selecionados; o app calcula Nex e Nez, sem pedir estes números de novo. Lz usa o maior comprimento torsional dos trechos. Sem travamento da telha.')
  st.caption('Convenção: My positivo comprime a alma; My negativo comprime as bordas/lábios. Os eixos locais e o sentido da seção física devem corresponder a esta convenção. Cm = 1,0 em todas as combinações; não há redução automática.')
  raw=catalog_entry(index)['raw_source_values']
- st.dataframe(pd.DataFrame([{'Dado':k,'Valor tabelado':raw.get(k)} for k in ['Wy cm³','xg cm','x0 cm','r0 cm','Ml,y kNm']]),hide_index=True)
+ st.dataframe(display_frame([{'Dado':k,'Valor tabelado':raw.get(k)} for k in ['Wy cm³','xg cm','x0 cm','r0 cm','Ml,y kNm']]),hide_index=True)
  wc=copy.deepcopy(b.get('weak_catalog',{}));gm=wc.get('mean_line',{})
  old_weak_span=st.session_state.get(f'weak_last_span_{r}',b['L_mm'])
  current_lx=st.session_state.get(f'weak_lx_{r}',wc.get('Lx_mm',d['L_mm']))
@@ -306,18 +318,18 @@ if 'result' in st.session_state:
  batch=result.get('schema')=='tercas_batch_results_v1'
  if batch:
   for warning in dict.fromkeys(w for case in result['cases'] for w in case['warnings']):st.warning(warning)
-  st.dataframe(pd.DataFrame(result['summary']),hide_index=True,width='stretch')
+  st.dataframe(display_frame(result['summary']),hide_index=True,width='stretch')
   st.caption('Máximos por verificação entre os casos calculados. Pendências em outras combinações permanecem visíveis; não há combinação global aprovada.')
   with st.expander('Resultados de cada combinação'):
    names=[f"{c['combination']['id']} — {c['combination']['type']}" for c in result['cases']]
    selected=st.selectbox('Combinação para consultar',range(len(names)),format_func=lambda i:names[i])
-   item=result['cases'][selected];st.caption(item['combination']['expression']+f"; q normal={item['combination']['q_kN_m']:.6f} kN/m; P normal={item['combination'].get('P_N',0)/1000:.3f} kN")
-   st.dataframe(pd.DataFrame(item['rows']),hide_index=True,width='stretch')
+   item=result['cases'][selected];st.caption(measurement_text(item['combination']['expression'])+f"; q normal={fmt(item['combination']['q_kN_m'])} kN/m; P normal={fmt(item['combination'].get('P_N',0)/1000)} kN")
+   st.dataframe(display_frame(item['rows']),hide_index=True,width='stretch')
    if item.get('evidence',{}).get('inclination'):show_inclination(item['evidence']['inclination'])
  else:
   for warning in result.get('coverage_warnings',[]):st.warning(warning)
   if result.get('numerical_warnings'):st.warning('A integração da flecha emitiu aviso numérico. A verificação ELS ficou pendente; demais resultados foram preservados.')
-  st.dataframe(pd.DataFrame(rows(result)),hide_index=True,width='stretch')
+  st.dataframe(display_frame(rows(result)),hide_index=True,width='stretch')
   if result.get('inclination_evidence'):show_inclination(result['inclination_evidence'])
  c1,c2,c3=st.columns(3)
  with c1:st.download_button('Baixar memória parcial (Word)',batch_word(result) if batch else word(result),file_name='MC_terca_parcial.docx',mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document')

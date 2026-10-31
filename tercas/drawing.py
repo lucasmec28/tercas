@@ -1,3 +1,4 @@
+from .presentation import fmt
 """Pure SVG, no untrusted markup. Scaled schematic, not fabrication drawing."""
 from html import escape
 
@@ -12,8 +13,8 @@ def svg(data):
  return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 280" role="img" aria-label="Seção U ou Ue e viga biapoiada com carga informada">
  <rect width="920" height="280" fill="#fafbfc" rx="14"/>
  <path d="{path}" fill="none" stroke="#e87722" stroke-width="{T}" stroke-linejoin="round"/>
- <g font-family="Arial" font-size="14" fill="#25334a"><text x="25" y="25">Seção transversal</text><text x="20" y="260">h={h:g} · b={b:g} · t={t:g} · D={lip:g} mm</text>
- <text x="340" y="25">Vão e posição da resultante</text><text x="520" y="195">L = {L:g} mm</text><text x="{px-40}" y="65">P = {data['P_uls']/1000:g} kN</text><text x="350" y="240">q = {data['q_uls']:g} kN/m · x = {a:g} mm</text></g>
+ <g font-family="Arial" font-size="14" fill="#25334a"><text x="25" y="25">Seção transversal</text><text x="20" y="260">h={escape(fmt(h))} · b={escape(fmt(b))} · t={escape(fmt(t))} · D={escape(fmt(lip))} mm</text>
+ <text x="340" y="25">Vão e posição da resultante</text><text x="520" y="195">L = {escape(fmt(L))} mm</text><text x="{px-40}" y="65">P = {escape(fmt(data['P_uls']/1000))} kN</text><text x="350" y="240">q = {escape(fmt(data['q_uls']))} kN/m · x = {escape(fmt(a))} mm</text></g>
  <line x1="340" y1="140" x2="840" y2="140" stroke="#34455f" stroke-width="5"/>
  <path d="M340 143 l-10 18 h20 z M840 143 l-10 18 h20 z" fill="none" stroke="#34455f" stroke-width="2"/>
  {arrow}{marks}

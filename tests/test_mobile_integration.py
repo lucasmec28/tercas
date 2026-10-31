@@ -23,7 +23,7 @@ class MobileIntegration(unittest.TestCase):
    else:self.assertIn('limite superior conservador',rows['Flecha — flexão']['Situação']);self.assertLessEqual(rows['Flecha — flexão']['Índice'],1)
   json.dumps(r,allow_nan=False)
   text='\n'.join(x.text for x in Document(BytesIO(batch_word(r))).paragraphs)
-  self.assertIn('P normal=1.500 kN',text);self.assertIn('P normal=1.000 kN',text)
+  self.assertIn('P normal=1,50 kN',text);self.assertIn('P normal=1,00 kN',text)
  def test_known_central_failure_not_hidden(self):
   from tercas.batch import mobile_rows
   d=self.data();d['selected_types']=['ELS rara'];r=calculate_batch(d);case=r['cases'][-1]
