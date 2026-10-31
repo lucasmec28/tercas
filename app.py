@@ -163,7 +163,7 @@ else:
   with cols[i%2]:area[key]=num(label,key,area[key],unit)
  d['area_inputs']=area
  d['selected_types']=st.multiselect('Tipos de combinações consideradas',COMBINATION_TYPES,default=b['selected_types'],key=f'combo_types_{r}')
- st.caption('P = 1 kN de manutenção é incluída automaticamente nas famílias ELU normal e ELS rara selecionadas, apenas com permanentes; não se soma a SC ou vento. FLT e flecha móvel ainda têm cobertura parcial, identificada nos resultados.')
+ st.caption('P = 1 kN de manutenção é incluída automaticamente nas famílias ELU normal e ELS rara selecionadas, apenas com permanentes; não se soma a SC ou vento. FLT móvel permanece parcial; na flecha normal, um limite superior conservador pode concluir o critério do modelo quando aplicável, sem calcular a flecha móvel exata.')
  st.caption(f"Massa linear selecionada: {d['properties']['mass_kg_m']} kg/m. Matriz fixa fornecida por Lucas: 32 ELU normal, 8 ELS rara, 6 frequente e 2 quase permanente.")
  with st.expander('Casos e combinações que serão calculados'):
   try:

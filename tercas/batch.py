@@ -98,6 +98,9 @@ def mobile_rows(rs,result,combo):
    row['Índice']=central_index if known_failure else None
    row['Situação']='Não atende já no candidato central — envelope parcial' if known_failure else 'Pendente — envelope móvel parcial'
    row['Observação']+=' P avaliada no centro somente; valor exibido é candidato, não envelope móvel qualificado desta rota.'
+   if name=='Flecha — flexão':
+    from .mobile_deflection_adapter import apply_bound
+    ev['deflection_upper_bound']=apply_bound(row,result,combo)
    if name=='Carga concentrada' and result['input_data'].get('patch_mm') is None:row['Observação']+=' Sem contato físico informado, resistência local permanece pendente; cálculos globais continuam.'
   if idx is not None:
    row['Índice']=idx;row['Situação']='Não atende' if idx>1 else 'Atende ao critério calculado'

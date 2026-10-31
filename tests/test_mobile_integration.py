@@ -20,7 +20,7 @@ class MobileIntegration(unittest.TestCase):
     self.assertIsNotNone(rows['Cortante']['Índice']);self.assertIsNotNone(rows['Flexão e cortante concomitantes']['Índice'])
     flt=rows['FLT — trecho 1'];self.assertTrue(flt['Índice'] is None or (flt['Índice']>1 and 'Não atende' in flt['Situação']));self.assertIsNone(rows['Carga concentrada']['Índice'])
     self.assertAlmostEqual(c['evidence']['mobile_point']['global_envelope']['V_abs_N'],c['combination']['q_N_mm']*1500+1500)
-   else:self.assertIsNone(rows['Flecha — flexão']['Índice'])
+   else:self.assertIn('limite superior conservador',rows['Flecha — flexão']['Situação']);self.assertLessEqual(rows['Flecha — flexão']['Índice'],1)
   json.dumps(r,allow_nan=False)
   text='\n'.join(x.text for x in Document(BytesIO(batch_word(r))).paragraphs)
   self.assertIn('P normal=1.500 kN',text);self.assertIn('P normal=1.000 kN',text)

@@ -8,7 +8,7 @@ from .catalogs import catalog_labels, critical_defaults, apply_material, entries
 from .core.local_table12 import local_critical
 from .load_combinations import COMBINATION_TYPES
 
-VERSION='0.3.0-estudo'
+VERSION='0.3.1-estudo'
 
 def defaults(index=0):
  s=select(index)
