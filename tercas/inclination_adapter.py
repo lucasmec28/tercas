@@ -59,7 +59,7 @@ def direct_evidence(data):
 
 def pending_rows(ev,state):
  if not ev['parallel_demand']:return []
- names=[('Flexão biaxial','NBR 14762 §9.9'),('Cortante paralelo às mesas','Rota não implementada')] if state=='ELU' else []
+ names=[('Flexão biaxial','NBR 14762 §9.9')] if state=='ELU' else []
  rows_out=[{'Verificação':name,'Situação':'Pendente — componente paralela não verificada','Índice':None,'Demanda / valor':f"q paralelo={ev['q_vector']['parallel']:.6f} kN/m; P paralelo={ev['P_vector']['parallel']/1000:.6f} kN",'Resistência / limite':'Não definida para eixo/sentido','Referência':ref,'Observação':ev['resistance_status']+' Não reutiliza capacidades do eixo forte nem VRd da alma.'} for name,ref in names]
  if state=='ELU' and ev.get('biaxial'):
   from .weak_axis import rows

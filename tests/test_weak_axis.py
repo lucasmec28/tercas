@@ -22,7 +22,7 @@ class WeakTests(unittest.TestCase):
   from io import BytesIO
   d=configured();d['load_mode']='area';d['selected_types']=['ELU normal'];d['inclination']={'value':10,'unit':'degrees'}
   text=' '.join(p.text for p in Document(BytesIO(batch_word(calculate_batch(d)))).paragraphs)
-  self.assertIn('o candidato central permanece parcial',text);self.assertNotIn('Sem dimensionamento de torção primária, flexão biaxial',text)
+  self.assertIn('os resultados cobrem as duas posições prescritas',text);self.assertNotIn('Sem dimensionamento de torção primária, flexão biaxial',text)
  def test_cm_reduction_rejected_direct(self):
   d=configured();d['weak_axis']['positive']['Cm']=.5
   with self.assertRaisesRegex(ValueError,'Cm = 1'):calculate(d)
@@ -90,7 +90,7 @@ class WeakTests(unittest.TestCase):
   r=calculate_batch(d)
   for c in r['cases']:
    if c['combination'].get('P_N'):
-    row=next(x for x in c['rows'] if x['Verificação']=='Flexão biaxial');self.assertNotIn('Atende',row['Situação'])
+    row=next(x for x in c['rows'] if x['Verificação']=='Flexão biaxial');self.assertIn(c['combination']['point_position'],('center','support_limit'));self.assertIn('não certificam',c['scope_notes'][0]);self.assertFalse(r['whole_member_approved'])
  def test_zero_axis_missing_capacity_no_block(self):
   z=interaction_envelope(3000,0,0,.1,0,1500,None,{'positive':{'MRd_Nmm':1e6}})
   self.assertEqual(z['status'],'computed_fixed_position')

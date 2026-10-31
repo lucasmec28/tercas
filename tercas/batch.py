@@ -3,7 +3,7 @@ import copy,math
 from .application import calculate,rows,fingerprint,VERSION,build_spec,finite
 from .load_combinations import combine_area_actions,COMBINATION_TYPES
 from .point_combinations import point_combinations
-from .envelope_mv import envelope
+
 
 def area_bundle(data):
  if data.get('load_mode')!='area':raise ValueError('Modo de área não selecionado.')
@@ -19,9 +19,21 @@ def area_bundle(data):
  # Contact is a local-resistance input, not a prerequisite or restriction for
  # the normative mathematical point-load global envelope.
  bundle['combinations']+=point_combinations(L_mm=data['L_mm'],case_q_N_mm=bundle['case_q_N_mm'],selected_types=types)
- bundle['notes']+=['P = 1 kN de manutenção, isolada de SC e vento: quatro ELU e uma ELS rara conforme seleção; NBR 6120 §6.4 / NBR 14762.', 'Sem comprimento de contato obrigatório: apenas a resistência local pode ficar pendente.']
+ bundle['notes']+=['P = 1 kN de manutenção, isolada de SC e vento: quatro ELU e uma ELS rara conforme seleção; NBR 6120 §6.4 / NBR 14762.', 'P avaliada em duas posições prescritas: centro e limite junto ao apoio; sem varredura de posições intermediárias.']
  from .inclination_adapter import adapt_bundle
- return adapt_bundle(data,bundle)
+ bundle=adapt_bundle(data,bundle)
+ expanded=[]
+ for c in bundle['combinations']:
+  if not c.get('P_N'):expanded.append(c);continue
+  for position,suffix in [('center','CENTRO'),('support_limit','APOIO')]:
+   cc=copy.deepcopy(c);cc.update(id=c['id']+'_'+suffix,point_position=position,x_mm=data['L_mm']/2 if position=='center' else 0.)
+   if position=='support_limit':
+    q=cc['q_N_mm'];P=cc['P_N'];L=data['L_mm']
+    cc['effects_at_midspan']={'left_reaction_N':q*L/2+P,'right_reaction_N':q*L/2,'V_N':0.,'M_Nmm':q*L*L/8,'midspan_moment_Nmm':q*L*L/8,'max_abs_shear_N':abs(q*L/2+P),'support_limit':True}
+   for key in ('global_envelope','position_plan','mobile_resistance_status','local_contact_status','ELS_position_status'):cc.pop(key,None)
+   expanded.append(cc)
+ bundle['combinations']=expanded
+ return bundle
 
 def case_inputs(data,combo):
  d=copy.deepcopy(data);q=combo['q_N_mm'];L=d['L_mm']
@@ -29,6 +41,10 @@ def case_inputs(data,combo):
  # is retained, reported and exported. There is no fictitious zero combination.
  d.update(q_parallel_uls=combo.get('q_vector',{}).get('parallel',0.),q_parallel_sls=combo.get('q_vector',{}).get('parallel',0.),P_parallel_uls=combo.get('P_vector',{}).get('parallel',0.),P_parallel_sls=combo.get('P_vector',{}).get('parallel',0.))
  d.update(load_mode='direct',q_uls=q,q_sls=q,P_uls=combo.get('P_N',0.),P_sls=combo.get('P_N',0.),x_uls=L/2,x_sls=L/2,actions_origin=f"{combo['id']} — {combo['type']} — {combo['expression']} — {combo.get('origin','matriz fornecida por Lucas')}")
+ if combo.get('point_position')=='support_limit':
+  # Analytical limit: P has zero bending/displacement away from the support.
+  # Its limiting internal shear is evaluated explicitly, not by applying P at x=0.
+  d.update(P_uls=0.,P_sls=0.,P_parallel_uls=0.,P_parallel_sls=0.)
  if combo['limit_state']=='ELS':
   denom=d['ELS_down_denominator'] if q>=0 else d['ELS_up_denominator']
   d.update(ELS_limit_mm=L/denom,ELS_origin=f"L/{denom:g} informado para {'descendente' if q>=0 else 'ascendente'}; {combo['type']}")
@@ -44,15 +60,26 @@ def calculate_batch(data):
   mobile={}
   if combo.get('P_N',0):mobile=mobile_rows(rs,result,combo)
   evidence=({'ELS':result['ELS']} if combo['limit_state']=='ELS' else {k:result[k] for k in ['NBR_branches','FLT_segments','section_checks']})
-  if mobile:evidence['mobile_point']=mobile
+  if mobile:evidence['prescribed_point']=mobile
   from .inclination_adapter import pending_rows
   from .inclination_adapter import evidence as inclination_evidence
   ev=copy.deepcopy(result['inclination_evidence'][combo['limit_state']])
-  if mobile:ev['convention']+=' P móvel: estados exibidos para candidato central, não envelope biaxial móvel.'
+  if mobile:
+   ev['convention']+=' '+mobile['method']
+   if combo.get('point_position')=='support_limit':
+    # Reactions include the limiting point load, although interior M/V
+    # away from the vanishing support layer are those of q alone.
+    for state in ev['states']:
+     if state['x_mm']==0.:state['position_limit']='interior após P no limite'
+     for axis in ('normal','parallel'):state[axis]['Rleft_N']+=combo['P_vector'][axis]
+    boundary=copy.deepcopy(ev['states'][0]);boundary.update(x_mm=0.,side='right',position_limit='x→0+, seção antes de P')
+    for axis in ('normal','parallel'):
+     boundary[axis]['M_Nmm']=0.;boundary[axis]['V_N']=combo['q_vector'][axis]*data['L_mm']/2+combo['P_vector'][axis]
+    ev['states'].insert(0,boundary);ev['P_vector']=copy.deepcopy(combo['P_vector'])
   evidence['inclination']=ev
   # Core rows already contain ELU pending rows, but ELS filtering excludes its parallel component.
   # All rows filtered by limit state above.
-  cases.append({'combination':combo,'rows':rs,'evidence':evidence,'warnings':result['coverage_warnings']+result['numerical_warnings']})
+  cases.append({'combination':combo,'rows':rs,'evidence':evidence,'warnings':result['coverage_warnings']+result['numerical_warnings'],'scope_notes':[mobile['scope']] if mobile else []})
  return {'schema':'tercas_batch_results_v1','version':VERSION,'project':data['project'],'synthetic':data['synthetic'],'input_fingerprint':fingerprint(data),'input_data':copy.deepcopy(data),'load_bundle':bundle,'cases':cases,'whole_member_approved':False,'summary':governing(cases)}
 
 def governing(cases):
@@ -74,40 +101,25 @@ def governing(cases):
 
 
 def mobile_rows(rs,result,combo):
- """Exact global same-direction envelopes; partial routes remain pending."""
- env=combo['global_envelope'];L=result['input_data']['L_mm']
+ """Two prescribed positions only; no sweep or continuous-position envelope."""
+ position=combo.get('point_position','center');L=result['input_data']['L_mm']
+ ev={'position':position,'method':'P no centro.' if position=='center' else 'P no limite junto ao apoio esquerdo: x→0+, sem distância fictícia. M e flecha de P tendem a zero; V limite inclui P.'}
  b=result['NBR_branches'];vr=result['section_checks'].get('shear',{}).get('VRd_N')
- mr=b['local'].get('MRd_Nmm');ev={'global_envelope':env,'method':'Biapoiada; permanentes uniformes e P móvel; máximos M/V não simultâneos.'}
- best=None
- if mr and vr:
-  best,_=envelope(L,combo['q_N_mm'],combo['P_N'],0.,L,mr,vr)
-  ev['MV_concomitant']=best
- for row in rs:
-  name=row['Verificação'];idx=None
-  if name=='Cortante' and vr:
-   idx=env['V_abs_N']/vr;row['Demanda / valor']=f"{env['V_abs_N']/1000:.6f} kN"
-   row['Observação']='Envelope global: limite com P aproximando-se do apoio, não P aplicada exatamente no apoio.'
-  elif name=='Flexão e cortante concomitantes' and best:
-   idx=best['index_squared'];row['Observação']=f"Envelope concomitante: posição P={best['a_mm']:.3f} mm; seção x={best['x_mm']:.3f} mm; limite de apoio={best['support_limit']}. Não soma máximos M/V independentes."
-  elif name in ('Flexão local','Distorcional'):
-   row['Observação']+=' Máximo global de momento com P no centro (permanentes e P no mesmo sentido).'
-  elif name=='Flexão biaxial':
-   provisional='hipótese provisória' in row['Situação']
-   central=row.get('Índice');row['Índice']=central if finite(central) and central>1 else None
-   row['Situação']='Não atende no candidato central — envelope parcial' if row['Índice'] is not None else 'Pendente — interação móvel parcial'
-   if provisional:row['Situação']+=' — hipótese provisória, a conferir'
-   row['Observação']+=' P central não certifica envelope móvel biaxial.'
-  elif name.startswith('FLT —') or name=='Flecha — flexão' or name=='Carga concentrada':
-   ev[name]={'central_candidate_index':row.get('Índice'),'central_candidate_value':row['Demanda / valor']}
-   central_index=row.get('Índice')
-   known_failure=finite(central_index) and central_index>1
-   row['Índice']=central_index if known_failure else None
-   row['Situação']='Não atende já no candidato central — envelope parcial' if known_failure else 'Pendente — envelope móvel parcial'
-   row['Observação']+=' P avaliada no centro somente; valor exibido é candidato, não envelope móvel qualificado desta rota.'
-   if name=='Flecha — flexão':
-    from .mobile_deflection_adapter import apply_bound
-    ev['deflection_upper_bound']=apply_bound(row,result,combo)
-   if name=='Carga concentrada' and result['input_data'].get('patch_mm') is None:row['Observação']+=' Sem contato físico informado, resistência local permanece pendente; cálculos globais continuam.'
-  if idx is not None:
-   row['Índice']=idx;row['Situação']='Não atende' if idx>1 else 'Atende ao critério calculado'
+ if position=='support_limit':
+  v=abs(combo['q_N_mm']*L/2+combo['P_N']);ev['V_support_limit_N']=v
+  for row in rs:
+   if row['Verificação']=='Cortante' and vr:
+    row['Índice']=v/vr;row['Demanda / valor']=f'{v/1000:.6f} kN'
+    row['Situação']='Não atende' if row['Índice']>1 else 'Atende ao critério calculado'
+   elif row['Verificação']=='Flexão e cortante concomitantes' and vr and row.get('Índice') is not None:
+    # Away from the support: q-only interaction. At the boundary layer:
+    # M→0 and V→qL/2+P. Max of these distinct concomitant states.
+    ev['MV_limit_states']={'interior_q_only_index_squared':row['Índice'],'support_layer_index_squared':(v/vr)**2,'method':'máximo entre estados concomitantes distintos'}
+    row['Índice']=max(row['Índice'],(v/vr)**2)
+    ev['MV_limit_states']['governing_index_squared']=row['Índice']
+    row['Situação']='Não atende' if row['Índice']>1 else 'Atende ao critério calculado'
+   row['Observação']+=' '+ev['method']
+ else:
+  for row in rs:row['Observação']+=' P na posição central prescrita.'
+ ev['scope']='Resultados das duas posições prescritas; não certificam máximo da interação ou FLT para outras posições de P.'
  return ev

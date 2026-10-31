@@ -8,7 +8,7 @@ from .catalogs import catalog_labels, critical_defaults, apply_material, entries
 from .core.local_table12 import local_critical
 from .load_combinations import COMBINATION_TYPES
 
-VERSION='0.4.2-estudo'
+VERSION='0.4.3-estudo'
 
 def defaults(index=0):
  s=select(index)
@@ -163,10 +163,7 @@ def rows(result):
  shear=result['section_checks'].get('shear',{});d=result['input_data'];L=d['L_mm'];q=d['q_uls'];P=d['P_uls'];a=d['x_uls'];R=q*L/2+P*(L-a)/L;V=max(abs(R),abs(R-q*a),abs(R-q*a-P),abs(R-q*L-P))
  add('Cortante',shear,'§9.8.3',V/shear['VRd_N'] if shear.get('VRd_N') else None)
  mv=b['MV'];add('Flexão e cortante concomitantes',mv,'§9.8.4',mv.get('result',{}).get('index_squared'))
- add('Carga concentrada',b['point'],'Anexo D')
  add('Flecha — flexão',result['ELS'],'§9.8.5; critério informado')
- lag=b['shear_lag_domain']
- out.append({'Verificação':'Shear lag — triagem de comprimento','Situação':'Não acionado pelo comprimento' if lag['status']=='not_triggered_by_length' else 'Enquadramento pendente','Índice':None,'Demanda / valor':f"L = {lag['L_mm']:g} mm",'Resistência / limite':f"30 bf0 (limite superior) = {30*lag['bf0_upper_bound_mm']:g} mm",'Referência':'§9.4','Observação':'Triagem suficiente, não proibição normativa. Se pendente, informar a largura livre real e enquadrar o item; os demais resultados não incluem redução adicional.' if lag['status']!='not_triggered_by_length' else 'A triagem usa um limite superior da largura livre.'})
  for row in out:
   name=row['Verificação']
   if name=='Flexão local':r=b['local'];cap=r.get('MRd_Nmm');dem=r.get('Msd_Nmm')

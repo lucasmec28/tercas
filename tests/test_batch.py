@@ -10,15 +10,15 @@ class BatchTests(unittest.TestCase):
  def data(self):
   d=example();d.update(load_mode='area',selected_types=list(COMBINATION_TYPES));d['area_inputs'].update(spacing_m=1.5,permanent_kgf_m2=10.,live_kgf_m2=25.,wind_up_kgf_m2=100.,wind_down_kgf_m2=50.);return d
  def test_full_matrix_and_signs(self):
-  d=self.data();r=calculate_batch(d);self.assertEqual(len(r['cases']),53);self.assertFalse(r['whole_member_approved']);self.assertTrue(any(c['combination']['q_N_mm']<0 for c in r['cases']))
+  d=self.data();r=calculate_batch(d);self.assertEqual(len(r['cases']),58);self.assertFalse(r['whole_member_approved']);self.assertTrue(any(c['combination']['q_N_mm']<0 for c in r['cases']))
   for item in r['cases']:
    c=item['combination']
    if c.get('P_N'):continue
    direct=calculate(case_inputs(d,c));rr=rows(direct);expected=[x for x in rr if (x['Verificação']=='Flecha — flexão')==(c['limit_state']=='ELS')];self.assertEqual(item['rows'],expected)
  def test_only_els_no_elu(self):
-  d=self.data();d['selected_types']=['ELS rara'];r=calculate_batch(d);self.assertEqual(len(r['cases']),9);self.assertEqual(len(r['summary']),1);self.assertTrue(all('ELS' in c['evidence'] for c in r['cases']))
+  d=self.data();d['selected_types']=['ELS rara'];r=calculate_batch(d);self.assertEqual(len(r['cases']),10);self.assertEqual(len(r['summary']),1);self.assertTrue(all('ELS' in c['evidence'] for c in r['cases']))
  def test_only_elu_no_els(self):
-  d=self.data();d['selected_types']=['ELU normal'];r=calculate_batch(d);self.assertEqual(len(r['cases']),36);self.assertTrue(all(c['combination']['limit_state']=='ELU' for c in r['cases']));self.assertFalse(any(x['Verificação'].startswith('Flecha') for x in r['summary']))
+  d=self.data();d['selected_types']=['ELU normal'];r=calculate_batch(d);self.assertEqual(len(r['cases']),40);self.assertTrue(all(c['combination']['limit_state']=='ELU' for c in r['cases']));self.assertFalse(any(x['Verificação'].startswith('Flecha') for x in r['summary']))
  def test_els_limits_sign(self):
   d=self.data();r=calculate_batch(d)
   for c in r['cases']:

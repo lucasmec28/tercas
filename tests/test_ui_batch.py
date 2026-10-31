@@ -12,8 +12,8 @@ class BatchUI(unittest.TestCase):
  def test_custom_material(self):
   a=self.app();next(s for s in a.selectbox if s.label=='Tipo de aço').set_value('Personalizado').run(timeout=60);next(n for n in a.number_input if n.label.startswith('fy personalizado')).set_value(280.).run();a.button[1].click().run(timeout=60);self.assertFalse(a.exception);self.assertEqual(a.session_state.result['input_data']['properties']['fy_MPa'],280)
  def test_area_compute_and_invalidate(self):
-  a=self.area();next(n for n in a.number_input if n.label.startswith('Vento para cima')).set_value(100.).run();a.button[1].click().run(timeout=120);self.assertFalse(a.exception);self.assertEqual(len(a.session_state.result['cases']),51);self.assertEqual(len(a.get('download_button')),3)
-  a.multiselect[0].set_value(['ELS rara']).run(timeout=60);self.assertNotIn('result',a.session_state);a.button[1].click().run(timeout=120);self.assertEqual(len(a.session_state.result['cases']),9)
+  a=self.area();next(n for n in a.number_input if n.label.startswith('Vento para cima')).set_value(100.).run();a.button[1].click().run(timeout=120);self.assertFalse(a.exception);self.assertEqual(len(a.session_state.result['cases']),56);self.assertEqual(len(a.get('download_button')),3)
+  a.multiselect[0].set_value(['ELS rara']).run(timeout=60);self.assertNotIn('result',a.session_state);a.button[1].click().run(timeout=120);self.assertEqual(len(a.session_state.result['cases']),10)
  def test_empty_selection_clears(self):
   a=self.area();a.button[1].click().run(timeout=120);a.multiselect[0].set_value([]).run();a.button[1].click().run(timeout=60);self.assertFalse(a.exception);self.assertNotIn('result',a.session_state);self.assertTrue(a.error)
  def test_mode_switch_clears(self):

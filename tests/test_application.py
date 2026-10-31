@@ -55,10 +55,10 @@ class Robustness(unittest.TestCase):
    with self.assertRaises(ValueError):build_spec(d)
  def test_empty_segments_visible(self):
   d=example();d['segments']=[];r=calculate(d);self.assertTrue(r['coverage_warnings'])
- def test_shear_lag_visible(self):
+ def test_excluded_check_not_presented(self):
   d=example();d['L_mm']=1000;d['x_uls']=d['x_sls']=500;d['segments']=[];r=calculate(d)
-  row=next(x for x in rows(r) if 'Shear lag' in x['Verificação']);self.assertEqual(row['Situação'],'Enquadramento pendente')
-  t='\n'.join(p.text for p in Document(BytesIO(word(r))).paragraphs);self.assertIn('§9.4',str(rows(r)));self.assertIn('largura livre',t)
+  self.assertFalse(any('Shear lag' in x['Verificação'] for x in rows(r)));self.assertFalse(r['whole_member_approved'])
+  t='\n'.join(p.text for p in Document(BytesIO(word(r))).paragraphs);self.assertNotIn('§9.4',str(rows(r)));self.assertNotIn('largura livre',t)
  def test_values_in_report(self):
   t='\n'.join(p.text for p in Document(BytesIO(word(calculate(example())))).paragraphs);self.assertIn('Resistência/limite',t);self.assertIn('mm em x=',t)
 
@@ -80,3 +80,4 @@ class DrawingLoads(unittest.TestCase):
     else:
      self.assertEqual(arrow.attrib['data-direction'],direction)
      self.assertIn('v55' if value>0 else 'v-55',arrow.attrib['d'])
+

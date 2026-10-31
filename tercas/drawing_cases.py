@@ -11,7 +11,8 @@ def drawing_cases(data):
     previews=[]
     for c in combinations:
         d=copy.deepcopy(data)
-        d.update(q_uls=c['q_N_mm'],P_uls=c.get('P_N',0.),x_uls=data['L_mm']/2)
+        d['point_position']=c.get('point_position')
+        d.update(q_uls=c['q_N_mm'],P_uls=c.get('P_N',0.),x_uls=c.get('x_mm',data['L_mm']/2))
         label=f"{c['id']} — {c['type']} — q={c['q_N_mm']:.2f} kN/m; P={c.get('P_N',0)/1000:.2f} kN"
         previews.append((label,d))
     return previews

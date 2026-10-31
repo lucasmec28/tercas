@@ -1,5 +1,5 @@
 """Streamlit entry point. User inputs are untrusted; no global approval state."""
-from tercas.presentation import fmt, display, display_records, measurement_text, DISPLAY_NOTE
+from tercas.presentation import fmt, display, display_records, display_frame, measurement_text, DISPLAY_NOTE
 import copy,json,math
 import pandas as pd
 import streamlit as st
@@ -12,13 +12,6 @@ from tercas.catalogs import catalog_labels,STEEL_NAMES,material,critical_default
 from tercas.batch import calculate_batch,area_bundle,case_inputs
 from tercas.load_combinations import COMBINATION_TYPES
 from tercas.ux_inputs import CB_LABELS,cb_code,flange_segments,whole_span
-
-def display_frame(records):
- # Styler changes visible text only: numeric sorting and column types survive.
- frame=pd.DataFrame(records)
- def formatter(key):
-  return lambda value: '—' if value is None or (isinstance(value,float) and math.isnan(value)) else display_records([{key:value}])[0][key]
- return frame.style.format({key:formatter(key) for key in frame.columns})
 
 def show_inclination(evidence):
  """Display concurrent effects; never interpret missing resistance as approval."""
@@ -37,7 +30,7 @@ def show_inclination(evidence):
   st.dataframe(display_frame(caps),hide_index=True,width='stretch')
  records=[]
  for state in evidence.get('states',[]):
-  row={'x [mm]':state.get('x_mm'),'Lado da seção':{'left':'Esquerda','right':'Direita'}.get(state.get('side'),'—')}
+  row={'Estado limite':state.get('position_limit','Posição fixa'),'x [mm]':state.get('x_mm'),'Lado da seção':{'left':'Esquerda','right':'Direita'}.get(state.get('side'),'—')}
   for axis,label in [('normal','Normal / eixo forte'),('parallel','Paralelo / eixo fraco')]:
    v=state.get(axis,{})
    for k,title,scale in [('M_Nmm','M [kN·m]',1e6),('V_N','V [kN]',1000),('Rleft_N','Reação esquerda [kN]',1000),('Rright_N','Reação direita [kN]',1000)]:
@@ -241,7 +234,7 @@ else:
   with cols[i%2]:area[key]=num(label,key,area[key],unit)
  d['area_inputs']=area
  d['selected_types']=st.multiselect('Tipos de combinações consideradas',COMBINATION_TYPES,default=b['selected_types'],key=f'combo_types_{r}')
- st.caption('P = 1 kN de manutenção é incluída automaticamente nas famílias ELU normal e ELS rara selecionadas, apenas com permanentes; não se soma a SC ou vento. FLT móvel permanece parcial; na flecha normal, um limite superior conservador pode concluir o critério do modelo quando aplicável, sem calcular a flecha móvel exata.')
+ st.caption('P = 1 kN de manutenção é incluída automaticamente nas famílias ELU normal e ELS rara selecionadas, apenas com permanentes; não se soma a SC ou vento. São calculadas duas posições: centro e limite junto ao apoio. Não há varredura intermediária; os resultados de interação e FLT cobrem essas posições, não um máximo contínuo.')
  st.caption(f"Massa linear selecionada: {fmt(d['properties']['mass_kg_m'])} kg/m. Matriz fixa fornecida por Lucas: 32 ELU normal, 8 ELS rara, 6 frequente e 2 quase permanente.")
  with st.expander('Casos e combinações que serão calculados'):
   try:
@@ -299,12 +292,7 @@ with st.expander('Eixo fraco — dados existentes e críticos por sentido',expan
   d['weak_axis'][sign]=out
  st.caption('Hipótese provisória autorizada: o Ml,y tabulado preenche somente My positivo (alma comprimida), apoiado na comparação pyCUFSM, ainda a conferir com exemplos CBCA. Não é copiado no sentido oposto; Mdist,y não usa a tabela do eixo forte. A ausência de um crítico afeta só a rota correspondente.')
 
-with st.expander('Introdução de P e limite de flecha',expanded=False):
- st.caption('Apoios e ligações não são dimensionados neste app. O cálculo da terça mantém as hipóteses de introdução das forças aplicáveis; não há aprovação automática do detalhe.')
- st.caption('Não é a posição da força. Deixe vazio quando desconhecido: a força pontual global continua sendo calculada. Não adote comprimento fictício.')
- d['patch_mm']=num('Contato físico de P — opcional, somente resistência local','patch',b['patch_mm'],'mm')
- d['patch_origin']=txt('Origem do contato de P','patch_origin',b['patch_origin'])
- st.caption('Anexo D nesta interface: força de compressão isolada e interna, aplicada à mesa. Próximo ao apoio ou outro detalhe: não avaliado, sem bloquear os cálculos globais.')
+with st.expander('Limite de flecha',expanded=False):
  if d['load_mode']=='direct':
   d['ELS_limit_mm']=num('Limite de flecha adotado','els_limit',b['ELS_limit_mm'],'mm')
   d['ELS_origin']=txt('Origem / aplicação do limite de flecha','els_origin',b['ELS_origin'])
@@ -322,7 +310,7 @@ try:
  if d['load_mode']=='area':
   selected_preview=st.selectbox('Combinação mostrada no desenho',range(len(previews)),format_func=lambda i:previews[i][0])
   drawing_data=previews[selected_preview][1]
-  st.caption('Prévia de uma combinação, não soma dos máximos. Casos P aparecem primeiro; P móvel é representada no centro apenas para ilustração.')
+  st.caption('Prévia de uma combinação, não soma dos máximos. Casos P aparecem primeiro; A posição indicada identifica o caso calculado; no apoio representa-se o limite x→0+.')
  else:drawing_data=previews[0][1]
  st.markdown(svg(drawing_data),unsafe_allow_html=True)
  token=fingerprint(d)

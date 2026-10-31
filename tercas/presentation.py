@@ -55,3 +55,12 @@ def display_records(records):
 DISPLAY_NOTE=('Exibição com duas casas decimais; cálculos e arquivos JSON mantêm a precisão completa. '
               'Valores não nulos inferiores à resolução aparecem como <0,01 (ou −<0,01). '
               'Índices arredondados para 1,00 indicam > ou < quando necessário; a situação usa o valor não arredondado.')
+
+
+def display_frame(records):
+    """Format a presentation copy, including all pandas missing-value sentinels."""
+    import pandas as pd
+    frame = pd.DataFrame(records)
+    def formatter(key):
+        return lambda value: display_records([{key: value}])[0][key]
+    return frame.style.format({key: formatter(key) for key in frame.columns}, na_rep='—')
