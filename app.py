@@ -1,5 +1,5 @@
-from tercas.presentation import fmt, display, display_records, measurement_text, DISPLAY_NOTE
 """Streamlit entry point. User inputs are untrusted; no global approval state."""
+from tercas.presentation import fmt, display, display_records, measurement_text, DISPLAY_NOTE
 import copy,json,math
 import pandas as pd
 import streamlit as st

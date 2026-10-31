@@ -47,3 +47,9 @@ def test_number_input_keeps_full_value_after_unrelated_rerun():
  assert next(x for x in a.number_input if x.label=='Vão entre apoios [mm]').proto.format=='%.2f'
  a.run(timeout=30)
  assert a.session_state.last_input['L_mm']==3000.123456789
+
+
+def test_entry_docstring_remains_module_docstring():
+ import ast
+ source=(Path(__file__).parents[1]/"app.py").read_text()
+ assert ast.get_docstring(ast.parse(source)).startswith("Streamlit entry point")
