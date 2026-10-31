@@ -1,3 +1,5 @@
+> Atualização0.4.1: a conversão nominal/linha média foi conferida na FiguraE.1 e CBCAEx08 e agora é automática. Consulte ANNEX_E_GEOMETRY.md. As notas abaixo sobre conversão ainda não confirmada são histórico do0.4.0.
+
 # Candidato 0.4.0 — eixo fraco e flexão biaxial
 
 > Estado atual: interface compacta com propriedades da planilha automatizadas; as descrições iniciais de entradas manuais duplicadas abaixo são histórico da primeira cópia, substituídas pela seção «Automação compacta posterior». Nenhuma publicação por este agente.

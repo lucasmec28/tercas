@@ -5,6 +5,8 @@ import pandas as pd
 import streamlit as st
 from tercas.application import defaults,example,calculate,rows,fingerprint,VERSION
 from tercas.drawing import svg
+from tercas.drawing_cases import drawing_cases
+from tercas.catalog_scan import scan_catalog,inputs_for_section
 from tercas.report import word,batch_word
 from tercas.catalogs import catalog_labels,STEEL_NAMES,material,critical_defaults,catalog_entry
 from tercas.batch import calculate_batch,area_bundle,case_inputs
@@ -31,7 +33,7 @@ def show_inclination(evidence):
  if evidence.get('weak_axis_capacities'):
   caps=[]
   for sign,c in evidence['weak_axis_capacities'].items():
-   caps.append({'Sentido':{'positive':'My positivo','negative':'My negativo'}[sign],'Estado':'Calculado com dados informados' if c.get('MRd_Nmm') else 'Dados pendentes','Me Anexo E [kN·m]':c.get('annex_e',{}).get('Me_Nmm',0)/1e6 if c.get('annex_e') else None,'MRd fraco [kN·m]':c.get('MRd_Nmm',0)/1e6 if c.get('MRd_Nmm') else None,'Origem / faltas':c.get('provenance',', '.join(c.get('missing',[])))})
+   caps.append({'Sentido':{'positive':'My positivo','negative':'My negativo'}[sign],'Estado':'Calculado com dados informados' if c.get('MRd_Nmm') else 'Dados pendentes','Me Anexo E [kN·m]':c.get('annex_e',{}).get('Me_Nmm',0)/1e6 if c.get('annex_e') else None,'MRd fraco [kN·m]':c.get('MRd_Nmm',0)/1e6 if c.get('MRd_Nmm') else None,'Origem / faltas':c.get('provenance',', '.join(c.get('missing',[])))+' '+ ' '.join(c.get('automatic_inputs',{}).get('warnings',[]))})
   st.dataframe(display_frame(caps),hide_index=True,width='stretch')
  records=[]
  for state in evidence.get('states',[]):
@@ -66,12 +68,16 @@ with left:
  if index!=st.session_state.base['catalog_index']:
   changed=copy.deepcopy(st.session_state.get('last_input',st.session_state.base));fresh=defaults(index)
   for key in ['schema','catalog_index','properties','Ml_Nmm','Mdist_Nmm','critical_origin','property_origin']:changed[key]=fresh[key]
-  changed.pop('weak_axis',None);changed.pop('weak_catalog',None)
-  changed['synthetic']=False
+  changed.pop('weak_axis',None)
+  # Preserve project restraint length, not section-dependent mean-line data.
+  old_wc=changed.get('weak_catalog',{})
+  changed['weak_catalog']={k:copy.deepcopy(old_wc[k]) for k in ['Lx_mm'] if k in old_wc}
+  # Changing a section does not turn didactic project inputs into real data.
+  changed['synthetic']=changed.get('synthetic',False)
   if changed.get('steel_name')!='Personalizado':changed['properties'].update(material(changed['steel_name'])['properties'])
   else:
    old=st.session_state.get('last_input',st.session_state.base)
-   for key in ['fy_MPa','fu_MPa']:changed['properties'][key]=old['properties'][key]
+   changed=inputs_for_section(old,index)
   load(changed);st.rerun()
 b=copy.deepcopy(st.session_state.base);r=st.session_state.revision
 # Preserve values of widgets hidden when changing input mode.
@@ -103,12 +109,67 @@ if d['steel_name']=='Personalizado':
  with c2:fu=num('fu personalizado','fu_custom',custom['fu'],'MPa')
  custom_origin=txt('Origem do aço personalizado','steel_origin',custom['origin'])
  st.session_state.custom_steel_draft=dict(fy=fy,fu=fu,origin=custom_origin)
- try:mat=material('Personalizado',{'fy_MPa':fy,'fu_MPa':fu,'origin':custom_origin})
+ try:
+  mat=material('Personalizado',{'fy_MPa':fy,'fu_MPa':fu,'origin':custom_origin})
+  for key in ['E_MPa','G_MPa']:mat['properties'][key]=b['properties'][key]
+  mat['physical_origin']='E e G preservados das entradas do aço personalizado; conferir origem e aplicabilidade'
+  if mat['properties']['E_MPa']!=200000. or mat['properties']['G_MPa']!=77000.:st.warning('E/G personalizados diferem das constantes usuais da NBR 14762. Valores importados preservados, sem atribuí-los à norma; confira a origem e a aplicabilidade.')
  except ValueError as exc:mat=None;st.warning(str(exc));d['properties'].update(fy_MPa=fy,fu_MPa=fu)
 else:mat=material(d['steel_name'])
 if mat:
  d['properties'].update(mat['properties']);d['property_origin']=f"{mat['name']}: {mat['origin']}; {mat['physical_origin']}"
  st.caption(f"fy = {fmt(mat['properties']['fy_MPa'])} MPa · fu = {fmt(mat['properties']['fu_MPa'])} MPa. Conferir especificação do produto.")
+
+st.subheader('Comprimentos efetivos e travamentos')
+st.caption('Eixos da seção: X horizontal (maior inércia), Y vertical (menor inércia). Ly das mesas entra na FLT da flexão em X; Lx entra na instabilidade da flexão em Y. Lz é torsional. Não são novos apoios verticais.')
+wc=copy.deepcopy(b.get('weak_catalog',{}))
+old_weak_span=st.session_state.get(f'weak_last_span_{r}',b['L_mm'])
+current_lx=st.session_state.get(f'weak_lx_{r}',wc.get('Lx_mm',d['L_mm']))
+if d['L_mm']!=old_weak_span and current_lx==old_weak_span:
+ st.session_state[f'weak_lx_{r}']=d['L_mm'];wc['Lx_mm']=d['L_mm']
+st.session_state[f'weak_last_span_{r}']=d['L_mm']
+wc['Lx_mm']=num('Lx efetivo — instabilidade da flexão fraca','weak_lx',wc.get('Lx_mm',d['L_mm']),'mm')
+source_segments=flange_segments(st.session_state.get(f'last_segments_{r}',b['segments']))
+first=source_segments[0] if source_segments else {}
+source_whole=(len(source_segments)==1 and first.get('start_mm')==0 and first.get('end_mm')==st.session_state.get(f'last_span_{r}',b['L_mm']))
+custom=st.checkbox('Definir trechos específicos (avançado)',value=not source_whole,key=f'custom_segments_{r}')
+if not custom:
+ # In the usual one-span case, section coordinates follow L automatically.
+ # Only defaults following the whole span follow its change; edits persist.
+ previous_span=st.session_state.get(f'last_span_{r}',b['L_mm'])
+ new_span=d['L_mm']!=previous_span
+ def length_value(key):
+  v=first.get(key)
+  return d['L_mm'] if v is None or (new_span and v==previous_span) else v
+ if new_span:
+  for widget,field in [('upper','Ly_top_effective_mm'),('lower','Ly_bottom_effective_mm'),('torsion','Lz_effective_mm')]:
+   st.session_state[f'{widget}_{r}']=length_value(field)
+  st.info('Vão alterado: comprimentos iguais ao vão anterior acompanham o novo vão; valores personalizados são preservados. Confira os travamentos.')
+ c1,c2,c3=st.columns(3)
+ with c1:upper=num('Ly — mesa superior (menor inércia)','upper',length_value('Ly_top_effective_mm'),'mm')
+ with c2:lower=num('Ly — mesa inferior (menor inércia)','lower',length_value('Ly_bottom_effective_mm'),'mm')
+ with c3:torsion=num('Comprimento efetivo torsional Lz','torsion',length_value('Lz_effective_mm'),'mm')
+ cb_label=st.selectbox('Coeficiente Cb',list(CB_LABELS.values()),index=list(CB_LABELS).index(first.get('Cb_mode','one')),key=f'cb_{r}')
+ st.caption('Momento positivo comprime a mesa superior; momento negativo comprime a inferior. O app escolhe o comprimento da mesa comprimida em cada caso e não considera a telha como travamento.')
+ with st.expander('Vínculo torsional e origem dos comprimentos',expanded=False):
+  origin=txt('Origem / hipótese dos travamentos','restraint_origin',first.get('restraint_provenance') or 'Comprimentos efetivos informados; sem crédito de travamento da telha')
+  st.caption('O valor inicial é o vão inteiro. Um travamento lateral de mesa não reduz automaticamente o comprimento torsional. Confira o vínculo adotado.')
+ effective_cb=cb_label
+ if cb_code(cb_label)=='quarter_formula' and (upper!=d['L_mm'] or lower!=d['L_mm']):
+  st.warning('Cb = 1,0 adotado neste modo: os comprimentos efetivos não informam a posição física dos trechos. Para calcular Cb pelos momentos, defina os limites físicos em trechos específicos (avançado).')
+  effective_cb='one'
+ d['segments']=whole_span(d['L_mm'],upper,lower,torsion,effective_cb,origin)
+ st.caption(f'Trecho de cálculo automático: 0 até {fmt(d["L_mm"])} mm, conforme o vão informado acima.')
+else:
+ for seg in source_segments:seg['Cb_mode']=CB_LABELS[seg['Cb_mode']]
+ df=pd.DataFrame(source_segments,columns=['start_mm','end_mm','Ly_top_effective_mm','Ly_bottom_effective_mm','Lz_effective_mm','Cb_mode','restraint_provenance'])
+ edited=st.data_editor(df,num_rows='dynamic',hide_index=True,key=f'segments_{r}',column_config={'start_mm':st.column_config.NumberColumn('Início [mm]',format='%.2f'),'end_mm':st.column_config.NumberColumn('Fim [mm]',format='%.2f'),'Ly_top_effective_mm':st.column_config.NumberColumn('Mesa superior — comprimento efetivo [mm]',format='%.2f'),'Ly_bottom_effective_mm':st.column_config.NumberColumn('Mesa inferior — comprimento efetivo [mm]',format='%.2f'),'Lz_effective_mm':st.column_config.NumberColumn('Lz torsional [mm]',format='%.2f'),'restraint_provenance':'Origem / hipótese do vínculo','Cb_mode':st.column_config.SelectboxColumn('Cb',options=list(CB_LABELS.values()))},width='stretch')
+ d['segments']=edited.astype(object).where(pd.notna(edited),None).to_dict('records')
+ for seg in d['segments']:seg['Cb_mode']=cb_code(seg.get('Cb_mode') or 'one')
+ st.caption('Início e fim são os limites físicos do diagrama usado no Cb; Ly e Lz são comprimentos efetivos e podem diferir desse intervalo por condição de vínculo. Trechos representam o diagrama usado no Cb; não criam apoios verticais nem comprovam travamentos. Uma inversão do momento não é um travamento.')
+
+st.session_state[f'last_segments_{r}']=copy.deepcopy(d['segments'])
+st.session_state[f'last_span_{r}']=d['L_mm']
 
 with st.expander('Perfil, aço e origem dos dados',expanded=False):
  st.caption('209 perfis da planilha V03 fornecida por Lucas; fontes e linha de origem preservadas. Críticos tabulados de Pierin/DimPerfil quando disponíveis. A transcrição não é certificação do produto.')
@@ -118,7 +179,7 @@ with st.expander('Perfil, aço e origem dos dados',expanded=False):
   with cols[i%3]:d['properties'][key]=num(label,key,b['properties'][key])
  extra_origin=txt('Origem dos dados complementares / alterações','property_origin',b['property_origin'])
  d['property_origin']=(f"Aço {mat['name']}: {mat['origin']}; {mat['physical_origin']}; " if mat else '')+extra_origin
- st.caption(f"E = {fmt(d['properties']['E_MPa'])} MPa · G = {fmt(d['properties']['G_MPa'])} MPa — NBR 14762.")
+ st.caption(f"E = {fmt(d['properties']['E_MPa'])} MPa · G = {fmt(d['properties']['G_MPa'])} MPa — propriedades físicas adotadas; conferir origem.")
  st.caption('Fonte: '+catalog_entry(index)['source_url']+'; linha '+str(catalog_entry(index)['source_workbook_row'])+' da planilha original.')
  st.caption('Conferir a convenção de Wx e das propriedades usadas em conjunto. Editar valores não comprova a correspondência física.')
 
@@ -200,68 +261,28 @@ with st.expander('Estabilidade, críticos e trechos',expanded=True):
  st.caption('Ly superior/inferior é o comprimento lateral associado à menor inércia no cálculo de FLT da flexão forte. Lz é torsional, não um comprimento da maior inércia. Esses comprimentos não criam apoios no diagrama de cargas.')
  st.caption('Esta seleção é uma hipótese do modelo, não uma verificação do caminho da torção. Ly e Lz são independentes; um tirante lateral não é automaticamente travamento torsional.')
 
- source_segments=flange_segments(st.session_state.get(f'last_segments_{r}',b['segments']))
- first=source_segments[0] if source_segments else {}
- source_whole=(len(source_segments)==1 and first.get('start_mm')==0 and first.get('end_mm')==st.session_state.get(f'last_span_{r}',b['L_mm']))
- custom=st.checkbox('Definir trechos específicos (avançado)',value=not source_whole,key=f'custom_segments_{r}')
- if not custom:
-  # In the usual one-span case, section coordinates follow L automatically.
-  # Only defaults following the whole span follow its change; edits persist.
-  previous_span=st.session_state.get(f'last_span_{r}',b['L_mm'])
-  new_span=d['L_mm']!=previous_span
-  def length_value(key):
-   v=first.get(key)
-   return d['L_mm'] if v is None or (new_span and v==previous_span) else v
-  if new_span:
-   for widget,field in [('upper','Ly_top_effective_mm'),('lower','Ly_bottom_effective_mm'),('torsion','Lz_effective_mm')]:
-    st.session_state[f'{widget}_{r}']=length_value(field)
-   st.info('Vão alterado: comprimentos iguais ao vão anterior acompanham o novo vão; valores personalizados são preservados. Confira os travamentos.')
-  c1,c2=st.columns(2)
-  with c1:upper=num('Ly — mesa superior (menor inércia)','upper',length_value('Ly_top_effective_mm'),'mm')
-  with c2:lower=num('Ly — mesa inferior (menor inércia)','lower',length_value('Ly_bottom_effective_mm'),'mm')
-  cb_label=st.selectbox('Coeficiente Cb',list(CB_LABELS.values()),index=list(CB_LABELS).index(first.get('Cb_mode','one')),key=f'cb_{r}')
-  st.caption('Momento positivo comprime a mesa superior; momento negativo comprime a inferior. O app escolhe o comprimento da mesa comprimida em cada caso e não considera a telha como travamento.')
-  with st.expander('Vínculo torsional e origem dos comprimentos',expanded=False):
-   torsion=num('Comprimento efetivo torsional Lz','torsion',length_value('Lz_effective_mm'),'mm')
-   origin=txt('Origem / hipótese dos travamentos','restraint_origin',first.get('restraint_provenance') or 'Comprimentos efetivos informados; sem crédito de travamento da telha')
-   st.caption('O valor inicial é o vão inteiro. Um travamento lateral de mesa não reduz automaticamente o comprimento torsional. Confira o vínculo adotado.')
-  effective_cb=cb_label
-  if cb_code(cb_label)=='quarter_formula' and (upper!=d['L_mm'] or lower!=d['L_mm']):
-   st.warning('Cb = 1,0 adotado neste modo: os comprimentos efetivos não informam a posição física dos trechos. Para calcular Cb pelos momentos, defina os limites físicos em trechos específicos (avançado).')
-   effective_cb='one'
-  d['segments']=whole_span(d['L_mm'],upper,lower,torsion,effective_cb,origin)
-  st.caption(f'Trecho de cálculo automático: 0 até {fmt(d["L_mm"])} mm, conforme o vão informado acima.')
- else:
-  for seg in source_segments:seg['Cb_mode']=CB_LABELS[seg['Cb_mode']]
-  df=pd.DataFrame(source_segments,columns=['start_mm','end_mm','Ly_top_effective_mm','Ly_bottom_effective_mm','Lz_effective_mm','Cb_mode','restraint_provenance'])
-  edited=st.data_editor(df,num_rows='dynamic',hide_index=True,key=f'segments_{r}',column_config={'start_mm':st.column_config.NumberColumn('Início [mm]',format='%.2f'),'end_mm':st.column_config.NumberColumn('Fim [mm]',format='%.2f'),'Ly_top_effective_mm':st.column_config.NumberColumn('Mesa superior — comprimento efetivo [mm]',format='%.2f'),'Ly_bottom_effective_mm':st.column_config.NumberColumn('Mesa inferior — comprimento efetivo [mm]',format='%.2f'),'Lz_effective_mm':st.column_config.NumberColumn('Lz torsional [mm]',format='%.2f'),'restraint_provenance':'Origem / hipótese do vínculo','Cb_mode':st.column_config.SelectboxColumn('Cb',options=list(CB_LABELS.values()))},width='stretch')
-  if any(0<abs(float(v))<0.005 for v in edited.select_dtypes(include='number').to_numpy().ravel()):st.caption('Há comprimento não nulo abaixo de 0,01 mm na tabela. O valor completo foi preservado; confira a entrada.')
-  d['segments']=edited.astype(object).where(pd.notna(edited),None).to_dict('records')
-  for seg in d['segments']:seg['Cb_mode']=cb_code(seg.get('Cb_mode') or 'one')
-  st.caption('Início e fim são os limites físicos do diagrama usado no Cb; Ly e Lz são comprimentos efetivos e podem diferir desse intervalo por condição de vínculo. Trechos representam o diagrama usado no Cb; não criam apoios verticais nem comprovam travamentos. Uma inversão do momento não é um travamento.')
-
- st.session_state[f'last_segments_{r}']=copy.deepcopy(d['segments'])
- st.session_state[f'last_span_{r}']=d['L_mm']
 
 with st.expander('Eixo fraco — dados existentes e críticos por sentido',expanded=False):
  st.caption('Wy, xg, x0 e r0 já estão na planilha. Área, Ix, Iy, J, Cw, E e G vêm do perfil/aço selecionados; o app calcula Nex e Nez, sem pedir estes números de novo. Lz usa o maior comprimento torsional dos trechos. Sem travamento da telha.')
  st.caption('Convenção: My positivo comprime a alma; My negativo comprime as bordas/lábios. Os eixos locais e o sentido da seção física devem corresponder a esta convenção. Cm = 1,0 em todas as combinações; não há redução automática.')
  raw=catalog_entry(index)['raw_source_values']
  st.dataframe(display_frame([{'Dado':k,'Valor tabelado':raw.get(k)} for k in ['Wy cm³','xg cm','x0 cm','r0 cm','Ml,y kNm']]),hide_index=True)
- wc=copy.deepcopy(b.get('weak_catalog',{}));gm=wc.get('mean_line',{})
- old_weak_span=st.session_state.get(f'weak_last_span_{r}',b['L_mm'])
- current_lx=st.session_state.get(f'weak_lx_{r}',wc.get('Lx_mm',d['L_mm']))
- if d['L_mm']!=old_weak_span and current_lx==old_weak_span:
-  st.session_state[f'weak_lx_{r}']=d['L_mm'];wc['Lx_mm']=d['L_mm']
- st.session_state[f'weak_last_span_{r}']=d['L_mm']
- wc['Lx_mm']=num('Lx efetivo — instabilidade da flexão fraca','weak_lx',wc.get('Lx_mm',d['L_mm']),'mm')
- with st.expander('Convenção geométrica de linha média — somente para j do Anexo E',expanded=False):
-  st.caption('A conversão das dimensões nominais do catálogo para am, bm e cm ainda não foi confirmada na fonte. Não são novos ensaios: são as dimensões de linha média do Anexo E. Não há valores presumidos. O app confere compatibilidade com xg, x0 e Iy da planilha; diferença acima de 3% bloqueia esta automação. Essa triagem não certifica a convenção.')
-  vals={};cols=st.columns(3)
-  for i,(key,label) in enumerate([('am_mm','am — altura na linha média'),('bm_mm','bm — largura na linha média'),('cm_mm','cm — lábio na linha média')]):
-   with cols[i]:vals[key]=num(label,'weak_geom_'+key,gm.get(key,0. if key=='cm_mm' and catalog_entry(index)['family']=='U' else None),'mm')
-  vals['origin']=txt('Origem / convenção das dimensões médias','weak_geometry_origin',gm.get('origin',''))
-  wc['mean_line']=vals
+ gm=wc.get('mean_line',{})
+ with st.expander('Linha média do Anexo E — cálculo automático e origem',expanded=False):
+  from tercas.weak_catalog import nominal_mean_line,geometry_mode
+  auto_geom=nominal_mean_line(d)
+  st.caption('Conversão conferida na Figura E.1 da NBR14762 e no Ex08 do CBCA. Ue: am=h−t, bm=bf−t, cm=D−t/2. U: am=h−t, bm=bf−t/2, cm=0. O raio ri permanece o tabelado; não é inferido destas dimensões.')
+  st.caption(f"Linha média automática: am={fmt(auto_geom['am_mm'])} mm; bm={fmt(auto_geom['bm_mm'])} mm; cm={fmt(auto_geom['cm_mm'])} mm. Diferenças de Iy entre idealização de linha média e catálogo com cantos são informativas, não um limite normativo de3%.")
+  explicit=st.checkbox('Usar dimensões médias explicitamente documentadas (avançado)',value=geometry_mode(wc)=='explicit',key=f'weak_explicit_{r}')
+  wc['geometry_mode']='explicit' if explicit else 'catalog'
+  if explicit:
+   st.caption('Entradas legadas são preservadas, mas esta automação só aceita a conversão nominal comprovada. Outro modelo de seção exige propriedades próprias, não mistura automática com Iy do catálogo.')
+   vals={};cols=st.columns(3)
+   for i,(key,label) in enumerate([('am_mm','am — altura na linha média'),('bm_mm','bm — largura na linha média'),('cm_mm','cm — lábio na linha média')]):
+    with cols[i]:vals[key]=num(label,'weak_geom_'+key,gm.get(key,auto_geom[key]),'mm')
+   vals['origin']=txt('Origem / convenção das dimensões médias','weak_geometry_origin',gm.get('origin',''))
+   wc['mean_line']=vals
+  else:wc['mean_line']=auto_geom
  d['weak_catalog']=wc;d['weak_axis']={}
  from tercas.weak_catalog import critical_hypothesis
  provisional=critical_hypothesis(index)
@@ -292,25 +313,70 @@ with st.expander('Introdução de P e limite de flecha',expanded=False):
   d['ELS_up_denominator']=num('Limite ascendente L/','els_up',b['ELS_up_denominator'])
   st.caption('Limite escolhido por sentido de cada combinação ELS; conferir critério da aplicação.')
 
+provenance_text=' '.join([str(d.get('project','')),str(d.get('patch_origin',''))]+[str(seg.get('restraint_provenance','')) for seg in d.get('segments',[])])
+if any(tag in provenance_text.casefold() for tag in ['sintétic','sintetic','didático','didatico']):
+ st.warning('Há referências a dados sintéticos/didáticos nas entradas ou origens. Foram preservadas; confira essas premissas antes de usar como dados de projeto.')
 st.session_state['last_input']=copy.deepcopy(d)
 try:
- drawing_data=copy.deepcopy(d)
+ previews=drawing_cases(d)
  if d['load_mode']=='area':
-  try:
-   pv=area_bundle(d);govern=max(pv['combinations'],key=lambda c:abs(c['q_N_mm']))
-   drawing_data.update(q_uls=govern['q_N_mm'],P_uls=govern.get('P_N',0.),x_uls=d['L_mm']/2)
-   st.caption('Esquema: maior módulo de q entre as combinações selecionadas — '+govern['id'])
-  except (ValueError,KeyError,TypeError):drawing_data.update(q_uls=0.,P_uls=0.)
+  selected_preview=st.selectbox('Combinação mostrada no desenho',range(len(previews)),format_func=lambda i:previews[i][0])
+  drawing_data=previews[selected_preview][1]
+  st.caption('Prévia de uma combinação, não soma dos máximos. Casos P aparecem primeiro; P móvel é representada no centro apenas para ilustração.')
+ else:drawing_data=previews[0][1]
  st.markdown(svg(drawing_data),unsafe_allow_html=True)
  token=fingerprint(d)
 except (ValueError,TypeError,KeyError,ZeroDivisionError):token=None;st.caption('Complete geometria e ações para atualizar o esquema.')
 if 'result' in st.session_state and st.session_state.result['input_fingerprint']!=token:
  st.session_state.pop('result');st.info('Entradas alteradas. Calcule novamente; os resultados e exportações anteriores foram retirados.')
-if st.button('Calcular verificações disponíveis',type='primary'):
+calc_col,scan_col=st.columns(2)
+with calc_col:calculate_clicked=st.button('Calcular verificações disponíveis',type='primary')
+with scan_col:scan_clicked=st.button('Calcular todas as seções do catálogo')
+if calculate_clicked:
  st.session_state.pop('result',None)
  try:
   with st.spinner('Calculando o caso informado…'):st.session_state.result=calculate_batch(d) if d['load_mode']=='area' else calculate(d)
  except (ValueError,TypeError,KeyError,ZeroDivisionError) as exc:st.error('Não foi possível calcular: '+str(exc))
+# Explicit snapshot; never scan on a normal input/profile edit.
+if 'catalog_scan_state' in st.session_state and st.session_state.catalog_scan_state['fingerprint']!=token:
+ st.session_state.pop('catalog_scan_state')
+ st.info('Entradas alteradas: comparação anterior retirada. Inicie nova comparação quando desejar.')
+if scan_clicked:
+ if token is None:st.error('Complete as entradas antes de comparar o catálogo.')
+ else:
+  st.session_state.catalog_scan_state=dict(fingerprint=token,inputs=copy.deepcopy(d),rows=[],next_index=0,running=True,cancelled=False,elapsed_seconds=0.)
+
+@st.fragment(run_every=0.5 if st.session_state.get('catalog_scan_state',{}).get('running') else None)
+def catalog_comparison():
+ state=st.session_state.get('catalog_scan_state')
+ if not state:return
+ total=len(catalog_labels())
+ st.subheader('Comparação das seções — menor massa primeiro')
+ st.caption('Utilização (%) = 100 × maior índice calculado, não porcentagem de aprovação. Pendências e hipóteses permanecem explícitas. No modo área, o peso próprio é recalculado para cada perfil. A comparação completa pode levar minutos.')
+ if state['running'] and st.button('Cancelar comparação',key='cancel_catalog_scan'):
+  state['running']=False;state['cancelled']=True
+  st.rerun()
+ if state['running']:
+  # One section per fragment allows cooperative cancellation between sections.
+  part=scan_catalog(state['inputs'],indices=[state['next_index']])
+  state['rows'].extend(part['rows']);state['next_index']+=1
+  state['elapsed_seconds']+=part['elapsed_seconds']
+  state['running']=state['next_index']<total
+  if not state['running']:st.rerun()
+ done=state['next_index']
+ st.progress(done/total,text=f'{done} de {total} perfis processados')
+ if state['cancelled']:st.warning('Comparação interrompida: tabela parcial; perfis restantes não foram avaliados.')
+ elif not state['running']:st.caption('Todos os perfis processados; dados insuficientes e verificações pendentes não foram ocultados.')
+ rows_sorted=sorted(state['rows'],key=lambda r:(r['mass_kg_m'] if r['mass_kg_m'] is not None else float('inf'),r['profile'],r['catalog_index']))
+ view=[{'Perfil':v['profile'],'Peso linear [kg/m]':v['mass_kg_m'],'Utilização máxima [%]':v['utilization_percent'],'Situação':v['status'],'Critério governante':v['governing_check'],'Combinação':v['governing_combination'],'Critérios calculados':v['evaluated_checks'],'Pendências':v['pending_checks']} for v in rows_sorted]
+ if view:st.dataframe(display_frame(view),hide_index=True,width='stretch')
+ with st.expander('Pendências e rastreabilidade da comparação'):
+  st.caption('Ações diretas são mantidas como informadas: eventual peso próprio já incluído não é substituído. Críticos manuais de outra seção não são transferidos. Nenhum resultado significa aprovação global.')
+  for v in rows_sorted:
+   if v['pending']:st.write(v['profile']+': '+'; '.join(v['pending']))
+ st.download_button('Baixar comparação (JSON)',json.dumps(dict(schema='tercas_catalog_comparison_ui_v1',input_fingerprint=state['fingerprint'],completed_count=done,requested_count=total,complete=done==total,cancelled=state['cancelled'],rows=rows_sorted,whole_member_approved=False),ensure_ascii=False,indent=2),file_name='comparacao_tercas.json',mime='application/json')
+catalog_comparison()
+
 if 'result' in st.session_state:
  result=st.session_state.result
  st.subheader('Resultados por verificação')

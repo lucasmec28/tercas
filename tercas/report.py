@@ -33,13 +33,14 @@ def inclination_report(doc,evidence):
  doc.add_paragraph('A tabela de seções ilustra solicitações locais. Quando disponível, o resultado §9.9 acima identifica o máximo concomitante para P fixa, calculado separadamente. Para P móvel, o candidato central não certifica o envelope móvel. Não há conclusão biaxial sem resistência aplicável por eixo e sentido; os críticos fortes não são reutilizados no eixo fraco.')
 
 def inclination_inputs(doc,data):
+ doc.add_paragraph('Eixos locais da seção: X horizontal (maior inércia), Y vertical (menor inércia). Flecha paralela à cobertura fora do escopo desta emissão: não avaliada e não incluída na lista de verificações.')
  ic=data.get('inclination',{'value':0.,'unit':'degrees','spacing_basis':'roof','permanent_basis':'roof','live_basis':'horizontal','wind_basis':'roof'})
  if ic:
   doc.add_paragraph('Inclinação e bases declaradas: '+display(ic))
   doc.add_paragraph('Bases roof = plano da cobertura; horizontal = projeção horizontal. Vento normal à cobertura; gravidade decomposta no modo por área. No modo direto, componentes já locais não são giradas novamente. Alma perpendicular à cobertura; telha sem crédito de travamento.')
  if data.get('weak_catalog') is not None:
   doc.add_paragraph('Automação de propriedades do catálogo / linha média explícita: '+display(data['weak_catalog']))
-  doc.add_paragraph('Nex e Nez calculados dos comprimentos e propriedades; Cs por sentido local; Cm=1. Triagens de consistência não são verificações resistentes nem certificação da convenção geométrica.')
+  doc.add_paragraph('Nex e Nez calculados dos comprimentos e propriedades; Cs por sentido local; Cm=1. Consistência de propriedades editadas não é verificação resistente; diferenças entre linha média idealizada e catálogo com cantos são informativas, sem limite normativo de3%. A conversão automática am/bm/cm segue Figura E.1 e Ex08 CBCA.')
  if data.get('weak_axis'):
   doc.add_heading('Dados rastreados — eixo fraco / Anexo E',2)
   doc.add_paragraph('W é da primeira fibra a escoar; Wc da fibra comprimida. Nex/Nez em N, r0/j em mm, W/Wc em mm³, Ml/Mdist em Nmm. Cs/Cm conforme Anexo E. Dados independentes por sentido; nenhuma transposição automática bilateral da tabela.')

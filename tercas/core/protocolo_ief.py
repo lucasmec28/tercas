@@ -37,6 +37,22 @@ def max_moment(args):
             if lo<=x<=hi:cands.append(x)
     return max(abs(moment(x,L,q,P,a)) for x in cands)
 
+def integration_points(L, a, z):
+    """Coalesce floating-point duplicate breakpoints, not finite load patches.
+
+    A symmetric root can be returned a few ULP from a=L/2. QUADPACK
+    cannot integrate such a degenerate subinterval reliably. Its omitted
+    measure is at most 32 ULP of span, below the integration tolerance.
+    """
+    points=[]
+    tolerance=32*math.ulp(float(L))
+    for value in sorted(set([0.,a,z,L])):
+        if not points or value-points[-1]>tolerance:
+            points.append(value)
+        elif value==L:
+            points[-1]=L
+    return points
+
 def deflection(args,z,constant_min=False):
     L,E,Ig,Ml,q,P,a=args
     if not 0<=z<=L:raise ValueError('Ponto fora do vão')
@@ -46,7 +62,7 @@ def deflection(args,z,constant_min=False):
         m=moment(x,L,q,P,a)
         mu=(L-z)*x/L if x<=z else z*(L-x)/L
         return m*mu/(E*(imin if constant_min else ief(Ig,m,Ml)))
-    points=sorted(set([0.,a,z,L]))
+    points=integration_points(L,a,z)
     return sum(quad(f,lo,hi,epsabs=1e-9,epsrel=1e-9,limit=200)[0] for lo,hi in zip(points,points[1:]) if hi>lo)
 
 def slope(args,z,constant_min=False):
@@ -56,7 +72,7 @@ def slope(args,z,constant_min=False):
         m=moment(x,L,q,P,a)
         dmu=-x/L if x<=z else (L-x)/L
         return m*dmu/(E*(imin if constant_min else ief(Ig,m,Ml)))
-    points=sorted(set([0.,a,z,L]))
+    points=integration_points(L,a,z)
     return sum(quad(f,lo,hi,epsabs=1e-11,epsrel=1e-9,limit=200)[0] for lo,hi in zip(points,points[1:]) if hi>lo)
 
 def peak(args,constant_min=False):
@@ -64,3 +80,4 @@ def peak(args,constant_min=False):
     if max_moment(args)==0:return 0.,0.
     x=brentq(lambda z:slope(args,z,constant_min),0.,L,xtol=1e-8)
     return x,deflection(args,x,constant_min)
+

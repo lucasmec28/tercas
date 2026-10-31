@@ -20,8 +20,8 @@ class CatalogTests(unittest.TestCase):
   self.assertAlmostEqual(s['Nex_N'],math.pi**2*p['E_MPa']*p['Ix_cm4']*1e4/3000**2)
   self.assertAlmostEqual(s['Nez_N'],(p['G_MPa']*p['J_mm4']+math.pi**2*p['E_MPa']*p['Cw_mm6']/3000**2)/26.3**2)
   self.assertAlmostEqual(s['r0_mm'],26.3);self.assertLessEqual(s['W_mm3'],s['Wc_mm3']);self.assertEqual(s['Cs'],1);self.assertEqual(z['signs']['negative']['Cs'],-1)
- def test_no_meanline_inference(self):
-  d=case();del d['weak_catalog']['mean_line'];z=automatic_inputs(d);self.assertEqual(z['status'],'not_evaluated');self.assertIn('am/bm/cm',z['missing'][0])
+ def test_source_verified_meanline_default(self):
+  d=case();del d['weak_catalog']['mean_line'];z=automatic_inputs(d);self.assertEqual(z['status'],'computed_catalog_inputs');self.assertTrue(z['mean_line_conversion_verified']);self.assertEqual(z['mean_line']['cm_mm'],0)
  def test_auto_capacities(self):
   c=capacities(case(),'U');self.assertTrue(c['positive']['MRd_Nmm']);self.assertTrue(c['negative']['MRd_Nmm']);self.assertNotEqual(c['positive']['annex_e']['Me_Nmm'],c['negative']['annex_e']['Me_Nmm'])
  def test_no_critical_source(self):

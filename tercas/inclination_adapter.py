@@ -30,7 +30,7 @@ def adapt_bundle(data,bundle):
   mid=simply_supported_state(data['L_mm'],data['L_mm']/2,q,p,data['L_mm']/2)['normal']
   c['effects_at_midspan']={'left_reaction_N':mid['Rleft_N'],'right_reaction_N':mid['Rright_N'],'V_N':mid['V_N'],'M_Nmm':mid['M_Nmm'],'midspan_moment_Nmm':mid['M_Nmm'],'max_abs_shear_N':max(abs(mid['Rleft_N']),abs(mid['Rright_N']))}
   if c.get('global_envelope') is not None:c['global_envelope']=same_direction_global_envelope(data['L_mm'],q['normal'],p['normal'])
- bundle['notes']+=['Alma perpendicular à cobertura; vento normal ao plano; PP, CP, SC e P verticais decompostos. Sem travamento da telha.', 'Flexão forte permanece calculável; resistência biaxial/flecha paralela não aprovadas sem dados e método aplicáveis ao eixo fraco.']
+ bundle['notes']+=['Alma perpendicular à cobertura; vento normal ao plano; PP, CP, SC e P verticais decompostos. Sem travamento da telha.', 'Flexão forte permanece calculável; resistência biaxial depende dos dados e métodos aplicáveis ao eixo fraco. Flecha paralela fora do escopo desta emissão; não avaliada.']
  return bundle
 
 def evidence(data,q,p,a):
@@ -59,7 +59,7 @@ def direct_evidence(data):
 
 def pending_rows(ev,state):
  if not ev['parallel_demand']:return []
- names=[('Flexão biaxial','NBR 14762 §9.9'),('Cortante paralelo às mesas','Rota não implementada')] if state=='ELU' else [('Flecha paralela à cobertura','Rota não implementada')]
+ names=[('Flexão biaxial','NBR 14762 §9.9'),('Cortante paralelo às mesas','Rota não implementada')] if state=='ELU' else []
  rows_out=[{'Verificação':name,'Situação':'Pendente — componente paralela não verificada','Índice':None,'Demanda / valor':f"q paralelo={ev['q_vector']['parallel']:.6f} kN/m; P paralelo={ev['P_vector']['parallel']/1000:.6f} kN",'Resistência / limite':'Não definida para eixo/sentido','Referência':ref,'Observação':ev['resistance_status']+' Não reutiliza capacidades do eixo forte nem VRd da alma.'} for name,ref in names]
  if state=='ELU' and ev.get('biaxial'):
   from .weak_axis import rows

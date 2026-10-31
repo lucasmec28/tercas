@@ -1,10 +1,15 @@
 from .presentation import fmt
 """Pure SVG, no untrusted markup. Scaled schematic, not fabrication drawing."""
 from html import escape
+from .catalogs import catalog_entry
 
 def svg(data):
  p=data['properties'];h,b,t,lip=[float(p[k]) for k in ['h','bf','t','lip']];scale=min(170/h,150/b);x,y=55,45;H=h*scale;B=b*scale;T=max(2,t*scale);D=lip*scale
  path=f'M{x+B},{y+D} L{x+B},{y} L{x},{y} L{x},{y+H} L{x+B},{y+H} L{x+B},{y+H-D}'
+ # Centroid xg measured from the outer web face (catalogue convention).
+ xg=catalog_entry(data['catalog_index'])['raw_source_values'].get('xg cm')
+ cx=x+(float(xg)*10 if xg is not None else b/2)*scale;cy=y+H/2
+ axes=f'<g id="section-local-axes" stroke="#147d92" stroke-width="1.4"><path d="M{x-15} {cy} H{x+B+25} m-7 -4 l7 4 l-7 4 M{cx} {y+H+15} V{y-10} m-4 7 l4 -7 l4 7" fill="none"/><g fill="#147d92" stroke="none" font-family="Arial" font-size="13"><text x="{x+B+28}" y="{cy+5}">X</text><text x="{cx+8}" y="{y-5}">Y</text></g></g>'
  L=data['L_mm'];a=data['x_uls'];px=340+500*a/max(L,1)
  P=data['P_uls']
  arrow_path=(f'M{px} 75 v55 m-5 -8 l5 8 l5 -8' if P>0 else f'M{px} 130 v-55 m-5 8 l5 -8 l5 8')
@@ -13,8 +18,9 @@ def svg(data):
  return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 280" role="img" aria-label="Seção U ou Ue e viga biapoiada com carga informada">
  <rect width="920" height="280" fill="#fafbfc" rx="14"/>
  <path d="{path}" fill="none" stroke="#e87722" stroke-width="{T}" stroke-linejoin="round"/>
- <g font-family="Arial" font-size="14" fill="#25334a"><text x="25" y="25">Seção transversal</text><text x="20" y="260">h={escape(fmt(h))} · b={escape(fmt(b))} · t={escape(fmt(t))} · D={escape(fmt(lip))} mm</text>
- <text x="340" y="25">Vão e posição da resultante</text><text x="520" y="195">L = {escape(fmt(L))} mm</text><text x="{px-40}" y="65">P = {escape(fmt(data['P_uls']/1000))} kN</text><text x="350" y="240">q = {escape(fmt(data['q_uls']))} kN/m · x = {escape(fmt(a))} mm</text></g>
+ {axes}
+ <g font-family="Arial" font-size="14" fill="#25334a"><text x="25" y="25">Seção transversal</text><text x="20" y="260">h={fmt(h)} · b={fmt(b)} · t={fmt(t)} · D={fmt(lip)} mm</text>
+ <text x="340" y="25">Vão e posição da resultante</text><text x="520" y="195">L = {fmt(L)} mm</text><text x="{px-40}" y="65">P = {fmt(data['P_uls']/1000)} kN</text><text x="350" y="240">q = {fmt(data['q_uls'])} kN/m · x = {fmt(a)} mm</text></g>
  <line x1="340" y1="140" x2="840" y2="140" stroke="#34455f" stroke-width="5"/>
  <path d="M340 143 l-10 18 h20 z M840 143 l-10 18 h20 z" fill="none" stroke="#34455f" stroke-width="2"/>
  {arrow}{marks}

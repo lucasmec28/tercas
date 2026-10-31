@@ -23,4 +23,4 @@ class BoundIntegration(unittest.TestCase):
    if change=='base':r['ELS']['status']='not_evaluated'
    row=self.row();b=apply_bound(row,r,c);self.assertEqual(b['status'],'not_evaluated');self.assertIsNone(row['Índice'])
  def test_inclination_only_normal(self):
-  d=example();d.update(load_mode='area',selected_types=['ELS rara'],inclination={'value':30});r=calculate_batch(d);case=r['cases'][-1];row=next(x for x in case['rows'] if x['Verificação']=='Flecha paralela à cobertura');self.assertIsNone(row['Índice']);self.assertFalse(r['whole_member_approved'])
+  d=example();d.update(load_mode='area',selected_types=['ELS rara'],inclination={'value':30});r=calculate_batch(d);case=r['cases'][-1];self.assertFalse(any(x['Verificação']=='Flecha paralela à cobertura' for x in case['rows']));self.assertFalse(r['whole_member_approved'])

@@ -65,10 +65,10 @@ def governing(cases):
   numeric=[(c,r) for c,r in items if finite(r.get('Índice'))]
   c,r=max(numeric,key=lambda x:x[1]['Índice']) if numeric else items[0]
   entry=copy.deepcopy(r);entry['Combinação']=f"{c['id']} — {c['type']}";entry['q [kN/m]']=c['q_kN_m'];entry['Casos avaliados']=len(numeric)
-  pending=sum(1 for _,rr in items if not finite(rr.get('Índice')) and rr['Situação'] not in ('Não aplicável','Dispensado pela Tabela 14','Não acionado pelo comprimento'))
+  pending=sum(1 for _,rr in items if any(tag in str(rr.get('Situação','')).lower() for tag in ('parcial','pendente','hipótese','provisóri')) or (not finite(rr.get('Índice')) and rr['Situação'] not in ('Não aplicável','Dispensado pela Tabela 14','Não acionado pelo comprimento')))
   entry['Casos pendentes']=pending
   if pending:
-   entry['Situação']='Parcial — '+entry['Situação'];entry['Observação']+=f' {pending} combinação(ões) sem índice; o máximo numérico não cobre essas pendências.'
+   entry['Situação']='Parcial — '+entry['Situação'];entry['Observação']+=f' {pending} combinação(ões) com índice ausente, resultado parcial ou hipótese; o máximo numérico não cobre essas pendências.'
   out.append(entry)
  return out
 
