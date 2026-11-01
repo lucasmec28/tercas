@@ -412,3 +412,14 @@ with st.expander('Abrir entradas JSON',expanded=False):
 
 st.caption('Método documentado na Rev07. Programa de domínio restrito: não dimensiona ligações, torção primária ou sistemas contínuos. Nenhum crédito de travamento da telha.')
 
+
+# Optional experimental laboratory, same page: do not trigger multipage widget cleanup.
+with st.expander('Laboratório FSM experimental — separado do dimensionamento',expanded=False):
+ st.caption('FSM experimental R01-20261101 — assinatura e modos, sem resistência automática')
+ st.caption('Não altera entradas, catálogo ou resultados resistentes da terça. Sem transferência automática de críticos.')
+ if not st.session_state.get('tercas_fsm_lab_open',False):
+  if st.button('Abrir laboratório experimental',key='tercas_fsm_lab_activate'):
+   st.session_state['tercas_fsm_lab_open']=True
+ if st.session_state.get('tercas_fsm_lab_open',False):
+  from experimental_fsm.app_integration.panel import render as render_fsm_laboratory
+  render_fsm_laboratory(st,namespace='tercas_fsm_lab')
