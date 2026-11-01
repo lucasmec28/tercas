@@ -30,7 +30,7 @@ def adapt_bundle(data,bundle):
   mid=simply_supported_state(data['L_mm'],data['L_mm']/2,q,p,data['L_mm']/2)['normal']
   c['effects_at_midspan']={'left_reaction_N':mid['Rleft_N'],'right_reaction_N':mid['Rright_N'],'V_N':mid['V_N'],'M_Nmm':mid['M_Nmm'],'midspan_moment_Nmm':mid['M_Nmm'],'max_abs_shear_N':max(abs(mid['Rleft_N']),abs(mid['Rright_N']))}
   if c.get('global_envelope') is not None:c['global_envelope']=same_direction_global_envelope(data['L_mm'],q['normal'],p['normal'])
- bundle['notes']+=['Alma perpendicular à cobertura; vento normal ao plano; PP, CP, SC e P verticais decompostos. Sem travamento da telha.', 'Flexão forte permanece calculável; resistência biaxial depende dos dados e métodos aplicáveis ao eixo fraco. Flecha paralela fora do escopo desta emissão; não avaliada.']
+ bundle['notes']+=['Vista A→B, boca à direita em 0°; +θ cai para a boca, −θ cai no sentido oposto. Alma perpendicular à cobertura; vento normal ao plano; PP, CP, SC e P verticais decompostos. Sem travamento da telha.', 'Flexão forte permanece calculável; resistência biaxial depende dos dados e métodos aplicáveis ao eixo fraco. Flecha paralela fora do escopo desta emissão; não avaliada.']
  return bundle
 
 def evidence(data,q,p,a):
@@ -46,7 +46,7 @@ def evidence(data,q,p,a):
   for side in (('left','right') if x==a else ('right',)):
    states.append(dict(x_mm=x,side=side,**simply_supported_state(L,x,q,p,a,side)))
  demand=any(abs(v)>1e-12 for v in (q['parallel'],p['parallel']))
- return {'angle':ang,'configuration':cfg,'convention':'Eixos locais: normal à cobertura e paralelo ao caimento; alma normal; sem travamento da telha. M e V abaixo são concomitantes por seção/posição, não máximos independentes.', 'q_vector':q,'P_vector':p,'states':states,'parallel_demand':demand,'resistance_status':'Pendente: propriedades/críticos e resistências do eixo fraco por sentido não fornecidos; sem aprovação biaxial.' if demand else 'Sem demanda paralela neste caso; não equivale a aprovação global.', 'weak_property_provenance':None}
+ return {'angle':ang,'configuration':cfg,'convention':'Eixos locais: normal à cobertura (positivo para dentro) e paralelo à cobertura (positivo para a boca, vista A→B); alma normal; sem travamento da telha. M e V abaixo são concomitantes por seção/posição, não máximos independentes.', 'q_vector':q,'P_vector':p,'states':states,'parallel_demand':demand,'resistance_status':'Pendente: propriedades/críticos e resistências do eixo fraco por sentido não fornecidos; sem aprovação biaxial.' if demand else 'Sem demanda paralela neste caso; não equivale a aprovação global.', 'weak_property_provenance':None}
 
 def direct_evidence(data):
  result={}

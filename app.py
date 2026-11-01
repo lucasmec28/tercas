@@ -177,6 +177,7 @@ with st.expander('Perfil, aço e origem dos dados',expanded=False):
  st.caption('Conferir a convenção de Wx e das propriedades usadas em conjunto. Editar valores não comprova a correspondência física.')
 
 st.subheader('Inclinação da cobertura')
+st.caption('Convenção: seção vista do apoio A para B, boca à direita em 0°. Inclinação positiva: caimento para a boca; negativa: caimento oposto. A seção gira junto com a cobertura; não há espelhamento independente.')
 ic=copy.deepcopy(b.get('inclination',{}))
 c1,c2=st.columns(2)
 with c1:
