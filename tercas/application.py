@@ -142,6 +142,9 @@ def calculate(data):
  result['strong_critical_qualification']=copy.deepcopy(spec['strong_critical_qualification'])
  result['strong_critical_reference']=copy.deepcopy(spec['strong_critical_qualification']['pierin_U_reference'])
  result['critical_warnings']=list(spec['strong_critical_qualification']['warnings'])
+ from .weak_u_assumption import evidence as u_evidence
+ result['weak_sense_assumption']=u_evidence(data)
+ if result['weak_sense_assumption']:result['critical_warnings'].append(result['weak_sense_assumption']['warning'])
  result['coverage_warnings']=[]
  intervals=[]
  for seg in data['segments']:

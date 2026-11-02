@@ -26,7 +26,7 @@ def show_inclination(evidence):
  if evidence.get('weak_axis_capacities'):
   caps=[]
   for sign,c in evidence['weak_axis_capacities'].items():
-   caps.append({'Sentido':{'positive':'My positivo','negative':'My negativo'}[sign],'Estado':'Calculado com dados informados' if c.get('MRd_Nmm') else 'Dados pendentes','Me Anexo E [kN·m]':c.get('annex_e',{}).get('Me_Nmm',0)/1e6 if c.get('annex_e') else None,'MRd fraco [kN·m]':c.get('MRd_Nmm',0)/1e6 if c.get('MRd_Nmm') else None,'Origem / faltas':c.get('provenance',', '.join(c.get('missing',[])))+' '+ ' '.join(c.get('automatic_inputs',{}).get('warnings',[]))})
+   caps.append({'Sentido':{'positive':'My positivo','negative':'My negativo'}[sign],'Estado':('Exploratório — hipótese inferida pendente' if c.get('conditional_assumption') else 'Calculado com dados informados') if c.get('MRd_Nmm') else 'Dados pendentes','Me Anexo E [kN·m]':c.get('annex_e',{}).get('Me_Nmm',0)/1e6 if c.get('annex_e') else None,'MRd fraco [kN·m]':c.get('MRd_Nmm',0)/1e6 if c.get('MRd_Nmm') else None,'Origem / faltas':c.get('provenance',', '.join(c.get('missing',[])))+' '+ ' '.join(c.get('automatic_inputs',{}).get('warnings',[]))})
   st.dataframe(display_frame(caps),hide_index=True,width='stretch')
  records=[]
  for state in evidence.get('states',[]):
@@ -309,8 +309,34 @@ with st.expander('Eixo fraco — dados existentes e críticos por sentido',expan
  from tercas.weak_catalog import critical_hypothesis
  from tercas.weak_axis import provisional_hypothesis
  provisional=critical_hypothesis(index)
+ from tercas.weak_u_assumption import covered as u_covered,marked as u_marked,selected as u_selected,input_row as u_input_row,reasons as u_reasons,WARNING as U_WARNING
+ u_src=copy.deepcopy(b.get('weak_axis',{}).get('positive',provisional['positive']))
+ u_was_selected=u_selected(u_src);u_active=False;u_restored=None
+ u_backup_key=f'u_pierin_manual_backup_{r}'
+ if u_covered(index) or u_marked(u_src):
+  st.caption('Opção em estudo, limitada a quatro geometrias com refinamento e modos revisados. É recorte de evidência, não limite normativo. A comparação 124/124 não confirma o sentido declarado pela fonte nem a resistência.')
+  u_active=st.checkbox('Usar explicitamente a hipótese inferida U/alma — cálculo exploratório, pendente de confirmação',value=u_was_selected,key=f'u_pierin_optin_{r}',disabled=not u_covered(index) and not u_was_selected)
+  if u_active:
+   if not u_was_selected:
+    st.session_state[u_backup_key]=copy.deepcopy(u_src if not u_marked(u_src) else provisional['positive'])
+    u_src=u_input_row(index)
+   st.warning(U_WARNING)
+   st.caption('Seleção vinculada somente a esta seção e My positivo. A exportação registra a escolha; reabrir JSON mantém o aviso. Trocar perfil ou comparar todo o catálogo não transfere esta opção. Ao desligar, restaura-se o rascunho manual desta sessão; sem ele, os campos voltam vazios.')
+   for reason in u_reasons(d,catalog_entry(index)['family'],'positive',u_src):st.warning('Hipótese não aplicável nesta configuração: '+reason)
+  elif u_was_selected:
+   u_restored=copy.deepcopy(st.session_state.pop(u_backup_key,provisional['positive']))
+ elif catalog_entry(index)['family']=='U':
+  st.caption('Hipótese inferida U/alma indisponível nesta proposta: fora das quatro geometrias com refinamento/modal revisado. Referência oficial permanece disponível, sem atribuição de sentido.')
  for sign,label in [('positive','My positivo — alma comprimida'),('negative','My negativo — bordas comprimidas')]:
   src=b.get('weak_axis',{}).get(sign,provisional[sign])
+  if sign=='positive' and u_restored is not None:src=u_restored
+  if sign=='positive' and u_active:
+   st.markdown('**'+label+' — hipótese inferida selecionada**')
+   st.caption('Ml,y da seleção [kN·m]: '+(fmt(u_src['Ml_Nmm']/1e6) if u_src.get('Ml_Nmm') is not None else 'ausente')+'; campo vinculado à referência, sem edição/escala nesta opção.')
+   st.caption(u_src.get('provenance','Origem ausente'))
+   st.caption('Condição da rota existente: U simples, sem painel na mesa tracionada; não aplicabilidade distorcional conforme §9.3. Não se transfere a dispensa da Tabela 14 forte ao eixo fraco. Conferir essa condição no caso estudado.')
+   d['weak_axis'][sign]=copy.deepcopy(u_src)
+   continue
   st.markdown('**'+label+'**');out={};cols=st.columns(2)
   for i,(key,label2) in enumerate([('Ml_Nmm','Ml,y local'),('Mdist_Nmm','Mdist,y distorcional')]):
    with cols[i]:
@@ -328,7 +354,7 @@ with st.expander('Eixo fraco — dados existentes e críticos por sentido',expan
   out['provisional_hypothesis']=(inherited_hypothesis and not replace_hypothesis) or legacy_hypothesis
   if replace_hypothesis and legacy_hypothesis:st.warning('A origem ainda identifica a hipótese provisória. Substitua pela origem própria dos críticos; o selo e a restrição de compatibilidade permanecem enquanto este texto estiver presente.')
   d['weak_axis'][sign]=out
- st.caption('Ue: mantém-se a hipótese previamente autorizada de atribuição do Ml,y oficial a My positivo (alma comprimida), apoiada no comparador pyCUFSM e ainda a conferir; o valor da tabela não é uma hipótese, mas seu sentido aplicado é. U: os novos valores oficiais não recebem sentido automático. Nenhum valor é copiado para ambos os sentidos; Mdist,y não usa a tabela forte. A ausência afeta só a rota correspondente.')
+ st.caption('Ue: mantém-se a hipótese previamente autorizada de atribuição do Ml,y oficial a My positivo (alma comprimida), apoiada no comparador pyCUFSM e ainda a conferir; o valor da tabela não é uma hipótese, mas seu sentido aplicado é. U: os novos valores oficiais não recebem sentido automático; a opção exploratória exige escolha explícita e mantém a pendência de confirmação. Nenhum valor é copiado para ambos os sentidos; Mdist,y não usa a tabela forte. A ausência afeta só a rota correspondente.')
 
 with st.expander('Limite de flecha',expanded=False):
  if d['load_mode']=='direct':

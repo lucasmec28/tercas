@@ -61,6 +61,12 @@ def strong_reference_report(doc,reference):
 
 def inclination_inputs(doc,data,reference=None):
  weak_reference_report(doc,reference)
+ from .weak_u_assumption import evidence as u_evidence
+ inference=u_evidence(data)
+ if inference:
+  doc.add_heading('Opção exploratória — hipótese U/alma inferida',2)
+  doc.add_paragraph(inference['warning'])
+  doc.add_paragraph('Registro explícito e limites: '+display(inference))
  doc.add_paragraph('Eixos locais da seção: X horizontal (maior inércia), Y vertical (menor inércia). Flecha paralela à cobertura fora do escopo desta emissão: não avaliada e não incluída na lista de verificações.')
  ic=data.get('inclination',{'value':0.,'unit':'degrees','spacing_basis':'roof','permanent_basis':'roof','live_basis':'horizontal','wind_basis':'roof'})
  if ic:

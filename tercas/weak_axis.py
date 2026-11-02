@@ -2,16 +2,18 @@
 import math
 from .inclination import annex_e_critical, weak_resistance, biaxial_interaction, number
 from .core.travamentos_nbr import moment
+from .weak_u_assumption import FIELD as U_FIELD, marked as u_marked, validate_token as validate_u_token, reasons as u_reasons, evidence as u_evidence, WARNING as U_WARNING
 
 FIELDS=('W_mm3','Wc_mm3','Ml_Nmm','Mdist_Nmm','Nex_N','Nez_N','r0_mm','j_mm','Cm')
 def provisional_hypothesis(s):
- return s.get('provisional_hypothesis',False) or 'HIPÓTESE PROVISÓRIA' in s.get('provenance','').upper()
+ return u_marked(s) or s.get('provisional_hypothesis',False) or 'HIPÓTESE PROVISÓRIA' in s.get('provenance','').upper()
 
 def validate(data):
  cfg=data.get('weak_axis',{})
  if not isinstance(cfg,dict) or set(cfg)-{'positive','negative'}:raise ValueError('Eixo fraco: configuração inválida.')
  for sign,s in cfg.items():
-  if not isinstance(s,dict) or set(s)-set(FIELDS)-{'Cs','provenance','plain_u_no_distortion','provisional_hypothesis'}:raise ValueError('Eixo fraco: campos inválidos.')
+  if not isinstance(s,dict) or set(s)-set(FIELDS)-{'Cs','provenance','plain_u_no_distortion','provisional_hypothesis',U_FIELD}:raise ValueError('Eixo fraco: campos inválidos.')
+  validate_u_token(s)
   for k in FIELDS:
    if s.get(k) is not None:number(s[k],k,positive=k not in ('j_mm',))
   if s.get('Cm') is not None and s['Cm']!=1:raise ValueError('Nesta rota simplificada, Cm = 1,0. Redução requer enquadramento do diagrama e não é aceita automaticamente.')
@@ -33,7 +35,11 @@ def capacities(data,family):
   # Rev07 section 5 records Pierin's tabulated criticals at E=200 GPa.
   # This is a provenance guard for that provisional import, not a material
   # restriction or a scaling rule. Manually qualified inputs stay explicit.
-  if provisional_hypothesis(s):
+  if u_marked(s):
+   reasons=u_reasons(data,family,sign,s)
+   if reasons:
+    out[sign]={'status':'not_evaluated','missing':[U_WARNING+' '+'; '.join(reasons)],'conditional_assumption':u_evidence(data),'design_approved':False};continue
+  elif provisional_hypothesis(s):
    from .weak_pierin import reference_for_inputs
    from .catalogs import catalog_entry
    reference=reference_for_inputs(data);reasons=list(reference.get('compatibility_reasons',[]))
@@ -59,6 +65,7 @@ def capacities(data,family):
   if missing:out[sign]={'status':'not_evaluated','missing':missing};continue
   me=annex_e_critical(**{k:s[k] for k in ('Nex_N','Nez_N','r0_mm','j_mm','Cs','Cm')},provenance=s['provenance'])
   out[sign]=weak_resistance(W_mm3=s['W_mm3'],Wc_mm3=s['Wc_mm3'],fy_MPa=data['properties']['fy_MPa'],Me_Nmm=me['Me_Nmm'],Ml_Nmm=s['Ml_Nmm'],Mdist_Nmm=s.get('Mdist_Nmm'),distortional_not_applicable=s.get('plain_u_no_distortion',False),family=family,provenance=s['provenance'])
+  if u_marked(s):out[sign].update(conditional_assumption=u_evidence(data),design_approved=False,source_sign_declared=False)
   if auto is not None:out[sign]['automatic_inputs']=auto
   out[sign]['annex_e']=dict(me,Cm_adopted=1.0,Cm_policy='Rota simplificada: Cm=1 em todas as combinações, sem redução automática.')
  return out
@@ -125,12 +132,17 @@ def integrate(result):
  if not ev['parallel_demand']:return
  fam=result['input_snapshot']['selected_section']['family'];caps=capacities(d,fam);rx=strong_capacity(result)
  z=interaction_envelope(d['L_mm'],d['q_uls'],d['P_uls'],d.get('q_parallel_uls',0),d.get('P_parallel_uls',0),d['x_uls'],rx,caps)
+ ev['u_pierin_assumption']=u_evidence(d)
  ev['provisional_hypothesis']=any(provisional_hypothesis(s) for s in d.get('weak_axis',{}).values())
  ev['weak_axis_capacities']=caps;ev['biaxial']=z;ev['strong_capacity_Nmm']=rx
  ev['resistance_status']='Interação §9.9 calculada na posição fixa de P; resistências condicionadas aos dados rastreados. Sem aprovação global.' if z['status']=='computed_fixed_position' else 'Interação §9.9 pendente: '+', '.join({'positive':'resistência para My positivo','negative':'resistência para My negativo','strong':'resistência completa do eixo forte'}.get(k,k) for k in z['missing'])
 
+ if ev.get('u_pierin_assumption'):ev['resistance_status']=U_WARNING+' '+ev['resistance_status']
+
 def rows(ev):
  z=ev.get('biaxial',{});g=z.get('governing') or {};complete=z.get('status')=='computed_fixed_position';idx=g.get('index') if complete or g.get('index',0)>1 else None
  status=('Não atende' if idx>1 else 'Atende ao critério calculado') if complete and idx is not None else 'Parcial — faltam resistências por eixo/sentido'
- if ev.get('provisional_hypothesis'):status+=' — hipótese provisória, a conferir'
+ if ev.get('u_pierin_assumption'):
+  status=('Exploratório — índice calculado maior que 1' if idx is not None and idx>1 else 'Exploratório — sem conclusão de atendimento')+' — hipótese inferida, pendente de confirmação'
+ elif ev.get('provisional_hypothesis'):status+=' — hipótese provisória, a conferir'
  return {'Verificação':'Flexão biaxial','Situação':status,'Índice':idx,'Demanda / valor':f"Seção x={g.get('x_mm','—')} mm; Mx={g.get('Mx_Nmm','—')} Nmm; My={g.get('My_Nmm','—')} Nmm",'Resistência / limite':'|Mx|/MxRd + |My|/MyRd ≤ 1; N=0','Referência':'NBR 14762 §9.9; Anexo E; §9.8.2','Observação':ev['resistance_status']+' Menor resistência forte dos trechos, conservadora. Momentos concomitantes; não soma máximos independentes. Dados fracos nunca importados bilateralmente de Pierin.'}

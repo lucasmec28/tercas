@@ -83,7 +83,8 @@ def calculate_batch(data):
   cases.append({'combination':combo,'rows':rs,'evidence':evidence,'warnings':result['coverage_warnings']+result.get('critical_warnings',[])+result['numerical_warnings'],'scope_notes':[mobile['scope']] if mobile else []})
  from .weak_pierin import reference_for_inputs
  from .strong_pierin import qualify
- return {'strong_critical_reference':qualify(data)[1],'weak_critical_reference':reference_for_inputs(data),'schema':'tercas_batch_results_v1','version':VERSION,'project':data['project'],'synthetic':data['synthetic'],'input_fingerprint':fingerprint(data),'input_data':copy.deepcopy(data),'load_bundle':bundle,'cases':cases,'whole_member_approved':False,'summary':governing(cases)}
+ from .weak_u_assumption import evidence as u_evidence
+ return {'strong_critical_reference':qualify(data)[1],'weak_sense_assumption':u_evidence(data),'weak_critical_reference':reference_for_inputs(data),'schema':'tercas_batch_results_v1','version':VERSION,'project':data['project'],'synthetic':data['synthetic'],'input_fingerprint':fingerprint(data),'input_data':copy.deepcopy(data),'load_bundle':bundle,'cases':cases,'whole_member_approved':False,'summary':governing(cases)}
 
 def governing(cases):
  groups={}
