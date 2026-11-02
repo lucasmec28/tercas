@@ -33,8 +33,20 @@ def capacities(data,family):
   # Rev07 section 5 records Pierin's tabulated criticals at E=200 GPa.
   # This is a provenance guard for that provisional import, not a material
   # restriction or a scaling rule. Manually qualified inputs stay explicit.
-  if provisional_hypothesis(s) and data['properties'].get('E_MPa')!=200000.:
-   out[sign]={'status':'not_evaluated','missing':['Hipótese provisória de Ml,y tabulado referida a E=200000 MPa; E alterado exige crítico compatível com origem própria, sem escala automática.']};continue
+  if provisional_hypothesis(s):
+   from .weak_pierin import reference_for_inputs
+   from .catalogs import catalog_entry
+   reference=reference_for_inputs(data);reasons=list(reference.get('compatibility_reasons',[]))
+   if reference['status']=='not_tabulated':reasons.append('Sem linha exata de Pierin para a hipótese herdada.')
+   if family!='Ue' or catalog_entry(data['catalog_index'])['family']!='Ue' or sign!='positive':
+    reasons.append('Hipótese automática autorizada somente para Ue com My positivo/alma comprimida; não transferir família ou sentido.')
+   if s.get('Ml_Nmm')!=reference.get('Mly_Nmm'):
+    reasons.append('Ml,y informado difere do valor tabelado da hipótese; substituição exige entrada manual explícita e origem própria.')
+   origin=s.get('provenance','');row=catalog_entry(data['catalog_index'])['source_workbook_row']
+   if 'planilha V03 linha ' in origin and f'planilha V03 linha {row};' not in origin:
+    reasons.append('Origem automática do Ml,y não corresponde à seção/linha selecionada.')
+   if reasons:
+    out[sign]={'status':'not_evaluated','missing':['Hipótese provisória de sentido do Ml,y tabelado: '+'; '.join(reasons)+' Exige crítico compatível com origem própria, sem escala automática.'],'reference':reference};continue
   if auto is not None:
    if auto['status']!='computed_catalog_inputs':
     out[sign]={'status':'not_evaluated','missing':auto['missing'],'automatic_inputs':auto};continue

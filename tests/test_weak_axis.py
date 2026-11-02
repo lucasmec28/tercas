@@ -1,6 +1,6 @@
 import unittest,random,math,copy
 from tercas.weak_axis import interaction_envelope,capacities,validate
-from tercas.application import example,calculate,rows
+from tercas.application import example,calculate,rows,defaults
 from tercas.batch import calculate_batch
 from tercas.core.travamentos_nbr import moment
 
@@ -8,6 +8,15 @@ def props():
  return dict(W_mm3=10000.,Wc_mm3=20000.,Ml_Nmm=4e6,Mdist_Nmm=5e6,Nex_N=1e6,Nez_N=1e6,r0_mm=20.,j_mm=-10.,Cm=1.,Cs=1,provenance='SYNTHETIC same axis/section sign; regression only')
 def configured():
  d=example();d['q_parallel_uls']=.1;d['weak_axis']={s:props() for s in ('positive','negative')};return d
+
+def provisional_configured():
+ # A real Ue catalogue identity/material is necessary for automatic hypothesis.
+ # Remaining actions/weak properties are synthetic label-test data only.
+ d=configured();base=defaults(0)
+ for key in ('catalog_index','properties','Ml_Nmm','Mdist_Nmm','critical_origin'):
+  d[key]=copy.deepcopy(base[key])
+ d['weak_axis']['positive'].update(provisional_hypothesis=True,Ml_Nmm=910000.)
+ return d
 
 class WeakTests(unittest.TestCase):
  def test_word_provenance(self):
@@ -36,11 +45,13 @@ class WeakTests(unittest.TestCase):
    if ev['parallel_demand']:
     self.assertTrue(ev.get('weak_axis_capacities'))
     for cap in ev['weak_axis_capacities'].values():self.assertEqual(cap['annex_e']['Cm_adopted'],1)
+ # Label tests use the actual adopted Ue0 table value, not an arbitrary
+ # synthetic value mislabeled as an automatic Pierin hypothesis.
  def test_provisional_label_even_when_index_passes(self):
-  d=configured();d.update(q_uls=.01,P_uls=0,q_parallel_uls=.01);d['weak_axis']['positive']['provisional_hypothesis']=True
+  d=provisional_configured();d.update(q_uls=.01,P_uls=0,q_parallel_uls=.01)
   row=next(x for x in rows(calculate(d)) if x['Verificação']=='Flexão biaxial');self.assertLess(row['Índice'],1);self.assertIn('hipótese provisória',row['Situação'])
  def test_provisional_label_mobile_and_summary(self):
-  d=configured();d['weak_axis']['positive']['provisional_hypothesis']=True;d['load_mode']='area';d['selected_types']=['ELU normal'];d['inclination']={'value':10,'unit':'degrees'}
+  d=provisional_configured();d['load_mode']='area';d['selected_types']=['ELU normal'];d['inclination']={'value':10,'unit':'degrees'}
   z=calculate_batch(d)
   for c in z['cases']:
    for row in c['rows']:
@@ -50,7 +61,7 @@ class WeakTests(unittest.TestCase):
   from tercas.report import word,batch_word
   from docx import Document
   from io import BytesIO
-  d=configured();d['weak_axis']['positive']['provisional_hypothesis']=True
+  d=provisional_configured()
   for blob in [word(calculate(d))]:
    doc=Document(BytesIO(blob));rows_text=[' '.join(c.text for c in row.cells) for table in doc.tables for row in table.rows];self.assertTrue(any('Flexão biaxial' in t and 'hipótese provisória' in t for t in rows_text))
   d['load_mode']='area';d['selected_types']=['ELU normal'];d['inclination']={'value':10,'unit':'degrees'}

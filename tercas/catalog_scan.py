@@ -112,6 +112,7 @@ All 209 entries are selected by default; no hidden cut-off or load/combination c
                 warnings = result['coverage_warnings'] + result.get('critical_warnings', []) + result['numerical_warnings']
             row.update(summarize(checks, warnings))
             row['checks'] = checks
+            row['weak_critical_reference'] = copy.deepcopy(result.get('weak_critical_reference'))
         except (ValueError, TypeError, KeyError, ArithmeticError) as exc:
             row.update(status='Não calculado — dados insuficientes ou incompatíveis',
                        utilization_percent=None, governing_check=None, governing_combination=None,

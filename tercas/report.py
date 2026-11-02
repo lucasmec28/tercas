@@ -32,7 +32,20 @@ def inclination_report(doc,evidence):
    doc.add_paragraph(label+': '+ '; '.join(title+'='+fmt(v[k]/scale) for k,title,scale in [('M_Nmm','M [kN·m]',1e6),('V_N','V [kN]',1000),('Rleft_N','Reação esquerda [kN]',1000),('Rright_N','Reação direita [kN]',1000)] if k in v))
  doc.add_paragraph('A tabela de seções ilustra solicitações locais. Quando disponível, o resultado §9.9 acima identifica o máximo concomitante para P fixa, calculado separadamente. No modo por área, P é avaliada nas duas posições prescritas, sem varredura intermediária; no modo direto, na posição informada. Não há conclusão biaxial sem resistência aplicável por eixo e sentido; os críticos fortes não são reutilizados no eixo fraco.')
 
-def inclination_inputs(doc,data):
+def weak_reference_report(doc,reference):
+ if not reference:return
+ doc.add_heading('Ml,y — referência oficial adotada: Pierin2013',2)
+ if reference.get('status')=='not_tabulated':
+  doc.add_paragraph(reference['reason']);return
+ doc.add_paragraph('Ml,y tabelado = '+fmt(reference['Mly_Nmm']/1e6)+' kN·m; Tabela '+str(reference['table'])+', p'+str(reference['printed_page'])+'/PDF'+str(reference['PDF_page'])+'. Geometria nominal: '+display(reference['dimensions_mm'])+'.')
+ doc.add_paragraph(reference['title']+'; '+reference['url'])
+ doc.add_paragraph('Fonte: E=200000 MPa, apoios simples e cantos retos. G e ν não explicitados; conversão exata do modelo INSTAB para linha média não demonstrada. O G original do app é detector de alteração, não dado atribuído à fonte.')
+ doc.add_paragraph('Valor oficial da referência adotada não é resistência nem qualificação de sentido. A tabela não explicita o lado comprimido; Ue conserva somente a hipótese previamente autorizada para alma comprimida. Novos valores U não são atribuídos automaticamente. Sem importação bilateral ou Mdist,y presumido.')
+ for reason in reference.get('compatibility_reasons',[]):doc.add_paragraph('Incompatibilidade da configuração atual: '+reason)
+ doc.add_paragraph('Identidade do PDF fonte SHA256: '+reference['source_pdf_sha256'])
+
+def inclination_inputs(doc,data,reference=None):
+ weak_reference_report(doc,reference)
  doc.add_paragraph('Eixos locais da seção: X horizontal (maior inércia), Y vertical (menor inércia). Flecha paralela à cobertura fora do escopo desta emissão: não avaliada e não incluída na lista de verificações.')
  ic=data.get('inclination',{'value':0.,'unit':'degrees','spacing_basis':'roof','permanent_basis':'roof','live_basis':'horizontal','wind_basis':'roof'})
  if ic:
@@ -69,7 +82,7 @@ def word(result):
   doc.add_paragraph(text,style='List Bullet')
  for warning in result.get('coverage_warnings',[])+result.get('critical_warnings',[]):doc.add_paragraph(warning)
  if result.get('numerical_warnings'):doc.add_paragraph('Aviso numérico na integração da flecha: critério ELS não concluído.')
- inclination_inputs(doc,result['input_data'])
+ inclination_inputs(doc,result['input_data'],result.get('weak_critical_reference'))
  if result.get('inclination_evidence'):
   doc.add_heading('Solicitações locais simultâneas',1);inclination_report(doc,result['inclination_evidence'])
  doc.add_heading('Resultados por verificação',1)
@@ -136,7 +149,7 @@ def batch_word(result):
  doc.add_paragraph('Origem das propriedades: '+d['property_origin'])
  doc.add_paragraph('Críticos: '+d['critical_origin'])
  doc.add_paragraph('Vão [mm]: '+display(d['L_mm']))
- inclination_inputs(doc,d)
+ inclination_inputs(doc,d,result.get('weak_critical_reference'))
  labels={'mass_kg_m':'Massa linear [kg/m]','spacing_m':'Distância entre terças [m]','permanent_kgf_m2':'Permanente [kgf/m²]','live_kgf_m2':'Sobrecarga [kgf/m²]','wind_up_kgf_m2':'Vento para cima [kgf/m²]','wind_down_kgf_m2':'Vento para baixo [kgf/m²]'}
  for k,v in result['load_bundle']['inputs'].items():doc.add_paragraph(f'{labels.get(k,k)}: {display(v)}')
  doc.add_paragraph('Área → linha pela distância entre terças; PP uma única vez pela massa linear. Vento para cima negativo. As 48 combinações de origem são as fornecidas por Lucas em 31/10/2026, filtradas pelos tipos selecionados. Adicionam-se quatro ELU G+1,5P e uma ELS rara G+P, conforme seleção, com P=1 kN isolada de outras variáveis. Cada combinação com P é calculada em duas posições: centro e limite junto ao apoio (x→0+). Não há varredura intermediária.')

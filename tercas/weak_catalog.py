@@ -74,6 +74,11 @@ def automatic_inputs(data):
  return {'status':'computed_catalog_inputs','catalog_convention_pending':bool(e.get('source_geometry_convention_unresolved',True)),'mean_line_conversion_verified':mode=='catalog','geometry_mode':mode,'warnings':warnings,'geometry_basis':geom['origin'],'checks':checks,'geometry':gp,'mean_line':geom,'catalog_properties':{'W_published_mm3':W,'xg_mm':xg,'x0_mm':x0,'r0_mm':r0},'Lx_mm':lx,'Lz_mm':lz,'signs':signs,'convention':'My positivo: alma comprimida (Cs=+1); My negativo: bordas/lábios comprimidos (Cs=-1). Orientação deve corresponder aos eixos locais.'}
 
 def critical_hypothesis(index):
- """User-authorized provisional interpretation, NOT bilateral qualification."""
- e=catalog_entry(index);v=e['critical_values'].get('Mly_Nmm')
- return {'positive':{'provisional_hypothesis':v is not None,'Ml_Nmm':v,'Mdist_Nmm':None,'plain_u_no_distortion':e['family']=='U','provenance':(f"HIPÓTESE PROVISÓRIA autorizada: Ml,y tabulado interpretado com alma comprimida; planilha V03 linha {e['source_workbook_row']}; {e['critical_source']}. Comparação pyCUFSM de Ue 200x75x20x2 indica este sentido, diferença ~1,94%, não validação de todos os perfis. Conferência por exemplos CBCA pendente." if v is not None else '')},'negative':{'Ml_Nmm':None,'Mdist_Nmm':None,'plain_u_no_distortion':e['family']=='U','provenance':''}}
+ """Official table value != qualified sense. Preserve only prior Ue hypothesis."""
+ from .weak_pierin import reference_for_index
+ e=catalog_entry(index);ref=reference_for_index(index)
+ # Lucas adopted Pierin values as the official app reference. That decision does
+ # not supply a missing bending sense. New U values are displayed, not assigned.
+ v=ref['Mly_Nmm'] if e['family']=='Ue' else None
+ origin=(f"HIPÓTESE PROVISÓRIA autorizada SOMENTE de sentido: Ml,y é valor oficial da referência adotada Pierin2013, Tabela {ref.get('table')}, p{ref.get('printed_page')}/PDF{ref.get('PDF_page')}; interpretado com alma comprimida; planilha V03 linha {e['source_workbook_row']}; {e['critical_source']}. Comparação pyCUFSM Ue200x75x20x2 apoia este sentido, não valida todo catálogo. O sentido não é explicitado na tabela; Mdist,y continua independente." if v is not None else '')
+ return {'positive':{'provisional_hypothesis':v is not None,'Ml_Nmm':v,'Mdist_Nmm':None,'plain_u_no_distortion':e['family']=='U','provenance':origin},'negative':{'Ml_Nmm':None,'Mdist_Nmm':None,'plain_u_no_distortion':e['family']=='U','provenance':''}}

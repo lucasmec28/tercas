@@ -1,0 +1,3332 @@
+{
+  "schema": "pierin_2013_weak_reference_v1",
+  "adopted_as_app_reference": true,
+  "adoption_date": "2026-11-02",
+  "adoption_authority": "Lucas: valores tabelados em Pierin autorizados como referência oficial no app; não presume sentido ou validação geral",
+  "title": "Pierin, Silva e La Rovere (2013) — Forças Normais e Momentos Fletores Críticos de Perfis Formados a Frio",
+  "url": "https://www.researchgate.net/publication/265207005_Forcas_Normais_e_Momentos_Fletores_Criticos_de_Perfis_Formados_a_Frio",
+  "source_pdf_sha256": "2ff5f67f201e00ddb31fdb7370a8077bc9e27fb9ac553cb0c5036ab9ad9d2d73",
+  "source_inventory_sha256": "5b4a66f66541aa21524aa0a33dc11c695b57f3ebb043c2b0f13e663ebe4421b7",
+  "E_MPa": 200000.0,
+  "G_MPa": null,
+  "nu": null,
+  "boundary": "simplesmente apoiado",
+  "corners": "retos",
+  "source_geometry_to_mean_line": "não explicitada",
+  "source_sign": "não explicitado",
+  "meaning": "Momento crítico local elástico em torno de y; não é resistência de cálculo nem indicação bilateral.",
+  "entries": [
+    {
+      "id": "Pierin2013_T2_planilha_v03_r5",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 50.0,
+        "bf": 25.0,
+        "lip": 10.0,
+        "t": 1.2
+      },
+      "Mly_Nmm": 910000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "50 x 25 x 10 x 1,20     86,96      95,51        4,51         2,81          0,91",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r6",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 50.0,
+        "bf": 25.0,
+        "lip": 10.0,
+        "t": 1.5
+      },
+      "Mly_Nmm": 1770000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "50 x 25 x 10 x 1,50    167,79     154,62        8,70         4,51          1,77",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r7",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 50.0,
+        "bf": 25.0,
+        "lip": 10.0,
+        "t": 2.0
+      },
+      "Mly_Nmm": 4160000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "50 x 25 x 10 x 2,00    368,58     290,84        20,01        8,40          4,16",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r8",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 50.0,
+        "bf": 25.0,
+        "lip": 10.0,
+        "t": 2.25
+      },
+      "Mly_Nmm": 5880000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "50 x 25 x 10 x 2,25    520,84     378,53        27,89       10,88          5,88",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r9",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 50.0,
+        "bf": 25.0,
+        "lip": 10.0,
+        "t": 2.65
+      },
+      "Mly_Nmm": 9540000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "50 x 25 x 10 x 2,65    836,40     547,38          ‐‐‐‐      15,62          9,54",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r10",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 50.0,
+        "bf": 25.0,
+        "lip": 10.0,
+        "t": 3.0
+      },
+      "Mly_Nmm": 13720000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "50 x 25 x 10 x 3,00    1187,74    726,23          ‐‐‐‐      20,60          13,72",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r11",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 75.0,
+        "bf": 40.0,
+        "lip": 15.0,
+        "t": 1.2
+      },
+      "Mly_Nmm": 980000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "75 x 40 x 15 x 1,20     55,27      89,68        4,27         3,88          0,98",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r12",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 75.0,
+        "bf": 40.0,
+        "lip": 15.0,
+        "t": 1.5
+      },
+      "Mly_Nmm": 1900000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "75 x 40 x 15 x 1,50    107,75     143,66        8,29         6,18          1,90",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r13",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 75.0,
+        "bf": 40.0,
+        "lip": 15.0,
+        "t": 2.0
+      },
+      "Mly_Nmm": 4500000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "75 x 40 x 15 x 2,00    254,45     265,86        19,44       11,34          4,50",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r14",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 75.0,
+        "bf": 40.0,
+        "lip": 15.0,
+        "t": 2.25
+      },
+      "Mly_Nmm": 6390000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "75 x 40 x 15 x 2,25    360,94     343,33        27,49       14,57          6,39",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r15",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 75.0,
+        "bf": 40.0,
+        "lip": 15.0,
+        "t": 2.65
+      },
+      "Mly_Nmm": 10410000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "75 x 40 x 15 x 2,65    586,37     490,11        44,30       20,70          10,41",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r16",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 75.0,
+        "bf": 40.0,
+        "lip": 15.0,
+        "t": 3.0
+      },
+      "Mly_Nmm": 15050000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "75 x 40 x 15 x 3,00    847,53     645,28        63,26       27,11          15,05",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r17",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 40.0,
+        "lip": 17.0,
+        "t": 1.2
+      },
+      "Mly_Nmm": 710000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "100 x 40 x 17 x 1,20    37,17      98,93        5,48         5,27          0,71",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r18",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 40.0,
+        "lip": 17.0,
+        "t": 1.5
+      },
+      "Mly_Nmm": 1390000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "100 x 40 x 17 x 1,50    72,46     130,03        10,66        8,41          1,39",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r19",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 40.0,
+        "lip": 17.0,
+        "t": 2.0
+      },
+      "Mly_Nmm": 3280000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "100 x 40 x 17 x 2,00   170,82     240,76        25,11       15,45          3,28",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r20",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 40.0,
+        "lip": 17.0,
+        "t": 2.25
+      },
+      "Mly_Nmm": 4670000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "100 x 40 x 17 x 2,25   242,78     310,64        35,58       19,87          4,67",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r21",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 40.0,
+        "lip": 17.0,
+        "t": 2.65
+      },
+      "Mly_Nmm": 7580000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "100 x 40 x 17 x 2,65   394,49     444,88        57,60       28,27          7,58",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r22",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 40.0,
+        "lip": 17.0,
+        "t": 3.0
+      },
+      "Mly_Nmm": 10960000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "100 x 40 x 17 x 3,00   569,22     584,89        82,67       37,03          10,96",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r23",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 40.0,
+        "lip": 17.0,
+        "t": 3.35
+      },
+      "Mly_Nmm": 15210000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "100 x 40 x 17 x 3,35   788,23     747,51       113,43       47,14          15,21",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r24",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 50.0,
+        "lip": 17.0,
+        "t": 1.2
+      },
+      "Mly_Nmm": 900000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "100 x 50 x 17 x 1,20    39,69      80,47        4,59         4,61          0,90",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r25",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 50.0,
+        "lip": 17.0,
+        "t": 1.5
+      },
+      "Mly_Nmm": 1750000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "100 x 50 x 17 x 1,50    77,37     128,77        8,93         7,33          1,75",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r26",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 50.0,
+        "lip": 17.0,
+        "t": 2.0
+      },
+      "Mly_Nmm": 4139999.9999999995,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "100 x 50 x 17 x 2,00   183,07     237,89        21,00       13,44          4,14",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r27",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 50.0,
+        "lip": 17.0,
+        "t": 2.25
+      },
+      "Mly_Nmm": 5880000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "100 x 50 x 17 x 2,25   260,17     306,91        29,73       17,25          5,88",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r28",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 50.0,
+        "lip": 17.0,
+        "t": 2.65
+      },
+      "Mly_Nmm": 9570000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "100 x 50 x 17 x 2,65   423,49     438,45        48,10       24,49          9,57",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r29",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 50.0,
+        "lip": 17.0,
+        "t": 3.0
+      },
+      "Mly_Nmm": 13860000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "100 x 50 x 17 x 3,00   612,14     575,60        69,02       32,04          13,86",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r30",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 50.0,
+        "lip": 17.0,
+        "t": 3.35
+      },
+      "Mly_Nmm": 19230000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "100 x 50 x 17 x 3,35   847,59     736,27        94,77       40,71          19,23",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r31",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 50.0,
+        "lip": 17.0,
+        "t": 2.0
+      },
+      "Mly_Nmm": 3200000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "125 x 50 x 17 x 2,00   132,56     207,10        25,12       15,98          3,20",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r32",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 50.0,
+        "lip": 17.0,
+        "t": 2.25
+      },
+      "Mly_Nmm": 4550000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "125 x 50 x 17 x 2,25   188,40     267,92        35,59       20,57          4,55",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r33",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 50.0,
+        "lip": 17.0,
+        "t": 2.65
+      },
+      "Mly_Nmm": 7420000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "125 x 50 x 17 x 2,65   306,68     384,19        57,53       29,31          7,42",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r34",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 50.0,
+        "lip": 17.0,
+        "t": 3.0
+      },
+      "Mly_Nmm": 10720000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "125 x 50 x 17 x 3,00   442,53     506,44        82,46       38,40          10,72",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r35",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 50.0,
+        "lip": 17.0,
+        "t": 3.35
+      },
+      "Mly_Nmm": 14880000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "125 x 50 x 17 x 3,35   613,93     649,98       112,86       48,97          14,88",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r36",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 50.0,
+        "lip": 20.0,
+        "t": 3.75
+      },
+      "Mly_Nmm": 21260000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "125 x 50 x 20 x 3,75   879,48     895,65       160,54       69,71          21,26",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r37",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 60.0,
+        "lip": 20.0,
+        "t": 2.0
+      },
+      "Mly_Nmm": 3200000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "150 x 60 x 20 x 2,00   110,38     198,64        25,22       18,45          3,20",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r38",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 60.0,
+        "lip": 20.0,
+        "t": 2.25
+      },
+      "Mly_Nmm": 4550000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "150 x 60 x 20 x 2,25   156,88     256,17        35,79       23,69          4,55",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r39",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 60.0,
+        "lip": 20.0,
+        "t": 2.65
+      },
+      "Mly_Nmm": 7410000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "150 x 60 x 20 x 2,65   255,84     366,14        58,08       33,63          7,41",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r40",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 60.0,
+        "lip": 20.0,
+        "t": 3.0
+      },
+      "Mly_Nmm": 10740000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "150 x 60 x 20 x 3,00   369,84     480,79        83,62       43,96          10,74",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r41",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 60.0,
+        "lip": 20.0,
+        "t": 3.35
+      },
+      "Mly_Nmm": 14930000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "150 x 60 x 20 x 3,35   514,04     615,16       115,34       55,90          14,93",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r42",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 60.0,
+        "lip": 20.0,
+        "t": 3.75
+      },
+      "Mly_Nmm": 20860000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "150 x 60 x 20 x 3,75   717,09     791,95       159,50       71,60          20,86",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r43",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 60.0,
+        "lip": 20.0,
+        "t": 4.25
+      },
+      "Mly_Nmm": 30260000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "150 x 60 x 20 x 4,25   1038,13   1051,52          ‐‐‐‐      94,49          30,26",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r44",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 60.0,
+        "lip": 20.0,
+        "t": 4.75
+      },
+      "Mly_Nmm": 42090000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "150 x 60 x 20 x 4,75   1438,65   1358,58          ‐‐‐‐     121,17          42,09",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r45",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 75.0,
+        "lip": 20.0,
+        "t": 2.0
+      },
+      "Mly_Nmm": 2910000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "200 x 75 x 20 x 2,00    78,67     153,26        24,95       19,54          2,91",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r46",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 75.0,
+        "lip": 20.0,
+        "t": 2.25
+      },
+      "Mly_Nmm": 4130000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "200 x 75 x 20 x 2,25   111,82     198,14        35,41       25,13          4,13",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r47",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 75.0,
+        "lip": 25.0,
+        "t": 2.65
+      },
+      "Mly_Nmm": 6920000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "200 x 75 x 25 x 2,65   187,37     331,35        59,08       42,75          6,92",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r48",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 75.0,
+        "lip": 25.0,
+        "t": 3.0
+      },
+      "Mly_Nmm": 10040000.0,
+      "table": 2,
+      "PDF_page": 11,
+      "printed_page": 31,
+      "source_row": "200 x 75 x 25 x 3,00   271,36     434,37        85,40       55,73          10,04",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r49",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 75.0,
+        "lip": 25.0,
+        "t": 3.35
+      },
+      "Mly_Nmm": 13950000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "200 x 75 x 25 x 3,35   377,17     553,18       118,35        70,65         13,95",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r50",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 75.0,
+        "lip": 25.0,
+        "t": 4.75
+      },
+      "Mly_Nmm": 39420000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "200 x 75 x 25 x 4,75   1063,56   1208,85       326,85       151,55         39,42",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r51",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 75.0,
+        "lip": 30.0,
+        "t": 6.3
+      },
+      "Mly_Nmm": 93210000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "200 x 75 x 30 x 6,30   2515,66   2478,60          ‐‐‐‐      317,57         93,21",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r52",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 100.0,
+        "lip": 25.0,
+        "t": 2.65
+      },
+      "Mly_Nmm": 9290000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "200 x 100 x 25 x 2,65   205,11     319,40        48,32        34,40         9,29",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r53",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 100.0,
+        "lip": 25.0,
+        "t": 3.0
+      },
+      "Mly_Nmm": 13480000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "200 x 100 x 25 x 3,00   297,04     417,29        69,81        44,77         13,48",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r54",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 100.0,
+        "lip": 25.0,
+        "t": 3.35
+      },
+      "Mly_Nmm": 18740000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "200 x 100 x 25 x 3,35   412,85     530,58        96,74        56,68         18,74",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r55",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 100.0,
+        "lip": 25.0,
+        "t": 3.75
+      },
+      "Mly_Nmm": 26290000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "200 x 100 x 25 x 3,75   578,02     679,90       134,75        72,22         26,29",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r56",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 100.0,
+        "lip": 25.0,
+        "t": 4.25
+      },
+      "Mly_Nmm": 38190000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "200 x 100 x 25 x 4,25   839,86     896,06       194,04        94,74         38,19",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r57",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 100.0,
+        "lip": 25.0,
+        "t": 4.75
+      },
+      "Mly_Nmm": 53230000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "200 x 100 x 25 x 4,75   1168,17   1150,73       267,50       120,73         53,23",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r58",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 250.0,
+        "bf": 85.0,
+        "lip": 25.0,
+        "t": 2.0
+      },
+      "Mly_Nmm": 2640000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "250 x 85 x 25 x 2,00    61,33     143,87        24,80        25,41         2,64",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r59",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 250.0,
+        "bf": 85.0,
+        "lip": 25.0,
+        "t": 2.25
+      },
+      "Mly_Nmm": 3760000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "250 x 85 x 25 x 2,25    87,17     185,49        35,25        32,61         3,76",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r60",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 250.0,
+        "bf": 85.0,
+        "lip": 25.0,
+        "t": 2.65
+      },
+      "Mly_Nmm": 6130000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "250 x 85 x 25 x 2,65   142,17     264,86        57,41        46,23         6,13",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r61",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 250.0,
+        "bf": 85.0,
+        "lip": 25.0,
+        "t": 3.0
+      },
+      "Mly_Nmm": 8870000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "250 x 85 x 25 x 3,00   205,90     347,93        83,04        60,35         8,87",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r62",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 250.0,
+        "bf": 85.0,
+        "lip": 25.0,
+        "t": 3.35
+      },
+      "Mly_Nmm": 12330000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "250 x 85 x 25 x 3,35   286,19     444,61       115,15        76,67         12,33",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r63",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 250.0,
+        "bf": 85.0,
+        "lip": 25.0,
+        "t": 3.75
+      },
+      "Mly_Nmm": 17270000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "250 x 85 x 25 x 3,75   399,99     572,03       160,62        98,07         17,27",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r64",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 250.0,
+        "bf": 85.0,
+        "lip": 25.0,
+        "t": 4.25
+      },
+      "Mly_Nmm": 25090000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "250 x 85 x 25 x 4,25   580,19     759,67       231,69       129,20         25,09",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r65",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 250.0,
+        "bf": 85.0,
+        "lip": 25.0,
+        "t": 4.75
+      },
+      "Mly_Nmm": 34900000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "250 x 85 x 25 x 4,75   805,62     980,44       319,24       165,44         34,90",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r66",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 250.0,
+        "bf": 85.0,
+        "lip": 30.0,
+        "t": 6.3
+      },
+      "Mly_Nmm": 82660000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "250 x 85 x 30 x 6,30   1902,26   2075,83          ‐‐‐‐      350,26         82,66",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r67",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 250.0,
+        "bf": 100.0,
+        "lip": 25.0,
+        "t": 2.65
+      },
+      "Mly_Nmm": 7210000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "250 x 100 x 25 x 2,65   149,09     273,15        57,34        41,13         7,21",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r68",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 250.0,
+        "bf": 100.0,
+        "lip": 25.0,
+        "t": 3.0
+      },
+      "Mly_Nmm": 10440000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "250 x 100 x 25 x 3,00   215,92     358,04        82,81        53,62         10,44",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r69",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 250.0,
+        "bf": 100.0,
+        "lip": 25.0,
+        "t": 3.35
+      },
+      "Mly_Nmm": 14530000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "250 x 100 x 25 x 3,35   300,10     456,68       114,69        68,01         14,53",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r70",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 250.0,
+        "bf": 100.0,
+        "lip": 25.0,
+        "t": 3.75
+      },
+      "Mly_Nmm": 20350000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "250 x 100 x 25 x 3,75   420,19     587,19       159,70        86,93         20,35",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r71",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 250.0,
+        "bf": 100.0,
+        "lip": 25.0,
+        "t": 4.25
+      },
+      "Mly_Nmm": 29570000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "250 x 100 x 25 x 4,25   610,56     777,07       229,68       114,30         29,57",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r72",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 250.0,
+        "bf": 100.0,
+        "lip": 25.0,
+        "t": 4.75
+      },
+      "Mly_Nmm": 41210000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "250 x 100 x 25 x 4,75   849,29    1001,18       315,51       146,13         41,21",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r73",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 300.0,
+        "bf": 85.0,
+        "lip": 25.0,
+        "t": 2.0
+      },
+      "Mly_Nmm": 2170000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "300 x 85 x 25 x 2,00    47,88       ‐‐‐‐        23,06        28,30         2,17",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r74",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 300.0,
+        "bf": 85.0,
+        "lip": 25.0,
+        "t": 2.25
+      },
+      "Mly_Nmm": 3080000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "300 x 85 x 25 x 2,25    68,05       ‐‐‐‐        32,77        36,40         3,08",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r75",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 300.0,
+        "bf": 85.0,
+        "lip": 25.0,
+        "t": 2.65
+      },
+      "Mly_Nmm": 5030000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "300 x 85 x 25 x 2,65   110,78       ‐‐‐‐        53,41        51,76         5,03",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r76",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 300.0,
+        "bf": 85.0,
+        "lip": 25.0,
+        "t": 3.0
+      },
+      "Mly_Nmm": 7280000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "300 x 85 x 25 x 3,00   160,45       ‐‐‐‐        77,25        67,78         7,28",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r77",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 300.0,
+        "bf": 85.0,
+        "lip": 25.0,
+        "t": 3.35
+      },
+      "Mly_Nmm": 10120000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "300 x 85 x 25 x 3,35   222,63       ‐‐‐‐       107,18        86,30         10,12",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r78",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 300.0,
+        "bf": 85.0,
+        "lip": 25.0,
+        "t": 3.75
+      },
+      "Mly_Nmm": 14140000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "300 x 85 x 25 x 3,75   311,18       ‐‐‐‐       149,60       110,73         14,14",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r79",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 300.0,
+        "bf": 85.0,
+        "lip": 25.0,
+        "t": 4.25
+      },
+      "Mly_Nmm": 20520000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "300 x 85 x 25 x 4,25   450,58       ‐‐‐‐       216,11       146,38         20,52",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r80",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 300.0,
+        "bf": 85.0,
+        "lip": 25.0,
+        "t": 4.75
+      },
+      "Mly_Nmm": 28490000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "300 x 85 x 25 x 4,75   624,57       ‐‐‐‐       298,38       188,02         28,49",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r81",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 300.0,
+        "bf": 85.0,
+        "lip": 30.0,
+        "t": 6.3
+      },
+      "Mly_Nmm": 67460000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "300 x 85 x 30 x 6,30   1471,93   1639,62          ‐‐‐‐      397,82         67,46",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r82",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 300.0,
+        "bf": 100.0,
+        "lip": 25.0,
+        "t": 2.65
+      },
+      "Mly_Nmm": 5890000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "300 x 100 x 25 x 2,65   115,74       ‐‐‐‐        56,14        47,04         5,89",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r83",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 300.0,
+        "bf": 100.0,
+        "lip": 25.0,
+        "t": 3.0
+      },
+      "Mly_Nmm": 8530000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "300 x 100 x 25 x 3,00   167,62       ‐‐‐‐        81,17        61,48         8,53",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r84",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 300.0,
+        "bf": 100.0,
+        "lip": 25.0,
+        "t": 3.35
+      },
+      "Mly_Nmm": 11860000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "300 x 100 x 25 x 3,35   232,98     367,96       112,60        78,15         11,86",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r85",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 300.0,
+        "bf": 100.0,
+        "lip": 25.0,
+        "t": 3.75
+      },
+      "Mly_Nmm": 16610000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "300 x 100 x 25 x 3,75   325,64     474,76       157,12       100,05         16,61",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r86",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 300.0,
+        "bf": 100.0,
+        "lip": 25.0,
+        "t": 4.25
+      },
+      "Mly_Nmm": 24130000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "300 x 100 x 25 x 4,25   472,33     632,61       226,66       132,02         24,13",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T2_planilha_v03_r87",
+      "family": "Ue",
+      "dimensions_mm": {
+        "h": 300.0,
+        "bf": 100.0,
+        "lip": 25.0,
+        "t": 4.75
+      },
+      "Mly_Nmm": 33570000.0,
+      "table": 2,
+      "PDF_page": 12,
+      "printed_page": 32,
+      "source_row": "300 x 100 x 25 x 4,75   657,05     818,06       312,46       169,28         33,57",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r88",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 50.0,
+        "bf": 25.0,
+        "lip": 0,
+        "t": 1.2
+      },
+      "Mly_Nmm": 700000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "50 x 25 x 1,20     36,36   0,76     0,70",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r89",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 50.0,
+        "bf": 25.0,
+        "lip": 0,
+        "t": 1.5
+      },
+      "Mly_Nmm": 1370000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "50 x 25 x 1,50     70,77   1,48     1,37",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r90",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 75.0,
+        "bf": 40.0,
+        "lip": 0,
+        "t": 1.2
+      },
+      "Mly_Nmm": 760000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "75 x 40 x 1,20     22,81   0,70     0,76",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r91",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 50.0,
+        "bf": 25.0,
+        "lip": 0,
+        "t": 2.0
+      },
+      "Mly_Nmm": 3220000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "50 x 25 x 2,00    167,75   3,48     3,22",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r92",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 50.0,
+        "bf": 25.0,
+        "lip": 0,
+        "t": 2.25
+      },
+      "Mly_Nmm": 4570000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "50 x 25 x 2,25    238,02   4,95     4,57",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r93",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 40.0,
+        "lip": 0,
+        "t": 1.2
+      },
+      "Mly_Nmm": 540000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 40 x 1,20    21,08   0,99     0,54",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r94",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 75.0,
+        "bf": 40.0,
+        "lip": 0,
+        "t": 1.5
+      },
+      "Mly_Nmm": 1490000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "75 x 40 x 1,50     44,55   1,38     1,49",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r95",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 1.2
+      },
+      "Mly_Nmm": 710000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 50 x 1,20    18,18   0,76     0,71",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r96",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 50.0,
+        "bf": 25.0,
+        "lip": 0,
+        "t": 2.65
+      },
+      "Mly_Nmm": 7430000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "50 x 25 x 2,65    387,52   8,06     7,43",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r97",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 40.0,
+        "lip": 0,
+        "t": 1.5
+      },
+      "Mly_Nmm": 1050000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 40 x 1,50    41,18   1,92     1,05",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r98",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 1.2
+      },
+      "Mly_Nmm": 540000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 50 x 1,20    16,87   0,99       0,54",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r99",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 50.0,
+        "bf": 25.0,
+        "lip": 0,
+        "t": 3.0
+      },
+      "Mly_Nmm": 10690000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "50 x 25 x 3,00    560,29   11,63   10,69",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r100",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 1.5
+      },
+      "Mly_Nmm": 1380000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 50 x 1,50    35,51   1,48     1,38",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r101",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 75.0,
+        "bf": 40.0,
+        "lip": 0,
+        "t": 2.0
+      },
+      "Mly_Nmm": 3520000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "75 x 40 x 2,00    105,60   3,25     3,52",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r102",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 1.5
+      },
+      "Mly_Nmm": 1050000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 50 x 1,50    32,94   1,92       1,05",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r103",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 75.0,
+        "bf": 40.0,
+        "lip": 0,
+        "t": 2.25
+      },
+      "Mly_Nmm": 5000000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "75 x 40 x 2,25    149,78   4,63     5,00",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r104",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 40.0,
+        "lip": 0,
+        "t": 2.0
+      },
+      "Mly_Nmm": 2490000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 40 x 2,00    97,35   4,55     2,49",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r105",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 75.0,
+        "bf": 40.0,
+        "lip": 0,
+        "t": 2.65
+      },
+      "Mly_Nmm": 8140000.000000001,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "75 x 40 x 2,65    244,71   7,54     8,14",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r106",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 2.0
+      },
+      "Mly_Nmm": 3260000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 50 x 2,00    84,16   3,51     3,26",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r107",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 40.0,
+        "lip": 0,
+        "t": 2.25
+      },
+      "Mly_Nmm": 3530000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 40 x 2,25   138,61   6,48     3,53",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r108",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 2.25
+      },
+      "Mly_Nmm": 4640000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 50 x 2,25   119,83   5,00     4,64",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r109",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 75.0,
+        "bf": 40.0,
+        "lip": 0,
+        "t": 3.0
+      },
+      "Mly_Nmm": 11770000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "75 x 40 x 3,00    355,05   10,94   11,77",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r110",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 2.0
+      },
+      "Mly_Nmm": 2490000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 50 x 2,00    78,09   4,56       2,49",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r111",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 40.0,
+        "lip": 0,
+        "t": 2.65
+      },
+      "Mly_Nmm": 5770000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 40 x 2,65   225,85   10,57    5,77",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r112",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 75.0,
+        "bf": 40.0,
+        "lip": 0,
+        "t": 3.35
+      },
+      "Mly_Nmm": 16340000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "75 x 40 x 3,35    494,37   15,19   16,34",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r113",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 2.0
+      },
+      "Mly_Nmm": 1990000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 50 x 2,00    67,65   5,67     1,99",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r114",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 2.25
+      },
+      "Mly_Nmm": 3540000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 50 x 2,25   110,89   6,49       3,54",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r115",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 2.65
+      },
+      "Mly_Nmm": 7570000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 50 x 2,65   195,11   8,15     7,57",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r116",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 40.0,
+        "lip": 0,
+        "t": 3.0
+      },
+      "Mly_Nmm": 8340000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 40 x 3,00   327,68   15,31    8,34",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r117",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 75.0,
+        "bf": 40.0,
+        "lip": 0,
+        "t": 3.75
+      },
+      "Mly_Nmm": 22810000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "75 x 40 x 3,75    690,82   21,24   22,81",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r118",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 2.25
+      },
+      "Mly_Nmm": 2830000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 50 x 2,25    96,09   8,07     2,83",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r119",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 40.0,
+        "lip": 0,
+        "t": 3.35
+      },
+      "Mly_Nmm": 11570000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 40 x 3,35   455,05   21,32   11,57",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r120",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 3.0
+      },
+      "Mly_Nmm": 10950000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 50 x 3,00   283,07  11,82       10,95",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r121",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 2.65
+      },
+      "Mly_Nmm": 5780000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 50 x 2,65   181,17  10,59       5,78",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r122",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 2.0
+      },
+      "Mly_Nmm": 1390000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 50 x 2,00    48,91   7,92     1,39",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r123",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 75.0,
+        "bf": 40.0,
+        "lip": 0,
+        "t": 4.25
+      },
+      "Mly_Nmm": 33040000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "75 x 40 x 4,25    1005,63  30,82   33,04",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r124",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 40.0,
+        "lip": 0,
+        "t": 3.75
+      },
+      "Mly_Nmm": 16190000.000000002,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 40 x 3,75   636,57   29,79   16,19",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r125",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 3.35
+      },
+      "Mly_Nmm": 15220000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 50 x 3,35   394,16  16,42       15,22",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r126",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 75.0,
+        "lip": 0,
+        "t": 2.65
+      },
+      "Mly_Nmm": 12440000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 75 x 2,65   126,15   5,19       12,44",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r127",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 2.65
+      },
+      "Mly_Nmm": 4620000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 50 x 2,65   156,98   13,16    4,62",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r128",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 3.0
+      },
+      "Mly_Nmm": 8380000.000000001,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 50 x 3,00   262,85  15,36       8,38",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r129",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 2.25
+      },
+      "Mly_Nmm": 1980000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 50 x 2,25    69,65   11,27    1,98",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r130",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 75.0,
+        "bf": 40.0,
+        "lip": 0,
+        "t": 4.75
+      },
+      "Mly_Nmm": 45740000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "75 x 40 x 4,75    1398,62  42,89   45,74",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r131",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 3.75
+      },
+      "Mly_Nmm": 21320000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 50 x 3,75   552,88  23,03       21,32",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r132",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 40.0,
+        "lip": 0,
+        "t": 4.25
+      },
+      "Mly_Nmm": 23460000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 40 x 4,25   921,66   43,29   23,46",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r133",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 75.0,
+        "lip": 0,
+        "t": 2.65
+      },
+      "Mly_Nmm": 9460000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 75 x 2,65   130,25   6,63       9,46",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r134",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 3.35
+      },
+      "Mly_Nmm": 11650000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 50 x 3,35   365,02  21,35       11,65",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r136",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 3.0
+      },
+      "Mly_Nmm": 6700000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 50 x 3,00   227,22   19,10    6,70",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r137",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 75.0,
+        "lip": 0,
+        "t": 2.65
+      },
+      "Mly_Nmm": 7590000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 75 x 2,65   130,52   8,17     7,59",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r138",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 2.65
+      },
+      "Mly_Nmm": 3230000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 50 x 2,65   113,53   18,42    3,23",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r139",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 40.0,
+        "lip": 0,
+        "t": 4.75
+      },
+      "Mly_Nmm": 32540000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 40 x 4,75   1283,24  60,21   32,54",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r140",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 4.25
+      },
+      "Mly_Nmm": 30880000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 50 x 4,25   802,05  33,43       30,88",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r141",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 75.0,
+        "lip": 0,
+        "t": 3.0
+      },
+      "Mly_Nmm": 13720000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 75 x 3,00   188,98   9,63       13,72",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r142",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 3.75
+      },
+      "Mly_Nmm": 16290000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 50 x 3,75   512,00  29,90       16,29",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r143",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 75.0,
+        "lip": 0,
+        "t": 3.35
+      },
+      "Mly_Nmm": 25030000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 75 x 3,35   254,84  10,48       25,03",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r144",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 3.35
+      },
+      "Mly_Nmm": 9320000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 50 x 3,35   315,63   26,56    9,32",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r145",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 75.0,
+        "lip": 0,
+        "t": 3.0
+      },
+      "Mly_Nmm": 11000000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 75 x 3,00   189,37   11,85    11,00",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r146",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 3.0
+      },
+      "Mly_Nmm": 4670000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 50 x 3,00   164,35   26,70    4,67",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r147",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 4.75
+      },
+      "Mly_Nmm": 42970000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 50 x 4,75   1119,74 46,54       42,97",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r148",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 75.0,
+        "lip": 0,
+        "t": 3.35
+      },
+      "Mly_Nmm": 19080000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 75 x 3,35   263,13  13,40       19,08",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r149",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 75.0,
+        "lip": 0,
+        "t": 3.75
+      },
+      "Mly_Nmm": 35050000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 75 x 3,75   357,46  14,69       35,05",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r150",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 3.75
+      },
+      "Mly_Nmm": 13030000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 50 x 3,75   441,67   37,21    13,03",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r151",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 4.25
+      },
+      "Mly_Nmm": 23640000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 50 x 4,25   743,33  43,44       23,64",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r152",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 75.0,
+        "lip": 0,
+        "t": 2.65
+      },
+      "Mly_Nmm": 5360000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 75 x 2,65   115,97   11,45    5,36",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r153",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 75.0,
+        "lip": 0,
+        "t": 3.35
+      },
+      "Mly_Nmm": 15320000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 75 x 3,35   263,68   16,51    15,32",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r154",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 3.35
+      },
+      "Mly_Nmm": 6500000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 50 x 3,35   228,34   37,16    6,50",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r155",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 75.0,
+        "lip": 0,
+        "t": 3.75
+      },
+      "Mly_Nmm": 26720000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 75 x 3,75   369,09  18,73       26,72",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r156",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 4.75
+      },
+      "Mly_Nmm": 32900000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 50 x 4,75   1034,96 60,54       32,90",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r157",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 75.0,
+        "lip": 0,
+        "t": 4.25
+      },
+      "Mly_Nmm": 50850000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 75 x 4,25   520,36  21,26       50,85",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r158",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 4.25
+      },
+      "Mly_Nmm": 18910000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 50 x 4,25   641,39   54,10    18,91",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r159",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 40.0,
+        "lip": 0,
+        "t": 6.3
+      },
+      "Mly_Nmm": 74250000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 40 x 6,30   2937,03 138,69   74,25",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r160",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 75.0,
+        "lip": 0,
+        "t": 3.0
+      },
+      "Mly_Nmm": 7760000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 75 x 3,00   168,26   16,62    7,76",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r161",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 100.0,
+        "lip": 0,
+        "t": 2.65
+      },
+      "Mly_Nmm": 7610000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 100 x2,65     97,89      8,17       7,61",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r162",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 75.0,
+        "lip": 0,
+        "t": 3.75
+      },
+      "Mly_Nmm": 21450000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 75 x 3,75   368,58   23,09    21,45",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r163",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 3.75
+      },
+      "Mly_Nmm": 9100000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 50 x 3,75   319,57   52,08    9,10",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r164",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 75.0,
+        "lip": 0,
+        "t": 4.25
+      },
+      "Mly_Nmm": 38830000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 75 x 4,25   537,29  27,26       38,83",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r165",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 75.0,
+        "lip": 0,
+        "t": 4.75
+      },
+      "Mly_Nmm": 70870000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 75 x 4,75   721,63  29,68       70,87",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r166",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 4.75
+      },
+      "Mly_Nmm": 26320000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 50 x 4,75   893,29   75,43    26,32",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r167",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 6.3
+      },
+      "Mly_Nmm": 98640000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 50 x 6,30   2594,42 107,37      98,64",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r168",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 75.0,
+        "lip": 0,
+        "t": 3.35
+      },
+      "Mly_Nmm": 10810000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 75 x 3,35    234,29      23,14     10,81",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r169",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 250.0,
+        "bf": 100.0,
+        "lip": 0,
+        "t": 2.65
+      },
+      "Mly_Nmm": 5800000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "250 x 100 x 2,65    90,83      10,63      5,80",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r170",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 100.0,
+        "lip": 0,
+        "t": 3.0
+      },
+      "Mly_Nmm": 11020000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 100 x 3,00   142,02      11,85     11,02",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r171",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 75.0,
+        "lip": 0,
+        "t": 4.25
+      },
+      "Mly_Nmm": 31170000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 75 x 4,25   536,55   33,61    31,17",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r172",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 4.25
+      },
+      "Mly_Nmm": 13210000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 50 x 4,25   463,12   75,70    13,21",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r173",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 75.0,
+        "lip": 0,
+        "t": 4.75
+      },
+      "Mly_Nmm": 54120000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 75 x 4,75   750,11  38,06       54,12",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r174",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 75.0,
+        "lip": 0,
+        "t": 3.75
+      },
+      "Mly_Nmm": 15140000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 75 x 3,75    327,79      32,46     15,14",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r175",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 6.3
+      },
+      "Mly_Nmm": 75690000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 50 x 6,30   2388,68 140,23      75,69",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r176",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 300.0,
+        "bf": 100.0,
+        "lip": 0,
+        "t": 2.65
+      },
+      "Mly_Nmm": 4650000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "300 x 100 x 2,65    78,68      13,20      4,65",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r177",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 100.0,
+        "lip": 0,
+        "t": 3.35
+      },
+      "Mly_Nmm": 15340000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 100 x 3,35   197,76      16,51     15,34",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r178",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 250.0,
+        "bf": 100.0,
+        "lip": 0,
+        "t": 3.0
+      },
+      "Mly_Nmm": 8410000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "250 x 100 x 3,00   131,78      15,39      8,41",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r179",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 75.0,
+        "lip": 0,
+        "t": 4.75
+      },
+      "Mly_Nmm": 43460000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 75 x 4,75   749,07   46,92    43,46",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r180",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 4.75
+      },
+      "Mly_Nmm": 18360000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 50 x 4,75   643,65  105,60    18,36",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r181",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 75.0,
+        "lip": 0,
+        "t": 4.25
+      },
+      "Mly_Nmm": 22010000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 75 x 4,25    477,17      47,17     22,01",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r182",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 75.0,
+        "lip": 0,
+        "t": 6.3
+      },
+      "Mly_Nmm": 163330000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 75 x 6,30   1683,66 68,84      163,33",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r183",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 6.3
+      },
+      "Mly_Nmm": 60560000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 50 x 6,30   2049,02 174,63    60,56",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r184",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 100.0,
+        "lip": 0,
+        "t": 3.75
+      },
+      "Mly_Nmm": 21520000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 100 x 3,75   277,39      23,15     21,52",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r185",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 250.0,
+        "bf": 100.0,
+        "lip": 0,
+        "t": 3.35
+      },
+      "Mly_Nmm": 11720000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "250 x 100 x 3,35   183,49      21,43     11,72",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r186",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 300.0,
+        "bf": 100.0,
+        "lip": 0,
+        "t": 3.0
+      },
+      "Mly_Nmm": 6730000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "300 x 100 x 3,00   114,15      19,15      6,73",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r187",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 75.0,
+        "lip": 0,
+        "t": 4.75
+      },
+      "Mly_Nmm": 30680000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 75 x 4,75    664,48      65,75     30,68",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r188",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 75.0,
+        "lip": 0,
+        "t": 6.3
+      },
+      "Mly_Nmm": 124990000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 75 x 6,30   1742,15 88,10      124,99",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r189",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 300.0,
+        "bf": 100.0,
+        "lip": 0,
+        "t": 3.35
+      },
+      "Mly_Nmm": 9370000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "300 x 100 x 3,35   158,95      26,66      9,37",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r190",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 100.0,
+        "lip": 0,
+        "t": 4.25
+      },
+      "Mly_Nmm": 31270000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 100 x 4,25   403,80      33,70     31,27",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r191",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 250.0,
+        "bf": 100.0,
+        "lip": 0,
+        "t": 3.75
+      },
+      "Mly_Nmm": 16440000.000000002,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "250 x 100 x 3,75   257,37      30,06     16,44",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r192",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 75.0,
+        "lip": 0,
+        "t": 6.3
+      },
+      "Mly_Nmm": 100570000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 75 x 6,30   1741,67 108,88   100,57",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r193",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 6.3
+      },
+      "Mly_Nmm": 42260000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 50 x 6,30   1478,01 245,05    42,26",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r194",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 75.0,
+        "lip": 0,
+        "t": 8.0
+      },
+      "Mly_Nmm": 328480000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 75 x 8,00   3447,49 139,26     328,48",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r195",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 8.0
+      },
+      "Mly_Nmm": 121490000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 50 x 8,00   4103,06 354,33   121,49",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r196",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 100.0,
+        "lip": 0,
+        "t": 4.75
+      },
+      "Mly_Nmm": 43590000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 100 x 4,75   563,74      46,92     43,59",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r197",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 300.0,
+        "bf": 100.0,
+        "lip": 0,
+        "t": 3.75
+      },
+      "Mly_Nmm": 13140000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "300 x 100 x 3,75   222,95      37,35     13,14",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r198",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 250.0,
+        "bf": 100.0,
+        "lip": 0,
+        "t": 4.25
+      },
+      "Mly_Nmm": 23890000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "250 x 100 x 4,25   374,66      43,76     23,89",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r199",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 75.0,
+        "lip": 0,
+        "t": 8.0
+      },
+      "Mly_Nmm": 252940000.0,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 75 x 8,00   3567,25 179,68     252,94",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r200",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 250.0,
+        "bf": 100.0,
+        "lip": 0,
+        "t": 4.75
+      },
+      "Mly_Nmm": 33290000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "250 x 100 x 4,75   521,67      61,09     33,29",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r201",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 300.0,
+        "bf": 100.0,
+        "lip": 0,
+        "t": 4.25
+      },
+      "Mly_Nmm": 19100000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "300 x 100 x 4,25   323,78      54,38     19,10",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r202",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 75.0,
+        "lip": 0,
+        "t": 6.3
+      },
+      "Mly_Nmm": 71160000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 75 x 6,30    1542,42    152,91     71,16",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r203",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 75.0,
+        "lip": 0,
+        "t": 8.0
+      },
+      "Mly_Nmm": 203950000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 75 x 8,00   3553,93 221,71   203,95",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r204",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 50.0,
+        "lip": 0,
+        "t": 8.0
+      },
+      "Mly_Nmm": 84620000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 50 x 8,00   2936,15 498,30    84,62",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r205",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 300.0,
+        "bf": 100.0,
+        "lip": 0,
+        "t": 4.75
+      },
+      "Mly_Nmm": 26680000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "300 x 100 x 4,75   452,03      75,91     26,68",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r206",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 100.0,
+        "lip": 0,
+        "t": 6.3
+      },
+      "Mly_Nmm": 101390000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 100 x 6,30   1310,77    109,48     101,39",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r207",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 75.0,
+        "lip": 0,
+        "t": 8.0
+      },
+      "Mly_Nmm": 144630000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 75 x 8,00    3133,98    311,60     144,63",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r208",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 250.0,
+        "bf": 100.0,
+        "lip": 0,
+        "t": 6.3
+      },
+      "Mly_Nmm": 77450000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "250 x 100 x 6,30   1213,86    142,28     77,45",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r210",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 100.0,
+        "lip": 0,
+        "t": 8.0
+      },
+      "Mly_Nmm": 206250000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 100 x 8,00   2683,95    222,94     206,25",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r211",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 300.0,
+        "bf": 100.0,
+        "lip": 0,
+        "t": 6.3
+      },
+      "Mly_Nmm": 62060000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "300 x 100 x 6,30   1052,13    176,66     62,06",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r212",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 250.0,
+        "bf": 100.0,
+        "lip": 0,
+        "t": 8.0
+      },
+      "Mly_Nmm": 157880000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "250 x 100 x 8,00   2478,86    290,29     157,88",
+      "source_sign": null
+    },
+    {
+      "id": "Pierin2013_T1_planilha_v03_r213",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 300.0,
+        "bf": 100.0,
+        "lip": 0,
+        "t": 8.0
+      },
+      "Mly_Nmm": 126280000.0,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "300 x 100 x 8,00   2144,08    361,28     126,28",
+      "source_sign": null
+    }
+  ]
+}

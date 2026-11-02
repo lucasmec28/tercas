@@ -133,6 +133,8 @@ def calculate(data):
  if data['P_uls']==0:b['point']={'status':'not_applicable','reason':'Sem força concentrada de compressão no caso informado.'}
  result['inclination_evidence']=inclination_evidence
  result['whole_member_approved']=False
+ from .weak_pierin import reference_for_inputs
+ result['weak_critical_reference']=reference_for_inputs(data)
  result['strong_critical_qualification']=copy.deepcopy(spec['strong_critical_qualification'])
  result['critical_warnings']=list(spec['strong_critical_qualification']['warnings'])
  result['coverage_warnings']=[]

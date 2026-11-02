@@ -80,7 +80,8 @@ def calculate_batch(data):
   # Core rows already contain ELU pending rows, but ELS filtering excludes its parallel component.
   # All rows filtered by limit state above.
   cases.append({'combination':combo,'rows':rs,'evidence':evidence,'warnings':result['coverage_warnings']+result.get('critical_warnings',[])+result['numerical_warnings'],'scope_notes':[mobile['scope']] if mobile else []})
- return {'schema':'tercas_batch_results_v1','version':VERSION,'project':data['project'],'synthetic':data['synthetic'],'input_fingerprint':fingerprint(data),'input_data':copy.deepcopy(data),'load_bundle':bundle,'cases':cases,'whole_member_approved':False,'summary':governing(cases)}
+ from .weak_pierin import reference_for_inputs
+ return {'weak_critical_reference':reference_for_inputs(data),'schema':'tercas_batch_results_v1','version':VERSION,'project':data['project'],'synthetic':data['synthetic'],'input_fingerprint':fingerprint(data),'input_data':copy.deepcopy(data),'load_bundle':bundle,'cases':cases,'whole_member_approved':False,'summary':governing(cases)}
 
 def governing(cases):
  groups={}

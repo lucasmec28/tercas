@@ -271,6 +271,15 @@ with st.expander('Eixo fraco — dados existentes e críticos por sentido',expan
  st.caption('Convenção: My positivo comprime a alma; My negativo comprime as bordas/lábios. Os eixos locais e o sentido da seção física devem corresponder a esta convenção. Cm = 1,0 em todas as combinações; não há redução automática.')
  raw=catalog_entry(index)['raw_source_values']
  st.dataframe(display_frame([{'Dado':k,'Valor tabelado':raw.get(k)} for k in ['Wy cm³','xg cm','x0 cm','r0 cm','Ml,y kNm']]),hide_index=True)
+ from tercas.weak_pierin import reference_for_inputs
+ pierin=reference_for_inputs(d)
+ st.markdown('**Pierin — referência oficial adotada no app para Ml,y**')
+ if pierin['status']=='tabulated_adopted_reference':
+  st.caption(f"Ml,y = {fmt(pierin['Mly_Nmm']/1e6)} kN·m; Tabela {pierin['table']}, p{pierin['printed_page']} / PDF{pierin['PDF_page']}. Geometria nominal exata. E=200000 MPa, apoios simples e cantos retos; G e ν da fonte não explicitados.")
+  st.caption('Este é o valor tabelado oficial de referência, separado da atribuição por sentido. A fonte não explicita o lado comprimido. Não é resistência de cálculo, não libera ambos os sentidos e não fornece Mdist,y. Valores brutos da planilha permanecem preservados acima.')
+  for reason in pierin['compatibility_reasons']:st.warning('Referência apenas documental nesta configuração: '+reason)
+ else:st.caption(pierin['reason'])
+
  gm=wc.get('mean_line',{})
  with st.expander('Linha média do Anexo E — cálculo automático e origem',expanded=False):
   from tercas.weak_catalog import nominal_mean_line,geometry_mode
@@ -310,7 +319,7 @@ with st.expander('Eixo fraco — dados existentes e críticos por sentido',expan
   out['provisional_hypothesis']=(inherited_hypothesis and not replace_hypothesis) or legacy_hypothesis
   if replace_hypothesis and legacy_hypothesis:st.warning('A origem ainda identifica a hipótese provisória. Substitua pela origem própria dos críticos; o selo e a restrição de compatibilidade permanecem enquanto este texto estiver presente.')
   d['weak_axis'][sign]=out
- st.caption('Hipótese provisória autorizada: o Ml,y tabulado preenche somente My positivo (alma comprimida), apoiado na comparação pyCUFSM, ainda a conferir com exemplos CBCA. Não é copiado no sentido oposto; Mdist,y não usa a tabela do eixo forte. A ausência de um crítico afeta só a rota correspondente.')
+ st.caption('Ue: mantém-se a hipótese previamente autorizada de atribuição do Ml,y oficial a My positivo (alma comprimida), apoiada no comparador pyCUFSM e ainda a conferir; o valor da tabela não é uma hipótese, mas seu sentido aplicado é. U: os novos valores oficiais não recebem sentido automático. Nenhum valor é copiado para ambos os sentidos; Mdist,y não usa a tabela forte. A ausência afeta só a rota correspondente.')
 
 with st.expander('Limite de flecha',expanded=False):
  if d['load_mode']=='direct':
