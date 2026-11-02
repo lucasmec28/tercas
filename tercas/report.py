@@ -67,7 +67,7 @@ def word(result):
  doc.add_heading('Premissas e limites',1)
  for text in ['Um vão isostático. Flexão forte e rota restrita de flexão fraca/Anexo E; interação biaxial §9.9 para N=0 quando há resistências rastreadas por eixo e sentido. Para posição fixa de P, o máximo concomitante é calculado ao longo do vão. Sem dimensionamento de torção primária, axial, continuidade ou balanços nesta emissão.', 'Ações ELU e ELS já combinadas, informadas separadamente. Não há geração automática de todas as combinações.', 'Ly e Lz são comprimentos efetivos informados; coordenada de tirante não comprova vínculo torsional.', 'A flecha é componente Euler–Bernoulli com Ief por seção. Limite de flecha é informado com origem; não equivale a aprovação do sistema.', 'Propriedades e críticos fornecidos não são certificados pelo aplicativo. A convenção geométrica das propriedades do catálogo precisa ser conferida para o caso.', 'Ligações e apoios não são dimensionados ou aprovados pelo aplicativo.']:
   doc.add_paragraph(text,style='List Bullet')
- for warning in result.get('coverage_warnings',[]):doc.add_paragraph(warning)
+ for warning in result.get('coverage_warnings',[])+result.get('critical_warnings',[]):doc.add_paragraph(warning)
  if result.get('numerical_warnings'):doc.add_paragraph('Aviso numérico na integração da flecha: critério ELS não concluído.')
  inclination_inputs(doc,result['input_data'])
  if result.get('inclination_evidence'):

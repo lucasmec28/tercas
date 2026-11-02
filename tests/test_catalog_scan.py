@@ -63,6 +63,9 @@ class CatalogScanTests(unittest.TestCase):
   self.assertTrue(all(not r['whole_member_approved'] for r in result['rows']))
  def test_area_real(self):
   d=example();d['load_mode']='area';d['selected_types']=['ELS rara']
+  # Catalogue-domain test: the synthetic example uses G=E/2.6, not the
+  # original G=77000 configuration. Elastic-change blocking is tested separately.
+  d['properties']['G_MPa']=77000.
   result=scan_catalog(d,indices=[0,82]);self.assertTrue(result['complete'])
   self.assertTrue(all(r['evaluated_checks']>0 for r in result['rows']))
  def test_no_shared_mutation(self):

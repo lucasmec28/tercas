@@ -7,6 +7,7 @@ from .mobile_point import same_direction_global_envelope
 DEFAULT={'value':0.,'unit':'degrees','spacing_basis':'roof','permanent_basis':'roof','live_basis':'horizontal','wind_basis':'roof'}
 
 def configuration(data):
+ if not isinstance(data,dict):raise ValueError('O arquivo deve conter um objeto de entradas JSON.')
  cfg=dict(DEFAULT);given=data.get('inclination',{})
  if not isinstance(given,dict) or set(given)-set(DEFAULT):raise ValueError('Configuração de inclinação inválida.')
  cfg.update(given);ang=angle(cfg['value'],cfg['unit'])

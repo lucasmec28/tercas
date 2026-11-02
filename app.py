@@ -96,11 +96,12 @@ c1,c2=st.columns(2)
 with c1:d['L_mm']=num('Vão entre apoios','L',b['L_mm'],'mm')
 with c2:d['steel_name']=st.selectbox('Tipo de aço',STEEL_NAMES,index=STEEL_NAMES.index(b.get('steel_name','ASTM A36')),key=f'steel_{r}')
 if d['steel_name']=='Personalizado':
- custom=st.session_state.get('custom_steel_draft',dict(fy=b['properties']['fy_MPa'],fu=b['properties']['fu_MPa'],origin=b['property_origin']))
+ custom=st.session_state.get('custom_steel_draft',dict(fy=b['properties']['fy_MPa'],fu=b['properties']['fu_MPa'],origin=b.get('custom_steel_origin',b['property_origin'])))
  c1,c2=st.columns(2)
  with c1:fy=num('fy personalizado','fy_custom',custom['fy'],'MPa')
  with c2:fu=num('fu personalizado','fu_custom',custom['fu'],'MPa')
  custom_origin=txt('Origem do aço personalizado','steel_origin',custom['origin'])
+ d['custom_steel_origin']=custom_origin
  st.session_state.custom_steel_draft=dict(fy=fy,fu=fu,origin=custom_origin)
  try:
   mat=material('Personalizado',{'fy_MPa':fy,'fu_MPa':fu,'origin':custom_origin})
@@ -108,7 +109,11 @@ if d['steel_name']=='Personalizado':
   mat['physical_origin']='E e G preservados das entradas do aço personalizado; conferir origem e aplicabilidade'
   if mat['properties']['E_MPa']!=200000. or mat['properties']['G_MPa']!=77000.:st.warning('E/G personalizados diferem das constantes usuais da NBR 14762. Valores importados preservados, sem atribuí-los à norma; confira a origem e a aplicabilidade.')
  except ValueError as exc:mat=None;st.warning(str(exc));d['properties'].update(fy_MPa=fy,fu_MPa=fu)
-else:mat=material(d['steel_name'])
+else:
+ mat=material(d['steel_name'])
+ # This metadata belongs to the active custom material, not an exported draft.
+ # In-session toggling still uses custom_steel_draft (fy/fu and origin together).
+ d.pop('custom_steel_origin',None)
 if mat:
  d['properties'].update(mat['properties']);d['property_origin']=f"{mat['name']}: {mat['origin']}; {mat['physical_origin']}"
  st.caption(f"fy = {fmt(mat['properties']['fy_MPa'])} MPa · fu = {fmt(mat['properties']['fu_MPa'])} MPa. Conferir especificação do produto.")
@@ -171,7 +176,12 @@ with st.expander('Perfil, aço e origem dos dados',expanded=False):
  for i,(key,label) in enumerate(labels.items()):
   with cols[i%3]:d['properties'][key]=num(label,key,b['properties'][key])
  extra_origin=txt('Origem dos dados complementares / alterações','property_origin',b['property_origin'])
- d['property_origin']=(f"Aço {mat['name']}: {mat['origin']}; {mat['physical_origin']}; " if mat else '')+extra_origin
+ steel_prefix=f"Aço {mat['name']}: {mat['origin']}; {mat['physical_origin']}; " if mat else ''
+ # Exported inputs already include this prefix: reopening must not duplicate it.
+ d['property_origin']=extra_origin if extra_origin.startswith(steel_prefix) else steel_prefix+extra_origin
+ # Legacy custom exports contain only the aggregate. Preserve that text intact;
+ # do not guess its certificate/history boundary or wrap it in itself again.
+ if mat and d['steel_name']=='Personalizado' and custom_origin==extra_origin and extra_origin.startswith('Aço Personalizado: '):d['property_origin']=extra_origin
  st.caption(f"E = {fmt(d['properties']['E_MPa'])} MPa · G = {fmt(d['properties']['G_MPa'])} MPa — propriedades físicas adotadas; conferir origem.")
  st.caption('Fonte: '+catalog_entry(index)['source_url']+'; linha '+str(catalog_entry(index)['source_workbook_row'])+' da planilha original.')
  st.caption('Conferir a convenção de Wx e das propriedades usadas em conjunto. Editar valores não comprova a correspondência física.')
@@ -279,6 +289,7 @@ with st.expander('Eixo fraco — dados existentes e críticos por sentido',expan
   else:wc['mean_line']=auto_geom
  d['weak_catalog']=wc;d['weak_axis']={}
  from tercas.weak_catalog import critical_hypothesis
+ from tercas.weak_axis import provisional_hypothesis
  provisional=critical_hypothesis(index)
  for sign,label in [('positive','My positivo — alma comprimida'),('negative','My negativo — bordas comprimidas')]:
   src=b.get('weak_axis',{}).get(sign,provisional[sign])
@@ -286,10 +297,18 @@ with st.expander('Eixo fraco — dados existentes e críticos por sentido',expan
   for i,(key,label2) in enumerate([('Ml_Nmm','Ml,y local'),('Mdist_Nmm','Mdist,y distorcional')]):
    with cols[i]:
     value=num(label2+' — '+label,'weak_'+sign+'_'+key,None if src.get(key) is None else src[key]/1e6,'kN·m');out[key]=None if value is None else value*1e6
-  out['provisional_hypothesis']=src.get('provisional_hypothesis',False) or 'HIPÓTESE PROVISÓRIA' in src.get('provenance','').upper()
+  inherited_hypothesis=provisional_hypothesis(src)
+  replace_key=f'weak_replace_hypothesis_{sign}_{r}'
+  replace_hypothesis=False
+  if inherited_hypothesis or st.session_state.get(replace_key,False):
+   replace_hypothesis=st.checkbox('Usar críticos informados com origem própria — '+label,value=False,key=replace_key)
+   if replace_hypothesis:st.caption('Esta escolha só distingue a entrada manual da hipótese tabulada; não valida fisicamente os críticos. Informe valores compatíveis com seção, eixo, sentido e material, com sua própria origem.')
   out['plain_u_no_distortion']=catalog_entry(index)['family']=='U'
   if out['plain_u_no_distortion']:st.caption('U simples, sem painel na mesa tracionada: não aplicabilidade distorcional conforme §9.3. Não se usa dispensa da Tabela 14 forte no eixo fraco.')
   out['provenance']=txt('Origem dos críticos neste sentido — '+label,'weak_source_'+sign,src.get('provenance',''))
+  legacy_hypothesis='HIPÓTESE PROVISÓRIA' in out['provenance'].upper()
+  out['provisional_hypothesis']=(inherited_hypothesis and not replace_hypothesis) or legacy_hypothesis
+  if replace_hypothesis and legacy_hypothesis:st.warning('A origem ainda identifica a hipótese provisória. Substitua pela origem própria dos críticos; o selo e a restrição de compatibilidade permanecem enquanto este texto estiver presente.')
   d['weak_axis'][sign]=out
  st.caption('Hipótese provisória autorizada: o Ml,y tabulado preenche somente My positivo (alma comprimida), apoiado na comparação pyCUFSM, ainda a conferir com exemplos CBCA. Não é copiado no sentido oposto; Mdist,y não usa a tabela do eixo forte. A ausência de um crítico afeta só a rota correspondente.')
 
@@ -382,7 +401,7 @@ if 'result' in st.session_state:
    st.dataframe(display_frame(item['rows']),hide_index=True,width='stretch')
    if item.get('evidence',{}).get('inclination'):show_inclination(item['evidence']['inclination'])
  else:
-  for warning in result.get('coverage_warnings',[]):st.warning(warning)
+  for warning in result.get('coverage_warnings',[])+result.get('critical_warnings',[]):st.warning(warning)
   if result.get('numerical_warnings'):st.warning('A integração da flecha emitiu aviso numérico. A verificação ELS ficou pendente; demais resultados foram preservados.')
   st.dataframe(display_frame(rows(result)),hide_index=True,width='stretch')
   if result.get('inclination_evidence'):show_inclination(result['inclination_evidence'])

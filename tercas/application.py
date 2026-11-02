@@ -7,6 +7,7 @@ from .core.travamentos_nbr import segment_moments
 from .catalogs import catalog_labels, critical_defaults, apply_material, entries, STEEL_NAMES
 from .core.local_table12 import local_critical
 from .load_combinations import COMBINATION_TYPES
+from .strong_critical_guard import qualify_strong_criticals
 
 VERSION='0.4.4-estudo'
 
@@ -67,6 +68,7 @@ def build_spec(data):
  if missing:raise ValueError('Arquivo incompleto. Campos ausentes: '+', '.join(sorted(missing)))
  for key in ['project','property_origin','actions_origin','critical_origin','ELS_origin','support_origin','patch_origin']:
   if not isinstance(data.get(key),str) or len(data[key])>2000:raise ValueError('Texto inválido ou excessivo: '+key)
+ if 'custom_steel_origin' in data and (not isinstance(data['custom_steel_origin'],str) or len(data['custom_steel_origin'])>2000):raise ValueError('Texto inválido ou excessivo: custom_steel_origin')
  for key in ['synthetic','route_domain','left_web','right_web']:
   if not isinstance(data.get(key),bool):raise ValueError('Opção inválida: '+key)
  if not isinstance(data.get('properties'),dict) or set(data['properties'])!=set(defaults(data['catalog_index'])['properties']):raise ValueError('Conjunto de propriedades incompleto ou não reconhecido.')
@@ -91,7 +93,7 @@ def build_spec(data):
   elif val!=s['fields'][key]['value']:edit(s,key,val,d.get('property_origin',''))
  # Radius initially absent may be provided without invalidating published properties;
  # convention uncertainty remains visible in every report.
- def critical(key):return {'value':d.get(key),'origin':d.get('critical_origin','')}
+ strong_criticals,strong_qualification=qualify_strong_criticals(d)
  segs=d.get('segments',[])
  if not isinstance(segs,list) or len(segs)>20:raise ValueError('Use até 20 trechos por caso.')
  for seg in segs:
@@ -104,7 +106,8 @@ def build_spec(data):
    if k in seg and seg[k] is not None and not finite(seg[k]):raise ValueError('Comprimento ou coordenada inválida no trecho: '+k)
   if seg.get('restraint_provenance') is not None and not isinstance(seg['restraint_provenance'],str):raise ValueError('Origem dos vínculos deve ser texto.')
  spec={'selected_section':s,'L_mm':L,'route_domain':'strong_symmetry_CT_no_primary_torsion' if d.get('route_domain') is True else None,
- 'Ml':critical('Ml_Nmm'),'Mdist':critical('Mdist_Nmm'),
+ 'Ml':strong_criticals['Ml'],'Mdist':strong_criticals['Mdist'],
+ 'strong_critical_qualification':strong_qualification,
  'ULS':{'q_Nmm':d['q_uls'],'P_N':d['P_uls'],'x_mm':d['x_uls'],'origin':d.get('actions_origin','')},
  'SLS':{'q_Nmm':d['q_sls'],'P_N':d['P_sls'],'x_mm':d['x_sls'],'origin':d.get('actions_origin','')},
  'segments':copy.deepcopy(segs),'ELS_limit_mm':{'value':d.get('ELS_limit_mm'),'origin':d.get('ELS_origin','')},
@@ -130,6 +133,8 @@ def calculate(data):
  if data['P_uls']==0:b['point']={'status':'not_applicable','reason':'Sem força concentrada de compressão no caso informado.'}
  result['inclination_evidence']=inclination_evidence
  result['whole_member_approved']=False
+ result['strong_critical_qualification']=copy.deepcopy(spec['strong_critical_qualification'])
+ result['critical_warnings']=list(spec['strong_critical_qualification']['warnings'])
  result['coverage_warnings']=[]
  intervals=[]
  for seg in data['segments']:

@@ -109,7 +109,7 @@ All 209 entries are selected by default; no hidden cut-off or load/combination c
             else:
                 result = calculate(item)
                 checks = rows(result)
-                warnings = result['coverage_warnings'] + result['numerical_warnings']
+                warnings = result['coverage_warnings'] + result.get('critical_warnings', []) + result['numerical_warnings']
             row.update(summarize(checks, warnings))
             row['checks'] = checks
         except (ValueError, TypeError, KeyError, ArithmeticError) as exc:

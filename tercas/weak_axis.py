@@ -4,6 +4,9 @@ from .inclination import annex_e_critical, weak_resistance, biaxial_interaction,
 from .core.travamentos_nbr import moment
 
 FIELDS=('W_mm3','Wc_mm3','Ml_Nmm','Mdist_Nmm','Nex_N','Nez_N','r0_mm','j_mm','Cm')
+def provisional_hypothesis(s):
+ return s.get('provisional_hypothesis',False) or 'HIPÓTESE PROVISÓRIA' in s.get('provenance','').upper()
+
 def validate(data):
  cfg=data.get('weak_axis',{})
  if not isinstance(cfg,dict) or set(cfg)-{'positive','negative'}:raise ValueError('Eixo fraco: configuração inválida.')
@@ -27,6 +30,11 @@ def capacities(data,family):
   except (ValueError,TypeError,KeyError) as exc:auto={'status':'not_evaluated','missing':['Dados do catálogo/linha média: '+str(exc)],'signs':{}}
  for sign in ('positive','negative'):
   s=dict(cfg.get(sign,{}))
+  # Rev07 section 5 records Pierin's tabulated criticals at E=200 GPa.
+  # This is a provenance guard for that provisional import, not a material
+  # restriction or a scaling rule. Manually qualified inputs stay explicit.
+  if provisional_hypothesis(s) and data['properties'].get('E_MPa')!=200000.:
+   out[sign]={'status':'not_evaluated','missing':['Hipótese provisória de Ml,y tabulado referida a E=200000 MPa; E alterado exige crítico compatível com origem própria, sem escala automática.']};continue
   if auto is not None:
    if auto['status']!='computed_catalog_inputs':
     out[sign]={'status':'not_evaluated','missing':auto['missing'],'automatic_inputs':auto};continue
@@ -105,7 +113,7 @@ def integrate(result):
  if not ev['parallel_demand']:return
  fam=result['input_snapshot']['selected_section']['family'];caps=capacities(d,fam);rx=strong_capacity(result)
  z=interaction_envelope(d['L_mm'],d['q_uls'],d['P_uls'],d.get('q_parallel_uls',0),d.get('P_parallel_uls',0),d['x_uls'],rx,caps)
- ev['provisional_hypothesis']=any(s.get('provisional_hypothesis',False) or 'HIPÓTESE PROVISÓRIA' in s.get('provenance','').upper() for s in d.get('weak_axis',{}).values())
+ ev['provisional_hypothesis']=any(provisional_hypothesis(s) for s in d.get('weak_axis',{}).values())
  ev['weak_axis_capacities']=caps;ev['biaxial']=z;ev['strong_capacity_Nmm']=rx
  ev['resistance_status']='Interação §9.9 calculada na posição fixa de P; resistências condicionadas aos dados rastreados. Sem aprovação global.' if z['status']=='computed_fixed_position' else 'Interação §9.9 pendente: '+', '.join({'positive':'resistência para My positivo','negative':'resistência para My negativo','strong':'resistência completa do eixo forte'}.get(k,k) for k in z['missing'])
 
