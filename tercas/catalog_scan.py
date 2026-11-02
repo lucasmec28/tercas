@@ -29,7 +29,8 @@ Even the originally selected section is compared on the same catalogue basis.
     out['property_origin'] = data.get('property_origin', '') + '; demais propriedades: catálogo da seção comparada'
     # Retain synthetic provenance of loads/restraints used by test/demo cases.
     entry = catalog_entry(index)
-    if entry['critical_values']['Ml_Nmm'] is None:
+    from .strong_pierin import reference_for_index
+    if entry['critical_values']['Ml_Nmm'] is None and reference_for_index(index)['status'] != 'tabulated_adopted_reference':
         from .core.local_table12 import local_critical
         p = out['properties']
         try:
@@ -113,6 +114,7 @@ All 209 entries are selected by default; no hidden cut-off or load/combination c
             row.update(summarize(checks, warnings))
             row['checks'] = checks
             row['weak_critical_reference'] = copy.deepcopy(result.get('weak_critical_reference'))
+            row['strong_critical_reference'] = copy.deepcopy(result.get('strong_critical_reference'))
         except (ValueError, TypeError, KeyError, ArithmeticError) as exc:
             row.update(status='Não calculado — dados insuficientes ou incompatíveis',
                        utilization_percent=None, governing_check=None, governing_combination=None,
@@ -131,5 +133,6 @@ All 209 entries are selected by default; no hidden cut-off or load/combination c
                        'Índices de interação quadrática permanecem na métrica original do critério.',
                        'Pendências, hipóteses e avisos impedem classificação como atendimento completo dos critérios.',
                        'Propriedades/críticos manuais da seção anterior não são transferidos; catálogo e hipóteses rastreadas de cada seção são usados.',
+                       'Nas 124 linhas U exatas, nova seleção/comparação usa Mlx Pierin no lugar da Tabela 12. Importação direta de projeto legado mantém sua fonte; não há escala ou fallback silencioso para E/G alterados.',
                        'Peso próprio varia por seção no modo área. Ações diretas permanecem exatamente as informadas, inclusive eventual peso próprio nelas embutido.',
                        'Comparação restrita às verificações implementadas; não constitui aprovação global de projeto.'])

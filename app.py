@@ -260,6 +260,15 @@ with st.expander('Estabilidade, críticos e trechos',expanded=True):
  with c1:m=num('Ml — crítico local','Ml',None if b['Ml_Nmm'] is None else b['Ml_Nmm']/1e6,'kN·m');d['Ml_Nmm']=None if m is None else m*1e6
  with c2:m=num('Mdist — quando não dispensado','Mdist',None if b['Mdist_Nmm'] is None else b['Mdist_Nmm']/1e6,'kN·m');d['Mdist_Nmm']=None if m is None else m*1e6
  d['critical_origin']=txt('Origem dos críticos / método e seção','critical_origin',b['critical_origin'])
+ from tercas.strong_pierin import qualify as qualify_pierin_U,use_label as pierin_U_use_label
+ _,strong_ref=qualify_pierin_U(d)
+ if strong_ref['status']=='tabulated_adopted_reference':
+  st.markdown('**Pierin — referência oficial adotada para Mlx / Nl de U**')
+  st.caption(f"Mlx = {fmt(strong_ref['Mlx_Nmm']/1e6)} kN·m; Nl = {fmt(strong_ref['Nl_N']/1000)} kN. Tabela 1, p{strong_ref['printed_page']} / PDF{strong_ref['PDF_page']}; linha nominal exata. Nl é somente documental: não há verificação axial implementada.")
+  st.caption('Críticos elásticos, não resistências. Novas seleções U tabeladas usam Mlx Pierin; projetos importados mantêm sua entrada/fonte. Fonte: E=200000 MPa, apoio simples, cantos retos; G/ν e conversão exata para linha média não explicitados. As propriedades originais do catálogo são mantidas; equivalência física com INSTAB não demonstrada. Sem escala, interpolação ou fallback automático por E/G.')
+  st.caption('Uso atual: '+pierin_U_use_label(strong_ref)+'. Ml informado acima é preservado; valor de referência não substitui silenciosamente entrada legada/manual.')
+  if strong_ref.get('reason'):st.warning(strong_ref['reason'])
+ elif strong_ref['status']=='not_tabulated':st.caption(strong_ref['reason']+' A rota Tabela 12 permanece quando válida.')
  selection=st.selectbox('Domínio da expressão de Me nesta emissão',['Não informado / outra situação','Eixo forte de simetria; sem torção primária ou efeito de altura neste modelo'],index=1 if b['route_domain'] else 0,key=f'domain_{r}')
  d['route_domain']=selection.startswith('Eixo')
  st.caption('Ly superior/inferior é o comprimento lateral associado à menor inércia no cálculo de FLT da flexão forte. Lz é torsional, não um comprimento da maior inércia. Esses comprimentos não criam apoios no diagrama de cargas.')

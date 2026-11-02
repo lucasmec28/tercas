@@ -1,0 +1,2496 @@
+{
+  "schema": "pierin_2013_U_strong_reference_v1",
+  "title": "Pierin, Silva e La Rovere (2013) — Forças Normais e Momentos Fletores Críticos de Perfis Formados a Frio",
+  "url": "https://www.researchgate.net/publication/265207005_Forcas_Normais_e_Momentos_Fletores_Criticos_de_Perfis_Formados_a_Frio",
+  "source_pdf_sha256": "2ff5f67f201e00ddb31fdb7370a8077bc9e27fb9ac553cb0c5036ab9ad9d2d73",
+  "source_text_sha256": "ec0bcd133b1094a08c3ec3d52de99b70f1453d4a4b53ba6d2ce20e0b61822da2",
+  "source_E_MPa": 200000.0,
+  "source_G_MPa": null,
+  "source_nu": null,
+  "boundary": "simplesmente apoiado",
+  "corners": "retos",
+  "source_geometry_to_mean_line": "não explicitada",
+  "meaning": "Nl e Mlx são críticos locais elásticos, não resistências de cálculo. Nl apenas documental: o app não calcula resistência axial.",
+  "entries": [
+    {
+      "id": "Pierin2013_T1_U_50x25x1.20",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 50.0,
+        "bf": 25.0,
+        "lip": 0.0,
+        "t": 1.2
+      },
+      "Nl_N": 36360,
+      "Mlx_Nmm": 760000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "50 x 25 x 1,20     36,36   0,76     0,70",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_100x50x3.00",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 3.0
+      },
+      "Nl_N": 283070,
+      "Mlx_Nmm": 11820000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 50 x 3,00   283,07  11,82       10,95",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_50x25x1.50",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 50.0,
+        "bf": 25.0,
+        "lip": 0.0,
+        "t": 1.5
+      },
+      "Nl_N": 70770,
+      "Mlx_Nmm": 1480000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "50 x 25 x 1,50     70,77   1,48     1,37",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_100x50x3.35",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 3.35
+      },
+      "Nl_N": 394160,
+      "Mlx_Nmm": 16420000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 50 x 3,35   394,16  16,42       15,22",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_50x25x2.00",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 50.0,
+        "bf": 25.0,
+        "lip": 0.0,
+        "t": 2.0
+      },
+      "Nl_N": 167750,
+      "Mlx_Nmm": 3480000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "50 x 25 x 2,00    167,75   3,48     3,22",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_100x50x3.75",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 3.75
+      },
+      "Nl_N": 552880,
+      "Mlx_Nmm": 23030000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 50 x 3,75   552,88  23,03       21,32",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_50x25x2.25",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 50.0,
+        "bf": 25.0,
+        "lip": 0.0,
+        "t": 2.25
+      },
+      "Nl_N": 238020,
+      "Mlx_Nmm": 4950000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "50 x 25 x 2,25    238,02   4,95     4,57",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_100x50x4.25",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 4.25
+      },
+      "Nl_N": 802050,
+      "Mlx_Nmm": 33430000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 50 x 4,25   802,05  33,43       30,88",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_50x25x2.65",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 50.0,
+        "bf": 25.0,
+        "lip": 0.0,
+        "t": 2.65
+      },
+      "Nl_N": 387520,
+      "Mlx_Nmm": 8060000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "50 x 25 x 2,65    387,52   8,06     7,43",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_100x50x4.75",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 4.75
+      },
+      "Nl_N": 1119740,
+      "Mlx_Nmm": 46540000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 50 x 4,75   1119,74 46,54       42,97",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_50x25x3.00",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 50.0,
+        "bf": 25.0,
+        "lip": 0.0,
+        "t": 3.0
+      },
+      "Nl_N": 560290,
+      "Mlx_Nmm": 11630000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "50 x 25 x 3,00    560,29   11,63   10,69",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_100x50x6.30",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 6.3
+      },
+      "Nl_N": 2594420,
+      "Mlx_Nmm": 107370000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 50 x 6,30   2594,42 107,37      98,64",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_75x40x1.20",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 75.0,
+        "bf": 40.0,
+        "lip": 0.0,
+        "t": 1.2
+      },
+      "Nl_N": 22810,
+      "Mlx_Nmm": 700000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "75 x 40 x 1,20     22,81   0,70     0,76",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_100x75x2.65",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 75.0,
+        "lip": 0.0,
+        "t": 2.65
+      },
+      "Nl_N": 126150,
+      "Mlx_Nmm": 5190000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 75 x 2,65   126,15   5,19       12,44",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_75x40x1.50",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 75.0,
+        "bf": 40.0,
+        "lip": 0.0,
+        "t": 1.5
+      },
+      "Nl_N": 44550,
+      "Mlx_Nmm": 1380000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "75 x 40 x 1,50     44,55   1,38     1,49",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_100x75x3.35",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 75.0,
+        "lip": 0.0,
+        "t": 3.35
+      },
+      "Nl_N": 254840,
+      "Mlx_Nmm": 10480000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 75 x 3,35   254,84  10,48       25,03",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_75x40x2.00",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 75.0,
+        "bf": 40.0,
+        "lip": 0.0,
+        "t": 2.0
+      },
+      "Nl_N": 105600,
+      "Mlx_Nmm": 3250000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "75 x 40 x 2,00    105,60   3,25     3,52",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_100x75x3.75",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 75.0,
+        "lip": 0.0,
+        "t": 3.75
+      },
+      "Nl_N": 357460,
+      "Mlx_Nmm": 14690000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 75 x 3,75   357,46  14,69       35,05",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_75x40x2.25",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 75.0,
+        "bf": 40.0,
+        "lip": 0.0,
+        "t": 2.25
+      },
+      "Nl_N": 149780,
+      "Mlx_Nmm": 4630000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "75 x 40 x 2,25    149,78   4,63     5,00",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_100x75x4.25",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 75.0,
+        "lip": 0.0,
+        "t": 4.25
+      },
+      "Nl_N": 520360,
+      "Mlx_Nmm": 21260000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 75 x 4,25   520,36  21,26       50,85",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_75x40x2.65",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 75.0,
+        "bf": 40.0,
+        "lip": 0.0,
+        "t": 2.65
+      },
+      "Nl_N": 244710,
+      "Mlx_Nmm": 7540000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "75 x 40 x 2,65    244,71   7,54     8,14",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_100x75x4.75",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 75.0,
+        "lip": 0.0,
+        "t": 4.75
+      },
+      "Nl_N": 721630,
+      "Mlx_Nmm": 29680000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 75 x 4,75   721,63  29,68       70,87",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_75x40x3.00",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 75.0,
+        "bf": 40.0,
+        "lip": 0.0,
+        "t": 3.0
+      },
+      "Nl_N": 355050,
+      "Mlx_Nmm": 10940000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "75 x 40 x 3,00    355,05   10,94   11,77",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_100x75x6.30",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 75.0,
+        "lip": 0.0,
+        "t": 6.3
+      },
+      "Nl_N": 1683660,
+      "Mlx_Nmm": 68840000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 75 x 6,30   1683,66 68,84      163,33",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_75x40x3.35",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 75.0,
+        "bf": 40.0,
+        "lip": 0.0,
+        "t": 3.35
+      },
+      "Nl_N": 494370,
+      "Mlx_Nmm": 15190000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "75 x 40 x 3,35    494,37   15,19   16,34",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_100x75x8.00",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 75.0,
+        "lip": 0.0,
+        "t": 8.0
+      },
+      "Nl_N": 3447490,
+      "Mlx_Nmm": 139260000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 75 x 8,00   3447,49 139,26     328,48",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_75x40x3.75",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 75.0,
+        "bf": 40.0,
+        "lip": 0.0,
+        "t": 3.75
+      },
+      "Nl_N": 690820,
+      "Mlx_Nmm": 21240000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "75 x 40 x 3,75    690,82   21,24   22,81",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_125x50x1.20",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 1.2
+      },
+      "Nl_N": 16870,
+      "Mlx_Nmm": 990000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 50 x 1,20    16,87   0,99       0,54",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_75x40x4.25",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 75.0,
+        "bf": 40.0,
+        "lip": 0.0,
+        "t": 4.25
+      },
+      "Nl_N": 1005630,
+      "Mlx_Nmm": 30820000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "75 x 40 x 4,25    1005,63  30,82   33,04",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_125x50x1.50",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 1.5
+      },
+      "Nl_N": 32940,
+      "Mlx_Nmm": 1920000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 50 x 1,50    32,94   1,92       1,05",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_75x40x4.75",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 75.0,
+        "bf": 40.0,
+        "lip": 0.0,
+        "t": 4.75
+      },
+      "Nl_N": 1398620,
+      "Mlx_Nmm": 42890000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "75 x 40 x 4,75    1398,62  42,89   45,74",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_125x50x2.00",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 2.0
+      },
+      "Nl_N": 78090,
+      "Mlx_Nmm": 4560000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 50 x 2,00    78,09   4,56       2,49",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_100x40x1.20",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 40.0,
+        "lip": 0.0,
+        "t": 1.2
+      },
+      "Nl_N": 21080,
+      "Mlx_Nmm": 990000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 40 x 1,20    21,08   0,99     0,54",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_125x50x2.25",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 2.25
+      },
+      "Nl_N": 110890,
+      "Mlx_Nmm": 6490000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 50 x 2,25   110,89   6,49       3,54",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_100x40x1.50",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 40.0,
+        "lip": 0.0,
+        "t": 1.5
+      },
+      "Nl_N": 41180,
+      "Mlx_Nmm": 1920000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 40 x 1,50    41,18   1,92     1,05",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_125x50x2.65",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 2.65
+      },
+      "Nl_N": 181170,
+      "Mlx_Nmm": 10590000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 50 x 2,65   181,17  10,59       5,78",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_100x40x2.00",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 40.0,
+        "lip": 0.0,
+        "t": 2.0
+      },
+      "Nl_N": 97350,
+      "Mlx_Nmm": 4550000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 40 x 2,00    97,35   4,55     2,49",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_125x50x3.00",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 3.0
+      },
+      "Nl_N": 262850,
+      "Mlx_Nmm": 15360000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 50 x 3,00   262,85  15,36       8,38",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_100x40x2.25",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 40.0,
+        "lip": 0.0,
+        "t": 2.25
+      },
+      "Nl_N": 138610,
+      "Mlx_Nmm": 6480000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 40 x 2,25   138,61   6,48     3,53",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_125x50x3.35",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 3.35
+      },
+      "Nl_N": 365020,
+      "Mlx_Nmm": 21350000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 50 x 3,35   365,02  21,35       11,65",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_100x40x2.65",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 40.0,
+        "lip": 0.0,
+        "t": 2.65
+      },
+      "Nl_N": 225850,
+      "Mlx_Nmm": 10570000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 40 x 2,65   225,85   10,57    5,77",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_125x50x3.75",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 3.75
+      },
+      "Nl_N": 512000,
+      "Mlx_Nmm": 29900000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 50 x 3,75   512,00  29,90       16,29",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_100x40x3.00",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 40.0,
+        "lip": 0.0,
+        "t": 3.0
+      },
+      "Nl_N": 327680,
+      "Mlx_Nmm": 15310000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 40 x 3,00   327,68   15,31    8,34",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_125x50x4.25",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 4.25
+      },
+      "Nl_N": 743330,
+      "Mlx_Nmm": 43440000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 50 x 4,25   743,33  43,44       23,64",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_100x40x3.35",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 40.0,
+        "lip": 0.0,
+        "t": 3.35
+      },
+      "Nl_N": 455050,
+      "Mlx_Nmm": 21320000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 40 x 3,35   455,05   21,32   11,57",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_125x50x4.75",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 4.75
+      },
+      "Nl_N": 1034960,
+      "Mlx_Nmm": 60540000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 50 x 4,75   1034,96 60,54       32,90",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_100x40x3.75",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 40.0,
+        "lip": 0.0,
+        "t": 3.75
+      },
+      "Nl_N": 636570,
+      "Mlx_Nmm": 29790000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 40 x 3,75   636,57   29,79   16,19",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_125x50x6.30",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 6.3
+      },
+      "Nl_N": 2388680,
+      "Mlx_Nmm": 140230000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 50 x 6,30   2388,68 140,23      75,69",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_100x40x4.25",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 40.0,
+        "lip": 0.0,
+        "t": 4.25
+      },
+      "Nl_N": 921660,
+      "Mlx_Nmm": 43290000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 40 x 4,25   921,66   43,29   23,46",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_125x75x2.65",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 75.0,
+        "lip": 0.0,
+        "t": 2.65
+      },
+      "Nl_N": 130250,
+      "Mlx_Nmm": 6630000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 75 x 2,65   130,25   6,63       9,46",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_100x40x4.75",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 40.0,
+        "lip": 0.0,
+        "t": 4.75
+      },
+      "Nl_N": 1283240,
+      "Mlx_Nmm": 60210000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 40 x 4,75   1283,24  60,21   32,54",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_125x75x3.00",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 75.0,
+        "lip": 0.0,
+        "t": 3.0
+      },
+      "Nl_N": 188980,
+      "Mlx_Nmm": 9630000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 75 x 3,00   188,98   9,63       13,72",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_100x40x6.30",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 40.0,
+        "lip": 0.0,
+        "t": 6.3
+      },
+      "Nl_N": 2937030,
+      "Mlx_Nmm": 138690000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 40 x 6,30   2937,03 138,69   74,25",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_125x75x3.35",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 75.0,
+        "lip": 0.0,
+        "t": 3.35
+      },
+      "Nl_N": 263130,
+      "Mlx_Nmm": 13400000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 75 x 3,35   263,13  13,40       19,08",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_100x50x1.20",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 1.2
+      },
+      "Nl_N": 18180,
+      "Mlx_Nmm": 760000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 50 x 1,20    18,18   0,76     0,71",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_125x75x3.75",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 75.0,
+        "lip": 0.0,
+        "t": 3.75
+      },
+      "Nl_N": 369090,
+      "Mlx_Nmm": 18730000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 75 x 3,75   369,09  18,73       26,72",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_100x50x1.50",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 1.5
+      },
+      "Nl_N": 35510,
+      "Mlx_Nmm": 1480000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 50 x 1,50    35,51   1,48     1,38",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_125x75x4.25",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 75.0,
+        "lip": 0.0,
+        "t": 4.25
+      },
+      "Nl_N": 537290,
+      "Mlx_Nmm": 27260000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 75 x 4,25   537,29  27,26       38,83",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_100x50x2.00",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 2.0
+      },
+      "Nl_N": 84160,
+      "Mlx_Nmm": 3510000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 50 x 2,00    84,16   3,51     3,26",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_125x75x4.75",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 75.0,
+        "lip": 0.0,
+        "t": 4.75
+      },
+      "Nl_N": 750110,
+      "Mlx_Nmm": 38060000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 75 x 4,75   750,11  38,06       54,12",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_100x50x2.25",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 2.25
+      },
+      "Nl_N": 119830,
+      "Mlx_Nmm": 5000000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 50 x 2,25   119,83   5,00     4,64",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_125x75x6.30",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 75.0,
+        "lip": 0.0,
+        "t": 6.3
+      },
+      "Nl_N": 1742150,
+      "Mlx_Nmm": 88100000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 75 x 6,30   1742,15 88,10      124,99",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_100x50x2.65",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 2.65
+      },
+      "Nl_N": 195110,
+      "Mlx_Nmm": 8150000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 50 x 2,65   195,11   8,15     7,57",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_125x75x8.00",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 125.0,
+        "bf": 75.0,
+        "lip": 0.0,
+        "t": 8.0
+      },
+      "Nl_N": 3567250,
+      "Mlx_Nmm": 179680000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "125 x 75 x 8,00   3567,25 179,68     252,94",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_150x50x2.00",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 2.0
+      },
+      "Nl_N": 67650,
+      "Mlx_Nmm": 5670000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 50 x 2,00    67,65   5,67     1,99",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_200x75x3.35",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 75.0,
+        "lip": 0.0,
+        "t": 3.35
+      },
+      "Nl_N": 234290,
+      "Mlx_Nmm": 23140000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 75 x 3,35    234,29      23,14     10,81",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_150x50x2.25",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 2.25
+      },
+      "Nl_N": 96090,
+      "Mlx_Nmm": 8070000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 50 x 2,25    96,09   8,07     2,83",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_200x75x3.75",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 75.0,
+        "lip": 0.0,
+        "t": 3.75
+      },
+      "Nl_N": 327790,
+      "Mlx_Nmm": 32460000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 75 x 3,75    327,79      32,46     15,14",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_150x50x2.65",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 2.65
+      },
+      "Nl_N": 156980,
+      "Mlx_Nmm": 13160000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 50 x 2,65   156,98   13,16    4,62",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_200x75x4.25",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 75.0,
+        "lip": 0.0,
+        "t": 4.25
+      },
+      "Nl_N": 477170,
+      "Mlx_Nmm": 47170000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 75 x 4,25    477,17      47,17     22,01",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_150x50x3.00",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 3.0
+      },
+      "Nl_N": 227220,
+      "Mlx_Nmm": 19100000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 50 x 3,00   227,22   19,10    6,70",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_200x75x4.75",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 75.0,
+        "lip": 0.0,
+        "t": 4.75
+      },
+      "Nl_N": 664480,
+      "Mlx_Nmm": 65750000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 75 x 4,75    664,48      65,75     30,68",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_150x50x3.35",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 3.35
+      },
+      "Nl_N": 315630,
+      "Mlx_Nmm": 26560000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 50 x 3,35   315,63   26,56    9,32",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_200x75x6.30",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 75.0,
+        "lip": 0.0,
+        "t": 6.3
+      },
+      "Nl_N": 1542420,
+      "Mlx_Nmm": 152910000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 75 x 6,30    1542,42    152,91     71,16",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_150x50x3.75",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 3.75
+      },
+      "Nl_N": 441670,
+      "Mlx_Nmm": 37210000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 50 x 3,75   441,67   37,21    13,03",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_200x75x8.00",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 75.0,
+        "lip": 0.0,
+        "t": 8.0
+      },
+      "Nl_N": 3133980,
+      "Mlx_Nmm": 311600000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 75 x 8,00    3133,98    311,60     144,63",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_150x50x4.25",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 4.25
+      },
+      "Nl_N": 641390,
+      "Mlx_Nmm": 54100000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 50 x 4,25   641,39   54,10    18,91",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_200x100x2.65",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 100.0,
+        "lip": 0.0,
+        "t": 2.65
+      },
+      "Nl_N": 97890,
+      "Mlx_Nmm": 8170000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 100 x2,65     97,89      8,17       7,61",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_150x50x4.75",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 4.75
+      },
+      "Nl_N": 893290,
+      "Mlx_Nmm": 75430000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 50 x 4,75   893,29   75,43    26,32",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_200x100x3.00",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 100.0,
+        "lip": 0.0,
+        "t": 3.0
+      },
+      "Nl_N": 142020,
+      "Mlx_Nmm": 11850000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 100 x 3,00   142,02      11,85     11,02",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_150x50x6.30",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 6.3
+      },
+      "Nl_N": 2049020,
+      "Mlx_Nmm": 174630000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 50 x 6,30   2049,02 174,63    60,56",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_200x100x3.35",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 100.0,
+        "lip": 0.0,
+        "t": 3.35
+      },
+      "Nl_N": 197760,
+      "Mlx_Nmm": 16510000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 100 x 3,35   197,76      16,51     15,34",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_150x50x8.00",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 8.0
+      },
+      "Nl_N": 4103060,
+      "Mlx_Nmm": 354330000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 50 x 8,00   4103,06 354,33   121,49",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_200x100x3.75",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 100.0,
+        "lip": 0.0,
+        "t": 3.75
+      },
+      "Nl_N": 277390,
+      "Mlx_Nmm": 23150000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 100 x 3,75   277,39      23,15     21,52",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_150x75x2.65",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 75.0,
+        "lip": 0.0,
+        "t": 2.65
+      },
+      "Nl_N": 130520,
+      "Mlx_Nmm": 8170000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 75 x 2,65   130,52   8,17     7,59",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_200x100x4.25",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 100.0,
+        "lip": 0.0,
+        "t": 4.25
+      },
+      "Nl_N": 403800,
+      "Mlx_Nmm": 33700000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 100 x 4,25   403,80      33,70     31,27",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_150x75x3.00",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 75.0,
+        "lip": 0.0,
+        "t": 3.0
+      },
+      "Nl_N": 189370,
+      "Mlx_Nmm": 11850000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 75 x 3,00   189,37   11,85    11,00",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_200x100x4.75",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 100.0,
+        "lip": 0.0,
+        "t": 4.75
+      },
+      "Nl_N": 563740,
+      "Mlx_Nmm": 46920000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 100 x 4,75   563,74      46,92     43,59",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_150x75x3.35",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 75.0,
+        "lip": 0.0,
+        "t": 3.35
+      },
+      "Nl_N": 263680,
+      "Mlx_Nmm": 16510000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 75 x 3,35   263,68   16,51    15,32",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_200x100x6.30",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 100.0,
+        "lip": 0.0,
+        "t": 6.3
+      },
+      "Nl_N": 1310770,
+      "Mlx_Nmm": 109480000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 100 x 6,30   1310,77    109,48     101,39",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_150x75x3.75",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 75.0,
+        "lip": 0.0,
+        "t": 3.75
+      },
+      "Nl_N": 368580,
+      "Mlx_Nmm": 23090000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 75 x 3,75   368,58   23,09    21,45",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_200x100x8.00",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 100.0,
+        "lip": 0.0,
+        "t": 8.0
+      },
+      "Nl_N": 2683950,
+      "Mlx_Nmm": 222940000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 100 x 8,00   2683,95    222,94     206,25",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_150x75x4.25",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 75.0,
+        "lip": 0.0,
+        "t": 4.25
+      },
+      "Nl_N": 536550,
+      "Mlx_Nmm": 33610000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 75 x 4,25   536,55   33,61    31,17",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_250x100x2.65",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 250.0,
+        "bf": 100.0,
+        "lip": 0.0,
+        "t": 2.65
+      },
+      "Nl_N": 90830,
+      "Mlx_Nmm": 10630000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "250 x 100 x 2,65    90,83      10,63      5,80",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_150x75x4.75",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 75.0,
+        "lip": 0.0,
+        "t": 4.75
+      },
+      "Nl_N": 749070,
+      "Mlx_Nmm": 46920000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 75 x 4,75   749,07   46,92    43,46",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_250x100x3.00",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 250.0,
+        "bf": 100.0,
+        "lip": 0.0,
+        "t": 3.0
+      },
+      "Nl_N": 131780,
+      "Mlx_Nmm": 15390000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "250 x 100 x 3,00   131,78      15,39      8,41",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_150x75x6.30",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 75.0,
+        "lip": 0.0,
+        "t": 6.3
+      },
+      "Nl_N": 1741670,
+      "Mlx_Nmm": 108880000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 75 x 6,30   1741,67 108,88   100,57",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_250x100x3.35",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 250.0,
+        "bf": 100.0,
+        "lip": 0.0,
+        "t": 3.35
+      },
+      "Nl_N": 183490,
+      "Mlx_Nmm": 21430000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "250 x 100 x 3,35   183,49      21,43     11,72",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_150x75x8.00",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 150.0,
+        "bf": 75.0,
+        "lip": 0.0,
+        "t": 8.0
+      },
+      "Nl_N": 3553930,
+      "Mlx_Nmm": 221710000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "150 x 75 x 8,00   3553,93 221,71   203,95",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_250x100x3.75",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 250.0,
+        "bf": 100.0,
+        "lip": 0.0,
+        "t": 3.75
+      },
+      "Nl_N": 257370,
+      "Mlx_Nmm": 30060000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "250 x 100 x 3,75   257,37      30,06     16,44",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_200x50x2.00",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 2.0
+      },
+      "Nl_N": 48910,
+      "Mlx_Nmm": 7920000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 50 x 2,00    48,91   7,92     1,39",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_250x100x4.25",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 250.0,
+        "bf": 100.0,
+        "lip": 0.0,
+        "t": 4.25
+      },
+      "Nl_N": 374660,
+      "Mlx_Nmm": 43760000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "250 x 100 x 4,25   374,66      43,76     23,89",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_200x50x2.25",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 2.25
+      },
+      "Nl_N": 69650,
+      "Mlx_Nmm": 11270000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 50 x 2,25    69,65   11,27    1,98",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_250x100x4.75",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 250.0,
+        "bf": 100.0,
+        "lip": 0.0,
+        "t": 4.75
+      },
+      "Nl_N": 521670,
+      "Mlx_Nmm": 61090000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "250 x 100 x 4,75   521,67      61,09     33,29",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_200x50x2.65",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 2.65
+      },
+      "Nl_N": 113530,
+      "Mlx_Nmm": 18420000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 50 x 2,65   113,53   18,42    3,23",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_250x100x6.30",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 250.0,
+        "bf": 100.0,
+        "lip": 0.0,
+        "t": 6.3
+      },
+      "Nl_N": 1213860,
+      "Mlx_Nmm": 142280000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "250 x 100 x 6,30   1213,86    142,28     77,45",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_200x50x3.00",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 3.0
+      },
+      "Nl_N": 164350,
+      "Mlx_Nmm": 26700000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 50 x 3,00   164,35   26,70    4,67",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_250x100x8.00",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 250.0,
+        "bf": 100.0,
+        "lip": 0.0,
+        "t": 8.0
+      },
+      "Nl_N": 2478860,
+      "Mlx_Nmm": 290290000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "250 x 100 x 8,00   2478,86    290,29     157,88",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_200x50x3.35",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 3.35
+      },
+      "Nl_N": 228340,
+      "Mlx_Nmm": 37160000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 50 x 3,35   228,34   37,16    6,50",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_300x100x2.65",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 300.0,
+        "bf": 100.0,
+        "lip": 0.0,
+        "t": 2.65
+      },
+      "Nl_N": 78680,
+      "Mlx_Nmm": 13200000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "300 x 100 x 2,65    78,68      13,20      4,65",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_200x50x3.75",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 3.75
+      },
+      "Nl_N": 319570,
+      "Mlx_Nmm": 52080000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 50 x 3,75   319,57   52,08    9,10",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_300x100x3.00",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 300.0,
+        "bf": 100.0,
+        "lip": 0.0,
+        "t": 3.0
+      },
+      "Nl_N": 114150,
+      "Mlx_Nmm": 19150000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "300 x 100 x 3,00   114,15      19,15      6,73",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_200x50x4.25",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 4.25
+      },
+      "Nl_N": 463120,
+      "Mlx_Nmm": 75700000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 50 x 4,25   463,12   75,70    13,21",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_300x100x3.35",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 300.0,
+        "bf": 100.0,
+        "lip": 0.0,
+        "t": 3.35
+      },
+      "Nl_N": 158950,
+      "Mlx_Nmm": 26660000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "300 x 100 x 3,35   158,95      26,66      9,37",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_200x50x4.75",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 4.75
+      },
+      "Nl_N": 643650,
+      "Mlx_Nmm": 105600000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 50 x 4,75   643,65  105,60    18,36",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_300x100x3.75",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 300.0,
+        "bf": 100.0,
+        "lip": 0.0,
+        "t": 3.75
+      },
+      "Nl_N": 222950,
+      "Mlx_Nmm": 37350000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "300 x 100 x 3,75   222,95      37,35     13,14",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_200x50x6.30",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 6.3
+      },
+      "Nl_N": 1478010,
+      "Mlx_Nmm": 245050000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 50 x 6,30   1478,01 245,05    42,26",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_300x100x4.25",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 300.0,
+        "bf": 100.0,
+        "lip": 0.0,
+        "t": 4.25
+      },
+      "Nl_N": 323780,
+      "Mlx_Nmm": 54380000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "300 x 100 x 4,25   323,78      54,38     19,10",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_200x50x8.00",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 8.0
+      },
+      "Nl_N": 2936150,
+      "Mlx_Nmm": 498300000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 50 x 8,00   2936,15 498,30    84,62",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_300x100x4.75",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 300.0,
+        "bf": 100.0,
+        "lip": 0.0,
+        "t": 4.75
+      },
+      "Nl_N": 452030,
+      "Mlx_Nmm": 75910000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "300 x 100 x 4,75   452,03      75,91     26,68",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_200x75x2.65",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 75.0,
+        "lip": 0.0,
+        "t": 2.65
+      },
+      "Nl_N": 115970,
+      "Mlx_Nmm": 11450000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 75 x 2,65   115,97   11,45    5,36",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_300x100x6.30",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 300.0,
+        "bf": 100.0,
+        "lip": 0.0,
+        "t": 6.3
+      },
+      "Nl_N": 1052130,
+      "Mlx_Nmm": 176660000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "300 x 100 x 6,30   1052,13    176,66     62,06",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_200x75x3.00",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 200.0,
+        "bf": 75.0,
+        "lip": 0.0,
+        "t": 3.0
+      },
+      "Nl_N": 168260,
+      "Mlx_Nmm": 16620000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "200 x 75 x 3,00   168,26   16,62    7,76",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    },
+    {
+      "id": "Pierin2013_T1_U_300x100x8.00",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 300.0,
+        "bf": 100.0,
+        "lip": 0.0,
+        "t": 8.0
+      },
+      "Nl_N": 2144080,
+      "Mlx_Nmm": 361280000,
+      "table": 1,
+      "PDF_page": 10,
+      "printed_page": 30,
+      "source_row": "300 x 100 x 8,00   2144,08    361,28     126,28",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      }
+    }
+  ]
+}

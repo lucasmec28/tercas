@@ -24,6 +24,10 @@ def defaults(index=0):
  'area_inputs':{'spacing_m':1.5,'permanent_kgf_m2':0.,'live_kgf_m2':0.,'wind_up_kgf_m2':0.,'wind_down_kgf_m2':0.},
  'ELS_down_denominator':180.,'ELS_up_denominator':120.}
  d.update(critical_defaults(index));d=apply_material(d,'ASTM A36')
+ from .strong_pierin import reference_for_index
+ pierin=reference_for_index(index)
+ if pierin['status']=='tabulated_adopted_reference':
+  d.update(Ml_Nmm=pierin['Mlx_Nmm'],critical_origin=pierin['source_origin'])
  if d['Ml_Nmm'] is None:
   f=d['properties']
   try:
@@ -136,6 +140,7 @@ def calculate(data):
  from .weak_pierin import reference_for_inputs
  result['weak_critical_reference']=reference_for_inputs(data)
  result['strong_critical_qualification']=copy.deepcopy(spec['strong_critical_qualification'])
+ result['strong_critical_reference']=copy.deepcopy(spec['strong_critical_qualification']['pierin_U_reference'])
  result['critical_warnings']=list(spec['strong_critical_qualification']['warnings'])
  result['coverage_warnings']=[]
  intervals=[]

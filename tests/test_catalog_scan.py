@@ -21,11 +21,19 @@ class CatalogScanTests(unittest.TestCase):
  def test_derived_critical_respects_E_and_provenance(self):
   from tercas.core.local_table12 import local_critical
   from tercas.catalogs import catalog_entry
+  from tercas.strong_pierin import reference_for_index
+  from tercas.application import build_spec
   d=example();d['properties']['E_MPa']=100000.
   for i in range(len(catalog_labels())):
    e=catalog_entry(i)
    if e['critical_values']['Ml_Nmm'] is not None:continue
    out=inputs_for_section(d,i);p=out['properties']
+   ref=reference_for_index(i)
+   if ref['status']=='tabulated_adopted_reference':
+    self.assertEqual(out['Ml_Nmm'],ref['Mlx_Nmm'])
+    self.assertIsNone(build_spec(out)['Ml']['value'])
+    self.assertTrue(out['synthetic'])
+    continue
    expected=local_critical(e['family'],p['h'],p['bf'],p['t'],p['Wx_cm3']*1000,100000.,D_mm=p['lip'])
    self.assertAlmostEqual(out['Ml_Nmm'],expected['Ml_Nmm'])
    self.assertTrue(out['synthetic'])

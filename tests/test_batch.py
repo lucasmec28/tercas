@@ -33,7 +33,7 @@ class BatchTests(unittest.TestCase):
  def test_word_and_json(self):
   d=self.data();d['selected_types']=['ELS quase permanente'];r=calculate_batch(d);doc=Document(BytesIO(batch_word(r)));txt='\n'.join(p.text for p in doc.paragraphs);self.assertIn('NÃO É APROVAÇÃO GLOBAL',txt);self.assertIn('ELS quase permanente',txt);json.dumps(r,allow_nan=False)
  def test_default_u_fallback(self):
-  labels=catalog_labels();idx=next(i for i,x in enumerate(labels) if x.startswith('U ') );d=defaults(idx);self.assertGreater(d['Ml_Nmm'],0);self.assertIn('Tabela 12',d['critical_origin'])
+  labels=catalog_labels();idx=next(i for i,x in enumerate(labels) if x=='U 100 x 75 x 3,00');d=defaults(idx);self.assertGreater(d['Ml_Nmm'],0);self.assertIn('Tabela 12',d['critical_origin'])
  def test_partial_missing_lz_visible(self):
   d=self.data();d['segments'][0]['Lz_effective_mm']=None;r=calculate_batch(d);flt=next(x for x in r['summary'] if x['Verificação'].startswith('FLT'));self.assertGreater(flt['Casos pendentes'],0);self.assertIn('Parcial',flt['Situação'])
 

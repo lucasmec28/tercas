@@ -19,7 +19,7 @@ def _same(a, b):
             and math.isclose(a, b, rel_tol=1e-12, abs_tol=1e-8))
 
 
-def qualify_strong_criticals(data):
+def qualify_legacy_strong_criticals(data):
     """Return effective criticals plus an audit trail, without mutating inputs.
 
     Legacy imports have no structured origin flag. Equal catalogue values or an
@@ -119,4 +119,24 @@ def qualify_strong_criticals(data):
                 effective['Ml'] = {'value':None, 'origin':origin, 'reason':reason}
                 info.update(status='not_evaluated_stale_automatic_table12',reason=reason)
                 evidence['warnings'].append(reason)
+    return effective, evidence
+
+
+def qualify_strong_criticals(data):
+    effective, evidence = qualify_legacy_strong_criticals(data)
+    # New U table overlay is distinct from legacy workbook/Table12 provenance.
+    # Qualify after the legacy path so imported old projects retain their route.
+    from .strong_pierin import qualify
+    override, reference = qualify(data, legacy=(effective, evidence))
+    evidence['pierin_U_reference'] = reference
+    if override is not None:
+        effective['Ml'] = override
+        evidence['fields']['Ml'] = {
+            'status':reference['use_status'], 'inherited_tabulated':True,
+            'input_value_Nmm':data.get('Ml_Nmm'), 'reference_id':reference.get('id'),
+            'source':'Pierin2013 Table1 U Mlx',
+        }
+        if override.get('reason'):
+            evidence['fields']['Ml']['reason'] = override['reason']
+            evidence['warnings'].append(override['reason'])
     return effective, evidence

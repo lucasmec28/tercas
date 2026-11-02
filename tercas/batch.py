@@ -77,11 +77,13 @@ def calculate_batch(data):
      boundary[axis]['M_Nmm']=0.;boundary[axis]['V_N']=combo['q_vector'][axis]*data['L_mm']/2+combo['P_vector'][axis]
     ev['states'].insert(0,boundary);ev['P_vector']=copy.deepcopy(combo['P_vector'])
   evidence['inclination']=ev
+  evidence['strong_critical_qualification']=copy.deepcopy(result['strong_critical_qualification'])
   # Core rows already contain ELU pending rows, but ELS filtering excludes its parallel component.
   # All rows filtered by limit state above.
   cases.append({'combination':combo,'rows':rs,'evidence':evidence,'warnings':result['coverage_warnings']+result.get('critical_warnings',[])+result['numerical_warnings'],'scope_notes':[mobile['scope']] if mobile else []})
  from .weak_pierin import reference_for_inputs
- return {'weak_critical_reference':reference_for_inputs(data),'schema':'tercas_batch_results_v1','version':VERSION,'project':data['project'],'synthetic':data['synthetic'],'input_fingerprint':fingerprint(data),'input_data':copy.deepcopy(data),'load_bundle':bundle,'cases':cases,'whole_member_approved':False,'summary':governing(cases)}
+ from .strong_pierin import qualify
+ return {'strong_critical_reference':qualify(data)[1],'weak_critical_reference':reference_for_inputs(data),'schema':'tercas_batch_results_v1','version':VERSION,'project':data['project'],'synthetic':data['synthetic'],'input_fingerprint':fingerprint(data),'input_data':copy.deepcopy(data),'load_bundle':bundle,'cases':cases,'whole_member_approved':False,'summary':governing(cases)}
 
 def governing(cases):
  groups={}

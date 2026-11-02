@@ -13,6 +13,16 @@ from tercas.report import word, batch_word
 from tercas.strong_critical_guard import qualify_strong_criticals
 
 
+def legacy_table12(index=83):
+    """Explicit saved pre-Pierin input, not the new-profile default."""
+    from tercas.catalogs import critical_defaults
+    from tercas.core.local_table12 import local_critical
+    d=defaults(index);d.update(critical_defaults(index));p=d['properties']
+    c=local_critical(entries()[index]['family'],p['h'],p['bf'],p['t'],p['Wx_cm3']*1000,p['E_MPa'],D_mm=p['lip'])
+    d.update(Ml_Nmm=c['Ml_Nmm'],critical_origin=d['critical_origin']+'; Ml calculado: '+c['origin'])
+    return d
+
+
 def loaded():
     d = defaults(0)
     d.update(q_uls=.1, q_sls=.1, ELS_limit_mm=3000/180,
@@ -144,7 +154,7 @@ def test_streamlit_imported_custom_E_shows_pending_without_crash():
 
 @pytest.mark.parametrize('E', [100000.,400000.,None])
 def test_stale_direct_table12_fallback_blocks_without_rewriting_inputs(E):
-    d = defaults(83);before_value = d['Ml_Nmm'];d['properties']['E_MPa'] = E
+    d = legacy_table12(83);before_value = d['Ml_Nmm'];d['properties']['E_MPa'] = E
     original = copy.deepcopy(d);r = calculate(d)
     assert d == original and r['input_data'] == original
     assert before_value == pytest.approx(679828.32598158)
@@ -158,9 +168,9 @@ def test_stale_direct_table12_fallback_blocks_without_rewriting_inputs(E):
     assert any('Tabela 12' in w for w in r['critical_warnings'])
 
 
-@pytest.mark.parametrize('index', [83,84,100])
+@pytest.mark.parametrize('index', [130,204,4])
 def test_profile_change_recomputed_fallback_has_current_E_and_parameter_evidence(index):
-    d = defaults(83);d['properties']['E_MPa'] = 100000.;before = copy.deepcopy(d)
+    d = legacy_table12(83);d['properties']['E_MPa'] = 100000.;before = copy.deepcopy(d)
     out = inputs_for_section(d,index);s = build_spec(out)
     assert d == before
     assert out['catalog_index'] == index
@@ -169,33 +179,32 @@ def test_profile_change_recomputed_fallback_has_current_E_and_parameter_evidence
     assert q['status'] == 'automatic_table12_recomputed_for_current_E'
     assert q['formula_E_MPa'] == 100000. and q['formula_nu'] == .3
     assert q['formula_parameters']['h'] == out['properties']['h']
-    if index == 83:assert s['Ml']['value'] == pytest.approx(339914.16299079)
     assert out['properties']['E_MPa'] == 100000.
 
 
 def test_manual_table12_critical_retained_with_independent_value_and_origin():
-    d = defaults(83);d['properties']['E_MPa'] = 100000.
+    d = legacy_table12(83);d['properties']['E_MPa'] = 100000.
     d.update(Ml_Nmm=333333.,critical_origin='Recálculo independente informado pelo usuário')
     assert build_spec(d)['Ml']['value'] == 333333.
-    d['Ml_Nmm'] = defaults(83)['Ml_Nmm']
+    d['Ml_Nmm'] = legacy_table12(83)['Ml_Nmm']
     assert build_spec(d)['Ml']['value'] is None
 
 
 def test_editing_only_auto_table12_value_does_not_requalify():
-    d = defaults(83);d['properties']['E_MPa'] = 100000.;d['Ml_Nmm'] *= .5
+    d = legacy_table12(83);d['properties']['E_MPa'] = 100000.;d['Ml_Nmm'] *= .5
     assert build_spec(d)['Ml']['value'] is None
     d['properties']['E_MPa'] = 200000.
-    assert build_spec(defaults(83))['Ml']['value'] == defaults(83)['Ml_Nmm']
+    assert build_spec(legacy_table12(83))['Ml']['value'] == legacy_table12(83)['Ml_Nmm']
 
 
 @pytest.mark.parametrize('E', [200000.,400000.])
 def test_reediting_E_after_a_catalogue_recalculation_does_not_restore_stale_value(E):
-    d = defaults(83);d['properties']['E_MPa'] = 100000.
-    scanned = inputs_for_section(d,83)
-    assert build_spec(scanned)['Ml']['value'] == pytest.approx(339914.16299079)
+    d = defaults(130);d['properties']['E_MPa'] = 100000.
+    scanned = inputs_for_section(d,130)
+    assert build_spec(scanned)['Ml']['value'] == pytest.approx(defaults(130)['Ml_Nmm']/2)
     scanned['properties']['E_MPa'] = E
     assert build_spec(scanned)['Ml']['value'] is None
-    refreshed = inputs_for_section(scanned,83)
+    refreshed = inputs_for_section(scanned,130)
     assert build_spec(refreshed)['Ml']['value'] == refreshed['Ml_Nmm']
 
 
