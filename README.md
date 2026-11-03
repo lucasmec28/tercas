@@ -119,3 +119,35 @@ somente carga. Sem aprovação global, física, de ELS completo, torção ou 3D.
 
 Detalhes: `docs/UE_REFERENCE_INTEGRATION_20261103.txt`. Integração local, sem
 publicação. Caminhos anteriores U, Travessa e diagnóstico 3D preservados.
+
+## Família própria Ue100 — seis espessuras, 03/11/2026
+
+O novo carregador **Carregar família própria Ue100** oferece 1,50 / 2,00 / 2,25 /
+2,65 / 3,00 / 3,35 mm. São referências próprias R01 de 209 nós, ri=t, com
+propriedades e críticos individuais. A rota anterior de 1,20 mm permanece
+separada e os projetos antigos não são migrados automaticamente.
+
+Dentro da referência ativa, a prévia conjunta de seção e vão permite trocar
+espessura e L entre 3000 e 6000 mm, preservando ações e a posição absoluta de P.
+Aplicar reconstrói o vetor completo da nova identidade, incluindo PP, críticos,
+Ne/Me e fontes. Nenhum piso ou crítico é escalado de outra espessura. Uma proposta
+não aplicada retira resultados e bloqueia cálculo até aplicar ou descartar.
+
+As seis incluem D forte próprio, sem dispensa da Tabela 14. D da alma permanece
+não identificado; o valor consumido é o piso elástico discreto individual, com
+prova conservadora escalar delimitada. Locais e D dos lábios são próprios por
+sentido. A matriz existente de combinações e as duas posições de P permanecem.
+
+O pacote de fontes em `tercas/data/ue_family` é autossuficiente e verificado por
+hashes. O marcador não basta: valores protegidos, fontes, material, vínculos e
+sentidos são comparados integralmente. Arquivos incompatíveis abrem inspeção,
+sem reparo silencioso. Os JSON antigos do estudo externo não ativam a nova rota.
+Word e JSON usam a evidência guardada no resultado, sem requalificar histórico.
+
+Componentes resistentes e interação concomitante N=0 são calculadas dentro do
+domínio. ELS biaxial, torção/empenamento físicos, forças locais, ligações e
+aprovação global continuam pendentes. A telha não contribui estruturalmente.
+Não há nova linha de cortante/flecha paralela, migração para travessas 3D,
+interpolação de espessura ou generalização para seção livre.
+
+Veja `docs/UE_FAMILY_INTEGRATION_20261103.txt` para escopo e QA.

@@ -1,0 +1,77 @@
+{
+  "status": "pass",
+  "adapter_sha256": "3ffec2551d90d1baba554f5f4a4deca9a91d4e9b04714a0c9dfa2da9511dfe67",
+  "oracle_sha256": "f2acc276e8b49aa99a99832cb27604683dc42fa214879f3e8de9fa7367cf65d4",
+  "scalar_checks": 2160,
+  "scalar_comparison_file_byte_identical_after_final_changes": true,
+  "all_36_mutations_gracefully_rejected": true,
+  "original_failure_log_preserved": true,
+  "floor_proof": [
+    {
+      "thickness_mm": 1.5,
+      "lambda_floor": 0.7921013562591512,
+      "rho_floor": 0.9118249332589479,
+      "proof_branch": "active_branch_increasing_in_critical_and_plateau_checked_separately",
+      "conservative_for_all_critical_at_least_floor": true,
+      "literal_curve_globally_monotone_claimed": false,
+      "Mdist_identified_Nmm": null,
+      "physical_continuum_proof": false
+    },
+    {
+      "thickness_mm": 2.0,
+      "lambda_floor": 0.5850943673033664,
+      "rho_floor": 1.0,
+      "proof_branch": "entire_admissible_critical_range_on_plateau",
+      "conservative_for_all_critical_at_least_floor": true,
+      "literal_curve_globally_monotone_claimed": false,
+      "Mdist_identified_Nmm": null,
+      "physical_continuum_proof": false
+    },
+    {
+      "thickness_mm": 2.25,
+      "lambda_floor": 0.5157568875721177,
+      "rho_floor": 1.0,
+      "proof_branch": "entire_admissible_critical_range_on_plateau",
+      "conservative_for_all_critical_at_least_floor": true,
+      "literal_curve_globally_monotone_claimed": false,
+      "Mdist_identified_Nmm": null,
+      "physical_continuum_proof": false
+    },
+    {
+      "thickness_mm": 2.65,
+      "lambda_floor": 0.5079254372591074,
+      "rho_floor": 1.0,
+      "proof_branch": "entire_admissible_critical_range_on_plateau",
+      "conservative_for_all_critical_at_least_floor": true,
+      "literal_curve_globally_monotone_claimed": false,
+      "Mdist_identified_Nmm": null,
+      "physical_continuum_proof": false
+    },
+    {
+      "thickness_mm": 3.0,
+      "lambda_floor": 0.498934611353053,
+      "rho_floor": 1.0,
+      "proof_branch": "entire_admissible_critical_range_on_plateau",
+      "conservative_for_all_critical_at_least_floor": true,
+      "literal_curve_globally_monotone_claimed": false,
+      "Mdist_identified_Nmm": null,
+      "physical_continuum_proof": false
+    },
+    {
+      "thickness_mm": 3.35,
+      "lambda_floor": 0.4898423093961698,
+      "rho_floor": 1.0,
+      "proof_branch": "entire_admissible_critical_range_on_plateau",
+      "conservative_for_all_critical_at_least_floor": true,
+      "literal_curve_globally_monotone_claimed": false,
+      "Mdist_identified_Nmm": null,
+      "physical_continuum_proof": false
+    }
+  ],
+  "rounded_transition_rho_above_one_rejected": true,
+  "frozen_elastic_and_backend_sources_preserved": true,
+  "whole_member_approved": false,
+  "combined_ELS_approved": false,
+  "torsion_physical_loading_qualified": false,
+  "published": false
+}

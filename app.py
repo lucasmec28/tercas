@@ -18,6 +18,8 @@ from tercas.homogeneous_reference import FIELD as REFERENCE_FIELD, assess as ass
 from tercas.homogeneous_reference_ui import loader as reference_loader, render as render_reference
 from tercas.ue_reference import FIELD as UE_REFERENCE_FIELD, claims_reference as claims_ue_reference, assess as assess_ue_reference, activate as activate_ue_reference
 from tercas.ue_reference_ui import loader as ue_reference_loader, render as render_ue_reference
+from tercas.ue_family_reference import FIELD as UE_FAMILY_FIELD, claims_reference as claims_ue_family, assess as assess_ue_family, activate as activate_ue_family
+from tercas.ue_family_ui import loader as ue_family_loader, render as render_ue_family
 from tercas.ux_inputs import CB_LABELS,cb_code,flange_segments,whole_span
 
 def show_elastic_wall(evidence):
@@ -61,6 +63,11 @@ def render_results(result,d):
  else:
   st.subheader('Resultados por verificação')
   st.warning('Resultado parcial, sem aprovação global. “Atende” se refere somente ao critério e às entradas indicados.')
+  if result.get('ue_family_reference_evidence'):
+   record=result['ue_family_reference_evidence']
+   st.caption('Fonte numérica ativa: '+record['reference_id']+'; propriedades e críticos próprios individuais.')
+   st.warning('Família Ue100: D forte calculado, sem dispensa Tabela 14. D da alma é piso conservador discreto individual, não modo identificado.')
+   st.caption('ELS biaxial, torção física e aprovação global continuam pendentes. Pierin somente corresponde à família nominal.')
   if result.get('ue_reference_evidence'):
    record=result['ue_reference_evidence']
    st.caption('Fonte numérica ativa: '+record['active_numeric_reference'])
@@ -88,7 +95,7 @@ def render_results(result,d):
   c1,c2,c3=st.columns(3)
   with c1:st.download_button('Baixar memória parcial (Word)',batch_word(result) if batch else word(result),file_name='MC_terca_parcial.docx',mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
   with c2:st.download_button('Baixar estudo e resultados (JSON)',json.dumps(result,ensure_ascii=False,indent=2),file_name='terca_estudo_resultados.json',mime='application/json')
-  with c3:st.download_button('Baixar entradas (JSON)',json.dumps(copy.deepcopy(d) if (result.get('homogeneous_reference_evidence') or result.get('ue_reference_evidence')) else domain_export_inputs(d),ensure_ascii=False,indent=2),file_name='terca_entradas.json',mime='application/json')
+  with c3:st.download_button('Baixar entradas (JSON)',json.dumps(copy.deepcopy(d) if (result.get('homogeneous_reference_evidence') or result.get('ue_reference_evidence') or result.get('ue_family_reference_evidence')) else domain_export_inputs(d),ensure_ascii=False,indent=2),file_name='terca_entradas.json',mime='application/json')
   with st.expander('Memória numérica e rastreabilidade'):st.json(result)
 
 
@@ -124,7 +131,7 @@ def render_input_import(revision):
     if upload.size>200000:raise ValueError('Arquivo maior que 200 kB.')
     from tercas.application import build_spec
     new=json.loads(upload.getvalue(),parse_constant=reject_json_constant)
-    if isinstance(new,dict) and (REFERENCE_FIELD in new or claims_ue_reference(new)):
+    if isinstance(new,dict) and (REFERENCE_FIELD in new or claims_ue_reference(new) or claims_ue_family(new)):
      index=new.get('catalog_index')
      if isinstance(index,bool) or not isinstance(index,int) or not 0<=index<len(catalog_labels()):raise ValueError('Índice de perfil inválido.')
      load(new);st.rerun()
@@ -150,6 +157,9 @@ def has_manual_weak(data):
  return isinstance(cfg,dict) and any(isinstance(v,dict) and MANUAL_WEAK_FIELDS.intersection(v) for v in cfg.values())
 
 def manual_inspection_reason(data):
+ if claims_ue_family(data):
+  state=assess_ue_family(data)
+  if not state['active']:return 'a família própria Ue fora do contrato: '+'; '.join(state['reasons'] or ['ative explicitamente o vetor íntegro'])+'.'
  if claims_ue_reference(data):
   state=assess_ue_reference(data)
   if not state['active']:return 'a referência própria Ue fora do contrato: '+'; '.join(state['reasons'] or ['ative explicitamente o vetor íntegro'])+'.'
@@ -174,11 +184,11 @@ def show_manual_inspection(preserved,reason):
  st.caption('Limitação de edição/importação desta interface, não exigência normativa nem ausência de capacidade matemática do backend. Nenhum dado do arquivo foi substituído ou completado; E, G, origens e campos por sentido permanecem intactos.')
  st.warning('Preservar o arquivo não comprova sua coerência física, não valida a referência de Pierin e não aprova o elemento. Todas as hipóteses e limitações do estudo original permanecem.')
  st.caption('Para contrato de referência inválido, escolher outro perfil abre novas entradas padrão de catálogo. Para retornar ao editor comum, selecione outro perfil acima, carregue o exemplo didático ou abra outro JSON. Trocar de perfil descarta propriedades e críticos específicos desta seção; baixe o arquivo preservado antes de sair, se necessário.')
- state=assess_ue_reference(preserved) if claims_ue_reference(preserved) else assess_reference(preserved)
+ state=assess_ue_family(preserved) if claims_ue_family(preserved) else assess_ue_reference(preserved) if claims_ue_reference(preserved) else assess_reference(preserved)
  if state['eligible'] and not state['active']:
   st.caption('Vetor integral reconhecido como referência própria '+state['reference_id']+'. A ativação preserva todos os campos existentes; não substitui nem normaliza o arquivo.')
   if st.button('Ativar esta referência para cálculo',key=f'ref_activate_{st.session_state.revision}'):
-   load(activate_ue_reference(preserved) if claims_ue_reference(preserved) else activate_reference(preserved));st.rerun()
+   load(activate_ue_family(preserved) if claims_ue_family(preserved) else activate_ue_reference(preserved) if claims_ue_reference(preserved) else activate_reference(preserved));st.rerun()
  try:inspection_fingerprint=fingerprint(preserved)
  except (ValueError,TypeError):inspection_fingerprint='indisponível para este objeto inválido'
  st.caption('Identificação SHA-256 das entradas: '+inspection_fingerprint)
@@ -189,6 +199,7 @@ def show_manual_inspection(preserved,reason):
  except (ValueError,TypeError,KeyError):inspection_3d=False
  with calc_col:st.button('Calcular diagnóstico 3D' if inspection_3d else 'Calcular verificações disponíveis',type='primary',disabled=True)
  with scan_col:st.button('Calcular todas as seções do catálogo',disabled=True)
+ ue_family_loader(st,st.session_state.revision,load)
  ue_reference_loader(st,st.session_state.revision,load)
  reference_loader(st,st.session_state.revision,load)
  render_input_import(st.session_state.revision)
@@ -202,7 +213,7 @@ with left:
  index=st.selectbox('Perfil de catálogo',range(len(catalog_labels())),format_func=lambda i:catalog_labels()[i],index=st.session_state.base['catalog_index'],key=f'catalog_{st.session_state.revision}')
  if index!=st.session_state.base['catalog_index']:
   prior=st.session_state.get('last_input',st.session_state.base)
-  if (claims_ue_reference(prior) and not assess_ue_reference(prior)['eligible']) or (REFERENCE_FIELD in prior and not assess_reference(prior)['eligible']):
+  if (claims_ue_family(prior) and not assess_ue_family(prior)['eligible']) or (claims_ue_reference(prior) and not assess_ue_reference(prior)['eligible']) or (REFERENCE_FIELD in prior and not assess_reference(prior)['eligible']):
    load(defaults(index));st.rerun()
   changed=copy.deepcopy(st.session_state.get('last_input',st.session_state.base));fresh=defaults(index)
   for key in ['schema','catalog_index','properties','Ml_Nmm','Mdist_Nmm','critical_origin','property_origin']:changed[key]=fresh[key]
@@ -210,7 +221,7 @@ with left:
   changed.pop(REFERENCE_FIELD,None)
   changed.pop('homogeneous_lengths',None)
   changed.pop('homogeneous_reference_evidence',None)
-  for field in (UE_REFERENCE_FIELD,'ue_model','ue_source_documents','active_numeric_reference','ue_reference_evidence'):changed.pop(field,None)
+  for field in (UE_REFERENCE_FIELD,'ue_model','ue_source_documents','active_numeric_reference','ue_reference_evidence',UE_FAMILY_FIELD,'ue_family_model','ue_family_sources','ue_family_reference_evidence'):changed.pop(field,None)
   if 'three_girt_model' in changed:
    changed['three_girt_model'].update(sc_y_mm=None,sc_z_mm=0.,sc_origin='',connections_declared=False,load_line_declared=False)
   # Preserve project restraint length, not section-dependent mean-line data.
@@ -223,7 +234,9 @@ with left:
    old=st.session_state.get('last_input',st.session_state.base)
    changed=inputs_for_section(old,index)
   load(changed);st.rerun()
-reference_data=st.session_state.get('last_input',st.session_state.base) if (REFERENCE_FIELD in st.session_state.base or claims_ue_reference(st.session_state.base)) else st.session_state.base
+reference_data=st.session_state.get('last_input',st.session_state.base) if (REFERENCE_FIELD in st.session_state.base or claims_ue_reference(st.session_state.base) or claims_ue_family(st.session_state.base)) else st.session_state.base
+if claims_ue_family(reference_data) and assess_ue_family(reference_data)['active']:
+ render_ue_family(st,reference_data,st.session_state.revision,load,render_results,render_input_import)
 if claims_ue_reference(reference_data) and assess_ue_reference(reference_data)['active']:
  render_ue_reference(st,reference_data,st.session_state.revision,load,render_results,render_input_import)
 if assess_reference(reference_data)['active']:
@@ -676,6 +689,7 @@ catalog_comparison()
 
 if 'result' in st.session_state:render_results(st.session_state.result,d)
 
+ue_family_loader(st,r,load)
 ue_reference_loader(st,r,load)
 reference_loader(st,r,load)
 render_input_import(r)

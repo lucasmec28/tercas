@@ -10,7 +10,7 @@ class Tests(unittest.TestCase):
  def test_initial_render(self):
   at=self.run_app();self.assertIn('Terças',at.title[0].value)
   # Application and explicit reference selectors are intentional; preserve the nine legacy controls.
-  legacy=[x for x in at.selectbox if x.label not in ('Aplicação do elemento','Referência nominal própria','Caso sintético verificado','Exemplo sintético Ue100')]
+  legacy=[x for x in at.selectbox if x.label not in ('Aplicação do elemento','Referência nominal própria','Caso sintético verificado','Exemplo sintético Ue100','Espessura da referência Ue100 [mm]','Exemplo sintético da família Ue100')]
   self.assertEqual(len(legacy),9)
   for label in ('Referência nominal própria','Caso sintético verificado'):
    self.assertEqual(len([x for x in at.selectbox if x.label==label]),1)
@@ -18,6 +18,12 @@ class Tests(unittest.TestCase):
   self.assertEqual(len(own_ue),1)
   self.assertEqual(own_ue[0].value,0)
   self.assertEqual(own_ue[0].options,['+0° · 58 combinações','+5° · 58 combinações','-5° · 58 combinações'])
+  family=[x for x in at.selectbox if x.label=='Espessura da referência Ue100 [mm]']
+  self.assertEqual(len(family),1)
+  self.assertEqual(family[0].options,['1,50','2,00','2,25','2,65','3,00','3,35'])
+  family_example=[x for x in at.selectbox if x.label=='Exemplo sintético da família Ue100']
+  self.assertEqual(len(family_example),1)
+  self.assertEqual(family_example[0].options,own_ue[0].options)
   application=[x for x in at.selectbox if x.label=='Aplicação do elemento']
   self.assertEqual(len(application),1);self.assertEqual(application[0].value,'purlin')
   self.assertEqual(application[0].options,['Terça de cobertura','Travessa lateral — boca para baixo'])

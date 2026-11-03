@@ -1,0 +1,84 @@
+MEMÓRIA DO CASO SINTÉTICO: Ue100×50×17×2,65, L=3 m, θ=+5°
+03/11/2026. Cálculo de componentes em cópia, não é projeto real ou aprovação global.
+
+IDENTIDADE E VÍNCULOS
+OWN_Ue100x50x17_t2p65_ri2p65_n12_a16_v1_243974742f83
+Contorno próprio R01 de 209 nós, ri=t=2,65 mm. E=200000 MPa, ν=0,3, G=E/2,6, fy=250 MPa.
+Garfos ideais, translações/torção nas extremidades impedidas, rotações de flexão e empenamento livres.
+Kx=Ky=Kz=Cb=Cm=1, Lx=Ly=Lz=3000 mm. N=0; torque primário imposto=0 apenas nesta componente.
+Telha sem contato/contribuição estrutural. PP físico no CG e demais excentricidades não foram eliminados por esta hipótese.
+
+PROPRIEDADES PRÓPRIAS
+A_mm2 = 573.898926649144
+Ix_mm4 = 894506.189487415
+Iy_mm4 = 197472.352977846
+J_mm4 = 1343.40173746454
+Cw_mm6 = 447410171.638209
+r0_mm = 59.8515618772391
+j_mm = 59.0089514010047
+Massa linear = 4.50510657419578 kg/m, derivada da área própria e 7850 kg/m³.
+
+AÇÕES CARACTERÍSTICAS E BASES
+Espaçamento de influência 1,50 m no plano da cobertura. CP=8 kgf/m² no plano da cobertura.
+SC=25 kgf/m² em projeção horizontal; vento de sucção=60 kgf/m² e pressão=40 kgf/m² no plano da cobertura.
+1 kgf=9,80665 N. Gravidade decomposta em normal/paralelo; vento normal. PP incluído uma única vez.
+PP: q_normal=0.0440118851346462; q_paralelo=0.00385054100968668 N/mm.
+CP: q_normal=0.117231992832497; q_paralelo=0.0102564703753959 N/mm.
+SC: q_normal=0.364955905332697; q_paralelo=0.0319295044034513 N/mm.
+V_Cima: q_normal=-0.8825985; q_paralelo=0 N/mm.
+V_Baixo: q_normal=0.588399; q_paralelo=0 N/mm.
+P característico de manutenção=1000 N, separado de SC e vento, nas posições centro e limite junto ao apoio.
+As 48 combinações da matriz fornecida por Lucas foram preservadas. Com P, são 58 estados: 40 ELU e 18 ELS.
+Não é validação de um gerador universal de coeficientes nem definição das ações de uma obra.
+
+CRÍTICOS GLOBAIS RECALCULADOS NO VÃO
+Nex_N = 196187.160545926
+Ney_N = 43310.5334231916
+Nez_N = 56240.8838953302
+torsion_warping_stiffness_Nmm2 = 201466626.280527
+Me_strong_Nmm = 2953917.23837693
+Me_weak_web_Nmm = 24750538.8538699
+Me_weak_lips_Nmm = 1596941.60955868
+
+COMPONENTES RESISTENTES, Nmm
+Local forte: Tabela12(b). D forte e D dos lábios: vales convencionais próprios. Locais fracos separados por sentido.
+Alma comprimida: piso elástico próprio=5940000 Nmm; D identificado continua nulo, sem dispensa.
+Nenhuma dispensa T14: bw/t=37,73585 está fora do domínio da tabela, portanto D forte foi calculado.
+strong_positive: W=17890.1237897483; Wc=17890.1237897483; Ml=43503349.1061674; Me=2953917.23837693.
+  MRd_local=4065937.22494279; MRd_FLT=2613497.09004736; MRd_D=4065937.22494279; mínimo=2613497.09004736.
+strong_negative: W=17890.1237897483; Wc=17890.1237897483; Ml=43503349.1061674; Me=2953917.23837693.
+  MRd_local=4065937.22494279; MRd_FLT=2613497.09004736; MRd_D=4065937.22494279; mínimo=2613497.09004736.
+weak_web_compressed: W=6129.80081560097; Wc=11103.3926213742; Ml=9123303.21621513; Me=24750538.8538699.
+  MRd_local=1393136.54900022; MRd_FLT=2523498.32303958; MRd_D=1393136.54900022; mínimo=1393136.54900022.
+weak_lips_compressed: W=6129.80081560097; Wc=6129.80081560097; Ml=27916760.7371563; Me=1596941.60955868.
+  MRd_local=1393136.54900022; MRd_FLT=1133848.47430174; MRd_D=1393136.54900022; mínimo=1133848.47430174.
+
+COMBINAÇÃO GOVERNANTE ENTRE AS COMPONENTES ELU AVALIADAS
+ELUN_00022: 1.25 PP + 1.4 CP + 1.2 SC + 1.4 V_Baixo.
+q_normal=1.48084533278304; q_paralelo=0.0574876400718041 N/mm; P=0.
+Na seção concomitante x=1500 mm: Mx=1665950.99938092; My=64673.5950807796 Nmm.
+Índice §9.9 N=0 = |Mx|/2613497.09004736 + |My|/1393136.54900022 = 0.683864318661363.
+VRd da alma plana h=89,4 mm = 32305.9090909091 N.
+Índice M–V §9.8.4 = 0.167881603385105; denominador de flexão é MRd_local, não mínimo FLT/D.
+
+SENTIDO OPOSTO
+Mantidas as ações e θ=−5°, My muda de sinal e seleciona a resistência dos lábios comprimidos.
+Para a mesma combinação ELUN_00022: índice biaxial=0.694480316954728.
+A resistência da alma não é usada bilateralmente e nenhum sentido histórico de Pierin foi presumido.
+
+P NO LIMITE JUNTO AO APOIO
+A parcela de flexão/flecha de P tende a zero no interior; sua reação e cortante junto ao apoio permanecem.
+M–V compara separadamente a seção interior e a camada junto ao apoio, conservando esforços concomitantes.
+Introdução local da força e ligação permanecem pendentes. Os resultados das duas posições não certificam todas as posições de P.
+
+ELS E CONCLUSÃO DELIMITADA
+A componente forte de flecha foi comparada por integração independente de Ief(M).
+Aqui existe ação paralela: não há índice de atendimento ELS nem rigidez efetiva combinada qualificada.
+Os índices ELU calculados deste exemplo ficam abaixo de 1, mas isso NÃO aprova a terça física.
+Permanecem torção/empenamento com pontos reais de aplicação, ELS combinado, detalhes locais e ligações, sem aprovação global.
+
+RASTREABILIDADE
+Registro elástico SHA256: 3919d41d60e8423d7ae44a2bfb32bbd7c75783c7165bd78c027a20757e61cbe3
+Entradas, resultado integral, referência independente e todas as comparações: end_to_end/t2.65_L3000_anglep5/.
+Par de sentido oposto: end_to_end/t2.65_L3000_anglem5/.
+Lote total: 4176 estados, 208272 comparações, 72 reimportações/recalculações exatas.

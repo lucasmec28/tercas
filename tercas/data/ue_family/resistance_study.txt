@@ -1,0 +1,156 @@
+Ue100×50×17: SEIS ESPESSURAS, RESISTÊNCIAS E COMBINAÇÕES EM CÓPIA
+03/11/2026. Preparação e auditoria de backend, sem publicação ou mudança de UI.
+
+RESULTADO ÚTIL
+As seis espessuras 1,50 / 2,00 / 2,25 / 2,65 / 3,00 / 3,35 mm agora percorrem
+uma única rota de cálculo em lote: propriedades próprias → ações → combinações
+→ solicitações concomitantes → local/FLT/D por eixo e sentido → interação.
+Não foi criado um app manual para cada espessura. A referência 1,20 foi
+preservada e não forneceu pisos, críticos, resistências ou dispensas ao lote.
+
+Foram calculados 72 lotes × 58 estados = 4.176 casos completos sintéticos,
+nos vãos 3.000 / 4.000 / 4.750 / 6.000 mm e inclinações 0 / +5 / −5 graus.
+As 208.272 comparações numéricas passaram, além de 72 reimportações/recalculos
+com igualdade integral do JSON e sem mutação das entradas. Depois das guardas
+finais, os 72 lotes foram recalculados outra vez e TODOS os resultados salvos
+permaneceram exatamente iguais; a auditoria independente foi repetida.
+
+Revisão adicional independente: 48 referências escalares em oito vãos,
+192 vetores assinados, 2.160 confrontos de resistência e 162 de Ne/Me;
+quatro lotes ±15° com 232 casos/11.928 confrontos; seis casos diretos com
+posição assimétrica e/ou sinais mistos, 304 confrontos. Tudo passou.
+São 4.408 combinações de área, mais seis casos diretos, sem contar replays
+como novos casos. Os 88 testes de contrato e 38 testes próprios do oráculo passaram.
+As 36 mutações finais foram bloqueadas. Também foram conferidos os 12.160
+índices apresentados nos 76 lotes, com 936 ELS biaxiais sem índice de aprovação.
+
+O resultado é cálculo de componentes dentro de hipóteses explícitas, NÃO
+aprovação de um perfil comercial, da terça física ou de um projeto completo.
+
+ESCOPO EXATO
+Mesmos seis contornos R01 arredondados/facetados de 209 nós, ri=t, propriedades
+integradas da mesma linha e módulos nas fibras exteriores. E=200000 MPa,
+nu=0,3, G=E/2,6, fy=250 MPa. O vetor próprio não mistura Cw ou J do catálogo.
+Pierin fornece somente prioridade/correspondência nominal da família: nenhum
+crítico histórico, raio, G/nu ou sentido de Mly foi atribuído à tabela.
+
+3000≤L≤6000 mm, Lx=Ly=Lz=L e Kx=Ky=Kz=Cb=Cm=1. Garfos ideais, translações
+e torção de extremidade impedidas, rotações de flexão e empenamento livres.
+N=0 e torque primário imposto=0 são hipóteses desta componente de flexão,
+não comprovação das ligações ou da posição física das forças. PP real no CG
+é excêntrico ao centro de cisalhamento; esse torque não desapareceu.
+Sem apoio intermediário ou crédito estrutural de telha. Telha é somente ação.
+
+CONSUMO INDIVIDUAL DOS CRÍTICOS
+Local forte primário pela Tabela 12(b), não substituído pelo local forte FSM.
+Locais fracos e D dos lábios são próprios de cada seção e sentido. D forte
+próprio entra nas seis: nenhuma usa a dispensa T14 existente na antiga 1,20.
+Todos os valores fortes de lambda_D ficaram no patamar rho=1 para fy=250;
+isso é verificação efetivamente feita, não autorização para omitir o ramo.
+
+Os seis pisos da alma permanecem 1,53 / 3,58 / 5,07 / 5,94 / 6,75 / 7,57
+milhões Nmm. Cada um está ligado ao próprio certificado discreto e revisão
+independente. Mdist identificado da alma continua nulo e a dispensa falsa.
+O argumento de uso conservador na curva resistente foi verificado em dois
+casos separados, sem afirmar monotonia global da fórmula literal arredondada:
+ - t=1,50: lambda_floor=0,792101 e rho_floor=0,91182493. O ramo ativo cresce
+   com o crítico, e o patamar rho=1 também fica acima desse valor.
+ - As outras cinco: lambda_floor≤0,673; todo crítico acima do piso permanece
+   no patamar rho=1. O antigo gate específico de lambda>0,673 não foi herdado.
+
+A pequena descontinuidade da fórmula literal em 0,673 foi explicitamente
+considerada. Um teste artificial próximo da transição, com rho_floor>1,
+é rejeitado por esta prova suficiente. Os coeficientes não foram alterados.
+O piso não é autovalor D identificado, dispensa normativa ou prova de casca
+contínua, perfil fabricado ou espectro sob tensão biaxial real.
+
+RESISTÊNCIAS E CONCOMITÂNCIA
+NBR 14762:2010 fornecida: §9.8.2.1/2/3, §9.8.3/4/5, §9.9 com N=0 e Anexo E.
+W de primeiro escoamento e Wc da fibra comprimida permanecem distintos.
+O mínimo local/FLT/D é calculado por eixo/sentido; Ne/Me são recalculados no
+vão atual. Não se transfere um Ne ou Me de 3 m para 6 m por simples marcador.
+Em t=1,50, o piso da alma governa MRd=0,795740977 kNm nos vãos amostrados;
+ignorá-lo produziria uma capacidade maior, portanto ele não ficou só em nota.
+
+A resistência de cortante corresponde à alma plana h=100−4t, kv=5,
+sem enrijecedores transversais. M–V usa MRd_local de §9.8.2.1, NÃO o mínimo
+FLT/D. A interação biaxial usa |Mx|/MRdx + |My|/MRdy, na mesma combinação
+e seção, com a resistência escolhida pelo sinal de My.
+
+O oráculo deriva equilíbrio e extremos por polinômios, independentemente do
+backend. Em um caso direto t=2,25, L=4750, a=475 mm, q=(0,23;−0,11) N/mm
+e P=(250;730) N, a interação biaxial governa em x=2602,71546 mm e M–V em
+x=2266,30435 mm. O backend e o oráculo coincidiram. Isso demonstra que não
+foi usada uma soma artificial de máximos independentes ou só centro/apoios.
+
+CARREGAMENTO E P
+Casos de área sintéticos: influência 1,50 m, CP 8, SC 25, sucção 60 e pressão 40
+kgf/m², com bases explicitadas nos JSON. PP deriva da área própria de cada
+seção, massa=0,00785 A_mm² kg/m e conversão 1 kgf=9,80665 N. Não é carga real
+de Lucas ou nova recomendação de projeto.
+
+Foi preservada a matriz de 48 combinações fornecida por Lucas. P de manutenção
+de 1000 N é separado de SC/vento e avaliado no centro/limite junto ao apoio.
+No limite, a flexão/flecha interior de P tende a zero, mas sua reação e seu
+cortante junto ao apoio continuam. O relatório não apaga a introdução local.
+Coeficientes não foram rederivados como combinação normativa universal.
+
+ELS E LIMITES REAIS
+A componente forte de flecha foi conferida com quadratura independente de
+curvatura/trabalho virtual e separação das transições de Ief(M). Os 1.296
+estados ELS possuem valor escalar calculado e nenhuma advertência numérica
+na execução principal. Apenas 432 estados com q/P paralelos realmente nulos
+conservam o critério parcial forte. Os 864 estados biaxiais ficam PENDENTES,
+sem índice de atendimento. Não houve soma de inércias/flechas isoladas para
+fingir uma rigidez combinada. Essa seleção depende das ações reais do estado,
+não apenas da inclinação, ID ou nome do caso.
+
+Torção/empenamento com pontos físicos de aplicação, ELS combinado, detalhes
+locais de forças, apoios/ligação reais e aprovação global continuam pendentes.
+Esses limites não acrescentam dispensa ou exigência normativa inventada.
+Não foi criada linha de cortante paralelo, flecha paralela ou casos condicionais
+na UI. Nenhuma etapa de travessas 3D foi requalificada por este lote de terças.
+
+CORREÇÕES E CONTRATO
+family_reference.py é um adaptador de pesquisa separado. Cada cálculo confere
+o registro elástico, leitor e 84 fontes, além dos 204 arquivos do backend.
+A identidade integral das entradas é comparada com a referência própria:
+marcador não autoriza propriedades, pisos, sentidos, material ou vínculos
+alterados. Vão e espessura não são arredondados para caber no domínio.
+Ações editáveis inválidas não são reparadas silenciosamente.
+
+A revisão independente encontrou apenas uma fragilidade de mensagem:
+properties=None ou [] causava exceção AttributeError em vez de inelegibilidade.
+Agora ambos e outros formatos inválidos retornam bloqueio explícito. Houve
+teste de regressão específico. A guarda algébrica do piso foi acrescentada
+sem alteração dos valores. Todos os 72 resultados completos foram reproduzidos
+exatamente depois das duas correções.
+
+ESTADO DO APP E PRÓXIMO PASSO
+O app publicado e seus 204 arquivos não mudaram. A rota nova não está conectada
+à UI, ao carregador de projetos ou ao relatório Word do app. Os JSON deste
+estudo devem passar por family_reference.calculate_reference; importá-los na
+rota manual do app atual NÃO ativa este contrato de qualificação.
+app_route_connected=False e requires_research_adapter=True são explícitos.
+
+O próximo passo seguro é integrar este contrato único às seleções/entradas e
+saídas do app em uma candidata, mantendo antigos projetos e a rota 1,20,
+e fazer QA de interface/importação/relatório. Isso não elimina as pendências
+físicas listadas acima nem amplia a família para medidas livres.
+
+ARTEFATOS
+family_reference.py: contrato e adaptador único, sem patch do backend.
+run_batches.py / end_to_end/: 72 lotes, entradas, referência, saída e auditoria.
+FINAL_REVALIDATION.json: recálculo exato após correções e provas dos seis pisos.
+test_contracts.py / CONTRACT_TESTS.log: 88 testes do contrato final.
+independent_review/: oráculo Decimal de 60 dígitos, fontes, 38 testes e auditorias extras.
+CASE_COMPLETE.txt: memória legível do exemplo 2,65 mm, L=3 m, θ±5°.
+FINAL_RECEIPT.json / MANIFEST_SHA256.json: consolidação e integridade final.
+
+Fontes fornecidas: NBR 14762:2010 SHA256
+c2a01615a3ce9e2b93aeb7fee757f7bf9dd932adaefbc242e848ce813dc82407;
+registro elástico SHA256
+3919d41d60e8423d7ae44a2bfb32bbd7c75783c7165bd78c027a20757e61cbe3.
+A edição 2010 é a fonte fixa do estudo; não se afirmou vigência para uma obra.
+
+Usadas somente dependências existentes. Nenhuma instalação ou publicação.

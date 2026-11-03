@@ -1,0 +1,45 @@
+{
+  "schema": "own_Ue100_six_self_contained_sources_v1",
+  "files": {
+    "elastic_registry.json": {
+      "sha256": "3919d41d60e8423d7ae44a2bfb32bbd7c75783c7165bd78c027a20757e61cbe3",
+      "original_research_source": "outputs/tercas_ue100_family_critical_20261103/FAMILY_ELASTIC_REGISTRY.json"
+    },
+    "elastic_receipt.json": {
+      "sha256": "b6c916189834ad7e92bea07a7f3583eb0bd50fc1ca3ce99fb3c64a7e65be35f5",
+      "original_research_source": "outputs/tercas_ue100_family_critical_20261103/FINAL_RECEIPT.json"
+    },
+    "floor_independent_review.json": {
+      "sha256": "41d449d4f07644f2e9a94d5d0548555ceadb916fcf5b70a4dabc4b1a866c3da9",
+      "original_research_source": "outputs/tercas_ue100_family_critical_20261103/analytic_review/web_floor_review/REVIEW.json"
+    },
+    "floor_scalar_revalidation.json": {
+      "sha256": "2d802bec965bb384883be292f509d6add951162c7fb79724c1ab4a003c381950",
+      "original_research_source": "outputs/tercas_ue100_family_resistance_20261103/FINAL_REVALIDATION.json"
+    },
+    "resistance_receipt.json": {
+      "sha256": "80e5759c1c192627a434be93c02f10c6d314f07618756977d013ad484c8d6a04",
+      "original_research_source": "outputs/tercas_ue100_family_resistance_20261103/FINAL_RECEIPT.json"
+    },
+    "independent_resistance_receipt.json": {
+      "sha256": "9cc494afe24c363ca366abb3d8df65fa09171095488febb11ff32b86a9ef131f",
+      "original_research_source": "outputs/tercas_ue100_family_resistance_20261103/independent_review/FINAL_REVIEW_RECEIPT.json"
+    },
+    "resistance_study.txt": {
+      "sha256": "bf251bf7f54ea221e4545bdc246d41e12c1fa0e5667ccfa9af98fcaf6bafe6fe",
+      "original_research_source": "outputs/tercas_ue100_family_resistance_20261103/REPORT.txt"
+    },
+    "independent_resistance_study.txt": {
+      "sha256": "df27c0dc8b0216b8c0b228dc832fdd9520cbac4e33f478a8f8578145b875d80d",
+      "original_research_source": "outputs/tercas_ue100_family_resistance_20261103/independent_review/REPORT.txt"
+    },
+    "complete_case.txt": {
+      "sha256": "866caf87cab12f42d74fa8440237349bd778d201eec548accb52c6084b51c68f",
+      "original_research_source": "outputs/tercas_ue100_family_resistance_20261103/CASE_COMPLETE.txt"
+    },
+    "consumption_decision.json": {
+      "sha256": "f1790861e5373f00184f2481840e48c3f14c1a494d9666531ac2d6aa2158d6d4",
+      "original_research_source": "Integration consumption decision based on the pinned independent numerical records"
+    }
+  }
+}

@@ -126,6 +126,8 @@ def build_spec(data):
  return spec
 
 def calculate(data):
+ from .ue_family_reference import claims_reference as family_claims, calculate_reference as family_calculate
+ if family_claims(data):return family_calculate(data)
  from .ue_reference import claims_reference, calculate_reference
  if claims_reference(data):return calculate_reference(data)
  return _calculate(data)

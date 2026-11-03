@@ -1,0 +1,119 @@
+{
+  "schema": "own_Ue100_six_signed_scalar_consumption_v1",
+  "thicknesses_mm": [
+    1.5,
+    2.0,
+    2.25,
+    2.65,
+    3.0,
+    3.35
+  ],
+  "profile_ids": [
+    "OWN_Ue100x50x17_t1p50_ri1p50_n12_a16_v1_cd50bf66f299",
+    "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce",
+    "OWN_Ue100x50x17_t2p25_ri2p25_n12_a16_v1_e30a0bd327de",
+    "OWN_Ue100x50x17_t2p65_ri2p65_n12_a16_v1_243974742f83",
+    "OWN_Ue100x50x17_t3p00_ri3p00_n12_a16_v1_c3d1e69d48f6",
+    "OWN_Ue100x50x17_t3p35_ri3p35_n12_a16_v1_90bf516ec976"
+  ],
+  "accepted_for_signed_scalar_components": true,
+  "registry_sha256": "3919d41d60e8423d7ae44a2bfb32bbd7c75783c7165bd78c027a20757e61cbe3",
+  "span_domain_inclusive_mm": [
+    3000.0,
+    6000.0
+  ],
+  "material": {
+    "E_MPa": 200000.0,
+    "nu": 0.3,
+    "G_MPa": 76923.07692307692,
+    "fy_MPa": 250.0
+  },
+  "lengths": "Lx=Ly=Lz=L; K=Cb=Cm=1",
+  "supports": "ideal forks; bending rotations and warping free",
+  "strong_Table14_exemption": false,
+  "web_Mdist_identified_Nmm": null,
+  "web_floor_interpretation": "individual certified DISCRETE elastic lower bounds, not identified D modes or exemptions",
+  "floor_scalar_proofs": [
+    {
+      "thickness_mm": 1.5,
+      "reference_id": "OWN_Ue100x50x17_t1p50_ri1p50_n12_a16_v1_cd50bf66f299",
+      "floor_Nmm": 1530000,
+      "lambda_floor": 0.7921013562591512,
+      "rho_floor": 0.9118249332589479,
+      "proof_branch": "active_branch_increasing_in_critical_and_plateau_checked_separately",
+      "conservative_for_all_critical_at_least_floor": true,
+      "literal_curve_globally_monotone_claimed": false,
+      "Mdist_identified_Nmm": null,
+      "physical_continuum_proof": false
+    },
+    {
+      "thickness_mm": 2.0,
+      "reference_id": "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce",
+      "floor_Nmm": 3580000,
+      "lambda_floor": 0.5850943673033664,
+      "rho_floor": 1.0,
+      "proof_branch": "entire_admissible_critical_range_on_plateau",
+      "conservative_for_all_critical_at_least_floor": true,
+      "literal_curve_globally_monotone_claimed": false,
+      "Mdist_identified_Nmm": null,
+      "physical_continuum_proof": false
+    },
+    {
+      "thickness_mm": 2.25,
+      "reference_id": "OWN_Ue100x50x17_t2p25_ri2p25_n12_a16_v1_e30a0bd327de",
+      "floor_Nmm": 5070000,
+      "lambda_floor": 0.5157568875721177,
+      "rho_floor": 1.0,
+      "proof_branch": "entire_admissible_critical_range_on_plateau",
+      "conservative_for_all_critical_at_least_floor": true,
+      "literal_curve_globally_monotone_claimed": false,
+      "Mdist_identified_Nmm": null,
+      "physical_continuum_proof": false
+    },
+    {
+      "thickness_mm": 2.65,
+      "reference_id": "OWN_Ue100x50x17_t2p65_ri2p65_n12_a16_v1_243974742f83",
+      "floor_Nmm": 5940000,
+      "lambda_floor": 0.5079254372591074,
+      "rho_floor": 1.0,
+      "proof_branch": "entire_admissible_critical_range_on_plateau",
+      "conservative_for_all_critical_at_least_floor": true,
+      "literal_curve_globally_monotone_claimed": false,
+      "Mdist_identified_Nmm": null,
+      "physical_continuum_proof": false
+    },
+    {
+      "thickness_mm": 3.0,
+      "reference_id": "OWN_Ue100x50x17_t3p00_ri3p00_n12_a16_v1_c3d1e69d48f6",
+      "floor_Nmm": 6750000,
+      "lambda_floor": 0.498934611353053,
+      "rho_floor": 1.0,
+      "proof_branch": "entire_admissible_critical_range_on_plateau",
+      "conservative_for_all_critical_at_least_floor": true,
+      "literal_curve_globally_monotone_claimed": false,
+      "Mdist_identified_Nmm": null,
+      "physical_continuum_proof": false
+    },
+    {
+      "thickness_mm": 3.35,
+      "reference_id": "OWN_Ue100x50x17_t3p35_ri3p35_n12_a16_v1_90bf516ec976",
+      "floor_Nmm": 7570000,
+      "lambda_floor": 0.4898423093961698,
+      "rho_floor": 1.0,
+      "proof_branch": "entire_admissible_critical_range_on_plateau",
+      "conservative_for_all_critical_at_least_floor": true,
+      "literal_curve_globally_monotone_claimed": false,
+      "Mdist_identified_Nmm": null,
+      "physical_continuum_proof": false
+    }
+  ],
+  "N_N": 0.0,
+  "imposed_primary_torque_Nmm": 0.0,
+  "physical_load_eccentricity_qualified": false,
+  "combined_ELS_approved": false,
+  "whole_member_approved": false,
+  "torsion_physical_loading_qualified": false,
+  "physical_conditions_verified": false,
+  "cladding": "no contact or structural contribution; actions only",
+  "scope": "Release for calculations of the individually reviewed scalar components only, not approval of physical members. Independent MC/UI qualification is separate."
+}

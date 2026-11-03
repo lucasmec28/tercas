@@ -8,6 +8,7 @@ from docx.oxml.ns import qn
 from .application import rows
 from .homogeneous_reference import report as homogeneous_reference_report
 from .ue_reference import report as ue_reference_report
+from .ue_family_reference import report as ue_family_reference_report
 from .model_domain import report as domain_report,historical_rows,historical_inclination
 from .member_application import is_girt,wall_els_config,wall_convention
 
@@ -152,6 +153,7 @@ def word(result):
  domain_report(doc,result)
  homogeneous_reference_report(doc,result)
  ue_reference_report(doc,result)
+ ue_family_reference_report(doc,result)
  doc.add_paragraph('Projeto: '+result['project']);doc.add_paragraph('Versão: '+result['version']);doc.add_paragraph('Gerado em UTC: '+datetime.now(timezone.utc).isoformat())
  doc.add_heading('Premissas e limites',1)
  for text in ['Um vão isostático. Flexão forte e rota restrita de flexão fraca/Anexo E; interação biaxial §9.9 para N=0 quando há resistências rastreadas por eixo e sentido. Para posição fixa de P, o máximo concomitante é calculado ao longo do vão. Sem dimensionamento de torção primária, axial, continuidade ou balanços nesta emissão.', 'Ações ELU e ELS já combinadas, informadas separadamente. Não há geração automática de todas as combinações.', 'Ly e Lz são comprimentos efetivos informados; coordenada de tirante não comprova vínculo torsional.', 'A flecha é componente Euler–Bernoulli com Ief por seção. Limite de flecha é informado com origem; não equivale a aprovação do sistema.', 'Propriedades e críticos fornecidos não são certificados pelo aplicativo. A convenção geométrica das propriedades do catálogo precisa ser conferida para o caso.', 'Ligações e apoios não são dimensionados ou aprovados pelo aplicativo.']:
@@ -159,8 +161,8 @@ def word(result):
   doc.add_paragraph(text,style='List Bullet')
  for warning in result.get('coverage_warnings',[])+result.get('critical_warnings',[]):doc.add_paragraph(warning)
  if result.get('numerical_warnings'):doc.add_paragraph('Aviso numérico na integração da flecha: critério ELS não concluído.')
- inclination_inputs(doc,result['input_data'],None if (result.get('homogeneous_reference_evidence') or result.get('ue_reference_evidence')) else result.get('weak_critical_reference'))
- if not (result.get('homogeneous_reference_evidence') or result.get('ue_reference_evidence')):strong_reference_report(doc,result.get('strong_critical_reference'))
+ inclination_inputs(doc,result['input_data'],None if (result.get('homogeneous_reference_evidence') or result.get('ue_reference_evidence') or result.get('ue_family_reference_evidence')) else result.get('weak_critical_reference'))
+ if not (result.get('homogeneous_reference_evidence') or result.get('ue_reference_evidence') or result.get('ue_family_reference_evidence')):strong_reference_report(doc,result.get('strong_critical_reference'))
  if result.get('inclination_evidence'):
   doc.add_heading('Solicitações locais simultâneas',1);inclination_report(doc,historical_inclination(result,result['inclination_evidence']))
  wall_vertical_report(doc,result)
@@ -221,8 +223,9 @@ def batch_common_inputs(doc,result):
  doc.add_heading('Propriedades e críticos — dados numéricos adotados',2)
  if snapshot is not None:
   section=snapshot['selected_section'];fields=section['fields']
-  if result.get('ue_reference_evidence'):
-   doc.add_paragraph('Snapshot comum às combinações: referência própria '+result['ue_reference_evidence']['reference_id']+'; família '+section['family']+'. Correspondência nominal documental: '+section.get('nominal_documentary_catalog',{}).get('entry_id',section['entry_id'])+'. Os valores consumidos e suas origens são próprios; não são certificação do perfil físico.')
+  if result.get('ue_reference_evidence') or result.get('ue_family_reference_evidence'):
+   own_record=result.get('ue_family_reference_evidence') or result['ue_reference_evidence']
+   doc.add_paragraph('Snapshot comum às combinações: referência própria '+own_record['reference_id']+'; família '+section['family']+'. Correspondência nominal documental: '+section.get('nominal_documentary_catalog',{}).get('entry_id',section['entry_id'])+'. Os valores consumidos e suas origens são próprios; não são certificação do perfil físico.')
   else:
    doc.add_paragraph('Snapshot comum às combinações: seção '+section['entry_id']+
                      '; família '+section['family']+'. Valores de entrada e origem preservados no cálculo; não são certificação do perfil.')
@@ -267,17 +270,18 @@ def batch_word(result):
  domain_report(doc,result)
  homogeneous_reference_report(doc,result)
  ue_reference_report(doc,result)
+ ue_family_reference_report(doc,result)
  doc.add_paragraph('Projeto: '+result['project']+' | versão: '+result['version'])
  if result['synthetic']:doc.add_paragraph('EXEMPLO DIDÁTICO — DADOS SINTÉTICOS.')
  doc.add_heading('Entradas e premissas',1)
  d=result['input_data'];from .catalogs import catalog_labels
- doc.add_paragraph('Correspondência nominal (propriedades próprias): '+catalog_labels()[d['catalog_index']]+'; aço declarado: '+d['steel_name'] if (result.get('homogeneous_reference_evidence') or result.get('ue_reference_evidence')) else 'Perfil: '+catalog_labels()[d['catalog_index']]+'; aço: '+d['steel_name'])
+ doc.add_paragraph('Correspondência nominal (propriedades próprias): '+catalog_labels()[d['catalog_index']]+'; aço declarado: '+d['steel_name'] if (result.get('homogeneous_reference_evidence') or result.get('ue_reference_evidence') or result.get('ue_family_reference_evidence')) else 'Perfil: '+catalog_labels()[d['catalog_index']]+'; aço: '+d['steel_name'])
  doc.add_paragraph('Origem das propriedades: '+d['property_origin'])
  doc.add_paragraph('Críticos: '+d['critical_origin'])
  doc.add_paragraph('Vão [mm]: '+display(d['L_mm']))
  batch_common_inputs(doc,result)
- inclination_inputs(doc,d,None if (result.get('homogeneous_reference_evidence') or result.get('ue_reference_evidence')) else result.get('weak_critical_reference'))
- if not (result.get('homogeneous_reference_evidence') or result.get('ue_reference_evidence')):strong_reference_report(doc,result.get('strong_critical_reference'))
+ inclination_inputs(doc,d,None if (result.get('homogeneous_reference_evidence') or result.get('ue_reference_evidence') or result.get('ue_family_reference_evidence')) else result.get('weak_critical_reference'))
+ if not (result.get('homogeneous_reference_evidence') or result.get('ue_reference_evidence') or result.get('ue_family_reference_evidence')):strong_reference_report(doc,result.get('strong_critical_reference'))
  labels={'mass_kg_m':'Massa linear [kg/m]','spacing_m':'Distância entre terças [m]','permanent_kgf_m2':'Permanente [kgf/m²]','live_kgf_m2':'Sobrecarga [kgf/m²]','wind_up_kgf_m2':'Vento para cima [kgf/m²]','wind_down_kgf_m2':'Vento para baixo [kgf/m²]'}
  if is_girt(d):labels.update(spacing_m='Distância tributária entre travessas no fechamento [m]',live_kgf_m2='SC de cobertura armazenada e INATIVA [kgf/m²]',wind_up_kgf_m2='Vento normal negativo / sucção [kgf/m²]',wind_down_kgf_m2='Vento normal positivo / pressão [kgf/m²]')
  for k,v in result['load_bundle']['inputs'].items():doc.add_paragraph(f'{labels.get(k,k)}: {display(v)}')

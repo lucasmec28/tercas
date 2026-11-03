@@ -1,0 +1,173 @@
+REVISÃO INDEPENDENTE: RESISTÊNCIAS E SOLICITAÇÕES Ue100×50×17
+03/11/2026. Somente cópia de pesquisa, nenhuma publicação ou alteração de app.
+
+RESULTADO ÚTIL
+Os 192 vetores resistentes assinados (seis espessuras, oito vãos e quatro
+sentidos) foram derivados por implementação própria com Decimal de 60 dígitos.
+Os 2.160 confrontos dos escalares contra o adapter do produtor passaram.
+Quatro lotes adicionais a ±15° somam 232 casos completos e 11.928 confrontos;
+seis casos diretos, com posição assimétrica e/ou ações de sinais mistos,
+somam mais 304 confrontos. Todos passaram. As comparações incluem as grandezas
+na mesma seção/combinação, não somas artificiais de máximos não concomitantes.
+Os 38 testes próprios do oráculo passaram.
+
+A revisão adicional das linhas apresentadas nos 72 lotes do produtor e nos
+quatro lotes desta revisão conferiu 12.160 índices de flexão local,
+distorcional, FLT e cortante. Nos 936 casos ELS biaxiais desses 76 lotes,
+os índices de atendimento continuaram ausentes e a rigidez combinada pendente.
+IDs próprios, pisos individuais, fontes e flags de não aprovação foram
+conferidos novamente nas saídas salvas, sem recalcular ou modificar o app.
+
+O contrato bloqueou todas as 36 mutações ensaiadas, sem alterar a entrada.
+Na primeira revisão, properties=None e properties=[] foram bloqueadas por
+AttributeError, sem retorno amigável de inelegibilidade. Foi solicitada ao
+produtor a correção de robustez, sem alterar cálculo. MUTATION_REVIEW.json
+e MUTATION_REVIEW_FINAL.json distinguem a primeira revisão e o reteste.
+Nenhuma mutação produziu cálculo aceito ou aprovação global indevida.
+
+INDEPENDÊNCIA E FONTES
+oracle.py não importa a candidata, family_reference.py ou rotinas resistentes
+anteriores. Suas expressões foram transcritas após inspeção visual da cópia
+fornecida da NBR14762:2010: p41–42/PDF47–48, p45/PDF51, p47–53/PDF53–59,
+e Anexo E p82/PDF88. A edição é fonte fixa do estudo, não afirmação de
+vigência para uma obra. Imagens das páginas PDF51–59 ficam em source_views.
+SHA256 da NBR: c2a01615a3ce9e2b93aeb7fee757f7bf9dd932adaefbc242e848ce813dc82407.
+
+Entrada elástica exclusiva: FAMILY_ELASTIC_REGISTRY.json, SHA256
+3919d41d60e8423d7ae44a2bfb32bbd7c75783c7165bd78c027a20757e61cbe3.
+Cada perfil mantém os seus A/I/J/Cw/r0/j, módulos exteriores W/Wc, local
+forte T12, locais fracos, D forte/lábios e piso próprio da alma. Todos os
+hashes de fonte do registro foram rechecados. Não se importou da seção
+1,20 mm nenhum valor resistente, crítico, piso, modo ou dispensa.
+
+Os coeficientes foram lidos da matriz congelada do usuário em
+combinations_lucas_20261031.json, SHA256
+31aae61004ea785aa79626acef8709bd49fb690e79686c0a794b1baa68d66f5a.
+Há 48 linhas originais; o P separado acrescenta oito ELU e duas ELS após
+expansão nas posições centro/limite junto ao apoio, totalizando 40 ELU e
+18 ELS. Não se rederivaram os coeficientes como gerador normativo universal.
+
+RESISTÊNCIA ESCALAR
+Usou-se fy=250 MPa, gamma=1,10. Na seção efetiva §9.8.2.1,
+lambda_p=sqrt(W fy/Ml), rho=1 para lambda_p≤0,673 e
+rho=(1−0,22/lambda_p)/lambda_p no ramo reduzido; MRd_local=rho W fy/gamma.
+W corresponde ao primeiro escoamento exterior, inclusive a fibra tracionada
+extrema quando ela governa. Não foi trocado por Wc da fibra comprimida.
+
+Em §9.8.2.2, lambda0=sqrt(Wc fy/Me); chi=1 para lambda0≤0,6,
+chi=1,11(1−0,278 lambda0²) para 0,6<lambda0<1,336, e chi=1/lambda0²
+para lambda0≥1,336. A seção efetiva é recalculada para chi fy:
+lambda_p,FLT=sqrt(chi Wc fy/Ml), MRd_FLT=chi rho(lambda_p,FLT) Wc fy/gamma.
+Em §9.8.2.3, lambda_dist=sqrt(W fy/Mdist) e MRd_dist=rho W fy/gamma.
+O mínimo dos três ramos define a capacidade escalar por eixo/sentido.
+
+Nenhuma das seis seções tem dispensa forte pela Tabela 14. Todas usam
+o D forte próprio. Os valores de lambda_dist forte são inferiores a 0,673,
+logo rho_dist=1, mas isso é verificação feita, não dispensa. D dos lábios
+também resulta em rho_dist=1 no material fixado. FLT governa forte e lábios
+nos oito vãos amostrados. Na alma, o piso de t=1,50 reduz a capacidade;
+nas demais espessuras os ramos local e D chegam ao mesmo patamar de
+primeiro escoamento. A inspeção dos vãos é amostragem numérica; o contrato
+analítico de comprimento permanece o do registro e de seus certificados.
+
+PISOS INDIVIDUAIS DA ALMA: PROVA ESCALAR DELIMITADA
+São cotas inferiores das matrizes discretas próprias, não identificação de D,
+ausência de D ou dispensa normativa. identified_Nmm continua nulo.
+Cobrem 3000≤L≤6000 mm, todos os harmônicos e cauda infinita certificados,
+com geometria/material/tensão pura e vínculos congelados. Não são uma prova
+da casca contínua, do perfil fabricado ou do espectro combinado Mx+My real.
+
+Seja Y=W fy, c o crítico verdadeiro do modelo admitido, c0 o piso e
+R(c)=Y rho(sqrt(Y/c))/gamma. O uso conservador é justificado separadamente:
+1. Se lambda_floor≤0,673, então c≥c0 implica lambda(c)≤lambda_floor e
+   todo o intervalo permanece no patamar R=Y/gamma. Vale nas cinco seções
+   t=2,00/2,25/2,65/3,00/3,35.
+2. Se lambda_floor>0,673 e rho_floor≤1, no ramo ativo
+   R(c)=(sqrt(Y c)−0,22c)/gamma e
+   dR/dc=(0,5 sqrt(Y/c)−0,22)/gamma>0. Ao entrar no patamar,
+   R=Y/gamma≥R(c0). Vale para t=1,50: lambda_floor=0,792101,
+   rho_floor=0,91182493, MRd_dist=0,79574098 kNm.
+
+Não se afirma monotonia global da expressão literal: em lambda→0,673+
+ela fornece rho≈1,00015676, antes de retornar a rho=1 no patamar. A pequena
+descontinuidade vem do limite arredondado. O argumento acima compara o
+ramo reduzido e o patamar separadamente, sem adulterar os coeficientes.
+Também não se exige que as cinco seções no patamar satisfaçam o gate antigo
+lambda_floor>0,673, que era específico da seção 1,20.
+
+Ne/Me E CORTANTE
+Nex=pi² E Ix/L²; Ney=pi² E Iy/L²; Nez=(pi² E Cw/L²+GJ)/r0².
+A raiz flexotorcional Nexz foi recalculada pela expressão literal de
+§9.7.2.2 em alta precisão, e Ne=min(Ney,Nexz). Isso não produz NRd nem
+autoriza esforço axial neste ensaio N=0. Me forte=r0 sqrt(Ney Nez).
+Me fraco segue Anexo E, com Cs=+1 para alma comprimida e Cs=−1 para lábios,
+Cm=1. Os 162 confrontos com os Ne/Me já registrados tiveram diferença
+relativa máxima 3,96028610401e−16.
+
+Garfos ideais, empenamento livre, Lx=Ly=Lz=L, K=Cb=Cm=1; nenhuma telha
+estrutural ou apoio intermediário presumido. A fórmula de Me não resolve
+altura/excentricidade de força. PP físico no CG pode gerar torque, ainda
+fora desta componente de flexão. Torque imposto nulo não elimina isso.
+
+Em §9.8.3, a alma plana é h=100−4t, entre tangências dos cantos com ri=t,
+e kv=5 para ausência de enrijecedores transversais. Todas as seis estão no
+ramo compacto: VRd=0,6 fy h t/1,10. Na ordem das espessuras, os VRd são
+19,2273 / 25,0909 / 27,9205 / 32,3059 / 36,0000 / 39,5605 kN.
+Isso é cortante da alma para o plano forte, não capacidade de cortante
+fraco nem interação de cisalhamento biaxial.
+
+M–V E FLEXÃO BIAXIAL CONCOMITANTES
+Em §9.8.4, (Mx/MRd_local)²+(V/VRd)² usa exclusivamente MRd_local de
+§9.8.2.1. Não usa o mínimo FLT/D. Em §9.9 com N=0, a conta é
+|Mx|/MRdx(sinal)+|My|/MRdy(sinal), na mesma seção e mesma combinação.
+
+O oráculo recompõe reações, momentos e cortantes diretamente por equilíbrio.
+A busca de máximos usa z=x/L e polinômios separados antes/depois de P;
+divide também nas raízes de Mx e My para escolher a capacidade do sentido
+correto. Os extremos de M–V vêm das raízes da derivada cúbica; os extremos
+da soma biaxial vêm da quadrática em cada intervalo de sinais fixos.
+Os limites de cortante em ambos os lados de P são examinados. O limite
+a→0+ conserva o cortante da camada junto ao apoio e separa a flexão interior
+q-only; não se apaga a transferência de P ao apoio.
+
+Caso não trivial: t=2,25 mm, L=4750 mm, q=(0,23;−0,11) N/mm,
+P=(250;730) N e a=475 mm. A interação biaxial governa em x=2602,71546 mm,
+índice=0,84297620815; M–V governa em x=2266,30435 mm,
+índice quadrático=0,04026874785. Ambas as posições e índices coincidiram
+com o backend. Assim, a auditoria não se limita a centro e apoios.
+
+ELS E LIMITES DE APROVAÇÃO
+Para os casos simétricos de área, a componente forte foi conferida por
+integração independente de curvatura/trabalho virtual, com transições de Ief
+explicitamente separadas e 96/160 pontos de Gauss. A soma de flechas isoladas
+não foi rebatizada como rigidez efetiva combinada. Os seis ensaios diretos
+biaxiais mantiveram status ELS pendente e nenhum índice de atendimento.
+Todas as flags whole_member_approved, combined_ELS_approved,
+torsion_physical_loading_qualified e published permanecem falsas.
+Não foram qualificados contato de P, ligações, apoios reais, torção,
+empenamento físico, telha estrutural, efeito 3D ou aprovação de projeto.
+
+ARTEFATOS
+oracle.py: referência escalar independente e auditor de estados concomitantes.
+SCALAR_REFERENCES.json / SCALAR_RESISTANCES.csv: 48 referências/192 sentidos.
+SCALAR_SUMMARY.json / REGISTRY_GLOBAL_COMPARISON.json: repetição Ne/Me.
+ADAPTER_SCALAR_COMPARISON.json: 2.160 confrontos resistentes.
+extra_area_cases/: quatro lotes e auditorias a ±15°.
+direct_cases/: seis casos assimétricos/mistos, saídas e auditorias.
+test_oracle.py / tests.log: 38 testes próprios.
+MUTATION_REVIEW.json: primeira campanha de 36 mutações, incluindo dois
+retornos não amigáveis. MUTATION_REVIEW_FINAL.json registra o reteste das
+36 mutações após a correção: todas bloqueadas com retorno amigável.
+EXTENDED_REVIEW.json: resumo da primeira campanha, hash do adapter revisto.
+FINAL_REVIEW_RECEIPT.json: revisão da versão final do adapter e do novo gate
+algébrico dos pisos, com as duas condições suficientes e rejeição explícita
+da faixa arredondada rho>1. O arquivo de 2.160 comparações escalares ficou
+idêntico byte a byte após as mudanças finais. Fontes elásticas e backend
+permanecem íntegros. Nenhuma capacidade foi alterada pela correção do gate.
+PRESENTED_ROWS_REVIEW.json: revisão das linhas e anotações dos 76 lotes salvos.
+
+O log tests_initial_assumption_corrections.log documenta quatro falhas
+iniciais do teste, não do backend: simetria binária exata exigida apesar de
+arredondamento ~1e−15 em Wc; contagem ELU/ELS anotada incorretamente; e
+suposição de monotonia global literal na transição 0,673. As três premissas
+foram corrigidas após inspeção, preservando o log original.

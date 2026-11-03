@@ -1,0 +1,83 @@
+FAMÍLIA PRÓPRIA Ue100: INTEGRAÇÃO DE SEIS ESPESSURAS
+03/11/2026. Rotas de componentes, não aprovação física/global.
+
+ESCOPO NUMÉRICO
+Ue100×50×17: t=1,50/2,00/2,25/2,65/3,00/3,35 mm. R01 arredondado/facetado
+de 209 nós, ri=t, propriedades integradas da mesma linha, módulos exteriores.
+E=200000 MPa, nu=0,3, G=E/2,6, fy=250 MPa. Não mistura Cw/J de catálogo com
+críticos próprios. Pierin é somente correspondência/prioridade nominal.
+
+3000≤L≤6000 mm, Lx=Ly=Lz=L, K=Cb=Cm=1; garfos ideais, translações e torção
+impedidas, flexão e empenamento livres. N=0 e torque primário imposto=0 são
+hipóteses da componente, não prova da posição física das forças. PP real no CG
+pode produzir torque. Telha sem contato/contribuição, somente ações.
+
+LOCAL/FLT/D E INTERAÇÕES
+Local forte primário pela Tabela 12(b), críticos fracos e D próprios por sentido.
+Nenhuma das seis tem dispensa forte T14. D forte entra efetivamente no mínimo.
+Na alma, o crítico D identificado permanece nulo. A entrada numérica é o piso
+conservador discreto da própria espessura, com certificado e revisão registrados.
+Pisos na ordem das espessuras: 1,53/3,58/5,07/5,94/6,75/7,57 milhões Nmm.
+Não é modo D identificado, dispensa ou prova da casca física.
+
+O uso conservador escalar considera separadamente o ramo reduzido e o patamar
+da fórmula literal com transição arredondada 0,673. t=1,50 tem rho=0,91182493;
+as outras cinco permanecem no patamar 1 para críticos acima do próprio piso.
+Não se impôs o antigo gate específico da seção 1,20 nem monotonia global falsa.
+
+W de primeiro escoamento permanece distinto de Wc da fibra comprimida.
+MRd mínimo local/FLT/D por sentido; M–V usa somente MRd_local de §9.8.2.1.
+§9.9 para N=0 usa momentos concomitantes na mesma combinação e seção.
+P no limite do apoio conserva reação/cortante; sua flexão interior tende a zero.
+
+ESTADO DE VALIDADE
+ELS forte uniaxial conserva só o critério parcial quando q/P paralelos locais
+reais são zero. ELS biaxial mantém diagnóstico escalar, sem índice de atendimento
+por rigidez combinada pendente. Torção/empenamento físicos, detalhes locais,
+apoios/ligação reais e aprovação global permanecem pendentes.
+Não há crédito da telha, nova linha de cortante/flecha paralela ou aprovação 3D.
+As ações iniciais são sintéticas, explicitamente marcadas, não projeto de Lucas.
+A matriz fornecida em 31/10/2026 é preservada, sem rederivação normativa universal.
+A NBR 14762:2010 fornecida é a fonte fixa, sem afirmar vigência de uma obra.
+
+CONTRATO E INTERFACE
+tercas.ue_family_reference é uma rota autossuficiente. gate() confere fontes
+incorporadas em data/ue_family, sem ler a árvore externa de pesquisa ou executar
+solvers modais em produção. O registro elástico permanece documento histórico;
+consumption_decision.json concede somente o uso dos componentes escalares.
+
+Não há conversão automática de catálogo. O carregador abre novo estudo de 4 m.
+Na referência ativa, a prévia/aplicação explícita de t e L reconstrói todos os
+dados da nova seção, preservando ações e posições absolutas de P. Vão menor
+que uma posição P não a desloca silenciosamente. Proposta pendente retira
+resultados e desativa cálculo; exportação guarda apenas entradas já aplicadas.
+
+Identidade integral, fontes, geometria, material, pisos, sentidos e vínculos
+são comparados. Token sozinho não qualifica. Entradas malformadas, misturadas,
+alteradas ou fora do domínio abrem inspeção exata, sem substituição. O marcador
+do estudo externo de pesquisa não ativa a rota do app. Dados antigos continuam
+com seus contratos originais. Escolher catálogo explicitamente remove o vínculo
+da família, sem apagar as ações. Comparação genérica e diagnóstico 3D rejeitam
+vínculos da família em vez de transferi-los para outra seção/aplicação.
+
+MC E JSON
+Registros incluem identidade, propriedades próprias, fontes, Ne/Me atuais,
+capacidades por sentido e distinção entre piso e D identificado. Nenhum valor
+é atribuído ao catálogo só por coincidência numérica. Word usa somente a
+evidência gravada no resultado, sem acessar fontes atuais ou requalificar um
+resultado antigo. Flags globais, ELS combinado e torção física ficam falsas.
+app_route_connected=True indica somente disponibilidade da rota de software.
+
+PRESERVAÇÃO
+Rotas U simples, Ue 1,20, entradas manuais, travessas e diagnóstico 3D não são
+promovidas ou alteradas pela família. Não há troca de epoch global de cache:
+os resultados legados seguem numericamente iguais; o fluxo novo invalida seus
+resultados por fingerprint e evidência. Carregar/aplicar outra identidade já
+remove resultados e comparação, preservando dados e histórico adequado.
+
+BASE DE QA
+O estudo resistente anterior contém 72 lotes/4176 casos, 208272 comparações,
+72 replays exatos e oráculo independente. Os seis contornos e seus críticos
+têm revisão elástica separada. Esses números são evidência da etapa anterior,
+não substituem os testes de importação/seleção/Word e suíte final desta candidata.
+Os recibos da integração registram separadamente a execução desses testes.
