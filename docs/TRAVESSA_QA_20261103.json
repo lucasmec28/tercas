@@ -1,0 +1,50 @@
+{
+  "date_utc": "2026-11-03T01:20:39.291892+00:00",
+  "scope": "Pre-publication qualification snapshot; not structural approval or physical tie qualification. Deployment verified separately.",
+  "full_final_suite": {
+    "tests_passed": 487,
+    "subtests_passed": 889,
+    "seconds": 387.9,
+    "log": "qualificacao/full_pytest_final.log"
+  },
+  "final_focused_backend_report_reference": {
+    "tests_passed": 45,
+    "log": "qualificacao/final_targeted_tests.log"
+  },
+  "legacy_invariance": {
+    "input_cases_each_tree": 32,
+    "process_runs_total": 64,
+    "exact_full_objects": true,
+    "allowed_differences": []
+  },
+  "UI_SVG_focused": {
+    "tests_passed": 17,
+    "subtests_passed": 3,
+    "not_additive_to_full_suite": true
+  },
+  "visual": {
+    "girt_direct_pages": 7,
+    "girt_area_pages": 6,
+    "prior_strong_direct_pages": 5,
+    "prior_MC_area_pages": 6,
+    "all_final_pages_reviewed": true
+  },
+  "prior_MC_checkpoint": {
+    "tests_passed": 456,
+    "subtests_passed": 889
+  },
+  "history_preserved": "Initial girt suite: 485 passed, 889 subtests, one failure from obsolete 9-selectbox assertion; updated test explicitly verifies nine legacy controls plus requested selector. Presentation-only cantSplit patch then fresh final suite.",
+  "versions": {
+    "Python": "3.12",
+    "Streamlit": "1.65.0",
+    "pytest": "9.1.1",
+    "Jinja2": "3.1.6",
+    "numpy": "2.5.3",
+    "scipy": "1.17.0",
+    "pandas": "2.2.3",
+    "python-docx": "1.2.0"
+  },
+  "installation_performed": false,
+  "candidate_streamlit_pin": "1.66.0",
+  "pin_compatibility_or_public_browser_proven": false
+}

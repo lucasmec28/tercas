@@ -8,6 +8,8 @@ DEFAULT={'value':0.,'unit':'degrees','spacing_basis':'roof','permanent_basis':'r
 
 def configuration(data):
  if not isinstance(data,dict):raise ValueError('O arquivo deve conter um objeto de entradas JSON.')
+ from .member_application import is_girt,wall_angle
+ if is_girt(data):return {'orientation':'mouth_down','area_basis':'wall_plane'},wall_angle()
  cfg=dict(DEFAULT);given=data.get('inclination',{})
  if not isinstance(given,dict) or set(given)-set(DEFAULT):raise ValueError('Configuração de inclinação inválida.')
  cfg.update(given);ang=angle(cfg['value'],cfg['unit'])
@@ -16,6 +18,8 @@ def configuration(data):
  return cfg,ang
 
 def adapt_bundle(data,bundle):
+ from .member_application import is_girt,adapt_wall_bundle
+ if is_girt(data):return adapt_wall_bundle(data,bundle)
  cfg,ang=configuration(data);theta=ang['radians'];a=data['area_inputs']
  cases={'PP':self_weight(data['properties']['mass_kg_m'],theta)}
  for case,key,basis,sgn in [('CP','permanent_kgf_m2','permanent_basis',1),('SC','live_kgf_m2','live_basis',1),('V_Cima','wind_up_kgf_m2','wind_basis',-1),('V_Baixo','wind_down_kgf_m2','wind_basis',1)]:
@@ -47,7 +51,10 @@ def evidence(data,q,p,a):
   for side in (('left','right') if x==a else ('right',)):
    states.append(dict(x_mm=x,side=side,**simply_supported_state(L,x,q,p,a,side)))
  demand=any(abs(v)>1e-12 for v in (q['parallel'],p['parallel']))
- return {'angle':ang,'configuration':cfg,'convention':'Eixos locais: normal à cobertura (positivo para dentro) e paralelo à cobertura (positivo para a boca, vista A→B); alma normal; sem travamento da telha. M e V abaixo são concomitantes por seção/posição, não máximos independentes.', 'q_vector':q,'P_vector':p,'states':states,'parallel_demand':demand,'resistance_status':'Pendente: propriedades/críticos e resistências do eixo fraco por sentido não fornecidos; sem aprovação biaxial.' if demand else 'Sem demanda paralela neste caso; não equivale a aprovação global.', 'weak_property_provenance':None}
+ out={'angle':ang,'configuration':cfg,'convention':'Eixos locais: normal à cobertura (positivo para dentro) e paralelo à cobertura (positivo para a boca, vista A→B); alma normal; sem travamento da telha. M e V abaixo são concomitantes por seção/posição, não máximos independentes.', 'q_vector':q,'P_vector':p,'states':states,'parallel_demand':demand,'resistance_status':'Pendente: propriedades/críticos e resistências do eixo fraco por sentido não fornecidos; sem aprovação biaxial.' if demand else 'Sem demanda paralela neste caso; não equivale a aprovação global.', 'weak_property_provenance':None}
+ from .member_application import is_girt,wall_convention
+ if is_girt(data):out.update(member_application='wall_girt',convention=wall_convention()+' Esforços concomitantes na mesma seção/combinação.')
+ return out
 
 def direct_evidence(data):
  result={}

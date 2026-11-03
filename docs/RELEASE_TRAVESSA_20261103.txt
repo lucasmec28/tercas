@@ -1,0 +1,38 @@
+ATUALIZAÇÃO — TERÇA / TRAVESSA LATERAL
+03/11/2026 | Escopo restrito e diagnósticos condicionais. NÃO É PROJETO.
+
+O QUE ESTÁ IMPLEMENTADO
+Seleção Terça/Travessa lateral. Arquivo legado sem a nova chave continua Terça. Na Travessa U/Ue boca para baixo, PP e permanentes atuam verticalmente no eixo fraco; vento horizontal normal ao fechamento atua no eixo forte. Desenho e rótulos distinguem os eixos; não se invertem apenas nomes de inércias. Inclinação e SC de cobertura ficam armazenadas, mas inativas. No modo direto, ações já locais/combinadas não são giradas de novo e não se acrescenta PP.
+Travessa por área usa o subconjunto da matriz fornecida pelo usuário sem SC e sem P automático de manutenção de cobertura: 12 ELU, 3 ELS raras, 3 frequentes e 1 quase permanente, antes do filtro de famílias. Não é gerador normativo universal nem dispensa de cargas especiais, equipamentos ou manutenção aplicável; esses casos exigem avaliação e entradas diretas combinadas.
+A MC conserva propriedades/críticos efetivos e hipóteses, inclusive valores armazenados inativos, reações dos apoios, alertas específicos de levantamento/momento negativo/resíduo e força nos tirantes. A exportação não muda o cálculo.
+
+TIRANTES — MODELO DELIMITADO, SEM CRÉDITO AUTOMÁTICO
+Desligado por padrão; nenhuma rigidez é inventada. O estudo opcional exige posição, rigidez finita positiva, origem e hipótese declarada de ancoragem fixa. A declaração não comprova a estrutura real.
+Viga Euler–Bernoulli contínua, simplesmente apoiada nas extremidades, Iy BRUTO constante; molas verticais unilaterais (tração apenas) ancoradas em estrutura fixa. Sem folga, pré-tensão, deslocamento das ancoragens, excentricidade transversal de aplicação, torção, deformação de cisalhamento ou ligação. Ações verticais não negativas; ações reversas ficam explicitamente não avaliadas neste diagnóstico. Até 20 molas é limite da implementação, não normativo.
+O método de flexibilidade/Green resolve compatibilidade e conjunto ativo, e encontra extremos por polinômios por trecho, não malha gráfica. Não divide L por n, não libera a viga em cada tirante e não encurta FLT. Apoios extremos são bilaterais; reação de levantamento exige detalhe físico capaz de retê-la.
+Iy bruto NÃO é Ief qualificado. Flecha vertical livre e com tirantes têm índice nulo/ausente e não aprovam ELS. A redistribuição do estudo NÃO é inserida nas resistências/interação do modelo de vão livre; tampouco se afirma que esse modelo seja universalmente conservador. É diagnóstico separado até qualificar a resistência por sentido e o sistema físico.
+
+EXEMPLO DIDÁTICO (VALORES ARBITRÁRIOS, NÃO RECOMENDAÇÃO)
+Ue100, L=4000 mm, E=200000 MPa, Iy=101200 mm4; q vertical ELS=0,1 N/mm. Sem tirante: flecha 16,4690382082 mm. Mola central k=100 N/mm, ancoragem fixa assumida: flecha máxima 2,1868926826 mm em x=1647,6214 mm, força 217,05157145 N, My mínimo −17051,57145 N.mm. A menor flecha vem com inversão de momento; não é aprovação.
+Caso adverso independente: P vertical=100 N em x=100 mm, mola x=800 mm/k=1e6 N/mm apenas para controle numérico, gera reação direita −0,30751314 N. O JSON e a MC preservam o alerta de levantamento; esses valores não definem um tirante real.
+
+TRÊS COMPRIMENTOS INDEPENDENTES
+L do modelo; Lref para limite ELS; comprimentos efetivos de estabilidade/FLT. As referências editáveis L/120 horizontal e L/180 vertical estão identificadas como critérios históricos declarados, não regra normativa atual universal verificada. Alterar Lref só muda o critério, não rigidez, esforços ou FLT. A existência de linhas de tirantes não demonstra ancoragem rígida.
+
+BASE DOCUMENTAL E LIMITES
+Resistências permanecem na rota NBR14762 do app, sem crédito de telha. Não são importadas capacidades NBR8800/AISI/Eurocode.
+1) Manual CBCA2014: pp137–139 (deslocamentos e vento nas travessas), p164 (modelo específico de correntes), pp172–173 (corrente específica e limitação do exemplo). https://www.jodi.com.br/wp-content/uploads/2021/01/Manual-CBCA-Estrutura-composta-por-perfis-formados-a-frio.pdf
+2) Gerdau, Tabela de Vãos e Cargas, 5ªed.2018, p19/§2.10: referência histórica ao deslocamento paralelo ao fechamento entre linhas de tirantes; perpendicular sob vento característico. As tabelas resistentes são para I/H/NBR8800:2008 e NÃO se transferem para U/Ue. https://gsn.gerdau.com/sites/gsn_gerdau/files/downloadable_files/Tabela%20V%C3%A3os%20e%20Cargas.pdf
+3) SCI P3972012, §11.4/p92: mecânica de peso próprio no eixo fraco e caminho de anti-sag nas travessas. SCI P3462006, §3.6/pp36–37: tabelas de fabricante podem pressupor restrição do fechamento, ausente aqui. Apenas corroboração mecânica; não rota resistente estrangeira. https://www.steelconstruction.info/images/c/c5/SCI_P397.pdf ; https://www.steelconstruction.info/images/d/d8/SCI_P346.pdf
+Não foi obtida nova verificação integral de edição normativa atual nesta etapa. Folga, pré-tensão, EA/L, direção, deslocamento das ancoragens, ligações e resistência precisam de dados do sistema real antes de crédito de projeto. Conectar travessas móveis entre si pode deixar modo coletivo livre.
+Pierin: sentido fraco não se transforma em fato pela orientação. R04 e demais críticos experimentais não foram incorporados como resistência. A flexão fraca que faltar e a interação correspondente continuam parciais; não há aprovação global.
+
+TESTES E ENTREGAS
+Logs, revisões independentes, dados e hashes acompanham a cópia. Consulte QA_FINAL.json para resultado terminal atual; execuções históricas não devem ser somadas.
+Backend/mecânica focal inicial: 25 testes passaram; após o controle de paginação, 26 controles próprios. Gate final combinado de backend/MC/caso forte: 45 testes passaram. UI/SVG focal:17 testes +3 subtests passaram; U e Ue inspecionados. Suíte completa e invariância exata têm seus próprios registros finais.
+Dois DOCX demonstram modo direto com tirante condicional e uma combinação ELS quase permanente por área. O último NÃO é análise integral de ELU/ELS. Dados em JSON mantêm precisão integral.
+Incluído o checkpoint do caso forte/MC anterior: nele, M–V=0,620319 não superou a falha FLT=2,4031/2,4749. Não confundir verificação isolada atendida com aprovação.
+QA usou dependências já existentes, não instalações: Python3.12, Streamlit1.65.0, pytest9.1.1, numpy2.5.3, scipy1.17.0, pandas2.2.3, docx1.2.0. O projeto fixa Streamlit1.66.0: compatibilidade com esse pin e navegador/implantação não foi demonstrada por este QA. Nenhum remoto foi alterado.
+
+QA ANTES DA PUBLICAÇÃO
+487 testes e 889 subtests passaram na fonte final; comparação exata de32 entradas entre árvores preservou os objetos completos de Terça. Todos os13 lados/páginas dos dois DOCX Travessa foram inspecionados. O pacote de qualificação conserva logs, controles independentes e casos JSON/Word; não são provas de aprovação estrutural. As dependências declaradas de produção não foram trocadas: Streamlit1.66/numpy2.3.5. O QA local existente usou Streamlit1.65/numpy2.5.3; a verificação do app implantado é etapa separada.

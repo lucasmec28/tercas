@@ -1,0 +1,78 @@
+{
+  "case": "Ue100x50x17x1.20_L4000_central_point_strong_only",
+  "source_type": "composite verification case, NOT published complete MSE example",
+  "reference_geometry": {
+    "h_mm": 100,
+    "bf_mm": 50,
+    "lip_mm": 17,
+    "t_mm": 1.2,
+    "ri_mm": 1.2,
+    "A_mm2": 271,
+    "Ix_mm4": 441500,
+    "Iy_mm4": 101200,
+    "Wx_mm3": 8830,
+    "J_mm4": 130,
+    "Cw_mm6": 246610000
+  },
+  "material": {
+    "E_MPa": 200000,
+    "G_MPa": 77000,
+    "fy_MPa": 250
+  },
+  "idealization": {
+    "L_mm": 4000.0,
+    "point_x_mm": 2000,
+    "inclination_degrees": 0,
+    "N_N": 0,
+    "My_Nmm": 0,
+    "sheet_restraint_credit": false,
+    "Cb": 1,
+    "fork_ends": "ideal mathematical supports; no physical connection demonstrated",
+    "point_at_shear_center": "explicit adopted idealization; not real load detail demonstrated"
+  },
+  "strong_elastic_reference": {
+    "Mlx_Nmm": 4590000,
+    "Mdistx_Nmm": 4610000,
+    "source": "Pierin2013 Table2; sharp corners, source mean-line conversion unresolved",
+    "weak_criticals_used": false,
+    "R04_used": false
+  },
+  "historical_comparator": {
+    "Pk_N": 1000.0,
+    "point_factor_adopted": 1.5,
+    "Pd_N": 1500.0,
+    "q_N_mm": 0,
+    "Rleft_N": 750,
+    "Rright_N": 750,
+    "Mmid_Nmm": 1500000,
+    "Vmid_left_N": 750,
+    "Vmid_right_N": -750,
+    "M0Rd_MLE_Nmm": 1954500,
+    "VRd_printed_N": 13450,
+    "MV_printed_capacity_index": 0.5921038137290966,
+    "warning": "Pd source direct; Pk and gamma are constructed extension; PP omitted only for mathematical comparator, not real member"
+  },
+  "extension_with_catalog_selfweight": {
+    "mass_kg_m": 2.13,
+    "g_m_s2": 9.80665,
+    "PPk_N_mm": 0.020888164499999997,
+    "CPk_N_mm": 0,
+    "point_characteristic_N": 1000.0,
+    "coefficients": {
+      "PP": 1.25,
+      "CP": 1.4,
+      "P": 1.5
+    },
+    "q_ULS_N_mm": 0.026110205624999997,
+    "P_ULS_N": 1500.0,
+    "Rleft_ULS_N": 802.22041125,
+    "Rright_ULS_N": 802.22041125,
+    "Mmid_ULS_Nmm": 1552220.41125,
+    "Vmid_left_ULS_N": 750.0,
+    "Vmid_right_ULS_N": -750.0,
+    "q_SLS_N_mm": 0.020888164499999997,
+    "P_SLS_N": 1000.0,
+    "gross_bending_deflection_mid_mm": 15.888567931294828,
+    "warning": "PP catalog; g and factor vector explicit adopted inputs. Gross displacement is stiffness comparator, not effective-I serviceability approval."
+  }
+}

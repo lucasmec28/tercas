@@ -49,6 +49,8 @@ def finite(x):return isinstance(x,(int,float)) and not isinstance(x,bool) and ma
 
 def build_spec(data):
  if not isinstance(data,dict):raise ValueError('O arquivo deve conter um objeto de entradas JSON.')
+ from .member_application import validate as validate_member
+ validate_member(data)
  from .inclination_adapter import configuration,number
  configuration(data)
  from .weak_axis import validate
@@ -116,6 +118,8 @@ def build_spec(data):
  'SLS':{'q_Nmm':d['q_sls'],'P_N':d['P_sls'],'x_mm':d['x_sls'],'origin':d.get('actions_origin','')},
  'segments':copy.deepcopy(segs),'ELS_limit_mm':{'value':d.get('ELS_limit_mm'),'origin':d.get('ELS_origin','')},
  'introduction':{'left':{'route':'web_connection' if d.get('left_web') is True else None,'origin':d.get('support_origin','')},'right':{'route':'web_connection' if d.get('right_web') is True else None,'origin':d.get('support_origin','')},'point':{'c_mm':d.get('patch_mm'),'origin':d.get('patch_origin','')}}}
+ from .member_application import is_girt,normal_els_limit
+ if is_girt(data):spec['ELS_limit_mm']=normal_els_limit(data)
  return spec
 
 def calculate(data):
@@ -159,6 +163,9 @@ def calculate(data):
  result['coverage_warnings']=list(dict.fromkeys(result['coverage_warnings']))
  from .weak_axis import integrate
  integrate(result)
+ from .member_application import is_girt,add_vertical_studies
+ if is_girt(data):
+  result['member_application']='wall_girt';add_vertical_studies(result)
  return result
 
 STATUS={'not_evaluated':'Não avaliado','invalid_inputs':'Entrada inválida','FLT_not_evaluated':'Não avaliado','route_domain_not_declared':'Domínio não informado','computed':'Calculado','computed_bending_component':'Componente de flexão calculada','computed_from_supplied_inputs':'Calculado com dados informados','computed_fixed_load_position':'Calculado na posição informada','computed_from_supplied_effective_lengths':'Calculado com comprimentos informados','not_applicable':'Não aplicável','exempt_Table14':'Dispensado pela Tabela 14','stiffener_exception_9_5_1':'Exceção de enrijecedor §9.5.1','outside_implemented_family':'Fora da versão','invalid_or_outside_implemented_domain':'Entrada inválida ou fora do domínio'}
@@ -203,6 +210,12 @@ def rows(result):
  from .inclination_adapter import pending_rows
  for state,ev in result.get('inclination_evidence',{}).items():
   out+=pending_rows(ev,state)
+ from .member_application import is_girt,vertical_row
+ if is_girt(d):
+  for row in out:
+   if row['Verificação']=='Flecha — flexão':row['Verificação']='Flecha horizontal — eixo forte'
+   if row['Verificação']=='Flexão biaxial':row['Observação']+=' Travessa: Mx devido à componente horizontal, My devido à vertical; hipóteses de tirantes não alteram esta resistência de vão livre.'
+  out.append(vertical_row(result))
  return out
 
 

@@ -1,4 +1,4 @@
-# Versões efetivamente usadas na revisão desta candidata.
+# Pins declarados da base; QA local distinto documentado em docs/RELEASE_TRAVESSA_20261103.txt.
 streamlit==1.66.0
 numpy==2.3.5
 scipy==1.17.0

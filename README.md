@@ -31,3 +31,11 @@ Projeto de ligações, torção primária, interação axial, balanços/continui
 
 Status: emissão restrita 0.4.4. Suíte ampliada de testes automatizados incluída; houve revisão independente e comparações aritméticas. Implantação e navegador online ainda precisam de conferência. Testes não equivalem a validação experimental ou aprovação de projeto.
 
+
+## Terça / Travessa — 03/11/2026, escopo restrito
+
+A seleção **Travessa lateral** orienta U/Ue com boca para baixo: peso/permanentes no eixo fraco vertical e vento no forte horizontal. Mantém a Terça legada. Inclinação e SC de cobertura são preservadas, mas inativas na travessa; o subconjunto por área usa 19 combinações sem SC/P de cobertura antes dos filtros. Não é dispensa universal de ações nem gerador normativo genérico.
+
+O estudo opcional de tirantes usa posições e rigidezes finitas declaradas, molas verticais em tração e ancoragem fixa assumida. Não fornece rigidez por padrão, não divide o vão, não altera FLT ou resistência. A flecha vertical com **Iy bruto** é apenas diagnóstico, sem índice de aprovação ELS; momento negativo e levantamento podem ocorrer e são reportados. L do modelo, Lref do critério e comprimentos de FLT são separados. As escolhas editáveis L/120 e L/180 são referências históricas declaradas, não atualização normativa automática.
+
+Veja `docs/RELEASE_TRAVESSA_20261103.txt` para hipóteses, fontes, exemplos, QA e limites. O identificador 0.4.4 do núcleo foi preservado para permitir comparação exata das saídas legadas; esta candidata é identificada pelo manifesto de 03/11/2026. Nenhuma resistência fraca nova foi liberada e nenhum dado R04 foi transposto ao projeto.

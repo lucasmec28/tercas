@@ -18,8 +18,11 @@ def area_bundle(data):
  bundle=combine_area_actions(L_mm=data['L_mm'],selected_types=types,mass_kg_m=data['properties']['mass_kg_m'],**area)
  # Contact is a local-resistance input, not a prerequisite or restriction for
  # the normative mathematical point-load global envelope.
- bundle['combinations']+=point_combinations(L_mm=data['L_mm'],case_q_N_mm=bundle['case_q_N_mm'],selected_types=types)
- bundle['notes']+=['P = 1 kN de manutenção, isolada de SC e vento: quatro ELU e uma ELS rara conforme seleção; NBR 6120 §6.4 / NBR 14762.', 'P avaliada em duas posições prescritas: centro e limite junto ao apoio; sem varredura de posições intermediárias.']
+ from .member_application import is_girt
+ if is_girt(data):bundle['combinations']=[c for c in bundle['combinations'] if 'SC' not in c['coefficients']]
+ else:
+  bundle['combinations']+=point_combinations(L_mm=data['L_mm'],case_q_N_mm=bundle['case_q_N_mm'],selected_types=types)
+  bundle['notes']+=['P = 1 kN de manutenção, isolada de SC e vento: quatro ELU e uma ELS rara conforme seleção; NBR 6120 §6.4 / NBR 14762.', 'P avaliada em duas posições prescritas: centro e limite junto ao apoio; sem varredura de posições intermediárias.']
  from .inclination_adapter import adapt_bundle
  bundle=adapt_bundle(data,bundle)
  expanded=[]
@@ -48,22 +51,35 @@ def case_inputs(data,combo):
  if combo['limit_state']=='ELS':
   denom=d['ELS_down_denominator'] if q>=0 else d['ELS_up_denominator']
   d.update(ELS_limit_mm=L/denom,ELS_origin=f"L/{denom:g} informado para {'descendente' if q>=0 else 'ascendente'}; {combo['type']}")
+  from .member_application import is_girt,normal_els_limit
+  if is_girt(data):
+   lim=normal_els_limit(data);d.update(ELS_limit_mm=lim['value'],ELS_origin=lim['origin'])
  return d
 
 def calculate_batch(data):
  bundle=area_bundle(data);cases=[]
  # Direct-mode actions are inactive here, including point-load coordinates.
- build_spec(case_inputs(data,bundle['combinations'][0]))
+ common_spec=build_spec(case_inputs(data,bundle['combinations'][0]))
+ # Freeze only common, load-independent inputs for the area MC. Do not attach
+ # the first combination's fictitious second limit state as a batch snapshot.
+ common_snapshot={key:copy.deepcopy(common_spec[key]) for key in
+                  ('selected_section','Ml','Mdist','strong_critical_qualification')}
  for combo in bundle['combinations']:
   d=case_inputs(data,combo);result=calculate(d)
-  rs=[r for r in rows(result) if (r['Verificação'] in ('Flecha — flexão','Flecha paralela à cobertura'))==(combo['limit_state']=='ELS')]
+  rs=[r for r in rows(result) if (r['Verificação'] in ('Flecha — flexão','Flecha paralela à cobertura','Flecha horizontal — eixo forte','Flecha vertical — eixo fraco'))==(combo['limit_state']=='ELS')]
   mobile={}
   if combo.get('P_N',0):mobile=mobile_rows(rs,result,combo)
   evidence=({'ELS':result['ELS']} if combo['limit_state']=='ELS' else {k:result[k] for k in ['NBR_branches','FLT_segments','section_checks']})
+  if combo['limit_state']=='ELS':
+   for key in ('elastic_vertical','elastic_tie_study'):
+    if key in result:evidence[key]=copy.deepcopy(result[key])
   if mobile:evidence['prescribed_point']=mobile
   from .inclination_adapter import pending_rows
   from .inclination_adapter import evidence as inclination_evidence
   ev=copy.deepcopy(result['inclination_evidence'][combo['limit_state']])
+  ev['convention']=ev['convention'].replace(
+   'Modo direto: cargas já locais e combinadas; não há rotação nem PP automático.',
+   'Modo por área: cargas desta combinação já convertidas aos eixos locais; PP incluído uma única vez pela massa linear, antes da combinação. O adaptador interno não aplica novamente rotação ou PP.')
   if mobile:
    ev['convention']+=' '+mobile['method']
    if combo.get('point_position')=='support_limit':
@@ -84,7 +100,7 @@ def calculate_batch(data):
  from .weak_pierin import reference_for_inputs
  from .strong_pierin import qualify
  from .weak_u_assumption import evidence as u_evidence
- return {'strong_critical_reference':qualify(data)[1],'weak_sense_assumption':u_evidence(data),'weak_critical_reference':reference_for_inputs(data),'schema':'tercas_batch_results_v1','version':VERSION,'project':data['project'],'synthetic':data['synthetic'],'input_fingerprint':fingerprint(data),'input_data':copy.deepcopy(data),'load_bundle':bundle,'cases':cases,'whole_member_approved':False,'summary':governing(cases)}
+ return {'common_input_snapshot':common_snapshot,'strong_critical_reference':qualify(data)[1],'weak_sense_assumption':u_evidence(data),'weak_critical_reference':reference_for_inputs(data),'schema':'tercas_batch_results_v1','version':VERSION,'project':data['project'],'synthetic':data['synthetic'],'input_fingerprint':fingerprint(data),'input_data':copy.deepcopy(data),'load_bundle':bundle,'cases':cases,'whole_member_approved':False,'summary':governing(cases)}
 
 def governing(cases):
  groups={}

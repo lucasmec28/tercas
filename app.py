@@ -5,6 +5,7 @@ import pandas as pd
 import streamlit as st
 from tercas.application import defaults,example,calculate,rows,fingerprint,VERSION
 from tercas.drawing import svg
+from tercas.member_application import is_girt
 from tercas.drawing_cases import drawing_cases
 from tercas.catalog_scan import scan_catalog,inputs_for_section
 from tercas.report import word,batch_word
@@ -12,6 +13,12 @@ from tercas.catalogs import catalog_labels,STEEL_NAMES,material,critical_default
 from tercas.batch import calculate_batch,area_bundle,case_inputs
 from tercas.load_combinations import COMBINATION_TYPES
 from tercas.ux_inputs import CB_LABELS,cb_code,flange_segments,whole_span
+
+def show_elastic_wall(evidence):
+ if not isinstance(evidence,dict):return
+ for key,label in [('elastic_vertical','Flecha vertical fraca — estudo elástico bruto'),('elastic_tie_study','Tirantes verticais — estudo elástico bruto')]:
+  if key in evidence:
+   st.markdown('**'+label+'**');st.warning('Diagnóstico elástico bruto; não resistência nem aprovação. Sem crédito automático em FLT ou torção.');st.caption('Flecha livre e resposta condicional com molas são distintas. Conferir reações e eventual momento negativo; não substituir o vão por L/n.');st.json(evidence[key])
 
 def show_inclination(evidence):
  """Display concurrent effects; never interpret missing resistance as approval."""
@@ -31,7 +38,7 @@ def show_inclination(evidence):
  records=[]
  for state in evidence.get('states',[]):
   row={'Estado limite':state.get('position_limit','Posição fixa'),'x [mm]':state.get('x_mm'),'Lado da seção':{'left':'Esquerda','right':'Direita'}.get(state.get('side'),'—')}
-  for axis,label in [('normal','Normal / eixo forte'),('parallel','Paralelo / eixo fraco')]:
+  for axis,label in [('normal','Horizontal / eixo forte' if globals().get('girt',False) else 'Normal / eixo forte'),('parallel','Vertical / eixo fraco' if globals().get('girt',False) else 'Paralelo / eixo fraco')]:
    v=state.get(axis,{})
    for k,title,scale in [('M_Nmm','M [kN·m]',1e6),('V_N','V [kN]',1000),('Rleft_N','Reação esquerda [kN]',1000),('Rright_N','Reação direita [kN]',1000)]:
     if k in v:row[label+' — '+title]=v[k]/scale
@@ -41,7 +48,7 @@ def show_inclination(evidence):
 
 st.set_page_config(page_title='LRO | Terças',page_icon='🏗️',layout='wide')
 st.markdown('<style>.block-container{max-width:1200px} h1,h2,h3{color:#25334a} div.stButton>button[kind="primary"]{background:#d96516;border:0}</style>',unsafe_allow_html=True)
-st.title('LRO | Terças')
+st.title('LRO | Terças e travessas laterais')
 with st.expander('Precisão dos números exibidos',expanded=False):st.caption(DISPLAY_NOTE)
 st.caption(f'NBR 14762:2010 · {VERSION} · primeira emissão restrita')
 st.info('Um vão, perfis U/Ue. Solicitações nos dois eixos; resistências desta emissão restritas às rotas disponíveis. A telha não é considerada como travamento. Resultados por verificação, sem aprovação global automática.')
@@ -77,7 +84,7 @@ b=copy.deepcopy(st.session_state.base);r=st.session_state.revision
 last=st.session_state.get('last_input',b)
 for key in ['load_mode','area_inputs','selected_types','ELS_down_denominator','ELS_up_denominator','q_uls','P_uls','x_uls','q_sls','P_sls','x_sls','actions_origin','ELS_limit_mm','ELS_origin']:
  b[key]=copy.deepcopy(last[key])
-for key in ['weak_catalog','weak_axis','inclination','q_parallel_uls','q_parallel_sls','P_parallel_uls','P_parallel_sls']:
+for key in ['member_application','wall_els','wall_tie_study','weak_catalog','weak_axis','inclination','q_parallel_uls','q_parallel_sls','P_parallel_uls','P_parallel_sls']:
  if key in last:b[key]=copy.deepcopy(last[key])
 d=copy.deepcopy(b)
 if b.get('synthetic'):st.warning('EXEMPLO DIDÁTICO: propriedades complementares, críticos e contatos sintéticos. Substitua pelos dados do seu caso antes de usar resultados.')
@@ -92,8 +99,22 @@ def num(label,key,value,unit='',step=None):
 def txt(label,key,value):return st.text_input(label,value=str(value),key=f'{key}_{r}')
 
 d['project']=txt('Identificação do estudo','project',b['project'])
+try:is_girt(b)
+except (ValueError,TypeError) as exc:
+ st.error('Aplicação inválida: '+str(exc));st.stop()
+application_labels={'purlin':'Terça de cobertura','wall_girt':'Travessa lateral — boca para baixo'}
+application=st.selectbox('Aplicação do elemento',list(application_labels),format_func=application_labels.get,index=list(application_labels).index(b.get('member_application','purlin')),key=f'member_application_{r}')
+d['member_application']=application;girt=is_girt(d)
+previous_application=st.session_state.get(f'previous_application_{r}',b.get('member_application','purlin'))
+if application!=previous_application:
+ st.warning('Aplicação alterada: confira a reinterpretação física das cargas locais, dos vínculos e dos critérios ELS. Valores armazenados foram preservados; nenhuma ação direta foi girada novamente.')
+st.session_state[f'previous_application_{r}']=application
+if girt:
+ st.info('Travessa lateral U/Ue com boca para baixo. Gravidade/PP/permanente no eixo fraco vertical; vento no eixo forte horizontal. Sem crédito da telha ou de tirantes por padrão. Ligações e torção primária fora do escopo.')
+ st.caption('Vista A→B: +paralelo para baixo; +normal horizontal para a esquerda. Mesa superior do referencial = mesa física direita; inferior = esquerda. Estes nomes de referência continuam identificando os dados de FLT.')
+
 c1,c2=st.columns(2)
-with c1:d['L_mm']=num('Vão entre apoios','L',b['L_mm'],'mm')
+with c1:d['L_mm']=num('Vão do modelo entre apoios' if girt else 'Vão entre apoios','L',b['L_mm'],'mm')
 with c2:d['steel_name']=st.selectbox('Tipo de aço',STEEL_NAMES,index=STEEL_NAMES.index(b.get('steel_name','ASTM A36')),key=f'steel_{r}')
 if d['steel_name']=='Personalizado':
  custom=st.session_state.get('custom_steel_draft',dict(fy=b['properties']['fy_MPa'],fu=b['properties']['fu_MPa'],origin=b.get('custom_steel_origin',b['property_origin'])))
@@ -119,7 +140,7 @@ if mat:
  st.caption(f"fy = {fmt(mat['properties']['fy_MPa'])} MPa · fu = {fmt(mat['properties']['fu_MPa'])} MPa. Conferir especificação do produto.")
 
 st.subheader('Comprimentos efetivos e travamentos')
-st.caption('Eixos da seção: X horizontal (maior inércia), Y vertical (menor inércia). Ly das mesas entra na FLT da flexão em X; Lx entra na instabilidade da flexão em Y. Lz é torsional. Não são novos apoios verticais.')
+st.caption('Travessa: flexão forte horizontal e fraca vertical. Ly das mesas físicas direita/esquerda entra na FLT forte; Lx na instabilidade fraca; Lz é torsional. L do modelo, L de referência ELS e comprimentos efetivos FLT são independentes; nenhum cria apoio automaticamente.' if girt else 'Eixos da seção: X horizontal (maior inércia), Y vertical (menor inércia). Ly das mesas entra na FLT da flexão em X; Lx entra na instabilidade da flexão em Y. Lz é torsional. Não são novos apoios verticais.')
 wc=copy.deepcopy(b.get('weak_catalog',{}))
 old_weak_span=st.session_state.get(f'weak_last_span_{r}',b['L_mm'])
 current_lx=st.session_state.get(f'weak_lx_{r}',wc.get('Lx_mm',d['L_mm']))
@@ -144,11 +165,11 @@ if not custom:
    st.session_state[f'{widget}_{r}']=length_value(field)
   st.info('Vão alterado: comprimentos iguais ao vão anterior acompanham o novo vão; valores personalizados são preservados. Confira os travamentos.')
  c1,c2,c3=st.columns(3)
- with c1:upper=num('Ly — mesa superior (menor inércia)','upper',length_value('Ly_top_effective_mm'),'mm')
- with c2:lower=num('Ly — mesa inferior (menor inércia)','lower',length_value('Ly_bottom_effective_mm'),'mm')
+ with c1:upper=num('Ly — mesa física direita (superior no referencial)' if girt else 'Ly — mesa superior (menor inércia)','upper',length_value('Ly_top_effective_mm'),'mm')
+ with c2:lower=num('Ly — mesa física esquerda (inferior no referencial)' if girt else 'Ly — mesa inferior (menor inércia)','lower',length_value('Ly_bottom_effective_mm'),'mm')
  with c3:torsion=num('Comprimento efetivo torsional Lz','torsion',length_value('Lz_effective_mm'),'mm')
  cb_label=st.selectbox('Coeficiente Cb',list(CB_LABELS.values()),index=list(CB_LABELS).index(first.get('Cb_mode','one')),key=f'cb_{r}')
- st.caption('Momento positivo comprime a mesa superior; momento negativo comprime a inferior. O app escolhe o comprimento da mesa comprimida em cada caso e não considera a telha como travamento.')
+ st.caption('Travessa: Mx positivo comprime a mesa física direita (superior no referencial), negativo a esquerda (inferior). Nenhum travamento pela telha é presumido.' if girt else 'Momento positivo comprime a mesa superior; momento negativo comprime a inferior. O app escolhe o comprimento da mesa comprimida em cada caso e não considera a telha como travamento.')
  with st.expander('Vínculo torsional e origem dos comprimentos',expanded=False):
   origin=txt('Origem / hipótese dos travamentos','restraint_origin',first.get('restraint_provenance') or 'Comprimentos efetivos informados; sem crédito de travamento da telha')
   st.caption('O valor inicial é o vão inteiro. Um travamento lateral de mesa não reduz automaticamente o comprimento torsional. Confira o vínculo adotado.')
@@ -161,7 +182,7 @@ if not custom:
 else:
  for seg in source_segments:seg['Cb_mode']=CB_LABELS[seg['Cb_mode']]
  df=pd.DataFrame(source_segments,columns=['start_mm','end_mm','Ly_top_effective_mm','Ly_bottom_effective_mm','Lz_effective_mm','Cb_mode','restraint_provenance'])
- edited=st.data_editor(df,num_rows='dynamic',hide_index=True,key=f'segments_{r}',column_config={'start_mm':st.column_config.NumberColumn('Início [mm]',format='%.2f'),'end_mm':st.column_config.NumberColumn('Fim [mm]',format='%.2f'),'Ly_top_effective_mm':st.column_config.NumberColumn('Mesa superior — comprimento efetivo [mm]',format='%.2f'),'Ly_bottom_effective_mm':st.column_config.NumberColumn('Mesa inferior — comprimento efetivo [mm]',format='%.2f'),'Lz_effective_mm':st.column_config.NumberColumn('Lz torsional [mm]',format='%.2f'),'restraint_provenance':'Origem / hipótese do vínculo','Cb_mode':st.column_config.SelectboxColumn('Cb',options=list(CB_LABELS.values()))},width='stretch')
+ edited=st.data_editor(df,num_rows='dynamic',hide_index=True,key=f'segments_{r}',column_config={'start_mm':st.column_config.NumberColumn('Início [mm]',format='%.2f'),'end_mm':st.column_config.NumberColumn('Fim [mm]',format='%.2f'),'Ly_top_effective_mm':st.column_config.NumberColumn('Mesa física direita (superior ref.) [mm]' if girt else 'Mesa superior — comprimento efetivo [mm]',format='%.2f'),'Ly_bottom_effective_mm':st.column_config.NumberColumn('Mesa física esquerda (inferior ref.) [mm]' if girt else 'Mesa inferior — comprimento efetivo [mm]',format='%.2f'),'Lz_effective_mm':st.column_config.NumberColumn('Lz torsional [mm]',format='%.2f'),'restraint_provenance':'Origem / hipótese do vínculo','Cb_mode':st.column_config.SelectboxColumn('Cb',options=list(CB_LABELS.values()))},width='stretch')
  d['segments']=edited.astype(object).where(pd.notna(edited),None).to_dict('records')
  for seg in d['segments']:seg['Cb_mode']=cb_code(seg.get('Cb_mode') or 'one')
  st.caption('Início e fim são os limites físicos do diagrama usado no Cb; Ly e Lz são comprimentos efetivos e podem diferir desse intervalo por condição de vínculo. Trechos representam o diagrama usado no Cb; não criam apoios verticais nem comprovam travamentos. Uma inversão do momento não é um travamento.')
@@ -186,67 +207,71 @@ with st.expander('Perfil, aço e origem dos dados',expanded=False):
  st.caption('Fonte: '+catalog_entry(index)['source_url']+'; linha '+str(catalog_entry(index)['source_workbook_row'])+' da planilha original.')
  st.caption('Conferir a convenção de Wx e das propriedades usadas em conjunto. Editar valores não comprova a correspondência física.')
 
-st.subheader('Inclinação da cobertura')
-st.caption('Convenção: seção vista do apoio A para B, boca à direita em 0°. Inclinação positiva: caimento para a boca; negativa: caimento oposto. A seção gira junto com a cobertura; não há espelhamento independente.')
-ic=copy.deepcopy(b.get('inclination',{}))
-c1,c2=st.columns(2)
-with c1:
- unit_label=st.selectbox('Unidade de inclinação',['Graus','Porcentagem'],index=1 if ic.get('unit')=='percent' else 0,key=f'angle_unit_{r}')
-with c2:
- new_unit='percent' if unit_label=='Porcentagem' else 'degrees'
- old_unit=st.session_state.get(f'inclination_previous_unit_{r}',ic.get('unit','degrees'))
- if new_unit!=old_unit:
-  old=st.session_state.get(f'inclination_value_{r}',ic.get('value',0))
-  if old is not None:
-   converted=100*math.tan(math.radians(old)) if new_unit=='percent' else math.degrees(math.atan(old/100))
-   st.session_state[f'inclination_value_{r}']=converted
- st.session_state[f'inclination_previous_unit_{r}']=new_unit
- ic['value']=num('Inclinação','inclination_value',ic.get('value',0),'%' if unit_label=='Porcentagem' else '°')
-ic['unit']='percent' if unit_label=='Porcentagem' else 'degrees'
-if ic.get('value') is not None:
- theta=math.atan(ic['value']/100) if ic['unit']=='percent' else math.radians(ic['value'])
- if abs(theta)<math.pi/2:st.caption(f'Ângulo equivalente: {fmt(math.degrees(theta))}° = {fmt(100*math.tan(theta))}%. Exibição arredondada; cálculo com precisão completa. Trocar a unidade mantém a inclinação física.')
-st.caption('Alma perpendicular ao plano da cobertura. No modo por área, vento normal à cobertura; gravidade e peso próprio decompostos em normal e paralelo. Sem travamento pela telha.')
-with st.expander('Bases de área e distância entre terças',expanded=False):
- basis_labels={'roof':'No plano da cobertura','horizontal':'Na projeção horizontal'}
- for key,label,default in [('spacing_basis','Distância entre terças medida','roof'),('permanent_basis','Área do carregamento permanente','roof'),('live_basis','Área da sobrecarga','horizontal'),('wind_basis','Área de referência do vento','roof')]:
-  ic[key]=st.selectbox(label,list(basis_labels),format_func=lambda v:basis_labels[v],index=list(basis_labels).index(ic.get(key,default)),key=f'{key}_{r}')
- st.caption('Confira a base de cada valor recebido. O app converte a largura tributária entre projeção horizontal e plano da cobertura, sem duplicar o cosseno. Estas bases afetam somente o modo por área.')
-d['inclination']=ic
+if not girt:
+ st.subheader('Inclinação da cobertura')
+ st.caption('Convenção: seção vista do apoio A para B, boca à direita em 0°. Inclinação positiva: caimento para a boca; negativa: caimento oposto. A seção gira junto com a cobertura; não há espelhamento independente.')
+ ic=copy.deepcopy(b.get('inclination',{}))
+ c1,c2=st.columns(2)
+ with c1:
+  unit_label=st.selectbox('Unidade de inclinação',['Graus','Porcentagem'],index=1 if ic.get('unit')=='percent' else 0,key=f'angle_unit_{r}')
+ with c2:
+  new_unit='percent' if unit_label=='Porcentagem' else 'degrees'
+  old_unit=st.session_state.get(f'inclination_previous_unit_{r}',ic.get('unit','degrees'))
+  if new_unit!=old_unit:
+   old=st.session_state.get(f'inclination_value_{r}',ic.get('value',0))
+   if old is not None:
+    converted=100*math.tan(math.radians(old)) if new_unit=='percent' else math.degrees(math.atan(old/100))
+    st.session_state[f'inclination_value_{r}']=converted
+  st.session_state[f'inclination_previous_unit_{r}']=new_unit
+  ic['value']=num('Inclinação','inclination_value',ic.get('value',0),'%' if unit_label=='Porcentagem' else '°')
+ ic['unit']='percent' if unit_label=='Porcentagem' else 'degrees'
+ if ic.get('value') is not None:
+  theta=math.atan(ic['value']/100) if ic['unit']=='percent' else math.radians(ic['value'])
+  if abs(theta)<math.pi/2:st.caption(f'Ângulo equivalente: {fmt(math.degrees(theta))}° = {fmt(100*math.tan(theta))}%. Exibição arredondada; cálculo com precisão completa. Trocar a unidade mantém a inclinação física.')
+ st.caption('Alma perpendicular ao plano da cobertura. No modo por área, vento normal à cobertura; gravidade e peso próprio decompostos em normal e paralelo. Sem travamento pela telha.')
+ with st.expander('Bases de área e distância entre terças',expanded=False):
+  basis_labels={'roof':'No plano da cobertura','horizontal':'Na projeção horizontal'}
+  for key,label,default in [('spacing_basis','Distância entre terças medida','roof'),('permanent_basis','Área do carregamento permanente','roof'),('live_basis','Área da sobrecarga','horizontal'),('wind_basis','Área de referência do vento','roof')]:
+   ic[key]=st.selectbox(label,list(basis_labels),format_func=lambda v:basis_labels[v],index=list(basis_labels).index(ic.get(key,default)),key=f'{key}_{r}')
+  st.caption('Confira a base de cada valor recebido. O app converte a largura tributária entre projeção horizontal e plano da cobertura, sem duplicar o cosseno. Estas bases afetam somente o modo por área.')
+ d['inclination']=ic
+else:
+ st.warning('Entradas de cobertura preservadas, mas INATIVAS na travessa: inclinação '+display(b.get('inclination',{}))+'; SC de cobertura = '+display(b['area_inputs'].get('live_kgf_m2'))+' kgf/m². Não há SC usual de cobertura ou P de manutenção automáticos. Cargas especiais exigem combinação declarada no modo direto.')
 
 st.subheader('Carregamentos')
 mode=st.radio('Forma de entrada',['Ações já combinadas (ELU e ELS)','Cargas por área e combinações automáticas'],index=1 if b.get('load_mode')=='area' else 0,key=f'load_mode_{r}')
 d['load_mode']='area' if mode.startswith('Cargas') else 'direct'
 if d['load_mode']=='direct':
  st.subheader('Ações de uma combinação')
- st.caption('Ações já nos eixos locais: q e P principais são normais à cobertura; componentes paralelas são informadas abaixo. A inclinação não gira novamente estes valores. q positivo e P positivo atuam no mesmo sentido do esquema. q em kN/m equivale numericamente a N/mm. P é informado em kN. Inclua peso próprio nas ações; o app não o soma silenciosamente.')
+ st.caption('Travessa, modo direto: q/P normais são horizontais (eixo forte, positivo para a esquerda na vista A→B); paralelos são verticais (eixo fraco, positivo para baixo). Ações já locais e combinadas: não há rotação adicional nem PP automático. Inclua PP e cargas especiais na combinação declarada. kN/m equivale a N/mm; P em kN.' if girt else 'Ações já nos eixos locais: q e P principais são normais à cobertura; componentes paralelas são informadas abaixo. A inclinação não gira novamente estes valores. q positivo e P positivo atuam no mesmo sentido do esquema. q em kN/m equivale numericamente a N/mm. P é informado em kN. Inclua peso próprio nas ações; o app não o soma silenciosamente.')
  a,bcol=st.columns(2)
  with a:
   st.markdown('**ELU — valores já ponderados**')
-  d['q_uls']=num('q ELU','q_uls',b['q_uls'],'kN/m');p=num('P ELU','P_uls',b['P_uls']/1000,'kN');d['P_uls']=None if p is None else p*1000;d['x_uls']=num('Posição de P ELU','x_uls',b['x_uls'],'mm')
+  d['q_uls']=num('q horizontal ELU' if girt else 'q ELU','q_uls',b['q_uls'],'kN/m');p=num('P horizontal ELU' if girt else 'P ELU','P_uls',b['P_uls']/1000,'kN');d['P_uls']=None if p is None else p*1000;d['x_uls']=num('Posição de P ELU','x_uls',b['x_uls'],'mm')
  with bcol:
   st.markdown('**ELS — combinação de serviço**')
-  d['q_sls']=num('q ELS','q_sls',b['q_sls'],'kN/m');p=num('P ELS','P_sls',b['P_sls']/1000,'kN');d['P_sls']=None if p is None else p*1000;d['x_sls']=num('Posição de P ELS','x_sls',b['x_sls'],'mm')
- with st.expander('Componentes paralelas à cobertura — ações já combinadas',expanded=False):
+  d['q_sls']=num('q horizontal ELS' if girt else 'q ELS','q_sls',b['q_sls'],'kN/m');p=num('P horizontal ELS' if girt else 'P ELS','P_sls',b['P_sls']/1000,'kN');d['P_sls']=None if p is None else p*1000;d['x_sls']=num('Posição de P ELS','x_sls',b['x_sls'],'mm')
+ with st.expander('Componentes verticais — eixo fraco, já combinadas' if girt else 'Componentes paralelas à cobertura — ações já combinadas',expanded=False):
   st.caption('Zero quando não houver componente paralela. P paralela atua na mesma posição da P normal de cada estado-limite. Resistência biaxial não é aprovada sem resistências aplicáveis nos dois eixos.')
   c1,c2=st.columns(2)
   for state,col in [('uls',c1),('sls',c2)]:
    with col:
     label='ELU' if state=='uls' else 'ELS'
-    key='q_parallel_'+state;d[key]=num('q paralelo '+label,key,b.get(key,0),'kN/m')
-    key='P_parallel_'+state;pv=b.get(key,0);pv=num('P paralelo '+label,key,None if pv is None else pv/1000,'kN');d[key]=None if pv is None else pv*1000
+    key='q_parallel_'+state;d[key]=num(('q vertical ' if girt else 'q paralelo ')+label,key,b.get(key,0),'kN/m')
+    key='P_parallel_'+state;pv=b.get(key,0);pv=num(('P vertical ' if girt else 'P paralelo ')+label,key,None if pv is None else pv/1000,'kN');d[key]=None if pv is None else pv*1000
  d['actions_origin']=txt('Identificação e origem das combinações','actions_origin',b['actions_origin'])
  
 else:
- st.caption('Informe módulos positivos em kgf/m². Vento para cima recebe sinal negativo. PP vem da massa linear, sem campo adicional; CP não deve repetir PP.')
+ st.caption('Travessa: módulos em kgf/m² na fachada e largura tributária pela distância entre travessas. Vento pressão positivo / sucção negativo no eixo forte horizontal; CP e PP verticais. PP vem da massa linear uma única vez; CP não deve repetir PP. Bases roof/horizontal da cobertura ficam inativas.' if girt else 'Informe módulos positivos em kgf/m². Vento para cima recebe sinal negativo. PP vem da massa linear, sem campo adicional; CP não deve repetir PP.')
  area=copy.deepcopy(b['area_inputs']);cols=st.columns(2)
  labels=[('spacing_m','Distância entre terças','m'),('permanent_kgf_m2','Carregamento permanente','kgf/m²'),('live_kgf_m2','Sobrecarga','kgf/m²'),('wind_up_kgf_m2','Vento para cima','kgf/m²'),('wind_down_kgf_m2','Vento para baixo','kgf/m²')]
+ if girt:labels=[('spacing_m','Distância entre travessas','m'),('permanent_kgf_m2','Permanente vertical — sem duplicar PP','kgf/m²'),('wind_up_kgf_m2','Vento sucção — horizontal negativo','kgf/m²'),('wind_down_kgf_m2','Vento pressão — horizontal positivo','kgf/m²')]
  for i,(key,label,unit) in enumerate(labels):
   with cols[i%2]:area[key]=num(label,key,area[key],unit)
  d['area_inputs']=area
  d['selected_types']=st.multiselect('Tipos de combinações consideradas',COMBINATION_TYPES,default=b['selected_types'],key=f'combo_types_{r}')
- st.caption('P = 1 kN de manutenção é incluída automaticamente nas famílias ELU normal e ELS rara selecionadas, apenas com permanentes; não se soma a SC ou vento. São calculadas duas posições: centro e limite junto ao apoio. Não há varredura intermediária; os resultados de interação e FLT cobrem essas posições, não um máximo contínuo.')
- st.caption(f"Massa linear selecionada: {fmt(d['properties']['mass_kg_m'])} kg/m. Matriz fixa fornecida por Lucas: 32 ELU normal, 8 ELS rara, 6 frequente e 2 quase permanente.")
+ if not girt:st.caption('P = 1 kN de manutenção é incluída automaticamente nas famílias ELU normal e ELS rara selecionadas, apenas com permanentes; não se soma a SC ou vento. São calculadas duas posições: centro e limite junto ao apoio. Não há varredura intermediária; os resultados de interação e FLT cobrem essas posições, não um máximo contínuo.')
+ if not girt:st.caption(f"Massa linear selecionada: {fmt(d['properties']['mass_kg_m'])} kg/m. Matriz fixa fornecida por Lucas: 32 ELU normal, 8 ELS rara, 6 frequente e 2 quase permanente.")
  with st.expander('Casos e combinações que serão calculados'):
   try:
    preview=area_bundle(d)
@@ -356,14 +381,38 @@ with st.expander('Eixo fraco — dados existentes e críticos por sentido',expan
   d['weak_axis'][sign]=out
  st.caption('Ue: mantém-se a hipótese previamente autorizada de atribuição do Ml,y oficial a My positivo (alma comprimida), apoiada no comparador pyCUFSM e ainda a conferir; o valor da tabela não é uma hipótese, mas seu sentido aplicado é. U: os novos valores oficiais não recebem sentido automático; a opção exploratória exige escolha explícita e mantém a pendência de confirmação. Nenhum valor é copiado para ambos os sentidos; Mdist,y não usa a tabela forte. A ausência afeta só a rota correspondente.')
 
-with st.expander('Limite de flecha',expanded=False):
- if d['load_mode']=='direct':
-  d['ELS_limit_mm']=num('Limite de flecha adotado','els_limit',b['ELS_limit_mm'],'mm')
-  d['ELS_origin']=txt('Origem / aplicação do limite de flecha','els_origin',b['ELS_origin'])
- else:
-  d['ELS_down_denominator']=num('Limite descendente L/','els_down',b['ELS_down_denominator'])
-  d['ELS_up_denominator']=num('Limite ascendente L/','els_up',b['ELS_up_denominator'])
-  st.caption('Limite escolhido por sentido de cada combinação ELS; conferir critério da aplicação.')
+if not girt:
+ with st.expander('Limite de flecha',expanded=False):
+  if d['load_mode']=='direct':
+   d['ELS_limit_mm']=num('Limite de flecha adotado','els_limit',b['ELS_limit_mm'],'mm')
+   d['ELS_origin']=txt('Origem / aplicação do limite de flecha','els_origin',b['ELS_origin'])
+  else:
+   d['ELS_down_denominator']=num('Limite descendente L/','els_down',b['ELS_down_denominator'])
+   d['ELS_up_denominator']=num('Limite ascendente L/','els_up',b['ELS_up_denominator'])
+   st.caption('Limite escolhido por sentido de cada combinação ELS; conferir critério da aplicação.')
+else:
+ with st.expander('Critérios ELS da travessa e comprimentos de referência',expanded=True):
+  st.caption('L/120 horizontal e L/180 vertical são escolhas históricas editáveis, não regra atual verificada. Informe a origem/aplicação. Lref vazio usa L do modelo; alterar Lref não cria apoio nem altera comprimentos FLT.')
+  we=dict(normal_denominator=120.,vertical_denominator=180.,normal_reference_mm=None,vertical_reference_mm=None,origin='critério declarado pelo usuário');we.update(b.get('wall_els',{}))
+  c1,c2=st.columns(2)
+  with c1:
+   we['normal_denominator']=num('Flecha horizontal forte — Lref/','wall_normal_denominator',we['normal_denominator'])
+   we['normal_reference_mm']=num('Lref ELS horizontal (vazio = vão do modelo)','wall_normal_reference',we['normal_reference_mm'],'mm')
+  with c2:
+   we['vertical_denominator']=num('Flecha vertical fraca — Lref/','wall_vertical_denominator',we['vertical_denominator'])
+   we['vertical_reference_mm']=num('Lref ELS vertical (vazio = vão do modelo)','wall_vertical_reference',we['vertical_reference_mm'],'mm')
+  we['origin']=txt('Origem dos critérios ELS da travessa','wall_els_origin',we['origin']);d['wall_els']=we
+ with st.expander('Estudo elástico bruto opcional de tirantes verticais',expanded=False):
+  wt=dict(enabled=False,anchorage_confirmed=False,origin='',springs=[]);wt.update(b.get('wall_tie_study',{}))
+  wt['enabled']=st.checkbox('Ativar estudo elástico bruto de molas verticais',value=wt['enabled'],key=f'wall_tie_enabled_{r}')
+  st.warning('Diagnóstico elástico bruto, não resistência nem aprovação. Molas verticais ancoradas, tração-apenas, sem folga/pré-tensão. Não representam apoio rígido e não reduzem automaticamente Lz/FLT. Não use rigidez ou ancoragem sem origem.')
+  if wt['enabled']:
+   wt['anchorage_confirmed']=st.checkbox('Ancoragem externa explicitamente confirmada para este estudo',value=wt['anchorage_confirmed'],key=f'wall_tie_anchorage_{r}')
+   wt['origin']=txt('Origem / hipótese do estudo dos tirantes','wall_tie_origin',wt['origin'])
+   springs=pd.DataFrame(wt['springs'],columns=['x_mm','k_N_mm','origin'])
+   edited_springs=st.data_editor(springs,num_rows='dynamic',hide_index=True,key=f'wall_springs_{r}',column_config={'x_mm':st.column_config.NumberColumn('Posição ao longo do vão [mm]'),'k_N_mm':st.column_config.NumberColumn('Rigidez vertical [N/mm]'),'origin':'Origem da rigidez / ancoragem'},width='stretch')
+   wt['springs']=edited_springs.astype(object).where(pd.notna(edited_springs),None).to_dict('records')
+  d['wall_tie_study']=wt
 
 provenance_text=' '.join([str(d.get('project','')),str(d.get('patch_origin',''))]+[str(seg.get('restraint_provenance','')) for seg in d.get('segments',[])])
 if any(tag in provenance_text.casefold() for tag in ['sintétic','sintetic','didático','didatico']):
@@ -374,7 +423,7 @@ try:
  if d['load_mode']=='area':
   selected_preview=st.selectbox('Combinação mostrada no desenho',range(len(previews)),format_func=lambda i:previews[i][0])
   drawing_data=previews[selected_preview][1]
-  st.caption('Prévia de uma combinação, não soma dos máximos. Casos P aparecem primeiro; A posição indicada identifica o caso calculado; no apoio representa-se o limite x→0+.')
+  st.caption('Prévia de uma combinação de travessa; vento horizontal e gravidade vertical. Sem SC/P de cobertura automáticos; não soma máximos.' if girt else 'Prévia de uma combinação, não soma dos máximos. Casos P aparecem primeiro; A posição indicada identifica o caso calculado; no apoio representa-se o limite x→0+.')
  else:drawing_data=previews[0][1]
  st.markdown(svg(drawing_data),unsafe_allow_html=True)
  token=fingerprint(d)
@@ -444,11 +493,13 @@ if 'result' in st.session_state:
    item=result['cases'][selected];st.caption(measurement_text(item['combination']['expression'])+f"; q normal={fmt(item['combination']['q_kN_m'])} kN/m; P normal={fmt(item['combination'].get('P_N',0)/1000)} kN")
    st.dataframe(display_frame(item['rows']),hide_index=True,width='stretch')
    if item.get('evidence',{}).get('inclination'):show_inclination(item['evidence']['inclination'])
+   if girt:show_elastic_wall(item.get('evidence',{}))
  else:
   for warning in result.get('coverage_warnings',[])+result.get('critical_warnings',[]):st.warning(warning)
   if result.get('numerical_warnings'):st.warning('A integração da flecha emitiu aviso numérico. A verificação ELS ficou pendente; demais resultados foram preservados.')
   st.dataframe(display_frame(rows(result)),hide_index=True,width='stretch')
   if result.get('inclination_evidence'):show_inclination(result['inclination_evidence'])
+  if girt:show_elastic_wall(result)
  c1,c2,c3=st.columns(3)
  with c1:st.download_button('Baixar memória parcial (Word)',batch_word(result) if batch else word(result),file_name='MC_terca_parcial.docx',mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
  with c2:st.download_button('Baixar estudo e resultados (JSON)',json.dumps(result,ensure_ascii=False,indent=2),file_name='terca_estudo_resultados.json',mime='application/json')

@@ -1,0 +1,119 @@
+{
+  "local": {
+    "lambda": 0.6934960844677591,
+    "rho": 0.9845286648729396,
+    "M0Rd_Nmm": 1975770.0251881946
+  },
+  "distortional": {
+    "table14_eta": 0.5,
+    "bw_over_t": 83.33333333333334,
+    "required_lip_web_ratio": 0.16333333333333333,
+    "actual_lip_web_ratio": 0.17,
+    "production_expected": "exempt_Table14",
+    "optional_formula_only": {
+      "lambda": 0.6919901194233986,
+      "chi": 0.9856735902794419,
+      "MRd_Nmm": 1978067.682310789
+    }
+  },
+  "shear": {
+    "h_mm": 95.2,
+    "h_over_t": 79.33333333333334,
+    "lower": 68.305197459637,
+    "upper": 88.54377448471462,
+    "VRd_N": 13454.05404508001
+  },
+  "variants": {
+    "CBCA_J130": {
+      "Me_Nmm": 710509.750615042,
+      "lambda0": 1.7626469545904069,
+      "chi_flt": 0.3218617216829183,
+      "lambda_local_reduced": 0.39344015128027127,
+      "rho_local_reduced": 1,
+      "MRd_FLT_Nmm": 645917.9551045838,
+      "loads": {
+        "Ex09_P_only": {
+          "R_N": 750.0,
+          "Mmax_Nmm": 1500000.0,
+          "Vmax_N": 750.0,
+          "local_index": 0.7591976702132239,
+          "FLT_index": 2.322276363655393,
+          "shear_index": 0.055745279265788754,
+          "MV_max": {
+            "x_mm": 2000.0,
+            "side": "left",
+            "M_Nmm": 1500000.0,
+            "V_N": 750.0,
+            "index": 0.5794886386176079
+          }
+        },
+        "PP_plus_P": {
+          "R_N": 802.22041125,
+          "Mmax_Nmm": 1552220.41125,
+          "Vmax_N": 802.22041125,
+          "local_index": 0.7856280799189415,
+          "FLT_index": 2.403123181486219,
+          "shear_index": 0.059626667810462865,
+          "MV_max": {
+            "x_mm": 2000.0,
+            "side": "left",
+            "M_Nmm": 1552220.41125,
+            "V_N": 750.0,
+            "index": 0.6203190161175435
+          }
+        }
+      }
+    },
+    "catalog_J100": {
+      "Me_Nmm": 689915.6768898689,
+      "lambda0": 1.7887611314112921,
+      "chi_flt": 0.31253258296256803,
+      "lambda_local_reduced": 0.38769630684036965,
+      "rho_local_reduced": 1,
+      "MRd_FLT_Nmm": 627196.0698998808,
+      "loads": {
+        "Ex09_P_only": {
+          "R_N": 750.0,
+          "Mmax_Nmm": 1500000.0,
+          "Vmax_N": 750.0,
+          "local_index": 0.7591976702132239,
+          "FLT_index": 2.391596618645019,
+          "shear_index": 0.055745279265788754,
+          "MV_max": {
+            "x_mm": 2000.0,
+            "side": "left",
+            "M_Nmm": 1500000.0,
+            "V_N": 750.0,
+            "index": 0.5794886386176079
+          }
+        },
+        "PP_plus_P": {
+          "R_N": 802.22041125,
+          "Mmax_Nmm": 1552220.41125,
+          "Vmax_N": 802.22041125,
+          "local_index": 0.7856280799189415,
+          "FLT_index": 2.474856724624854,
+          "shear_index": 0.059626667810462865,
+          "MV_max": {
+            "x_mm": 2000.0,
+            "side": "left",
+            "M_Nmm": 1552220.41125,
+            "V_N": 750.0,
+            "index": 0.6203190161175435
+          }
+        }
+      }
+    }
+  },
+  "ELS_rare_PP_plus_P": {
+    "Mmax_Nmm": 1041776.329,
+    "gross_threshold_Nmm": 2078944.1100000003,
+    "lambda_max": 0.4764100339826008,
+    "Ief_everywhere_mm4": 441500.0,
+    "x_deflection_max_mm": 2000.0,
+    "deflection_max_mm": 15.888567931294828,
+    "declared_limit_L_over_180_mm": 22.22222222222222,
+    "index_declared_limit": 0.7149855569082673,
+    "scope": "Same-sense central point+uniform, strong bending component only; rare combination explicitly adopted, not CBCA Ex09 published SLS. Ief=Ig proven through maximum moment threshold."
+  }
+}
