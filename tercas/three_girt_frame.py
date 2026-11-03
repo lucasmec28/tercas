@@ -9,6 +9,7 @@ open-section warping, stability, ELS or NBR resistance calculation.
 import copy
 import math
 import numpy as np
+from .bounded_polynomial import real_roots_open_unit_interval
 
 DOFS=('ux','uy','uz','rx','ry','rz')
 LEVELS=('upper','middle','lower')
@@ -77,11 +78,7 @@ def _arm(r):
 
 
 def _roots_inside(coeff):
-    c=np.asarray(coeff,dtype=float)
-    while len(c)>1 and c[-1]==0:c=c[:-1]
-    if len(c)<2:return []
-    return sorted(float(z.real) for z in np.polynomial.polynomial.polyroots(c)
-                  if abs(z.imag)<=1e-9*max(1.,abs(z.real)) and 0<z.real<1)
+    return real_roots_open_unit_interval(coeff)
 
 
 def _derivative(c,order=1):
