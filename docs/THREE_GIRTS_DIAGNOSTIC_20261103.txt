@@ -1,0 +1,107 @@
+SISTEMA DE TRÊS TRAVESSAS — CÓPIA TÉCNICA DE 03/11/2026
+
+Estado e conclusão
+A nova rota calcula ações e deslocamentos elásticos simultâneos de três travessas
+contínuas conectadas às barras do croqui de Lucas. Não verifica resistência, não
+conclui ELS e não aprova o sistema. Está separada da rota resistente N=0 do vão
+isolado. O estudo anterior de molas fica armazenado, porém inativo nessa seleção.
+Esta emissão é cópia em qualificação, não confirmação de publicação/deploy.
+
+Confirmações do usuário
+Vermelho: travessas. Azul, incluindo diagonais: barras redondas. Verde: cantoneiras.
+Seis extremos das travessas: todas as translações impedidas, torção impedida,
+rotações de flexão livres. Nenhuma translação livre. Isso NÃO define empenamento.
+Análise linear bilateral tração/compressão, primeira ordem. Sem resistência das
+barras/tirantes. Usar vão, distância entre travessas e quantidade de tirantes.
+
+Geometria e vínculos
+Reusa L_mm e area_inputs.spacing_m. A distância deve ser explicitamente declarada
+tanto geométrica entre eixos como largura tributária: não são sinônimos gerais.
+Mesma seção e vão nas três travessas, níveis +distância, 0, −distância. Posições
+uniformes são padrão editável, não medidas da imagem. O croqui tem duas linhas.
+A extensão para n linhas adiciona vertical verde superior–central e vertical azul
+central–inferior em cada linha, mantendo duas diagonais azuis: extremo superior
+esquerdo→primeira linha central e extremo direito→última. n=1 recebe as duas
+no mesmo nó; n=0 desliga as barras. Extensão declarada, não nova topologia deduzida.
+Limite de implementação n≤20; não é limite normativo.
+
+Travessas Euler–Bernoulli com GJ, seção bruta constante, sem empenamento ECw ou
+bimomento. Rotação livre de flexão no apoio NÃO é engaste. Nas ligações interiores
+as travessas permanecem contínuas: não há rótulas introduzidas nas travessas.
+Barras são axiais articuladas; cantoneira não ganha rigidez de flexão por rótulo.
+Braços rígidos declarados usam deslocamento do ponto u_CG + theta×r e transferem
+r×F. Não modelam deformabilidade da ligação ou empenamento setorial.
+
+Eixos e referência
+X de A para B, Y para cima, Z para direita na vista A→B, mão direita. qY=−q paralelo
+e qZ=−q normal da interface. My é forte e Mz fraco no solver; NÃO identificar My
+com o My fraco legado. N positivo é tração. Cisalhamentos usam convenção de reação
+esquerda: Mz'=Vy e My'=−Vz. T_SC=GJ phi'; T_CG=T_SC+sc_z Vy−sc_y Vz.
+O vetor SC−CG=(0,sc_y,sc_z) exige origem e sinal declarados; x0 do catálogo não é
+transposto silenciosamente. Coordenadas híbridas: ux_CG, v_SC=v_CG−sc_z phi,
+w_SC=w_CG+sc_y phi; K_CG=Tᵀ K_híbrido T, preservando trabalho. Não deslocar o
+DOF axial para SC. Recuperação inclui bolhas exatas de UDL na flexão/torção.
+
+Ações e combinações
+Fatores de área externa nas linhas superior/central/inferior: 0.5/1/0.5. Cada
+travessa idêntica mantém seu PP inteiro no CG. Vento e permanente externo usam
+linha comum declarada; se as linhas reais diferirem, esta entrada não representa
+o caso sem redução equivalente explicitamente documentada. Torque resultante
+sobre CG é soma r×q de cada componente; PP da travessa não vai à linha externa.
+CP inclui o peso próprio de telha/revestimento por área de influência e demais
+permanentes externos informados. q_CP central=CP_kgf_m2×spacing_m×9.80665/1000
+N/mm; q_CP de cada extrema=metade. Não acrescentar PP do perfil no campo CP.
+MC mostra ações características centrais/extremas e a matriz ponderada.
+Modo área: mesma matriz de combinações do usuário, subconjunto sem SC e sem P de
+cobertura, caso a caso; não novo gerador normativo universal. PP barras usa o
+coeficiente PP de cada combinação. Cargas diretas armazenadas são inativas.
+Modo direto: cargas da travessa central já combinadas; exige parcela PP combinada
+já embutida no q vertical e fator próprio do PP barras. q_vertical_extrema =
+0.5*(q_vertical_central−PP)+PP. Não soma PP da travessa novamente. PP barras, se
+ativo, é adicional: inteiro, metade em cada extremidade. Isso preserva força e
+momento global, mas omite flexão local da barra pelo peso próprio.
+Ações P ativas no modo direto são recusadas; não descartadas. Entradas P diretas
+inativas no modo área não bloqueiam nem contaminam o resultado.
+
+Perfis das barras e fonte
+Azul default: Gerdau redonda ASTM A36 Ø3/8; massa nominal0.56 kg/m. Catálogo exibe
+9.53 mm; usa-se conversão nominal exata 9.525 mm para A=71.2557392481 mm² calculada,
+não tabelada. Verde default: Gerdau L3×3×3/16, A nominal703 mm² e massa5.52 kg/m.
+Defaults não certificam bitola/lote real. E200000 MPa é declarado separadamente,
+não extraído da tabela Gerdau. Mudanças de A/E/massa exigem origem própria. Área
+líquida de rosca, flambagem, flexão de cantoneira e capacidade da ligação não são
+verificadas. Compressão calculada permanece visível.
+
+Gates e saídas
+Sem declarações explícitas/SC/PP: status não resolvido, lista de faltas e zero casos
+calculados. Matriz escalada: mecanismo/mau condicionamento bloqueia sem apoio
+artificial, pseudoinversa ou mola fictícia. Equilíbrio6componentes e resíduos livres
+são verificados. Estabilidade numérica NÃO é resistência à flambagem.
+Extremos exatos de polinômios por componente; ambos os lados de juntas preservados.
+N, Vy, Vz, My, Mz, T_CG e T_SC concomitantes na seção/combinação; máximos isolados
+não são somados como interação. Deslocamentos brutos absolutos no CG, sem índice
+ELS/Ief e sem critério de corda relativa de painel. MC identifica combinação
+selecionada e toda combinação não resolvida. JSON mantém todos os dados/estados.
+
+Preservação e segurança
+Projetos antigos não ganham three_girt_model por default. A rota permanece opt-in.
+Retorno a Terça preserva o rascunho 3D, porém o deixa inativo. Não há execução
+paralela da resistência isolada quando 3D selecionado; chamadas backend dessa rota
+e scan resistente são bloqueadas. Trocar perfil invalida SC e declarações de linha
+de carga/conexões; não transfere dados dependentes de outra seção. Edição invalida
+resultado e exports. Nenhum campo physical_conditions_verified/resistance_qualified/
+ELS_qualified/whole_member_approved é liberado por uma caixa de declaração.
+
+Fontes primárias
+Gerdau Barras e Perfis tabela de bolso03/19, PDFp3/p8:
+https://gsn.gerdau.com/sites/gsn_gerdau/files/downloadable_files/Barras-e-Perfis-Tabela-de-bolso.pdf
+Gerdau Barras e Perfis02/14, PDFp6, famílias ASTM A36:
+https://gsn.gerdau.com/sites/gsn_gerdau/files/downloadable_files/catalogo-barras-e-perfis.pdf
+SCI P3852011, §§2.5–2.6 e4, distinção torção/empenamento:
+https://www.steelconstruction.info/images/6/6f/Sci_p385.pdf
+OpenSees ElasticBeamColumn e Truss, documentação primária dos modelos:
+https://opensees.github.io/OpenSeesDocumentation/user/manual/model/elements/elasticBeamColumn.html
+https://opensees.berkeley.edu/wiki/index.php/Truss_Element
+SCI/OpenSees fundamentam mecânica, não resistência importada de outra norma.
+NBR14762 permanece a referência resistente do app legado; esta rota 3D NÃO foi
+qualificada para flexocompressão/tração, interação fraca ou torção/empenamento.

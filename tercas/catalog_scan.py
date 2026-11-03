@@ -20,6 +20,10 @@ def inputs_for_section(data, index):
 Manual section properties/criticals are deliberately not copied to another section.
 Even the originally selected section is compared on the same catalogue basis.
 """
+    if 'three_girt_model' in data:
+        # Section-dependent coordinates/connection declarations cannot transfer.
+        data=copy.deepcopy(data)
+        data['three_girt_model'].update(sc_y_mm=None,sc_z_mm=0.,sc_origin='',connections_declared=False,load_line_declared=False)
     fresh = defaults(index)
     out = copy.deepcopy(data)
     for key in ('catalog_index', 'properties', 'Ml_Nmm', 'Mdist_Nmm', 'critical_origin'):
@@ -80,6 +84,8 @@ max_seconds is a soft between-section bound: a running calculation is not killed
 progress(completed,total,row) receives a copy. No cross-request mutable cache/state.
 All 209 entries are selected by default; no hidden cut-off or load/combination changes.
 """
+    from .three_girt_application import enabled as three_girt_enabled
+    if three_girt_enabled(data):raise ValueError('Comparação resistente do catálogo indisponível no diagnóstico 3D.')
     labels = catalog_labels()
     indices = list(range(len(labels))) if indices is None else list(indices)
     if any(not isinstance(i, int) or isinstance(i, bool) or not 0 <= i < len(labels) for i in indices):

@@ -123,6 +123,8 @@ def build_spec(data):
  return spec
 
 def calculate(data):
+ from .three_girt_application import enabled as three_girt_enabled
+ if three_girt_enabled(data):raise ValueError('Sistema 3D selecionado: usar o diagnóstico específico; resistência isolada N=0 bloqueada.')
  from .inclination_adapter import direct_evidence
  spec=build_spec(data)
  inclination_evidence=direct_evidence(data)

@@ -39,3 +39,12 @@ A seleção **Travessa lateral** orienta U/Ue com boca para baixo: peso/permanen
 O estudo opcional de tirantes usa posições e rigidezes finitas declaradas, molas verticais em tração e ancoragem fixa assumida. Não fornece rigidez por padrão, não divide o vão, não altera FLT ou resistência. A flecha vertical com **Iy bruto** é apenas diagnóstico, sem índice de aprovação ELS; momento negativo e levantamento podem ocorrer e são reportados. L do modelo, Lref do critério e comprimentos de FLT são separados. As escolhas editáveis L/120 e L/180 são referências históricas declaradas, não atualização normativa automática.
 
 Veja `docs/RELEASE_TRAVESSA_20261103.txt` para hipóteses, fontes, exemplos, QA e limites. O identificador 0.4.4 do núcleo foi preservado para permitir comparação exata das saídas legadas; esta candidata é identificada pelo manifesto de 03/11/2026. Nenhuma resistência fraca nova foi liberada e nenhum dado R04 foi transposto ao projeto.
+
+## Cópia com diagnóstico de três travessas em 3D
+
+Opt-in na Travessa lateral: três travessas contínuas e barras axiais bilaterais de
+primeira ordem. Solicitações simultâneas, reações, N, torção Saint-Venant e flechas
+brutas; **sem resistência, sem conclusão ELS e sem aprovação global**. Não reutiliza
+a rota N=0, não presume empenamento impedido ou ancoragem comprovada. Mantém todos
+os projetos antigos no caminho anterior; detalhes em
+`docs/THREE_GIRTS_DIAGNOSTIC_20261103.txt`. Cópia em qualificação, sem deploy inferido.
