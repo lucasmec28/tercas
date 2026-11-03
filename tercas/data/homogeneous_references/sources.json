@@ -1,0 +1,65 @@
+{
+  "U100": {
+    "reference_vector_sha256": "41ff8390d3a4bebab4f9d686cb3477dc7d8ed3c710aaf6d449e0671ba22c7746",
+    "reference_vector": "U100_reference_vector.json",
+    "inputs": {
+      "p0": {
+        "file": "U100_angle_p0_inputs.json",
+        "sha256": "7b2312c668bddbddc0036ab616ed6728194ccd73dc9e1ec7595e7b06d6c8bf5e"
+      },
+      "p5": {
+        "file": "U100_angle_p5_inputs.json",
+        "sha256": "a41902ef792c4b90ed22a94479607c2732b5351edb27e3afafbfaf348ad9f670"
+      },
+      "m5": {
+        "file": "U100_angle_m5_inputs.json",
+        "sha256": "f34bd490340ddb54eed41666c2bd85be8c5f65a8a918b3c9be324a204ba3f2a2"
+      }
+    },
+    "geometry_source": "CBCA 2014, Tabela 2.3 p20/PDF21 (dimensões externas nominais) e Tabela C.2 p100/PDF101, U100x50x2, ri=2 mm.",
+    "method": "Propriedades próprias integradas no mesmo contorno nominal arredondado de parede fina; críticos locais FSM Kirchhoff facetada convergida; instabilidade global pelo Anexo E e FLT. Resistências condicionais NBR 14762:2010 §9.8 e Anexo E; sem utilização dos críticos ou dos sinais de Pierin.",
+    "source_scope": "Correspondência nominal de linha, não geometria medida nem aprovação de produto. Revisão independente de geometria/energia e de resistências; os modos FSM têm limitações documentadas, não solução exata de casca curva contínua."
+  },
+  "U125": {
+    "reference_vector_sha256": "dab18c1799c9cd283cc0ccd53809e45af49f37ca8d62e9fdbe053a203b906aa7",
+    "reference_vector": "U125_reference_vector.json",
+    "inputs": {
+      "p0": {
+        "file": "U125_angle_p0_inputs.json",
+        "sha256": "e79c82058818f2b573981c5281f31fa40a633b13247155a7578df81a1b67c56f"
+      },
+      "p5": {
+        "file": "U125_angle_p5_inputs.json",
+        "sha256": "9a8cdf36be91b67069a302d96bac09e34fbb4d237add6d562350e62cc7ee601e"
+      },
+      "m5": {
+        "file": "U125_angle_m5_inputs.json",
+        "sha256": "406df3587dde199eb29fed9650808490f5e28361d2a543addd9cb30c26b99522"
+      }
+    },
+    "geometry_source": "CBCA 2014, Tabela 2.3 p20/PDF21 (dimensões externas nominais) e Tabela C.2 p101/PDF102, U125x50x2, ri=2 mm.",
+    "method": "Propriedades próprias integradas no mesmo contorno nominal arredondado de parede fina; críticos locais FSM Kirchhoff facetada convergida; instabilidade global pelo Anexo E e FLT. Resistências condicionais NBR 14762:2010 §9.8 e Anexo E; sem utilização dos críticos ou dos sinais de Pierin.",
+    "source_scope": "Correspondência nominal de linha, não geometria medida nem aprovação de produto. Revisão independente de geometria/energia e de resistências; os modos FSM têm limitações documentadas, não solução exata de casca curva contínua."
+  },
+  "U150": {
+    "reference_vector_sha256": "d21eaba6c27f8e4680b56a15f790e88222b9a4abf93d5ae47c59284b0fcaaaea",
+    "reference_vector": "U150_reference_vector.json",
+    "inputs": {
+      "p0": {
+        "file": "U150_angle_p0_inputs.json",
+        "sha256": "c9e2af1c8372647b537bfc7276bf87ee242e5f6db4461563da0a9529abfe9441"
+      },
+      "p5": {
+        "file": "U150_angle_p5_inputs.json",
+        "sha256": "98afcc715cfd8f26ace697ebe3276a7a1ddbc04a5b3d12e8ba9b2d917dc39087"
+      },
+      "m5": {
+        "file": "U150_angle_m5_inputs.json",
+        "sha256": "5fa32dd9ca05bcfa2b1d692745af14eb39587102ef9c47903510df87f07925cf"
+      }
+    },
+    "geometry_source": "CBCA 2014, Tabela 2.3 p20/PDF21 (dimensões externas nominais) e Tabela C.2 p102/PDF103, U150x50x2, ri=2 mm.",
+    "method": "Propriedades próprias integradas no mesmo contorno nominal arredondado de parede fina; críticos locais FSM Kirchhoff facetada convergida; instabilidade global pelo Anexo E e FLT. Resistências condicionais NBR 14762:2010 §9.8 e Anexo E; sem utilização dos críticos ou dos sinais de Pierin.",
+    "source_scope": "Correspondência nominal de linha, não geometria medida nem aprovação de produto. Revisão independente de geometria/energia e de resistências; os modos FSM têm limitações documentadas, não solução exata de casca curva contínua."
+  }
+}

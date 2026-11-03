@@ -1,0 +1,35 @@
+REFERÊNCIAS PRÓPRIAS HOMOGÊNEAS U100/U125/U150 — CÓPIA CONTROLADA
+03/11/2026. Não publicada; não é aprovação de projeto, perfil comercial ou produto.
+
+BASE E MUDANÇAS
+Integração local sobre o commit c26a5bf01cc9f35b936d283d1b344cd20e8fc7b4. Os três arquivos publicados da correção M–V permanecem byte a byte idênticos; esta integração não altera suas fórmulas nem tercas/batch.py. A nova rota chama o mesmo calculate/calculate_batch, compartilha a apresentação de resultados e acrescenta evidência explícita ao resultado/Word. A inspeção manual e o editor convencional continuam separados.
+
+OPT-IN E IDENTIDADE
+JSON manual legado, inclusive o U100 próprio exato, abre em inspeção. O botão “Ativar esta referência para cálculo” só aparece quando TODO o contrato protegido coincide com uma das três entradas registradas. A ação copia o arquivo atual e acrescenta exclusivamente homogeneous_reference; não substitui nem normaliza propriedade, crítico, origem ou domínio. O carregador explícito oferece U100/U125/U150 e os casos sintéticos 0/+5/-5 graus. Cada caso por área traz todas as quatro famílias e produz 58 combinações (40 ELU e 18 ELS).
+
+A marcação persistente permite reimportação ativa somente depois de nova comparação integral. Nome, ID e hash fornecidos no JSON não autorizam. O registro verifica a integridade de seu próprio manifesto e os bytes das entradas e do vetor fonte. Tolerância física é zero: números JSON equivalentes int/float são aceitos, mas nenhuma normalização, arredondamento ou aproximação é usada na identidade. Um próximo float diferente de qualquer propriedade congelada invalida a identidade.
+
+Todos os campos fora da lista explícita de ações/identificação são comparados, inclusive origens completas, propriedades, críticos, sentidos, seções e domínios. Campos físicos novos/desconhecidos, weak_catalog mesmo vazio, qualquer estrutura3D, travessa, mistura de seção/material ou painel incompatível não são ativados. Model_domain é opcional para legados; quando presente deve ser o token sem contribuição estrutural da telha. Uma declaração extra não é removida para forçar aceitação.
+
+ESTADO E CORREÇÃO DAS AÇÕES
+assess separa eligible (identidade física válida), active (identidade mais opt-in) e calculable (ações ativas válidas). Forma/tipos/completude desconhecidos vão para inspeção integral. Famílias vazias, texto vazio, vão de aplicação de P inválido e valores de ação recuperáveis permanecem no editor restrito, com cálculo desativado, para o usuário corrigir. Os campos de ações inativos ficam preservados e não são aplicados ao outro modo. O build_spec legado exige área armazenada válida mesmo no modo direto; se inválida, o editor orienta a voltar ao modo área e corrigir, sem substituir silenciosamente os valores. Não há reaproveitamento de resultado após qualquer alteração da entrada ou ausência da evidência atual, mesmo com fingerprint igual.
+
+MATERIAIS, COMPRIMENTOS E LIMITES
+Contornos nominais CBCA arredondados, ri=t=2 mm, E200000 MPa, G=E/2,6, fy250/fu400 MPa, L3000 mm e comprimentos efetivos3000 mm. Cb=Cm1, N0, garfos matemáticos com rotações de flexão e empenamento livres. Nex e Nez manuais pertencem a esse vão; material, propriedades, críticos, comprimentos e vínculos permanecem congelados nesta etapa por escopo de qualificação, não por nova exigência normativa. Não há recomputação automática de Nex/Nez para outro L.
+
+Propriedades próprias foram integradas no mesmo contorno de parede fina; críticos locais são FSM Kirchhoff facetada convergida. Correspondência nominal com linhas históricas não atribui valores/sentidos a Pierin. ELS forte usa Ief uniaxial: a rigidez efetiva sob flexão biaxial/Ief combinado e o ELS completo permanecem não qualificados. Não há resistência3D, torção, travamento de painel ou aprovação global. O PP no CG pode produzir torque que esta referência de componentes de flexão não verifica.
+
+INTERFACE E EXPORTAÇÃO
+Editor separado preserva seção/material e só permite identificação e ações. Área usa o gerador existente, com PP pela massa própria uma vez e decomposição angular. Direto usa os componentes locais já combinados sem rotação adicional nem PP automático. Ações/sinais podem ser editados; a evidência não transforma essas ações novas em casos previamente auditados.
+
+Os botões de catálogo são desativados na referência e scan_catalog recusa a marcação. Trocar seção retira vínculo e críticos próprios. inputs_for_section retira a marcação/evidência e separa a origem de catálogo da nova seção dos valores sintéticos de material preservados. Para um contrato marcado inválido/incompleto, a seleção explícita de outra seção abre novas entradas padrão; o original continua disponível para download em inspeção antes dessa ação.
+
+JSON de entrada preserva campos, proveniência e marcação, sem acrescentar normalizações. JSON de resultado registra os dados efetivamente calculados, o fingerprint padrão, identidade bibliográfica/hashes e os limites. Word registra a fonte CBCA por perfil, método próprio e hashes; não apresenta críticos históricos de Pierin como entradas adotadas da referência própria. Linhas antes retiradas pelo usuário não foram reintroduzidas.
+
+RASTREABILIDADE M–V CORRIGIDA
+NBR_branches.MV.result registra o governante entre interior_q_only e support_layer, com o mesmo índice da linha calculada e de prescribed_point.MV_limit_states. limit_states retém os dois estados concomitantes, e interior_q_only_result preserva o adaptador bruto P=0. Nos estados físicos a_mm=null e a_limit='a→0+', sem inventar afastamento finito. A transferência local de P permanece não avaliada. A integração mantém exatamente o patch publicado, sem nova verificação resistente.
+
+A evidência exportada usa support_limit_mv_trace para essa descrição factual, no lugar da antiga trace_limitation. A versão de apresentação foi atualizada para impedir uso de cache anterior com a ressalva superada; o marcador físico de entrada não mudou. A correção textual ELS da referência também permanece: os dados próprios foram fornecidos, mas Ief combinado/flecha fraca e ELS completo não estão qualificados.
+
+VERIFICAÇÃO
+Novos testes cobrem igualdade integral, próximo float, campos ausentes/extras, material/perfil/comprimentos/vínculos, hashes do pacote, tokens falsos, referências0/±5, imports legados, opt-in, editor restrito, cargas/sinais, ações inválidas recuperáveis, modo direto/área, troca de seção, referências3D negadas sem regressão da rota3D legada, reruns/cache e roundtrip. Registros de execução, recibos e manifesto vigente ficam fora da candidata, na pasta de qualificação. Não há logs nem manifesto R1 histórico no staging limpo. O replay independente de522casos e a auditoria independente são coordenados pelo responsável pela qualificação.

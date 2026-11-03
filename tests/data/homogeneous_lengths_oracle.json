@@ -1,0 +1,1686 @@
+{
+  "source": "Independent Vlasov matrix/geometry integration and 70-digit Decimal evaluation, 2026-11-03. Equal lengths ideal whole-span model; unequal lengths algebra only, no physical restraint validation.",
+  "source_sha256": "813ec1a25ed09e0f618dddfc274c456be9004cab06e9b2956b6bde35434eeb45",
+  "records": [
+    {
+      "reference": "U100",
+      "case": "equal_1000",
+      "Lx_mm": 1000.0,
+      "Ly_mm": 1000.0,
+      "Lz_mm": 1000.0,
+      "physical_equal_length_sine_mode": true,
+      "global_criticals": {
+        "Nex_N": 1213660.9434713265,
+        "Ney_N": 191858.85860387838,
+        "Nez_N": 126395.40352512541,
+        "torsion_modal_stiffness_Nmm2": 355066173.8947208,
+        "Me_strong_Nmm": 8253641.066358976,
+        "Me_weak_positive_Nmm": 144711470.68804735,
+        "Me_weak_negative_Nmm": 2977856.182062934
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 8253641.066358971,
+          "MRd_Nmm": 2269420.382095663
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 8253641.066358973,
+          "MRd_Nmm": 2269420.382095663
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 144711470.6880484,
+          "MRd_Nmm": 603881.838447252
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 2977856.1820629328,
+          "MRd_Nmm": 553418.6662920882
+        }
+      }
+    },
+    {
+      "reference": "U100",
+      "case": "equal_1500",
+      "Lx_mm": 1500.0,
+      "Ly_mm": 1500.0,
+      "Lz_mm": 1500.0,
+      "physical_equal_length_sine_mode": true,
+      "global_criticals": {
+        "Nex_N": 539404.863765034,
+        "Ney_N": 85270.60382394594,
+        "Nez_N": 64022.43333855372,
+        "torsion_modal_stiffness_Nmm2": 179849898.1367727,
+        "Me_strong_Nmm": 3916108.963218181,
+        "Me_weak_positive_Nmm": 64496851.59580499,
+        "Me_weak_negative_Nmm": 1504134.0375896888
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 3916108.963218179,
+          "MRd_Nmm": 2073278.8264425634
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 3916108.9632181805,
+          "MRd_Nmm": 2073278.8264425634
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 64496851.59580504,
+          "MRd_Nmm": 603881.838447252
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 1504134.0375896879,
+          "MRd_Nmm": 543251.788531031
+        }
+      }
+    },
+    {
+      "reference": "U100",
+      "case": "equal_3000",
+      "Lx_mm": 3000.0,
+      "Ly_mm": 3000.0,
+      "Lz_mm": 3000.0,
+      "physical_equal_length_sine_mode": true,
+      "global_criticals": {
+        "Nex_N": 134851.2159412585,
+        "Ney_N": 21317.650955986486,
+        "Nez_N": 26598.651226610713,
+        "torsion_modal_stiffness_Nmm2": 74720132.68200386,
+        "Me_strong_Nmm": 1262084.6674846963,
+        "Me_weak_positive_Nmm": 16363930.050687756,
+        "Me_weak_negative_Nmm": 615750.6611339311
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 1262084.6674846958,
+          "MRd_Nmm": 1147349.6977133595
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 1262084.667484696,
+          "MRd_Nmm": 1147349.69771336
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 16363930.050687796,
+          "MRd_Nmm": 603881.838447252
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 615750.6611339309,
+          "MRd_Nmm": 462357.9092507375
+        }
+      }
+    },
+    {
+      "reference": "U100",
+      "case": "equal_4500",
+      "Lx_mm": 4500.0,
+      "Ly_mm": 4500.0,
+      "Lz_mm": 4500.0,
+      "physical_equal_length_sine_mode": true,
+      "global_criticals": {
+        "Nex_N": 59933.87375167044,
+        "Ney_N": 9474.511535993994,
+        "Nez_N": 19668.32120588053,
+        "torsion_modal_stiffness_Nmm2": 55251657.5977874,
+        "Me_strong_Nmm": 723520.8824166908,
+        "Me_weak_positive_Nmm": 7444036.314885502,
+        "Me_weak_negative_Nmm": 444845.47508380166
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 723520.8824166905,
+          "MRd_Nmm": 657746.2567424458
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 723520.8824166907,
+          "MRd_Nmm": 657746.256742446
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 7444036.314885502,
+          "MRd_Nmm": 603881.838447252
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 444845.47508380143,
+          "MRd_Nmm": 392045.9966395913
+        }
+      }
+    },
+    {
+      "reference": "U100",
+      "case": "equal_6000",
+      "Lx_mm": 6000.0,
+      "Ly_mm": 6000.0,
+      "Lz_mm": 6000.0,
+      "physical_equal_length_sine_mode": true,
+      "global_criticals": {
+        "Nex_N": 33712.803985314626,
+        "Ney_N": 5329.412738996622,
+        "Nez_N": 17242.705698624963,
+        "torsion_modal_stiffness_Nmm2": 48437691.31831165,
+        "Me_strong_Nmm": 508079.1760733716,
+        "Me_weak_positive_Nmm": 4315446.139008046,
+        "Me_weak_negative_Nmm": 378401.2916195898
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 508079.17607337126,
+          "MRd_Nmm": 461890.1600667011
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 508079.1760733714,
+          "MRd_Nmm": 461890.1600667012
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 4315446.139008052,
+          "MRd_Nmm": 603881.838447252
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 378401.29161958955,
+          "MRd_Nmm": 343185.30860831076
+        }
+      }
+    },
+    {
+      "reference": "U100",
+      "case": "equal_9000",
+      "Lx_mm": 9000.0,
+      "Ly_mm": 9000.0,
+      "Lz_mm": 9000.0,
+      "physical_equal_length_sine_mode": true,
+      "global_criticals": {
+        "Nex_N": 14983.46843791761,
+        "Ney_N": 2368.6278839984984,
+        "Nez_N": 15510.123193442414,
+        "torsion_modal_stiffness_Nmm2": 43570572.54725753,
+        "Me_strong_Nmm": 321251.41720654507,
+        "Me_weak_positive_Nmm": 2065817.1162428656,
+        "Me_weak_negative_Nmm": 316019.40629244084
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 321251.4172065449,
+          "MRd_Nmm": 292046.7429150408
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 321251.4172065449,
+          "MRd_Nmm": 292046.7429150408
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 2065817.116242869,
+          "MRd_Nmm": 603881.838447252
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 316019.4062924407,
+          "MRd_Nmm": 287290.36935676425
+        }
+      }
+    },
+    {
+      "reference": "U100",
+      "case": "equal_12000",
+      "Lx_mm": 12000.0,
+      "Ly_mm": 12000.0,
+      "Lz_mm": 12000.0,
+      "physical_equal_length_sine_mode": true,
+      "global_criticals": {
+        "Nex_N": 8428.200996328656,
+        "Ney_N": 1332.3531847491554,
+        "Nez_N": 14903.719316628523,
+        "torsion_modal_stiffness_Nmm2": 41867080.97738859,
+        "Me_strong_Nmm": 236181.57988372946,
+        "Me_weak_positive_Nmm": 1263529.7936945104,
+        "Me_weak_negative_Nmm": 279268.5818473963
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 236181.57988372928,
+          "MRd_Nmm": 214710.52716702662
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 236181.57988372928,
+          "MRd_Nmm": 214710.52716702662
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 1263529.793694513,
+          "MRd_Nmm": 603881.838447252
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 279268.58184739604,
+          "MRd_Nmm": 253880.52895217814
+        }
+      }
+    },
+    {
+      "reference": "U100",
+      "case": "declared_x_short",
+      "Lx_mm": 3000.0,
+      "Ly_mm": 6000.0,
+      "Lz_mm": 6000.0,
+      "physical_equal_length_sine_mode": false,
+      "global_criticals": {
+        "Nex_N": 134851.2159412585,
+        "Ney_N": 5329.412738996622,
+        "Nez_N": 17242.705698624963,
+        "torsion_modal_stiffness_Nmm2": 48437691.31831165,
+        "Me_strong_Nmm": 508079.1760733716,
+        "Me_weak_positive_Nmm": 16152566.0094772,
+        "Me_weak_negative_Nmm": 404386.619923374
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 508079.17607337126,
+          "MRd_Nmm": 461890.1600667011
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 508079.1760733714,
+          "MRd_Nmm": 461890.1600667012
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 16152566.009477213,
+          "MRd_Nmm": 603881.838447252
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 404386.6199233738,
+          "MRd_Nmm": 364205.8170966847
+        }
+      }
+    },
+    {
+      "reference": "U100",
+      "case": "declared_y_short",
+      "Lx_mm": 6000.0,
+      "Ly_mm": 3000.0,
+      "Lz_mm": 6000.0,
+      "physical_equal_length_sine_mode": false,
+      "global_criticals": {
+        "Nex_N": 33712.803985314626,
+        "Ney_N": 21317.650955986486,
+        "Nez_N": 17242.705698624963,
+        "torsion_modal_stiffness_Nmm2": 48437691.31831165,
+        "Me_strong_Nmm": 1016158.3521467432,
+        "Me_weak_positive_Nmm": 4315446.139008046,
+        "Me_weak_negative_Nmm": 378401.2916195898
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 1016158.3521467425,
+          "MRd_Nmm": 923780.3201334022
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 1016158.3521467427,
+          "MRd_Nmm": 923780.3201334022
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 4315446.139008052,
+          "MRd_Nmm": 603881.838447252
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 378401.29161958955,
+          "MRd_Nmm": 343185.30860831076
+        }
+      }
+    },
+    {
+      "reference": "U100",
+      "case": "declared_z_short",
+      "Lx_mm": 6000.0,
+      "Ly_mm": 6000.0,
+      "Lz_mm": 3000.0,
+      "physical_equal_length_sine_mode": false,
+      "global_criticals": {
+        "Nex_N": 33712.803985314626,
+        "Ney_N": 5329.412738996622,
+        "Nez_N": 26598.651226610713,
+        "torsion_modal_stiffness_Nmm2": 74720132.68200386,
+        "Me_strong_Nmm": 631042.3337423481,
+        "Me_weak_positive_Nmm": 4497179.3239976475,
+        "Me_weak_negative_Nmm": 560134.4766091909
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 631042.3337423479,
+          "MRd_Nmm": 573674.8488566799
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 631042.3337423479,
+          "MRd_Nmm": 573674.8488566799
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 4497179.323997655,
+          "MRd_Nmm": 603881.838447252
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 560134.4766091907,
+          "MRd_Nmm": 447790.4737214454
+        }
+      }
+    },
+    {
+      "reference": "U100",
+      "case": "declared_all_distinct",
+      "Lx_mm": 6000.0,
+      "Ly_mm": 2000.0,
+      "Lz_mm": 3000.0,
+      "physical_equal_length_sine_mode": false,
+      "global_criticals": {
+        "Nex_N": 33712.803985314626,
+        "Ney_N": 47964.714650969596,
+        "Nez_N": 26598.651226610713,
+        "torsion_modal_stiffness_Nmm2": 74720132.68200386,
+        "Me_strong_Nmm": 1893127.0012270445,
+        "Me_weak_positive_Nmm": 4497179.3239976475,
+        "Me_weak_negative_Nmm": 560134.4766091909
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 1893127.001227044,
+          "MRd_Nmm": 1623846.3889842122
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 1893127.0012270443,
+          "MRd_Nmm": 1623846.3889842122
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 4497179.323997655,
+          "MRd_Nmm": 603881.838447252
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 560134.4766091907,
+          "MRd_Nmm": 447790.4737214454
+        }
+      }
+    },
+    {
+      "reference": "U100",
+      "case": "declared_x_long",
+      "Lx_mm": 9000.0,
+      "Ly_mm": 6000.0,
+      "Lz_mm": 6000.0,
+      "physical_equal_length_sine_mode": false,
+      "global_criticals": {
+        "Nex_N": 14983.46843791761,
+        "Ney_N": 5329.412738996622,
+        "Nez_N": 17242.705698624963,
+        "torsion_modal_stiffness_Nmm2": 48437691.31831165,
+        "Me_strong_Nmm": 508079.1760733716,
+        "Me_weak_positive_Nmm": 2096051.0262914887,
+        "Me_weak_negative_Nmm": 346253.3163410639
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 508079.17607337126,
+          "MRd_Nmm": 461890.1600667011
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 508079.1760733714,
+          "MRd_Nmm": 461890.1600667012
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 2096051.0262914905,
+          "MRd_Nmm": 603881.838447252
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 346253.3163410637,
+          "MRd_Nmm": 314775.74212823965
+        }
+      }
+    },
+    {
+      "reference": "U100",
+      "case": "declared_y_long",
+      "Lx_mm": 6000.0,
+      "Ly_mm": 9000.0,
+      "Lz_mm": 6000.0,
+      "physical_equal_length_sine_mode": false,
+      "global_criticals": {
+        "Nex_N": 33712.803985314626,
+        "Ney_N": 2368.6278839984984,
+        "Nez_N": 17242.705698624963,
+        "torsion_modal_stiffness_Nmm2": 48437691.31831165,
+        "Me_strong_Nmm": 338719.4507155811,
+        "Me_weak_positive_Nmm": 4315446.139008046,
+        "Me_weak_negative_Nmm": 378401.2916195898
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 338719.4507155809,
+          "MRd_Nmm": 307926.77337780077
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 338719.4507155809,
+          "MRd_Nmm": 307926.77337780077
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 4315446.139008052,
+          "MRd_Nmm": 603881.838447252
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 378401.29161958955,
+          "MRd_Nmm": 343185.30860831076
+        }
+      }
+    },
+    {
+      "reference": "U100",
+      "case": "declared_z_long",
+      "Lx_mm": 6000.0,
+      "Ly_mm": 6000.0,
+      "Lz_mm": 9000.0,
+      "physical_equal_length_sine_mode": false,
+      "global_criticals": {
+        "Nex_N": 33712.803985314626,
+        "Ney_N": 5329.412738996622,
+        "Nez_N": 15510.123193442414,
+        "torsion_modal_stiffness_Nmm2": 43570572.54725753,
+        "Me_strong_Nmm": 481877.1258098176,
+        "Me_weak_positive_Nmm": 4280224.546460183,
+        "Me_weak_negative_Nmm": 343179.6990717267
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 481877.1258098174,
+          "MRd_Nmm": 438070.1143725612
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 481877.1258098174,
+          "MRd_Nmm": 438070.1143725612
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 4280224.546460188,
+          "MRd_Nmm": 603881.838447252
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 343179.6990717266,
+          "MRd_Nmm": 311981.5446106605
+        }
+      }
+    },
+    {
+      "reference": "U100",
+      "case": "declared_short_flex_long_twist",
+      "Lx_mm": 1000.0,
+      "Ly_mm": 1000.0,
+      "Lz_mm": 12000.0,
+      "physical_equal_length_sine_mode": false,
+      "global_criticals": {
+        "Nex_N": 1213660.9434713265,
+        "Ney_N": 191858.85860387838,
+        "Nez_N": 14903.719316628523,
+        "torsion_modal_stiffness_Nmm2": 41867080.97738859,
+        "Me_strong_Nmm": 2834178.9586047535,
+        "Me_weak_positive_Nmm": 142091218.87732336,
+        "Me_weak_negative_Nmm": 357604.3713389324
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 2834178.9586047507,
+          "MRd_Nmm": 1921600.340954973
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 2834178.9586047526,
+          "MRd_Nmm": 1921600.3409549731
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 142091218.87732348,
+          "MRd_Nmm": 603881.838447252
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 357604.37133893213,
+          "MRd_Nmm": 325094.88303539285
+        }
+      }
+    },
+    {
+      "reference": "U100",
+      "case": "declared_long_flex_short_twist",
+      "Lx_mm": 12000.0,
+      "Ly_mm": 12000.0,
+      "Lz_mm": 1000.0,
+      "physical_equal_length_sine_mode": false,
+      "global_criticals": {
+        "Nex_N": 8428.200996328656,
+        "Ney_N": 1332.3531847491554,
+        "Nez_N": 126395.40352512541,
+        "torsion_modal_stiffness_Nmm2": 355066173.8947208,
+        "Me_strong_Nmm": 687803.4221965813,
+        "Me_weak_positive_Nmm": 2290674.9100397434,
+        "Me_weak_negative_Nmm": 1306413.6981926295
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 687803.4221965809,
+          "MRd_Nmm": 625275.8383605282
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 687803.422196581,
+          "MRd_Nmm": 625275.8383605282
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 2290674.910039747,
+          "MRd_Nmm": 603881.838447252
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 1306413.6981926279,
+          "MRd_Nmm": 535175.5295721544
+        }
+      }
+    },
+    {
+      "reference": "U125",
+      "case": "equal_1000",
+      "Lx_mm": 1000.0,
+      "Ly_mm": 1000.0,
+      "Lz_mm": 1000.0,
+      "physical_equal_length_sine_mode": true,
+      "global_criticals": {
+        "Nex_N": 2036443.2760594792,
+        "Ney_N": 205340.13267969384,
+        "Nez_N": 170635.99162382298,
+        "torsion_modal_stiffness_Nmm2": 582865678.0805706,
+        "Me_strong_Nmm": 10940096.693882741,
+        "Me_weak_positive_Nmm": 288350742.736411,
+        "Me_weak_negative_Nmm": 4116420.438903014
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 10940096.69388274,
+          "MRd_Nmm": 3013105.979152288
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 10940096.693882734,
+          "MRd_Nmm": 3013105.9791522874
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 288350742.7364132,
+          "MRd_Nmm": 622138.3715490638
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 4116420.438903015,
+          "MRd_Nmm": 569013.8707028114
+        }
+      }
+    },
+    {
+      "reference": "U125",
+      "case": "equal_1500",
+      "Lx_mm": 1500.0,
+      "Ly_mm": 1500.0,
+      "Lz_mm": 1500.0,
+      "physical_equal_length_sine_mode": true,
+      "global_criticals": {
+        "Nex_N": 905085.9004708796,
+        "Ney_N": 91262.28119097505,
+        "Nez_N": 83125.35551992472,
+        "torsion_modal_stiffness_Nmm2": 283943125.0683754,
+        "Me_strong_Nmm": 5090510.516857251,
+        "Me_weak_positive_Nmm": 128328975.69173558,
+        "Me_weak_negative_Nmm": 2002610.2261765078
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 5090510.516857251,
+          "MRd_Nmm": 2739718.6501944936
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 5090510.516857247,
+          "MRd_Nmm": 2739718.650194493
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 128328975.6917344,
+          "MRd_Nmm": 622138.3715490638
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 2002610.2261765085,
+          "MRd_Nmm": 569013.8707028114
+        }
+      }
+    },
+    {
+      "reference": "U125",
+      "case": "equal_3000",
+      "Lx_mm": 3000.0,
+      "Ly_mm": 3000.0,
+      "Lz_mm": 3000.0,
+      "physical_equal_length_sine_mode": true,
+      "global_criticals": {
+        "Nex_N": 226271.4751177199,
+        "Ney_N": 22815.57029774376,
+        "Nez_N": 30618.9738575858,
+        "torsion_modal_stiffness_Nmm2": 104589593.26105839,
+        "Me_strong_Nmm": 1544756.0381691684,
+        "Me_weak_positive_Nmm": 32313957.30128566,
+        "Me_weak_negative_Nmm": 732365.9348958923
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 1544756.0381691682,
+          "MRd_Nmm": 1404323.6710628797
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 1544756.0381691675,
+          "MRd_Nmm": 1404323.6710628797
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 32313957.301285498,
+          "MRd_Nmm": 622138.3715490638
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 732365.9348958925,
+          "MRd_Nmm": 495170.82639131893
+        }
+      }
+    },
+    {
+      "reference": "U125",
+      "case": "equal_4500",
+      "Lx_mm": 4500.0,
+      "Ly_mm": 4500.0,
+      "Lz_mm": 4500.0,
+      "physical_equal_length_sine_mode": true,
+      "global_criticals": {
+        "Nex_N": 100565.10005231996,
+        "Ney_N": 10140.253465663895,
+        "Nez_N": 20895.569846041548,
+        "torsion_modal_stiffness_Nmm2": 71375976.25970337,
+        "Me_strong_Nmm": 850747.0191735032,
+        "Me_weak_positive_Nmm": 14530261.655146882,
+        "Me_weak_negative_Nmm": 493998.8256403167
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 850747.019173503,
+          "MRd_Nmm": 773406.3810668209
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 850747.0191735027,
+          "MRd_Nmm": 773406.3810668206
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 14530261.65514685,
+          "MRd_Nmm": 622138.3715490638
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 493998.8256403168,
+          "MRd_Nmm": 424618.37195555645
+        }
+      }
+    },
+    {
+      "reference": "U125",
+      "case": "equal_6000",
+      "Lx_mm": 6000.0,
+      "Ly_mm": 6000.0,
+      "Lz_mm": 6000.0,
+      "physical_equal_length_sine_mode": true,
+      "global_criticals": {
+        "Nex_N": 56567.86877942998,
+        "Ney_N": 5703.89257443594,
+        "Nez_N": 17492.378442001063,
+        "torsion_modal_stiffness_Nmm2": 59751210.30922912,
+        "Me_strong_Nmm": 583793.1866649115,
+        "Me_weak_positive_Nmm": 8302503.783643896,
+        "Me_weak_negative_Nmm": 407105.94204645394
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 583793.1866649113,
+          "MRd_Nmm": 530721.0787862829
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 583793.1866649112,
+          "MRd_Nmm": 530721.0787862829
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 8302503.783643898,
+          "MRd_Nmm": 622138.3715490638
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 407105.9420464539,
+          "MRd_Nmm": 367852.7647114519
+        }
+      }
+    },
+    {
+      "reference": "U125",
+      "case": "equal_9000",
+      "Lx_mm": 9000.0,
+      "Ly_mm": 9000.0,
+      "Lz_mm": 9000.0,
+      "physical_equal_length_sine_mode": true,
+      "global_criticals": {
+        "Nex_N": 25141.27501307999,
+        "Ney_N": 2535.0633664159736,
+        "Nez_N": 15061.527439115001,
+        "torsion_modal_stiffness_Nmm2": 51447806.058890365,
+        "Me_strong_Nmm": 361141.8674459758,
+        "Me_weak_positive_Nmm": 3845429.5454495004,
+        "Me_weak_negative_Nmm": 336363.83807285957
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 361141.8674459756,
+          "MRd_Nmm": 328310.78858725046
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 361141.8674459756,
+          "MRd_Nmm": 328310.78858725046
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 3845429.5454495,
+          "MRd_Nmm": 622138.3715490638
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 336363.8380728597,
+          "MRd_Nmm": 305785.3073389633
+        }
+      }
+    },
+    {
+      "reference": "U125",
+      "case": "equal_12000",
+      "Lx_mm": 12000.0,
+      "Ly_mm": 12000.0,
+      "Lz_mm": 12000.0,
+      "physical_equal_length_sine_mode": true,
+      "global_criticals": {
+        "Nex_N": 14141.967194857494,
+        "Ney_N": 1425.973143608985,
+        "Nez_N": 14210.729588104881,
+        "torsion_modal_stiffness_Nmm2": 48541614.57127181,
+        "Me_strong_Nmm": 263095.1134590914,
+        "Me_weak_positive_Nmm": 2275526.4312431226,
+        "Me_weak_negative_Nmm": 301676.9708437625
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 263095.1134590913,
+          "MRd_Nmm": 239177.37587190114
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 263095.1134590913,
+          "MRd_Nmm": 239177.37587190114
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 2275526.4312431207,
+          "MRd_Nmm": 622138.3715490638
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 301676.9708437626,
+          "MRd_Nmm": 274251.79167614784
+        }
+      }
+    },
+    {
+      "reference": "U125",
+      "case": "declared_x_short",
+      "Lx_mm": 3000.0,
+      "Ly_mm": 6000.0,
+      "Lz_mm": 6000.0,
+      "physical_equal_length_sine_mode": false,
+      "global_criticals": {
+        "Nex_N": 226271.4751177199,
+        "Ney_N": 5703.89257443594,
+        "Nez_N": 17492.378442001063,
+        "torsion_modal_stiffness_Nmm2": 59751210.30922912,
+        "Me_strong_Nmm": 583793.1866649115,
+        "Me_weak_positive_Nmm": 32004037.88841542,
+        "Me_weak_negative_Nmm": 422446.52202565514
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 583793.1866649113,
+          "MRd_Nmm": 530721.0787862829
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 583793.1866649112,
+          "MRd_Nmm": 530721.0787862829
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 32004037.888415076,
+          "MRd_Nmm": 622138.3715490638
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 422446.52202565526,
+          "MRd_Nmm": 379571.93958989513
+        }
+      }
+    },
+    {
+      "reference": "U125",
+      "case": "declared_y_short",
+      "Lx_mm": 6000.0,
+      "Ly_mm": 3000.0,
+      "Lz_mm": 6000.0,
+      "physical_equal_length_sine_mode": false,
+      "global_criticals": {
+        "Nex_N": 56567.86877942998,
+        "Ney_N": 22815.57029774376,
+        "Nez_N": 17492.378442001063,
+        "torsion_modal_stiffness_Nmm2": 59751210.30922912,
+        "Me_strong_Nmm": 1167586.373329823,
+        "Me_weak_positive_Nmm": 8302503.783643896,
+        "Me_weak_negative_Nmm": 407105.94204645394
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 1167586.373329823,
+          "MRd_Nmm": 1061442.157572566
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 1167586.373329822,
+          "MRd_Nmm": 1061442.1575725654
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 8302503.7836438995,
+          "MRd_Nmm": 622138.3715490638
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 407105.9420464539,
+          "MRd_Nmm": 367852.7647114519
+        }
+      }
+    },
+    {
+      "reference": "U125",
+      "case": "declared_z_short",
+      "Lx_mm": 6000.0,
+      "Ly_mm": 6000.0,
+      "Lz_mm": 3000.0,
+      "physical_equal_length_sine_mode": false,
+      "global_criticals": {
+        "Nex_N": 56567.86877942998,
+        "Ney_N": 5703.89257443594,
+        "Nez_N": 30618.9738575858,
+        "torsion_modal_stiffness_Nmm2": 104589593.26105839,
+        "Me_strong_Nmm": 772378.0190845842,
+        "Me_weak_positive_Nmm": 8584587.657501478,
+        "Me_weak_negative_Nmm": 689189.8159040362
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 772378.0190845839,
+          "MRd_Nmm": 702161.8355314399
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 772378.0190845839,
+          "MRd_Nmm": 702161.8355314399
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 8584587.657501474,
+          "MRd_Nmm": 622138.3715490638
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 689189.8159040364,
+          "MRd_Nmm": 487261.8498223356
+        }
+      }
+    },
+    {
+      "reference": "U125",
+      "case": "declared_all_distinct",
+      "Lx_mm": 6000.0,
+      "Ly_mm": 2000.0,
+      "Lz_mm": 3000.0,
+      "physical_equal_length_sine_mode": false,
+      "global_criticals": {
+        "Nex_N": 56567.86877942998,
+        "Ney_N": 51335.03316992346,
+        "Nez_N": 30618.9738575858,
+        "torsion_modal_stiffness_Nmm2": 104589593.26105839,
+        "Me_strong_Nmm": 2317134.0572537524,
+        "Me_weak_positive_Nmm": 8584587.657501478,
+        "Me_weak_negative_Nmm": 689189.8159040362
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 2317134.057253753,
+          "MRd_Nmm": 2037122.7861186776
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 2317134.057253751,
+          "MRd_Nmm": 2037122.786118676
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 8584587.657501474,
+          "MRd_Nmm": 622138.3715490638
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 689189.8159040364,
+          "MRd_Nmm": 487261.8498223356
+        }
+      }
+    },
+    {
+      "reference": "U125",
+      "case": "declared_x_long",
+      "Lx_mm": 9000.0,
+      "Ly_mm": 6000.0,
+      "Lz_mm": 6000.0,
+      "physical_equal_length_sine_mode": false,
+      "global_criticals": {
+        "Nex_N": 25141.27501307999,
+        "Ney_N": 5703.89257443594,
+        "Nez_N": 17492.378442001063,
+        "torsion_modal_stiffness_Nmm2": 59751210.30922912,
+        "Me_strong_Nmm": 583793.1866649115,
+        "Me_weak_positive_Nmm": 3894768.155102722,
+        "Me_weak_negative_Nmm": 385702.44772608025
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 583793.1866649113,
+          "MRd_Nmm": 530721.0787862829
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 583793.1866649112,
+          "MRd_Nmm": 530721.0787862829
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 3894768.155102718,
+          "MRd_Nmm": 622138.3715490638
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 385702.44772608037,
+          "MRd_Nmm": 349944.26181333145
+        }
+      }
+    },
+    {
+      "reference": "U125",
+      "case": "declared_y_long",
+      "Lx_mm": 6000.0,
+      "Ly_mm": 9000.0,
+      "Lz_mm": 6000.0,
+      "physical_equal_length_sine_mode": false,
+      "global_criticals": {
+        "Nex_N": 56567.86877942998,
+        "Ney_N": 2535.0633664159736,
+        "Nez_N": 17492.378442001063,
+        "torsion_modal_stiffness_Nmm2": 59751210.30922912,
+        "Me_strong_Nmm": 389195.45777660765,
+        "Me_weak_positive_Nmm": 8302503.783643896,
+        "Me_weak_negative_Nmm": 407105.94204645394
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 389195.4577766075,
+          "MRd_Nmm": 353814.0525241885
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 389195.4577766075,
+          "MRd_Nmm": 353814.0525241885
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 8302503.783643901,
+          "MRd_Nmm": 622138.3715490638
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 407105.9420464539,
+          "MRd_Nmm": 367852.7647114519
+        }
+      }
+    },
+    {
+      "reference": "U125",
+      "case": "declared_z_long",
+      "Lx_mm": 6000.0,
+      "Ly_mm": 6000.0,
+      "Lz_mm": 9000.0,
+      "physical_equal_length_sine_mode": false,
+      "global_criticals": {
+        "Nex_N": 56567.86877942998,
+        "Ney_N": 5703.89257443594,
+        "Nez_N": 15061.527439115001,
+        "torsion_modal_stiffness_Nmm2": 51447806.058890365,
+        "Me_strong_Nmm": 541712.8011689637,
+        "Me_weak_positive_Nmm": 8248236.039741454,
+        "Me_weak_negative_Nmm": 352838.1981440116
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 541712.8011689634,
+          "MRd_Nmm": 492466.1828808757
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 541712.8011689633,
+          "MRd_Nmm": 492466.1828808757
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 8248236.039741429,
+          "MRd_Nmm": 622138.3715490638
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 352838.1981440117,
+          "MRd_Nmm": 320761.9983127379
+        }
+      }
+    },
+    {
+      "reference": "U125",
+      "case": "declared_short_flex_long_twist",
+      "Lx_mm": 1000.0,
+      "Ly_mm": 1000.0,
+      "Lz_mm": 12000.0,
+      "physical_equal_length_sine_mode": false,
+      "global_criticals": {
+        "Nex_N": 2036443.2760594792,
+        "Ney_N": 205340.13267969384,
+        "Nez_N": 14210.729588104881,
+        "torsion_modal_stiffness_Nmm2": 48541614.57127181,
+        "Me_strong_Nmm": 3157141.3615090963,
+        "Me_weak_positive_Nmm": 284581682.12707907,
+        "Me_weak_negative_Nmm": 347359.8295711638
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 3157141.361509099,
+          "MRd_Nmm": 2398951.576941183
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 3157141.3615090917,
+          "MRd_Nmm": 2398951.57694118
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 284581682.1270786,
+          "MRd_Nmm": 622138.3715490638
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 347359.8295711641,
+          "MRd_Nmm": 315781.6632465128
+        }
+      }
+    },
+    {
+      "reference": "U125",
+      "case": "declared_long_flex_short_twist",
+      "Lx_mm": 12000.0,
+      "Ly_mm": 12000.0,
+      "Lz_mm": 1000.0,
+      "physical_equal_length_sine_mode": false,
+      "global_criticals": {
+        "Nex_N": 14141.967194857494,
+        "Ney_N": 1425.973143608985,
+        "Nez_N": 170635.99162382298,
+        "torsion_modal_stiffness_Nmm2": 582865678.0805706,
+        "Me_strong_Nmm": 911674.7244902285,
+        "Me_weak_positive_Nmm": 4022857.48991349,
+        "Me_weak_negative_Nmm": 2049008.0295141297
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 911674.7244902278,
+          "MRd_Nmm": 828795.2040820251
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 911674.7244902286,
+          "MRd_Nmm": 828795.2040820259
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 4022857.489913484,
+          "MRd_Nmm": 622138.3715490638
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 2049008.0295141318,
+          "MRd_Nmm": 569013.8707028114
+        }
+      }
+    },
+    {
+      "reference": "U150",
+      "case": "equal_1000",
+      "Lx_mm": 1000.0,
+      "Ly_mm": 1000.0,
+      "Lz_mm": 1000.0,
+      "physical_equal_length_sine_mode": true,
+      "global_criticals": {
+        "Nex_N": 3128696.377381203,
+        "Ney_N": 216052.32256680191,
+        "Nez_N": 210987.7060803704,
+        "torsion_modal_stiffness_Nmm2": 881749791.6012735,
+        "Me_strong_Nmm": 13802321.920541076,
+        "Me_weak_positive_Nmm": 534246365.6049284,
+        "Me_weak_negative_Nmm": 5163773.787428244
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 13802321.920541061,
+          "MRd_Nmm": 3816497.897342604
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 13802321.920541067,
+          "MRd_Nmm": 3816497.897342604
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 534246365.6049268,
+          "MRd_Nmm": 635699.2646028168
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 5163773.787428247,
+          "MRd_Nmm": 580141.1978605536
+        }
+      }
+    },
+    {
+      "reference": "U150",
+      "case": "equal_1500",
+      "Lx_mm": 1500.0,
+      "Ly_mm": 1500.0,
+      "Lz_mm": 1500.0,
+      "physical_equal_length_sine_mode": true,
+      "global_criticals": {
+        "Nex_N": 1390531.7232805346,
+        "Ney_N": 96023.25447413418,
+        "Nez_N": 100410.19450352705,
+        "torsion_modal_stiffness_Nmm2": 419629511.7043574,
+        "Me_strong_Nmm": 6347770.584011695,
+        "Me_weak_positive_Nmm": 237603623.50736704,
+        "Me_weak_negative_Nmm": 2455804.921811461
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 6347770.584011689,
+          "MRd_Nmm": 3457600.5738536874
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 6347770.584011691,
+          "MRd_Nmm": 3457600.5738536874
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 237603623.50736633,
+          "MRd_Nmm": 635699.2646028168
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 2455804.9218114624,
+          "MRd_Nmm": 580141.1978605536
+        }
+      }
+    },
+    {
+      "reference": "U150",
+      "case": "equal_3000",
+      "Lx_mm": 3000.0,
+      "Ly_mm": 3000.0,
+      "Lz_mm": 3000.0,
+      "physical_equal_length_sine_mode": true,
+      "global_criticals": {
+        "Nex_N": 347632.93082013365,
+        "Ney_N": 24005.813618533546,
+        "Nez_N": 34063.68755742103,
+        "torsion_modal_stiffness_Nmm2": 142357343.76620772,
+        "Me_strong_Nmm": 1848622.1522206995,
+        "Me_weak_positive_Nmm": 59617054.37466806,
+        "Me_weak_negative_Nmm": 830099.7282791636
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 1848622.1522206976,
+          "MRd_Nmm": 1680565.592927907
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 1848622.1522206983,
+          "MRd_Nmm": 1680565.5929279076
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 59617054.37466728,
+          "MRd_Nmm": 635699.2646028168
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 830099.7282791643,
+          "MRd_Nmm": 517442.8206857411
+        }
+      }
+    },
+    {
+      "reference": "U150",
+      "case": "equal_4500",
+      "Lx_mm": 4500.0,
+      "Ly_mm": 4500.0,
+      "Lz_mm": 4500.0,
+      "physical_equal_length_sine_mode": true,
+      "global_criticals": {
+        "Nex_N": 154503.5248089483,
+        "Ney_N": 10669.25049712602,
+        "Nez_N": 21777.29738221621,
+        "torsion_modal_stiffness_Nmm2": 91010645.99988371,
+        "Me_strong_Nmm": 985401.1264850571,
+        "Me_weak_positive_Nmm": 26655069.774448387,
+        "Me_weak_negative_Nmm": 527534.376053324
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 985401.1264850559,
+          "MRd_Nmm": 895819.2058955051
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 985401.1264850562,
+          "MRd_Nmm": 895819.2058955055
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 26655069.774448346,
+          "MRd_Nmm": 635699.2646028168
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 527534.3760533243,
+          "MRd_Nmm": 445602.3765139606
+        }
+      }
+    },
+    {
+      "reference": "U150",
+      "case": "equal_6000",
+      "Lx_mm": 6000.0,
+      "Ly_mm": 6000.0,
+      "Lz_mm": 6000.0,
+      "physical_equal_length_sine_mode": true,
+      "global_criticals": {
+        "Nex_N": 86908.23270503341,
+        "Ney_N": 6001.4534046333865,
+        "Nez_N": 17477.060820894523,
+        "torsion_modal_stiffness_Nmm2": 73039301.7816703,
+        "Me_strong_Nmm": 662073.9885765417,
+        "Me_weak_positive_Nmm": 15116654.113018956,
+        "Me_weak_negative_Nmm": 419915.45142173383
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 662073.988576541,
+          "MRd_Nmm": 601885.4441604917
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 662073.9885765411,
+          "MRd_Nmm": 601885.4441604919
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 15116654.113018844,
+          "MRd_Nmm": 635699.2646028168
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 419915.45142173395,
+          "MRd_Nmm": 378961.6220139526
+        }
+      }
+    },
+    {
+      "reference": "U150",
+      "case": "equal_9000",
+      "Lx_mm": 9000.0,
+      "Ly_mm": 9000.0,
+      "Lz_mm": 9000.0,
+      "physical_equal_length_sine_mode": true,
+      "global_criticals": {
+        "Nex_N": 38625.88120223708,
+        "Ney_N": 2667.312624281505,
+        "Nez_N": 14405.463277093317,
+        "torsion_modal_stiffness_Nmm2": 60202627.34008929,
+        "Me_strong_Nmm": 400723.38079919305,
+        "Me_weak_positive_Nmm": 6870349.807914603,
+        "Me_weak_negative_Nmm": 338465.9583158365
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 400723.38079919264,
+          "MRd_Nmm": 364293.9825447206
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 400723.38079919276,
+          "MRd_Nmm": 364293.98254472064
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 6870349.807914554,
+          "MRd_Nmm": 635699.2646028168
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 338465.9583158366,
+          "MRd_Nmm": 307696.32574166957
+        }
+      }
+    },
+    {
+      "reference": "U150",
+      "case": "equal_12000",
+      "Lx_mm": 12000.0,
+      "Ly_mm": 12000.0,
+      "Lz_mm": 12000.0,
+      "physical_equal_length_sine_mode": true,
+      "global_criticals": {
+        "Nex_N": 21727.058176258353,
+        "Ney_N": 1500.3633511583466,
+        "Nez_N": 13330.404136762896,
+        "torsion_modal_stiffness_Nmm2": 55709791.28553594,
+        "Me_strong_Nmm": 289110.5829012469,
+        "Me_weak_positive_Nmm": 3978427.9241266255,
+        "Me_weak_negative_Nmm": 304243.2587273196
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 289110.58290124655,
+          "MRd_Nmm": 262827.80263749685
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 289110.5829012467,
+          "MRd_Nmm": 262827.80263749696
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 3978427.9241266064,
+          "MRd_Nmm": 635699.2646028168
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 304243.2587273198,
+          "MRd_Nmm": 276584.7806611997
+        }
+      }
+    },
+    {
+      "reference": "U150",
+      "case": "declared_x_short",
+      "Lx_mm": 3000.0,
+      "Ly_mm": 6000.0,
+      "Lz_mm": 6000.0,
+      "physical_equal_length_sine_mode": false,
+      "global_criticals": {
+        "Nex_N": 347632.93082013365,
+        "Ney_N": 6001.4534046333865,
+        "Nez_N": 17477.060820894523,
+        "torsion_modal_stiffness_Nmm2": 73039301.7816703,
+        "Me_strong_Nmm": 662073.9885765417,
+        "Me_weak_positive_Nmm": 59215740.411239326,
+        "Me_weak_negative_Nmm": 428785.7648504382
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 662073.988576541,
+          "MRd_Nmm": 601885.4441604917
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 662073.9885765411,
+          "MRd_Nmm": 601885.4441604919
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 59215740.41123915,
+          "MRd_Nmm": 635699.2646028168
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 428785.7648504384,
+          "MRd_Nmm": 385719.34879925585
+        }
+      }
+    },
+    {
+      "reference": "U150",
+      "case": "declared_y_short",
+      "Lx_mm": 6000.0,
+      "Ly_mm": 3000.0,
+      "Lz_mm": 6000.0,
+      "physical_equal_length_sine_mode": false,
+      "global_criticals": {
+        "Nex_N": 86908.23270503341,
+        "Ney_N": 24005.813618533546,
+        "Nez_N": 17477.060820894523,
+        "torsion_modal_stiffness_Nmm2": 73039301.7816703,
+        "Me_strong_Nmm": 1324147.9771530833,
+        "Me_weak_positive_Nmm": 15116654.113018956,
+        "Me_weak_negative_Nmm": 419915.45142173383
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 1324147.9771530817,
+          "MRd_Nmm": 1203770.8883209834
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 1324147.9771530824,
+          "MRd_Nmm": 1203770.8883209843
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 15116654.11301884,
+          "MRd_Nmm": 635699.2646028168
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 419915.45142173395,
+          "MRd_Nmm": 378961.6220139526
+        }
+      }
+    },
+    {
+      "reference": "U150",
+      "case": "declared_z_short",
+      "Lx_mm": 6000.0,
+      "Ly_mm": 6000.0,
+      "Lz_mm": 3000.0,
+      "physical_equal_length_sine_mode": false,
+      "global_criticals": {
+        "Nex_N": 86908.23270503341,
+        "Ney_N": 6001.4534046333865,
+        "Nez_N": 34063.68755742103,
+        "torsion_modal_stiffness_Nmm2": 142357343.76620772,
+        "Me_strong_Nmm": 924311.0761103497,
+        "Me_weak_positive_Nmm": 15495182.019275352,
+        "Me_weak_negative_Nmm": 798443.3576781313
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 924311.0761103489,
+          "MRd_Nmm": 840282.7964639537
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 924311.0761103489,
+          "MRd_Nmm": 840282.7964639537
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 15495182.019275263,
+          "MRd_Nmm": 635699.2646028168
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 798443.3576781318,
+          "MRd_Nmm": 512937.3390892536
+        }
+      }
+    },
+    {
+      "reference": "U150",
+      "case": "declared_all_distinct",
+      "Lx_mm": 6000.0,
+      "Ly_mm": 2000.0,
+      "Lz_mm": 3000.0,
+      "physical_equal_length_sine_mode": false,
+      "global_criticals": {
+        "Nex_N": 86908.23270503341,
+        "Ney_N": 54013.08064170048,
+        "Nez_N": 34063.68755742103,
+        "torsion_modal_stiffness_Nmm2": 142357343.76620772,
+        "Me_strong_Nmm": 2772933.2283310494,
+        "Me_weak_positive_Nmm": 15495182.019275352,
+        "Me_weak_negative_Nmm": 798443.3576781313
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 2772933.2283310457,
+          "MRd_Nmm": 2468223.095402292
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 2772933.2283310476,
+          "MRd_Nmm": 2468223.0954022924
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 15495182.019275283,
+          "MRd_Nmm": 635699.2646028168
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 798443.3576781317,
+          "MRd_Nmm": 512937.3390892535
+        }
+      }
+    },
+    {
+      "reference": "U150",
+      "case": "declared_x_long",
+      "Lx_mm": 9000.0,
+      "Ly_mm": 6000.0,
+      "Lz_mm": 6000.0,
+      "physical_equal_length_sine_mode": false,
+      "global_criticals": {
+        "Nex_N": 38625.88120223708,
+        "Ney_N": 6001.4534046333865,
+        "Nez_N": 17477.060820894523,
+        "torsion_modal_stiffness_Nmm2": 73039301.7816703,
+        "Me_strong_Nmm": 662073.9885765417,
+        "Me_weak_positive_Nmm": 6938486.553510577,
+        "Me_weak_negative_Nmm": 406602.70391181053
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 662073.988576541,
+          "MRd_Nmm": 601885.4441604917
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 662073.9885765411,
+          "MRd_Nmm": 601885.4441604919
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 6938486.553510535,
+          "MRd_Nmm": 635699.2646028168
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 406602.7039118108,
+          "MRd_Nmm": 368266.1623220988
+        }
+      }
+    },
+    {
+      "reference": "U150",
+      "case": "declared_y_long",
+      "Lx_mm": 6000.0,
+      "Ly_mm": 9000.0,
+      "Lz_mm": 6000.0,
+      "physical_equal_length_sine_mode": false,
+      "global_criticals": {
+        "Nex_N": 86908.23270503341,
+        "Ney_N": 2667.312624281505,
+        "Nez_N": 17477.060820894523,
+        "torsion_modal_stiffness_Nmm2": 73039301.7816703,
+        "Me_strong_Nmm": 441382.6590510278,
+        "Me_weak_positive_Nmm": 15116654.113018956,
+        "Me_weak_negative_Nmm": 419915.45142173383
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 441382.65905102744,
+          "MRd_Nmm": 401256.96277366136
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 441382.65905102744,
+          "MRd_Nmm": 401256.96277366136
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 15116654.11301884,
+          "MRd_Nmm": 635699.2646028168
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 419915.45142173395,
+          "MRd_Nmm": 378961.6220139526
+        }
+      }
+    },
+    {
+      "reference": "U150",
+      "case": "declared_z_long",
+      "Lx_mm": 6000.0,
+      "Ly_mm": 6000.0,
+      "Lz_mm": 9000.0,
+      "physical_equal_length_sine_mode": false,
+      "global_criticals": {
+        "Nex_N": 86908.23270503341,
+        "Ney_N": 6001.4534046333865,
+        "Nez_N": 14405.463277093317,
+        "torsion_modal_stiffness_Nmm2": 60202627.34008929,
+        "Me_strong_Nmm": 601085.0711987895,
+        "Me_weak_positive_Nmm": 15044513.54515352,
+        "Me_weak_negative_Nmm": 347774.8835562963
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 601085.0711987888,
+          "MRd_Nmm": 546440.9738170807
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 601085.071198789,
+          "MRd_Nmm": 546440.973817081
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 15044513.545153424,
+          "MRd_Nmm": 635699.2646028168
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 347774.8835562964,
+          "MRd_Nmm": 316158.9850511785
+        }
+      }
+    },
+    {
+      "reference": "U150",
+      "case": "declared_short_flex_long_twist",
+      "Lx_mm": 1000.0,
+      "Ly_mm": 1000.0,
+      "Lz_mm": 12000.0,
+      "physical_equal_length_sine_mode": false,
+      "global_criticals": {
+        "Nex_N": 3128696.377381203,
+        "Ney_N": 216052.32256680191,
+        "Nez_N": 13330.404136762896,
+        "torsion_modal_stiffness_Nmm2": 55709791.28553594,
+        "Me_strong_Nmm": 3469326.9948149626,
+        "Me_weak_positive_Nmm": 529411823.2674212,
+        "Me_weak_negative_Nmm": 329231.44992112456
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 3469326.994814956,
+          "MRd_Nmm": 2843613.0376738356
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 3469326.994814963,
+          "MRd_Nmm": 2843613.037673839
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 529411823.2674217,
+          "MRd_Nmm": 635699.2646028168
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 329231.4499211247,
+          "MRd_Nmm": 299301.3181101133
+        }
+      }
+    },
+    {
+      "reference": "U150",
+      "case": "declared_long_flex_short_twist",
+      "Lx_mm": 12000.0,
+      "Ly_mm": 12000.0,
+      "Lz_mm": 1000.0,
+      "physical_equal_length_sine_mode": false,
+      "global_criticals": {
+        "Nex_N": 21727.058176258353,
+        "Ney_N": 1500.3633511583466,
+        "Nez_N": 210987.7060803704,
+        "torsion_modal_stiffness_Nmm2": 881749791.6012735,
+        "Me_strong_Nmm": 1150193.4933784232,
+        "Me_weak_positive_Nmm": 6583958.37861757,
+        "Me_weak_negative_Nmm": 2909773.7132182643
+      },
+      "directions": {
+        "strong_positive": {
+          "Me_matrix_Nmm": 1150193.493378422,
+          "MRd_Nmm": 1045630.4485258379
+        },
+        "strong_negative": {
+          "Me_matrix_Nmm": 1150193.493378422,
+          "MRd_Nmm": 1045630.4485258379
+        },
+        "weak_positive": {
+          "Me_matrix_Nmm": 6583958.378617528,
+          "MRd_Nmm": 635699.2646028168
+        },
+        "weak_negative": {
+          "Me_matrix_Nmm": 2909773.713218268,
+          "MRd_Nmm": 580141.1978605536
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,1309 @@
+{
+  "schema": "NBR14762_one_span_v1",
+  "input_snapshot": {
+    "selected_section": {
+      "entry_id": "planilha_v03_r106",
+      "family": "U",
+      "fields": {
+        "h": {
+          "value": 100,
+          "origin": "NBR 6355:2012 — Tabela A.2",
+          "edited": false
+        },
+        "bf": {
+          "value": 50,
+          "origin": "NBR 6355:2012 — Tabela A.2",
+          "edited": false
+        },
+        "lip": {
+          "value": 0,
+          "origin": "NBR 6355:2012 — Tabela A.2",
+          "edited": false
+        },
+        "t": {
+          "value": 2,
+          "origin": "NBR 6355:2012 — Tabela A.2",
+          "edited": false
+        },
+        "mass_kg_m": {
+          "value": 3.036769013984079,
+          "origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão.",
+          "edited": true
+        },
+        "A_cm2": {
+          "value": 3.8684955592153876,
+          "origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão.",
+          "edited": true
+        },
+        "Ix_cm4": {
+          "value": 61.48478166649565,
+          "origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão.",
+          "edited": true
+        },
+        "Wx_cm3": {
+          "value": 12.29695633329913,
+          "origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão.",
+          "edited": true
+        },
+        "Iy_cm4": {
+          "value": 9.719683323006443,
+          "origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão.",
+          "edited": true
+        },
+        "J_mm4": {
+          "value": 515.799407895385,
+          "origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão.",
+          "edited": true
+        },
+        "Cw_mm6": {
+          "value": 159778084.0787785,
+          "origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão.",
+          "edited": true
+        },
+        "ri_mm": {
+          "value": 2,
+          "origin": "NBR 6355:2012 — Tabela A.2",
+          "edited": false
+        },
+        "fy_MPa": {
+          "value": 250.0,
+          "origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão.",
+          "edited": true
+        },
+        "fu_MPa": {
+          "value": 400.0,
+          "origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão.",
+          "edited": true
+        },
+        "E_MPa": {
+          "value": 200000.0,
+          "origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão.",
+          "edited": true
+        },
+        "G_MPa": {
+          "value": 76923.07692307692,
+          "origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão.",
+          "edited": true
+        }
+      },
+      "history": [
+        {
+          "field": "mass_kg_m",
+          "previous": {
+            "value": 3.04,
+            "origin": "NBR 6355:2012 — Tabela A.2",
+            "edited": false
+          },
+          "new_value": 3.036769013984079,
+          "new_origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão."
+        },
+        {
+          "field": "A_cm2",
+          "previous": {
+            "value": 3.87,
+            "origin": "NBR 6355:2012 — Tabela A.2",
+            "edited": false
+          },
+          "new_value": 3.8684955592153876,
+          "new_origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão."
+        },
+        {
+          "field": "Ix_cm4",
+          "previous": {
+            "value": 61.59,
+            "origin": "NBR 6355:2012 — Tabela A.2",
+            "edited": false
+          },
+          "new_value": 61.48478166649565,
+          "new_origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão."
+        },
+        {
+          "field": "Wx_cm3",
+          "previous": {
+            "value": 12.32,
+            "origin": "NBR 6355:2012 — Tabela A.2",
+            "edited": false
+          },
+          "new_value": 12.29695633329913,
+          "new_origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão."
+        },
+        {
+          "field": "Iy_cm4",
+          "previous": {
+            "value": 9.71,
+            "origin": "NBR 6355:2012 — Tabela A.2",
+            "edited": false
+          },
+          "new_value": 9.719683323006443,
+          "new_origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão."
+        },
+        {
+          "field": "J_mm4",
+          "previous": {
+            "value": 520.0,
+            "origin": "NBR 6355:2012 — Tabela A.2",
+            "edited": false
+          },
+          "new_value": 515.799407895385,
+          "new_origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão."
+        },
+        {
+          "field": "Cw_mm6",
+          "previous": {
+            "value": 164780000.0,
+            "origin": "NBR 6355:2012 — Tabela A.2",
+            "edited": false
+          },
+          "new_value": 159778084.0787785,
+          "new_origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão."
+        },
+        {
+          "field": "fy_MPa",
+          "previous": {
+            "value": null,
+            "origin": "Não informado pelo catálogo selecionado",
+            "edited": false
+          },
+          "new_value": 250.0,
+          "new_origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão."
+        },
+        {
+          "field": "fu_MPa",
+          "previous": {
+            "value": null,
+            "origin": "Não informado pelo catálogo selecionado",
+            "edited": false
+          },
+          "new_value": 400.0,
+          "new_origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão."
+        },
+        {
+          "field": "E_MPa",
+          "previous": {
+            "value": null,
+            "origin": "Não informado pelo catálogo selecionado",
+            "edited": false
+          },
+          "new_value": 200000.0,
+          "new_origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão."
+        },
+        {
+          "field": "G_MPa",
+          "previous": {
+            "value": null,
+            "origin": "Não informado pelo catálogo selecionado",
+            "edited": false
+          },
+          "new_value": 76923.07692307692,
+          "new_origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão."
+        }
+      ],
+      "source": "NBR 6355:2012 — Tabela A.2",
+      "source_geometry_convention_unresolved": true,
+      "whole_member_approved": false
+    },
+    "L_mm": 3000.0,
+    "route_domain": "strong_symmetry_CT_no_primary_torsion",
+    "Ml": {
+      "value": 3476837.6663651397,
+      "origin": "FSM própria de contorno arredondado U100 ri2, E200000 MPa ν0,3, com facetas e malha convergidas; críticos locais próprios de ambos sentidos. Não são valores nem identificação de sentido de Pierin. NBR14762:2010 §9.8.2.1(b)."
+    },
+    "Mdist": {
+      "value": null,
+      "origin": "FSM própria de contorno arredondado U100 ri2, E200000 MPa ν0,3, com facetas e malha convergidas; críticos locais próprios de ambos sentidos. Não são valores nem identificação de sentido de Pierin. NBR14762:2010 §9.8.2.1(b)."
+    },
+    "strong_critical_qualification": {
+      "source_E_MPa": 200000.0,
+      "source_G_MPa": null,
+      "source_nu": null,
+      "app_original_G_MPa": 77000.0,
+      "source_note": "Rev07: Pierin declara E=200 GPa; ν não explicitado. G=77000 MPa é configuração original do app, não dado atribuído à tabela.",
+      "fields": {
+        "Ml": {
+          "status": "supplied_or_absent",
+          "inherited_tabulated": false,
+          "input_value_Nmm": 3476837.6663651397
+        },
+        "Mdist": {
+          "status": "supplied_or_absent",
+          "inherited_tabulated": false,
+          "input_value_Nmm": null
+        }
+      },
+      "warnings": [],
+      "pierin_U_reference": {
+        "schema": "pierin_2013_U_strong_reference_v1",
+        "title": "Pierin, Silva e La Rovere (2013) — Forças Normais e Momentos Fletores Críticos de Perfis Formados a Frio",
+        "url": "https://www.researchgate.net/publication/265207005_Forcas_Normais_e_Momentos_Fletores_Criticos_de_Perfis_Formados_a_Frio",
+        "source_pdf_sha256": "2ff5f67f201e00ddb31fdb7370a8077bc9e27fb9ac553cb0c5036ab9ad9d2d73",
+        "source_text_sha256": "ec0bcd133b1094a08c3ec3d52de99b70f1453d4a4b53ba6d2ce20e0b61822da2",
+        "source_E_MPa": 200000.0,
+        "source_G_MPa": null,
+        "source_nu": null,
+        "boundary": "simplesmente apoiado",
+        "corners": "retos",
+        "source_geometry_to_mean_line": "não explicitada",
+        "meaning": "Nl e Mlx são críticos locais elásticos, não resistências de cálculo. Nl apenas documental: o app não calcula resistência axial.",
+        "id": "Pierin2013_T1_U_100x50x2.00",
+        "family": "U",
+        "dimensions_mm": {
+          "h": 100.0,
+          "bf": 50.0,
+          "lip": 0.0,
+          "t": 2.0
+        },
+        "Nl_N": 84160,
+        "Mlx_Nmm": 3510000,
+        "table": 1,
+        "PDF_page": 9,
+        "printed_page": 29,
+        "source_row": "100 x 50 x 2,00    84,16   3,51     3,26",
+        "column_units": {
+          "Nl": "kN",
+          "Mlx": "kN·m"
+        },
+        "status": "tabulated_adopted_reference",
+        "adopted_as_app_reference": true,
+        "axial_calculation_implemented": false,
+        "whole_member_approved": false,
+        "section_property_convention_pending": true,
+        "source_geometry_convention_unresolved": true,
+        "geometric_adoption": "Linha nominal exata; propriedades do catálogo mantidas. A equivalência exata com a discretização INSTAB não foi demonstrada.",
+        "bending_axis": "x — eixo de simetria da seção U; não transpor ao eixo y",
+        "source_origin": "Pierin2013 Tabela1 Mlx U | Pierin2013_T1_U_100x50x2.00 | p29/PDF9; referência adotada; crítico elástico, não resistência",
+        "app_original_G_MPa": 77000.0,
+        "original_configuration_unchanged": false,
+        "compatibility_reasons": [
+          "G difere da configuração original do app; G e ν da fonte não foram explicitados.",
+          "Propriedade de seção A_cm2 difere do catálogo associado à linha nominal Pierin.",
+          "Propriedade de seção Ix_cm4 difere do catálogo associado à linha nominal Pierin.",
+          "Propriedade de seção Wx_cm3 difere do catálogo associado à linha nominal Pierin.",
+          "Propriedade de seção Iy_cm4 difere do catálogo associado à linha nominal Pierin.",
+          "Propriedade de seção J_mm4 difere do catálogo associado à linha nominal Pierin.",
+          "Propriedade de seção Cw_mm6 difere do catálogo associado à linha nominal Pierin."
+        ],
+        "compatibility_note": "G=77000 MPa é detector de alteração do app, não G da fonte. Compatibilidade nominal não certifica o elemento físico.",
+        "source_input_value_Nmm": 3476837.6663651397,
+        "source_input_origin": "FSM própria de contorno arredondado U100 ri2, E200000 MPa ν0,3, com facetas e malha convergidas; críticos locais próprios de ambos sentidos. Não são valores nem identificação de sentido de Pierin. NBR14762:2010 §9.8.2.1(b).",
+        "use_status": "reference_only_existing_input_preserved"
+      }
+    },
+    "model_domain_evidence": {
+      "version": "cladding_actions_only_20261103_r1",
+      "text": "Hipótese fixa do modelo: não há contato da telha/painel com o perfil nem ligação de qualquer mesa a painel. A telha contribui somente com as ações declaradas: peso, área de obstrução ao vento e recepção de sobrecarga quando aplicável à cobertura. Não fornece travamento, apoio, contenção ou rigidez ao perfil.",
+      "origin": "Domínio definido pelo usuário em 03/11/2026",
+      "limit": "Esta é a idealização de cálculo do app, não comprovação da condição física externa. Não define caminho de transferência das forças, não altera comprimentos efetivos ou linhas de aplicação das cargas e não implica torção nula. Sem aprovação global.",
+      "status": "fixed_model_domain",
+      "input_token_present": false,
+      "physical_declaration": null,
+      "physical_conditions_verified": false,
+      "conflict": null
+    },
+    "ULS": {
+      "q_Nmm": 6.0,
+      "P_N": 0.0,
+      "x_mm": 1500.0,
+      "origin": "Valores sintéticos declarados para verificação do programa; matriz Lucas de 31/10/2026 e P adicional separado. Não é projeto real."
+    },
+    "SLS": {
+      "q_Nmm": 4.0,
+      "P_N": 0.0,
+      "x_mm": 1500.0,
+      "origin": "Valores sintéticos declarados para verificação do programa; matriz Lucas de 31/10/2026 e P adicional separado. Não é projeto real."
+    },
+    "segments": [
+      {
+        "start_mm": 0.0,
+        "end_mm": 3000.0,
+        "Ly_top_effective_mm": 3000.0,
+        "Ly_bottom_effective_mm": 3000.0,
+        "Lz_effective_mm": 3000.0,
+        "Cb_mode": "one",
+        "restraint_provenance": "Referência ideal: garfos nas pontas, deslocamentos laterais e torção impedidos, rotações de flexão e empenamento livres; comprimentos efetivos 3 m. Sem painel ligado, cargas pelo centro de cisalhamento."
+      }
+    ],
+    "ELS_limit_mm": {
+      "value": 16.666666666666668,
+      "origin": "L/180 escolhido para teste; não prescrição universal."
+    },
+    "introduction": {
+      "left": {
+        "route": null,
+        "origin": "Garfos matemáticos de referência; nenhuma ligação física dimensionada."
+      },
+      "right": {
+        "route": null,
+        "origin": "Garfos matemáticos de referência; nenhuma ligação física dimensionada."
+      },
+      "point": {
+        "c_mm": null,
+        "origin": "Contato de P não especificado no benchmark; introdução local pendente."
+      }
+    }
+  },
+  "whole_member_approved": false,
+  "sheet_restraint_credit": false,
+  "issues": [],
+  "section_checks": {
+    "entry_id": "planilha_v03_r106",
+    "whole_member_approved": false,
+    "source_geometry_convention_unresolved": true,
+    "history": [
+      {
+        "field": "mass_kg_m",
+        "previous": {
+          "value": 3.04,
+          "origin": "NBR 6355:2012 — Tabela A.2",
+          "edited": false
+        },
+        "new_value": 3.036769013984079,
+        "new_origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão."
+      },
+      {
+        "field": "A_cm2",
+        "previous": {
+          "value": 3.87,
+          "origin": "NBR 6355:2012 — Tabela A.2",
+          "edited": false
+        },
+        "new_value": 3.8684955592153876,
+        "new_origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão."
+      },
+      {
+        "field": "Ix_cm4",
+        "previous": {
+          "value": 61.59,
+          "origin": "NBR 6355:2012 — Tabela A.2",
+          "edited": false
+        },
+        "new_value": 61.48478166649565,
+        "new_origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão."
+      },
+      {
+        "field": "Wx_cm3",
+        "previous": {
+          "value": 12.32,
+          "origin": "NBR 6355:2012 — Tabela A.2",
+          "edited": false
+        },
+        "new_value": 12.29695633329913,
+        "new_origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão."
+      },
+      {
+        "field": "Iy_cm4",
+        "previous": {
+          "value": 9.71,
+          "origin": "NBR 6355:2012 — Tabela A.2",
+          "edited": false
+        },
+        "new_value": 9.719683323006443,
+        "new_origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão."
+      },
+      {
+        "field": "J_mm4",
+        "previous": {
+          "value": 520.0,
+          "origin": "NBR 6355:2012 — Tabela A.2",
+          "edited": false
+        },
+        "new_value": 515.799407895385,
+        "new_origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão."
+      },
+      {
+        "field": "Cw_mm6",
+        "previous": {
+          "value": 164780000.0,
+          "origin": "NBR 6355:2012 — Tabela A.2",
+          "edited": false
+        },
+        "new_value": 159778084.0787785,
+        "new_origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão."
+      },
+      {
+        "field": "fy_MPa",
+        "previous": {
+          "value": null,
+          "origin": "Não informado pelo catálogo selecionado",
+          "edited": false
+        },
+        "new_value": 250.0,
+        "new_origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão."
+      },
+      {
+        "field": "fu_MPa",
+        "previous": {
+          "value": null,
+          "origin": "Não informado pelo catálogo selecionado",
+          "edited": false
+        },
+        "new_value": 400.0,
+        "new_origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão."
+      },
+      {
+        "field": "E_MPa",
+        "previous": {
+          "value": null,
+          "origin": "Não informado pelo catálogo selecionado",
+          "edited": false
+        },
+        "new_value": 200000.0,
+        "new_origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão."
+      },
+      {
+        "field": "G_MPa",
+        "previous": {
+          "value": null,
+          "origin": "Não informado pelo catálogo selecionado",
+          "edited": false
+        },
+        "new_value": 76923.07692307692,
+        "new_origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão."
+      }
+    ],
+    "input_fields": {
+      "h": {
+        "value": 100,
+        "origin": "NBR 6355:2012 — Tabela A.2",
+        "edited": false
+      },
+      "bf": {
+        "value": 50,
+        "origin": "NBR 6355:2012 — Tabela A.2",
+        "edited": false
+      },
+      "lip": {
+        "value": 0,
+        "origin": "NBR 6355:2012 — Tabela A.2",
+        "edited": false
+      },
+      "t": {
+        "value": 2,
+        "origin": "NBR 6355:2012 — Tabela A.2",
+        "edited": false
+      },
+      "mass_kg_m": {
+        "value": 3.036769013984079,
+        "origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão.",
+        "edited": true
+      },
+      "A_cm2": {
+        "value": 3.8684955592153876,
+        "origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão.",
+        "edited": true
+      },
+      "Ix_cm4": {
+        "value": 61.48478166649565,
+        "origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão.",
+        "edited": true
+      },
+      "Wx_cm3": {
+        "value": 12.29695633329913,
+        "origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão.",
+        "edited": true
+      },
+      "Iy_cm4": {
+        "value": 9.719683323006443,
+        "origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão.",
+        "edited": true
+      },
+      "J_mm4": {
+        "value": 515.799407895385,
+        "origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão.",
+        "edited": true
+      },
+      "Cw_mm6": {
+        "value": 159778084.0787785,
+        "origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão.",
+        "edited": true
+      },
+      "ri_mm": {
+        "value": 2,
+        "origin": "NBR 6355:2012 — Tabela A.2",
+        "edited": false
+      },
+      "fy_MPa": {
+        "value": 250.0,
+        "origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão.",
+        "edited": true
+      },
+      "fu_MPa": {
+        "value": 400.0,
+        "origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão.",
+        "edited": true
+      },
+      "E_MPa": {
+        "value": 200000.0,
+        "origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão.",
+        "edited": true
+      },
+      "G_MPa": {
+        "value": 76923.07692307692,
+        "origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão.",
+        "edited": true
+      }
+    },
+    "shear": {
+      "status": "computed_from_supplied_inputs",
+      "flat_web_mm": 92,
+      "VRd_N": 25090.90909090909,
+      "branch": "yield",
+      "h_over_t": 46.0,
+      "lower": 68.305197459637,
+      "upper": 88.54377448471462,
+      "kv": 5.0,
+      "gamma": 1.1,
+      "scope": "9.8.3 single flat web without transverse shear stiffeners; no concentrated-force check"
+    },
+    "elastic_Me": {
+      "status": "not_evaluated",
+      "missing": [
+        "L_mm",
+        "restraint_load_contract"
+      ]
+    },
+    "local_FLT_resistance": {
+      "status": "not_evaluated",
+      "reason": "resolve Wx reference convention and select local critical route for same geometry; no silent property mixing"
+    }
+  },
+  "FLT_segments": [
+    {
+      "status": "computed_from_supplied_effective_lengths",
+      "moments": {
+        "Mmax_Nmm": 6750000.0,
+        "quarter_moments_Nmm": [
+          5062500.0,
+          6750000.0,
+          5062500.0
+        ],
+        "Cb_from_moments": 1.1363636363636365,
+        "Mpositive_Nmm": 6750000.0,
+        "Mnegative_Nmm": 0.0
+      },
+      "Cb_used": 1,
+      "Me_Nmm": 1262084.6674846974,
+      "FLT": {
+        "lambda0": 1.5607184859251302,
+        "chi_flt": 0.4105356263052111,
+        "flt_branch": "elastic",
+        "lambda_p_reduced_stress": 0.6024930456646908,
+        "local_branch": "gross",
+        "Wceff_mm3": 12296.956333299131,
+        "MRd_flt_Nmm": 1147349.6977133616,
+        "gamma": 1.1,
+        "scope": "MSE 9.8.2.2 only; Me/Ml supplied and qualified externally; not total capacity"
+      },
+      "index": 5.883123526726487,
+      "restraint_provenance": "Referência ideal: garfos nas pontas, deslocamentos laterais e torção impedidos, rotações de flexão e empenamento livres; comprimentos efetivos 3 m. Sem painel ligado, cargas pelo centro de cisalhamento.",
+      "whole_member_approved": false,
+      "condition": "NBR expression domain and effective lengths supplied; physical stiffness/strength not established by coordinates alone",
+      "compressed_flange": "superior",
+      "Ly_used_mm": 3000.0,
+      "Lz_used_mm": 3000.0,
+      "Msd_flange_Nmm": 6750000.0,
+      "flange_results": [
+        {
+          "status": "computed_from_supplied_effective_lengths",
+          "moments": {
+            "Mmax_Nmm": 6750000.0,
+            "quarter_moments_Nmm": [
+              5062500.0,
+              6750000.0,
+              5062500.0
+            ],
+            "Cb_from_moments": 1.1363636363636365,
+            "Mpositive_Nmm": 6750000.0,
+            "Mnegative_Nmm": 0.0
+          },
+          "Cb_used": 1,
+          "Me_Nmm": 1262084.6674846974,
+          "FLT": {
+            "lambda0": 1.5607184859251302,
+            "chi_flt": 0.4105356263052111,
+            "flt_branch": "elastic",
+            "lambda_p_reduced_stress": 0.6024930456646908,
+            "local_branch": "gross",
+            "Wceff_mm3": 12296.956333299131,
+            "MRd_flt_Nmm": 1147349.6977133616,
+            "gamma": 1.1,
+            "scope": "MSE 9.8.2.2 only; Me/Ml supplied and qualified externally; not total capacity"
+          },
+          "index": 5.883123526726487,
+          "restraint_provenance": "Referência ideal: garfos nas pontas, deslocamentos laterais e torção impedidos, rotações de flexão e empenamento livres; comprimentos efetivos 3 m. Sem painel ligado, cargas pelo centro de cisalhamento.",
+          "whole_member_approved": false,
+          "condition": "NBR expression domain and effective lengths supplied; physical stiffness/strength not established by coordinates alone",
+          "compressed_flange": "superior",
+          "Ly_used_mm": 3000.0,
+          "Lz_used_mm": 3000.0,
+          "Msd_flange_Nmm": 6750000.0
+        }
+      ],
+      "full_segment_moments": {
+        "Mmax_Nmm": 6750000.0,
+        "quarter_moments_Nmm": [
+          5062500.0,
+          6750000.0,
+          5062500.0
+        ],
+        "Cb_from_moments": 1.1363636363636365,
+        "Mpositive_Nmm": 6750000.0,
+        "Mnegative_Nmm": 0.0
+      },
+      "flange_selection": "Momento positivo: superior; negativo: inferior. Sem travamento fictício na inversão de sinal.",
+      "section_property_convention_pending": true
+    }
+  ],
+  "ELS": {
+    "status": "computed_bending_component",
+    "x_mm": 1500.0,
+    "deflection_mm": 46.03048647159197,
+    "same_span_mm": 3000.0,
+    "model": "Euler-Bernoulli bending with sectionwise Ief(M), explicitly clamped to Ig for rounded transition",
+    "section_property_convention_pending": true,
+    "criterion_scope": "bending component only, not complete system ELS approval",
+    "limit_mm": 16.666666666666668,
+    "limit_origin": "L/180 escolhido para teste; não prescrição universal.",
+    "index": 2.761829188295518,
+    "criterion_status": "fails"
+  },
+  "NBR_branches": {
+    "local": {
+      "status": "computed",
+      "MRd_Nmm": 2276766.163417701,
+      "property_convention_pending": true,
+      "Msd_Nmm": 6750000.0,
+      "index": 2.9647313406430085,
+      "criterion_status": "fails"
+    },
+    "distortional": {
+      "status": "not_applicable",
+      "MRd_Nmm": null,
+      "source": "NBR 14762:2010 §9.3, p32 (PDF38)",
+      "model_domain": {
+        "version": "cladding_actions_only_20261103_r1",
+        "text": "Hipótese fixa do modelo: não há contato da telha/painel com o perfil nem ligação de qualquer mesa a painel. A telha contribui somente com as ações declaradas: peso, área de obstrução ao vento e recepção de sobrecarga quando aplicável à cobertura. Não fornece travamento, apoio, contenção ou rigidez ao perfil.",
+        "origin": "Domínio definido pelo usuário em 03/11/2026",
+        "limit": "Esta é a idealização de cálculo do app, não comprovação da condição física externa. Não define caminho de transferência das forças, não altera comprimentos efetivos ou linhas de aplicação das cargas e não implica torção nula. Sem aprovação global.",
+        "status": "fixed_model_domain",
+        "input_token_present": false,
+        "physical_declaration": null,
+        "physical_conditions_verified": false,
+        "conflict": null
+      },
+      "reason": "U simples dispensado de distorção em §9.3 no domínio adotado, sem ligação de mesa a painel. A exceção de mesa tracionada ligada a painel não integra esta idealização; não se usa Tabela 14 para esta dispensa."
+    },
+    "MV": {
+      "status": "computed_fixed_load_position",
+      "result": {
+        "x_mm": 1500.0,
+        "a_mm": 1500.0,
+        "branch": "a_bound_left",
+        "index_squared": 8.78963192219089
+      },
+      "source": "NBR9.8.4 same position and combination; local MRd denominator"
+    },
+    "shear_lag_domain": {
+      "status": "not_triggered_by_length",
+      "L_mm": 3000.0,
+      "bf0_upper_bound_mm": 50,
+      "scope": "sufficient length screen using nominal width upper bound; failing bound is NOT proof shear lag required"
+    },
+    "supports": {
+      "left": {
+        "status": "not_evaluated",
+        "missing": "select actual web connection, transverse stiffener or flange-contact geometry; no new normative check invented"
+      },
+      "right": {
+        "status": "not_evaluated",
+        "missing": "select actual web connection, transverse stiffener or flange-contact geometry; no new normative check invented"
+      }
+    },
+    "point": {
+      "status": "not_applicable",
+      "reason": "Sem força concentrada de compressão no caso informado."
+    }
+  },
+  "remaining_checks": [
+    "actual catalogue property convention/critical source, restraints and connection design remain as declared inputs; partial branches are explicit"
+  ],
+  "numerical_warnings": [],
+  "version": "0.4.4-estudo",
+  "project": "REFERÊNCIA NUMÉRICA DE FLEXÃO U100 ARREDONDADO, θ=+5 graus, não é projeto",
+  "synthetic": true,
+  "input_fingerprint": "70d4d37a54153f16a6e423174be9694a05d2b802207495a9a33313f9940c5693",
+  "input_data": {
+    "schema": "tercas_input_v2",
+    "catalog_index": 101,
+    "synthetic": true,
+    "project": "REFERÊNCIA NUMÉRICA DE FLEXÃO U100 ARREDONDADO, θ=+5 graus, não é projeto",
+    "properties": {
+      "h": 100,
+      "bf": 50,
+      "lip": 0,
+      "t": 2,
+      "mass_kg_m": 3.036769013984079,
+      "A_cm2": 3.8684955592153876,
+      "Ix_cm4": 61.48478166649565,
+      "Wx_cm3": 12.29695633329913,
+      "Iy_cm4": 9.719683323006443,
+      "J_mm4": 515.799407895385,
+      "Cw_mm6": 159778084.0787785,
+      "ri_mm": 2.0,
+      "fy_MPa": 250.0,
+      "fu_MPa": 400.0,
+      "E_MPa": 200000.0,
+      "G_MPa": 76923.07692307692
+    },
+    "property_origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão.",
+    "L_mm": 3000.0,
+    "q_uls": 6.0,
+    "P_uls": 0.0,
+    "x_uls": 1500.0,
+    "q_sls": 4.0,
+    "P_sls": 0.0,
+    "x_sls": 1500.0,
+    "actions_origin": "Valores sintéticos declarados para verificação do programa; matriz Lucas de 31/10/2026 e P adicional separado. Não é projeto real.",
+    "Ml_Nmm": 3476837.6663651397,
+    "Mdist_Nmm": null,
+    "critical_origin": "FSM própria de contorno arredondado U100 ri2, E200000 MPa ν0,3, com facetas e malha convergidas; críticos locais próprios de ambos sentidos. Não são valores nem identificação de sentido de Pierin. NBR14762:2010 §9.8.2.1(b).",
+    "ELS_limit_mm": 16.666666666666668,
+    "ELS_origin": "L/180 escolhido para teste; não prescrição universal.",
+    "route_domain": true,
+    "segments": [
+      {
+        "start_mm": 0.0,
+        "end_mm": 3000.0,
+        "Ly_top_effective_mm": 3000.0,
+        "Ly_bottom_effective_mm": 3000.0,
+        "Lz_effective_mm": 3000.0,
+        "Cb_mode": "one",
+        "restraint_provenance": "Referência ideal: garfos nas pontas, deslocamentos laterais e torção impedidos, rotações de flexão e empenamento livres; comprimentos efetivos 3 m. Sem painel ligado, cargas pelo centro de cisalhamento."
+      }
+    ],
+    "left_web": false,
+    "right_web": false,
+    "support_origin": "Garfos matemáticos de referência; nenhuma ligação física dimensionada.",
+    "patch_mm": null,
+    "patch_origin": "Contato de P não especificado no benchmark; introdução local pendente.",
+    "steel_name": "ASTM A36",
+    "load_mode": "direct",
+    "selected_types": [
+      "ELU normal",
+      "ELS rara",
+      "ELS frequente",
+      "ELS quase permanente"
+    ],
+    "area_inputs": {
+      "spacing_m": 1.5,
+      "permanent_kgf_m2": 8.0,
+      "live_kgf_m2": 25.0,
+      "wind_up_kgf_m2": 60.0,
+      "wind_down_kgf_m2": 40.0
+    },
+    "ELS_down_denominator": 180.0,
+    "ELS_up_denominator": 120.0,
+    "inclination": {
+      "value": 5.0,
+      "unit": "degrees",
+      "spacing_basis": "roof",
+      "permanent_basis": "roof",
+      "live_basis": "horizontal",
+      "wind_basis": "roof"
+    },
+    "weak_axis": {
+      "positive": {
+        "W_mm3": 2657.080089167908,
+        "Wc_mm3": 7242.856385101593,
+        "Ml_Nmm": 3332961.321861884,
+        "Mdist_Nmm": null,
+        "Nex_N": 134851.21594125862,
+        "Nez_N": 26598.651226610757,
+        "r0_mm": 53.00160361303818,
+        "j_mm": 58.390943231886666,
+        "Cm": 1.0,
+        "Cs": 1,
+        "plain_u_no_distortion": true,
+        "provenance": "Contorno próprio U100 arredondado H100 B50 t2 ri2, lado comprimido alma; todas propriedades integradas do mesmo contorno, FSM própria facetada convergida e Anexo E verificado independentemente. U isolado SEM painel ligado, âmbito restrito §9.3; não dispensa universal de terça instalada."
+      },
+      "negative": {
+        "W_mm3": 2657.080089167908,
+        "Wc_mm3": 2657.080089167908,
+        "Ml_Nmm": 1076283.2814849233,
+        "Mdist_Nmm": null,
+        "Nex_N": 134851.21594125862,
+        "Nez_N": 26598.651226610757,
+        "r0_mm": 53.00160361303818,
+        "j_mm": 58.390943231886666,
+        "Cm": 1.0,
+        "Cs": -1,
+        "plain_u_no_distortion": true,
+        "provenance": "Contorno próprio U100 arredondado H100 B50 t2 ri2, lado comprimido bordas; todas propriedades integradas do mesmo contorno, FSM própria facetada convergida e Anexo E verificado independentemente. U isolado SEM painel ligado, âmbito restrito §9.3; não dispensa universal de terça instalada."
+      }
+    },
+    "homogeneous_reference": {
+      "schema": "homogeneous_bending_reference_20261103_r1",
+      "reference_id": "U100"
+    },
+    "q_parallel_uls": 0.1,
+    "q_parallel_sls": 0.05
+  },
+  "inclination_evidence": {
+    "ELU": {
+      "angle": {
+        "radians": 0.08726646259971647,
+        "degrees": 5.0,
+        "percent": 8.748866352592401
+      },
+      "configuration": {
+        "value": 5.0,
+        "unit": "degrees",
+        "spacing_basis": "roof",
+        "permanent_basis": "roof",
+        "live_basis": "horizontal",
+        "wind_basis": "roof"
+      },
+      "convention": "Eixos locais: normal à cobertura (positivo para dentro) e paralelo à cobertura (positivo para a boca, vista A→B); alma normal; sem travamento da telha. M e V abaixo são concomitantes por seção/posição, não máximos independentes. Modo direto: cargas já locais e combinadas; não há rotação nem PP automático.",
+      "q_vector": {
+        "normal": 6.0,
+        "parallel": 0.1
+      },
+      "P_vector": {
+        "normal": 0.0,
+        "parallel": 0.0
+      },
+      "states": [
+        {
+          "x_mm": 0.0,
+          "side": "right",
+          "normal": {
+            "M_Nmm": 0.0,
+            "V_N": 9000.0,
+            "Rleft_N": 9000.0,
+            "Rright_N": 9000.0
+          },
+          "parallel": {
+            "M_Nmm": 0.0,
+            "V_N": 150.0,
+            "Rleft_N": 150.0,
+            "Rright_N": 150.0
+          }
+        },
+        {
+          "x_mm": 1500.0,
+          "side": "left",
+          "normal": {
+            "M_Nmm": 6750000.0,
+            "V_N": 0.0,
+            "Rleft_N": 9000.0,
+            "Rright_N": 9000.0
+          },
+          "parallel": {
+            "M_Nmm": 112500.0,
+            "V_N": 0.0,
+            "Rleft_N": 150.0,
+            "Rright_N": 150.0
+          }
+        },
+        {
+          "x_mm": 1500.0,
+          "side": "right",
+          "normal": {
+            "M_Nmm": 6750000.0,
+            "V_N": 0.0,
+            "Rleft_N": 9000.0,
+            "Rright_N": 9000.0
+          },
+          "parallel": {
+            "M_Nmm": 112500.0,
+            "V_N": 0.0,
+            "Rleft_N": 150.0,
+            "Rright_N": 150.0
+          }
+        },
+        {
+          "x_mm": 3000.0,
+          "side": "right",
+          "normal": {
+            "M_Nmm": 0.0,
+            "V_N": -9000.0,
+            "Rleft_N": 9000.0,
+            "Rright_N": 9000.0
+          },
+          "parallel": {
+            "M_Nmm": 0.0,
+            "V_N": -150.0,
+            "Rleft_N": 150.0,
+            "Rright_N": 150.0
+          }
+        }
+      ],
+      "parallel_demand": true,
+      "resistance_status": "Interação §9.9 calculada na posição fixa de P; resistências condicionadas aos dados rastreados. Sem aprovação global.",
+      "weak_property_provenance": null,
+      "u_pierin_assumption": null,
+      "provisional_hypothesis": false,
+      "weak_axis_capacities": {
+        "positive": {
+          "status": "computed_restricted",
+          "MRd_Nmm": 603881.8384472518,
+          "capacities_Nmm": {
+            "local": 603881.8384472518,
+            "FLT": 1566709.4177051354
+          },
+          "source": "NBR14762:2010 9.8.2.1–3",
+          "provenance": "Contorno próprio U100 arredondado H100 B50 t2 ri2, lado comprimido alma; todas propriedades integradas do mesmo contorno, FSM própria facetada convergida e Anexo E verificado independentemente. U isolado SEM painel ligado, âmbito restrito §9.3; não dispensa universal de terça instalada.",
+          "whole_member_approved": false,
+          "annex_e": {
+            "Me_Nmm": 16363930.050687777,
+            "source": "NBR14762:2010 Annex E.2 p82",
+            "provenance": "Contorno próprio U100 arredondado H100 B50 t2 ri2, lado comprimido alma; todas propriedades integradas do mesmo contorno, FSM própria facetada convergida e Anexo E verificado independentemente. U isolado SEM painel ligado, âmbito restrito §9.3; não dispensa universal de terça instalada.",
+            "resistance_evaluated": false,
+            "Cm_adopted": 1.0,
+            "Cm_policy": "Rota simplificada: Cm=1 em todas as combinações, sem redução automática."
+          }
+        },
+        "negative": {
+          "status": "computed_restricted",
+          "MRd_Nmm": 462357.90925073763,
+          "capacities_Nmm": {
+            "local": 553418.666292088,
+            "FLT": 462357.90925073763
+          },
+          "source": "NBR14762:2010 9.8.2.1–3",
+          "provenance": "Contorno próprio U100 arredondado H100 B50 t2 ri2, lado comprimido bordas; todas propriedades integradas do mesmo contorno, FSM própria facetada convergida e Anexo E verificado independentemente. U isolado SEM painel ligado, âmbito restrito §9.3; não dispensa universal de terça instalada.",
+          "whole_member_approved": false,
+          "annex_e": {
+            "Me_Nmm": 615750.6611339317,
+            "source": "NBR14762:2010 Annex E.2 p82",
+            "provenance": "Contorno próprio U100 arredondado H100 B50 t2 ri2, lado comprimido bordas; todas propriedades integradas do mesmo contorno, FSM própria facetada convergida e Anexo E verificado independentemente. U isolado SEM painel ligado, âmbito restrito §9.3; não dispensa universal de terça instalada.",
+            "resistance_evaluated": false,
+            "Cm_adopted": 1.0,
+            "Cm_policy": "Rota simplificada: Cm=1 em todas as combinações, sem redução automática."
+          }
+        }
+      },
+      "biaxial": {
+        "status": "computed_fixed_position",
+        "missing": [],
+        "governing": {
+          "x_mm": 1499.9999999999998,
+          "Mx_Nmm": 6750000.0,
+          "My_Nmm": 112500.0,
+          "index": 6.069418250027437
+        },
+        "candidate_count": 4,
+        "whole_member_approved": false
+      },
+      "strong_capacity_Nmm": 1147349.6977133616
+    },
+    "ELS": {
+      "angle": {
+        "radians": 0.08726646259971647,
+        "degrees": 5.0,
+        "percent": 8.748866352592401
+      },
+      "configuration": {
+        "value": 5.0,
+        "unit": "degrees",
+        "spacing_basis": "roof",
+        "permanent_basis": "roof",
+        "live_basis": "horizontal",
+        "wind_basis": "roof"
+      },
+      "convention": "Eixos locais: normal à cobertura (positivo para dentro) e paralelo à cobertura (positivo para a boca, vista A→B); alma normal; sem travamento da telha. M e V abaixo são concomitantes por seção/posição, não máximos independentes. Modo direto: cargas já locais e combinadas; não há rotação nem PP automático.",
+      "q_vector": {
+        "normal": 4.0,
+        "parallel": 0.05
+      },
+      "P_vector": {
+        "normal": 0.0,
+        "parallel": 0.0
+      },
+      "states": [
+        {
+          "x_mm": 0.0,
+          "side": "right",
+          "normal": {
+            "M_Nmm": 0.0,
+            "V_N": 6000.0,
+            "Rleft_N": 6000.0,
+            "Rright_N": 6000.0
+          },
+          "parallel": {
+            "M_Nmm": 0.0,
+            "V_N": 75.0,
+            "Rleft_N": 75.0,
+            "Rright_N": 75.0
+          }
+        },
+        {
+          "x_mm": 1500.0,
+          "side": "left",
+          "normal": {
+            "M_Nmm": 4500000.0,
+            "V_N": 0.0,
+            "Rleft_N": 6000.0,
+            "Rright_N": 6000.0
+          },
+          "parallel": {
+            "M_Nmm": 56250.0,
+            "V_N": 0.0,
+            "Rleft_N": 75.0,
+            "Rright_N": 75.0
+          }
+        },
+        {
+          "x_mm": 1500.0,
+          "side": "right",
+          "normal": {
+            "M_Nmm": 4500000.0,
+            "V_N": 0.0,
+            "Rleft_N": 6000.0,
+            "Rright_N": 6000.0
+          },
+          "parallel": {
+            "M_Nmm": 56250.0,
+            "V_N": 0.0,
+            "Rleft_N": 75.0,
+            "Rright_N": 75.0
+          }
+        },
+        {
+          "x_mm": 3000.0,
+          "side": "right",
+          "normal": {
+            "M_Nmm": 0.0,
+            "V_N": -6000.0,
+            "Rleft_N": 6000.0,
+            "Rright_N": 6000.0
+          },
+          "parallel": {
+            "M_Nmm": 0.0,
+            "V_N": -75.0,
+            "Rleft_N": 75.0,
+            "Rright_N": 75.0
+          }
+        }
+      ],
+      "parallel_demand": true,
+      "resistance_status": "Propriedades e críticos próprios por sentido fornecidos. Flecha forte: componente com Ief uniaxial. Rigidez efetiva sob flexão biaxial/Ief combinado e flecha fraca não qualificadas; sem conclusão de ELS completo nem aprovação global.",
+      "weak_property_provenance": null
+    }
+  },
+  "weak_critical_reference": {
+    "id": "Pierin2013_T1_planilha_v03_r106",
+    "family": "U",
+    "dimensions_mm": {
+      "h": 100.0,
+      "bf": 50.0,
+      "lip": 0,
+      "t": 2.0
+    },
+    "Mly_Nmm": 3260000.0,
+    "table": 1,
+    "PDF_page": 9,
+    "printed_page": 29,
+    "source_row": "100 x 50 x 2,00    84,16   3,51     3,26",
+    "source_sign": null,
+    "status": "tabulated_adopted_reference",
+    "adopted_as_app_reference": true,
+    "title": "Pierin, Silva e La Rovere (2013) — Forças Normais e Momentos Fletores Críticos de Perfis Formados a Frio",
+    "url": "https://www.researchgate.net/publication/265207005_Forcas_Normais_e_Momentos_Fletores_Criticos_de_Perfis_Formados_a_Frio",
+    "source_pdf_sha256": "2ff5f67f201e00ddb31fdb7370a8077bc9e27fb9ac553cb0c5036ab9ad9d2d73",
+    "source_E_MPa": 200000.0,
+    "source_G_MPa": null,
+    "source_nu": null,
+    "boundary": "simplesmente apoiado",
+    "corners": "retos",
+    "source_geometry_to_mean_line": "não explicitada",
+    "meaning": "Momento crítico local elástico em torno de y; não é resistência de cálculo nem indicação bilateral.",
+    "sense_qualification": "not_explicit_in_source",
+    "automatically_qualified_for_both_senses": false,
+    "app_original_G_MPa": 77000.0,
+    "original_configuration_unchanged": false,
+    "compatibility_reasons": [
+      "G difere da configuração original do app; G e ν da fonte não foram explicitados."
+    ],
+    "compatibility_note": "Compatibilidade de origem/configuração não é qualificação física; G=77000 MPa é detector de alteração do app, não valor atribuído a Pierin.",
+    "resistance_release": false
+  },
+  "strong_critical_qualification": {
+    "source_E_MPa": 200000.0,
+    "source_G_MPa": null,
+    "source_nu": null,
+    "app_original_G_MPa": 77000.0,
+    "source_note": "Rev07: Pierin declara E=200 GPa; ν não explicitado. G=77000 MPa é configuração original do app, não dado atribuído à tabela.",
+    "fields": {
+      "Ml": {
+        "status": "supplied_or_absent",
+        "inherited_tabulated": false,
+        "input_value_Nmm": 3476837.6663651397
+      },
+      "Mdist": {
+        "status": "supplied_or_absent",
+        "inherited_tabulated": false,
+        "input_value_Nmm": null
+      }
+    },
+    "warnings": [],
+    "pierin_U_reference": {
+      "schema": "pierin_2013_U_strong_reference_v1",
+      "title": "Pierin, Silva e La Rovere (2013) — Forças Normais e Momentos Fletores Críticos de Perfis Formados a Frio",
+      "url": "https://www.researchgate.net/publication/265207005_Forcas_Normais_e_Momentos_Fletores_Criticos_de_Perfis_Formados_a_Frio",
+      "source_pdf_sha256": "2ff5f67f201e00ddb31fdb7370a8077bc9e27fb9ac553cb0c5036ab9ad9d2d73",
+      "source_text_sha256": "ec0bcd133b1094a08c3ec3d52de99b70f1453d4a4b53ba6d2ce20e0b61822da2",
+      "source_E_MPa": 200000.0,
+      "source_G_MPa": null,
+      "source_nu": null,
+      "boundary": "simplesmente apoiado",
+      "corners": "retos",
+      "source_geometry_to_mean_line": "não explicitada",
+      "meaning": "Nl e Mlx são críticos locais elásticos, não resistências de cálculo. Nl apenas documental: o app não calcula resistência axial.",
+      "id": "Pierin2013_T1_U_100x50x2.00",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 2.0
+      },
+      "Nl_N": 84160,
+      "Mlx_Nmm": 3510000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 50 x 2,00    84,16   3,51     3,26",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      },
+      "status": "tabulated_adopted_reference",
+      "adopted_as_app_reference": true,
+      "axial_calculation_implemented": false,
+      "whole_member_approved": false,
+      "section_property_convention_pending": true,
+      "source_geometry_convention_unresolved": true,
+      "geometric_adoption": "Linha nominal exata; propriedades do catálogo mantidas. A equivalência exata com a discretização INSTAB não foi demonstrada.",
+      "bending_axis": "x — eixo de simetria da seção U; não transpor ao eixo y",
+      "source_origin": "Pierin2013 Tabela1 Mlx U | Pierin2013_T1_U_100x50x2.00 | p29/PDF9; referência adotada; crítico elástico, não resistência",
+      "app_original_G_MPa": 77000.0,
+      "original_configuration_unchanged": false,
+      "compatibility_reasons": [
+        "G difere da configuração original do app; G e ν da fonte não foram explicitados.",
+        "Propriedade de seção A_cm2 difere do catálogo associado à linha nominal Pierin.",
+        "Propriedade de seção Ix_cm4 difere do catálogo associado à linha nominal Pierin.",
+        "Propriedade de seção Wx_cm3 difere do catálogo associado à linha nominal Pierin.",
+        "Propriedade de seção Iy_cm4 difere do catálogo associado à linha nominal Pierin.",
+        "Propriedade de seção J_mm4 difere do catálogo associado à linha nominal Pierin.",
+        "Propriedade de seção Cw_mm6 difere do catálogo associado à linha nominal Pierin."
+      ],
+      "compatibility_note": "G=77000 MPa é detector de alteração do app, não G da fonte. Compatibilidade nominal não certifica o elemento físico.",
+      "source_input_value_Nmm": 3476837.6663651397,
+      "source_input_origin": "FSM própria de contorno arredondado U100 ri2, E200000 MPa ν0,3, com facetas e malha convergidas; críticos locais próprios de ambos sentidos. Não são valores nem identificação de sentido de Pierin. NBR14762:2010 §9.8.2.1(b).",
+      "use_status": "reference_only_existing_input_preserved"
+    }
+  },
+  "strong_critical_reference": {
+    "schema": "pierin_2013_U_strong_reference_v1",
+    "title": "Pierin, Silva e La Rovere (2013) — Forças Normais e Momentos Fletores Críticos de Perfis Formados a Frio",
+    "url": "https://www.researchgate.net/publication/265207005_Forcas_Normais_e_Momentos_Fletores_Criticos_de_Perfis_Formados_a_Frio",
+    "source_pdf_sha256": "2ff5f67f201e00ddb31fdb7370a8077bc9e27fb9ac553cb0c5036ab9ad9d2d73",
+    "source_text_sha256": "ec0bcd133b1094a08c3ec3d52de99b70f1453d4a4b53ba6d2ce20e0b61822da2",
+    "source_E_MPa": 200000.0,
+    "source_G_MPa": null,
+    "source_nu": null,
+    "boundary": "simplesmente apoiado",
+    "corners": "retos",
+    "source_geometry_to_mean_line": "não explicitada",
+    "meaning": "Nl e Mlx são críticos locais elásticos, não resistências de cálculo. Nl apenas documental: o app não calcula resistência axial.",
+    "id": "Pierin2013_T1_U_100x50x2.00",
+    "family": "U",
+    "dimensions_mm": {
+      "h": 100.0,
+      "bf": 50.0,
+      "lip": 0.0,
+      "t": 2.0
+    },
+    "Nl_N": 84160,
+    "Mlx_Nmm": 3510000,
+    "table": 1,
+    "PDF_page": 9,
+    "printed_page": 29,
+    "source_row": "100 x 50 x 2,00    84,16   3,51     3,26",
+    "column_units": {
+      "Nl": "kN",
+      "Mlx": "kN·m"
+    },
+    "status": "tabulated_adopted_reference",
+    "adopted_as_app_reference": true,
+    "axial_calculation_implemented": false,
+    "whole_member_approved": false,
+    "section_property_convention_pending": true,
+    "source_geometry_convention_unresolved": true,
+    "geometric_adoption": "Linha nominal exata; propriedades do catálogo mantidas. A equivalência exata com a discretização INSTAB não foi demonstrada.",
+    "bending_axis": "x — eixo de simetria da seção U; não transpor ao eixo y",
+    "source_origin": "Pierin2013 Tabela1 Mlx U | Pierin2013_T1_U_100x50x2.00 | p29/PDF9; referência adotada; crítico elástico, não resistência",
+    "app_original_G_MPa": 77000.0,
+    "original_configuration_unchanged": false,
+    "compatibility_reasons": [
+      "G difere da configuração original do app; G e ν da fonte não foram explicitados.",
+      "Propriedade de seção A_cm2 difere do catálogo associado à linha nominal Pierin.",
+      "Propriedade de seção Ix_cm4 difere do catálogo associado à linha nominal Pierin.",
+      "Propriedade de seção Wx_cm3 difere do catálogo associado à linha nominal Pierin.",
+      "Propriedade de seção Iy_cm4 difere do catálogo associado à linha nominal Pierin.",
+      "Propriedade de seção J_mm4 difere do catálogo associado à linha nominal Pierin.",
+      "Propriedade de seção Cw_mm6 difere do catálogo associado à linha nominal Pierin."
+    ],
+    "compatibility_note": "G=77000 MPa é detector de alteração do app, não G da fonte. Compatibilidade nominal não certifica o elemento físico.",
+    "source_input_value_Nmm": 3476837.6663651397,
+    "source_input_origin": "FSM própria de contorno arredondado U100 ri2, E200000 MPa ν0,3, com facetas e malha convergidas; críticos locais próprios de ambos sentidos. Não são valores nem identificação de sentido de Pierin. NBR14762:2010 §9.8.2.1(b).",
+    "use_status": "reference_only_existing_input_preserved"
+  },
+  "critical_warnings": [],
+  "model_domain_evidence": {
+    "version": "cladding_actions_only_20261103_r1",
+    "text": "Hipótese fixa do modelo: não há contato da telha/painel com o perfil nem ligação de qualquer mesa a painel. A telha contribui somente com as ações declaradas: peso, área de obstrução ao vento e recepção de sobrecarga quando aplicável à cobertura. Não fornece travamento, apoio, contenção ou rigidez ao perfil.",
+    "origin": "Domínio definido pelo usuário em 03/11/2026",
+    "limit": "Esta é a idealização de cálculo do app, não comprovação da condição física externa. Não define caminho de transferência das forças, não altera comprimentos efetivos ou linhas de aplicação das cargas e não implica torção nula. Sem aprovação global.",
+    "status": "fixed_model_domain",
+    "input_token_present": false,
+    "physical_declaration": null,
+    "physical_conditions_verified": false,
+    "conflict": null
+  },
+  "weak_sense_assumption": null,
+  "coverage_warnings": [],
+  "homogeneous_reference_evidence": {
+    "schema": "homogeneous_bending_reference_20261103_r1",
+    "reporting_version": "homogeneous_reference_mv_trace_c26a5bf_20261103_r3",
+    "reference_id": "U100",
+    "scope": "Referência própria de componentes de flexão: contorno nominal CBCA arredondado, ri=t=2 mm, propriedades integrais de parede fina e críticos locais FSM facetada convergida. Não são propriedades misturadas do catálogo nem críticos/sentidos históricos de Pierin. E=200000 MPa, G=E/2,6, fy=250 MPa; L e comprimentos efetivos=3000 mm, Cb=Cm=1, N=0. Garfos matemáticos com rotações de flexão e empenamento livres; ligações reais não verificadas. Telha sem contato/ligação, somente ações, sem contribuição estrutural. PP no CG pode gerar torque fora desta referência. Sem resistência 3D, torção, conclusão ELS fraca ou aprovação global de perfil comercial, produto ou projeto. A flecha forte usa Ief uniaxial; a rigidez efetiva sob flexão biaxial/Ief combinado e o ELS completo não estão qualificados.",
+    "frozen_scope": "Nesta etapa, materiais, seção, críticos e vínculos permanecem congelados: Nex/Nez manuais são da referência de 3 m. Alterar um valor físico exige nova qualificação; não é exigência normativa de vão nem licença para extrapolar os críticos.",
+    "support_limit_mv_trace": "Rastreabilidade M–V no limite junto ao apoio: NBR_branches.MV.result registra o estado governante entre interior_q_only e support_layer, com o mesmo índice da linha calculada e de prescribed_point.MV_limit_states. Os dois estados concomitantes ficam em limit_states; interior_q_only_result preserva o adaptador bruto P=0. Nos estados físicos, a_mm é nulo e a_limit indica a→0+, sem afastamento finito fictício. A transferência local de P continua não avaliada; isto não amplia as verificações nem aprova o elemento.",
+    "source_identity": {
+      "reference_vector_sha256": "41ff8390d3a4bebab4f9d686cb3477dc7d8ed3c710aaf6d449e0671ba22c7746",
+      "reference_vector": "U100_reference_vector.json",
+      "inputs": {
+        "p0": {
+          "file": "U100_angle_p0_inputs.json",
+          "sha256": "7b2312c668bddbddc0036ab616ed6728194ccd73dc9e1ec7595e7b06d6c8bf5e"
+        },
+        "p5": {
+          "file": "U100_angle_p5_inputs.json",
+          "sha256": "a41902ef792c4b90ed22a94479607c2732b5351edb27e3afafbfaf348ad9f670"
+        },
+        "m5": {
+          "file": "U100_angle_m5_inputs.json",
+          "sha256": "f34bd490340ddb54eed41666c2bd85be8c5f65a8a918b3c9be324a204ba3f2a2"
+        }
+      },
+      "geometry_source": "CBCA 2014, Tabela 2.3 p20/PDF21 (dimensões externas nominais) e Tabela C.2 p100/PDF101, U100x50x2, ri=2 mm.",
+      "method": "Propriedades próprias integradas no mesmo contorno nominal arredondado de parede fina; críticos locais FSM Kirchhoff facetada convergida; instabilidade global pelo Anexo E e FLT. Resistências condicionais NBR 14762:2010 §9.8 e Anexo E; sem utilização dos críticos ou dos sinais de Pierin.",
+      "source_scope": "Correspondência nominal de linha, não geometria medida nem aprovação de produto. Revisão independente de geometria/energia e de resistências; os modos FSM têm limitações documentadas, não solução exata de casca curva contínua."
+    },
+    "identity_check": "Comparação integral dos valores protegidos, não autorização por nome, ID ou hash.",
+    "input_sha256": "70d4d37a54153f16a6e423174be9694a05d2b802207495a9a33313f9940c5693",
+    "physical_conditions_verified": false,
+    "whole_member_approved": false
+  }
+}

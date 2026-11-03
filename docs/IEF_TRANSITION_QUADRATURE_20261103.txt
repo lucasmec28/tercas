@@ -1,0 +1,42 @@
+Quadratura da flecha com Ief variável - 03/11/2026
+
+Escopo
+Separação dos intervalos de integração nas transições da lei de Ief já
+existente. Nenhuma expressão de Ief, hipótese de vínculo, ação, resistência
+ou conclusão de ELS foi acrescentada ou alterada.
+
+Motivação verificável
+No caso sintético U100 arredondado, vão 6 m, inclinação +5 graus e combinação
+rara ELSR_00007, a integração anterior retornava 181,80376649908894 mm.
+Quadratura Gauss independente, refinada e separada nas transições, fornece
+181,8037650016988 mm. A diferença é cerca de 0,00000150 mm, sem mudança de
+classificação, mas supera o alvo relativo 1e-9 pedido à integração anterior.
+O caso não é um projeto real. O ensaio correspondente reproduz a diferença
+antes da correção e exige a concordância após ela.
+
+Implementação
+A lei atual usa min(Ig, Ief_literal). Com os coeficientes arredondados 0,673
+e 0,22, a saída efetiva deixa de ser Ig em lambda=(1+sqrt(1-4*0,22))/2,
+aproximadamente 0,67320508. Não se troca o limiar normativo nem a lei existente:
+somente se identifica onde a lei já limitada a Ig muda de derivada.
+
+As posições correspondentes são raízes dos polinômios de momento de cada
+lado de P. Usa-se a rotina já existente de raízes reais em intervalo aberto,
+em coordenada local normalizada. Esses pontos somam-se a apoios, P e ponto
+de avaliação. Mantém-se a regra existente de coalescência de pontos a poucos
+ULP, sem criar uma extensão física de carga. As raízes são armazenadas em
+cache limitado por não dependerem da coordenada onde se avalia a flecha.
+O caminho de I constante mínimo não recebe novos pontos. Casos inteiramente
+na região Ig preservam os intervalos anteriores.
+
+Verificações
+O teste próprio cobre o caso que falhava, cargas de ambos os sinais, P central
+ou excêntrica, q nulo, P no nó de apoio e resposta com Ig. A comparação usa
+quadratura Gauss independente, sem chamar a lei ou o integrador do aplicativo.
+Os testes anteriores de integração e carga móvel continuam aplicáveis.
+
+Limites
+Permanece a componente de flexão uniaxial da viga inteira. O ajuste não
+qualifica Ief sob tensões biaxiais, flecha fraca, torção, apoios reais ou o ELS
+completo. Precisão numérica de integração não constitui precisão física ou
+limite de aceitação normativa.

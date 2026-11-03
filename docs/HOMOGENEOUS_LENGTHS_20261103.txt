@@ -1,0 +1,87 @@
+Extensão explícita de vão e comprimentos nas referências próprias U100/U125/U150
+
+O modo fixo de 3 m e seus arquivos permanecem válidos. A extensão exige uma ação
+separada, ou importação de um contrato já ativado cujos dados protegidos e valores
+derivados confiram integralmente. Nome, marcador ou hash do usuário não autorizam
+cálculo. Um arquivo alterado fica em inspeção preservadora, sem reparo automático.
+
+Contrato editável
+- Um único vão inteiro L, biapoiado. Esforços e flechas não ganham apoios, tirantes,
+  molas ou segmentação a partir dos comprimentos de estabilidade.
+- Modo sem travamento intermediário: Lx=Ly=Lz=L, com Kx=Ky=Kz=1.
+- Modo declarado: Lx, Ly e Lz positivos, com K=1, origem registrada. Ly é comum
+  aos dois sentidos fortes somente nesta extensão. O fluxo legado que permite
+  comprimentos diferentes para as duas mesas não foi substituído.
+- Cb=Cm=1, empenamento livre na hipótese aplicável. Cargas no CT ou hipótese
+  aplicável não desestabilizante. Não qualifica cargas desestabilizantes, ligações,
+  rigidez de vínculos ou compatibilidade física dos comprimentos declarados.
+- A telha só gera ações. Sem crédito de contenção e sem verificação de torção
+  primária ou resistência 3D. O peso no CG não passa a atuar no CT e seu torque
+  físico não desaparece por esta extensão.
+
+Derivação e fontes primárias
+NBR 14762:2010 §9.7.2.1, p41–42 (PDF47–48):
+  Nex = pi² E Ix / Lx²
+  Ney = pi² E Iy / Ly²
+  Nez = [pi² E Cw / Lz² + G J] / r0²
+§9.8.2.2, p48 (PDF54):
+  Mcr forte = Cb r0 sqrt(Ney Nez), com Cb=1.
+Anexo E.2, p82 (PDF88):
+  Mcr fraco = (Nex/Cm)[sqrt(j²+r0² Nez/Nex)+Cs j], Cm=1.
+A expressão do Anexo E usa a implementação existente, estável numericamente,
+com Cs/j e convenções próprias por sentido. Não se atribui sentido ou crítico
+novo a Pierin. Não se reutilizam Nex/Nez de 3 m após mudar os comprimentos.
+
+O código preserva exatamente geometria nominal arredondada CBCA, propriedades
+integradas próprias, E/G/fy/fu e críticos locais FSM por sentido da referência.
+Ne e Mcr atuais são valores derivados do contrato, não propriedades de seção.
+
+Comprimentos iguais ao vão representam a idealização matemática da barra inteira
+com garfos e empenamento livre nas hipóteses declaradas. Comprimentos distintos
+são aplicação algébrica normativa às distâncias declaradas, não solução modal
+comprovada de um arranjo real de vínculos. K=1 é aplicado a essas distâncias;
+não se reduz K×L abaixo delas. A ressalva normativa sobre redução abaixo da
+distância destravada não é uma exigência nova para toda distância menor que L.
+
+Aplicação, ações e estado
+O editor mostra uma prévia de L/Lx/Ly/Lz, Ne/Mcr, trecho e critérios ELS. Enquanto
+há proposta pendente ou inválida, o resultado antigo é retirado e o cálculo fica
+bloqueado. Aplicar grava o novo contrato; Descartar restaura somente o rascunho.
+O JSON continua representando apenas o conjunto aplicado, nunca o rascunho.
+Nenhum resultado é calculado escondido. Clique repetido em Aplicar não deriva
+novamente a partir dos valores já derivados nem altera as ações.
+
+Coordenadas diretas de P são absolutas e preservadas. Se ficarem fora de [0,L],
+a entrada mantém-se no editor e o modo direto não calcula até correção explícita.
+No modo área, as posições prescritas de P continuam derivadas do vão: centro e
+limite junto ao apoio, sem varredura intermediária. Dados diretos inativos não
+são apagados. O PP continua calculado uma única vez a partir da mesma massa.
+
+Critérios ELS são razões escolhidas para teste: direto L/180; por área L/180 ou
+L/120 conforme o caso. Os limites acompanham o vão aplicado; não são apresentados
+como prescrição universal. Flecha forte usa Ief uniaxial; rigidez efetiva sob
+flexão biaxial/Ief combinado, flecha fraca e ELS completo não são qualificados.
+
+Rastreabilidade
+Entradas, origem, comprimentos, hipóteses, fórmulas e derivação ficam registrados
+em JSON/evidence e Word. A exportação Word usa os dados gravados no resultado,
+sem requalificar histórico pela configuração atual. Evidence da extensão tem
+versão própria para invalidar cache inadequado; o marcador físico original não
+muda. Trocar perfil remove os dois contratos, sem levar as propriedades próprias
+ou suas alegações para o catálogo. O carregador fixo é uma ação explícita que
+abre novamente o caso sintético completo original de 3 m.
+
+Ajuste numérico isolado
+A integração de flecha variável também passa a separar os pontos de transição
+analítica do clamp da lei existente de Ief. Não altera a lei de Ief. Ver
+IEF_TRANSITION_QUADRATURE_20261103.txt para motivação, teste adversarial e escopo.
+
+O integrador compartilhado atualizado também retira uma única vez os caches
+ativos de resultado/comparação de sessões anteriores, antes de exibir as rotas.
+Base, entradas, revisão, widgets, rascunhos e históricos não são alterados por
+essa migração. A época da sessão não é prova da versão real do runtime e não
+entra no JSON de entradas nem requalifica Word histórico. O modo fixo atualiza
+somente a versão da evidence, sem mudar marcador físico ou dados de referência.
+
+Nenhuma aprovação global, projeto real, solução física de contraventamento,
+resistência 3D, ELS biaxial ou publicação é inferida dos ensaios desta cópia.

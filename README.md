@@ -59,3 +59,31 @@ novos campos obrigatórios; a hipótese e sua origem são registradas nos result
 e na memória. Exportação de entradas acrescenta apenas um token de domínio em
 cópia. Declaração física explícita incompatível é preservada e marcada fora do
 domínio. Detalhes em `docs/NO_PANEL_MODEL_DOMAIN_20261103.txt`. Não publicado.
+
+## Referências próprias homogêneas — cópia controlada de 03/11/2026
+
+Carregador explícito de U100/U125/U150 nominais arredondados, com propriedades
+próprias e FSM própria, para os casos sintéticos 0/±5 graus. Importações manuais
+legadas continuam em inspeção até opt-in explícito. Um marcador só reabre o editor
+restrito quando o vetor físico, origens e domínios integrais conferem novamente.
+No modo fixo, seção/material/críticos/vínculos e L=3000 mm permanecem congelados;
+somente ações sintéticas e identificação podem ser editadas. Não há comparação genérica do
+catálogo neste modo, extrapolação de Nex/Nez, crédito da telha ou aprovação global.
+A flecha forte usa Ief uniaxial, sem qualificação de Ief combinado/ELS biaxial.
+Veja docs/HOMOGENEOUS_REFERENCE_UI_20261103.txt. Integração local sobre c26a5bf, com rastreabilidade M–V corrigida preservada.
+Esta nova candidata não foi publicada; não altera as verificações resistentes.
+
+## Extensão explícita de vão e comprimentos — cópia de 03/11/2026
+
+As mesmas referências próprias podem ativar separadamente um único vão inteiro
+editável, com Lx=Ly=Lz=L ou distâncias efetivas declaradas (K=1, Ly comum). Ne e
+Mcr são recalculados das propriedades próprias congeladas; nenhum vínculo ou
+rigidez de tirante é inferido. Comprimentos distintos são aplicação algébrica,
+não comprovação de um arranjo físico de contraventamento.
+
+Prévia/Aplicar preservam P absoluto e mostram os critérios ELS atualizados.
+Rascunhos pendentes retiram resultados anteriores. JSON alterado não é reparado
+silenciosamente; Word histórico usa a evidência gravada. O modo fixo de 3 m e o
+fluxo legado são preservados. Veja docs/HOMOGENEOUS_LENGTHS_20261103.txt e o ajuste
+isolado de quadratura em docs/IEF_TRANSITION_QUADRATURE_20261103.txt.
+Esta candidata permanece local, sem publicação ou aprovação global.

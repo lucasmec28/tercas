@@ -9,9 +9,11 @@ class Tests(unittest.TestCase):
   at=self.run_app();at.button[0].click().run(timeout=30);self.assertFalse(at.exception);return at
  def test_initial_render(self):
   at=self.run_app();self.assertIn('Terças',at.title[0].value)
-  # New application selector is intentional; preserve the nine legacy controls.
-  legacy=[x for x in at.selectbox if x.label!='Aplicação do elemento']
+  # Application and explicit reference selectors are intentional; preserve the nine legacy controls.
+  legacy=[x for x in at.selectbox if x.label not in ('Aplicação do elemento','Referência nominal própria','Caso sintético verificado')]
   self.assertEqual(len(legacy),9)
+  for label in ('Referência nominal própria','Caso sintético verificado'):
+   self.assertEqual(len([x for x in at.selectbox if x.label==label]),1)
   application=[x for x in at.selectbox if x.label=='Aplicação do elemento']
   self.assertEqual(len(application),1);self.assertEqual(application[0].value,'purlin')
   self.assertEqual(application[0].options,['Terça de cobertura','Travessa lateral — boca para baixo'])

@@ -26,11 +26,19 @@ Even the originally selected section is compared on the same catalogue basis.
         data['three_girt_model'].update(sc_y_mm=None,sc_z_mm=0.,sc_origin='',connections_declared=False,load_line_declared=False)
     fresh = defaults(index)
     out = copy.deepcopy(data)
+    out.pop("homogeneous_reference", None)
+    out.pop("homogeneous_lengths", None)
+    out.pop("homogeneous_reference_evidence", None)
     for key in ('catalog_index', 'properties', 'Ml_Nmm', 'Mdist_Nmm', 'critical_origin'):
         out[key] = copy.deepcopy(fresh[key])
     for key in ('E_MPa', 'G_MPa', 'fy_MPa', 'fu_MPa'):
         out['properties'][key] = data['properties'][key]
-    out['property_origin'] = data.get('property_origin', '') + '; demais propriedades: catálogo da seção comparada'
+    if 'homogeneous_reference' in data or 'homogeneous_lengths' in data:
+        out['property_origin'] = ('Geometria e propriedades seccionais do catálogo da seção comparada. '
+            'E/G/fy/fu preservados como valores sintéticos declarados do estudo de origem; '
+            'não são qualificação da nova seção nem propriedades do contorno próprio anterior.')
+    else:
+        out['property_origin'] = data.get('property_origin', '') + '; demais propriedades: catálogo da seção comparada'
     # Retain synthetic provenance of loads/restraints used by test/demo cases.
     entry = catalog_entry(index)
     from .strong_pierin import reference_for_index
@@ -86,6 +94,7 @@ All 209 entries are selected by default; no hidden cut-off or load/combination c
 """
     from .three_girt_application import enabled as three_girt_enabled
     if three_girt_enabled(data):raise ValueError('Comparação resistente do catálogo indisponível no diagnóstico 3D.')
+    if 'homogeneous_reference' in data or 'homogeneous_lengths' in data:raise ValueError('Referência própria não pode ser transferida à comparação genérica do catálogo.')
     labels = catalog_labels()
     indices = list(range(len(labels))) if indices is None else list(indices)
     if any(not isinstance(i, int) or isinstance(i, bool) or not 0 <= i < len(labels) for i in indices):

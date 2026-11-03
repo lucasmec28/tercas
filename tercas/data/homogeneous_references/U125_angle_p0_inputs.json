@@ -1,0 +1,111 @@
+{
+  "schema": "tercas_input_v2",
+  "catalog_index": 105,
+  "synthetic": true,
+  "project": "REFERÊNCIA NUMÉRICA U125 arredondado, θ=+0°, não é projeto",
+  "properties": {
+    "h": 125,
+    "bf": 50,
+    "lip": 0,
+    "t": 2,
+    "mass_kg_m": 3.4292690139840785,
+    "A_cm2": 4.368495559215387,
+    "Ix_cm4": 103.16742157541337,
+    "Wx_cm3": 16.50678745206614,
+    "Iy_cm4": 10.40265264619065,
+    "J_mm4": 582.4660745620517,
+    "Cw_mm6": 272584681.9972664,
+    "ri_mm": 2.0,
+    "fy_MPa": 250.0,
+    "fu_MPa": 400.0,
+    "E_MPa": 200000.0,
+    "G_MPa": 76923.07692307692
+  },
+  "property_origin": "Contorno nominal CBCA de U125, H125 B50 t2 ri2 mm. Todas as propriedades são integrais próprias do mesmo contorno arredondado; W usa fibras exteriores e I de linha, aproximação de parede fina. Não são valores misturados do catálogo. Massa=A×7850. PP físico no CG permanece excêntrico ao CT; ensaio apenas da componente de flexão.",
+  "L_mm": 3000.0,
+  "q_uls": 0.0,
+  "P_uls": 0.0,
+  "x_uls": 1500.0,
+  "q_sls": 0.0,
+  "P_sls": 0.0,
+  "x_sls": 1500.0,
+  "actions_origin": "Valores sintéticos para verificação do programa; matriz fornecida em 31/10/2026, P separado. Não é projeto real.",
+  "Ml_Nmm": 4534788.148866998,
+  "Mdist_Nmm": null,
+  "critical_origin": "FSM própria convergida do contorno arredondado U125, facetas Kirchhoff, E200000 MPa, nu0,3. Não é solução curva contínua exata nem atribuição de sinal ou uso de crítico de Pierin. NBR14762 §9.8.2.1(b).",
+  "ELS_limit_mm": 16.666666666666668,
+  "ELS_origin": "L/180 escolhido para teste, não prescrição universal.",
+  "route_domain": true,
+  "segments": [
+    {
+      "start_mm": 0.0,
+      "end_mm": 3000.0,
+      "Ly_top_effective_mm": 3000.0,
+      "Ly_bottom_effective_mm": 3000.0,
+      "Lz_effective_mm": 3000.0,
+      "Cb_mode": "one",
+      "restraint_provenance": "Garfos ideais: translações laterais/torção impedidas, rotações de flexão/empenamento livres; comprimentos efetivos 3 m. Nenhuma contribuição da telha; estudo da componente de flexão."
+    }
+  ],
+  "left_web": false,
+  "right_web": false,
+  "support_origin": "Garfos matemáticos; nenhuma ligação física dimensionada.",
+  "patch_mm": null,
+  "patch_origin": "Contato de P não especificado; introdução local permanece pendente.",
+  "steel_name": "ASTM A36",
+  "load_mode": "area",
+  "selected_types": [
+    "ELU normal",
+    "ELS rara",
+    "ELS frequente",
+    "ELS quase permanente"
+  ],
+  "area_inputs": {
+    "spacing_m": 1.5,
+    "permanent_kgf_m2": 8.0,
+    "live_kgf_m2": 25.0,
+    "wind_up_kgf_m2": 60.0,
+    "wind_down_kgf_m2": 40.0
+  },
+  "ELS_down_denominator": 180.0,
+  "ELS_up_denominator": 120.0,
+  "inclination": {
+    "value": 0.0,
+    "unit": "degrees",
+    "spacing_basis": "roof",
+    "permanent_basis": "roof",
+    "live_basis": "horizontal",
+    "wind_basis": "roof"
+  },
+  "model_domain": "cladding_actions_only_20261103_r1",
+  "weak_axis": {
+    "positive": {
+      "W_mm3": 2737.408834815886,
+      "Wc_mm3": 8670.194469021728,
+      "Ml_Nmm": 2565279.067506509,
+      "Mdist_Nmm": null,
+      "Nex_N": 226271.47511772023,
+      "Nez_N": 30618.97385758585,
+      "r0_mm": 58.4452096784281,
+      "j_mm": 69.78694806749067,
+      "Cm": 1.0,
+      "Cs": 1,
+      "plain_u_no_distortion": true,
+      "provenance": "Contorno próprio U125, lado comprimido web; FSM facetada convergida e Anexo E sobre as mesmas propriedades. Sem sinal atribuído a Pierin. U isolado sem ligação a painel; âmbito §9.3."
+    },
+    "negative": {
+      "W_mm3": 2737.408834815886,
+      "Wc_mm3": 2737.408834815886,
+      "Ml_Nmm": 1101618.648881198,
+      "Mdist_Nmm": null,
+      "Nex_N": 226271.47511772023,
+      "Nez_N": 30618.97385758585,
+      "r0_mm": 58.4452096784281,
+      "j_mm": 69.78694806749067,
+      "Cm": 1.0,
+      "Cs": -1,
+      "plain_u_no_distortion": true,
+      "provenance": "Contorno próprio U125, lado comprimido edges; FSM facetada convergida e Anexo E sobre as mesmas propriedades. Sem sinal atribuído a Pierin. U isolado sem ligação a painel; âmbito §9.3."
+    }
+  }
+}

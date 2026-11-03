@@ -1,7 +1,9 @@
 """Adapted from reviewed method protocols. See docs/METHOD.md."""
 import math
+from functools import lru_cache
 from scipy.integrate import quad
 from scipy.optimize import brentq
+from ..bounded_polynomial import real_roots_open_unit_interval
 
 def positive(*values):
     if any(not math.isfinite(v) or v <= 0 for v in values):
@@ -37,7 +39,7 @@ def max_moment(args):
             if lo<=x<=hi:cands.append(x)
     return max(abs(moment(x,L,q,P,a)) for x in cands)
 
-def integration_points(L, a, z):
+def integration_points(L, a, z, extra=()):
     """Coalesce floating-point duplicate breakpoints, not finite load patches.
 
     A symmetric root can be returned a few ULP from a=L/2. QUADPACK
@@ -46,12 +48,39 @@ def integration_points(L, a, z):
     """
     points=[]
     tolerance=32*math.ulp(float(L))
-    for value in sorted(set([0.,a,z,L])):
+    for value in sorted(set([0.,a,z,L,*extra])):
         if not points or value-points[-1]>tolerance:
             points.append(value)
         elif value==L:
             points[-1]=L
     return points
+
+@lru_cache(maxsize=256)
+def ief_transition_points(L, Ml, q, P, a):
+    """Breakpoints of the existing min(Ig,Ief_literal) law, not new physics.
+
+    The literal rounded coefficients have rho=1 at
+    lambda=(1+sqrt(1-4*0.22))/2, slightly above 0.673. The clamp therefore
+    stays at Ig until this upper root. Split there to keep adaptive
+    quadrature from missing a small derivative kink. Same-sign q and P
+    are already required by model(). Cached roots do not depend on the
+    displacement-evaluation coordinate.
+    """
+    threshold=((1+math.sqrt(1-4*.22))/2)**2*Ml
+    if max_moment((L,1.,1.,Ml,q,P,a))<=threshold:return ()
+    q,P=abs(q),abs(P)
+    reaction=q*L/2+P*(L-a)/L
+    points=[]
+    for lo,hi,after in ((0.,a,False),(a,L,True)):
+        length=hi-lo
+        if length<=0:continue
+        m0=moment(lo,L,q,P,a)
+        v0=reaction-q*lo-(P if after else 0.)
+        # Ascending coefficients in local normalized coordinate (0,1).
+        coeff=(m0-threshold,v0*length,-q*length*length/2)
+        for t in real_roots_open_unit_interval(coeff):
+            points.append(lo+length*t)
+    return tuple(sorted(set(points)))
 
 def deflection(args,z,constant_min=False):
     L,E,Ig,Ml,q,P,a=args
@@ -62,7 +91,8 @@ def deflection(args,z,constant_min=False):
         m=moment(x,L,q,P,a)
         mu=(L-z)*x/L if x<=z else z*(L-x)/L
         return m*mu/(E*(imin if constant_min else ief(Ig,m,Ml)))
-    points=integration_points(L,a,z)
+    extra=() if constant_min else ief_transition_points(L,Ml,q,P,a)
+    points=integration_points(L,a,z,extra)
     return sum(quad(f,lo,hi,epsabs=1e-9,epsrel=1e-9,limit=200)[0] for lo,hi in zip(points,points[1:]) if hi>lo)
 
 def slope(args,z,constant_min=False):
@@ -72,7 +102,8 @@ def slope(args,z,constant_min=False):
         m=moment(x,L,q,P,a)
         dmu=-x/L if x<=z else (L-x)/L
         return m*dmu/(E*(imin if constant_min else ief(Ig,m,Ml)))
-    points=integration_points(L,a,z)
+    extra=() if constant_min else ief_transition_points(L,Ml,q,P,a)
+    points=integration_points(L,a,z,extra)
     return sum(quad(f,lo,hi,epsabs=1e-11,epsrel=1e-9,limit=200)[0] for lo,hi in zip(points,points[1:]) if hi>lo)
 
 def peak(args,constant_min=False):

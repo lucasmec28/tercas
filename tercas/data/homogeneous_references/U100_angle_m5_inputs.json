@@ -1,0 +1,110 @@
+{
+  "schema": "tercas_input_v2",
+  "catalog_index": 101,
+  "synthetic": true,
+  "project": "REFERÊNCIA NUMÉRICA DE FLEXÃO U100 ARREDONDADO, θ=-5 graus, não é projeto",
+  "properties": {
+    "h": 100,
+    "bf": 50,
+    "lip": 0,
+    "t": 2,
+    "mass_kg_m": 3.036769013984079,
+    "A_cm2": 3.8684955592153876,
+    "Ix_cm4": 61.48478166649565,
+    "Wx_cm3": 12.29695633329913,
+    "Iy_cm4": 9.719683323006443,
+    "J_mm4": 515.799407895385,
+    "Cw_mm6": 159778084.0787785,
+    "ri_mm": 2.0,
+    "fy_MPa": 250.0,
+    "fu_MPa": 400.0,
+    "E_MPa": 200000.0,
+    "G_MPa": 76923.07692307692
+  },
+  "property_origin": "Geometria nominal CBCA2014 Tabela C.2 p100/PDF101: H100 B50 t2 ri2 mm. Propriedades próprias, integrais da linha média curva rm3, alma plana92 e mesas46 mm; W de fibras externas com I de linha é aproximação de parede fina. Não são os valores do catálogo. Massa A×7850. PP real atua no CG, excêntrico ao CT: seu torque não desaparece fisicamente; este ensaio verifica só a componente de flexão.",
+  "L_mm": 3000.0,
+  "q_uls": 0.0,
+  "P_uls": 0.0,
+  "x_uls": 1500.0,
+  "q_sls": 0.0,
+  "P_sls": 0.0,
+  "x_sls": 1500.0,
+  "actions_origin": "Valores sintéticos declarados para verificação do programa; matriz Lucas de 31/10/2026 e P adicional separado. Não é projeto real.",
+  "Ml_Nmm": 3476837.6663651397,
+  "Mdist_Nmm": null,
+  "critical_origin": "FSM própria de contorno arredondado U100 ri2, E200000 MPa ν0,3, com facetas e malha convergidas; críticos locais próprios de ambos sentidos. Não são valores nem identificação de sentido de Pierin. NBR14762:2010 §9.8.2.1(b).",
+  "ELS_limit_mm": 16.666666666666668,
+  "ELS_origin": "L/180 escolhido para teste; não prescrição universal.",
+  "route_domain": true,
+  "segments": [
+    {
+      "start_mm": 0.0,
+      "end_mm": 3000.0,
+      "Ly_top_effective_mm": 3000.0,
+      "Ly_bottom_effective_mm": 3000.0,
+      "Lz_effective_mm": 3000.0,
+      "Cb_mode": "one",
+      "restraint_provenance": "Referência ideal: garfos nas pontas, deslocamentos laterais e torção impedidos, rotações de flexão e empenamento livres; comprimentos efetivos 3 m. Sem painel ligado, cargas pelo centro de cisalhamento."
+    }
+  ],
+  "left_web": false,
+  "right_web": false,
+  "support_origin": "Garfos matemáticos de referência; nenhuma ligação física dimensionada.",
+  "patch_mm": null,
+  "patch_origin": "Contato de P não especificado no benchmark; introdução local pendente.",
+  "steel_name": "ASTM A36",
+  "load_mode": "area",
+  "selected_types": [
+    "ELU normal",
+    "ELS rara",
+    "ELS frequente",
+    "ELS quase permanente"
+  ],
+  "area_inputs": {
+    "spacing_m": 1.5,
+    "permanent_kgf_m2": 8.0,
+    "live_kgf_m2": 25.0,
+    "wind_up_kgf_m2": 60.0,
+    "wind_down_kgf_m2": 40.0
+  },
+  "ELS_down_denominator": 180.0,
+  "ELS_up_denominator": 120.0,
+  "inclination": {
+    "value": -5.0,
+    "unit": "degrees",
+    "spacing_basis": "roof",
+    "permanent_basis": "roof",
+    "live_basis": "horizontal",
+    "wind_basis": "roof"
+  },
+  "weak_axis": {
+    "positive": {
+      "W_mm3": 2657.080089167908,
+      "Wc_mm3": 7242.856385101593,
+      "Ml_Nmm": 3332961.321861884,
+      "Mdist_Nmm": null,
+      "Nex_N": 134851.21594125862,
+      "Nez_N": 26598.651226610757,
+      "r0_mm": 53.00160361303818,
+      "j_mm": 58.390943231886666,
+      "Cm": 1.0,
+      "Cs": 1,
+      "plain_u_no_distortion": true,
+      "provenance": "Contorno próprio U100 arredondado H100 B50 t2 ri2, lado comprimido alma; todas propriedades integradas do mesmo contorno, FSM própria facetada convergida e Anexo E verificado independentemente. U isolado SEM painel ligado, âmbito restrito §9.3; não dispensa universal de terça instalada."
+    },
+    "negative": {
+      "W_mm3": 2657.080089167908,
+      "Wc_mm3": 2657.080089167908,
+      "Ml_Nmm": 1076283.2814849233,
+      "Mdist_Nmm": null,
+      "Nex_N": 134851.21594125862,
+      "Nez_N": 26598.651226610757,
+      "r0_mm": 53.00160361303818,
+      "j_mm": 58.390943231886666,
+      "Cm": 1.0,
+      "Cs": -1,
+      "plain_u_no_distortion": true,
+      "provenance": "Contorno próprio U100 arredondado H100 B50 t2 ri2, lado comprimido bordas; todas propriedades integradas do mesmo contorno, FSM própria facetada convergida e Anexo E verificado independentemente. U isolado SEM painel ligado, âmbito restrito §9.3; não dispensa universal de terça instalada."
+    }
+  }
+}
