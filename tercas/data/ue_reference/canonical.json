@@ -1,0 +1,127 @@
+{
+  "schema": "tercas_input_v2",
+  "catalog_index": 19,
+  "synthetic": true,
+  "project": "Ensaio numérico Ue100x50x17x1.20_rounded_R01_209nodes_nu0p3, L=4000, θ=+0; não é projeto",
+  "properties": {
+    "h": 100,
+    "bf": 50,
+    "lip": 17,
+    "t": 1.2,
+    "mass_kg_m": 2.1299109101946496,
+    "A_cm2": 2.7132623059804457,
+    "Ix_cm4": 44.077946607003845,
+    "Wx_cm3": 8.815589321400768,
+    "Iy_cm4": 10.123375979153396,
+    "J_mm4": 130.23659068706135,
+    "Cw_mm6": 240764412.66233683,
+    "ri_mm": 1.2,
+    "fy_MPa": 250.0,
+    "fu_MPa": 400.0,
+    "E_MPa": 200000.0,
+    "G_MPa": 76923.07692307692
+  },
+  "property_origin": "Contorno próprio R01 de 209 nós, Ue100×50×17×1,20, ri1,20; todas as propriedades na mesma linha facetada. W usa fibras exteriores. Não é mistura de valores Pierin/catálogo. PP no CG tem torque físico fora deste ensaio da componente de flexão.",
+  "L_mm": 4000.0,
+  "q_uls": 0.0,
+  "P_uls": 0.0,
+  "x_uls": 1500.0,
+  "q_sls": 0.0,
+  "P_sls": 0.0,
+  "x_sls": 1500.0,
+  "actions_origin": "Ações sintéticas para testar algoritmo; matriz fornecida31/10/2026 preservada, P separado; não é carregamento real de Lucas.",
+  "Ml_Nmm": 4395734.375930524,
+  "Mdist_Nmm": null,
+  "critical_origin": "Forte: estimativa NBR14762:2010 Tabela12(b), nominal100×50×17×1,2. Fraco: FSM própria R01 de mesmo contorno/material/sentido. Nenhum crítico ou sinal de Pierin usado.",
+  "ELS_limit_mm": 22.22222222222222,
+  "ELS_origin": "L/180 escolhido para teste, não regra universal.",
+  "route_domain": true,
+  "segments": [
+    {
+      "start_mm": 0.0,
+      "end_mm": 4000.0,
+      "Ly_top_effective_mm": 4000.0,
+      "Ly_bottom_effective_mm": 4000.0,
+      "Lz_effective_mm": 4000.0,
+      "Cb_mode": "one",
+      "restraint_provenance": "Comprimentos efetivos declarados, K1; não criam apoios/tirantes; sem telha. Garfos ideais/empenamento livre."
+    }
+  ],
+  "left_web": false,
+  "right_web": false,
+  "support_origin": "Garfos matemáticos; nenhuma ligação real comprovada.",
+  "patch_mm": null,
+  "patch_origin": "Contato da força P não especificado; introdução local não qualificada.",
+  "steel_name": "ASTM A36",
+  "load_mode": "area",
+  "selected_types": [
+    "ELU normal",
+    "ELS rara",
+    "ELS frequente",
+    "ELS quase permanente"
+  ],
+  "area_inputs": {
+    "spacing_m": 1.5,
+    "permanent_kgf_m2": 8.0,
+    "live_kgf_m2": 25.0,
+    "wind_up_kgf_m2": 60.0,
+    "wind_down_kgf_m2": 40.0
+  },
+  "ELS_down_denominator": 180.0,
+  "ELS_up_denominator": 120.0,
+  "inclination": {
+    "value": 0.0,
+    "unit": "degrees",
+    "spacing_basis": "roof",
+    "permanent_basis": "roof",
+    "live_basis": "horizontal",
+    "wind_basis": "roof"
+  },
+  "model_domain": "cladding_actions_only_20261103_r1",
+  "weak_axis": {
+    "positive": {
+      "W_mm3": 3151.5055463838385,
+      "Wc_mm3": 5662.587190834765,
+      "Ml_Nmm": 878340.748314186,
+      "Mdist_Nmm": 850000.0,
+      "Nex_N": 54378.98697793336,
+      "Nez_N": 10369.449718948961,
+      "r0_mm": 61.891922186494426,
+      "j_mm": 60.33927401882127,
+      "Cm": 1.0,
+      "Cs": 1,
+      "plain_u_no_distortion": false,
+      "provenance": "R01 mesmo contorno/material; lado comprimido web. Fonte modal própria rastreada; não Pierin. signed_scalar_branches_with_certified_discrete_floor Entrada D = piso elástico conservador 850000 Nmm, não autovalor D identificado. Modelo R01 209 nós S-S, L=4000 mm no intervalo validado 3000–6000 mm; N0, torque imposto0, Cb=Cm1; Ne/Me/FLT recalculados neste vão. Uso escalar NBR9.8.2 e interação9.9, sem prova espectral da tensão biaxial real e sem aprovação física."
+    },
+    "negative": {
+      "W_mm3": 3151.5055463838385,
+      "Wc_mm3": 3151.5055463838385,
+      "Ml_Nmm": 2625295.3593363394,
+      "Mdist_Nmm": 1668845.1785399402,
+      "Nex_N": 54378.98697793336,
+      "Nez_N": 10369.449718948961,
+      "r0_mm": 61.891922186494426,
+      "j_mm": 60.33927401882127,
+      "Cm": 1.0,
+      "Cs": -1,
+      "plain_u_no_distortion": false,
+      "provenance": "R01 mesmo contorno/material; lado comprimido lips. Fonte modal própria rastreada; não Pierin. signed_scalar_branches_qualified"
+    }
+  },
+  "active_numeric_reference": {
+    "reference_id": "Ue100x50x17x1.20_rounded_R01_209nodes_nu0p3",
+    "Pierin_critical_values_or_signs_used": false,
+    "source": "Own R01 homogeneous geometry/material and signed criticals; certified web lower bound",
+    "web_Mdist_identified_Nmm": null,
+    "web_Mdist_lower_bound_Nmm": 850000.0,
+    "validated_span_range_mm": [
+      3000.0,
+      6000.0
+    ],
+    "current_span_mm": 4000.0,
+    "global_criticals_recomputed_at_current_span": true,
+    "effective_lengths_equal_span": true,
+    "scalar_NBR_interaction_not_combined_spectrum": true,
+    "decision_sha256": "42a3b2de4ec8e74bcc1949b6a6a3802e30bc117a5c47a54e7bc454e6c5343875"
+  }
+}

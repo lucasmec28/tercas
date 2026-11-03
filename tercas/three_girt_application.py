@@ -159,6 +159,8 @@ def load_cases(data,c):
 
 
 def calculate(data):
+ from .ue_reference import claims_reference
+ if claims_reference(data):raise ValueError('Referência própria Ue restrita à terça de flexão: remova o vínculo por uma nova seleção explícita antes do diagnóstico 3D; entradas preservadas, sem migração automática.')
  from .application import fingerprint,VERSION,build_spec
  from .batch import area_bundle,case_inputs
  if not enabled(data):raise ValueError('O sistema 3D requer seleção explícita em Travessa lateral.')

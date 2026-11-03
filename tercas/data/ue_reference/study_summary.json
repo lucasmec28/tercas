@@ -1,0 +1,356 @@
+{
+  "schema": "Ue100_parameterized_span_bending_benchmark_v1",
+  "status": "pass",
+  "validated_span_domain_inclusive_mm": [
+    3000.0,
+    6000.0
+  ],
+  "tested_spans_mm": [
+    3000.0,
+    4000.0,
+    4750.0,
+    6000.0
+  ],
+  "no_manual_eigenproblem_per_span": true,
+  "cases": 696,
+  "numerical_checks": 35672,
+  "roundtrips": 12,
+  "new_web_interactions_against_stage1": 160,
+  "comparison_count_note": "This reuses the prior 522 cases and adds 174 at 4750 mm; the 4 m floor was already tested in stage2.",
+  "complete_scalar_bending_capacities_both_senses": true,
+  "global_criticals_recomputed_for_each_span": true,
+  "web_Mdist_identified_Nmm": null,
+  "web_Mdist_lower_bound_Nmm": 850000.0,
+  "combined_ELS_approved": false,
+  "combined_stress_spectrum_certified": false,
+  "whole_member_approved": false,
+  "app_code_changed": false,
+  "published": false,
+  "frozen_app_files_intact": 173,
+  "batches": [
+    {
+      "batch": "L3000_anglep0",
+      "L_mm": 3000.0,
+      "angle_degrees": 0.0,
+      "cases": 58,
+      "numerical_checks": 2594,
+      "new_web_interactions_against_stage1": 0,
+      "previous_result_origin": "Frozen stage1 batch",
+      "json_roundtrip_exact": true,
+      "input_not_mutated": true,
+      "strong_MRd_Nmm": 1073681.625768815,
+      "weak_web_MRd_Nmm": 573953.5490512308,
+      "weak_lips_MRd_Nmm": 446224.0164462186,
+      "global_criticals": {
+        "Nex_N": 96673.75462743708,
+        "Ney_N": 22203.048026163255,
+        "Nez_N": 16400.45406768173,
+        "Me_strong_Nmm": 1181049.7883456964
+      },
+      "files": {
+        "inputs": "a197e6b8d2de3009cf8f82c41c14bfb35088fbde78a6de3bc9cd0f56d3620e53",
+        "reference": "5fc0455c3df936c79098b527353128c7a4a475caa47ddb67a28a5862620e7a6f",
+        "app": "3fc922bb961c2e91a4d97b9c9c806a93d6c623edae105962122c0e99f2483c2e",
+        "audit": "9c3ed20ded4ccd1bcaab035552f4f80ba23dd7447659a78f1f2646c845ed43c2",
+        "regression": "ec32610dc93da03f83d145300b601e7fcf63a64918ae456d2c99f516afb0866a"
+      }
+    },
+    {
+      "batch": "L3000_anglep5",
+      "L_mm": 3000.0,
+      "angle_degrees": 5.0,
+      "cases": 58,
+      "numerical_checks": 3114,
+      "new_web_interactions_against_stage1": 40,
+      "previous_result_origin": "Frozen stage1 batch",
+      "json_roundtrip_exact": true,
+      "input_not_mutated": true,
+      "strong_MRd_Nmm": 1073681.625768815,
+      "weak_web_MRd_Nmm": 573953.5490512308,
+      "weak_lips_MRd_Nmm": 446224.0164462186,
+      "global_criticals": {
+        "Nex_N": 96673.75462743708,
+        "Ney_N": 22203.048026163255,
+        "Nez_N": 16400.45406768173,
+        "Me_strong_Nmm": 1181049.7883456964
+      },
+      "files": {
+        "inputs": "7f0589d09d815724cc60d506fd7edcd9e10352eeeaf6a2a92ce0d4ae62684b6f",
+        "reference": "5fc0455c3df936c79098b527353128c7a4a475caa47ddb67a28a5862620e7a6f",
+        "app": "8c67507bab510b209961d86a3cbb9d97b29770ad8be11cfad3dc6f506ec4b3a2",
+        "audit": "ef918d7a7034404b7a43fc083f87d03f5c9a64f2520e99893e8274707ebff29e",
+        "regression": "ee8e520b3ec0314430668b3ebf8f767a9688d51454d66e8474722100cdb37f02"
+      }
+    },
+    {
+      "batch": "L3000_anglem5",
+      "L_mm": 3000.0,
+      "angle_degrees": -5.0,
+      "cases": 58,
+      "numerical_checks": 3114,
+      "new_web_interactions_against_stage1": 0,
+      "previous_result_origin": "Frozen stage1 batch",
+      "json_roundtrip_exact": true,
+      "input_not_mutated": true,
+      "strong_MRd_Nmm": 1073681.625768815,
+      "weak_web_MRd_Nmm": 573953.5490512308,
+      "weak_lips_MRd_Nmm": 446224.0164462186,
+      "global_criticals": {
+        "Nex_N": 96673.75462743708,
+        "Ney_N": 22203.048026163255,
+        "Nez_N": 16400.45406768173,
+        "Me_strong_Nmm": 1181049.7883456964
+      },
+      "files": {
+        "inputs": "83908f3b56b2d8f73987d0f2660dcbf74ddab3b8f250259bb5904c3234842d62",
+        "reference": "5fc0455c3df936c79098b527353128c7a4a475caa47ddb67a28a5862620e7a6f",
+        "app": "bc0e1468422dfc27dd8a10a2ea16ce8ed2458de6fb3c04d0e8a1e7712a5ac548",
+        "audit": "570e14f5115292935fe08567cb74bc7f15af5c56750a62f9bcc9073eff6085e2",
+        "regression": "ec32610dc93da03f83d145300b601e7fcf63a64918ae456d2c99f516afb0866a"
+      }
+    },
+    {
+      "batch": "L4000_anglep0",
+      "L_mm": 4000.0,
+      "angle_degrees": 0.0,
+      "cases": 58,
+      "numerical_checks": 2650,
+      "new_web_interactions_against_stage1": 0,
+      "previous_result_origin": "Frozen stage1 batch",
+      "json_roundtrip_exact": true,
+      "input_not_mutated": true,
+      "strong_MRd_Nmm": 640304.7200690487,
+      "weak_web_MRd_Nmm": 573953.5490512308,
+      "weak_lips_MRd_Nmm": 285558.5467363145,
+      "global_criticals": {
+        "Nex_N": 54378.98697793336,
+        "Ney_N": 12489.21451471683,
+        "Nez_N": 10369.449718948961,
+        "Me_strong_Nmm": 704335.1920759537
+      },
+      "files": {
+        "inputs": "f593f8376a6f009b9b67e1dba473c181f65e4a2b8cebbf733431f890cba480ff",
+        "reference": "0bca134cc5dd1e9a3106d03177c0c77fb4d6cfe30765be4452ef85a80afb1e0c",
+        "app": "b5eb74730507c49f8e530743267700090a830f3245e2f74fc6ad7ea8af8a374c",
+        "audit": "a239cedccbc894c5c9e55f73bb73793d0773ee8f65c22e13b98ab5854a70299c",
+        "regression": "ec32610dc93da03f83d145300b601e7fcf63a64918ae456d2c99f516afb0866a"
+      }
+    },
+    {
+      "batch": "L4000_anglep5",
+      "L_mm": 4000.0,
+      "angle_degrees": 5.0,
+      "cases": 58,
+      "numerical_checks": 3362,
+      "new_web_interactions_against_stage1": 40,
+      "previous_result_origin": "Frozen stage1 batch",
+      "json_roundtrip_exact": true,
+      "input_not_mutated": true,
+      "strong_MRd_Nmm": 640304.7200690487,
+      "weak_web_MRd_Nmm": 573953.5490512308,
+      "weak_lips_MRd_Nmm": 285558.5467363145,
+      "global_criticals": {
+        "Nex_N": 54378.98697793336,
+        "Ney_N": 12489.21451471683,
+        "Nez_N": 10369.449718948961,
+        "Me_strong_Nmm": 704335.1920759537
+      },
+      "files": {
+        "inputs": "4abcf8d57943f2b15d5ef4a31dfa5316ca288379455f9e094bf7615fbef79927",
+        "reference": "0bca134cc5dd1e9a3106d03177c0c77fb4d6cfe30765be4452ef85a80afb1e0c",
+        "app": "4ccf8fd8c1f83b5d7781a6fe46235963b222b270d5e577579c4a764647a90b11",
+        "audit": "798398ed6fd06bc8d4086daff019055e05c02602c5701b9f7ec39033e3cecd28",
+        "regression": "ee8e520b3ec0314430668b3ebf8f767a9688d51454d66e8474722100cdb37f02"
+      }
+    },
+    {
+      "batch": "L4000_anglem5",
+      "L_mm": 4000.0,
+      "angle_degrees": -5.0,
+      "cases": 58,
+      "numerical_checks": 3362,
+      "new_web_interactions_against_stage1": 0,
+      "previous_result_origin": "Frozen stage1 batch",
+      "json_roundtrip_exact": true,
+      "input_not_mutated": true,
+      "strong_MRd_Nmm": 640304.7200690487,
+      "weak_web_MRd_Nmm": 573953.5490512308,
+      "weak_lips_MRd_Nmm": 285558.5467363145,
+      "global_criticals": {
+        "Nex_N": 54378.98697793336,
+        "Ney_N": 12489.21451471683,
+        "Nez_N": 10369.449718948961,
+        "Me_strong_Nmm": 704335.1920759537
+      },
+      "files": {
+        "inputs": "92a9ef346d10a0a86e6beee658f0b634a96a795f03bccf22c94d58e547183eea",
+        "reference": "0bca134cc5dd1e9a3106d03177c0c77fb4d6cfe30765be4452ef85a80afb1e0c",
+        "app": "efecfe1c61b4391c6b85debf2008b14ceafdbe3697235f355be96999642414ed",
+        "audit": "bdd1d0595f2a6bdd15afab560eef2576afd3943687eb8d0445e2180bb9453673",
+        "regression": "ec32610dc93da03f83d145300b601e7fcf63a64918ae456d2c99f516afb0866a"
+      }
+    },
+    {
+      "batch": "L4750_anglep0",
+      "L_mm": 4750.0,
+      "angle_degrees": 0.0,
+      "cases": 58,
+      "numerical_checks": 2554,
+      "new_web_interactions_against_stage1": 0,
+      "previous_result_origin": "Original unchanged stage1 adapter evaluated at the new intermediate span",
+      "json_roundtrip_exact": true,
+      "input_not_mutated": true,
+      "strong_MRd_Nmm": 476974.41738562856,
+      "weak_web_MRd_Nmm": 573953.5490512308,
+      "weak_lips_MRd_Nmm": 222448.4591011102,
+      "global_criticals": {
+        "Nex_N": 38562.384117315625,
+        "Ney_N": 8856.617495200855,
+        "Nez_N": 8114.087981888231,
+        "Me_strong_Nmm": 524671.8591241916
+      },
+      "files": {
+        "inputs": "f530856ab22ca7944d519ef53b18025d05469d3699cac27a9c02b445bf4c41f5",
+        "reference": "6610633313efd60aaa2d0aac83de2e1d6e77a58af257db09feb17e66d523de22",
+        "app": "71a8c53e31c232c63f4744fc5b2558e0db33a4d14cdfa06cf871c579fdb64482",
+        "audit": "8beab2c7017bf7bd7bc1f69d6a8f02043576552a38a13b7bb4bc6ed390f59daf",
+        "regression": "ec32610dc93da03f83d145300b601e7fcf63a64918ae456d2c99f516afb0866a"
+      }
+    },
+    {
+      "batch": "L4750_anglep5",
+      "L_mm": 4750.0,
+      "angle_degrees": 5.0,
+      "cases": 58,
+      "numerical_checks": 3050,
+      "new_web_interactions_against_stage1": 40,
+      "previous_result_origin": "Original unchanged stage1 adapter evaluated at the new intermediate span",
+      "json_roundtrip_exact": true,
+      "input_not_mutated": true,
+      "strong_MRd_Nmm": 476974.41738562856,
+      "weak_web_MRd_Nmm": 573953.5490512308,
+      "weak_lips_MRd_Nmm": 222448.4591011102,
+      "global_criticals": {
+        "Nex_N": 38562.384117315625,
+        "Ney_N": 8856.617495200855,
+        "Nez_N": 8114.087981888231,
+        "Me_strong_Nmm": 524671.8591241916
+      },
+      "files": {
+        "inputs": "3836eaba05b1548ba658b26f252da32cf196cd57da3ef101c1a96e0799d2b2a6",
+        "reference": "6610633313efd60aaa2d0aac83de2e1d6e77a58af257db09feb17e66d523de22",
+        "app": "f456bfaa3e3bd5aa60f814ff915ff7fa52b95cc74ecce7c701acf5202389f873",
+        "audit": "446b75bc88c931f810a79d23e9a84e1926a441d525f498c8493e86d68c163f3e",
+        "regression": "ee8e520b3ec0314430668b3ebf8f767a9688d51454d66e8474722100cdb37f02"
+      }
+    },
+    {
+      "batch": "L4750_anglem5",
+      "L_mm": 4750.0,
+      "angle_degrees": -5.0,
+      "cases": 58,
+      "numerical_checks": 3050,
+      "new_web_interactions_against_stage1": 0,
+      "previous_result_origin": "Original unchanged stage1 adapter evaluated at the new intermediate span",
+      "json_roundtrip_exact": true,
+      "input_not_mutated": true,
+      "strong_MRd_Nmm": 476974.41738562856,
+      "weak_web_MRd_Nmm": 573953.5490512308,
+      "weak_lips_MRd_Nmm": 222448.4591011102,
+      "global_criticals": {
+        "Nex_N": 38562.384117315625,
+        "Ney_N": 8856.617495200855,
+        "Nez_N": 8114.087981888231,
+        "Me_strong_Nmm": 524671.8591241916
+      },
+      "files": {
+        "inputs": "5f03d14bfabf6d77c65b4a436fd2aad841ae6ef012ac89786f3ebd65955d99d7",
+        "reference": "6610633313efd60aaa2d0aac83de2e1d6e77a58af257db09feb17e66d523de22",
+        "app": "2819974bfe9b82cc30bf290308efe1a16d1e73a84a9cfa52d5fb5961817a94dc",
+        "audit": "c9bb1a52402af369b6695b8f4df5a311ed52f097ad90027a531885352afe90aa",
+        "regression": "ec32610dc93da03f83d145300b601e7fcf63a64918ae456d2c99f516afb0866a"
+      }
+    },
+    {
+      "batch": "L6000_anglep0",
+      "L_mm": 6000.0,
+      "angle_degrees": 0.0,
+      "cases": 58,
+      "numerical_checks": 2594,
+      "new_web_interactions_against_stage1": 0,
+      "previous_result_origin": "Frozen stage1 batch",
+      "json_roundtrip_exact": true,
+      "input_not_mutated": true,
+      "strong_MRd_Nmm": 326370.4641316278,
+      "weak_web_MRd_Nmm": 573953.5490512308,
+      "weak_lips_MRd_Nmm": 164687.7858891991,
+      "global_criticals": {
+        "Nex_N": 24168.43865685927,
+        "Ney_N": 5550.762006540814,
+        "Nez_N": 6061.589469854127,
+        "Me_strong_Nmm": 359007.5105447907
+      },
+      "files": {
+        "inputs": "44684a668c4f692e297ecf1504effebe5006fcb7323ff537b79a3df8a7b72379",
+        "reference": "d8deaebaa6067b488e11adbe90e61c94d38958995f28ac29a21db00e63f09373",
+        "app": "d2bcce7d833b7d9ecd5f1b033ea145509a5b59f2d1023a52e89d06a9a429b225",
+        "audit": "2c43ad19b631378543a05ced89dce05bc8bb4d2478d1fad070ac83edb2584788",
+        "regression": "ec32610dc93da03f83d145300b601e7fcf63a64918ae456d2c99f516afb0866a"
+      }
+    },
+    {
+      "batch": "L6000_anglep5",
+      "L_mm": 6000.0,
+      "angle_degrees": 5.0,
+      "cases": 58,
+      "numerical_checks": 3114,
+      "new_web_interactions_against_stage1": 40,
+      "previous_result_origin": "Frozen stage1 batch",
+      "json_roundtrip_exact": true,
+      "input_not_mutated": true,
+      "strong_MRd_Nmm": 326370.4641316278,
+      "weak_web_MRd_Nmm": 573953.5490512308,
+      "weak_lips_MRd_Nmm": 164687.7858891991,
+      "global_criticals": {
+        "Nex_N": 24168.43865685927,
+        "Ney_N": 5550.762006540814,
+        "Nez_N": 6061.589469854127,
+        "Me_strong_Nmm": 359007.5105447907
+      },
+      "files": {
+        "inputs": "10ed1df58072ce103f9cda073db1f03dedb7c89712b4064e3ea4bb4eae10b3dd",
+        "reference": "d8deaebaa6067b488e11adbe90e61c94d38958995f28ac29a21db00e63f09373",
+        "app": "4a30aa60ac837728e5d52eda91ea6c6ed4f143777cc5536b9790d455d84c795a",
+        "audit": "fc319ffe01cc969300e2db9a0e3f2d64325fdd285005ecc864c4039d1f298f1b",
+        "regression": "ee8e520b3ec0314430668b3ebf8f767a9688d51454d66e8474722100cdb37f02"
+      }
+    },
+    {
+      "batch": "L6000_anglem5",
+      "L_mm": 6000.0,
+      "angle_degrees": -5.0,
+      "cases": 58,
+      "numerical_checks": 3114,
+      "new_web_interactions_against_stage1": 0,
+      "previous_result_origin": "Frozen stage1 batch",
+      "json_roundtrip_exact": true,
+      "input_not_mutated": true,
+      "strong_MRd_Nmm": 326370.4641316278,
+      "weak_web_MRd_Nmm": 573953.5490512308,
+      "weak_lips_MRd_Nmm": 164687.7858891991,
+      "global_criticals": {
+        "Nex_N": 24168.43865685927,
+        "Ney_N": 5550.762006540814,
+        "Nez_N": 6061.589469854127,
+        "Me_strong_Nmm": 359007.5105447907
+      },
+      "files": {
+        "inputs": "a5aaaf133b0a9e59fa5dcbaae0f740e6f675b5469cda6620ab2f3d0ded6f154f",
+        "reference": "d8deaebaa6067b488e11adbe90e61c94d38958995f28ac29a21db00e63f09373",
+        "app": "f93363a962f5e00c36d03ec84cd9150389b33abd96d83be53075429b1608a5b7",
+        "audit": "88d0c3ff3cc1eb9ec9b923f51e0816a45d2c985017f2190ba774199c0bedf871",
+        "regression": "ec32610dc93da03f83d145300b601e7fcf63a64918ae456d2c99f516afb0866a"
+      }
+    }
+  ]
+}

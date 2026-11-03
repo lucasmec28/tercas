@@ -1,0 +1,255 @@
+ELS BIAXIAL DA TERÇA Ue100: EXIGÊNCIA, HIPÓTESE E DOMÍNIO FECHADO
+03/11/2026. Revisão em cópia. Sem publicação ou alteração do aplicativo.
+
+CONCLUSÃO PRÁTICA
+
+Não foi encontrada, nas cláusulas aplicáveis da NBR 14762:2010 fornecida,
+uma exigência de construir sempre uma geometria/seção efetiva biaxial
+conjunta para calcular a flecha de uma terça inclinada. A exigência é
+considerar a redução de rigidez por flambagem local e os efeitos relevantes
+do modelo. O cálculo da flexão pelos eixos principais é uma técnica válida.
+Mas a fórmula escalar do MSE em 9.8.5 também não contém uma regra explícita
+que certifique, para qualquer combinação, duas reduções independentes
+Ief,x(Mx) e Ief,y(My) sob a tensão simultânea Mx+My.
+
+Portanto, não se deve transformar "falta de seção efetiva biaxial" em
+requisito normativo universal. A pergunta correta é se a rigidez adotada
+representa adequadamente a combinação de serviço no domínio proposto.
+Uma seção efetiva geométrica conjunta é uma possível resposta pelo MLE,
+não a única resposta obrigatória nem um artefato exigido pelo MSE.
+
+Foi fechado um domínio concreto sem inventar uma extensão da lei MSE:
+34 dos 36 casos ELS existentes de 4 m, inclinações +5° e -5°, satisfazem
+uma condição suficiente de larguras integralmente efetivas sob a tensão
+COMBINADA. Nesse domínio, Ief,x=Ig,x e Ief,y=Ig,y são as propriedades da
+mesma seção bruta, Ixy praticamente nulo, e a composição vetorial das duas
+flexões é justificada. Os 34 casos passaram também em 68 soluções FEM
+acopladas em base não principal, com erro máximo de 1,67e-8 mm frente à
+solução fechada. Não se alteraram as flags antigas ou se publicou recurso.
+
+Em cada inclinação, apenas ELSR_00007 não é decidido por esse comparador
+conservador. Isto NÃO significa que a seção tenha necessariamente redução,
+que a flecha real esteja reprovada, ou que a norma proíba cálculo por eixos.
+Significa que essa prova suficiente não cobre aqueles dois estados.
+
+O resultado qualifica a componente de flexão biaxial no modelo descrito.
+Não verifica o atendimento de um limite de flecha, não inclui a parcela
+torsional/empenamento e não aprova resistência, ligações ou membro real.
+PP no CG continua tendo torque físico em relação ao CT, separado daqui.
+
+1. FONTES PRIMÁRIAS E PÁGINAS
+
+NBR 14762:2010 fornecida, PDF com 93 páginas; números abaixo são impressos.
+SHA256 c2a01615a3ce9e2b93aeb7fee757f7bf9dd932adaefbc242e848ce813dc82407.
+Arquivo de origem:
+outputs/tercas_three_girts_qualification_20261103/sources/Automação MC/
+NBR14762 Dim. perfis formados a frio.pdf
+
+- 8.1, p.24/PDF30: análise baseada em modelo realista, deformações dos
+  esforços relevantes e avaliação da pertinência da análise linear.
+- 9.2.2.1 e 9.2.2.2, pp.26-27/PDF32-33: efetividade local, limiar 0,673,
+  tensão de serviço e aproximações sucessivas no MLE.
+- Tabela 5, p.28/PDF34: elemento AA com distribuição linear de tensões.
+- Tabela 6, p.29/PDF35: elemento AL, inclusive compressão uniforme.
+- 9.2.3.1 e 9.2.3.2, pp.30-31/PDF36-37: elemento UNIFORMEMENTE comprimido
+  com enrijecedor de borda e adaptação a serviço. Para lambda_p0<=0,673,
+  o próprio texto dispensa a necessidade do enrijecedor para a efetividade
+  da mesa. Fora desse ramo, Is, Ia e a efetividade do lábio importam.
+- 9.8.1 e 9.8.2.1, pp.44-45/PDF50-51: domínio de flexão, opções MLE/MSE e
+  origem de Ml. "Flexão simples" não é usada aqui como prova textual de
+  que uma componente biaxial seria expressamente proibida.
+- 9.8.5, pp.51-52/PDF57-58: redução de rigidez por flambagem local via
+  MLE ou MSE. No MSE, lambda_pd=sqrt(Mn/Ml), Ief=Ig até 0,673 e acima disso
+  Ief/Ig=(1-0,22/lambda_pd)/lambda_pd. Mn é solicitante de serviço; Ml é
+  crítico local elástico. Não há uma equação tensorial biaxial nessa receita.
+- 9.9, p.53/PDF59: interação de esforços RESISTENTES. Não dá uma regra de
+  rigidez para a superposição de duas leis reduzidas de serviço.
+
+CBCA, Silva/Pierin/Silva, Estruturas compostas por perfis formados a frio,
+2014. Arquivo local CBCA2014_internal.pdf. SHA256 no manifesto deste ensaio.
+- p.29/PDF30: tensão de utilização na seção efetiva no cálculo de flechas.
+- Anexo B, pp.94-95/PDF95-96: projeção em eixos principais e equações de
+  flexão em eixos não principais, incluindo produto de inércia. Identifica
+  separadamente torção quando a força não passa pelo CT. Isso apoia a
+  mecânica da decomposição, não é autorização de uma lei MSE biaxial geral.
+- Exemplo 08, pp.67-70: resistência em flexão fraca e iteração de larguras
+  efetivas. Não foi transformado em benchmark ELS biaxial publicado.
+
+Origem pública do manual:
+https://www.jodi.com.br/wp-content/uploads/2021/01/Manual-CBCA-Estrutura-composta-por-perfis-formados-a-frio.pdf
+Biblioteca oficial que identifica o manual e sua base normativa:
+https://www.cbca-acobrasil.org.br/site/biblioteca/?bsc=ativar&bscPgn=2&bscQtdReg=10&chkCat%5B%5D=7&txtBscKeyword=
+Consulta primária online em 03/11/2026. A leitura técnica foi do PDF local
+completo, não de snippets. Não foi afirmada a edição vigente para uma obra.
+
+2. O QUE É NORMA, O QUE É MECÂNICA, O QUE AINDA FALTA
+
+Norma: usar rigidez efetiva em serviço, considerar esforços relevantes e
+seguir um dos métodos no seu domínio. No MLE, a tensão normal de serviço
+que define a efetividade deve refletir os esforços presentes. No ramo sem
+redução, a seção bruta já é um ponto fixo da iteração; nenhuma faixa precisa
+ser retirada e não há centroide/produto de inércia efetivos novos a achar.
+
+Mecânica: para o problema flexional elástico de primeira ordem, com seção
+inteiramente efetiva e seus eixos principais, curvaturas por eixo e sua
+transformação vetorial são exatas dentro de Euler-Bernoulli. Composição de
+componentes precisa usar a MESMA seção longitudinal e a MESMA combinação;
+não se compõe o máximo de cada eixo ocorrido em posições diferentes.
+
+Hipótese, ainda não qualificada em geral: no regime de rigidez reduzida,
+usar cada Ief somente em função do momento daquele eixo. A tensão combinada
+pode alterar as zonas comprimidas; no MLE, pode mudar o centroide e Ixy.
+O MSE não exige reconstrução de faixas geométricas, porém a existência de
+duas curvas puras não demonstra por si a precisão ou o conservadorismo do
+modelo diagonal sob momento biaxial. Tampouco demonstra que ele é inválido.
+
+Não se exige novo Ml biaxial para a prova do ramo totalmente efetivo feita
+aqui. Não se exige Mdist como entrada adicional da expressão MSE de Ief.
+Não se reutiliza interação de resistência para construir rigidez de serviço.
+Não se autoriza apagar torção, empenamento ou instabilidade global porque
+o bloco flexional passou. Não é necessário bloquear esse bloco até resolver
+o modelo 3D inteiro: seu domínio e suas exclusões podem ser explícitos.
+
+3. IDENTIDADE E CONTROLE INDEPENDENTE
+
+Ue100x50x17x1,20 R01, ri=1,20, linha média facetada com 209 nós, E=200000 MPa,
+nu=0,3. Mesma geometria congelada dos críticos e do executor de referência.
+As propriedades foram reintegradas de segmentos, sem copiar o catálogo:
+A=271,32623059804456 mm²; Ix=440779,46607003844 mm4;
+Iy=101233,75979153396 mm4; Ixy aproximadamente zero.
+O modelo mantém dA=t ds. As tensões foram limitadas também nas fibras
+exteriores das faixas de espessura 1,20, sem misturar outra convenção de I.
+
+O primeiro controle usa só uma condição uniforme mais grosseira: cada uma
+das cinco paredes recebe uma envoltória superior da compressão simultânea;
+alma AA k=4, mesas/lábios sem crédito de enrijecedor k=0,43. As larguras
+retas são 95,2; 45,2; 14,6 mm. Os limites correspondentes de tensão para
+lambda=0,673 são 51,9584; 24,7777; 237,4830 MPa. Não foram usados apenas
+os dois testes MSE puros. Esta primeira condição é SUFICIENTE, não necessária.
+
+Doze casos de 4 m: carga uniforme, ponto em L/3 e q+P com direções diferentes
+(5° para q e 20° para P), nos quatro quadrantes de momento. Todos passaram,
+com lambda de parede máximo 0,503332. As magnitudes são deliberadamente
+baixas. Solução fechada por eixo, protocolo escalar do aplicativo e um FEM
+Hermite em eixos girados 27°, com matriz acoplada integrada da geometria,
+foram confrontados. Malhas 36 e 72; erro FEM máximo 1,22256e-9 mm; erro do
+protocolo escalar 6,67e-16 mm. Equilíbrio e reações foram verificados.
+
+Esse crivo inicial alcança 19/162 casos originais: 18 em 3 m, um em 4 m/0°,
+nenhum em 6 m. Em contraste, 138/162 satisfazem os dois limiares MSE puros.
+A diferença mostra por que dois limiares isolados não foram usados como
+prova. NÃO mostra que os outros 143 casos têm seção reduzida.
+
+4. CRIVO REFINADO DO LOTE ORIGINAL 4 m / +/-5°
+
+Para não limitar o resultado a cargas pequenas artificiais, foi executado
+um segundo comparador suficiente nos 36 estados ELS originais inclinados.
+As cinco paredes e a tensão de ambos os momentos foram examinadas.
+
+4.1 Alma
+Usa-se a distribuição linear combinada na alma e k da Tabela 5. A face
+externa mais comprimida recebe o acréscimo uniforme conservador de t/2.
+A razão de tensões é calculada, não presumida como flexão forte pura.
+
+4.2 Mesas
+Cada mesa recebe compressão uniforme igual à sua maior compressão sob a
+combinação. Essa substituição é uma envoltória mecânica conservadora das
+tensões, NÃO uma afirmação de que 9.2.3 cubra diretamente mesa em gradiente.
+Aplica-se 9.2.3.1/.2 ao problema uniforme de comparação: D=17, b=45,2,
+d=14,6, Is=t d³/12=311,2136 mm4; dobra excluída de d, conforme a fonte.
+Quando lambda_p0>0,673, exige-se Is/Ia limitado a 1 exatamente igual a 1,
+além de lambda local<=0,673. Assim não se oculta redução d_s do enrijecedor.
+Com Is/Ia=1, k da mesa é 3,369469..., não k=4 tomado por conveniência.
+
+4.3 Lábios
+Cada lábio é AL e recebe sua própria maior compressão uniformizada.
+Exige-se largura toda efetiva. Os lábios podem ter compressões diferentes
+das mesas; não foram automaticamente considerados inteiros.
+
+4.4 Vão
+Os vetores de q e P dos casos originais são proporcionais e, quando P existe
+no meio do vão, têm o mesmo sentido. O diagrama de tensão de cada parede
+é portanto o do meio do vão multiplicado por um fator não negativo <=1.
+O pico fica no meio; onde a tensão diminui, a condição de efetividade não
+piora. O ponto no apoio usa o limite que não cria momento fletor de P.
+A prova não depende de chamar uma malha amostrada de prova contínua.
+O script rejeita q/P não proporcionais para essa passagem refinada.
+
+4.5 Resultado e alcance
+34/36 passaram: todos, exceto ELSR_00007 em cada inclinação. As componentes
+de flecha já calculadas no lote coincidem com a solução bruta dos passantes.
+FEM acoplado independente em 36/72 elementos: 68 soluções; maior diferença
+1,66563e-8 mm. Nenhum módulo de resistência ou capacidade é liberado aqui.
+
+Exemplo ELSR_00001 em +5°: deslocamentos no mesmo meio do vão são 19,019175 mm
+normal e 7,245018 mm paralelo. Em -5°, a componente paralela inverte o sinal;
+a prova de efetividade é refeita e não se transporta o lado comprimido.
+
+Pendências exatas, ELSR_00007:
+- +5°: Mx=1963815,86989 Nmm; My=+68855,14161 Nmm. A mesa comprimida no
+  comparador uniforme atinge lambda=0,7377 aproximadamente, acima de 0,673.
+- -5°: mesmo Mx; My=-68855,14161 Nmm. A mesa comparadora atinge lambda=0,7529.
+Esses resultados são INCONCLUSIVOS quanto à seção verdadeira sob gradiente.
+Não se adotou automaticamente a seção reduzida do comparador como rigidez
+biaxial, nem se apresentou conservadorismo de flecha que não foi demonstrado.
+
+5. DECISÃO PARA O PRODUTO E PRÓXIMO PASSO
+
+Manter separados:
+- curva Ief escalar por eixo e sentido: componente já qualificada;
+- componente biaxial bruta sob condição suficiente combinada: qualificada
+  aqui para os 34 estados específicos e para os controles de baixa carga;
+- extensão biaxial com redução, ELS físico completo e resistência: pendentes.
+
+Uma futura interface pode mostrar "Flexão biaxial com seção integralmente
+efetiva demonstrada" para esse domínio, acompanhada das exclusões. Não deve
+mostrar "ELS completo aprovado" ou tratar um crivo inconclusivo como falha.
+Não foi alterada a interface neste trabalho.
+
+Próximo passo pequeno e executável: integrar o marcador de domínio para
+esses 34 estados na cópia, após a revisão independente já concluída.
+Isso fecha uma lacuna real sem exigir solver genérico de seção biaxial.
+Para os dois ELSR_00007, a pergunta pendente é específica: qual a rigidez
+flexional efetiva da mesa enrijecida sob aqueles dois gradientes simultâneos,
+e que erro a aproximação por Ief separados introduz na flecha normal/paralela?
+Um MLE com domínio justificado para a mesa em gradiente ou um benchmark
+independente de rigidez da seção/barra pode respondê-la. Não é obrigatório
+escolher uma geometria efetiva conjunta; é obrigatório fundamentar o modelo
+que for adotado. Não promover automaticamente um crítico combinado novo a
+Ief pela fórmula escalar sem justificar essa passagem.
+
+Antes de um ELS de terça física ainda faltam a parcela de torção/empenamento
+das linhas de carga reais, o ponto de deslocamento medido, os vínculos e as
+combinações/limites apropriados. A telha permanece só como ações, sem contato,
+contenção ou rigidez. Esses trabalhos não impedem reconhecer o bloco fechado.
+
+6. REPRODUÇÃO E PRESERVAÇÃO
+
+Arquivos nesta pasta:
+- benchmark.py / BENCHMARK.json: 12 controles completos de baixa carga.
+- ORIGINAL_LOT_SCREEN.json: primeiro crivo suficiente dos 162 ELS.
+- refined_original_screen.py / REFINED_ORIGINAL_4M.json: 36 casos originais,
+  todos os cinco conjuntos de tensões e resultados FEM dos 34 passantes.
+- SOURCE_PRESERVATION.json: hashes antes/depois e 173 arquivos do app intactos.
+- DECISION.json: decisão estruturada e limites de aceitação.
+
+Executar, com o ambiente existente, sem instalações:
+PYTHONPATH=/tmp/tercas_publish_deps PYTHONDONTWRITEBYTECODE=1
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1
+python outputs/tercas_ue_priority_20261103/els_biaxial_review/benchmark.py
+python outputs/tercas_ue_priority_20261103/els_biaxial_review/refined_original_screen.py
+
+Os algoritmos de comparação não importam o app; só a etapa DUT do primeiro
+script importa protocolo_ief. Os dados do lote são congelados. O segundo
+script compara o FEM e a solução fechada com resultados escalares já
+registrados, não afirma que a interface atual calcule a componente fraca.
+Todos os arquivos escritos ficaram nesta pasta; fontes e aplicativo ficaram
+imutáveis. Não há aprovação experimental, obra real, resistência ou 3D.
+
+REVISÃO INDEPENDENTE CONCLUÍDA
+O receipt case_review/stage2_web_floor/ELS_RECEIPT.json reconstituiu 1.532
+comparações de geometria e crivos e reexecutou os 92 FEM contra uma integral
+própria de Green. Reproduziu 34/36 originais e os 12 controles, com erro
+máximo 1,66563e-8 mm. A leitura das pp.26-31 confirmou o alcance específico
+do comparador suficiente; nenhuma objeção foi identificada nesse domínio.
+O hash do receipt e os hashes dos algoritmos revistos constam da decisão.

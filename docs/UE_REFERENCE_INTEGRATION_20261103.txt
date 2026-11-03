@@ -1,0 +1,106 @@
+INTEGRAÇÃO LOCAL DA REFERÊNCIA PRÓPRIA Ue100 — 03/11/2026
+
+Escopo
+Apenas Ue100x50x17x1.20_rounded_R01_209nodes_nu0p3. R01 facetada com 209 nós,
+ri=t=1,2 mm; E=200000, nu=0,3, G=76923,07692307692, fy=250. Propriedades e críticos
+fracos próprios por sentido; forte local pela Tabela 12(b), não autovalor próprio
+independente. Pierin é fonte de prioridade/correspondência nominal somente.
+Os caminhos U existentes não foram generalizados nem receberam novo cálculo.
+Travessas, 3D e dados antigos permanecem em seus caminhos anteriores.
+
+Qualificação e fontes
+O pacote tercas/data/ue_reference é autossuficiente para consumo e não importa
+código, arquivos nem paths da árvore de pesquisa. sources.json tem SHA fixado
+no módulo; todos os bytes de cada arquivo copiado são verificados a cada acesso.
+A decisão de extensão tem SHA independente fixado no código. O manifesto contém
+origens e SHA dos artefatos estudados e dos métodos, sem fingir reproduzir a prova
+FSM no runtime. As decisões, vetor integral, entrada canônica, resumo de 696
+casos, recibo independente e parecer ELS são copiados com bytes e hashes iguais.
+
+Domínio e guarda
+Domínio contínuo 3000 <= L <= 6000 mm inclusive. Todos Lx=Ly=Lz=L; K=Cb=Cm=1;
+garfos ideais com empenamento livre; N=0 e torque primário imposto=0; sem contato
+nem contribuição da telha, somente carga. Uma proposta de vão não muda os dados
+até Aplicar e remove resultados antigos. P direto absoluto é preservado, mesmo
+quando fica fora do novo vão; a correção deve ser explícita antes do cálculo.
+Nex/Ney/Nez e Me/FLT por sentido são recalculados de propriedades próprias a cada L.
+Booleans, não finitos e reais que perderiam precisão ao converter para binary64
+são rejeitados antes de qualquer arredondamento para entrar na faixa.
+
+Marcador é consentimento, não prova. A comparação é integral e exata das
+propriedades, material, críticos, origem, sentido, segmentos, vínculos, domínio e
+documentos. Campos extras físicos, travessa, 3D, torção ou N desativam a rota.
+Os entry points públicos calculate/calculate_batch fazem o despacho e a guarda.
+O núcleo numérico privado permanece disponível ao adaptador já validado; não há
+licença para outro chamador tratar a rotina interna como uma qualificação.
+Importação não corrige valores silenciosamente. Arquivo incompatível é preservado
+para inspeção e download. A troca explícita de perfil válida preserva projeto e
+ações, remove metadados próprios e recompõe seção/material pela rota do catálogo.
+Comparação genérica do catálogo é bloqueada na referência própria.
+
+Distorcional
+D dos lábios identificado: 1668845,1785399402 Nmm. D da alma não identificado:
+Mdist_identified_Nmm=null, mas piso elástico conservador de 850000 Nmm aceito para
+consumo escalar de 9.8.2.3. O campo legado Mdist_Nmm=850000 tem proveniência
+inequívoca e o resultado da referência mantém separado o valor identificado nulo.
+O piso não é dispensa de D nem prova de que D não governa. Tabela 14 forte apenas.
+
+ELS
+NBR 14762:2010 9.8.5, impressas 51–52/PDF57–58, documento fornecido de SHA
+c2a01615a3ce9e2b93aeb7fee757f7bf9dd932adaefbc242e848ce813dc82407.
+Parecer els_biaxial_review/REPORT.txt, seção 5, SHA
+a9f9889c49fbcfff997c684f60003a24a4c2d237bc997779e4493d10182611ef;
+recibo etapa 3 SHA 5c0df046a14e8c203bc5604e46e57179b7aa1d42813c9680d19a6dc1ebfe50de.
+O critério parcial de flecha forte uniaxial é mantido quando q_parallel=P_parallel
+reais do estado ELS são exatamente zero, não por ângulo, ID ou soma de momentos.
+As guardas originais de q/P, posição e aviso numérico permanecem. Nos estados
+biaxiais, valores uniaxiais continuam diagnósticos e os índices são retirados com
+pendência de rigidez combinada. Não é declaração de falha. Os 34/36 estados MLE
+qualificados no caso original 4 m ±5° não são ativados automaticamente, inclusive
+quando IDs coincidem. Os 2 ELSR_00007 inconclusivos não são falhas. Nenhuma lei
+reduzida geral biaxial foi declarada.
+
+Apresentação e persistência
+A fonte própria ativa precede a menção nominal/documental. O cabeçalho de
+referência histórica Pierin não aparece como fonte consumida nesses resultados.
+JSON inclui marcador, domínio, fontes e evidência. Word usa o snapshot gravado,
+não relê fontes atuais nem requalifica resultado histórico. As linhas removidas
+de flecha e cortante paralelo não foram reintroduzidas. Não há seletor de painel
+nem teste físico extra criado como exigência normativa.
+
+Limites
+Não aprova perfil/produto real, hipóteses físicas externas, ligações, torção do PP,
+resistência 3D, ELS completo, espectro biaxial/variável ou membro global. As forças
+pontuais mantêm somente posições já implementadas e introdução local pendente.
+Sem publicação, instalação ou alteração de fontes congeladas. QA agregado e
+revisão independente da candidata são etapas separadas dos testes focados.
+
+ADENDO — ISOLAMENTO DO ENTRY POINT 3D, 03/11/2026
+A revisão independente encontrou um caminho público que ainda aceitava claims
+próprios Ue quando a entrada era adulterada para Travessa/3D. O retorno era somente
+diagnóstico, sem resistência ou aprovação, mas a associação indevida à referência
+foi reproduzida e corrigida. three_girt_application.calculate agora rejeita qualquer
+claim próprio Ue antes de ler configuração, construir especificação ou chamar o
+solver. Remover apenas o marcador não desativa essa guarda: origem numérica própria,
+modelo próprio ou documentos próprios também identificam a entrada incompatível.
+A seleção explícita de outro perfil continua sendo a forma de sair da referência.
+Nenhuma geometria, fórmula, solver ou resultado 3D legado foi alterado. Os resultados
+completos dos casos legados direto e por área são exatamente iguais aos anteriores
+por SHA-256 (2 e 19 casos). Logs, reproduções antes/depois e recibo do adendo ficam
+nos arquivos UE_3D_* e UE_INTEGRATION_3D_ADDENDUM.json. O recibo original foi mantido.
+
+ADENDO — ORIGENS E IDENTIDADE DOS SNAPSHOTS, 03/11/2026
+A QA visual detectou origem catalogal em campos numericamente coincidentes,
+como h, bf, lip, t e ri. O adaptador genérico só mudava a origem quando mudava o
+número. Na nova rota própria, o pós-processamento de metadados agora atribui a
+todos os campos consumidos a origem R01 e o SHA do manifesto, inclusive material
+e valores coincidentes. O entry_id ativo é o ID próprio R01. A origem, ID nominal
+e histórico do adaptador de catálogo ficam separados e explicitamente documentais.
+A correção cobre input_snapshot direto, common_input_snapshot por área e cópias
+section_checks/input_fields das evidências por caso. Não muda os números, os
+inputs do usuário, a geometria, o solver ou as verificações resistentes.
+REPORTING_VERSION Ue foi incrementado para r2; resultado antigo com mesmo hash de
+entrada não é reutilizado na sessão. O Word histórico continua lendo os metadados
+gravados, sem reconstruir ou requalificar suas fontes. Não houve mudança de schema
+físico, cache global ou rotas U. O bloco novo de fontes foi compactado sem perder
+SHA; o fingerprint comum permanece ao final do relatório, sem duplicação no bloco.

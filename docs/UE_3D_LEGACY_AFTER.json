@@ -1,0 +1,15 @@
+{
+  "exactly_unchanged": true,
+  "results": {
+    "False": {
+      "result_sha256": "a3935dbce77cb90607fbc01b4840c58d3d69a6db1084577420e7d2c1882d1765",
+      "cases": 2,
+      "status": "conditional_elastic_diagnostic"
+    },
+    "True": {
+      "result_sha256": "171288f3f601aa84eacda256d46dcbfd589ac6c37097e68081cfe4d69fa75d1c",
+      "cases": 19,
+      "status": "conditional_elastic_diagnostic"
+    }
+  }
+}

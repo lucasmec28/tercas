@@ -1,0 +1,525 @@
+{
+  "status": "PASS_continuous_scope_consumption_and_case_arithmetic",
+  "accepted_decision_sha256": "42a3b2de4ec8e74bcc1949b6a6a3802e30bc117a5c47a54e7bc454e6c5343875",
+  "source_hashes": {
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/SOURCES.json": "c818f5250b7927d1cf7f9fe2637561dd8fa6b592bc3979a74352606fa3e6d20e",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/variable_reference.py": "a2c07c0be3978cfd4aa4238c20b34f9bf4f265e8d999672b069edc714af3971c",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/run_variable_cases.py": "c1f0851b0f039daba7ce4cb6c258a624726eccacd01f962a6ff9e0ab90818ea9",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/test_variable_reference.py": "dde903ab31858c338b51e6b0ff775dba32878b654a00b90dcd4d342d6b678e8b",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/SUMMARY.json": "d153352f0ae236afdab04cdb864216cbb16368ea4c5bf786a529f44250e95969",
+    "outputs/tercas_ue_priority_20261103/distortion_review/web_floor_review/length_extension/LENGTH_EXTENSION_DECISION.json": "42a3b2de4ec8e74bcc1949b6a6a3802e30bc117a5c47a54e7bc454e6c5343875",
+    "outputs/tercas_ue_priority_20261103/distortion_review/web_floor_review/WEB_FLOOR_DECISION.json": "1d0824cde8d11fd362c6364d3c8bb3d4c99e26b0777fd9b8ae1db6af01a94da8",
+    "outputs/tercas_ue_priority_20261103/web_lower_bound/CERTIFICATE.json": "729657d90ad509dd4dbc5ab68f4a65c39dacbd8d58ecec2c7297f42b72d443b8",
+    "outputs/tercas_ue_priority_20261103/web_lower_bound/VERIFICATION.json": "d9c77bebd3e609e3f065305db3e02c355ce6ea19d1de12cad44d412385fada2d",
+    "outputs/tercas_ue_priority_20261103/web_lower_bound/GATE_RESULT.json": "cd0821979ff1d63ceee0cf2382bcb7365c660a70f5f4382e24eecf0afb534ead",
+    "outputs/tercas_ue_priority_20261103/web_bound_independent/RECEIPT.json": "0bbfc9ce707c6d787d16caa50a691961a4deecf0de93a62a2562f2292cfe6b72",
+    "outputs/tercas_purlin_pierin_independent_20261103/results_ue100.json": "957267f622b275b5de07c4c85d594b4038de30e719c106200a2579fd7bbd8589",
+    "outputs/weak_ue100_diagnostic_20261102/modes/fine_rounded_n12_a16_web_local_historical_nu0p3.npz": "00a59a885924c8b6d25f99ac7b1d23b6a033085acf21643c68e80531161314d1",
+    "outputs/weak_ue100_diagnostic_20261102/modes/fine_rounded_n12_a16_lips_local_historical_nu0p3.npz": "2c832aa60b198e9c405810304810f23c03586ac4885f2543f2631f4b1883f95a",
+    "outputs/weak_ue100_diagnostic_20261102/modes/fine_rounded_n12_a16_lips_distortional_historical_nu0p3.npz": "2a6be92cc0e48a87338d214536a37e0f403908d12df3b7b32b0e0ed10ce569ce",
+    "outputs/tercas_ue_priority_20261103/PLAN.json": "6540fc6d9ed38ebf93ced37be209f541fbacf9ec63fd0408073ea5898f9135cf",
+    "outputs/tercas_ue_priority_20261103/pipeline/reference.py": "31cda93a56300d174f3a2654185b326b099ea8cabef7aae3015a35d0909f7f8e",
+    "outputs/tercas_ue_priority_20261103/distortion_review/DECISION.json": "45fd89f1ab9ab6b5d13fd878b9531e8db7d7c235ebb42e2c42fc0dce140b1145",
+    "outputs/tercas_ue_priority_20261103/web_lower_bound/length_extension/EXTENSION_CERTIFICATE.json": "3b627a399a9cae9ab326aa3e1ec3419d139b48dface0d8bf5128678cbaa99ac5",
+    "outputs/tercas_ue_priority_20261103/web_bound_independent/length_extension/RECEIPT.json": "73d79be3f25148c7917a42d9a3726c99dc5931a16f90099c6d40e21a043464b8",
+    "outputs/tercas_ue_priority_20261103/stage2_web_floor/floor_curve.py": "9d3e5dcd65c42c1bb19967561400b03ca9f3ebe658ba6b987e2eaacc21c91cbe",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4000_anglem5/audit.json": "bdd1d0595f2a6bdd15afab560eef2576afd3943687eb8d0445e2180bb9453673",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4000_anglem5/app.json": "efecfe1c61b4391c6b85debf2008b14ceafdbe3697235f355be96999642414ed",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4000_anglem5/inputs.json": "92a9ef346d10a0a86e6beee658f0b634a96a795f03bccf22c94d58e547183eea",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4000_anglem5/reference.json": "0bca134cc5dd1e9a3106d03177c0c77fb4d6cfe30765be4452ef85a80afb1e0c",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4000_anglem5/regression.json": "ec32610dc93da03f83d145300b601e7fcf63a64918ae456d2c99f516afb0866a",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4000_anglep0/audit.json": "a239cedccbc894c5c9e55f73bb73793d0773ee8f65c22e13b98ab5854a70299c",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4000_anglep0/app.json": "b5eb74730507c49f8e530743267700090a830f3245e2f74fc6ad7ea8af8a374c",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4000_anglep0/inputs.json": "f593f8376a6f009b9b67e1dba473c181f65e4a2b8cebbf733431f890cba480ff",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4000_anglep0/reference.json": "0bca134cc5dd1e9a3106d03177c0c77fb4d6cfe30765be4452ef85a80afb1e0c",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4000_anglep0/regression.json": "ec32610dc93da03f83d145300b601e7fcf63a64918ae456d2c99f516afb0866a",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L6000_anglep5/audit.json": "fc319ffe01cc969300e2db9a0e3f2d64325fdd285005ecc864c4039d1f298f1b",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L6000_anglep5/app.json": "4a30aa60ac837728e5d52eda91ea6c6ed4f143777cc5536b9790d455d84c795a",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L6000_anglep5/inputs.json": "10ed1df58072ce103f9cda073db1f03dedb7c89712b4064e3ea4bb4eae10b3dd",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L6000_anglep5/reference.json": "d8deaebaa6067b488e11adbe90e61c94d38958995f28ac29a21db00e63f09373",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L6000_anglep5/regression.json": "ee8e520b3ec0314430668b3ebf8f767a9688d51454d66e8474722100cdb37f02",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4750_anglem5/audit.json": "c9bb1a52402af369b6695b8f4df5a311ed52f097ad90027a531885352afe90aa",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4750_anglem5/app.json": "2819974bfe9b82cc30bf290308efe1a16d1e73a84a9cfa52d5fb5961817a94dc",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4750_anglem5/inputs.json": "5f03d14bfabf6d77c65b4a436fd2aad841ae6ef012ac89786f3ebd65955d99d7",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4750_anglem5/reference.json": "6610633313efd60aaa2d0aac83de2e1d6e77a58af257db09feb17e66d523de22",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4750_anglem5/before_web_floor_app.json": "00e45cbdc191d69369087b52b203c205d96323d11148865d179b9aea7b64e029",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4750_anglem5/regression.json": "ec32610dc93da03f83d145300b601e7fcf63a64918ae456d2c99f516afb0866a",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4750_anglep5/audit.json": "446b75bc88c931f810a79d23e9a84e1926a441d525f498c8493e86d68c163f3e",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4750_anglep5/app.json": "f456bfaa3e3bd5aa60f814ff915ff7fa52b95cc74ecce7c701acf5202389f873",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4750_anglep5/inputs.json": "3836eaba05b1548ba658b26f252da32cf196cd57da3ef101c1a96e0799d2b2a6",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4750_anglep5/reference.json": "6610633313efd60aaa2d0aac83de2e1d6e77a58af257db09feb17e66d523de22",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4750_anglep5/before_web_floor_app.json": "c4483b8fe36e8c0a83a67d6eb78b6d8e3bce532af614be0bdd6dd58e9d699fe2",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4750_anglep5/regression.json": "ee8e520b3ec0314430668b3ebf8f767a9688d51454d66e8474722100cdb37f02",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L3000_anglem5/audit.json": "570e14f5115292935fe08567cb74bc7f15af5c56750a62f9bcc9073eff6085e2",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L3000_anglem5/app.json": "bc0e1468422dfc27dd8a10a2ea16ce8ed2458de6fb3c04d0e8a1e7712a5ac548",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L3000_anglem5/inputs.json": "83908f3b56b2d8f73987d0f2660dcbf74ddab3b8f250259bb5904c3234842d62",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L3000_anglem5/reference.json": "5fc0455c3df936c79098b527353128c7a4a475caa47ddb67a28a5862620e7a6f",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L3000_anglem5/regression.json": "ec32610dc93da03f83d145300b601e7fcf63a64918ae456d2c99f516afb0866a",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L3000_anglep5/audit.json": "ef918d7a7034404b7a43fc083f87d03f5c9a64f2520e99893e8274707ebff29e",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L3000_anglep5/app.json": "8c67507bab510b209961d86a3cbb9d97b29770ad8be11cfad3dc6f506ec4b3a2",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L3000_anglep5/inputs.json": "7f0589d09d815724cc60d506fd7edcd9e10352eeeaf6a2a92ce0d4ae62684b6f",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L3000_anglep5/reference.json": "5fc0455c3df936c79098b527353128c7a4a475caa47ddb67a28a5862620e7a6f",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L3000_anglep5/regression.json": "ee8e520b3ec0314430668b3ebf8f767a9688d51454d66e8474722100cdb37f02",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4750_anglep0/audit.json": "8beab2c7017bf7bd7bc1f69d6a8f02043576552a38a13b7bb4bc6ed390f59daf",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4750_anglep0/app.json": "71a8c53e31c232c63f4744fc5b2558e0db33a4d14cdfa06cf871c579fdb64482",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4750_anglep0/inputs.json": "f530856ab22ca7944d519ef53b18025d05469d3699cac27a9c02b445bf4c41f5",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4750_anglep0/reference.json": "6610633313efd60aaa2d0aac83de2e1d6e77a58af257db09feb17e66d523de22",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4750_anglep0/before_web_floor_app.json": "5a8a3c698ed51aafba2a52193d5997827659fab38e940f128500082e318ee921",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4750_anglep0/regression.json": "ec32610dc93da03f83d145300b601e7fcf63a64918ae456d2c99f516afb0866a",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4000_anglep5/audit.json": "798398ed6fd06bc8d4086daff019055e05c02602c5701b9f7ec39033e3cecd28",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4000_anglep5/app.json": "4ccf8fd8c1f83b5d7781a6fe46235963b222b270d5e577579c4a764647a90b11",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4000_anglep5/inputs.json": "4abcf8d57943f2b15d5ef4a31dfa5316ca288379455f9e094bf7615fbef79927",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4000_anglep5/reference.json": "0bca134cc5dd1e9a3106d03177c0c77fb4d6cfe30765be4452ef85a80afb1e0c",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4000_anglep5/regression.json": "ee8e520b3ec0314430668b3ebf8f767a9688d51454d66e8474722100cdb37f02",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L6000_anglem5/audit.json": "88d0c3ff3cc1eb9ec9b923f51e0816a45d2c985017f2190ba774199c0bedf871",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L6000_anglem5/app.json": "f93363a962f5e00c36d03ec84cd9150389b33abd96d83be53075429b1608a5b7",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L6000_anglem5/inputs.json": "a5aaaf133b0a9e59fa5dcbaae0f740e6f675b5469cda6620ab2f3d0ded6f154f",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L6000_anglem5/reference.json": "d8deaebaa6067b488e11adbe90e61c94d38958995f28ac29a21db00e63f09373",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L6000_anglem5/regression.json": "ec32610dc93da03f83d145300b601e7fcf63a64918ae456d2c99f516afb0866a",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L3000_anglep0/audit.json": "9c3ed20ded4ccd1bcaab035552f4f80ba23dd7447659a78f1f2646c845ed43c2",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L3000_anglep0/app.json": "3fc922bb961c2e91a4d97b9c9c806a93d6c623edae105962122c0e99f2483c2e",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L3000_anglep0/inputs.json": "a197e6b8d2de3009cf8f82c41c14bfb35088fbde78a6de3bc9cd0f56d3620e53",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L3000_anglep0/reference.json": "5fc0455c3df936c79098b527353128c7a4a475caa47ddb67a28a5862620e7a6f",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L3000_anglep0/regression.json": "ec32610dc93da03f83d145300b601e7fcf63a64918ae456d2c99f516afb0866a",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L6000_anglep0/audit.json": "2c43ad19b631378543a05ced89dce05bc8bb4d2478d1fad070ac83edb2584788",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L6000_anglep0/app.json": "d2bcce7d833b7d9ecd5f1b033ea145509a5b59f2d1023a52e89d06a9a429b225",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L6000_anglep0/inputs.json": "44684a668c4f692e297ecf1504effebe5006fcb7323ff537b79a3df8a7b72379",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L6000_anglep0/reference.json": "d8deaebaa6067b488e11adbe90e61c94d38958995f28ac29a21db00e63f09373",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L6000_anglep0/regression.json": "ec32610dc93da03f83d145300b601e7fcf63a64918ae456d2c99f516afb0866a"
+  },
+  "prior_manifests_unchanged": {
+    "STAGE1_MANIFEST_SHA256.json": {
+      "sha256": "0deeddb49020ccf032268ecc9213d5441c648e97169aca2c247b6b9e93c985e2",
+      "files": 314
+    },
+    "STAGE2_MANIFEST_SHA256.json": {
+      "sha256": "a9067a259a6617dc3f96d33fd689a7f2eb63ead3212a82d433fcaa009b255ca2",
+      "files": 132
+    },
+    "case_review/MANIFEST_SHA256.json": {
+      "sha256": "f2868456d64098846aad3d12d37c7d1f085ef8885b180bac2db285741423c54b",
+      "files": 10
+    },
+    "case_review/stage2_web_floor/MANIFEST_SHA256.json": {
+      "sha256": "7f6565fe024febe06871778a55585042eaf13810785898d255c7831f677bc49a",
+      "files": 13
+    },
+    "case_review/stage2_web_floor/els_merge_review/MANIFEST_SHA256.json": {
+      "sha256": "87259d22aa4699967b337825561a41fe1b65e50de210bdbc37825bd40bc7d2b3",
+      "files": 7
+    }
+  },
+  "case_count": 696,
+  "independent_numeric_checks": 30392,
+  "ULS_cases": 480,
+  "ELS_cases": 216,
+  "newly_enabled_web_indices_against_stage1": 160,
+  "newly_enabled_web_indices_beyond_stage2": 120,
+  "unique_load_cases_added": 174,
+  "reused_stage1_load_cases": 522,
+  "repeated_4m_cases_not_new_progress": 174,
+  "scalar_by_span": {
+    "3000.0": {
+      "Nex_N": 96673.75462743707,
+      "Ney_N": 22203.04802616325,
+      "Nez_N": 16400.454067681738,
+      "Me_strong_Nmm": 1181049.7883456955,
+      "Me_web_Nmm": 12165673.257030947,
+      "Me_lips_Nmm": 499224.9152445188,
+      "strong": {
+        "local": 1950411.8697322044,
+        "FLT": 1073681.625768814
+      },
+      "web": {
+        "local": 580586.1775465694,
+        "FLT": 838047.814455054,
+        "distortional": 573953.5490512307
+      },
+      "lips": {
+        "local": 716251.2605417812,
+        "FLT": 446224.0164462185,
+        "distortional": 708654.9152039352
+      }
+    },
+    "4000.0": {
+      "Nex_N": 54378.98697793335,
+      "Ney_N": 12489.214514716828,
+      "Nez_N": 10369.449718948967,
+      "Me_strong_Nmm": 704335.1920759532,
+      "Me_web_Nmm": 6876491.593664812,
+      "Me_lips_Nmm": 314114.40140994557,
+      "strong": {
+        "local": 1950411.8697322044,
+        "FLT": 640304.7200690482
+      },
+      "web": {
+        "local": 580586.1775465694,
+        "FLT": 838047.814455054,
+        "distortional": 573953.5490512307
+      },
+      "lips": {
+        "local": 716251.2605417812,
+        "FLT": 285558.5467363141,
+        "distortional": 708654.9152039352
+      }
+    },
+    "4750.0": {
+      "Nex_N": 38562.38411731562,
+      "Ney_N": 8856.617495200853,
+      "Nez_N": 8114.087981888237,
+      "Me_strong_Nmm": 524671.8591241912,
+      "Me_web_Nmm": 4898345.829158716,
+      "Me_lips_Nmm": 244693.3050112211,
+      "strong": {
+        "local": 1950411.8697322044,
+        "FLT": 476974.41738562833
+      },
+      "web": {
+        "local": 580586.1775465694,
+        "FLT": 838047.814455054,
+        "distortional": 573953.5490512307
+      },
+      "lips": {
+        "local": 716251.2605417812,
+        "FLT": 222448.45910111003,
+        "distortional": 708654.9152039352
+      }
+    },
+    "6000.0": {
+      "Nex_N": 24168.438656859267,
+      "Ney_N": 5550.762006540813,
+      "Nez_N": 6061.5894698541315,
+      "Me_strong_Nmm": 359007.51054479054,
+      "Me_web_Nmm": 3097768.6499247258,
+      "Me_lips_Nmm": 181156.56447811905,
+      "strong": {
+        "local": 1950411.8697322044,
+        "FLT": 326370.46413162776
+      },
+      "web": {
+        "local": 580586.1775465694,
+        "FLT": 822202.3926395022,
+        "distortional": 573953.5490512307
+      },
+      "lips": {
+        "local": 716251.2605417812,
+        "FLT": 164687.78588919912,
+        "distortional": 708654.9152039352
+      }
+    }
+  },
+  "negative_controls": [
+    {
+      "label": "out-of-scope 2999.9999999999995",
+      "rejected": true
+    },
+    {
+      "label": "out-of-scope 6000.000000000001",
+      "rejected": true
+    },
+    {
+      "label": "out-of-scope 2999.0",
+      "rejected": true
+    },
+    {
+      "label": "out-of-scope 6001.0",
+      "rejected": true
+    },
+    {
+      "label": "out-of-scope 0.0",
+      "rejected": true
+    },
+    {
+      "label": "out-of-scope True",
+      "rejected": true
+    },
+    {
+      "label": "out-of-scope np.True_",
+      "rejected": true
+    },
+    {
+      "label": "out-of-scope '4000'",
+      "rejected": true
+    },
+    {
+      "label": "out-of-scope nan",
+      "rejected": true
+    },
+    {
+      "label": "out-of-scope inf",
+      "rejected": true
+    },
+    {
+      "label": "out-of-scope Fraction(600000000000000000000001, 100000000000000000000)",
+      "rejected": true
+    },
+    {
+      "label": "out-of-scope Fraction(299999999999999999999999, 100000000000000000000)",
+      "rejected": true
+    },
+    {
+      "label": "out-of-scope np.longdouble('6000.0000000000000004')",
+      "rejected": true
+    },
+    {
+      "label": "out-of-scope np.longdouble('2999.9999999999999998')",
+      "rejected": true
+    },
+    {
+      "label": "different length 3000.0Lx_mm",
+      "rejected": true
+    },
+    {
+      "label": "different length 3000.0Ly_mm",
+      "rejected": true
+    },
+    {
+      "label": "different length 3000.0Lz_mm",
+      "rejected": true
+    },
+    {
+      "label": "hidden high-precision effective length 3000.0",
+      "rejected": true
+    },
+    {
+      "label": "different length 4000.0Lx_mm",
+      "rejected": true
+    },
+    {
+      "label": "different length 4000.0Ly_mm",
+      "rejected": true
+    },
+    {
+      "label": "different length 4000.0Lz_mm",
+      "rejected": true
+    },
+    {
+      "label": "hidden high-precision effective length 4000.0",
+      "rejected": true
+    },
+    {
+      "label": "different length 4750.0Lx_mm",
+      "rejected": true
+    },
+    {
+      "label": "different length 4750.0Ly_mm",
+      "rejected": true
+    },
+    {
+      "label": "different length 4750.0Lz_mm",
+      "rejected": true
+    },
+    {
+      "label": "hidden high-precision effective length 4750.0",
+      "rejected": true
+    },
+    {
+      "label": "different length 6000.0Lx_mm",
+      "rejected": true
+    },
+    {
+      "label": "different length 6000.0Ly_mm",
+      "rejected": true
+    },
+    {
+      "label": "different length 6000.0Lz_mm",
+      "rejected": true
+    },
+    {
+      "label": "hidden high-precision effective length 6000.0",
+      "rejected": true
+    },
+    {
+      "label": "angle True",
+      "rejected": true
+    },
+    {
+      "label": "angle np.False_",
+      "rejected": true
+    },
+    {
+      "label": "angle '5'",
+      "rejected": true
+    },
+    {
+      "label": "angle 1.0",
+      "rejected": true
+    },
+    {
+      "label": "angle 6.0",
+      "rejected": true
+    },
+    {
+      "label": "angle nan",
+      "rejected": true
+    },
+    {
+      "label": "edited reference E_MPa",
+      "rejected": true
+    },
+    {
+      "label": "edited reference L_mm",
+      "rejected": true
+    },
+    {
+      "label": "manifest plus added numeric floor",
+      "rejected": true
+    }
+  ],
+  "accepted_boundary_and_interior_lengths": [
+    3000.0,
+    3000.0000000000005,
+    3333.3,
+    4000.0,
+    4750.0,
+    5999.99,
+    5999.999999999999,
+    6000.0
+  ],
+  "replays": [
+    {
+      "batch": "L3000_anglem5",
+      "cases": 58,
+      "result_exact": true,
+      "input_not_mutated": true,
+      "json_roundtrip_exact": true
+    },
+    {
+      "batch": "L3000_anglep0",
+      "cases": 58,
+      "result_exact": true,
+      "input_not_mutated": true,
+      "json_roundtrip_exact": true
+    },
+    {
+      "batch": "L3000_anglep5",
+      "cases": 58,
+      "result_exact": true,
+      "input_not_mutated": true,
+      "json_roundtrip_exact": true
+    },
+    {
+      "batch": "L4000_anglem5",
+      "cases": 58,
+      "result_exact": true,
+      "input_not_mutated": true,
+      "json_roundtrip_exact": true
+    },
+    {
+      "batch": "L4000_anglep0",
+      "cases": 58,
+      "result_exact": true,
+      "input_not_mutated": true,
+      "json_roundtrip_exact": true
+    },
+    {
+      "batch": "L4000_anglep5",
+      "cases": 58,
+      "result_exact": true,
+      "input_not_mutated": true,
+      "json_roundtrip_exact": true
+    },
+    {
+      "batch": "L4750_anglem5",
+      "cases": 58,
+      "result_exact": true,
+      "input_not_mutated": true,
+      "json_roundtrip_exact": true
+    },
+    {
+      "batch": "L4750_anglep0",
+      "cases": 58,
+      "result_exact": true,
+      "input_not_mutated": true,
+      "json_roundtrip_exact": true
+    },
+    {
+      "batch": "L4750_anglep5",
+      "cases": 58,
+      "result_exact": true,
+      "input_not_mutated": true,
+      "json_roundtrip_exact": true
+    },
+    {
+      "batch": "L6000_anglem5",
+      "cases": 58,
+      "result_exact": true,
+      "input_not_mutated": true,
+      "json_roundtrip_exact": true
+    },
+    {
+      "batch": "L6000_anglep0",
+      "cases": 58,
+      "result_exact": true,
+      "input_not_mutated": true,
+      "json_roundtrip_exact": true
+    },
+    {
+      "batch": "L6000_anglep5",
+      "cases": 58,
+      "result_exact": true,
+      "input_not_mutated": true,
+      "json_roundtrip_exact": true
+    }
+  ],
+  "regressions": [
+    {
+      "batch": "L3000_anglem5",
+      "old_stage1_or_recomputed_adapter_nonweak_fields_exact": true
+    },
+    {
+      "batch": "L3000_anglep0",
+      "old_stage1_or_recomputed_adapter_nonweak_fields_exact": true
+    },
+    {
+      "batch": "L3000_anglep5",
+      "old_stage1_or_recomputed_adapter_nonweak_fields_exact": true
+    },
+    {
+      "batch": "L4000_anglem5",
+      "old_stage1_or_recomputed_adapter_nonweak_fields_exact": true,
+      "all4m_results_equal_stage2_after_removing_only_source_metadata": true
+    },
+    {
+      "batch": "L4000_anglep0",
+      "old_stage1_or_recomputed_adapter_nonweak_fields_exact": true,
+      "all4m_results_equal_stage2_after_removing_only_source_metadata": true
+    },
+    {
+      "batch": "L4000_anglep5",
+      "old_stage1_or_recomputed_adapter_nonweak_fields_exact": true,
+      "all4m_results_equal_stage2_after_removing_only_source_metadata": true
+    },
+    {
+      "batch": "L4750_anglem5",
+      "old_stage1_or_recomputed_adapter_nonweak_fields_exact": true
+    },
+    {
+      "batch": "L4750_anglep0",
+      "old_stage1_or_recomputed_adapter_nonweak_fields_exact": true
+    },
+    {
+      "batch": "L4750_anglep5",
+      "old_stage1_or_recomputed_adapter_nonweak_fields_exact": true
+    },
+    {
+      "batch": "L6000_anglem5",
+      "old_stage1_or_recomputed_adapter_nonweak_fields_exact": true
+    },
+    {
+      "batch": "L6000_anglep0",
+      "old_stage1_or_recomputed_adapter_nonweak_fields_exact": true
+    },
+    {
+      "batch": "L6000_anglep5",
+      "old_stage1_or_recomputed_adapter_nonweak_fields_exact": true
+    }
+  ],
+  "web_Mdist_identified_Nmm": null,
+  "web_elastic_floor_Nmm": 850000.0,
+  "no_new_FSM_certification": true,
+  "whole_member_approved": false,
+  "combined_ELS_approved": false,
+  "combined_stress_spectrum_certified": false,
+  "published": false
+}

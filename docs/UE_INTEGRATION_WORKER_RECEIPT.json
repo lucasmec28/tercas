@@ -1,0 +1,113 @@
+{
+  "schema": "ue100_integration_worker_receipt_v1",
+  "scope": "Local implementation only; no publication; aggregate and independent review pending",
+  "changed_existing": [
+    {
+      "path": "README.md",
+      "before_sha256": "d41b4c991bbd6d24f945c3b0aba8320e3c6088204e55e08dc14b557fb46eb4ce",
+      "sha256": "cd8a8b989b152e87c205482a9edd0644da319bb201e1da564fec04b2f4fabfde"
+    },
+    {
+      "path": "app.py",
+      "before_sha256": "8480865ed8c10e7b5591c931dd07787bd5e784c038bf9d04d8b0dfcfabb67c27",
+      "sha256": "93af9f93f0b11976ac7474d5aa13af327cc1a9187ee7f96eabedde4f95132c6c"
+    },
+    {
+      "path": "tercas/application.py",
+      "before_sha256": "f9ddfa5d1328ab69b03c6fd8d13e884df4e49c2d1970a23bb59b082f78533d96",
+      "sha256": "c33bf03825558a93fb69c6418905d39a39454f082d292edc824d43e7095d19bc"
+    },
+    {
+      "path": "tercas/batch.py",
+      "before_sha256": "e11b51807939fe8ca9d999c836e547c70d000df50bfc141d657b65e0c74c88be",
+      "sha256": "62868fc6f88f6a9aebff14c58d196572df101dd3d62fe3c9828b77a4a33c8a12"
+    },
+    {
+      "path": "tercas/catalog_scan.py",
+      "before_sha256": "a359498938a943602434674a43416d7aa1f70b6b6d7e41ba1439ea9dd9524c19",
+      "sha256": "b336caf0a43fbd6a051377f8a9ae552655406c4362f3b2d315e5a947b355b042"
+    },
+    {
+      "path": "tercas/report.py",
+      "before_sha256": "0f00fc5492d325eecf1b859513b8abbd189d9a540685a70b3913e6d9fb53588e",
+      "sha256": "41fc339300cd5e3917cb5bfc9a5ae008eefae4cee83a10c10c692114d333c9c5"
+    }
+  ],
+  "new_files": [
+    {
+      "path": "docs/UE_CORE_TEST_RUN.txt",
+      "sha256": "49fd47e2d0c903390d8d5a636a7183f3cef34365c2d84148d2bd7680100e24e1"
+    },
+    {
+      "path": "docs/UE_REFERENCE_INTEGRATION_20261103.txt",
+      "sha256": "3752eafa418623ac1204cb35b5708146cb3226f9180468eca6efb6484399493b"
+    },
+    {
+      "path": "docs/UE_UI_TEST_RUN.txt",
+      "sha256": "ee7f0a5d53a0616acc19f5624deaac7ef245998511b6f4fa1948336c296b7158"
+    },
+    {
+      "path": "tercas/data/ue_reference/canonical.json",
+      "sha256": "f593f8376a6f009b9b67e1dba473c181f65e4a2b8cebbf733431f890cba480ff"
+    },
+    {
+      "path": "tercas/data/ue_reference/els_decision.json",
+      "sha256": "8197ab823d54bd71cb041889248d7245f14d0943527895cbdc4ab64a14a7ba71"
+    },
+    {
+      "path": "tercas/data/ue_reference/els_review.txt",
+      "sha256": "a9f9889c49fbcfff997c684f60003a24a4c2d237bc997779e4493d10182611ef"
+    },
+    {
+      "path": "tercas/data/ue_reference/independent_receipt.json",
+      "sha256": "5c0df046a14e8c203bc5604e46e57179b7aa1d42813c9680d19a6dc1ebfe50de"
+    },
+    {
+      "path": "tercas/data/ue_reference/length_decision.json",
+      "sha256": "42a3b2de4ec8e74bcc1949b6a6a3802e30bc117a5c47a54e7bc454e6c5343875"
+    },
+    {
+      "path": "tercas/data/ue_reference/lips_decision.json",
+      "sha256": "45fd89f1ab9ab6b5d13fd878b9531e8db7d7c235ebb42e2c42fc0dce140b1145"
+    },
+    {
+      "path": "tercas/data/ue_reference/sources.json",
+      "sha256": "f5139130fcef62d75f57c889b1faa9a0e7ec53345f72d1f084bd8bc66dd6430c"
+    },
+    {
+      "path": "tercas/data/ue_reference/study_sources.json",
+      "sha256": "c818f5250b7927d1cf7f9fe2637561dd8fa6b592bc3979a74352606fa3e6d20e"
+    },
+    {
+      "path": "tercas/data/ue_reference/study_summary.json",
+      "sha256": "d153352f0ae236afdab04cdb864216cbb16368ea4c5bf786a529f44250e95969"
+    },
+    {
+      "path": "tercas/data/ue_reference/vector.json",
+      "sha256": "0bca134cc5dd1e9a3106d03177c0c77fb4d6cfe30765be4452ef85a80afb1e0c"
+    },
+    {
+      "path": "tercas/ue_reference.py",
+      "sha256": "7feb72993da35ad132d5b4455a383564a1d7cc37ace02554f8814ae36f5fa0ed"
+    },
+    {
+      "path": "tercas/ue_reference_ui.py",
+      "sha256": "302ae7e825acfd52bb1c2631cf964c0d8e9e30adb140b309a9b69e7247e8e231"
+    },
+    {
+      "path": "tests/test_ue_reference.py",
+      "sha256": "e114a319fcbef2c60b8103698071779cad4ddf58a341884f4a1ebf23508dedc9"
+    },
+    {
+      "path": "tests/test_ui_ue_reference.py",
+      "sha256": "dae006bea03a975a6ecdb248ab0c9c4316b5084933ef13c3f54c02715a19d09d"
+    }
+  ],
+  "test_results": {
+    "focused_backend": "145 passed",
+    "focused_UI": "15 passed"
+  },
+  "source_manifest_sha256": "f5139130fcef62d75f57c889b1faa9a0e7ec53345f72d1f084bd8bc66dd6430c",
+  "whole_member_approved": false,
+  "published": false
+}

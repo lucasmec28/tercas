@@ -1,0 +1,23 @@
+{
+  "candidate_sha256": "9c99cee5affa34afa5d3cb9aab1049a4539325d20863cfb9769b187af60a2133",
+  "ue_assess": {
+    "eligible": false,
+    "active": false,
+    "calculable": false,
+    "reference_id": null,
+    "reasons": [
+      "Campos protegidos divergentes: member_application, three_girt_model"
+    ],
+    "action_errors": []
+  },
+  "input_unchanged": true,
+  "outcome": "ACCEPTED",
+  "result_status": "conditional_elastic_diagnostic",
+  "cases": 2,
+  "schema": "tercas_three_girt_results_v1",
+  "retained_claim": true,
+  "case_model_statuses": [
+    "conditional_elastic_diagnostic",
+    "conditional_elastic_diagnostic"
+  ]
+}

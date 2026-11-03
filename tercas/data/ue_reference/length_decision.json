@@ -1,0 +1,87 @@
+{
+  "schema": "ue100_web_floor_NBR_additive_length_extension_v1",
+  "date": "2026-11-03",
+  "reference_id": "Ue100x50x17x1.20_rounded_R01_209nodes_nu0p3",
+  "status": "accepted_conservative_web_elastic_floor_for_declared_3000to6000mm_domain",
+  "accepted_for_NBR_9_8_2_3_web_elastic_floor": true,
+  "accepted_length_extension": true,
+  "length_domain_inclusive_mm": [3000.0, 6000.0],
+  "domain_kind": "validated scope of this copy, not a universal normative length range",
+  "input_kind": "elastic_floor_not_identified_Mdist",
+  "Mdist_lower_bound_Nmm": 850000,
+  "Mdist_identified_Nmm": null,
+  "web_nonapplicability_accepted": false,
+  "D_non_governing_proved": false,
+  "source_npz_sha256": "00a59a885924c8b6d25f99ac7b1d23b6a033085acf21643c68e80531161314d1",
+  "parent_4m_decision": {
+    "path": "outputs/tercas_ue_priority_20261103/distortion_review/web_floor_review/WEB_FLOOR_DECISION.json",
+    "sha256": "1d0824cde8d11fd362c6364d3c8bb3d4c99e26b0777fd9b8ae1db6af01a94da8",
+    "unchanged": true,
+    "relationship": "This additive decision authorizes the new length domain; it does not rewrite the historical 4m-only decision."
+  },
+  "model_conditions": {
+    "nodes": 209,
+    "E_MPa": 200000.0,
+    "nu": 0.3,
+    "G_MPa": 76923.07692307692,
+    "t_mm": 1.2,
+    "geometry_and_stress": "Exact frozen R01 rounded-faceted contour and nominal +My=1e6 Nmm web-compressed stress vector",
+    "boundary": "Prismatic classical S-S harmonic model; ideal fork-ended benchmark; no intermediate restraints or panel credit",
+    "effective_lengths": "Lx=Ly=Lz=L with Kx=Ky=Kz=1",
+    "N_N": 0.0,
+    "imposed_torque_Nmm": 0.0,
+    "Cb": 1.0,
+    "Cm": 1.0
+  },
+  "proof_domain": {
+    "continuous_p_lower_exact_decimal_mm_minus2": "0.00000027",
+    "continuous_p_upper": "infinity",
+    "all_positive_integer_harmonics_for_every_L_in_declared_domain": true,
+    "finite_intervals": 11,
+    "bernstein_matrices": 33,
+    "analytic_tail_starts_p_mm_minus2": 385,
+    "mathematical_L_ceiling_mm_approx_not_approved_limit": 6045.997880780726,
+    "manual_eigenproblem_per_length_required": false
+  },
+  "required_per_length_consumption": {
+    "recompute_AnexoE_Nex_Ney_Nez": true,
+    "recompute_sign_correct_Me_and_FLT_resistances": true,
+    "applies_to_strong_and_both_weak_senses": true,
+    "retain_local_criticals_and_lips_distortional_input": true,
+    "do_not_reuse_4m_global_capacity": true,
+    "do_not_clamp_or_round_outside_length_into_domain": true,
+    "outside_domain_behavior": "Do not consume this acceptance; preserve incomplete/unsupported state unless another applicable decision exists."
+  },
+  "scalar_resistance_component": {
+    "standard": "Supplied NBR14762:2010 9.8.2.3; current-edition status not asserted",
+    "W_external_mm3": 3151.5055463838385,
+    "fy_MPa": 250.0,
+    "gamma": 1.1,
+    "MRd_dist_lower_bound_Nmm": 573953.5490512308,
+    "MRd_local_web_Nmm": 580586.1775465694,
+    "total_scalar_rule": "MRd_y_web(L)=min(MRd_local_web, MRd_FLT_web(L), MRd_dist_lower_bound)",
+    "universal_governing_branch_claimed": false,
+    "accepted_as_conservative_My_Rd_denominator_in_NBR_9_9": true,
+    "NBR_9_9_scope": "Section-wise concomitant q/P moments within 3000<=L<=6000 and declared N0/T0/Cb1/Cm1, sign-correct resistances and separately applicable checks",
+    "variable_biaxial_initial_stress_spectrum_certified": false,
+    "benchmark_cases_preapproved_as_passing": false,
+    "literal_curve_unchanged": true
+  },
+  "evidence": {
+    "producer_extension": {
+      "path": "outputs/tercas_ue_priority_20261103/web_lower_bound/length_extension/EXTENSION_CERTIFICATE.json",
+      "sha256": "3b627a399a9cae9ab326aa3e1ec3419d139b48dface0d8bf5128678cbaa99ac5"
+    },
+    "independent_extension_receipt": {
+      "path": "outputs/tercas_ue_priority_20261103/web_bound_independent/length_extension/RECEIPT.json",
+      "sha256": "73d79be3f25148c7917a42d9a3726c99dc5931a16f90099c6d40e21a043464b8"
+    },
+    "own_receipt_audit": "RECEIPT_AUDIT.json",
+    "review": "REVIEW.txt"
+  },
+  "continuous_shell_lower_bound_proved": false,
+  "physical_member_design_approved": false,
+  "app_release_approved": false,
+  "historical_decisions_changed": false,
+  "lips_decision_unchanged_sha256": "45fd89f1ab9ab6b5d13fd878b9531e8db7d7c235ebb42e2c42fc0dce140b1145"
+}

@@ -57,6 +57,12 @@ def case_inputs(data,combo):
  return d
 
 def calculate_batch(data):
+ from .ue_reference import claims_reference, calculate_reference
+ if claims_reference(data):return calculate_reference(data)
+ return _calculate_batch(data)
+
+def _calculate_batch(data, *, _calculate_case=None):
+ if _calculate_case is None:_calculate_case=calculate
  from .three_girt_application import enabled as three_girt_enabled
  if three_girt_enabled(data):raise ValueError('Sistema 3D selecionado: usar o diagnóstico específico; resistência isolada N=0 bloqueada.')
  bundle=area_bundle(data);cases=[]
@@ -67,7 +73,7 @@ def calculate_batch(data):
  common_snapshot={key:copy.deepcopy(common_spec[key]) for key in
                   ('selected_section','Ml','Mdist','strong_critical_qualification','model_domain_evidence')}
  for combo in bundle['combinations']:
-  d=case_inputs(data,combo);result=calculate(d)
+  d=case_inputs(data,combo);result=_calculate_case(d)
   if combo.get('point_position')=='support_limit' and combo.get('P_N',0):
    # P is zero only in the interior bending adapter. The concentrated
    # transfer at the support has not disappeared and is not an internal
@@ -121,7 +127,7 @@ def governing(cases):
   numeric=[(c,r) for c,r in items if finite(r.get('Índice'))]
   c,r=max(numeric,key=lambda x:x[1]['Índice']) if numeric else items[0]
   entry=copy.deepcopy(r);entry['Combinação']=f"{c['id']} — {c['type']}";entry['q [kN/m]']=c['q_kN_m'];entry['Casos avaliados']=len(numeric)
-  pending=sum(1 for _,rr in items if any(tag in str(rr.get('Situação','')).lower() for tag in ('parcial','pendente','hipótese','provisóri')) or (not finite(rr.get('Índice')) and rr['Situação'] not in ('Não aplicável','Dispensado pela Tabela 14','Não acionado pelo comprimento')))
+  pending=sum(1 for _,rr in items if any(tag in str(rr.get('Situação','')).lower() for tag in ('parcial','pendente','hipótese','provisóri')) or (not finite(rr.get('Índice')) and rr['Situação'] not in ('Não aplicável','Dispensado pela Tabela 14','Dispensado pela Tabela 14 (eixo forte)','Não acionado pelo comprimento')))
   entry['Casos pendentes']=pending
   if pending:
    entry['Situação']='Parcial — '+entry['Situação'];entry['Observação']+=f' {pending} combinação(ões) com índice ausente, resultado parcial ou hipótese; o máximo numérico não cobre essas pendências.'

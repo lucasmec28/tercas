@@ -1,0 +1,62 @@
+{
+  "schema": "ue100_self_contained_consumption_sources_v1",
+  "reference_id": "Ue100x50x17x1.20_rounded_R01_209nodes_nu0p3",
+  "files": {
+    "canonical.json": {
+      "sha256": "f593f8376a6f009b9b67e1dba473c181f65e4a2b8cebbf733431f890cba480ff",
+      "original_source": "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4000_anglep0/inputs.json"
+    },
+    "vector.json": {
+      "sha256": "0bca134cc5dd1e9a3106d03177c0c77fb4d6cfe30765be4452ef85a80afb1e0c",
+      "original_source": "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/L4000_anglep0/reference.json"
+    },
+    "length_decision.json": {
+      "sha256": "42a3b2de4ec8e74bcc1949b6a6a3802e30bc117a5c47a54e7bc454e6c5343875",
+      "original_source": "outputs/tercas_ue_priority_20261103/distortion_review/web_floor_review/length_extension/LENGTH_EXTENSION_DECISION.json"
+    },
+    "lips_decision.json": {
+      "sha256": "45fd89f1ab9ab6b5d13fd878b9531e8db7d7c235ebb42e2c42fc0dce140b1145",
+      "original_source": "outputs/tercas_ue_priority_20261103/distortion_review/DECISION.json"
+    },
+    "study_sources.json": {
+      "sha256": "c818f5250b7927d1cf7f9fe2637561dd8fa6b592bc3979a74352606fa3e6d20e",
+      "original_source": "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/SOURCES.json"
+    },
+    "study_summary.json": {
+      "sha256": "d153352f0ae236afdab04cdb864216cbb16368ea4c5bf786a529f44250e95969",
+      "original_source": "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/end_to_end/SUMMARY.json"
+    },
+    "independent_receipt.json": {
+      "sha256": "5c0df046a14e8c203bc5604e46e57179b7aa1d42813c9680d19a6dc1ebfe50de",
+      "original_source": "outputs/tercas_ue_priority_20261103/case_review/stage3_variable_lengths/RECEIPT.json"
+    },
+    "els_decision.json": {
+      "sha256": "8197ab823d54bd71cb041889248d7245f14d0943527895cbdc4ab64a14a7ba71",
+      "original_source": "outputs/tercas_ue_priority_20261103/els_biaxial_review/DECISION.json"
+    },
+    "els_review.txt": {
+      "sha256": "a9f9889c49fbcfff997c684f60003a24a4c2d237bc997779e4493d10182611ef",
+      "original_source": "outputs/tercas_ue_priority_20261103/els_biaxial_review/REPORT.txt"
+    }
+  },
+  "method_sources": {
+    "outputs/tercas_ue_priority_20261103/pipeline/reference.py": "31cda93a56300d174f3a2654185b326b099ea8cabef7aae3015a35d0909f7f8e",
+    "outputs/tercas_ue_priority_20261103/stage3_variable_lengths/variable_reference.py": "a2c07c0be3978cfd4aa4238c20b34f9bf4f265e8d999672b069edc714af3971c",
+    "outputs/tercas_ue_priority_20261103/stage2_web_floor/floor_curve.py": "9d3e5dcd65c42c1bb19967561400b03ca9f3ebe658ba6b987e2eaacc21c91cbe",
+    "outputs/tercas_ue_priority_20261103/stage2_web_floor/adapter.py": "d0b0041ba69db06ba2513ea6d856bb4c8c9a1048ea8146f0f8a74e6023f698b7",
+    "outputs/tercas_ue_priority_20261103/case_review/stage3_variable_lengths/REPORT.txt": "3821e292544ffa55d79ab563d82c396fe4fea4470c66c4f0b5e0455444f63c1b",
+    "outputs/tercas_ue_priority_20261103/els_biaxial_review/REFINED_ORIGINAL_4M.json": "8a3707b27841625d5911e20eca740c3a7116d77f83761994fabdde48999513fc",
+    "outputs/tercas_ue_priority_20261103/els_component_merge/merge.py": "0bf14ad159d4ba68a6e29adfd64bf7b4b5b94fa918191ece8eced6abff0556c4",
+    "outputs/tercas_ue_priority_20261103/els_component_merge/SOURCES.json": "d4901c3d4737d1ad99aa4f765041b8a6ba602bf73519ab4c693a5b4a4906f991",
+    "outputs/tercas_ue_priority_20261103/els_component_merge/COMPONENT_EVIDENCE.json": "be3d17b74d73f3a52650fb59fe0676756e5877d1c08e8a066ed9522f6f825b5d"
+  },
+  "use": "Pinned numeric consumption, no runtime import of research tree; no repeated FEM/FSM proof or general ELS acceptance.",
+  "scalar_ELS_normative_source": {
+    "document": "NBR14762:2010 supplied PDF",
+    "sha256": "c2a01615a3ce9e2b93aeb7fee757f7bf9dd932adaefbc242e848ce813dc82407",
+    "clause": "9.8.5",
+    "printed_pages": "51-52",
+    "PDF_pages": "57-58",
+    "scope": "Strong uniaxial scalar stiffness only; actual local parallel q=P=0 required in this integration."
+  }
+}

@@ -1,0 +1,252 @@
+{
+  "schema": "Ue_biaxial_ELS_scoped_decision_v1",
+  "date": "2026-11-03",
+  "reference_id": "Ue100x50x17x1.20_rounded_R01_209nodes_nu0p3",
+  "status": "component_evidence_completed_in_copy",
+  "normative_interpretation": {
+    "joint_effective_section_geometry_explicitly_required_by_9_8_5": false,
+    "independent_reduced_MSE_axes_explicitly_certified_for_general_biaxial_loading": false,
+    "principle": "The required outcome is a realistic service stiffness accounting for local buckling. Principal-axis decomposition is valid in a justified domain, and the MSE does not require reconstructing a geometric effective section.",
+    "sources": [
+      {
+        "clause": "8.1",
+        "printed_page": 24
+      },
+      {
+        "clause": "9.2.2.1/.2",
+        "printed_pages": [
+          26,
+          27
+        ]
+      },
+      {
+        "clause": "Tables 5/6",
+        "printed_pages": [
+          28,
+          29
+        ]
+      },
+      {
+        "clause": "9.2.3.1/.2",
+        "printed_pages": [
+          30,
+          31
+        ]
+      },
+      {
+        "clause": "9.8.5",
+        "printed_pages": [
+          51,
+          52
+        ]
+      },
+      {
+        "document": "CBCA 2014 Annex B",
+        "printed_pages": [
+          94,
+          95
+        ]
+      }
+    ]
+  },
+  "qualified_domain": {
+    "geometry": "R01 209-node Ue100x50x17x1.20, ri1.20, E200000, nu0.3, thin-wall line convention",
+    "primary_model": "Simply supported 4 m, isolated first-order flexural translations, zero axial force and excluded primary torsion; no cladding contact/restraint.",
+    "route": "Sufficient MLE full-effectiveness proof under simultaneous signed Mx/My, followed by coupled gross bending FEM. Not a reduced biaxial MSE extension.",
+    "synthetic_control_cases": 12,
+    "existing_inclined_4m_cases": [
+      {
+        "batch": "L4000_anglem5",
+        "id": "ELSR_00001"
+      },
+      {
+        "batch": "L4000_anglem5",
+        "id": "ELSR_00002"
+      },
+      {
+        "batch": "L4000_anglem5",
+        "id": "ELSR_00003"
+      },
+      {
+        "batch": "L4000_anglem5",
+        "id": "ELSR_00004"
+      },
+      {
+        "batch": "L4000_anglem5",
+        "id": "ELSR_00005"
+      },
+      {
+        "batch": "L4000_anglem5",
+        "id": "ELSR_00006"
+      },
+      {
+        "batch": "L4000_anglem5",
+        "id": "ELSR_00008"
+      },
+      {
+        "batch": "L4000_anglem5",
+        "id": "ELSF_00001"
+      },
+      {
+        "batch": "L4000_anglem5",
+        "id": "ELSF_00002"
+      },
+      {
+        "batch": "L4000_anglem5",
+        "id": "ELSF_00003"
+      },
+      {
+        "batch": "L4000_anglem5",
+        "id": "ELSF_00004"
+      },
+      {
+        "batch": "L4000_anglem5",
+        "id": "ELSF_00005"
+      },
+      {
+        "batch": "L4000_anglem5",
+        "id": "ELSF_00006"
+      },
+      {
+        "batch": "L4000_anglem5",
+        "id": "ELSQP_00001"
+      },
+      {
+        "batch": "L4000_anglem5",
+        "id": "ELSQP_00002"
+      },
+      {
+        "batch": "L4000_anglem5",
+        "id": "P_ELS_01_CENTRO"
+      },
+      {
+        "batch": "L4000_anglem5",
+        "id": "P_ELS_01_APOIO"
+      },
+      {
+        "batch": "L4000_anglep5",
+        "id": "ELSR_00001"
+      },
+      {
+        "batch": "L4000_anglep5",
+        "id": "ELSR_00002"
+      },
+      {
+        "batch": "L4000_anglep5",
+        "id": "ELSR_00003"
+      },
+      {
+        "batch": "L4000_anglep5",
+        "id": "ELSR_00004"
+      },
+      {
+        "batch": "L4000_anglep5",
+        "id": "ELSR_00005"
+      },
+      {
+        "batch": "L4000_anglep5",
+        "id": "ELSR_00006"
+      },
+      {
+        "batch": "L4000_anglep5",
+        "id": "ELSR_00008"
+      },
+      {
+        "batch": "L4000_anglep5",
+        "id": "ELSF_00001"
+      },
+      {
+        "batch": "L4000_anglep5",
+        "id": "ELSF_00002"
+      },
+      {
+        "batch": "L4000_anglep5",
+        "id": "ELSF_00003"
+      },
+      {
+        "batch": "L4000_anglep5",
+        "id": "ELSF_00004"
+      },
+      {
+        "batch": "L4000_anglep5",
+        "id": "ELSF_00005"
+      },
+      {
+        "batch": "L4000_anglep5",
+        "id": "ELSF_00006"
+      },
+      {
+        "batch": "L4000_anglep5",
+        "id": "ELSQP_00001"
+      },
+      {
+        "batch": "L4000_anglep5",
+        "id": "ELSQP_00002"
+      },
+      {
+        "batch": "L4000_anglep5",
+        "id": "P_ELS_01_CENTRO"
+      },
+      {
+        "batch": "L4000_anglep5",
+        "id": "P_ELS_01_APOIO"
+      }
+    ],
+    "existing_inclined_4m_pass_count": 34,
+    "uniform_flange_comparator_is_engineering_inference": true,
+    "uniform_flange_comparator_explanation": "Use the maximum combined compressive stress as a uniform upper envelope, then apply 9.2.3 in its uniform domain. The web uses actual combined linear gradient; each lip separately passes AL full-width criterion. Is/Ia=1 is required where edge stiffness is needed.",
+    "no_general_gradient_extension_of_9_2_3": true,
+    "maximum_original_FEM_error_mm": 1.6656290569017074e-08,
+    "FEM_runs_total": 92,
+    "regression_tests_passed": 7
+  },
+  "pending_original_cases": [
+    {
+      "batch": "L4000_anglem5",
+      "id": "ELSR_00007",
+      "reason": "Uniform-compression flange comparator above local full-width threshold; inconclusive, not structural failure."
+    },
+    {
+      "batch": "L4000_anglep5",
+      "id": "ELSR_00007",
+      "reason": "Uniform-compression flange comparator above local full-width threshold; inconclusive, not structural failure."
+    }
+  ],
+  "pending_meaning": "Comparator inconclusive is not reduced-section proof and not a failed ELS or strength check.",
+  "next_step": {
+    "first": "Independent comparator review passed. Expose the scoped gross-biaxial marker only in the authorized copy, without changing complete ELS or resistance flags.",
+    "two_remaining_cases": "Establish effective flexural stiffness for the two ELSR_00007 signed simultaneous gradients using an applicable MLE treatment or independent stiffness benchmark; compare the independent-axis approximation instead of assuming it exact or prohibited.",
+    "not_required": "Do not require a generic joint effective-section geometry or full 3D solution merely to accept the demonstrated flexural component."
+  },
+  "peer_review_status": "passed_independent_reconstruction_and_source_review",
+  "reduced_biaxial_MSE_law_qualified": false,
+  "physical_purlin_ELS_approved": false,
+  "deflection_limit_compliance_approved": false,
+  "whole_member_approved": false,
+  "resistance_release": false,
+  "torsion_warping_approved": false,
+  "published": false,
+  "app_changed": false,
+  "frozen_app_files_intact": 173,
+  "source_preservation": {
+    "frozen_app_count": 173,
+    "sources": {
+      "outputs/tercas_three_girts_qualification_20261103/sources/Automação MC/NBR14762 Dim. perfis formados a frio.pdf": "c2a01615a3ce9e2b93aeb7fee757f7bf9dd932adaefbc242e848ce813dc82407",
+      "outputs/tercas_full_case_reference_20261103/fonte/CBCA2014_internal.pdf": "9548cd089d12e1ef34c7392526e5c3a5acf09fa180014046102e5de2ae98ff9e",
+      "outputs/weak_ue100_diagnostic_20261102/modes/fine_rounded_n12_a16_web_local_historical_nu0p3.npz": "00a59a885924c8b6d25f99ac7b1d23b6a033085acf21643c68e80531161314d1",
+      "outputs/tercas_ue_priority_20261103/end_to_end/L4000_anglep5/reference.json": "c4fbb8098676838c31ac4bba2c74964e1a73a21a5afe2ab42ecf59a2e0c79ebe",
+      "outputs/tercas_ue_priority_20261103/PLAN.json": "6540fc6d9ed38ebf93ced37be209f541fbacf9ec63fd0408073ea5898f9135cf",
+      "outputs/tercas_ue_priority_20261103/REPORT_STAGE1.txt": "e0c3b5f0ebb31387c2689b3f97b42fff64efe299ca34b8d5165bb5e34c28f661",
+      "outputs/tercas_ue_priority_20261103/pipeline/reference.py": "31cda93a56300d174f3a2654185b326b099ea8cabef7aae3015a35d0909f7f8e",
+      "outputs/tercas_ue_priority_20261103/pipeline/audit_cases.py": "186f68f60535c233fb1bea8542e33b3deffb5827ba0ab55a7101733e102b388a"
+    }
+  },
+  "peer_review": {
+    "receipt_path": "outputs/tercas_ue_priority_20261103/case_review/stage2_web_floor/ELS_RECEIPT.json",
+    "receipt_sha256": "1d21ed4e73d2177e84224682370c6d26b3362881ff5daebea6583a1f9e9947ce",
+    "status": "PASS_restricted_full_effectiveness_and_bending_controls",
+    "independent_numeric_checks": 1532,
+    "FEM_runs_reexecuted_against_independent_Green_integral": 92,
+    "algorithm_hashes_verified": true
+  }
+}

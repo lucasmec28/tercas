@@ -10,10 +10,14 @@ class Tests(unittest.TestCase):
  def test_initial_render(self):
   at=self.run_app();self.assertIn('Terças',at.title[0].value)
   # Application and explicit reference selectors are intentional; preserve the nine legacy controls.
-  legacy=[x for x in at.selectbox if x.label not in ('Aplicação do elemento','Referência nominal própria','Caso sintético verificado')]
+  legacy=[x for x in at.selectbox if x.label not in ('Aplicação do elemento','Referência nominal própria','Caso sintético verificado','Exemplo sintético Ue100')]
   self.assertEqual(len(legacy),9)
   for label in ('Referência nominal própria','Caso sintético verificado'):
    self.assertEqual(len([x for x in at.selectbox if x.label==label]),1)
+  own_ue=[x for x in at.selectbox if x.label=='Exemplo sintético Ue100']
+  self.assertEqual(len(own_ue),1)
+  self.assertEqual(own_ue[0].value,0)
+  self.assertEqual(own_ue[0].options,['+0° · 58 combinações','+5° · 58 combinações','-5° · 58 combinações'])
   application=[x for x in at.selectbox if x.label=='Aplicação do elemento']
   self.assertEqual(len(application),1);self.assertEqual(application[0].value,'purlin')
   self.assertEqual(application[0].options,['Terça de cobertura','Travessa lateral — boca para baixo'])

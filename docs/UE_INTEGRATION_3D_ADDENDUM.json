@@ -1,0 +1,38 @@
+{
+  "schema": "ue100_integration_3d_isolation_addendum_v1",
+  "date": "2026-11-03",
+  "original_receipt_preserved_sha256": "c7f5f753ba4fa4dfbc7dcd7db25499d797d941daa33b33753ab8dfbb0df6b443",
+  "finding": "Public three_girt_application.calculate accepted mutated own Ue claims as diagnostic3D; no resistance approval was granted.",
+  "fix": "Reject claims_reference before configuration/build_spec/solver; no geometry or solver changes.",
+  "previous_three_girt_application_sha256": "9c99cee5affa34afa5d3cb9aab1049a4539325d20863cfb9769b187af60a2133",
+  "files": {
+    "tercas/three_girt_application.py": "a0ec85064268171ae5b2ed197724284d356f0f9b09a665d7b5584f157e23f2f4",
+    "tests/test_ue_three_girt_gate.py": "55f2bb7617d670695503a48142b1d7fa0fcb57812ee876a4a10d4eb70d596e5d",
+    "docs/UE_REFERENCE_INTEGRATION_20261103.txt": "19430ae2901faa632617cc5c2fc46266ece4660cb44e75085f61b9ce2b1a40ce",
+    "docs/UE_3D_ENTRYPOINT_BEFORE.json": "e9617311c8eb22bf7159aaf2c15e55c98b1e4ee81ddc371fa3c006c403e856c5",
+    "docs/UE_3D_ENTRYPOINT_AFTER.json": "7112ae64555595bf1afbed6eb3311aa42d9897581a992f584b8529332903167e",
+    "docs/UE_3D_LEGACY_BEFORE.json": "9259ef53d0a8fc0fcf1c842fe2d937e396d58d4f598921ca79b67ad5042051f1",
+    "docs/UE_3D_LEGACY_AFTER.json": "139706bc5427e0cf1320a878f18a5fdb7dd18a685bba0c850975bf8bb0577621",
+    "docs/UE_3D_GATE_TEST_RUN_ADDENDUM.txt": "9066c20ac25fea7b455532e5ec3e56b565fdcda17d1bc8b63a4cf0c5b171fb24"
+  },
+  "tests": {
+    "command": "python -m pytest -q tests/test_ue_three_girt_gate.py tests/test_three_girt_system.py -p no:cacheprovider",
+    "result": "35 passed in 9.42s",
+    "new_tests": 8,
+    "claim_variants": [
+      "marked",
+      "removed_marker",
+      "own_source_only",
+      "model_only",
+      "documents_only",
+      "marker_only"
+    ],
+    "legacy_exact_result_matches": {
+      "direct_cases": 2,
+      "area_cases": 19
+    }
+  },
+  "original_focused_tests_unchanged": "145 backend and 15 UI tests previously passed; original logs preserved.",
+  "whole_member_approved": false,
+  "published": false
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "ue100_own_snapshot_source_metadata_addendum_v1",
+  "date": "2026-11-03",
+  "prior_receipts_preserved": {
+    "docs/UE_INTEGRATION_WORKER_RECEIPT.json": "c7f5f753ba4fa4dfbc7dcd7db25499d797d941daa33b33753ab8dfbb0df6b443",
+    "docs/UE_INTEGRATION_3D_ADDENDUM.json": "df480ed57590db3979dc03313d887421dacffdd5c36ae867dfca1c7a2d607d16"
+  },
+  "finding": "Generic adapter retained catalogue origins for equal numeric fields and catalogue entry identity in own-reference snapshots.",
+  "fix": "Own R01 origin plus source manifest SHA and own reference entry_id on consumed snapshots and section_checks; catalogue is documentary only.",
+  "changed_only": "Own Ue result metadata and own-reference Word block; no changes to input_data or numeric values.",
+  "reporting_version": "ue100_components_own_snapshot_sources_20261103_r2",
+  "files": {
+    "tercas/ue_reference.py": "cb9ed183ddab1065688aa9fa5bb9f7787524566ca6f0217597e11d274719ceae",
+    "tercas/report.py": "350cb1910f07a8ee6b4af59dc9fadc23c1d423e52b72d76572a70ac316329933",
+    "tests/test_ue_snapshot_sources.py": "264cac65d8e2aec0777297fd6aa524e041d45b13cb0b65b80c7cf209709a641c",
+    "tests/test_ui_ue_snapshot_cache.py": "fa8e92277e0b477b07c6ea68804ca4441ad71b7a72e91628f72a8f33dc3e6194",
+    "docs/UE_REFERENCE_INTEGRATION_20261103.txt": "b9c8556010fcdf6f2e2620fbabd3c14de676375033863df85fc9ce1460c6c328",
+    "docs/UE_SNAPSHOT_SOURCES_TEST_RUN_ADDENDUM.txt": "6e8cdecf9393994d704e046bac5314f4e6e53d1cb651df608661179ed934cb4a",
+    "docs/UE_SNAPSHOT_SOURCES_FINAL_TEST_RUN_ADDENDUM.txt": "07978fb59cbf39d35f7577dd2e8c53fd647b121e5e2180ceec6f99ea61d75870",
+    "docs/UE_SNAPSHOT_CACHE_UI_TEST_RUN_ADDENDUM.txt": "c26b5f84fdb21dd8a152021f7e4a54b5abf35c98b0599aa80afb23809487fe0c"
+  },
+  "tests": {
+    "final_backend_command": "python -m pytest -q tests/test_ue_snapshot_sources.py tests/test_ue_reference.py tests/test_ue_three_girt_gate.py -p no:cacheprovider",
+    "final_backend_result": "157 passed in 22.62s",
+    "new_provenance_tests": 4,
+    "new_UI_cache_test": "1 passed; R1 result with identical input fingerprint invalidated without mutating inputs",
+    "numeric_preservation": "Recursive numeric paths exactly unchanged by source reclassification in direct and 58-case batch; input_data exactly unchanged.",
+    "legacy_3D": "Exact result hash tests passed again."
+  },
+  "whole_member_approved": false,
+  "published": false
+}

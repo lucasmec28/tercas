@@ -1,0 +1,67 @@
+{
+  "schema": "ue100_lips_conventional_Mdist_acceptance_v1",
+  "date": "2026-11-03",
+  "reference_id": "Ue100x50x17x1.20_rounded_R01_209nodes_nu0p3",
+  "source_npz_sha256": "2a6be92cc0e48a87338d214536a37e0f403908d12df3b7b32b0e0ed10ce569ce",
+  "source_npz": "outputs/weak_ue100_diagnostic_20261102/modes/fine_rounded_n12_a16_lips_distortional_historical_nu0p3.npz",
+  "Mdist_Nmm": 1668845.1785399402,
+  "accepted_for_NBR_9_8_2_3_lips_Mdist": true,
+  "web_nonapplicability_accepted": false,
+  "Mdist_web_Nmm": null,
+  "status": "accepted_lips_elastic_input_only_for_declared_model_web_unresolved",
+  "compression_side": "lips",
+  "half_wave_mm": 555.8351998037826,
+  "model": {
+    "dimensions_external_mm": {"h": 100.0, "b": 50.0, "lip": 17.0, "t": 1.2, "ri": 1.2},
+    "nodes": 209,
+    "geometry": "Frozen R01 faceted rounded midsurface; identical nodes to weak_service_ue100_reference.json",
+    "E_MPa": 200000.0,
+    "nu": 0.3,
+    "G_MPa": 76923.07692307692,
+    "reference_N_N": 0.0,
+    "reference_Mx_Nmm": 0.0,
+    "reference_My_Nmm": -1000000.0,
+    "boundary": "Conventional S-S finite strips with one sinusoidal longitudinal term; prismatic section and uniform moment; no panels"
+  },
+  "basis": [
+    "NBR14762:2010 9.3 and 9.8.2.3 visually checked: elastic stability analysis is allowed; no mandatory cFSM decomposition or exact curved-shell algorithm.",
+    "The refined conventional mode shows flange-lip rotation and cross-section distortion, with documented valley neighbors and mesh continuity.",
+    "Frozen NPZ hash, exact geometry, material and stress resultants verified; eight saved modes and independent assembly/QZ checked in focal_results.json.",
+    "The conventional eigenproblem retains elastic modal coupling; larger restricted D, D+S or force-defined values are not substituted."
+  ],
+  "numerical_evidence": {
+    "reference_matrix_K_relative_error": 4.1410812309992485e-16,
+    "reference_matrix_G_relative_error": 2.3167501957602484e-16,
+    "independent_QZ_max_relative_difference8": 4.439866397865089e-7,
+    "reference_matrix_saved_mode_max_residual8": 3.731888573353652e-7,
+    "existing_residual_guard": 1e-6,
+    "mesh_157_to209_change_percent": -0.007286589681188005,
+    "diagnostic_numbers_are_not_normative_tolerances": true
+  },
+  "NBR_9_8_2_3_arithmetic_for_external_fiber_variant": {
+    "W_mm3": 3151.5055463838385,
+    "fy_MPa": 250.0,
+    "gamma": 1.1,
+    "lambda_dist": 0.6871016920852571,
+    "chi_dist": 0.9893943009159939,
+    "MRd_dist_Nmm": 708654.9152039352,
+    "local_FLT_dist_min_for_L4000_Cb1_N0_T0_Nmm": 285558.5467363145,
+    "governing_branch_for_that_declared_case": "FLT"
+  },
+  "design_approval": false,
+  "app_release_approval": false,
+  "limits": [
+    "Acceptance is only of the positive conventional lips-compressed elastic Mdist for the frozen model, not a physical-profile or complete structural-design approval.",
+    "Web-compressed Mdist remains null. No distortion exemption follows from the negative geometric matrix in the straight pure-D subspace.",
+    "Table14 exemption applies only to strong bending and is not used here.",
+    "No substitution of the G77000 variant, catalog properties, pure-D eigenvalues or unknown Pierin sign.",
+    "Local, global, distortional and applicable combined-action checks remain separate obligations; no nonlinear interaction or arbitrary combined-stress eigenvalue is certified.",
+    "Rejected long-wave signature points remain rejected; the full conventional global signature is not requalified.",
+    "The faceted thin-wall approximation and sinusoidal uniform-moment boundary are explicit model limits; no exact curved shell, physical restraint or manufactured geometry is certified.",
+    "Ma/Papangelis2025 abstract warns about DSM strength rules; its full equation/domain was unavailable. No automatic transfer to or dismissal of NBR is justified; ultimate-strength generalization is not accepted.",
+    "No source history, catalog or app was altered or published."
+  ],
+  "review_file": "REVIEW.txt",
+  "numeric_audit_file": "focal_results.json",
+  "exact_material_mode_image": "accepted_mode_nu0p3.png"
+}

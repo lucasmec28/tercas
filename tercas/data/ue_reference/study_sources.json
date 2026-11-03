@@ -1,0 +1,23 @@
+{
+  "schema": "pinned_parametric_web_floor_sources_v1",
+  "decision_file": "outputs/tercas_ue_priority_20261103/distortion_review/web_floor_review/length_extension/LENGTH_EXTENSION_DECISION.json",
+  "files": {
+    "outputs/tercas_ue_priority_20261103/distortion_review/web_floor_review/WEB_FLOOR_DECISION.json": "1d0824cde8d11fd362c6364d3c8bb3d4c99e26b0777fd9b8ae1db6af01a94da8",
+    "outputs/tercas_ue_priority_20261103/web_lower_bound/CERTIFICATE.json": "729657d90ad509dd4dbc5ab68f4a65c39dacbd8d58ecec2c7297f42b72d443b8",
+    "outputs/tercas_ue_priority_20261103/web_lower_bound/VERIFICATION.json": "d9c77bebd3e609e3f065305db3e02c355ce6ea19d1de12cad44d412385fada2d",
+    "outputs/tercas_ue_priority_20261103/web_lower_bound/GATE_RESULT.json": "cd0821979ff1d63ceee0cf2382bcb7365c660a70f5f4382e24eecf0afb534ead",
+    "outputs/tercas_ue_priority_20261103/web_bound_independent/RECEIPT.json": "0bbfc9ce707c6d787d16caa50a691961a4deecf0de93a62a2562f2292cfe6b72",
+    "outputs/tercas_purlin_pierin_independent_20261103/results_ue100.json": "957267f622b275b5de07c4c85d594b4038de30e719c106200a2579fd7bbd8589",
+    "outputs/weak_ue100_diagnostic_20261102/modes/fine_rounded_n12_a16_web_local_historical_nu0p3.npz": "00a59a885924c8b6d25f99ac7b1d23b6a033085acf21643c68e80531161314d1",
+    "outputs/weak_ue100_diagnostic_20261102/modes/fine_rounded_n12_a16_lips_local_historical_nu0p3.npz": "2c832aa60b198e9c405810304810f23c03586ac4885f2543f2631f4b1883f95a",
+    "outputs/weak_ue100_diagnostic_20261102/modes/fine_rounded_n12_a16_lips_distortional_historical_nu0p3.npz": "2a6be92cc0e48a87338d214536a37e0f403908d12df3b7b32b0e0ed10ce569ce",
+    "outputs/tercas_ue_priority_20261103/PLAN.json": "6540fc6d9ed38ebf93ced37be209f541fbacf9ec63fd0408073ea5898f9135cf",
+    "outputs/tercas_ue_priority_20261103/pipeline/reference.py": "31cda93a56300d174f3a2654185b326b099ea8cabef7aae3015a35d0909f7f8e",
+    "outputs/tercas_ue_priority_20261103/distortion_review/DECISION.json": "45fd89f1ab9ab6b5d13fd878b9531e8db7d7c235ebb42e2c42fc0dce140b1145",
+    "outputs/tercas_ue_priority_20261103/distortion_review/web_floor_review/length_extension/LENGTH_EXTENSION_DECISION.json": "42a3b2de4ec8e74bcc1949b6a6a3802e30bc117a5c47a54e7bc454e6c5343875",
+    "outputs/tercas_ue_priority_20261103/web_lower_bound/length_extension/EXTENSION_CERTIFICATE.json": "3b627a399a9cae9ab326aa3e1ec3419d139b48dface0d8bf5128678cbaa99ac5",
+    "outputs/tercas_ue_priority_20261103/web_bound_independent/length_extension/RECEIPT.json": "73d79be3f25148c7917a42d9a3726c99dc5931a16f90099c6d40e21a043464b8",
+    "outputs/tercas_ue_priority_20261103/stage2_web_floor/floor_curve.py": "9d3e5dcd65c42c1bb19967561400b03ca9f3ebe658ba6b987e2eaacc21c91cbe"
+  },
+  "no_duplicate_numeric_floor": true
+}

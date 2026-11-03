@@ -126,6 +126,11 @@ def build_spec(data):
  return spec
 
 def calculate(data):
+ from .ue_reference import claims_reference, calculate_reference
+ if claims_reference(data):return calculate_reference(data)
+ return _calculate(data)
+
+def _calculate(data):
  from .three_girt_application import enabled as three_girt_enabled
  if three_girt_enabled(data):raise ValueError('Sistema 3D selecionado: usar o diagnóstico específico; resistência isolada N=0 bloqueada.')
  from .inclination_adapter import direct_evidence
@@ -175,7 +180,7 @@ def calculate(data):
   result['member_application']='wall_girt';add_vertical_studies(result)
  return result
 
-STATUS={'not_evaluated':'Não avaliado','invalid_inputs':'Entrada inválida','FLT_not_evaluated':'Não avaliado','route_domain_not_declared':'Domínio não informado','computed':'Calculado','computed_bending_component':'Componente de flexão calculada','computed_from_supplied_inputs':'Calculado com dados informados','computed_fixed_load_position':'Calculado na posição informada','computed_from_supplied_effective_lengths':'Calculado com comprimentos informados','not_applicable':'Não aplicável','exempt_Table14':'Dispensado pela Tabela 14','stiffener_exception_9_5_1':'Exceção de enrijecedor §9.5.1','outside_implemented_family':'Fora da versão','invalid_or_outside_implemented_domain':'Entrada inválida ou fora do domínio'}
+STATUS={'not_evaluated':'Não avaliado','invalid_inputs':'Entrada inválida','FLT_not_evaluated':'Não avaliado','route_domain_not_declared':'Domínio não informado','computed':'Calculado','computed_bending_component':'Componente de flexão calculada','computed_from_supplied_inputs':'Calculado com dados informados','computed_fixed_load_position':'Calculado na posição informada','computed_from_supplied_effective_lengths':'Calculado com comprimentos informados','not_applicable':'Não aplicável','exempt_Table14':'Dispensado pela Tabela 14 (eixo forte)','stiffener_exception_9_5_1':'Exceção de enrijecedor §9.5.1','outside_implemented_family':'Fora da versão','invalid_or_outside_implemented_domain':'Entrada inválida ou fora do domínio'}
 
 def rows(result):
  out=[]
@@ -188,6 +193,8 @@ def rows(result):
   if isinstance(detail,list):detail=', '.join(map(str,detail))
   out.append({'Verificação':name,'Situação':status,'Índice':idx,'Demanda / valor':'—','Resistência / limite':'—','Referência':source,'Observação':str(detail)})
  b=result['NBR_branches'];add('Flexão local',b['local'],'NBR 14762 §9.8.2.1');add('Distorcional',b['distortional'],'§9.3 / §9.8.2.3' if b['distortional'].get('model_domain') else '§9.3 / §9.8.2.3 / Tabela 14')
+ if result['input_snapshot']['selected_section']['family']=='Ue':
+  out[-1]['Observação']+=' Esta linha avalia apenas o eixo de maior inércia. A Tabela 14 não dispensa o eixo fraco; sua resistência é tratada por sentido na interação biaxial, quando solicitada.'
  for i,r in enumerate(result['FLT_segments'],1):add(f'FLT — trecho {i}',r,'§9.8.2.2')
  shear=result['section_checks'].get('shear',{});d=result['input_data'];L=d['L_mm'];q=d['q_uls'];P=d['P_uls'];a=d['x_uls'];R=q*L/2+P*(L-a)/L;V=max(abs(R),abs(R-q*a),abs(R-q*a-P),abs(R-q*L-P))
  add('Cortante',shear,'§9.8.3',V/shear['VRd_N'] if shear.get('VRd_N') else None)

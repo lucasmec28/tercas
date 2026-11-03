@@ -1,0 +1,297 @@
+{
+  "schema": "Ue_signed_component_reference_v3_span_interval",
+  "id": "Ue100x50x17x1.20_rounded_R01_209nodes_nu0p3",
+  "model": {
+    "H_external_mm": 100.0,
+    "B_external_mm": 50.0,
+    "lip_external_mm": 17.0,
+    "t_mm": 1.2,
+    "ri_mm": 1.2,
+    "L_mm": 4000.0,
+    "web_flat_mm": 95.2,
+    "E_MPa": 200000.0,
+    "nu": 0.3,
+    "G_MPa": 76923.07692307692,
+    "fy_MPa": 250.0,
+    "nominal_geometry_source_verified": true,
+    "physical_geometry_verified": false,
+    "Pierin_critical_values_or_signs_used": false,
+    "coordinate": "My positive compresses web, negative compresses lips",
+    "imposed_primary_torque_Nmm": 0.0,
+    "N_N": 0.0,
+    "supports": "ideal forks; warping free",
+    "cladding": "no contact or restraint; actions only",
+    "stability_lengths": {
+      "Lx_mm": 4000.0,
+      "Ly_mm": 4000.0,
+      "Lz_mm": 4000.0
+    }
+  },
+  "properties": {
+    "A_mm2": 271.32623059804456,
+    "Ix_mm4": 440779.46607003844,
+    "Iy_mm4": 101233.75979153396,
+    "J_mm4": 130.23659068706135,
+    "Cw_mm6": 240764412.66233683,
+    "centroid_x_mm": 17.27765139499959,
+    "centroid_y_mm": 49.39999999999999,
+    "shear_center_x_mm": -25.535500764037177,
+    "shear_center_y_mm": 49.40000000000011,
+    "x0_magnitude_mm": 42.81315215903677,
+    "r0_mm": 61.891922186494426,
+    "j_mm": 60.33927401882127
+  },
+  "global_criticals": {
+    "Nex_N": 54378.98697793336,
+    "Ney_N": 12489.21451471683,
+    "Nez_N": 10369.449718948961,
+    "Me_strong_Nmm": 704335.1920759537
+  },
+  "moduli_exterior_primary": {
+    "Wx_mm3": 8815.589321400768
+  },
+  "resistances_exterior_primary": {
+    "strong_positive": {
+      "W_mm3": 8815.589321400768,
+      "Wc_mm3": 8815.589321400768,
+      "Ml_Nmm": 4395734.375930524,
+      "Me_Nmm": 704335.1920759537,
+      "MRd_local_Nmm": 1950411.8697322048,
+      "MRd_FLT_Nmm": 640304.7200690487,
+      "MRd_dist_Nmm": null,
+      "known_min_Nmm": 640304.7200690487,
+      "MRd_Nmm": 640304.7200690487,
+      "distortion_status": "exempt_Table14_strong_only"
+    },
+    "strong_negative": {
+      "W_mm3": 8815.589321400768,
+      "Wc_mm3": 8815.589321400768,
+      "Ml_Nmm": 4395734.375930524,
+      "Me_Nmm": 704335.1920759537,
+      "MRd_local_Nmm": 1950411.8697322048,
+      "MRd_FLT_Nmm": 640304.7200690487,
+      "MRd_dist_Nmm": null,
+      "known_min_Nmm": 640304.7200690487,
+      "MRd_Nmm": 640304.7200690487,
+      "distortion_status": "exempt_Table14_strong_only"
+    },
+    "weak_web_compressed": {
+      "W_mm3": 3151.5055463838385,
+      "Wc_mm3": 5662.587190834765,
+      "Ml_Nmm": 878340.748314186,
+      "Me_Nmm": 6876491.593664816,
+      "MRd_local_Nmm": 580586.1775465694,
+      "MRd_FLT_Nmm": 838047.8144550537,
+      "MRd_dist_Nmm": 573953.5490512308,
+      "known_min_Nmm": 573953.5490512308,
+      "Mdist_Nmm": null,
+      "MRd_Nmm": 573953.5490512308,
+      "status": "signed_scalar_branches_with_certified_discrete_floor",
+      "candidate_sensitivity_only": false,
+      "Cs": 1,
+      "distortional_not_applicable": false,
+      "Mdist_identified_Nmm": null,
+      "Mdist_lower_bound_Nmm": 850000.0,
+      "distortion_input_kind": "conservative_elastic_lower_bound_not_identified_mode"
+    },
+    "weak_lips_compressed": {
+      "W_mm3": 3151.5055463838385,
+      "Wc_mm3": 3151.5055463838385,
+      "Ml_Nmm": 2625295.3593363394,
+      "Me_Nmm": 314114.401409946,
+      "MRd_local_Nmm": 716251.2605417814,
+      "MRd_FLT_Nmm": 285558.5467363145,
+      "MRd_dist_Nmm": 708654.9152039352,
+      "known_min_Nmm": 285558.5467363145,
+      "Mdist_Nmm": 1668845.1785399402,
+      "MRd_Nmm": 285558.5467363145,
+      "status": "signed_scalar_branches_qualified",
+      "candidate_sensitivity_only": false,
+      "Cs": -1,
+      "distortional_not_applicable": false
+    }
+  },
+  "lips_distortion_decision": {
+    "schema": "ue100_lips_conventional_Mdist_acceptance_v1",
+    "date": "2026-11-03",
+    "reference_id": "Ue100x50x17x1.20_rounded_R01_209nodes_nu0p3",
+    "source_npz_sha256": "2a6be92cc0e48a87338d214536a37e0f403908d12df3b7b32b0e0ed10ce569ce",
+    "source_npz": "outputs/weak_ue100_diagnostic_20261102/modes/fine_rounded_n12_a16_lips_distortional_historical_nu0p3.npz",
+    "Mdist_Nmm": 1668845.1785399402,
+    "accepted_for_NBR_9_8_2_3_lips_Mdist": true,
+    "web_nonapplicability_accepted": false,
+    "Mdist_web_Nmm": null,
+    "status": "accepted_lips_elastic_input_only_for_declared_model_web_unresolved",
+    "compression_side": "lips",
+    "half_wave_mm": 555.8351998037826,
+    "model": {
+      "dimensions_external_mm": {
+        "h": 100.0,
+        "b": 50.0,
+        "lip": 17.0,
+        "t": 1.2,
+        "ri": 1.2
+      },
+      "nodes": 209,
+      "geometry": "Frozen R01 faceted rounded midsurface; identical nodes to weak_service_ue100_reference.json",
+      "E_MPa": 200000.0,
+      "nu": 0.3,
+      "G_MPa": 76923.07692307692,
+      "reference_N_N": 0.0,
+      "reference_Mx_Nmm": 0.0,
+      "reference_My_Nmm": -1000000.0,
+      "boundary": "Conventional S-S finite strips with one sinusoidal longitudinal term; prismatic section and uniform moment; no panels"
+    },
+    "basis": [
+      "NBR14762:2010 9.3 and 9.8.2.3 visually checked: elastic stability analysis is allowed; no mandatory cFSM decomposition or exact curved-shell algorithm.",
+      "The refined conventional mode shows flange-lip rotation and cross-section distortion, with documented valley neighbors and mesh continuity.",
+      "Frozen NPZ hash, exact geometry, material and stress resultants verified; eight saved modes and independent assembly/QZ checked in focal_results.json.",
+      "The conventional eigenproblem retains elastic modal coupling; larger restricted D, D+S or force-defined values are not substituted."
+    ],
+    "numerical_evidence": {
+      "reference_matrix_K_relative_error": 4.1410812309992485e-16,
+      "reference_matrix_G_relative_error": 2.3167501957602484e-16,
+      "independent_QZ_max_relative_difference8": 4.439866397865089e-07,
+      "reference_matrix_saved_mode_max_residual8": 3.731888573353652e-07,
+      "existing_residual_guard": 1e-06,
+      "mesh_157_to209_change_percent": -0.007286589681188005,
+      "diagnostic_numbers_are_not_normative_tolerances": true
+    },
+    "NBR_9_8_2_3_arithmetic_for_external_fiber_variant": {
+      "W_mm3": 3151.5055463838385,
+      "fy_MPa": 250.0,
+      "gamma": 1.1,
+      "lambda_dist": 0.6871016920852571,
+      "chi_dist": 0.9893943009159939,
+      "MRd_dist_Nmm": 708654.9152039352,
+      "local_FLT_dist_min_for_L4000_Cb1_N0_T0_Nmm": 285558.5467363145,
+      "governing_branch_for_that_declared_case": "FLT"
+    },
+    "design_approval": false,
+    "app_release_approval": false,
+    "limits": [
+      "Acceptance is only of the positive conventional lips-compressed elastic Mdist for the frozen model, not a physical-profile or complete structural-design approval.",
+      "Web-compressed Mdist remains null. No distortion exemption follows from the negative geometric matrix in the straight pure-D subspace.",
+      "Table14 exemption applies only to strong bending and is not used here.",
+      "No substitution of the G77000 variant, catalog properties, pure-D eigenvalues or unknown Pierin sign.",
+      "Local, global, distortional and applicable combined-action checks remain separate obligations; no nonlinear interaction or arbitrary combined-stress eigenvalue is certified.",
+      "Rejected long-wave signature points remain rejected; the full conventional global signature is not requalified.",
+      "The faceted thin-wall approximation and sinusoidal uniform-moment boundary are explicit model limits; no exact curved shell, physical restraint or manufactured geometry is certified.",
+      "Ma/Papangelis2025 abstract warns about DSM strength rules; its full equation/domain was unavailable. No automatic transfer to or dismissal of NBR is justified; ultimate-strength generalization is not accepted.",
+      "No source history, catalog or app was altered or published."
+    ],
+    "review_file": "REVIEW.txt",
+    "numeric_audit_file": "focal_results.json",
+    "exact_material_mode_image": "accepted_mode_nu0p3.png"
+  },
+  "candidate_sensitivity_only": false,
+  "whole_member_approved": false,
+  "weak_or_combined_ELS_approved": false,
+  "published": false,
+  "web_floor_length_decision": {
+    "schema": "ue100_web_floor_NBR_additive_length_extension_v1",
+    "date": "2026-11-03",
+    "reference_id": "Ue100x50x17x1.20_rounded_R01_209nodes_nu0p3",
+    "status": "accepted_conservative_web_elastic_floor_for_declared_3000to6000mm_domain",
+    "accepted_for_NBR_9_8_2_3_web_elastic_floor": true,
+    "accepted_length_extension": true,
+    "length_domain_inclusive_mm": [
+      3000.0,
+      6000.0
+    ],
+    "domain_kind": "validated scope of this copy, not a universal normative length range",
+    "input_kind": "elastic_floor_not_identified_Mdist",
+    "Mdist_lower_bound_Nmm": 850000,
+    "Mdist_identified_Nmm": null,
+    "web_nonapplicability_accepted": false,
+    "D_non_governing_proved": false,
+    "source_npz_sha256": "00a59a885924c8b6d25f99ac7b1d23b6a033085acf21643c68e80531161314d1",
+    "parent_4m_decision": {
+      "path": "outputs/tercas_ue_priority_20261103/distortion_review/web_floor_review/WEB_FLOOR_DECISION.json",
+      "sha256": "1d0824cde8d11fd362c6364d3c8bb3d4c99e26b0777fd9b8ae1db6af01a94da8",
+      "unchanged": true,
+      "relationship": "This additive decision authorizes the new length domain; it does not rewrite the historical 4m-only decision."
+    },
+    "model_conditions": {
+      "nodes": 209,
+      "E_MPa": 200000.0,
+      "nu": 0.3,
+      "G_MPa": 76923.07692307692,
+      "t_mm": 1.2,
+      "geometry_and_stress": "Exact frozen R01 rounded-faceted contour and nominal +My=1e6 Nmm web-compressed stress vector",
+      "boundary": "Prismatic classical S-S harmonic model; ideal fork-ended benchmark; no intermediate restraints or panel credit",
+      "effective_lengths": "Lx=Ly=Lz=L with Kx=Ky=Kz=1",
+      "N_N": 0.0,
+      "imposed_torque_Nmm": 0.0,
+      "Cb": 1.0,
+      "Cm": 1.0
+    },
+    "proof_domain": {
+      "continuous_p_lower_exact_decimal_mm_minus2": "0.00000027",
+      "continuous_p_upper": "infinity",
+      "all_positive_integer_harmonics_for_every_L_in_declared_domain": true,
+      "finite_intervals": 11,
+      "bernstein_matrices": 33,
+      "analytic_tail_starts_p_mm_minus2": 385,
+      "mathematical_L_ceiling_mm_approx_not_approved_limit": 6045.997880780726,
+      "manual_eigenproblem_per_length_required": false
+    },
+    "required_per_length_consumption": {
+      "recompute_AnexoE_Nex_Ney_Nez": true,
+      "recompute_sign_correct_Me_and_FLT_resistances": true,
+      "applies_to_strong_and_both_weak_senses": true,
+      "retain_local_criticals_and_lips_distortional_input": true,
+      "do_not_reuse_4m_global_capacity": true,
+      "do_not_clamp_or_round_outside_length_into_domain": true,
+      "outside_domain_behavior": "Do not consume this acceptance; preserve incomplete/unsupported state unless another applicable decision exists."
+    },
+    "scalar_resistance_component": {
+      "standard": "Supplied NBR14762:2010 9.8.2.3; current-edition status not asserted",
+      "W_external_mm3": 3151.5055463838385,
+      "fy_MPa": 250.0,
+      "gamma": 1.1,
+      "MRd_dist_lower_bound_Nmm": 573953.5490512308,
+      "MRd_local_web_Nmm": 580586.1775465694,
+      "total_scalar_rule": "MRd_y_web(L)=min(MRd_local_web, MRd_FLT_web(L), MRd_dist_lower_bound)",
+      "universal_governing_branch_claimed": false,
+      "accepted_as_conservative_My_Rd_denominator_in_NBR_9_9": true,
+      "NBR_9_9_scope": "Section-wise concomitant q/P moments within 3000<=L<=6000 and declared N0/T0/Cb1/Cm1, sign-correct resistances and separately applicable checks",
+      "variable_biaxial_initial_stress_spectrum_certified": false,
+      "benchmark_cases_preapproved_as_passing": false,
+      "literal_curve_unchanged": true
+    },
+    "evidence": {
+      "producer_extension": {
+        "path": "outputs/tercas_ue_priority_20261103/web_lower_bound/length_extension/EXTENSION_CERTIFICATE.json",
+        "sha256": "3b627a399a9cae9ab326aa3e1ec3419d139b48dface0d8bf5128678cbaa99ac5"
+      },
+      "independent_extension_receipt": {
+        "path": "outputs/tercas_ue_priority_20261103/web_bound_independent/length_extension/RECEIPT.json",
+        "sha256": "73d79be3f25148c7917a42d9a3726c99dc5931a16f90099c6d40e21a043464b8"
+      },
+      "own_receipt_audit": "RECEIPT_AUDIT.json",
+      "review": "REVIEW.txt"
+    },
+    "continuous_shell_lower_bound_proved": false,
+    "physical_member_design_approved": false,
+    "app_release_approved": false,
+    "historical_decisions_changed": false,
+    "lips_decision_unchanged_sha256": "45fd89f1ab9ab6b5d13fd878b9531e8db7d7c235ebb42e2c42fc0dce140b1145"
+  },
+  "active_numeric_source": {
+    "reference_id": "Ue100x50x17x1.20_rounded_R01_209nodes_nu0p3",
+    "Pierin_critical_values_or_signs_used": false,
+    "source": "Own R01 homogeneous geometry/material and signed criticals; certified web lower bound",
+    "web_Mdist_identified_Nmm": null,
+    "web_Mdist_lower_bound_Nmm": 850000.0,
+    "validated_span_range_mm": [
+      3000.0,
+      6000.0
+    ],
+    "current_span_mm": 4000.0,
+    "global_criticals_recomputed_at_current_span": true,
+    "effective_lengths_equal_span": true,
+    "scalar_NBR_interaction_not_combined_spectrum": true,
+    "decision_sha256": "42a3b2de4ec8e74bcc1949b6a6a3802e30bc117a5c47a54e7bc454e6c5343875"
+  }
+}

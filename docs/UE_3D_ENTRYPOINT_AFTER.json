@@ -1,0 +1,16 @@
+{
+  "candidate_sha256": "a0ec85064268171ae5b2ed197724284d356f0f9b09a665d7b5584f157e23f2f4",
+  "ue_assess": {
+    "eligible": false,
+    "active": false,
+    "calculable": false,
+    "reference_id": null,
+    "reasons": [
+      "Campos protegidos divergentes: member_application, three_girt_model"
+    ],
+    "action_errors": []
+  },
+  "input_unchanged": true,
+  "outcome": "REJECTED",
+  "error": "Referência própria Ue restrita à terça de flexão: remova o vínculo por uma nova seleção explícita antes do diagnóstico 3D; entradas preservadas, sem migração automática."
+}

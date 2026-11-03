@@ -87,3 +87,35 @@ silenciosamente; Word histórico usa a evidência gravada. O modo fixo de 3 m e 
 fluxo legado são preservados. Veja docs/HOMOGENEOUS_LENGTHS_20261103.txt e o ajuste
 isolado de quadratura em docs/IEF_TRANSITION_QUADRATURE_20261103.txt.
 Esta candidata permanece local, sem publicação ou aprovação global.
+
+## Referência própria Ue100 — opt-in restrito de 03/11/2026
+
+O carregador **Carregar referência própria Ue100** abre um estudo sintético próprio
+R01, Ue100×50×17×1,20, ri=1,20 mm, com 209 nós. Pierin seleciona somente a
+correspondência nominal; nenhum crítico nem sentido histórico de Pierin é usado.
+As fontes e decisões necessárias ao consumo estão incorporadas, com SHA-256,
+em pacote autossuficiente. Não há importação da árvore externa de pesquisa.
+
+Vão contínuo de 3000 a 6000 mm, inclusive, com Lx=Ly=Lz=L e K=Cb=Cm=1. A edição
+de vão exige prévia e aplicação explícitas, recalcula Ne/Me/FLT e preserva a
+posição absoluta de P direto. Não há comprimentos independentes, segmentação,
+crédito de painel, migração automática de catálogo nem comparação de seções.
+Ações, inclinação e identificação podem ser editadas. Fontes, propriedades,
+material, sentidos e demais condições físicas são conferidos integralmente.
+Alterações incompatíveis abrem inspeção não destrutiva, sem reparo silencioso.
+
+Alma comprimida: o valor 850000 Nmm na entrada D legada é um **piso elástico
+conservador**, não Mdist identificado nem dispensa distorcional. Lábios comprimidos:
+Mdist próprio identificado de 1668845,1785399402 Nmm. A dispensa da Tabela 14 é
+somente do eixo forte. Fonte e distinção constam da interface, JSON e Word.
+
+ELS forte uniaxial mantém o critério parcial apenas quando as componentes locais
+reais q e P paralelas do estado são ambas zero, preservadas as demais guardas.
+Solicitação biaxial mantém valores escalares diagnósticos e fica pendente por
+rigidez efetiva combinada, sem índice de atendimento. Não se transfere por ID a
+evidência MLE de 34 estados específicos de 4 m. Não há linhas novas de flecha ou
+cortante paralelo. A hipótese fixa continua telha sem contato/contribuição,
+somente carga. Sem aprovação global, física, de ELS completo, torção ou 3D.
+
+Detalhes: `docs/UE_REFERENCE_INTEGRATION_20261103.txt`. Integração local, sem
+publicação. Caminhos anteriores U, Travessa e diagnóstico 3D preservados.
