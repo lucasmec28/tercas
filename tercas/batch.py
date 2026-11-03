@@ -129,6 +129,30 @@ def governing(cases):
  return out
 
 
+def support_limit_mv_trace(mv,combo,L,support_index):
+ """Reconcile the existing two-state maximum; no extra load position/check."""
+ if not isinstance(mv,dict) or not isinstance(mv.get('result'),dict):return
+ original=copy.deepcopy(mv['result']);x=original['x_mm'];q=combo['q_N_mm']
+ # Preserve the raw P=0 adapter result for audit, but do not expose its
+ # inactive finite a as the physical point position in either limit state.
+ interior={**original,'a_mm':None,'a_limit':'a→0+',
+           'position_limit':'interior após P no limite a→0+',
+           'M_Nmm':q*x*(L-x)/2,'V_N':q*(L/2-x)}
+ boundary={'x_mm':0.,'a_mm':None,'a_limit':'a→0+',
+           'position_limit':'a→0+, x→0+, x<a: seção antes de P',
+           'branch':'support_layer_before_P','index_squared':support_index,
+           'M_Nmm':0.,'V_N':q*L/2+combo['P_N']}
+ states={'interior_q_only':interior,'support_layer':boundary}
+ governing=max(states,key=lambda key:states[key]['index_squared'])
+ mv.update(status='computed',position='support_limit',
+           source='NBR9.8.4 same combination; analytical support limit; max of distinct concomitant states; local MRd denominator',
+           interior_q_only_result=original,
+           interior_adapter_note='Resultado bruto do adaptador P=0: a_mm é partição inativa, não posição física de P.',
+           limit_states=states,governing_state=governing,
+           governing_states=[key for key in states if states[key]['index_squared']==states[governing]['index_squared']],
+           result=copy.deepcopy(states[governing]))
+
+
 def mobile_rows(rs,result,combo):
  """Two prescribed positions only; no sweep or continuous-position envelope."""
  position=combo.get('point_position','center');L=result['input_data']['L_mm']
@@ -150,6 +174,7 @@ def mobile_rows(rs,result,combo):
     ev['MV_limit_states']={'interior_q_only_index_squared':row['Índice'],'support_layer_index_squared':(v/vr)**2,'method':'máximo entre estados concomitantes distintos'}
     row['Índice']=max(row['Índice'],(v/vr)**2)
     ev['MV_limit_states']['governing_index_squared']=row['Índice']
+    support_limit_mv_trace(b.get('MV'),combo,L,ev['MV_limit_states']['support_layer_index_squared'])
     row['Situação']='Não atende' if row['Índice']>1 else 'Atende ao critério calculado'
    row['Observação']+=' '+ev['method']
  else:

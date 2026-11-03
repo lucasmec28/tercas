@@ -1,0 +1,54 @@
+Correção de rastreabilidade M–V no limite junto ao apoio — 03/11/2026
+
+Escopo
+Somente o ramo exportado evidence.NBR_branches.MV dos casos ELU com P na
+posição prescrita support_limit. A linha calculada de M–V e os três índices
+de prescribed_point.MV_limit_states já usavam o máximo correto; não mudam.
+A cópia de origem 7d8a9a09f465c6c0ece66faf96d3c7372a9ff1d2 fica preservada.
+Não há publicação implícita, aprovação global, nova verificação resistente,
+nova combinação ou varredura de posições. A transferência local de P continua
+não avaliada; as linhas excluídas da emissão continuam excluídas.
+
+Fundamento do limite já usado pelo aplicativo
+Na mesma combinação, P se aproxima do apoio esquerdo por a→0+. São candidatos
+distintos e concomitantes:
+- Interior após P: M(x)=q*x*(L-x)/2 e V(x)=q*(L/2-x), no x governante do
+  adaptador q-only já calculado. Não se soma o máximo independente de cortante
+  ao máximo independente de momento.
+- Camada antes de P: a→0+, x→0+, x<a, M→0 e V→q*L/2+P. O índice é (V/VRd)^2.
+O máximo dos dois índices é exatamente o mesmo já exibido na linha M–V.
+
+Contrato de evidência
+- result passa a conter o estado governante, com o mesmo index_squared da
+  linha e de prescribed_point.MV_limit_states.governing_index_squared.
+- limit_states preserva os dois candidatos, interior_q_only e support_layer.
+- interior_q_only_result preserva integralmente o resultado bruto anterior.
+  Seu a_mm finito é apenas a partição inativa do adaptador com P=0; não é uma
+  posição física da força no cenário junto ao apoio. A nota adjacente declara
+  isso explicitamente.
+- Nos estados físicos do limite e em result, a_mm=null e a_limit='a→0+'.
+  O x_mm=0 da camada é coordenada-limite, explicada por position_limit; não
+  representa aplicação exata de P no nó nem afastamento finito inventado.
+- governing_state seleciona um candidato. governing_states lista todos os
+  candidatos com igualdade numérica exata. Empate exato mantém o interior
+  primeiro, como o max anterior. Não há tolerância que reduza o máximo.
+- status usa o valor existente 'computed'; position='support_limit' e source
+  explicam o limite analítico, sem o rótulo enganoso de posição finita fixa.
+  M e V de evidência retêm seus sinais; o índice usa os quadrados existentes.
+
+Compatibilidade e limites
+O schema de lote continua tercas_batch_results_v1; não se removem campos
+legados. Resultados do centro, casos sem P e resultados ELS não mudam.
+Ausência de VRd ou de índice M–V não produz resultado fictício ou aprovação.
+Resistências, combinações, resultados das linhas, resumo, FLT, ELS, inclinação,
+hipóteses de domínio e guardas existentes permanecem inalterados.
+O a_mm=null nos estados de limite é intencional: consumidores não devem
+interpretar o antigo a_mm do adaptador P=0 como coordenada física de P.
+
+Testes de regressão públicos e sintéticos
+tests/test_support_limit_mv_trace.py cobre camada governante, interior
+governante, empate exato, V negativo, VRd ausente, M–V ausente ou pendente,
+centro, mesma combinação, preservação de demais ramos, ELS, exclusões e
+ausência de aprovação global. O empate usa índice analítico exato de 4 para
+não confundir arredondamento do polinômio com igualdade exata. Nenhum vetor
+de qualificação/pesquisa foi incorporado aos defaults ou a essas entradas.
