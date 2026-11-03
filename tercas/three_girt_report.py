@@ -55,6 +55,8 @@ def word(result,selected=0):
  if result.get('reason'):d.add_paragraph(result['reason'])
  for case in result['cases']:
   if case['model']['status']!='conditional_elastic_diagnostic':d.add_paragraph('COMBINAÇÃO NÃO RESOLVIDA: '+case['combination']['id']+'. '+case['model'].get('reason','Gate numérico não satisfeito.')+' Sem resposta liberada para esse caso.')
+ from .model_domain import report as domain_report
+ domain_report(d,result)
  d.add_heading('Modelo e entradas declaradas',1)
  c=result['configuration'];data=result['input_data'];p=data['properties']
  d.add_paragraph('Vão '+fmt(data['L_mm'])+' mm; distância igual entre eixos '+fmt(data['area_inputs']['spacing_m']*1000)+' mm; '+str(c['tie_count'])+' linhas de tirantes. Posições a partir de A: '+', '.join(fmt(x) for x in c['resolved_positions_mm'])+' mm.')

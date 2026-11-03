@@ -20,7 +20,7 @@ def test_default_off_then_explicit_on_and_off_clears_generated_values():
  assert data(a)['weak_axis']['positive'][FIELD]['acknowledged_as_inference'] is True
  assert data(a)['weak_axis']['negative']['Ml_Nmm'] is None
  assert any('hipótese de sentido inferida, pendente de confirmação' in x.value for x in a.warning)
- assert any('sem painel na mesa tracionada' in x.value for x in a.caption)
+ assert any('domínio fixo sem ligação de mesa a painel' in x.value for x in a.caption)
  a.checkbox(key='u_pierin_optin_0').uncheck().run();assert not a.exception
  p=data(a)['weak_axis']['positive'];assert FIELD not in p and p['Ml_Nmm'] is None and not p['provenance']
 

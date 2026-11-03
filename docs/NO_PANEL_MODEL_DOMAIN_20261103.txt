@@ -1,0 +1,60 @@
+DOMÍNIO FIXO DO MODELO — 03/11/2026 — CÓPIA NÃO PUBLICADA
+
+O usuário definiu como domínio do aplicativo: sem contato entre telha/painel e
+perfil e sem ligação de qualquer mesa a painel. A telha contribui somente com as
+ações declaradas (peso, área de obstrução ao vento e recepção de sobrecarga quando
+pertinente à cobertura). Não fornece travamento, apoio, contenção ou rigidez.
+Esta é a idealização do modelo, não uma comprovação de condições físicas externas.
+Não se deduz caminho de transferência de forças, vínculo ou torção nula.
+
+Consequência no U simples: a exceção de painel ligado à mesa tracionada com outra
+livre da NBR 14762:2010 §9.3 p32/PDF38 não integra esse domínio. O ramo D permanece
+dispensável por §9.3 nos dois sinais e na rota fraca, sem usar Tabela14 para U.
+A dispensa não libera os demais critérios, ligações, ELS ou aprovação global.
+A Tabela14 segue restrita a sua rota existente de Ue, sem mudança por esta edição.
+
+ENTRADA/EXPORTAÇÃO MÍNIMA
+Token opcional: model_domain = "cladding_actions_only_20261103_r1".
+O token NÃO integra defaults nem required. Legados sem token são aceitos sob o
+domínio fixo atual e conservam input_data/fingerprint sem mutação. Não há seletor,
+origem obrigatória ou pergunta adicional. A exportação de entradas acrescenta o
+token apenas a uma cópia; reimportá-la preserva números e hipótese. Token presente
+incompatível é recusado com mensagem, sem apagar/substituir o arquivo ou estado.
+Resultados/MC registram model_domain_evidence: versão, texto, origem legível
+'Domínio definido pelo usuário em 03/11/2026', limite e eventual conflito.
+
+CONFLITO EXPLÍCITO
+Se um arquivo já trouxer u_panel_condition com top_panel_other_free,
+bottom_panel_other_free ou other_specific_analysis, essa informação física é
+preservada. O modelo é marcado fora do domínio e a conclusão dependente do U
+(ramo D e resistência fraca/biaxial) fica pendente. Mdist isolado, marcador fraco
+ou hipótese Pierin não substituem a análise do caso incompatível. Ausência do
+campo, not_declared ou no_flange_panel não bloqueiam e não exigem origem.
+Não foi criada uma interface para configurar condições físicas alternativas.
+
+PRESERVAÇÃO
+Ações, combinações, comprimentos, FLT, local, cortante, M–V e flechas seguem iguais.
+3D recebe somente metadata/advertência/MC/exportação, sem mudar o solver, N/M/V/T,
+reação, torque ou deslocamento; continua sem resistência, aprovação ELS ou global.
+Condição explícita incompatível no 3D não é apagada e aparece entre limitações.
+Troca de perfil/aplicação e rerun preservam token e declaração eventualmente
+importados. Não foram reintroduzidas linhas removidas da interface.
+
+HISTÓRICO
+A exportação de um resultado antigo sem model_domain_evidence avisa que não o
+recalcula nem aplica retroativamente a hipótese atual. O objeto histórico fica
+intacto. A MC de lote informa que exportação não recalcula resultados; não diz
+que acabou de recalcular cada combinação. Se o histórico contém declaração física
+explicitamente conflitante, D/biaxial aparecem como históricos pendentes na UI/MC,
+sem mudar o objeto ou os valores originais. O histórico normal sem token NÃO
+recebe essa pendência adicional.
+
+QUALIFICAÇÃO
+Tests/test_model_domain.py cobre legado, ambos sinais, inversão, fraco/biaxial,
+conflito explícito, token incompatível, export/import, UI, Ue, 3D e MC histórica.
+A suíte completa deve ser consultada no registro de qualificação da candidata.
+Nenhum teste equivale a validação do perfil real ou aprovação de projeto.
+
+No detalhe de resultado histórico fisicamente conflitante, a apresentação exibe as solicitações antigas e a pendência resistente. As capacidades e a interação anteriores permanecem integralmente no JSON original, sem promoção ou recálculo.
+
+Comparação de catálogo anterior ao domínio com declaração física conflitante é arquivada como histórico e retirada da comparação ativa, sem iniciar cálculo. Novos caches registram model_domain_version. Legados normais sem declaração conflitante não são invalidados pela ausência do token.

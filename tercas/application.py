@@ -55,6 +55,8 @@ def build_spec(data):
  configuration(data)
  from .weak_axis import validate
  validate(data)
+ from .model_domain import evidence as domain_evidence
+ domain=domain_evidence(data)
  for key in ('q_parallel_uls','q_parallel_sls','P_parallel_uls','P_parallel_sls'):number(data.get(key,0.),key)
  if not isinstance(data,dict):raise ValueError('O arquivo deve conter um objeto de entradas JSON.')
  if data.get('schema')!='tercas_input_v2':raise ValueError('Formato anterior não reconhecido nesta atualização de catálogo. Selecione novamente o perfil para evitar troca de seção por índice.')
@@ -114,6 +116,7 @@ def build_spec(data):
  spec={'selected_section':s,'L_mm':L,'route_domain':'strong_symmetry_CT_no_primary_torsion' if d.get('route_domain') is True else None,
  'Ml':strong_criticals['Ml'],'Mdist':strong_criticals['Mdist'],
  'strong_critical_qualification':strong_qualification,
+ 'model_domain_evidence':domain,
  'ULS':{'q_Nmm':d['q_uls'],'P_N':d['P_uls'],'x_mm':d['x_uls'],'origin':d.get('actions_origin','')},
  'SLS':{'q_Nmm':d['q_sls'],'P_N':d['P_sls'],'x_mm':d['x_sls'],'origin':d.get('actions_origin','')},
  'segments':copy.deepcopy(segs),'ELS_limit_mm':{'value':d.get('ELS_limit_mm'),'origin':d.get('ELS_origin','')},
@@ -148,6 +151,8 @@ def calculate(data):
  result['strong_critical_qualification']=copy.deepcopy(spec['strong_critical_qualification'])
  result['strong_critical_reference']=copy.deepcopy(spec['strong_critical_qualification']['pierin_U_reference'])
  result['critical_warnings']=list(spec['strong_critical_qualification']['warnings'])
+ result['model_domain_evidence']=copy.deepcopy(spec['model_domain_evidence'])
+ if result['model_domain_evidence']['conflict']:result['critical_warnings'].append(result['model_domain_evidence']['conflict'])
  from .weak_u_assumption import evidence as u_evidence
  result['weak_sense_assumption']=u_evidence(data)
  if result['weak_sense_assumption']:result['critical_warnings'].append(result['weak_sense_assumption']['warning'])
@@ -182,7 +187,7 @@ def rows(result):
   if r.get('compressed_flange'):detail=f"Mesa comprimida governante: {r['compressed_flange']}; comprimento lateral efetivo: {r.get('Ly_used_mm')} mm; Lz torsional: {r.get('Lz_used_mm')} mm. "+str(detail)
   if isinstance(detail,list):detail=', '.join(map(str,detail))
   out.append({'Verificação':name,'Situação':status,'Índice':idx,'Demanda / valor':'—','Resistência / limite':'—','Referência':source,'Observação':str(detail)})
- b=result['NBR_branches'];add('Flexão local',b['local'],'NBR 14762 §9.8.2.1');add('Distorcional',b['distortional'],'§9.3 / §9.8.2.3 / Tabela 14')
+ b=result['NBR_branches'];add('Flexão local',b['local'],'NBR 14762 §9.8.2.1');add('Distorcional',b['distortional'],'§9.3 / §9.8.2.3' if b['distortional'].get('model_domain') else '§9.3 / §9.8.2.3 / Tabela 14')
  for i,r in enumerate(result['FLT_segments'],1):add(f'FLT — trecho {i}',r,'§9.8.2.2')
  shear=result['section_checks'].get('shear',{});d=result['input_data'];L=d['L_mm'];q=d['q_uls'];P=d['P_uls'];a=d['x_uls'];R=q*L/2+P*(L-a)/L;V=max(abs(R),abs(R-q*a),abs(R-q*a-P),abs(R-q*L-P))
  add('Cortante',shear,'§9.8.3',V/shear['VRd_N'] if shear.get('VRd_N') else None)
@@ -218,7 +223,8 @@ def rows(result):
    if row['Verificação']=='Flecha — flexão':row['Verificação']='Flecha horizontal — eixo forte'
    if row['Verificação']=='Flexão biaxial':row['Observação']+=' Travessa: Mx devido à componente horizontal, My devido à vertical; hipóteses de tirantes não alteram esta resistência de vão livre.'
   out.append(vertical_row(result))
- return out
+ from .model_domain import historical_rows
+ return historical_rows(result,out)
 
 
 TRANSLATIONS={

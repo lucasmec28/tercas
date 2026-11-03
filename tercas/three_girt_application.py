@@ -176,6 +176,9 @@ def calculate(data):
              topology_note='Verticais em cada linha; diagonais azuis dos extremos superiores à primeira/última linha central. Para n≠2 é extensão declarada do croqui; n=0 sem barras.',
              load_distribution='CP por área inclui o peso da telha/revestimento e demais permanentes informados, sem PP do perfil. Fatores de CP e vento superior/central/inferior = 0.5/1/0.5; PP de cada travessa integral aplicado no CG; ações externas na linha declarada. PP das barras, se ativo, integral e ponderado pelo coeficiente PP; metade em cada extremidade da barra. Nenhuma parcela é duplicada.',
              legacy_route_used=False)
+ from .model_domain import evidence as domain_evidence
+ result['model_domain_evidence']=domain_evidence(data)
+ if result['model_domain_evidence']['conflict']:result['limitations'].append(result['model_domain_evidence']['conflict'])
  missing=readiness(data,c)
  if missing:result.update(reason='Premissas explícitas pendentes; não calculado.',missing=missing);return result
  p=data['properties'];spacing=_number(data['area_inputs']['spacing_m'],'Distância entre travessas',positive=True)*1000

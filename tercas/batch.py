@@ -65,9 +65,16 @@ def calculate_batch(data):
  # Freeze only common, load-independent inputs for the area MC. Do not attach
  # the first combination's fictitious second limit state as a batch snapshot.
  common_snapshot={key:copy.deepcopy(common_spec[key]) for key in
-                  ('selected_section','Ml','Mdist','strong_critical_qualification')}
+                  ('selected_section','Ml','Mdist','strong_critical_qualification','model_domain_evidence')}
  for combo in bundle['combinations']:
   d=case_inputs(data,combo);result=calculate(d)
+  if combo.get('point_position')=='support_limit' and combo.get('P_N',0):
+   # P is zero only in the interior bending adapter. The concentrated
+   # transfer at the support has not disappeared and is not an internal
+   # isolated patch covered by that adapter's local-resistance subset.
+   result['NBR_branches']['point']={
+    'status':'not_evaluated','force_N':combo['P_N'],'position':'support_limit',
+    'reason':'Força concentrada no limite junto ao apoio: sua flexão tende a zero, mas a transferência local permanece. Fora do subconjunto interno isolado implementado; sem conclusão de resistência local ou ligação.'}
   rs=[r for r in rows(result) if (r['Verificação'] in ('Flecha — flexão','Flecha paralela à cobertura','Flecha horizontal — eixo forte','Flecha vertical — eixo fraco'))==(combo['limit_state']=='ELS')]
   mobile={}
   if combo.get('P_N',0):mobile=mobile_rows(rs,result,combo)
@@ -102,7 +109,7 @@ def calculate_batch(data):
  from .weak_pierin import reference_for_inputs
  from .strong_pierin import qualify
  from .weak_u_assumption import evidence as u_evidence
- return {'common_input_snapshot':common_snapshot,'strong_critical_reference':qualify(data)[1],'weak_sense_assumption':u_evidence(data),'weak_critical_reference':reference_for_inputs(data),'schema':'tercas_batch_results_v1','version':VERSION,'project':data['project'],'synthetic':data['synthetic'],'input_fingerprint':fingerprint(data),'input_data':copy.deepcopy(data),'load_bundle':bundle,'cases':cases,'whole_member_approved':False,'summary':governing(cases)}
+ return {'model_domain_evidence':copy.deepcopy(common_spec['model_domain_evidence']),'common_input_snapshot':common_snapshot,'strong_critical_reference':qualify(data)[1],'weak_sense_assumption':u_evidence(data),'weak_critical_reference':reference_for_inputs(data),'schema':'tercas_batch_results_v1','version':VERSION,'project':data['project'],'synthetic':data['synthetic'],'input_fingerprint':fingerprint(data),'input_data':copy.deepcopy(data),'load_bundle':bundle,'cases':cases,'whole_member_approved':False,'summary':governing(cases)}
 
 def governing(cases):
  groups={}
@@ -130,9 +137,13 @@ def mobile_rows(rs,result,combo):
  if position=='support_limit':
   v=abs(combo['q_N_mm']*L/2+combo['P_N']);ev['V_support_limit_N']=v
   for row in rs:
-   if row['Verificação']=='Cortante' and vr:
-    row['Índice']=v/vr;row['Demanda / valor']=f'{v/1000:.6f} kN'
-    row['Situação']='Não atende' if row['Índice']>1 else 'Atende ao critério calculado'
+   if row['Verificação']=='Cortante':
+    # A missing resistance cannot hide a known demand. Preserve pending
+    # status/index when VRd is absent, but always show the limiting P term.
+    row['Demanda / valor']=f'{v/1000:.6f} kN'
+    if vr:
+     row['Índice']=v/vr
+     row['Situação']='Não atende' if row['Índice']>1 else 'Atende ao critério calculado'
    elif row['Verificação']=='Flexão e cortante concomitantes' and vr and row.get('Índice') is not None:
     # Away from the support: q-only interaction. At the boundary layer:
     # M→0 and V→qL/2+P. Max of these distinct concomitant states.

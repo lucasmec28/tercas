@@ -112,6 +112,7 @@ def envelope_rows(model):
 
 
 def render_result(st,result):
+ from .model_domain import export_inputs as domain_export_inputs
  st.subheader('Sistema de três travessas — resultados elásticos condicionais')
  st.error('SEM CONCLUSÃO RESISTENTE OU ELS. Nenhum índice de aprovação foi calculado para o sistema 3D; os esforços não alimentam a rota isolada N=0.')
  st.caption(result['axis_convention']);st.caption(result['support_convention'])
@@ -153,5 +154,5 @@ def render_result(st,result):
  c1,c2,c3=st.columns(3)
  with c1:st.download_button('Baixar memória diagnóstica 3D (Word)',word(result,selected),file_name='MC_tres_travessas_diagnostico.docx',mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
  with c2:st.download_button('Baixar diagnóstico 3D (JSON)',json.dumps(result,ensure_ascii=False,indent=2),file_name='tres_travessas_diagnostico.json',mime='application/json')
- with c3:st.download_button('Baixar entradas (JSON)',json.dumps(result['input_data'],ensure_ascii=False,indent=2),file_name='terca_entradas.json',mime='application/json')
+ with c3:st.download_button('Baixar entradas (JSON)',json.dumps(domain_export_inputs(result['input_data']),ensure_ascii=False,indent=2),file_name='terca_entradas.json',mime='application/json')
  with st.expander('Rastreabilidade completa do diagnóstico 3D'):st.json(result)

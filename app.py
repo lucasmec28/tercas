@@ -13,6 +13,7 @@ from tercas.report import word,batch_word
 from tercas.catalogs import catalog_labels,STEEL_NAMES,material,critical_defaults,catalog_entry
 from tercas.batch import calculate_batch,area_bundle,case_inputs
 from tercas.load_combinations import COMBINATION_TYPES
+from tercas.model_domain import TEXT as DOMAIN_TEXT,evidence as domain_evidence,export_inputs as domain_export_inputs,HISTORICAL as DOMAIN_HISTORICAL,historical_rows as domain_historical_rows,historical_inclination as domain_historical_inclination,VERSION as DOMAIN_VERSION,explicit_panel_conflict as domain_explicit_panel_conflict
 from tercas.ux_inputs import CB_LABELS,cb_code,flange_segments,whole_span
 
 def show_elastic_wall(evidence):
@@ -52,7 +53,8 @@ st.markdown('<style>.block-container{max-width:1200px} h1,h2,h3{color:#25334a} d
 st.title('LRO | Terças e travessas laterais')
 with st.expander('Precisão dos números exibidos',expanded=False):st.caption(DISPLAY_NOTE)
 st.caption(f'NBR 14762:2010 · {VERSION} · primeira emissão restrita')
-st.info('Um vão, perfis U/Ue. Solicitações nos dois eixos; resistências desta emissão restritas às rotas disponíveis. A telha não é considerada como travamento. Resultados por verificação, sem aprovação global automática.')
+st.info('Um vão, perfis U/Ue. Solicitações nos dois eixos; resistências desta emissão restritas às rotas disponíveis. Resultados por verificação, sem aprovação global automática.')
+st.caption(DOMAIN_TEXT)
 
 if 'base' not in st.session_state:st.session_state.base=defaults()
 if 'revision' not in st.session_state:st.session_state.revision=0
@@ -60,6 +62,65 @@ if 'revision' not in st.session_state:st.session_state.revision=0
 def load(d):
  st.session_state.base=copy.deepcopy(d);st.session_state.last_input=copy.deepcopy(d);st.session_state.revision+=1
  st.session_state.pop('result',None);st.session_state.pop('custom_steel_draft',None)
+
+def render_input_import(revision):
+ with st.expander('Abrir entradas JSON',expanded=False):
+  st.caption('Abra somente entradas exportadas por esta versão. O arquivo não executa código. Resultados anteriores não são reaproveitados. Entradas manuais fora do editor comum são abertas para inspeção.')
+  upload=st.file_uploader('Arquivo de entradas',type=['json'],key=f'import_{revision}')
+  if upload is not None and st.button('Aplicar entradas do arquivo'):
+   try:
+    if upload.size>200000:raise ValueError('Arquivo maior que 200 kB.')
+    from tercas.application import build_spec
+    new=json.loads(upload.getvalue())
+    from tercas.inclination_adapter import configuration
+    from tercas.inclination import number
+    configuration(new)
+    for field in ['q_parallel_uls','q_parallel_sls','P_parallel_uls','P_parallel_sls']:number(new.get(field,0),field)
+    if new.get('load_mode')=='area':
+     bundle=area_bundle(new);build_spec(case_inputs(new,bundle['combinations'][0]))
+    else:build_spec(new)
+    if 'three_girt_model' in new:
+     from tercas.three_girt_application import configuration as validate_three_girt_configuration
+     validate_three_girt_configuration(new)
+    load(new);st.rerun()
+   except (ValueError,TypeError,KeyError,UnicodeDecodeError) as exc:st.error('Arquivo não aplicado: '+str(exc))
+
+# The catalogue editor cannot preserve active explicit Annex E properties.
+# In 3D they are inactive and already retained: only an actual material conflict
+# can require inspection there. This is a UI limitation, not a backend guard.
+MANUAL_WEAK_FIELDS={'W_mm3','Wc_mm3','Nex_N','Nez_N','r0_mm','j_mm','Cm','Cs'}
+def has_manual_weak(data):
+ cfg=data.get('weak_axis',{})
+ return isinstance(cfg,dict) and any(isinstance(v,dict) and MANUAL_WEAK_FIELDS.intersection(v) for v in cfg.values())
+
+def manual_inspection_reason(data):
+ if not has_manual_weak(data):return None
+ if not three_girt_enabled(data):return 'este contrato de propriedades manuais do eixo fraco ativo.'
+ if data.get('steel_name')!='Personalizado':
+  standard=material(data['steel_name'])['properties']
+  conflicts=[k for k,v in standard.items() if data['properties'].get(k)!=v]
+  if conflicts:return 'o material importado sem substituição pelo aço predefinido ('+', '.join(conflicts)+'). Os dados manuais do eixo fraco estão inativos no 3D e não são o motivo do bloqueio.'
+ return None
+
+def show_manual_inspection(preserved,reason):
+ preserved=copy.deepcopy(preserved)
+ st.session_state.last_input=copy.deepcopy(preserved)
+ if 'result' in st.session_state:st.session_state['manual_result_history']=copy.deepcopy(st.session_state.result)
+ if 'catalog_scan_state' in st.session_state:st.session_state['manual_catalog_history']=copy.deepcopy(st.session_state.catalog_scan_state)
+ st.session_state.pop('result',None);st.session_state.pop('catalog_scan_state',None)
+ st.warning('Entradas preservadas em modo de inspeção: esta interface não edita '+reason+' Cálculo e comparação estão desativados para evitar substituição silenciosa de dados.')
+ st.caption('Limitação de edição/importação desta interface, não exigência normativa nem ausência de capacidade matemática do backend. Nenhum dado do arquivo foi substituído ou completado; E, G, origens e campos por sentido permanecem intactos.')
+ st.warning('Preservar o arquivo não comprova sua coerência física, não valida a referência de Pierin e não aprova o elemento. Todas as hipóteses e limitações do estudo original permanecem.')
+ st.caption('Para retornar ao editor comum, selecione outro perfil acima, carregue o exemplo didático ou abra outro JSON. Trocar de perfil descarta propriedades e críticos específicos desta seção; baixe o arquivo preservado antes de sair, se necessário.')
+ st.caption('Identificação SHA-256 das entradas: '+fingerprint(preserved))
+ with st.expander('Entradas originais preservadas',expanded=False):st.json(preserved)
+ st.download_button('Baixar entradas preservadas (JSON)',json.dumps(preserved,ensure_ascii=False,indent=2),file_name='terca_entradas_preservadas.json',mime='application/json')
+ calc_col,scan_col=st.columns(2)
+ with calc_col:st.button('Calcular diagnóstico 3D' if three_girt_enabled(preserved) else 'Calcular verificações disponíveis',type='primary',disabled=True)
+ with scan_col:st.button('Calcular todas as seções do catálogo',disabled=True)
+ render_input_import(st.session_state.revision)
+ st.stop()
+
 
 left,right=st.columns([2,1])
 with right:
@@ -82,14 +143,21 @@ with left:
    old=st.session_state.get('last_input',st.session_state.base)
    changed=inputs_for_section(old,index)
   load(changed);st.rerun()
+inspection_reason=manual_inspection_reason(st.session_state.base)
+if inspection_reason:show_manual_inspection(st.session_state.base,inspection_reason)
+
 b=copy.deepcopy(st.session_state.base);r=st.session_state.revision
 # Preserve values of widgets hidden when changing input mode.
 last=st.session_state.get('last_input',b)
 for key in ['load_mode','area_inputs','selected_types','ELS_down_denominator','ELS_up_denominator','q_uls','P_uls','x_uls','q_sls','P_sls','x_sls','actions_origin','ELS_limit_mm','ELS_origin']:
  b[key]=copy.deepcopy(last[key])
-for key in ['member_application','wall_els','wall_tie_study','three_girt_model','weak_catalog','weak_axis','inclination','q_parallel_uls','q_parallel_sls','P_parallel_uls','P_parallel_sls']:
+for key in ['member_application','wall_els','wall_tie_study','three_girt_model','weak_catalog','weak_axis','model_domain','u_panel_condition','inclination','q_parallel_uls','q_parallel_sls','P_parallel_uls','P_parallel_sls']:
  if key in last:b[key]=copy.deepcopy(last[key])
 d=copy.deepcopy(b)
+try:
+ domain=domain_evidence(d)
+ if domain['conflict']:st.warning(domain['conflict'])
+except ValueError as exc:st.error(str(exc));st.stop()
 if b.get('synthetic'):st.warning('EXEMPLO DIDÁTICO: propriedades complementares, críticos e contatos sintéticos. Substitua pelos dados do seu caso antes de usar resultados.')
 
 def num(label,key,value,unit='',step=None):
@@ -122,6 +190,14 @@ if girt:
  if three_girt or 'three_girt_model' in b:
   d['three_girt_model']=copy.deepcopy(b.get('three_girt_model',{}));d['three_girt_model']['enabled']=three_girt
  if three_girt:st.warning('Os campos de resistência/FLT do vão isolado ficam armazenados, mas INATIVOS no sistema 3D. Esta seleção não libera resistência, torção com empenamento ou conclusão ELS.')
+
+# Switching away from a 3D diagnostic reactivates the stored manual contract.
+# Stop before any strength/material widget can rewrite it. Preserve the last
+# complete 3D input snapshot and only the explicit application/activation edit.
+if has_manual_weak(b) and three_girt_enabled(b) and not three_girt:
+ switched=copy.deepcopy(last);switched['member_application']=application
+ if 'three_girt_model' in d:switched['three_girt_model']=copy.deepcopy(d['three_girt_model'])
+ load(switched);st.rerun()
 
 c1,c2=st.columns(2)
 with c1:d['L_mm']=num('Vão do modelo entre apoios' if girt else 'Vão entre apoios','L',b['L_mm'],'mm')
@@ -374,7 +450,7 @@ else:
     st.markdown('**'+label+' — hipótese inferida selecionada**')
     st.caption('Ml,y da seleção [kN·m]: '+(fmt(u_src['Ml_Nmm']/1e6) if u_src.get('Ml_Nmm') is not None else 'ausente')+'; campo vinculado à referência, sem edição/escala nesta opção.')
     st.caption(u_src.get('provenance','Origem ausente'))
-    st.caption('Condição da rota existente: U simples, sem painel na mesa tracionada; não aplicabilidade distorcional conforme §9.3. Não se transfere a dispensa da Tabela 14 forte ao eixo fraco. Conferir essa condição no caso estudado.')
+    st.caption('No domínio fixo sem ligação de mesa a painel, o U simples é dispensado de distorção em §9.3. A dispensa da Tabela 14 forte não é transferida ao eixo fraco. Declaração física incompatível permanece fora do domínio.')
     d['weak_axis'][sign]=copy.deepcopy(u_src)
     continue
    st.markdown('**'+label+'**');out={};cols=st.columns(2)
@@ -388,7 +464,7 @@ else:
     replace_hypothesis=st.checkbox('Usar críticos informados com origem própria — '+label,value=False,key=replace_key)
     if replace_hypothesis:st.caption('Esta escolha só distingue a entrada manual da hipótese tabulada; não valida fisicamente os críticos. Informe valores compatíveis com seção, eixo, sentido e material, com sua própria origem.')
    out['plain_u_no_distortion']=catalog_entry(index)['family']=='U'
-   if out['plain_u_no_distortion']:st.caption('U simples, sem painel na mesa tracionada: não aplicabilidade distorcional conforme §9.3. Não se usa dispensa da Tabela 14 forte no eixo fraco.')
+   if out['plain_u_no_distortion']:st.caption('U simples no domínio fixo sem ligação de mesa a painel: dispensa distorcional §9.3. Não se usa Tabela 14 forte no eixo fraco. Declaração física incompatível não é convertida silenciosamente.')
    out['provenance']=txt('Origem dos críticos neste sentido — '+label,'weak_source_'+sign,src.get('provenance',''))
    legacy_hypothesis='HIPÓTESE PROVISÓRIA' in out['provenance'].upper()
    out['provisional_hypothesis']=(inherited_hypothesis and not replace_hypothesis) or legacy_hypothesis
@@ -468,10 +544,19 @@ if calculate_clicked:
 if 'catalog_scan_state' in st.session_state and st.session_state.catalog_scan_state['fingerprint']!=token:
  st.session_state.pop('catalog_scan_state')
  st.info('Entradas alteradas: comparação anterior retirada. Inicie nova comparação quando desejar.')
+# A conflicting pre-domain cache is historical, never resumed or re-qualified.
+old_scan=st.session_state.get('catalog_scan_state')
+if (old_scan and old_scan.get('model_domain_version')!=DOMAIN_VERSION
+    and domain_explicit_panel_conflict(old_scan.get('inputs',{}))):
+ st.session_state.catalog_scan_history=copy.deepcopy(old_scan)
+ st.session_state.pop('catalog_scan_state')
+if 'catalog_scan_history' in st.session_state:
+ st.warning('Comparação histórica retirada dos resultados ativos: declaração física fora do domínio adotado. Nenhum perfil foi recalculado; o cache original foi preservado. Inicie nova comparação para avaliar as entradas atuais.')
+ st.download_button('Baixar comparação histórica (JSON)',json.dumps(dict(historical_not_revalidated=True,original_state=st.session_state.catalog_scan_history),ensure_ascii=False,indent=2),file_name='comparacao_historica_nao_reavaliada.json',mime='application/json')
 if scan_clicked:
  if token is None:st.error('Complete as entradas antes de comparar o catálogo.')
  else:
-  st.session_state.catalog_scan_state=dict(fingerprint=token,inputs=copy.deepcopy(d),rows=[],next_index=0,running=True,cancelled=False,elapsed_seconds=0.)
+  st.session_state.catalog_scan_state=dict(model_domain_version=DOMAIN_VERSION,fingerprint=token,inputs=copy.deepcopy(d),rows=[],next_index=0,running=True,cancelled=False,elapsed_seconds=0.)
 
 @st.fragment(run_every=0.5 if st.session_state.get('catalog_scan_state',{}).get('running') else None)
 def catalog_comparison():
@@ -501,11 +586,12 @@ def catalog_comparison():
   st.caption('Ações diretas são mantidas como informadas: eventual peso próprio já incluído não é substituído. Críticos manuais de outra seção não são transferidos. Nenhum resultado significa aprovação global.')
   for v in rows_sorted:
    if v['pending']:st.write(v['profile']+': '+'; '.join(v['pending']))
- st.download_button('Baixar comparação (JSON)',json.dumps(dict(schema='tercas_catalog_comparison_ui_v1',input_fingerprint=state['fingerprint'],completed_count=done,requested_count=total,complete=done==total,cancelled=state['cancelled'],rows=rows_sorted,whole_member_approved=False),ensure_ascii=False,indent=2),file_name='comparacao_tercas.json',mime='application/json')
+ st.download_button('Baixar comparação (JSON)',json.dumps(dict(schema='tercas_catalog_comparison_ui_v1',model_domain_version=state.get('model_domain_version'),input_fingerprint=state['fingerprint'],completed_count=done,requested_count=total,complete=done==total,cancelled=state['cancelled'],rows=rows_sorted,whole_member_approved=False),ensure_ascii=False,indent=2),file_name='comparacao_tercas.json',mime='application/json')
 catalog_comparison()
 
 if 'result' in st.session_state:
  result=st.session_state.result
+ if 'model_domain_evidence' not in result:st.warning(DOMAIN_HISTORICAL)
  if result.get('schema')==THREE_GIRT_SCHEMA:
   from tercas.three_girt_ui import render_result as show_three_girt_result
   show_three_girt_result(st,result)
@@ -515,47 +601,28 @@ if 'result' in st.session_state:
   batch=result.get('schema')=='tercas_batch_results_v1'
   if batch:
    for warning in dict.fromkeys(w for case in result['cases'] for w in case['warnings']):st.warning(warning)
-   st.dataframe(display_frame(result['summary']),hide_index=True,width='stretch')
+   st.dataframe(display_frame(domain_historical_rows(result,result['summary'])),hide_index=True,width='stretch')
    st.caption('Máximos por verificação entre os casos calculados. Pendências em outras combinações permanecem visíveis; não há combinação global aprovada.')
    with st.expander('Resultados de cada combinação'):
     names=[f"{c['combination']['id']} — {c['combination']['type']}" for c in result['cases']]
     selected=st.selectbox('Combinação para consultar',range(len(names)),format_func=lambda i:names[i])
     item=result['cases'][selected];st.caption(measurement_text(item['combination']['expression'])+f"; q normal={fmt(item['combination']['q_kN_m'])} kN/m; P normal={fmt(item['combination'].get('P_N',0)/1000)} kN")
-    st.dataframe(display_frame(item['rows']),hide_index=True,width='stretch')
-    if item.get('evidence',{}).get('inclination'):show_inclination(item['evidence']['inclination'])
+    st.dataframe(display_frame(domain_historical_rows(result,item['rows'])),hide_index=True,width='stretch')
+    if item.get('evidence',{}).get('inclination'):show_inclination(domain_historical_inclination(result,item['evidence']['inclination']))
     if girt:show_elastic_wall(item.get('evidence',{}))
   else:
    for warning in result.get('coverage_warnings',[])+result.get('critical_warnings',[]):st.warning(warning)
    if result.get('numerical_warnings'):st.warning('A integração da flecha emitiu aviso numérico. A verificação ELS ficou pendente; demais resultados foram preservados.')
    st.dataframe(display_frame(rows(result)),hide_index=True,width='stretch')
-   if result.get('inclination_evidence'):show_inclination(result['inclination_evidence'])
+   if result.get('inclination_evidence'):show_inclination(domain_historical_inclination(result,result['inclination_evidence']))
    if girt:show_elastic_wall(result)
   c1,c2,c3=st.columns(3)
   with c1:st.download_button('Baixar memória parcial (Word)',batch_word(result) if batch else word(result),file_name='MC_terca_parcial.docx',mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
   with c2:st.download_button('Baixar estudo e resultados (JSON)',json.dumps(result,ensure_ascii=False,indent=2),file_name='terca_estudo_resultados.json',mime='application/json')
-  with c3:st.download_button('Baixar entradas (JSON)',json.dumps(d,ensure_ascii=False,indent=2),file_name='terca_entradas.json',mime='application/json')
+  with c3:st.download_button('Baixar entradas (JSON)',json.dumps(domain_export_inputs(d),ensure_ascii=False,indent=2),file_name='terca_entradas.json',mime='application/json')
   with st.expander('Memória numérica e rastreabilidade'):st.json(result)
 
-with st.expander('Abrir entradas JSON',expanded=False):
- st.caption('Abra somente entradas exportadas por esta versão. O arquivo não executa código. Os resultados são sempre recalculados.')
- upload=st.file_uploader('Arquivo de entradas',type=['json'],key=f'import_{r}')
- if upload is not None and st.button('Aplicar entradas do arquivo'):
-  try:
-   if upload.size>200000:raise ValueError('Arquivo maior que 200 kB.')
-   from tercas.application import build_spec
-   new=json.loads(upload.getvalue())
-   from tercas.inclination_adapter import configuration
-   from tercas.inclination import number
-   configuration(new)
-   for field in ['q_parallel_uls','q_parallel_sls','P_parallel_uls','P_parallel_sls']:number(new.get(field,0),field)
-   if new.get('load_mode')=='area':
-    bundle=area_bundle(new);build_spec(case_inputs(new,bundle['combinations'][0]))
-   else:build_spec(new)
-   if 'three_girt_model' in new:
-    from tercas.three_girt_application import configuration as validate_three_girt_configuration
-    validate_three_girt_configuration(new)
-   load(new);st.rerun()
-  except (ValueError,TypeError,KeyError,UnicodeDecodeError) as exc:st.error('Arquivo não aplicado: '+str(exc))
+render_input_import(r)
 
 st.caption('Método documentado na Rev07. Programa de domínio restrito: não dimensiona ligações ou torção primária. A opção de sistema 3D é apenas diagnóstico elástico, não dimensionamento. Nenhum crédito de travamento da telha.')
 

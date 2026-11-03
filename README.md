@@ -48,3 +48,14 @@ brutas; **sem resistência, sem conclusão ELS e sem aprovação global**. Não 
 a rota N=0, não presume empenamento impedido ou ancoragem comprovada. Mantém todos
 os projetos antigos no caminho anterior; detalhes em
 `docs/THREE_GIRTS_DIAGNOSTIC_20261103.txt`. Cópia em qualificação, sem deploy inferido.
+
+## Hipótese fixa da telha no modelo — 03/11/2026
+
+Nesta idealização, não há contato da telha/painel com o perfil nem ligação de
+qualquer mesa a painel. A telha entra somente nas ações declaradas, sem travamento,
+apoio, contenção ou rigidez. Isso não comprova a condição física externa, não
+estabelece caminho das forças e não implica torção nula. Legados são aceitos sem
+novos campos obrigatórios; a hipótese e sua origem são registradas nos resultados
+e na memória. Exportação de entradas acrescenta apenas um token de domínio em
+cópia. Declaração física explícita incompatível é preservada e marcada fora do
+domínio. Detalhes em `docs/NO_PANEL_MODEL_DOMAIN_20261103.txt`. Não publicado.

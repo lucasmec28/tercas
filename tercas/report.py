@@ -6,6 +6,7 @@ from docx.shared import Inches, Pt, RGBColor
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 from .application import rows
+from .model_domain import report as domain_report,historical_rows,historical_inclination
 from .member_application import is_girt,wall_els_config,wall_convention
 
 def wall_input_report(doc,data):
@@ -65,7 +66,11 @@ def inclination_report(doc,evidence):
   doc.add_heading('Resistências do eixo fraco por sentido',3)
   for sign,cap in evidence['weak_axis_capacities'].items():
    doc.add_paragraph(('My positivo' if sign=='positive' else 'My negativo')+': '+display(cap))
-  doc.add_paragraph('Interação concomitante §9.9, N=0: '+display(evidence.get('biaxial')))
+  biax=evidence.get('biaxial')
+  # An unfinished candidate is not a calculated interaction index.
+  if isinstance(biax,dict) and biax.get('status')=='not_evaluated':
+   biax={k:v for k,v in biax.items() if k!='governing'}
+  doc.add_paragraph('Interação concomitante §9.9, N=0: '+display(biax))
   doc.add_paragraph('MxRd conservador adotado [Nmm]: '+display(evidence.get('strong_capacity_Nmm')))
  doc.add_paragraph('Cargas locais: q [N/mm]='+display(evidence.get('q_vector'))+'; P [N]='+display(evidence.get('P_vector'))+'.')
  for state in evidence.get('states',[]):
@@ -142,6 +147,7 @@ def word(result):
  doc.add_paragraph('Emissão parcial — NBR 14762:2010 — sem crédito de travamento da telha')
  doc.add_paragraph('NÃO É APROVAÇÃO GLOBAL DO ELEMENTO OU DAS LIGAÇÕES. Confira os dados, a aplicação física, as verificações não avaliadas e o domínio de cada resultado.')
  if result['synthetic']:doc.add_paragraph('EXEMPLO DIDÁTICO COM DADOS SINTÉTICOS. NÃO UTILIZAR COMO PROJETO.')
+ domain_report(doc,result)
  doc.add_paragraph('Projeto: '+result['project']);doc.add_paragraph('Versão: '+result['version']);doc.add_paragraph('Gerado em UTC: '+datetime.now(timezone.utc).isoformat())
  doc.add_heading('Premissas e limites',1)
  for text in ['Um vão isostático. Flexão forte e rota restrita de flexão fraca/Anexo E; interação biaxial §9.9 para N=0 quando há resistências rastreadas por eixo e sentido. Para posição fixa de P, o máximo concomitante é calculado ao longo do vão. Sem dimensionamento de torção primária, axial, continuidade ou balanços nesta emissão.', 'Ações ELU e ELS já combinadas, informadas separadamente. Não há geração automática de todas as combinações.', 'Ly e Lz são comprimentos efetivos informados; coordenada de tirante não comprova vínculo torsional.', 'A flecha é componente Euler–Bernoulli com Ief por seção. Limite de flecha é informado com origem; não equivale a aprovação do sistema.', 'Propriedades e críticos fornecidos não são certificados pelo aplicativo. A convenção geométrica das propriedades do catálogo precisa ser conferida para o caso.', 'Ligações e apoios não são dimensionados ou aprovados pelo aplicativo.']:
@@ -152,7 +158,7 @@ def word(result):
  inclination_inputs(doc,result['input_data'],result.get('weak_critical_reference'))
  strong_reference_report(doc,result.get('strong_critical_reference'))
  if result.get('inclination_evidence'):
-  doc.add_heading('Solicitações locais simultâneas',1);inclination_report(doc,result['inclination_evidence'])
+  doc.add_heading('Solicitações locais simultâneas',1);inclination_report(doc,historical_inclination(result,result['inclination_evidence']))
  wall_vertical_report(doc,result)
  doc.add_heading('Resultados por verificação',1)
  tab=doc.add_table(rows=1, cols=4);tab.style='Table Grid'
@@ -251,6 +257,7 @@ def batch_word(result):
  doc.add_heading('LRO Engenharia Travessas laterais por combinações' if is_girt(result['input_data']) else 'LRO Engenharia Terças por combinações',0)
  doc.add_paragraph(DISPLAY_NOTE)
  doc.add_paragraph('NBR 14762:2010 · estudo parcial · sem travamento da telha. NÃO É APROVAÇÃO GLOBAL. Ligações e apoios fora do escopo.')
+ domain_report(doc,result)
  doc.add_paragraph('Projeto: '+result['project']+' | versão: '+result['version'])
  if result['synthetic']:doc.add_paragraph('EXEMPLO DIDÁTICO — DADOS SINTÉTICOS.')
  doc.add_heading('Entradas e premissas',1)
@@ -268,7 +275,7 @@ def batch_word(result):
  doc.add_paragraph('Travessa: área no plano da fachada × distância tributária. PP e CP verticais no eixo fraco; vento normal no forte. Usam-se apenas linhas da matriz do usuário sem SC (12 ELU, 3 ELS raras, 3 frequentes e 1 quase permanente antes do filtro de famílias). Não se adiciona P automática de cobertura; não é gerador normativo universal.' if is_girt(d) else 'Área → linha pela distância entre terças; PP uma única vez pela massa linear. Vento para cima negativo. As 48 combinações de origem são as fornecidas por Lucas em 31/10/2026, filtradas pelos tipos selecionados. Adicionam-se quatro ELU G+1,5P e uma ELS rara G+P, conforme seleção, com P=1 kN isolada de outras variáveis. Cada combinação com P é calculada em duas posições: centro e limite junto ao apoio (x→0+). Não há varredura intermediária.')
  doc.add_paragraph('Tipos selecionados: '+', '.join(d['selected_types']))
  if not is_girt(d):doc.add_paragraph(f"Limites de flecha: L/{fmt(d['ELS_down_denominator'])} descendente; L/{fmt(d['ELS_up_denominator'])} ascendente. Critérios informados, aplicados a cada combinação ELS.")
- doc.add_paragraph('Cada combinação é recalculada. A interação biaxial §9.9 (N=0) requer resistências rastreadas por eixo e sentido. Nesta Travessa por área não se adiciona P de cobertura. A flecha horizontal usa a rota de Ief; a vertical é diagnóstico bruto separado, sem conclusão ELS. Não há dimensionamento de torção primária, axial, continuidade ou balanços; o estudo elástico de tirantes não modifica a resistência do vão livre.' if is_girt(d) else 'Cada combinação é recalculada. Não se somam índices resistentes ou flechas calculadas com diferentes inércias efetivas. A interação biaxial §9.9 (N=0) usa resistências rastreadas por eixo e sentido. O envelope ao longo do vão é calculado para uma posição fixa de P; nas combinações com P, os resultados cobrem as duas posições prescritas, não o máximo contínuo da interação ou FLT. Sem dimensionamento de torção primária, axial, continuidade ou balanços.')
+ doc.add_paragraph('O resultado contém avaliações separadas por combinação; esta exportação não recalcula resultados. A interação biaxial §9.9 (N=0) requer resistências rastreadas por eixo e sentido. Nesta Travessa por área não se adiciona P de cobertura. A flecha horizontal usa a rota de Ief; a vertical é diagnóstico bruto separado, sem conclusão ELS. Não há dimensionamento de torção primária, axial, continuidade ou balanços; o estudo elástico de tirantes não modifica a resistência do vão livre.' if is_girt(d) else 'O resultado contém avaliações separadas por combinação; esta exportação não recalcula resultados. Não se somam índices resistentes ou flechas calculadas com diferentes inércias efetivas. A interação biaxial §9.9 (N=0) usa resistências rastreadas por eixo e sentido. O envelope ao longo do vão é calculado para uma posição fixa de P; nas combinações com P, os resultados cobrem as duas posições prescritas, não o máximo contínuo da interação ou FLT. Sem dimensionamento de torção primária, axial, continuidade ou balanços.')
  for s in d['segments']:
   cb={'one':'Adotar Cb = 1,0','quarter_formula':'Calcular pelos momentos do trecho'}.get(s.get('Cb_mode'),s.get('Cb_mode'))
   doc.add_paragraph(f"Trecho {fmt(s['start_mm'])} a {fmt(s['end_mm'])} mm. Ly superior: {fmt(s.get('Ly_top_effective_mm',s.get('Ly_effective_mm')))} mm; Ly inferior: {fmt(s.get('Ly_bottom_effective_mm',s.get('Ly_effective_mm')))} mm; Lz: {fmt(s.get('Lz_effective_mm'))} mm. {cb}. {s.get('restraint_provenance','')}")
@@ -281,15 +288,15 @@ def batch_word(result):
  t=doc.add_table(rows=1,cols=4);t.style='Table Grid'
  t.rows[0]._tr.get_or_add_trPr().append(OxmlElement('w:tblHeader'))
  for c,v in zip(t.rows[0].cells,['Critério','Combinação','Índice','Situação']):c.text=v
- for r in display_records(result['summary']):
+ for r in display_records(historical_rows(result,result['summary'])):
   for c,v in zip(t.add_row().cells,[r['Verificação'],r['Combinação'],'—' if r['Índice'] is None else f"{fmt(r['Índice'])}",r['Situação']]):c.text=display(v)
  doc.add_heading('Todas as combinações selecionadas',1)
  for item in result['cases']:
   c=item['combination'];doc.add_heading(f"{c['id']} — {c['type']}",2)
   doc.add_paragraph(f"{measurement_text(c['expression'])} → q normal={fmt(c['q_kN_m'])} kN/m. P normal={fmt(c.get('P_N',0)/1000)} kN. Forças/efeitos superpostos antes das verificações.")
-  if item.get('evidence',{}).get('inclination'):inclination_report(doc,item['evidence']['inclination'])
+  if item.get('evidence',{}).get('inclination'):inclination_report(doc,historical_inclination(result,item['evidence']['inclination']))
   wall_vertical_report(doc,item.get('evidence',{}))
-  for row in display_records(item['rows']):
+  for row in display_records(historical_rows(result,item['rows'])):
    index='—' if row['Índice'] is None else f"{fmt(row['Índice'])}"
    doc.add_paragraph(f"{row['Verificação']}: {row['Situação']}; índice {index}; {row['Demanda / valor']}; limite/resistência {row['Resistência / limite']}. {row['Referência']}. {row['Observação']}")
   for warning in item['warnings']:doc.add_paragraph('Aviso: '+warning)

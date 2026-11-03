@@ -25,6 +25,10 @@ def validate(data):
 
 def capacities(data,family):
  cfg=validate(data);out={}
+ from .model_domain import evidence as domain_evidence
+ domain=domain_evidence(data)
+ if family=='U' and domain['conflict']:
+  return {sign:{'status':'not_evaluated','missing':[domain['conflict']],'model_domain_evidence':domain,'design_approved':False} for sign in ('positive','negative')}
  auto=None
  if data.get('weak_catalog') is not None:
   from .weak_catalog import automatic_inputs
@@ -145,4 +149,6 @@ def rows(ev):
  if ev.get('u_pierin_assumption'):
   status=('Exploratório — índice calculado maior que 1' if idx is not None and idx>1 else 'Exploratório — sem conclusão de atendimento')+' — hipótese inferida, pendente de confirmação'
  elif ev.get('provisional_hypothesis'):status+=' — hipótese provisória, a conferir'
- return {'Verificação':'Flexão biaxial','Situação':status,'Índice':idx,'Demanda / valor':f"Seção x={g.get('x_mm','—')} mm; Mx={g.get('Mx_Nmm','—')} Nmm; My={g.get('My_Nmm','—')} Nmm",'Resistência / limite':'|Mx|/MxRd + |My|/MyRd ≤ 1; N=0','Referência':'NBR 14762 §9.9; Anexo E; §9.8.2','Observação':ev['resistance_status']+' Menor resistência forte dos trechos, conservadora. Momentos concomitantes; não soma máximos independentes. Dados fracos nunca importados bilateralmente de Pierin.'}
+ demand=(f"Seção x={g.get('x_mm','—')} mm; Mx={g.get('Mx_Nmm','—')} Nmm; My={g.get('My_Nmm','—')} Nmm" if idx is not None
+         else 'Máximo combinado não determinado; consultar as solicitações concomitantes, que não são nulas por faltar resistência.')
+ return {'Verificação':'Flexão biaxial','Situação':status,'Índice':idx,'Demanda / valor':demand,'Resistência / limite':'|Mx|/MxRd + |My|/MyRd ≤ 1; N=0','Referência':'NBR 14762 §9.9; Anexo E; §9.8.2','Observação':ev['resistance_status']+' Menor resistência forte dos trechos, conservadora. Momentos concomitantes; não soma máximos independentes. Dados fracos nunca importados bilateralmente de Pierin.'}

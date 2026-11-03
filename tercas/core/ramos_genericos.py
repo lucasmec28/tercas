@@ -15,7 +15,9 @@ def calculate(spec,base):
   local=W*1000*fy*weff_ratio(math.sqrt(W*1000*fy/Ml))[0]/1.1
   result['local']={'status':'computed','MRd_Nmm':local,'property_convention_pending':spec['selected_section']['source_geometry_convention_unresolved']}
  else:local=None;result['local']={'status':'not_evaluated','missing':'W,fy,Ml and critical origin'}
- if family=='U' and v('lip')==0:result['distortional']=distortional('U',0,False,1,1)
+ if family=='U' and v('lip')==0:
+  from ..model_domain import plain_u_distortional,evidence as domain_evidence
+  result['distortional']=plain_u_distortional(spec.get('model_domain_evidence',domain_evidence({})))
  elif family=='Ue':
   try:
    gate=table14(v('h'),v('bf'),v('lip'),v('t'))

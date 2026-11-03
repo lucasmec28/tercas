@@ -1,0 +1,1047 @@
+{
+  "schema": "NBR14762_one_span_v1",
+  "input_snapshot": {
+    "selected_section": {
+      "entry_id": "planilha_v03_r106",
+      "family": "U",
+      "fields": {
+        "h": {
+          "value": 100,
+          "origin": "NBR 6355:2012 — Tabela A.2",
+          "edited": false
+        },
+        "bf": {
+          "value": 50,
+          "origin": "NBR 6355:2012 — Tabela A.2",
+          "edited": false
+        },
+        "lip": {
+          "value": 0,
+          "origin": "NBR 6355:2012 — Tabela A.2",
+          "edited": false
+        },
+        "t": {
+          "value": 2,
+          "origin": "NBR 6355:2012 — Tabela A.2",
+          "edited": false
+        },
+        "mass_kg_m": {
+          "value": 3.04,
+          "origin": "NBR 6355:2012 — Tabela A.2",
+          "edited": false
+        },
+        "A_cm2": {
+          "value": 3.87,
+          "origin": "NBR 6355:2012 — Tabela A.2",
+          "edited": false
+        },
+        "Ix_cm4": {
+          "value": 61.59,
+          "origin": "NBR 6355:2012 — Tabela A.2",
+          "edited": false
+        },
+        "Wx_cm3": {
+          "value": 12.32,
+          "origin": "NBR 6355:2012 — Tabela A.2",
+          "edited": false
+        },
+        "Iy_cm4": {
+          "value": 9.71,
+          "origin": "NBR 6355:2012 — Tabela A.2",
+          "edited": false
+        },
+        "J_mm4": {
+          "value": 520.0,
+          "origin": "NBR 6355:2012 — Tabela A.2",
+          "edited": false
+        },
+        "Cw_mm6": {
+          "value": 164780000.0,
+          "origin": "NBR 6355:2012 — Tabela A.2",
+          "edited": false
+        },
+        "ri_mm": {
+          "value": 2,
+          "origin": "NBR 6355:2012 — Tabela A.2",
+          "edited": false
+        },
+        "fy_MPa": {
+          "value": 250.0,
+          "origin": "Dados sintéticos do teste de interface; não certificados pelo fabricante",
+          "edited": true
+        },
+        "fu_MPa": {
+          "value": 400.0,
+          "origin": "Dados sintéticos do teste de interface; não certificados pelo fabricante",
+          "edited": true
+        },
+        "E_MPa": {
+          "value": 200000.0,
+          "origin": "Dados sintéticos do teste de interface; não certificados pelo fabricante",
+          "edited": true
+        },
+        "G_MPa": {
+          "value": 76923.07692307692,
+          "origin": "Dados sintéticos do teste de interface; não certificados pelo fabricante",
+          "edited": true
+        }
+      },
+      "history": [
+        {
+          "field": "fy_MPa",
+          "previous": {
+            "value": null,
+            "origin": "Não informado pelo catálogo selecionado",
+            "edited": false
+          },
+          "new_value": 250.0,
+          "new_origin": "Dados sintéticos do teste de interface; não certificados pelo fabricante"
+        },
+        {
+          "field": "fu_MPa",
+          "previous": {
+            "value": null,
+            "origin": "Não informado pelo catálogo selecionado",
+            "edited": false
+          },
+          "new_value": 400.0,
+          "new_origin": "Dados sintéticos do teste de interface; não certificados pelo fabricante"
+        },
+        {
+          "field": "E_MPa",
+          "previous": {
+            "value": null,
+            "origin": "Não informado pelo catálogo selecionado",
+            "edited": false
+          },
+          "new_value": 200000.0,
+          "new_origin": "Dados sintéticos do teste de interface; não certificados pelo fabricante"
+        },
+        {
+          "field": "G_MPa",
+          "previous": {
+            "value": null,
+            "origin": "Não informado pelo catálogo selecionado",
+            "edited": false
+          },
+          "new_value": 76923.07692307692,
+          "new_origin": "Dados sintéticos do teste de interface; não certificados pelo fabricante"
+        }
+      ],
+      "source": "NBR 6355:2012 — Tabela A.2",
+      "source_geometry_convention_unresolved": true,
+      "whole_member_approved": false
+    },
+    "L_mm": 3000.0,
+    "route_domain": "strong_symmetry_CT_no_primary_torsion",
+    "Ml": {
+      "value": 3195774.181964692,
+      "origin": "Crítico sintético para regressão de interface; não validado para o perfil do fabricante"
+    },
+    "Mdist": {
+      "value": null,
+      "origin": "Crítico sintético para regressão de interface; não validado para o perfil do fabricante"
+    },
+    "strong_critical_qualification": {
+      "source_E_MPa": 200000.0,
+      "source_G_MPa": null,
+      "source_nu": null,
+      "app_original_G_MPa": 77000.0,
+      "source_note": "Rev07: Pierin declara E=200 GPa; ν não explicitado. G=77000 MPa é configuração original do app, não dado atribuído à tabela.",
+      "fields": {
+        "Ml": {
+          "status": "automatic_table12_original_configuration",
+          "inherited_tabulated": false,
+          "input_value_Nmm": 3195774.181964692,
+          "inherited_automatic_table12": true,
+          "formula_nu": 0.3,
+          "formula_nu_origin": "Parâmetro já adotado na fórmula do app; não é ν atribuído a Pierin",
+          "formula_E_MPa": 200000.0,
+          "formula_parameters": {
+            "h": 100,
+            "bf": 50,
+            "t": 2,
+            "lip": 0,
+            "Wx_cm3": 12.32
+          }
+        },
+        "Mdist": {
+          "status": "supplied_or_absent",
+          "inherited_tabulated": false,
+          "input_value_Nmm": null
+        }
+      },
+      "warnings": [],
+      "pierin_U_reference": {
+        "schema": "pierin_2013_U_strong_reference_v1",
+        "title": "Pierin, Silva e La Rovere (2013) — Forças Normais e Momentos Fletores Críticos de Perfis Formados a Frio",
+        "url": "https://www.researchgate.net/publication/265207005_Forcas_Normais_e_Momentos_Fletores_Criticos_de_Perfis_Formados_a_Frio",
+        "source_pdf_sha256": "2ff5f67f201e00ddb31fdb7370a8077bc9e27fb9ac553cb0c5036ab9ad9d2d73",
+        "source_text_sha256": "ec0bcd133b1094a08c3ec3d52de99b70f1453d4a4b53ba6d2ce20e0b61822da2",
+        "source_E_MPa": 200000.0,
+        "source_G_MPa": null,
+        "source_nu": null,
+        "boundary": "simplesmente apoiado",
+        "corners": "retos",
+        "source_geometry_to_mean_line": "não explicitada",
+        "meaning": "Nl e Mlx são críticos locais elásticos, não resistências de cálculo. Nl apenas documental: o app não calcula resistência axial.",
+        "id": "Pierin2013_T1_U_100x50x2.00",
+        "family": "U",
+        "dimensions_mm": {
+          "h": 100.0,
+          "bf": 50.0,
+          "lip": 0.0,
+          "t": 2.0
+        },
+        "Nl_N": 84160,
+        "Mlx_Nmm": 3510000,
+        "table": 1,
+        "PDF_page": 9,
+        "printed_page": 29,
+        "source_row": "100 x 50 x 2,00    84,16   3,51     3,26",
+        "column_units": {
+          "Nl": "kN",
+          "Mlx": "kN·m"
+        },
+        "status": "tabulated_adopted_reference",
+        "adopted_as_app_reference": true,
+        "axial_calculation_implemented": false,
+        "whole_member_approved": false,
+        "section_property_convention_pending": true,
+        "source_geometry_convention_unresolved": true,
+        "geometric_adoption": "Linha nominal exata; propriedades do catálogo mantidas. A equivalência exata com a discretização INSTAB não foi demonstrada.",
+        "bending_axis": "x — eixo de simetria da seção U; não transpor ao eixo y",
+        "source_origin": "Pierin2013 Tabela1 Mlx U | Pierin2013_T1_U_100x50x2.00 | p29/PDF9; referência adotada; crítico elástico, não resistência",
+        "app_original_G_MPa": 77000.0,
+        "original_configuration_unchanged": false,
+        "compatibility_reasons": [
+          "G difere da configuração original do app; G e ν da fonte não foram explicitados."
+        ],
+        "compatibility_note": "G=77000 MPa é detector de alteração do app, não G da fonte. Compatibilidade nominal não certifica o elemento físico.",
+        "source_input_value_Nmm": 3195774.181964692,
+        "source_input_origin": "Crítico sintético para regressão de interface; não validado para o perfil do fabricante",
+        "use_status": "reference_only_existing_input_preserved"
+      }
+    },
+    "ULS": {
+      "q_Nmm": 0.12,
+      "P_N": 0.0,
+      "x_mm": 1500.0,
+      "origin": "Ações de uma combinação informada pelo usuário; fatores já aplicados quando ELU"
+    },
+    "SLS": {
+      "q_Nmm": 0.229812216,
+      "P_N": 1000.0,
+      "x_mm": 1500.0,
+      "origin": "Ações de uma combinação informada pelo usuário; fatores já aplicados quando ELU"
+    },
+    "segments": [
+      {
+        "start_mm": 0.0,
+        "end_mm": 3000.0,
+        "Ly_effective_mm": 3000.0,
+        "Lz_effective_mm": 3000.0,
+        "Cb_mode": "one",
+        "restraint_provenance": "Comprimentos efetivos sintéticos de teste"
+      }
+    ],
+    "ELS_limit_mm": {
+      "value": 16.666666666666668,
+      "origin": "L/180 selecionado no exemplo didático"
+    },
+    "introduction": {
+      "left": {
+        "route": "web_connection",
+        "origin": "Apoios por alma ligada assumidos no exemplo didático"
+      },
+      "right": {
+        "route": "web_connection",
+        "origin": "Apoios por alma ligada assumidos no exemplo didático"
+      },
+      "point": {
+        "c_mm": 40.0,
+        "origin": "Contato central sintético"
+      }
+    }
+  },
+  "whole_member_approved": false,
+  "sheet_restraint_credit": false,
+  "issues": [],
+  "section_checks": {
+    "entry_id": "planilha_v03_r106",
+    "whole_member_approved": false,
+    "source_geometry_convention_unresolved": true,
+    "history": [
+      {
+        "field": "fy_MPa",
+        "previous": {
+          "value": null,
+          "origin": "Não informado pelo catálogo selecionado",
+          "edited": false
+        },
+        "new_value": 250.0,
+        "new_origin": "Dados sintéticos do teste de interface; não certificados pelo fabricante"
+      },
+      {
+        "field": "fu_MPa",
+        "previous": {
+          "value": null,
+          "origin": "Não informado pelo catálogo selecionado",
+          "edited": false
+        },
+        "new_value": 400.0,
+        "new_origin": "Dados sintéticos do teste de interface; não certificados pelo fabricante"
+      },
+      {
+        "field": "E_MPa",
+        "previous": {
+          "value": null,
+          "origin": "Não informado pelo catálogo selecionado",
+          "edited": false
+        },
+        "new_value": 200000.0,
+        "new_origin": "Dados sintéticos do teste de interface; não certificados pelo fabricante"
+      },
+      {
+        "field": "G_MPa",
+        "previous": {
+          "value": null,
+          "origin": "Não informado pelo catálogo selecionado",
+          "edited": false
+        },
+        "new_value": 76923.07692307692,
+        "new_origin": "Dados sintéticos do teste de interface; não certificados pelo fabricante"
+      }
+    ],
+    "input_fields": {
+      "h": {
+        "value": 100,
+        "origin": "NBR 6355:2012 — Tabela A.2",
+        "edited": false
+      },
+      "bf": {
+        "value": 50,
+        "origin": "NBR 6355:2012 — Tabela A.2",
+        "edited": false
+      },
+      "lip": {
+        "value": 0,
+        "origin": "NBR 6355:2012 — Tabela A.2",
+        "edited": false
+      },
+      "t": {
+        "value": 2,
+        "origin": "NBR 6355:2012 — Tabela A.2",
+        "edited": false
+      },
+      "mass_kg_m": {
+        "value": 3.04,
+        "origin": "NBR 6355:2012 — Tabela A.2",
+        "edited": false
+      },
+      "A_cm2": {
+        "value": 3.87,
+        "origin": "NBR 6355:2012 — Tabela A.2",
+        "edited": false
+      },
+      "Ix_cm4": {
+        "value": 61.59,
+        "origin": "NBR 6355:2012 — Tabela A.2",
+        "edited": false
+      },
+      "Wx_cm3": {
+        "value": 12.32,
+        "origin": "NBR 6355:2012 — Tabela A.2",
+        "edited": false
+      },
+      "Iy_cm4": {
+        "value": 9.71,
+        "origin": "NBR 6355:2012 — Tabela A.2",
+        "edited": false
+      },
+      "J_mm4": {
+        "value": 520.0,
+        "origin": "NBR 6355:2012 — Tabela A.2",
+        "edited": false
+      },
+      "Cw_mm6": {
+        "value": 164780000.0,
+        "origin": "NBR 6355:2012 — Tabela A.2",
+        "edited": false
+      },
+      "ri_mm": {
+        "value": 2,
+        "origin": "NBR 6355:2012 — Tabela A.2",
+        "edited": false
+      },
+      "fy_MPa": {
+        "value": 250.0,
+        "origin": "Dados sintéticos do teste de interface; não certificados pelo fabricante",
+        "edited": true
+      },
+      "fu_MPa": {
+        "value": 400.0,
+        "origin": "Dados sintéticos do teste de interface; não certificados pelo fabricante",
+        "edited": true
+      },
+      "E_MPa": {
+        "value": 200000.0,
+        "origin": "Dados sintéticos do teste de interface; não certificados pelo fabricante",
+        "edited": true
+      },
+      "G_MPa": {
+        "value": 76923.07692307692,
+        "origin": "Dados sintéticos do teste de interface; não certificados pelo fabricante",
+        "edited": true
+      }
+    },
+    "shear": {
+      "status": "computed_from_supplied_inputs",
+      "flat_web_mm": 92,
+      "VRd_N": 25090.90909090909,
+      "branch": "yield",
+      "h_over_t": 46.0,
+      "lower": 68.305197459637,
+      "upper": 88.54377448471462,
+      "kv": 5.0,
+      "gamma": 1.1,
+      "scope": "9.8.3 single flat web without transverse shear stiffeners; no concentrated-force check"
+    },
+    "elastic_Me": {
+      "status": "not_evaluated",
+      "missing": [
+        "L_mm",
+        "restraint_load_contract"
+      ]
+    },
+    "local_FLT_resistance": {
+      "status": "not_evaluated",
+      "reason": "resolve Wx reference convention and select local critical route for same geometry; no silent property mixing"
+    }
+  },
+  "FLT_segments": [
+    {
+      "status": "computed_from_supplied_effective_lengths",
+      "moments": {
+        "Mmax_Nmm": 135000.0,
+        "quarter_moments_Nmm": [
+          101250.0,
+          135000.0,
+          101250.0
+        ],
+        "Cb_from_moments": 1.1363636363636365,
+        "Mpositive_Nmm": 135000.0,
+        "Mnegative_Nmm": 0.0
+      },
+      "Cb_used": 1,
+      "Me_Nmm": 1273387.308575046,
+      "FLT": {
+        "lambda0": 1.5552316996164037,
+        "chi_flt": 0.4134374378490409,
+        "flt_branch": "elastic",
+        "lambda_p_reduced_stress": 0.6312366649275589,
+        "local_branch": "gross",
+        "Wceff_mm3": 12320.0,
+        "MRd_flt_Nmm": 1157624.8259773145,
+        "gamma": 1.1,
+        "scope": "MSE 9.8.2.2 only; Me/Ml supplied and qualified externally; not total capacity"
+      },
+      "index": 0.1166180933326369,
+      "restraint_provenance": "Comprimentos efetivos sintéticos de teste",
+      "whole_member_approved": false,
+      "condition": "NBR expression domain and effective lengths supplied; physical stiffness/strength not established by coordinates alone",
+      "section_property_convention_pending": true
+    }
+  ],
+  "ELS": {
+    "status": "computed_bending_component",
+    "x_mm": 1500.0,
+    "deflection_mm": 6.534178207196786,
+    "same_span_mm": 3000.0,
+    "model": "Euler-Bernoulli bending with sectionwise Ief(M), explicitly clamped to Ig for rounded transition",
+    "section_property_convention_pending": true,
+    "criterion_scope": "bending component only, not complete system ELS approval",
+    "limit_mm": 16.666666666666668,
+    "limit_origin": "L/180 selecionado no exemplo didático",
+    "index": 0.3920506924318071,
+    "criterion_status": "meets"
+  },
+  "NBR_branches": {
+    "local": {
+      "status": "computed",
+      "MRd_Nmm": 2212984.3463483783,
+      "property_convention_pending": true,
+      "Msd_Nmm": 135000.0,
+      "index": 0.0610035946357967,
+      "criterion_status": "meets"
+    },
+    "distortional": {
+      "status": "not_applicable",
+      "source": "NBR14762:2010 9.3 p32: plain U without tension-flange panel exception",
+      "MRd_Nmm": null
+    },
+    "MV": {
+      "status": "computed_fixed_load_position",
+      "result": {
+        "x_mm": 1500.0000000000016,
+        "a_mm": 1500.0,
+        "branch": "a_bound_right",
+        "index_squared": 0.0037214385584886035
+      },
+      "source": "NBR9.8.4 same position and combination; local MRd denominator"
+    },
+    "shear_lag_domain": {
+      "status": "not_triggered_by_length",
+      "L_mm": 3000.0,
+      "bf0_upper_bound_mm": 50,
+      "scope": "sufficient length screen using nominal width upper bound; failing bound is NOT proof shear lag required"
+    },
+    "supports": {
+      "left": {
+        "status": "stiffener_exception_9_5_1",
+        "reason": "web connected to another beam/column",
+        "connection_design_checked": false,
+        "provenance": "Apoios por alma ligada assumidos no exemplo didático",
+        "support_contact_assumed": false
+      },
+      "right": {
+        "status": "stiffener_exception_9_5_1",
+        "reason": "web connected to another beam/column",
+        "connection_design_checked": false,
+        "provenance": "Apoios por alma ligada assumidos no exemplo didático",
+        "support_contact_assumed": false
+      }
+    },
+    "point": {
+      "status": "not_applicable",
+      "reason": "Sem força concentrada de compressão no caso informado."
+    }
+  },
+  "remaining_checks": [
+    "actual catalogue property convention/critical source, restraints and connection design remain as declared inputs; partial branches are explicit"
+  ],
+  "numerical_warnings": [],
+  "version": "0.4.4-estudo",
+  "project": "EXEMPLO DIDÁTICO — não é projeto",
+  "synthetic": true,
+  "input_fingerprint": "fbd674c3fbce06e89dec04a1b6ec2af98e1c7b0b6abd19f88b7a4d774abc851b",
+  "input_data": {
+    "schema": "tercas_input_v2",
+    "catalog_index": 101,
+    "synthetic": true,
+    "project": "EXEMPLO DIDÁTICO — não é projeto",
+    "properties": {
+      "h": 100,
+      "bf": 50,
+      "lip": 0,
+      "t": 2,
+      "mass_kg_m": 3.04,
+      "A_cm2": 3.87,
+      "Ix_cm4": 61.59,
+      "Wx_cm3": 12.32,
+      "Iy_cm4": 9.71,
+      "J_mm4": 520.0,
+      "Cw_mm6": 164780000.0,
+      "ri_mm": 2.0,
+      "fy_MPa": 250.0,
+      "fu_MPa": 400.0,
+      "E_MPa": 200000.0,
+      "G_MPa": 76923.07692307692
+    },
+    "property_origin": "Dados sintéticos do teste de interface; não certificados pelo fabricante",
+    "L_mm": 3000.0,
+    "q_uls": 0.12,
+    "P_uls": 0.0,
+    "x_uls": 1500.0,
+    "q_sls": 0.229812216,
+    "P_sls": 1000.0,
+    "x_sls": 1500.0,
+    "actions_origin": "Ações de uma combinação informada pelo usuário; fatores já aplicados quando ELU",
+    "Ml_Nmm": 3195774.181964692,
+    "Mdist_Nmm": null,
+    "critical_origin": "Crítico sintético para regressão de interface; não validado para o perfil do fabricante",
+    "ELS_limit_mm": 16.666666666666668,
+    "ELS_origin": "L/180 selecionado no exemplo didático",
+    "route_domain": true,
+    "segments": [
+      {
+        "start_mm": 0.0,
+        "end_mm": 3000.0,
+        "Ly_effective_mm": 3000.0,
+        "Lz_effective_mm": 3000.0,
+        "Cb_mode": "one",
+        "restraint_provenance": "Comprimentos efetivos sintéticos de teste"
+      }
+    ],
+    "left_web": true,
+    "right_web": true,
+    "support_origin": "Apoios por alma ligada assumidos no exemplo didático",
+    "patch_mm": 40.0,
+    "patch_origin": "Contato central sintético",
+    "steel_name": "ASTM A36",
+    "load_mode": "direct",
+    "selected_types": [
+      "ELU normal",
+      "ELS rara",
+      "ELS frequente"
+    ],
+    "area_inputs": {
+      "spacing_m": 1.5,
+      "permanent_kgf_m2": 0.0,
+      "live_kgf_m2": 0.0,
+      "wind_up_kgf_m2": 0.0,
+      "wind_down_kgf_m2": 0.0
+    },
+    "ELS_down_denominator": 180.0,
+    "ELS_up_denominator": 120.0,
+    "q_parallel_uls": 0.1,
+    "u_panel_condition": {
+      "condition": "top_panel_other_free",
+      "origin": "Independent explicit historical physical conflict"
+    },
+    "weak_axis": {
+      "positive": {
+        "W_mm3": 10000.0,
+        "Wc_mm3": 20000.0,
+        "Ml_Nmm": 4000000.0,
+        "Mdist_Nmm": null,
+        "Nex_N": 1000000.0,
+        "Nez_N": 1000000.0,
+        "r0_mm": 20.0,
+        "j_mm": -10.0,
+        "Cm": 1.0,
+        "Cs": 1,
+        "plain_u_no_distortion": true,
+        "provenance": "Independent synthetic weak-axis data"
+      },
+      "negative": {
+        "W_mm3": 10000.0,
+        "Wc_mm3": 20000.0,
+        "Ml_Nmm": 4000000.0,
+        "Mdist_Nmm": null,
+        "Nex_N": 1000000.0,
+        "Nez_N": 1000000.0,
+        "r0_mm": 20.0,
+        "j_mm": -10.0,
+        "Cm": 1.0,
+        "Cs": 1,
+        "plain_u_no_distortion": true,
+        "provenance": "Independent synthetic weak-axis data"
+      }
+    }
+  },
+  "inclination_evidence": {
+    "ELU": {
+      "angle": {
+        "radians": 0.0,
+        "degrees": 0.0,
+        "percent": 0.0
+      },
+      "configuration": {
+        "value": 0.0,
+        "unit": "degrees",
+        "spacing_basis": "roof",
+        "permanent_basis": "roof",
+        "live_basis": "horizontal",
+        "wind_basis": "roof"
+      },
+      "convention": "Eixos locais: normal à cobertura (positivo para dentro) e paralelo à cobertura (positivo para a boca, vista A→B); alma normal; sem travamento da telha. M e V abaixo são concomitantes por seção/posição, não máximos independentes. Modo direto: cargas já locais e combinadas; não há rotação nem PP automático.",
+      "q_vector": {
+        "normal": 0.12,
+        "parallel": 0.1
+      },
+      "P_vector": {
+        "normal": 0.0,
+        "parallel": 0.0
+      },
+      "states": [
+        {
+          "x_mm": 0.0,
+          "side": "right",
+          "normal": {
+            "M_Nmm": 0.0,
+            "V_N": 180.0,
+            "Rleft_N": 180.0,
+            "Rright_N": 180.0
+          },
+          "parallel": {
+            "M_Nmm": 0.0,
+            "V_N": 150.0,
+            "Rleft_N": 150.0,
+            "Rright_N": 150.0
+          }
+        },
+        {
+          "x_mm": 1500.0,
+          "side": "left",
+          "normal": {
+            "M_Nmm": 135000.0,
+            "V_N": 0.0,
+            "Rleft_N": 180.0,
+            "Rright_N": 180.0
+          },
+          "parallel": {
+            "M_Nmm": 112500.0,
+            "V_N": 0.0,
+            "Rleft_N": 150.0,
+            "Rright_N": 150.0
+          }
+        },
+        {
+          "x_mm": 1500.0,
+          "side": "right",
+          "normal": {
+            "M_Nmm": 135000.0,
+            "V_N": 0.0,
+            "Rleft_N": 180.0,
+            "Rright_N": 180.0
+          },
+          "parallel": {
+            "M_Nmm": 112500.0,
+            "V_N": 0.0,
+            "Rleft_N": 150.0,
+            "Rright_N": 150.0
+          }
+        },
+        {
+          "x_mm": 3000.0,
+          "side": "right",
+          "normal": {
+            "M_Nmm": 0.0,
+            "V_N": -180.0,
+            "Rleft_N": 180.0,
+            "Rright_N": 180.0
+          },
+          "parallel": {
+            "M_Nmm": 0.0,
+            "V_N": -150.0,
+            "Rleft_N": 150.0,
+            "Rright_N": 150.0
+          }
+        }
+      ],
+      "parallel_demand": true,
+      "resistance_status": "Interação §9.9 calculada na posição fixa de P; resistências condicionadas aos dados rastreados. Sem aprovação global.",
+      "weak_property_provenance": null,
+      "u_pierin_assumption": null,
+      "provisional_hypothesis": false,
+      "weak_axis_capacities": {
+        "positive": {
+          "status": "computed_restricted",
+          "MRd_Nmm": 2074797.872880345,
+          "capacities_Nmm": {
+            "local": 2074797.872880345,
+            "FLT": 3235333.136140625
+          },
+          "source": "NBR14762:2010 9.8.2.1–3",
+          "provenance": "Independent synthetic weak-axis data",
+          "whole_member_approved": false,
+          "annex_e": {
+            "Me_Nmm": 12360679.774997896,
+            "source": "NBR14762:2010 Annex E.2 p82",
+            "provenance": "Independent synthetic weak-axis data",
+            "resistance_evaluated": false,
+            "Cm_adopted": 1.0,
+            "Cm_policy": "Rota simplificada: Cm=1 em todas as combinações, sem redução automática."
+          }
+        },
+        "negative": {
+          "status": "computed_restricted",
+          "MRd_Nmm": 2074797.872880345,
+          "capacities_Nmm": {
+            "local": 2074797.872880345,
+            "FLT": 3235333.136140625
+          },
+          "source": "NBR14762:2010 9.8.2.1–3",
+          "provenance": "Independent synthetic weak-axis data",
+          "whole_member_approved": false,
+          "annex_e": {
+            "Me_Nmm": 12360679.774997896,
+            "source": "NBR14762:2010 Annex E.2 p82",
+            "provenance": "Independent synthetic weak-axis data",
+            "resistance_evaluated": false,
+            "Cm_adopted": 1.0,
+            "Cm_policy": "Rota simplificada: Cm=1 em todas as combinações, sem redução automática."
+          }
+        }
+      },
+      "biaxial": {
+        "status": "computed_fixed_position",
+        "missing": [],
+        "governing": {
+          "x_mm": 1500.0,
+          "Mx_Nmm": 135000.0,
+          "My_Nmm": 112500.0,
+          "index": 0.17084024261786895
+        },
+        "candidate_count": 3,
+        "whole_member_approved": false
+      },
+      "strong_capacity_Nmm": 1157624.8259773145
+    },
+    "ELS": {
+      "angle": {
+        "radians": 0.0,
+        "degrees": 0.0,
+        "percent": 0.0
+      },
+      "configuration": {
+        "value": 0.0,
+        "unit": "degrees",
+        "spacing_basis": "roof",
+        "permanent_basis": "roof",
+        "live_basis": "horizontal",
+        "wind_basis": "roof"
+      },
+      "convention": "Eixos locais: normal à cobertura (positivo para dentro) e paralelo à cobertura (positivo para a boca, vista A→B); alma normal; sem travamento da telha. M e V abaixo são concomitantes por seção/posição, não máximos independentes. Modo direto: cargas já locais e combinadas; não há rotação nem PP automático.",
+      "q_vector": {
+        "normal": 0.229812216,
+        "parallel": 0.0
+      },
+      "P_vector": {
+        "normal": 1000.0,
+        "parallel": 0.0
+      },
+      "states": [
+        {
+          "x_mm": 0.0,
+          "side": "right",
+          "normal": {
+            "M_Nmm": 0.0,
+            "V_N": 844.7183239999999,
+            "Rleft_N": 844.7183239999999,
+            "Rright_N": 844.7183239999999
+          },
+          "parallel": {
+            "M_Nmm": 0.0,
+            "V_N": 0.0,
+            "Rleft_N": 0.0,
+            "Rright_N": 0.0
+          }
+        },
+        {
+          "x_mm": 1500.0,
+          "side": "left",
+          "normal": {
+            "M_Nmm": 1008538.7429999998,
+            "V_N": 499.99999999999994,
+            "Rleft_N": 844.7183239999999,
+            "Rright_N": 844.7183239999999
+          },
+          "parallel": {
+            "M_Nmm": 0.0,
+            "V_N": 0.0,
+            "Rleft_N": 0.0,
+            "Rright_N": 0.0
+          }
+        },
+        {
+          "x_mm": 1500.0,
+          "side": "right",
+          "normal": {
+            "M_Nmm": 1008538.7429999998,
+            "V_N": -500.00000000000006,
+            "Rleft_N": 844.7183239999999,
+            "Rright_N": 844.7183239999999
+          },
+          "parallel": {
+            "M_Nmm": 0.0,
+            "V_N": 0.0,
+            "Rleft_N": 0.0,
+            "Rright_N": 0.0
+          }
+        },
+        {
+          "x_mm": 3000.0,
+          "side": "right",
+          "normal": {
+            "M_Nmm": -4.656612873077393e-10,
+            "V_N": -844.718324,
+            "Rleft_N": 844.7183239999999,
+            "Rright_N": 844.7183239999999
+          },
+          "parallel": {
+            "M_Nmm": 0.0,
+            "V_N": 0.0,
+            "Rleft_N": 0.0,
+            "Rright_N": 0.0
+          }
+        }
+      ],
+      "parallel_demand": false,
+      "resistance_status": "Sem demanda paralela neste caso; não equivale a aprovação global.",
+      "weak_property_provenance": null
+    }
+  },
+  "weak_critical_reference": {
+    "id": "Pierin2013_T1_planilha_v03_r106",
+    "family": "U",
+    "dimensions_mm": {
+      "h": 100.0,
+      "bf": 50.0,
+      "lip": 0,
+      "t": 2.0
+    },
+    "Mly_Nmm": 3260000.0,
+    "table": 1,
+    "PDF_page": 9,
+    "printed_page": 29,
+    "source_row": "100 x 50 x 2,00    84,16   3,51     3,26",
+    "source_sign": null,
+    "status": "tabulated_adopted_reference",
+    "adopted_as_app_reference": true,
+    "title": "Pierin, Silva e La Rovere (2013) — Forças Normais e Momentos Fletores Críticos de Perfis Formados a Frio",
+    "url": "https://www.researchgate.net/publication/265207005_Forcas_Normais_e_Momentos_Fletores_Criticos_de_Perfis_Formados_a_Frio",
+    "source_pdf_sha256": "2ff5f67f201e00ddb31fdb7370a8077bc9e27fb9ac553cb0c5036ab9ad9d2d73",
+    "source_E_MPa": 200000.0,
+    "source_G_MPa": null,
+    "source_nu": null,
+    "boundary": "simplesmente apoiado",
+    "corners": "retos",
+    "source_geometry_to_mean_line": "não explicitada",
+    "meaning": "Momento crítico local elástico em torno de y; não é resistência de cálculo nem indicação bilateral.",
+    "sense_qualification": "not_explicit_in_source",
+    "automatically_qualified_for_both_senses": false,
+    "app_original_G_MPa": 77000.0,
+    "original_configuration_unchanged": false,
+    "compatibility_reasons": [
+      "G difere da configuração original do app; G e ν da fonte não foram explicitados."
+    ],
+    "compatibility_note": "Compatibilidade de origem/configuração não é qualificação física; G=77000 MPa é detector de alteração do app, não valor atribuído a Pierin.",
+    "resistance_release": false
+  },
+  "strong_critical_qualification": {
+    "source_E_MPa": 200000.0,
+    "source_G_MPa": null,
+    "source_nu": null,
+    "app_original_G_MPa": 77000.0,
+    "source_note": "Rev07: Pierin declara E=200 GPa; ν não explicitado. G=77000 MPa é configuração original do app, não dado atribuído à tabela.",
+    "fields": {
+      "Ml": {
+        "status": "automatic_table12_original_configuration",
+        "inherited_tabulated": false,
+        "input_value_Nmm": 3195774.181964692,
+        "inherited_automatic_table12": true,
+        "formula_nu": 0.3,
+        "formula_nu_origin": "Parâmetro já adotado na fórmula do app; não é ν atribuído a Pierin",
+        "formula_E_MPa": 200000.0,
+        "formula_parameters": {
+          "h": 100,
+          "bf": 50,
+          "t": 2,
+          "lip": 0,
+          "Wx_cm3": 12.32
+        }
+      },
+      "Mdist": {
+        "status": "supplied_or_absent",
+        "inherited_tabulated": false,
+        "input_value_Nmm": null
+      }
+    },
+    "warnings": [],
+    "pierin_U_reference": {
+      "schema": "pierin_2013_U_strong_reference_v1",
+      "title": "Pierin, Silva e La Rovere (2013) — Forças Normais e Momentos Fletores Críticos de Perfis Formados a Frio",
+      "url": "https://www.researchgate.net/publication/265207005_Forcas_Normais_e_Momentos_Fletores_Criticos_de_Perfis_Formados_a_Frio",
+      "source_pdf_sha256": "2ff5f67f201e00ddb31fdb7370a8077bc9e27fb9ac553cb0c5036ab9ad9d2d73",
+      "source_text_sha256": "ec0bcd133b1094a08c3ec3d52de99b70f1453d4a4b53ba6d2ce20e0b61822da2",
+      "source_E_MPa": 200000.0,
+      "source_G_MPa": null,
+      "source_nu": null,
+      "boundary": "simplesmente apoiado",
+      "corners": "retos",
+      "source_geometry_to_mean_line": "não explicitada",
+      "meaning": "Nl e Mlx são críticos locais elásticos, não resistências de cálculo. Nl apenas documental: o app não calcula resistência axial.",
+      "id": "Pierin2013_T1_U_100x50x2.00",
+      "family": "U",
+      "dimensions_mm": {
+        "h": 100.0,
+        "bf": 50.0,
+        "lip": 0.0,
+        "t": 2.0
+      },
+      "Nl_N": 84160,
+      "Mlx_Nmm": 3510000,
+      "table": 1,
+      "PDF_page": 9,
+      "printed_page": 29,
+      "source_row": "100 x 50 x 2,00    84,16   3,51     3,26",
+      "column_units": {
+        "Nl": "kN",
+        "Mlx": "kN·m"
+      },
+      "status": "tabulated_adopted_reference",
+      "adopted_as_app_reference": true,
+      "axial_calculation_implemented": false,
+      "whole_member_approved": false,
+      "section_property_convention_pending": true,
+      "source_geometry_convention_unresolved": true,
+      "geometric_adoption": "Linha nominal exata; propriedades do catálogo mantidas. A equivalência exata com a discretização INSTAB não foi demonstrada.",
+      "bending_axis": "x — eixo de simetria da seção U; não transpor ao eixo y",
+      "source_origin": "Pierin2013 Tabela1 Mlx U | Pierin2013_T1_U_100x50x2.00 | p29/PDF9; referência adotada; crítico elástico, não resistência",
+      "app_original_G_MPa": 77000.0,
+      "original_configuration_unchanged": false,
+      "compatibility_reasons": [
+        "G difere da configuração original do app; G e ν da fonte não foram explicitados."
+      ],
+      "compatibility_note": "G=77000 MPa é detector de alteração do app, não G da fonte. Compatibilidade nominal não certifica o elemento físico.",
+      "source_input_value_Nmm": 3195774.181964692,
+      "source_input_origin": "Crítico sintético para regressão de interface; não validado para o perfil do fabricante",
+      "use_status": "reference_only_existing_input_preserved"
+    }
+  },
+  "strong_critical_reference": {
+    "schema": "pierin_2013_U_strong_reference_v1",
+    "title": "Pierin, Silva e La Rovere (2013) — Forças Normais e Momentos Fletores Críticos de Perfis Formados a Frio",
+    "url": "https://www.researchgate.net/publication/265207005_Forcas_Normais_e_Momentos_Fletores_Criticos_de_Perfis_Formados_a_Frio",
+    "source_pdf_sha256": "2ff5f67f201e00ddb31fdb7370a8077bc9e27fb9ac553cb0c5036ab9ad9d2d73",
+    "source_text_sha256": "ec0bcd133b1094a08c3ec3d52de99b70f1453d4a4b53ba6d2ce20e0b61822da2",
+    "source_E_MPa": 200000.0,
+    "source_G_MPa": null,
+    "source_nu": null,
+    "boundary": "simplesmente apoiado",
+    "corners": "retos",
+    "source_geometry_to_mean_line": "não explicitada",
+    "meaning": "Nl e Mlx são críticos locais elásticos, não resistências de cálculo. Nl apenas documental: o app não calcula resistência axial.",
+    "id": "Pierin2013_T1_U_100x50x2.00",
+    "family": "U",
+    "dimensions_mm": {
+      "h": 100.0,
+      "bf": 50.0,
+      "lip": 0.0,
+      "t": 2.0
+    },
+    "Nl_N": 84160,
+    "Mlx_Nmm": 3510000,
+    "table": 1,
+    "PDF_page": 9,
+    "printed_page": 29,
+    "source_row": "100 x 50 x 2,00    84,16   3,51     3,26",
+    "column_units": {
+      "Nl": "kN",
+      "Mlx": "kN·m"
+    },
+    "status": "tabulated_adopted_reference",
+    "adopted_as_app_reference": true,
+    "axial_calculation_implemented": false,
+    "whole_member_approved": false,
+    "section_property_convention_pending": true,
+    "source_geometry_convention_unresolved": true,
+    "geometric_adoption": "Linha nominal exata; propriedades do catálogo mantidas. A equivalência exata com a discretização INSTAB não foi demonstrada.",
+    "bending_axis": "x — eixo de simetria da seção U; não transpor ao eixo y",
+    "source_origin": "Pierin2013 Tabela1 Mlx U | Pierin2013_T1_U_100x50x2.00 | p29/PDF9; referência adotada; crítico elástico, não resistência",
+    "app_original_G_MPa": 77000.0,
+    "original_configuration_unchanged": false,
+    "compatibility_reasons": [
+      "G difere da configuração original do app; G e ν da fonte não foram explicitados."
+    ],
+    "compatibility_note": "G=77000 MPa é detector de alteração do app, não G da fonte. Compatibilidade nominal não certifica o elemento físico.",
+    "source_input_value_Nmm": 3195774.181964692,
+    "source_input_origin": "Crítico sintético para regressão de interface; não validado para o perfil do fabricante",
+    "use_status": "reference_only_existing_input_preserved"
+  },
+  "critical_warnings": [],
+  "weak_sense_assumption": null,
+  "coverage_warnings": []
+}

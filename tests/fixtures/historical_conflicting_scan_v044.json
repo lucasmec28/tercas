@@ -1,0 +1,240 @@
+{
+  "fingerprint": "23a010633f62221627a0a31548aff8c77f9df44fdc1589fb5051a853430d4b4b",
+  "inputs": {
+    "schema": "tercas_input_v2",
+    "catalog_index": 101,
+    "synthetic": true,
+    "project": "EXEMPLO DIDÁTICO — não é projeto",
+    "properties": {
+      "h": 100,
+      "bf": 50,
+      "lip": 0,
+      "t": 2,
+      "mass_kg_m": 3.04,
+      "A_cm2": 3.87,
+      "Ix_cm4": 61.59,
+      "Wx_cm3": 12.32,
+      "Iy_cm4": 9.71,
+      "J_mm4": 520.0,
+      "Cw_mm6": 164780000.0,
+      "ri_mm": 2.0,
+      "fy_MPa": 250.0,
+      "fu_MPa": 400.0,
+      "E_MPa": 200000.0,
+      "G_MPa": 77000.0
+    },
+    "property_origin": "Aço ASTM A36: https://gsn.gerdau.com/sites/gsn_gerdau/files/downloadable_files/Catalogo-Chapa-Grossa.pdf; ABNT NBR 14762:2010 §4.6 — E=200000 MPa; G=77000 MPa; Dados sintéticos do teste de interface; não certificados pelo fabricante",
+    "L_mm": 3000.0,
+    "q_uls": 0.001,
+    "P_uls": 0.0,
+    "x_uls": 1500.0,
+    "q_sls": 0.001,
+    "P_sls": 0.0,
+    "x_sls": 1500.0,
+    "actions_origin": "Ações de uma combinação informada pelo usuário; fatores já aplicados quando ELU",
+    "Ml_Nmm": 3195774.181964692,
+    "Mdist_Nmm": null,
+    "critical_origin": "Crítico sintético para regressão de interface; não validado para o perfil do fabricante",
+    "ELS_limit_mm": 16.666666666666668,
+    "ELS_origin": "L/180 selecionado no exemplo didático",
+    "route_domain": true,
+    "segments": [
+      {
+        "start_mm": 0.0,
+        "end_mm": 3000.0,
+        "Ly_top_effective_mm": 3000.0,
+        "Ly_bottom_effective_mm": 3000.0,
+        "Lz_effective_mm": 3000.0,
+        "Cb_mode": "one",
+        "restraint_provenance": "Comprimentos efetivos sintéticos de teste"
+      }
+    ],
+    "left_web": true,
+    "right_web": true,
+    "support_origin": "Apoios por alma ligada assumidos no exemplo didático",
+    "patch_mm": 40.0,
+    "patch_origin": "Contato central sintético",
+    "steel_name": "ASTM A36",
+    "load_mode": "direct",
+    "selected_types": [
+      "ELU normal",
+      "ELS rara",
+      "ELS frequente"
+    ],
+    "area_inputs": {
+      "spacing_m": 1.5,
+      "permanent_kgf_m2": 0.0,
+      "live_kgf_m2": 0.0,
+      "wind_up_kgf_m2": 0.0,
+      "wind_down_kgf_m2": 0.0
+    },
+    "ELS_down_denominator": 180.0,
+    "ELS_up_denominator": 120.0,
+    "u_panel_condition": {
+      "condition": "top_panel_other_free",
+      "origin": "Independent explicit conflict"
+    },
+    "member_application": "purlin",
+    "inclination": {
+      "value": 0.0,
+      "unit": "degrees",
+      "spacing_basis": "roof",
+      "permanent_basis": "roof",
+      "live_basis": "horizontal",
+      "wind_basis": "roof"
+    },
+    "q_parallel_uls": 0.0,
+    "P_parallel_uls": 0.0,
+    "q_parallel_sls": 0.0,
+    "P_parallel_sls": 0.0,
+    "weak_catalog": {
+      "Lx_mm": 3000.0,
+      "geometry_mode": "catalog",
+      "mean_line": {
+        "am_mm": 98.0,
+        "bm_mm": 49.0,
+        "cm_mm": 0.0,
+        "origin": "NBR 14762:2010 Figura E.1 p84/PDF90; Ue conferido no CBCA2014 Ex08 p69: am=h−t, bm=bf−t, cm=D−t/2; U: am=h−t, bm=bf−t/2, cm=0. ri preservado do catálogo, não inferido.",
+        "conversion": "nominal_external_to_mean_line_verified",
+        "source_nominal_dimensions": {
+          "h": 100.0,
+          "bf": 50.0,
+          "D": 0.0,
+          "t": 2.0
+        }
+      }
+    },
+    "weak_axis": {
+      "positive": {
+        "Ml_Nmm": null,
+        "Mdist_Nmm": null,
+        "plain_u_no_distortion": true,
+        "provenance": "",
+        "provisional_hypothesis": false
+      },
+      "negative": {
+        "Ml_Nmm": null,
+        "Mdist_Nmm": null,
+        "plain_u_no_distortion": true,
+        "provenance": "",
+        "provisional_hypothesis": false
+      }
+    }
+  },
+  "rows": [
+    {
+      "catalog_index": 0,
+      "profile": "Ue 50 x 25 x 10 x 1,20",
+      "mass_kg_m": 1.06,
+      "status": "Atende aos critérios calculados",
+      "utilization_percent": 0.773701921910903,
+      "governing_check": "FLT — trecho 1",
+      "governing_combination": null,
+      "evaluated_checks": 6,
+      "pending_checks": 0,
+      "pending": [],
+      "criteria_satisfied": true,
+      "whole_member_approved": false,
+      "checks": [
+        {
+          "Verificação": "Flexão local",
+          "Situação": "Atende ao critério calculado",
+          "Índice": 0.002368421052631579,
+          "Demanda / valor": "0.001125 kN·m",
+          "Resistência / limite": "0.475000 kN·m",
+          "Referência": "NBR 14762 §9.8.2.1",
+          "Observação": ""
+        },
+        {
+          "Verificação": "Distorcional",
+          "Situação": "Atende ao critério calculado",
+          "Índice": 0.002368421052631579,
+          "Demanda / valor": "0.001125 kN·m",
+          "Resistência / limite": "0.475000 kN·m",
+          "Referência": "§9.3 / §9.8.2.3 / Tabela 14",
+          "Observação": ""
+        },
+        {
+          "Verificação": "FLT — trecho 1",
+          "Situação": "Atende ao critério calculado",
+          "Índice": 0.00773701921910903,
+          "Demanda / valor": "0.001125 kN·m",
+          "Resistência / limite": "0.145405 kN·m",
+          "Referência": "§9.8.2.2",
+          "Observação": "Mesa comprimida governante: superior; comprimento lateral efetivo: 3000.0 mm; Lz torsional: 3000.0 mm. "
+        },
+        {
+          "Verificação": "Cortante",
+          "Situação": "Atende ao critério calculado",
+          "Índice": 0.0002028023598820059,
+          "Demanda / valor": "0.001500 kN",
+          "Resistência / limite": "7.396364 kN",
+          "Referência": "§9.8.3",
+          "Observação": ""
+        },
+        {
+          "Verificação": "Flexão e cortante concomitantes",
+          "Situação": "Atende ao critério calculado",
+          "Índice": 5.609418282548477e-06,
+          "Demanda / valor": "—",
+          "Resistência / limite": "Σ índices² ≤ 1",
+          "Referência": "§9.8.4",
+          "Observação": ""
+        },
+        {
+          "Verificação": "Flecha — flexão",
+          "Situação": "Atende ao critério calculado",
+          "Índice": 0.006038287213740458,
+          "Demanda / valor": "0.100638 mm em x=1500.000 mm",
+          "Resistência / limite": "16.666667 mm",
+          "Referência": "§9.8.5; critério informado",
+          "Observação": ""
+        }
+      ],
+      "weak_critical_reference": {
+        "id": "Pierin2013_T2_planilha_v03_r5",
+        "family": "Ue",
+        "dimensions_mm": {
+          "h": 50.0,
+          "bf": 25.0,
+          "lip": 10.0,
+          "t": 1.2
+        },
+        "Mly_Nmm": 910000.0,
+        "table": 2,
+        "PDF_page": 11,
+        "printed_page": 31,
+        "source_row": "50 x 25 x 10 x 1,20     86,96      95,51        4,51         2,81          0,91",
+        "source_sign": null,
+        "status": "tabulated_adopted_reference",
+        "adopted_as_app_reference": true,
+        "title": "Pierin, Silva e La Rovere (2013) — Forças Normais e Momentos Fletores Críticos de Perfis Formados a Frio",
+        "url": "https://www.researchgate.net/publication/265207005_Forcas_Normais_e_Momentos_Fletores_Criticos_de_Perfis_Formados_a_Frio",
+        "source_pdf_sha256": "2ff5f67f201e00ddb31fdb7370a8077bc9e27fb9ac553cb0c5036ab9ad9d2d73",
+        "source_E_MPa": 200000.0,
+        "source_G_MPa": null,
+        "source_nu": null,
+        "boundary": "simplesmente apoiado",
+        "corners": "retos",
+        "source_geometry_to_mean_line": "não explicitada",
+        "meaning": "Momento crítico local elástico em torno de y; não é resistência de cálculo nem indicação bilateral.",
+        "sense_qualification": "not_explicit_in_source",
+        "automatically_qualified_for_both_senses": false,
+        "app_original_G_MPa": 77000.0,
+        "original_configuration_unchanged": true,
+        "compatibility_reasons": [],
+        "compatibility_note": "Compatibilidade de origem/configuração não é qualificação física; G=77000 MPa é detector de alteração do app, não valor atribuído a Pierin.",
+        "resistance_release": false
+      },
+      "strong_critical_reference": {
+        "status": "outside_U_scope",
+        "axial_calculation_implemented": false,
+        "use_status": "reference_only_existing_input_preserved"
+      }
+    }
+  ],
+  "next_index": 1,
+  "running": false,
+  "cancelled": true,
+  "elapsed_seconds": 0.07834864099277183
+}
