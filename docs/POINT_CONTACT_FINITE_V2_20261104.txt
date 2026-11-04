@@ -1,0 +1,39 @@
+CONTATO FÍSICO FINITO DE P — OPT-IN V2, 04/11/2026
+
+Extensão local da rota v1, sem migração automática ou publicação.
+Schema adicional: point_contact_finite_compression_v2. Mesmas chaves e oito
+condições físicas obrigatórias do v1. Default continua v1 desabilitado; só seleção
+explícita escolhe v2. Trocar versão invalida o vínculo de geometria/material e
+exige reconfirmação. Importações v1/v2 são preservadas, sem transformação.
+
+Fonte: ABNT NBR14762:2010 §9.5.1, Anexo D, Tabela D.2/Figura D.1, documento
+fornecido pelo usuário. Não há equação nova: núcleo anexo_d.py permanece intacto.
+Comprimento c >= 20 mm real, não presumido; contato centrado em x real informado,
+inteiramente contido em [0,L]. Borda coincidente com 0 ou L é admissível.
+Distância livre d=min(x-c/2,L-x-c/2). d<0 recusa o contato, sem snap ou ajuste.
+0<=d<=1,5h: linha de extremidade; d>1,5h: linha interna, h=H-2(ri+t).
+Limites comuns: h/t<=200, c/t<=210 e c/h<=2. Mesa não conectada, uma mesa:
+Ue extremidade: ri/t<=5, coeficientes 4,3;0,14;0,35;0,02.
+U extremidade: ri/t<=2, coeficientes 4,6;0,40;0,60;0,03.
+Interna continua com limites próprios: ri/t<=5 Ue ou<=1 U.
+
+Uso prático: modo direto e campo já existente P ELU/x_uls. UI informa a posição
+real ativa; não cria campo redundante. Nas fontes próprias o painel de contato
+fica depois das entradas de ações/geometria, antes de salvar e calcular fingerprint.
+Mudança física sem reconfirmação deixa ramo pendente. Não altera fontes protegidas,
+P, posição, apoios, ligações, flexão, FLT, AA/AISI, torção, ELS ou sistema 3D.
+Ausência, disabled e v1 preservam seus cálculos. Não presume contato pela telha.
+
+No lote por área, centro permanece L/2 e P_APOIO permanece a->0+, pendente.
+Um contato c>=20 centrado nesse limite ultrapassaria a peça física; não se promove
+esse limite ao caso de extremidade e não se muda a combinação ou case_inputs.
+A opção não implementa envelope móvel nem dimensiona as ligações dos apoios.
+
+Histórico: apenas lê dados salvos e digest, sem solver nem recalcular resistência.
+V2 verifica coerência dos escalares salvos (classe, contato, raio e demais limites).
+Não converte históricos v1. Complemento v2 e Word mostram posição, bordas,
+distância livre e linha salvas quando o registro é íntegro; inválidos não mostram
+resistência/índice. Contagens globais históricas não são reescritas.
+
+QA: casos sintéticos, não projeto ou validação experimental. Relatório e hashes
+ficam fora da candidata. Não representa autorização de publicação.

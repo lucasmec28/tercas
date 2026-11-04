@@ -11,6 +11,7 @@ import json
 
 FIELD = 'point_contact'
 SCHEMA = 'point_contact_internal_compression_v1'
+SCHEMA_V2 = 'point_contact_finite_compression_v2'
 SOURCE = 'ABNT NBR 14762:2010 §9.5.1; Anexo D, Tabela D.2 e Figura D.1'
 DECLARATIONS = {
     'section_geometry_and_material_verified': 'Declaro que a altura externa H, a espessura t, o raio interno ri e o material informados correspondem ao caso, com dois cantos de 90° na alma.',
@@ -31,6 +32,14 @@ SCOPE = ('Somente introdução local interna de P compressiva em uma mesa não c
          'Declarações não comprovam condições físicas nem dimensionam ligações.')
 
 
+SCOPE_V2 = ('Introdução local de P compressiva em posição finita explicitamente informada, '
+            'com contato inteiramente dentro de 0/L. Distância livre 0 ≤ d ≤ 1,5h: extremidade; '
+            'd > 1,5h: interna. Mesmas declarações físicas da opção v1. '
+            'P_APOIO do lote representa a→0+ e continua pendente: não admite contato finito '
+            'centrado nessa posição sem ultrapassar o extremo físico. '
+            'Não altera ações, vínculos, flexão, FLT, torção, AA/AISI ou 3D, '
+            'nem aprova ligações, apoios ou elemento completo.')
+
 def blank_choice():
     return dict(schema=SCHEMA, enabled=False, c_mm=None, origin='', basis=None,
                 declarations={key: False for key in DECLARATIONS})
@@ -42,7 +51,7 @@ def configuration(data):
         return None
     raw = data[FIELD]
     if (not isinstance(raw, dict) or set(raw) != {'schema', 'enabled', 'c_mm', 'origin', 'declarations', 'basis'}
-            or raw.get('schema') != SCHEMA or type(raw.get('enabled')) is not bool):
+            or raw.get('schema') not in (SCHEMA, SCHEMA_V2) or type(raw.get('enabled')) is not bool):
         raise ValueError('Declaração de contato local desconhecida ou incompleta; entradas não convertidas.')
     c = raw['c_mm']
     if c is not None and not _finite(c):
@@ -97,7 +106,8 @@ def evaluate(data, spec):
     cfg = configuration(data)
     if cfg is None or not cfg['enabled']:
         return None
-    common = dict(source=SOURCE, contact_contract=cfg, scope=SCOPE,
+    v2 = cfg['schema'] == SCHEMA_V2
+    common = dict(source=SOURCE, contact_contract=cfg, scope=SCOPE_V2 if v2 else SCOPE,
                   physical_conditions_verified=False, connection_design_checked=False)
     def pending(reason, **extra):
         return dict(common, status='not_evaluated', reason=reason, **extra)
@@ -142,7 +152,9 @@ def evaluate(data, spec):
         return pending('Geometria da alma plana ou posição interna de P inválida para o subconjunto.', force_N=p)
     # The real physical endpoints were explicitly declared at 0/L. This distance
     # is NOT reused as a fictitious distance to a load on the opposite flange.
-    end_distance = min(x - c / 2, L - x - c / 2)
+    if v2 and not all(_finite(v) for v in (x-c/2, x+c/2, h)):
+        return pending('Geometria do contato não representável por números finitos; sem traço ou índice numérico.', force_N=p)
+    end_distance = min(x - c / 2, L - (x + c / 2)) if v2 else min(x - c / 2, L - x - c / 2)
     trace = dict(family=family, h_flat_mm=h, H_external_mm=H, t_mm=t, ri_mm=ri,
                  fy_MPa=fy, c_mm=c, theta_degrees=90, x_mm=x,
                  contact_edges_mm=[x-c/2, x+c/2], physical_endpoints_mm=[0., L],
@@ -150,15 +162,21 @@ def evaluate(data, spec):
                  classification_basis='no_opposite_concentrated_force_declared',
                  opposite_clear_distance_mm=None, loaded_flange_count=1,
                  flange_connection='unconnected', gamma=1.35)
-    if end_distance <= 1.5 * h:
+    location = 'end' if end_distance <= 1.5 * h else 'internal'
+    if v2:
+        trace['table_location'] = location
+        if end_distance < 0:
+            return pending('Contato físico ultrapassa 0/L: o intervalo [x−c/2, x+c/2] deve estar inteiramente na peça. P no apoio-limite não foi reposicionado.', force_N=p, domain=trace)
+    if not v2 and end_distance <= 1.5 * h:
         return pending('Contato fora do subconjunto interno: a distância livre da borda carregada ao extremo físico da peça deve superar 1,5h. O caso próximo ao apoio permanece pendente.', force_N=p, domain=trace)
     if c < 20:
         return pending('Contato c inferior a 20 mm, fora do domínio implementado da Tabela D.2; c não foi aumentado automaticamente.', force_N=p, domain=trace)
     if h/t > 200 or c/t > 210 or c/h > 2:
         return pending('Geometria fora dos limites implementados da Tabela D.2: h/t ≤ 200, c/t ≤ 210 e c/h ≤ 2.', force_N=p, domain=trace)
-    radius_limit = 5 if family == 'Ue' else 1
+    radius_limit = 5 if family == 'Ue' else (2 if v2 and location == 'end' else 1)
     if ri/t > radius_limit:
-        return pending(f'Raio fora da linha interna de uma mesa não conectada: ri/t ≤ {radius_limit} para {family}.', force_N=p, domain=trace)
+        line = 'de extremidade' if v2 and location == 'end' else 'interna'
+        return pending(f'Raio fora da linha {line} de uma mesa não conectada: ri/t ≤ {radius_limit} para {family}.', force_N=p, domain=trace)
     from .core.anexo_d import frd
     try:
         capacity = frd(h=h, t=t, ri=ri, c=c, fy=fy,
@@ -185,7 +203,7 @@ def report(doc, result):
     if not isinstance(cfg, dict):
         return
     doc.add_heading('Introdução local de P — declarações salvas', 1)
-    doc.add_paragraph(SOURCE+'. '+SCOPE)
+    doc.add_paragraph(SOURCE+'. '+(SCOPE_V2 if cfg.get('schema') == SCHEMA_V2 else SCOPE))
     doc.add_paragraph('Opção registrada: '+('ativa' if cfg.get('enabled') is True else 'inativa')+
                       '; schema: '+str(cfg.get('schema', 'não registrado'))+'.')
     contact_text = str(cfg['c_mm'])+' mm' if _finite(cfg.get('c_mm')) else 'não informado'
@@ -198,7 +216,14 @@ def report(doc, result):
             value = declared.get(key)
             status = 'Declarado' if value is True else ('Não declarado' if value is False else 'Não registrado')
             doc.add_paragraph(status+': '+label.removeprefix('Declaro '))
-    doc.add_paragraph('Domínio desta opção: c ≥ 20 mm; h/t ≤ 200; c/t ≤ 210; c/h ≤ 2; '
+    if cfg.get('schema') == SCHEMA_V2:
+        doc.add_paragraph('Domínio v2: c ≥ 20 mm; h/t ≤ 200; c/t ≤ 210; c/h ≤ 2; h=H−2(ri+t). '
+                          'Contato inteiramente dentro de 0/L. Para 0 ≤ d ≤ 1,5h, linha de extremidade: ri/t ≤ 5 (Ue) ou ≤ 2 (U). '
+                          'Para d > 1,5h, linha interna: ri/t ≤ 5 (Ue) ou ≤ 1 (U). '
+                          'P no limite junto ao apoio continua fora do subconjunto. '
+                          'Somente transcrição salva, sem resolver ou requalificar o histórico.')
+    else:
+        doc.add_paragraph('Domínio desta opção: c ≥ 20 mm; h/t ≤ 200; c/t ≤ 210; c/h ≤ 2; '
                       'ri/t ≤ 5 para Ue ou ≤ 1 para U. h é a parte plana da alma, '
                       'H−2(ri+t), e a borda de contato deve estar a mais de 1,5h do extremo físico. '
                       'Ausência de força na mesa oposta é declaração de configuração, não distância inventada. '
@@ -208,6 +233,8 @@ def report(doc, result):
         label = 'Calculado — somente critério local' if item['status'] == 'computed' else 'Pendente no registro'
         values = '; '.join(name+'='+str(item[key])+unit for key,name,unit in [('P_normal_N','P normal',' N'),('P_parallel_N','P paralelo',' N'),('c_mm','c',' mm'),('FRd_N','FRd local',' N'),('index','índice local','')] if item[key] is not None)
         doc.add_paragraph(item['combination_id']+' — '+label+'. '+values+'. '+item['reason'])
+        if cfg.get('schema') == SCHEMA_V2 and item['status'] == 'computed':
+            doc.add_paragraph('Posição finita salva x='+str(item['x_mm'])+' mm; bordas='+str(item['contact_edges_mm'])+' mm; distância livre='+str(item['end_distance_mm'])+' mm; linha da Tabela D.2='+{'end': 'Extremidade', 'internal': 'Interna'}[item['table_location']]+'.')
 
 
 
@@ -221,7 +248,7 @@ def _saved_numeric_coherent(raw, cfg, data, combination, normal, parallel, famil
     """Validate links among saved scalars only; never call a resistance formula."""
     try:
         if (raw.get('status') != 'computed' or raw.get('source') != SOURCE
-                or raw.get('contact_contract') != cfg or cfg.get('schema') != SCHEMA
+                or raw.get('contact_contract') != cfg or cfg.get('schema') not in (SCHEMA, SCHEMA_V2)
                 or not basis_matches(data, cfg)
                 or raw.get('evidence_sha256') != _saved_digest(raw)
                 or not _finite(normal) or normal <= 0 or not _finite(parallel) or parallel != 0
@@ -246,6 +273,17 @@ def _saved_numeric_coherent(raw, cfg, data, combination, normal, parallel, famil
         if not all(_finite(v) for v in (H,t,ri,fy)) or family not in ('U','Ue'):
             return False
         edges = [x-c/2, x+c/2]
+        if cfg.get('schema') == SCHEMA_V2:
+            h = H-2*(ri+t)
+            distance = min(edges[0], L-edges[1])
+            location = 'end' if distance <= 1.5*h else 'internal'
+            limit = 5 if family == 'Ue' else (2 if location == 'end' else 1)
+            if (raw.get('physical_conditions_verified') is not False
+                    or raw.get('connection_design_checked') is not False
+                    or min(H,t,fy,L,h) <= 0 or ri < 0 or c < 20 or distance < 0
+                    or h/t > 200 or c/t > 210 or c/h > 2 or ri/t > limit
+                    or trace.get('table_location') != location):
+                return False
         return (trace.get('family') == family
                 and trace.get('H_external_mm') == H and trace.get('t_mm') == t
                 and trace.get('ri_mm') == ri and trace.get('fy_MPa') == fy
@@ -305,4 +343,7 @@ def saved_records(result):
                            FRd_N=raw['FRd_N'] if numeric else None,
                            index=raw['index'] if numeric else None,
                            status='computed' if numeric else 'pending', reason=str(reason)))
+        if numeric and cfg.get('schema') == SCHEMA_V2:
+            output[-1].update({k: copy.deepcopy(raw['domain'][k]) for k in
+                               ('x_mm', 'contact_edges_mm', 'end_distance_mm', 'table_location')})
     return output

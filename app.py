@@ -293,11 +293,9 @@ with left:
 reference_data=st.session_state.get('last_input',st.session_state.base) if (REFERENCE_FIELD in st.session_state.base or claims_ue_reference(st.session_state.base) or claims_ue_family(st.session_state.base)) else st.session_state.base
 if claims_ue_family(reference_data) and assess_ue_family(reference_data)['active']:
  reference_data=copy.deepcopy(reference_data)
- render_point_contact(st,reference_data,f'point_contact_{st.session_state.revision}',disabled=reference_data.get('member_application')=='wall_girt' and st.session_state.get(f'three_warping_{st.session_state.revision}_enabled',False))
  render_ue_family(st,reference_data,st.session_state.revision,load,render_results,render_input_import)
 if claims_ue_reference(reference_data) and assess_ue_reference(reference_data)['active']:
  reference_data=copy.deepcopy(reference_data)
- render_point_contact(st,reference_data,f'point_contact_{st.session_state.revision}',disabled=reference_data.get('member_application')=='wall_girt' and st.session_state.get(f'three_warping_{st.session_state.revision}_enabled',False))
  render_ue_reference(st,reference_data,st.session_state.revision,load,render_results,render_input_import)
 if assess_reference(reference_data)['active']:
  render_reference(st,reference_data,st.session_state.revision,load,render_results,render_input_import)

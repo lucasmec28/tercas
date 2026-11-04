@@ -120,6 +120,8 @@ def render(st, data, revision, load, render_results, render_import):
     render_horizontal_limit(st,data,'ue_family_ref_wall_els_'+str(revision))
     application_draft_pending=render_application_choice(st,data,'ue_family_ref_application_'+str(revision),load)
     length_draft_pending=application_draft_pending or render_geometry(st,data,revision,load)
+    from .point_contact_ui import render as render_point_contact
+    render_point_contact(st, data, f'point_contact_{revision}', disabled=data.get('member_application') == 'wall_girt' and st.session_state.get(f'three_warping_{revision}_enabled', False))
     st.session_state.last_input = copy.deepcopy(data)
     current = assess(data)
     from .three_girt_warping.ui import render_panel as render_three_girt_warping

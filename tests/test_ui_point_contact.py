@@ -263,3 +263,72 @@ def test_real_optin_result_shown_only_in_separate_saved_block(monkeypatch):
     monkeypatch.setattr(contact,'evaluate',forbidden)
     run(app)
     assert app.session_state.result==saved
+
+
+@pytest.mark.parametrize('t',[1.2,1.5])
+def test_v2_explicit_choice_real_position_and_reconfirmation(monkeypatch,t):
+    from tercas.point_contact import SCHEMA_V2, SCHEMA, basis_matches
+    from tercas.point_contact_ui import VERSION_LABEL
+    data=ue.load_reference() if t==1.2 else family.load_reference(t)
+    data.update(load_mode='direct',q_uls=.2,q_sls=.1,P_uls=100.,P_parallel_uls=0.)
+    app=imported(monkeypatch,data)
+    assert FIELD not in app.session_state.last_input
+    widget(app,'checkbox',LABEL).check();run(app)
+    assert not widget(app,'checkbox',VERSION_LABEL).value
+    assert app.session_state.last_input[FIELD]['schema']==SCHEMA
+    widget(app,'checkbox',VERSION_LABEL).check();run(app)
+    assert app.session_state.last_input[FIELD]['schema']==SCHEMA_V2
+    assert len([x for x in app.number_input if x.label=='Posição de P ELU [mm]'])==1
+    widget(app,'number_input','Posição de P ELU [mm]').set_value(20.);run(app)
+    assert any('posição de P ELU informada = 20.0 mm' in x.value for x in app.caption)
+    widget(app,'number_input',C_LABEL).set_value(40.);run(app)
+    widget(app,'text_input',ORIGIN_LABEL).set_value('Detalhe P e apoios A/B');run(app)
+    for label in DECLARATIONS.values():widget(app,'checkbox',label).check()
+    run(app);assert basis_matches(app.session_state.last_input)
+    widget(app,'button','Calcular verificações disponíveis').click();run(app)
+    b=app.session_state.result['NBR_branches']['point']
+    assert b['status']=='computed' and b['domain']['table_location']=='end'
+    widget(app,'number_input','Posição de P ELU [mm]').set_value(19.);run(app)
+    assert not basis_matches(app.session_state.last_input) and 'result' not in app.session_state
+    assert any('desmarque e reconfirme' in x.value for x in app.warning)
+    for key in ('patch_mm','patch_origin','left_web','right_web','support_origin'):
+        assert app.session_state.last_input[key]==data[key]
+
+
+def test_v2_import_is_not_automatically_changed(monkeypatch):
+    from tercas.point_contact import SCHEMA_V2
+    data=family.load_reference(1.5);data[FIELD]=blank_choice()
+    data[FIELD].update(schema=SCHEMA_V2,enabled=True)
+    app=imported(monkeypatch,data)
+    assert app.session_state.last_input==data
+    assert any('P_APOIO é a→0+' in x.value for x in app.caption)
+
+
+def test_v2_area_missing_span_does_not_infer_center():
+    from tercas.point_contact_ui import VERSION_LABEL
+    app=run(AppTest.from_file(APP))
+    widget(app,'radio','Forma de entrada').set_value('Cargas por área e combinações automáticas');run(app)
+    widget(app,'checkbox',LABEL).check();run(app)
+    widget(app,'checkbox',VERSION_LABEL).check();run(app)
+    widget(app,'checkbox',DECLARATIONS['section_geometry_and_material_verified']).check();run(app)
+    widget(app,'number_input','Vão entre apoios [mm]').set_value(None);run(app)
+    # The full app stops at its existing geometry guard before the contact panel.
+    assert not app.exception
+
+
+def _missing_span_contact_panel():
+    import streamlit as st
+    from tercas.point_contact import blank_choice, FIELD, SCHEMA_V2, reference_basis
+    from tercas.point_contact_ui import render
+    from tercas.application import example
+    data=example();data.update(load_mode='area')
+    cfg=blank_choice();cfg.update(enabled=True,schema=SCHEMA_V2,basis=reference_basis(data))
+    cfg['declarations']['section_geometry_and_material_verified']=True
+    data[FIELD]=cfg;data['L_mm']=None
+    render(st,data,'missing_span')
+
+
+def test_v2_area_panel_missing_span_caption():
+    app=run(AppTest.from_function(_missing_span_contact_panel))
+    assert any('P_CENTRO em L/2 = não informado' in x.value for x in app.caption)
+    assert any('desmarque e reconfirme' in x.value for x in app.warning)
