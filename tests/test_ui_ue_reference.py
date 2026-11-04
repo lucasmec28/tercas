@@ -7,6 +7,7 @@ import pytest
 import streamlit as st
 from streamlit.testing.v1 import AppTest
 from tercas import ue_reference as ue
+from tercas.new_study_policy import for_new_study
 APP=str(Path(__file__).resolve().parents[1]/'app.py')
 
 def button(app,label):return next(b for b in app.button if b.label==label)
@@ -23,14 +24,14 @@ def imported(monkeypatch,data):
 def test_loader_span_preview_apply_discard_and_no_independent_lengths():
     a=AppTest.from_file(APP).run(timeout=30)
     button(a,'Carregar referência própria Ue100').click().run(timeout=30)
-    assert not a.exception and a.session_state.last_input==ue.load_reference()
+    assert not a.exception and a.session_state.last_input==for_new_study(ue.load_reference())
     assert button(a,'Calcular todas as seções do catálogo').disabled
     assert not any('Lx ' in n.label or 'Ly ' in n.label or 'Lz ' in n.label for n in a.number_input)
     number(a,'Vão proposto Ue L [mm]').set_value(4750.).run(timeout=30)
     assert a.session_state.last_input['L_mm']==4000.
     assert button(a,'Calcular verificações disponíveis').disabled
     button(a,'Aplicar vão Ue e recalcular críticos').click().run(timeout=30)
-    assert a.session_state.last_input==ue.apply_span(ue.load_reference(),4750.)
+    assert a.session_state.last_input==ue.apply_span(for_new_study(ue.load_reference()),4750.)
     number(a,'Vão proposto Ue L [mm]').set_value(6000.00001).run(timeout=30)
     assert button(a,'Aplicar vão Ue e recalcular críticos').disabled
     assert button(a,'Calcular verificações disponíveis').disabled

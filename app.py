@@ -21,6 +21,7 @@ from tercas.ue_reference_ui import loader as ue_reference_loader, render as rend
 from tercas.ue_family_reference import FIELD as UE_FAMILY_FIELD, claims_reference as claims_ue_family, assess as assess_ue_family, activate as activate_ue_family
 from tercas.ue_family_ui import loader as ue_family_loader, render as render_ue_family
 from tercas.ux_inputs import CB_LABELS,cb_code,flange_segments,whole_span
+from tercas.new_study_policy import for_new_study, initialize_session
 
 def show_elastic_wall(evidence):
  if not isinstance(evidence,dict):return
@@ -28,13 +29,13 @@ def show_elastic_wall(evidence):
   if key in evidence:
    st.markdown('**'+label+'**');st.warning('Diagnóstico elástico bruto; não resistência nem aprovação. Sem crédito automático em FLT ou torção.');st.caption('Flecha livre e resposta condicional com molas são distintas. Conferir reações e eventual momento negativo; não substituir o vão por L/n.');st.json(evidence[key])
 
-def show_inclination(evidence):
+def show_inclination(evidence,girt=False):
  """Display concurrent effects; never interpret missing resistance as approval."""
  if not isinstance(evidence,dict):return
  if 'states' not in evidence:
   for state,item in evidence.items():
    if isinstance(item,dict):
-    st.markdown('**'+str(state)+' — solicitações locais**');show_inclination(item)
+    st.markdown('**'+str(state)+' — solicitações locais**');show_inclination(item,girt=girt)
   return
  st.caption(evidence.get('convention','Esforços simultâneos na mesma seção e combinação.'))
  st.warning(evidence.get('resistance_status','Resistência biaxial não avaliada; os esforços não constituem aprovação.'))
@@ -46,7 +47,7 @@ def show_inclination(evidence):
  records=[]
  for state in evidence.get('states',[]):
   row={'Estado limite':state.get('position_limit','Posição fixa'),'x [mm]':state.get('x_mm'),'Lado da seção':{'left':'Esquerda','right':'Direita'}.get(state.get('side'),'—')}
-  for axis,label in [('normal','Horizontal / eixo forte' if globals().get('girt',False) else 'Normal / eixo forte'),('parallel','Vertical / eixo fraco' if globals().get('girt',False) else 'Paralelo / eixo fraco')]:
+  for axis,label in [('normal','Horizontal / eixo forte' if girt else 'Normal / eixo forte'),('parallel','Vertical / eixo fraco' if girt else 'Paralelo / eixo fraco')]:
    v=state.get(axis,{})
    for k,title,scale in [('M_Nmm','M [kN·m]',1e6),('V_N','V [kN]',1000),('Rleft_N','Reação esquerda [kN]',1000),('Rright_N','Reação direita [kN]',1000)]:
     if k in v:row[label+' — '+title]=v[k]/scale
@@ -55,6 +56,17 @@ def show_inclination(evidence):
  st.caption('Valores nas seções listadas; não são envelope biaxial nem resistência. P e q são considerados juntos na mesma combinação.')
 
 def render_results(result,d):
+ from tercas.biaxial_component_ui import show as show_biaxial_component
+ from tercas.biaxial_component import presentation_rows as gross_component_rows,is_girt_result
+ show_biaxial_component(st,result)
+ from tercas.study_completion import show_global
+ show_global(st,result)
+ from tercas.torsion_study_ui import show_result as show_torsion
+ show_torsion(st,result)
+ from tercas.torsion_material_ui import render as show_nominal_material
+ result=show_nominal_material(st,result)
+ if result.get('deflection_scope_evidence'):
+  st.caption(result['deflection_scope_evidence']['text'])
  girt=is_girt(d)
  if 'model_domain_evidence' not in result:st.warning(DOMAIN_HISTORICAL)
  if result.get('schema')==THREE_GIRT_SCHEMA:
@@ -67,7 +79,7 @@ def render_results(result,d):
    record=result['ue_family_reference_evidence']
    st.caption('Fonte numérica ativa: '+record['reference_id']+'; propriedades e críticos próprios individuais.')
    st.warning('Família Ue100: D forte calculado, sem dispensa Tabela 14. D da alma é piso conservador discreto individual, não modo identificado.')
-   st.caption('ELS biaxial, torção física e aprovação global continuam pendentes. Pierin somente corresponde à família nominal.')
+   st.caption(('A componente flexional biaxial tem o alcance registrado acima; ELS físico completo, torção e aprovação global permanecem pendentes. ' if 'gross_biaxial_component_evidence' in result else 'ELS biaxial, torção física e aprovação global continuam pendentes. ')+'Pierin somente corresponde à família nominal.')
   if result.get('ue_reference_evidence'):
    record=result['ue_reference_evidence']
    st.caption('Fonte numérica ativa: '+record['active_numeric_reference'])
@@ -77,21 +89,21 @@ def render_results(result,d):
   batch=result.get('schema')=='tercas_batch_results_v1'
   if batch:
    for warning in dict.fromkeys(w for case in result['cases'] for w in case['warnings']):st.warning(warning)
-   st.dataframe(display_frame(domain_historical_rows(result,result['summary'])),hide_index=True,width='stretch')
+   st.dataframe(display_frame(domain_historical_rows(result,gross_component_rows(result,result['summary']))),hide_index=True,width='stretch')
    st.caption('Máximos por verificação entre os casos calculados. Pendências em outras combinações permanecem visíveis; não há combinação global aprovada.')
    with st.expander('Resultados de cada combinação'):
     names=[f"{c['combination']['id']} — {c['combination']['type']}" for c in result['cases']]
     selected=st.selectbox('Combinação para consultar',range(len(names)),format_func=lambda i:names[i])
     item=result['cases'][selected];st.caption(measurement_text(item['combination']['expression'])+f"; q normal={fmt(item['combination']['q_kN_m'])} kN/m; P normal={fmt(item['combination'].get('P_N',0)/1000)} kN")
-    st.dataframe(display_frame(domain_historical_rows(result,item['rows'])),hide_index=True,width='stretch')
-    if item.get('evidence',{}).get('inclination'):show_inclination(domain_historical_inclination(result,item['evidence']['inclination']))
-    if girt:show_elastic_wall(item.get('evidence',{}))
+    st.dataframe(display_frame(domain_historical_rows(result,gross_component_rows(result,item['rows']))),hide_index=True,width='stretch')
+    if item.get('evidence',{}).get('inclination'):show_inclination(domain_historical_inclination(result,item['evidence']['inclination']),girt=girt)
+    if girt and not is_girt_result(result):show_elastic_wall(item.get('evidence',{}))
   else:
    for warning in result.get('coverage_warnings',[])+result.get('critical_warnings',[]):st.warning(warning)
-   if result.get('numerical_warnings'):st.warning('A integração da flecha emitiu aviso numérico. A verificação ELS ficou pendente; demais resultados foram preservados.')
+   if result.get('numerical_warnings'):st.warning('O integrador escalar anterior emitiu aviso numérico, preservado como diagnóstico. O estado da componente tensorial nova é informado separadamente.' if 'gross_biaxial_component_evidence' in result else 'A integração da flecha emitiu aviso numérico. A verificação ELS ficou pendente; demais resultados foram preservados.')
    st.dataframe(display_frame(rows(result)),hide_index=True,width='stretch')
-   if result.get('inclination_evidence'):show_inclination(domain_historical_inclination(result,result['inclination_evidence']))
-   if girt:show_elastic_wall(result)
+   if result.get('inclination_evidence'):show_inclination(domain_historical_inclination(result,result['inclination_evidence']),girt=girt)
+   if girt and not is_girt_result(result):show_elastic_wall(result)
   c1,c2,c3=st.columns(3)
   with c1:st.download_button('Baixar memória parcial (Word)',batch_word(result) if batch else word(result),file_name='MC_terca_parcial.docx',mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
   with c2:st.download_button('Baixar estudo e resultados (JSON)',json.dumps(result,ensure_ascii=False,indent=2),file_name='terca_estudo_resultados.json',mime='application/json')
@@ -107,7 +119,7 @@ st.caption(f'NBR 14762:2010 · {VERSION} · primeira emissão restrita')
 st.info('Um vão, perfis U/Ue. Solicitações nos dois eixos; resistências desta emissão restritas às rotas disponíveis. Resultados por verificação, sem aprovação global automática.')
 st.caption(DOMAIN_TEXT)
 
-if 'base' not in st.session_state:st.session_state.base=defaults()
+initialize_session(st.session_state, defaults)
 if 'revision' not in st.session_state:st.session_state.revision=0
 
 # Session cache migration only: preserve inputs, widgets, drafts and histories.
@@ -208,7 +220,7 @@ def show_manual_inspection(preserved,reason):
 
 left,right=st.columns([2,1])
 with right:
- if st.button('Carregar exemplo didático',help='Carrega dados sintéticos, explicitamente marcados. Não representa produto ou projeto validado.'):load(example());st.rerun()
+ if st.button('Carregar exemplo didático',help='Carrega dados sintéticos, explicitamente marcados. Não representa produto ou projeto validado.'):load(for_new_study(example()));st.rerun()
 with left:
  index=st.selectbox('Perfil de catálogo',range(len(catalog_labels())),format_func=lambda i:catalog_labels()[i],index=st.session_state.base['catalog_index'],key=f'catalog_{st.session_state.revision}')
  if index!=st.session_state.base['catalog_index']:
@@ -221,7 +233,7 @@ with left:
   changed.pop(REFERENCE_FIELD,None)
   changed.pop('homogeneous_lengths',None)
   changed.pop('homogeneous_reference_evidence',None)
-  for field in (UE_REFERENCE_FIELD,'ue_model','ue_source_documents','active_numeric_reference','ue_reference_evidence',UE_FAMILY_FIELD,'ue_family_model','ue_family_sources','ue_family_reference_evidence'):changed.pop(field,None)
+  for field in (UE_REFERENCE_FIELD,'ue_model','ue_source_documents','active_numeric_reference','ue_reference_evidence',UE_FAMILY_FIELD,'ue_family_model','ue_family_sources','ue_family_reference_evidence','own_ue_isolated_application'):changed.pop(field,None)
   if 'three_girt_model' in changed:
    changed['three_girt_model'].update(sc_y_mm=None,sc_z_mm=0.,sc_origin='',connections_declared=False,load_line_declared=False)
   # Preserve project restraint length, not section-dependent mean-line data.
@@ -249,7 +261,7 @@ b=copy.deepcopy(st.session_state.base);r=st.session_state.revision
 last=st.session_state.get('last_input',b)
 for key in ['load_mode','area_inputs','selected_types','ELS_down_denominator','ELS_up_denominator','q_uls','P_uls','x_uls','q_sls','P_sls','x_sls','actions_origin','ELS_limit_mm','ELS_origin']:
  b[key]=copy.deepcopy(last[key])
-for key in ['member_application','wall_els','wall_tie_study','three_girt_model','weak_catalog','weak_axis','model_domain','u_panel_condition','inclination','q_parallel_uls','q_parallel_sls','P_parallel_uls','P_parallel_sls']:
+for key in ['torsion_model','deflection_model','member_application','wall_els','wall_tie_study','three_girt_model','weak_catalog','weak_axis','model_domain','u_panel_condition','inclination','q_parallel_uls','q_parallel_sls','P_parallel_uls','P_parallel_sls']:
  if key in last:b[key]=copy.deepcopy(last[key])
 d=copy.deepcopy(b)
 try:
@@ -607,6 +619,8 @@ if not three_girt:
 provenance_text=' '.join([str(d.get('project','')),str(d.get('patch_origin',''))]+[str(seg.get('restraint_provenance','')) for seg in d.get('segments',[])])
 if any(tag in provenance_text.casefold() for tag in ['sintétic','sintetic','didático','didatico']):
  st.warning('Há referências a dados sintéticos/didáticos nas entradas ou origens. Foram preservadas; confira essas premissas antes de usar como dados de projeto.')
+from tercas.deflection_scope import render_choice as render_deflection_choice
+render_deflection_choice(st,d,f'deflection_model_{r}')
 st.session_state['last_input']=copy.deepcopy(d)
 try:
  if three_girt:
@@ -635,8 +649,10 @@ if calculate_clicked:
   with st.spinner('Calculando o caso informado…'):
    if three_girt:
     from tercas.three_girt_application import calculate as calculate_three_girts
-    st.session_state.result=calculate_three_girts(d)
-   else:st.session_state.result=calculate_batch(d) if d['load_mode']=='area' else calculate(d)
+    raw_result=calculate_three_girts(d)
+   else:raw_result=calculate_batch(d) if d['load_mode']=='area' else calculate(d)
+   from tercas.study_completion import complete_result
+   st.session_state.result=complete_result(raw_result)
  except (ValueError,TypeError,KeyError,ArithmeticError) as exc:st.error('Não foi possível calcular: '+str(exc))
 # Explicit snapshot; never scan on a normal input/profile edit.
 if 'catalog_scan_state' in st.session_state and st.session_state.catalog_scan_state['fingerprint']!=token:

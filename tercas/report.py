@@ -11,6 +11,9 @@ from .ue_reference import report as ue_reference_report
 from .ue_family_reference import report as ue_family_reference_report
 from .model_domain import report as domain_report,historical_rows,historical_inclination
 from .member_application import is_girt,wall_els_config,wall_convention
+from .deflection_scope import report as deflection_scope_report
+from .biaxial_component import presentation_rows as gross_component_rows,is_girt_result
+from .biaxial_component_ui import report as gross_component_report
 
 def wall_input_report(doc,data):
  cfg=wall_els_config(data)
@@ -154,18 +157,27 @@ def word(result):
  homogeneous_reference_report(doc,result)
  ue_reference_report(doc,result)
  ue_family_reference_report(doc,result)
+ deflection_scope_report(doc,result)
+ gross_component_report(doc,result)
+ from .study_completion import report_global
+ report_global(doc,result)
+ from .torsion_study_ui import report as torsion_report
+ torsion_report(doc,result)
  doc.add_paragraph('Projeto: '+result['project']);doc.add_paragraph('Versão: '+result['version']);doc.add_paragraph('Gerado em UTC: '+datetime.now(timezone.utc).isoformat())
  doc.add_heading('Premissas e limites',1)
  for text in ['Um vão isostático. Flexão forte e rota restrita de flexão fraca/Anexo E; interação biaxial §9.9 para N=0 quando há resistências rastreadas por eixo e sentido. Para posição fixa de P, o máximo concomitante é calculado ao longo do vão. Sem dimensionamento de torção primária, axial, continuidade ou balanços nesta emissão.', 'Ações ELU e ELS já combinadas, informadas separadamente. Não há geração automática de todas as combinações.', 'Ly e Lz são comprimentos efetivos informados; coordenada de tirante não comprova vínculo torsional.', 'A flecha é componente Euler–Bernoulli com Ief por seção. Limite de flecha é informado com origem; não equivale a aprovação do sistema.', 'Propriedades e críticos fornecidos não são certificados pelo aplicativo. A convenção geométrica das propriedades do catálogo precisa ser conferida para o caso.', 'Ligações e apoios não são dimensionados ou aprovados pelo aplicativo.']:
-  if is_girt(result['input_data']) and text.startswith('A flecha é componente'):text='Flecha horizontal: componente Euler–Bernoulli com Ief por seção. Vertical: diagnóstico separado com Iy bruto, sem conclusão ELS. Critérios declarados não aprovam o sistema.'
+  if 'gross_biaxial_component_evidence' in result and text.startswith('A flecha é componente'):
+   text='A componente normal da flexão biaxial utiliza o tensor bruto próprio somente nos estados demonstrados pelo crivo suficiente. O relatório distingue esses estados dos inconclusivos; não é ELS físico completo.'
+  if is_girt(result['input_data']) and text.startswith('A flecha é componente'):
+   text=('Flecha horizontal: componente uniaxial isolada com Ief por seção. Flecha vertical fora do escopo selecionado. Critério declarado não aprova o sistema.' if result.get('deflection_scope_evidence') else 'Flecha horizontal: componente Euler–Bernoulli com Ief por seção. Vertical: diagnóstico separado com Iy bruto, sem conclusão ELS. Critérios declarados não aprovam o sistema.')
   doc.add_paragraph(text,style='List Bullet')
  for warning in result.get('coverage_warnings',[])+result.get('critical_warnings',[]):doc.add_paragraph(warning)
- if result.get('numerical_warnings'):doc.add_paragraph('Aviso numérico na integração da flecha: critério ELS não concluído.')
+ if result.get('numerical_warnings'):doc.add_paragraph('Aviso numérico do integrador escalar anterior preservado como diagnóstico. A componente tensorial nova tem estado separado.' if 'gross_biaxial_component_evidence' in result else 'Aviso numérico na integração da flecha: critério ELS não concluído.')
  inclination_inputs(doc,result['input_data'],None if (result.get('homogeneous_reference_evidence') or result.get('ue_reference_evidence') or result.get('ue_family_reference_evidence')) else result.get('weak_critical_reference'))
  if not (result.get('homogeneous_reference_evidence') or result.get('ue_reference_evidence') or result.get('ue_family_reference_evidence')):strong_reference_report(doc,result.get('strong_critical_reference'))
  if result.get('inclination_evidence'):
   doc.add_heading('Solicitações locais simultâneas',1);inclination_report(doc,historical_inclination(result,result['inclination_evidence']))
- wall_vertical_report(doc,result)
+ if not is_girt_result(result):wall_vertical_report(doc,result)
  doc.add_heading('Resultados por verificação',1)
  tab=doc.add_table(rows=1, cols=4);tab.style='Table Grid'
  trPr=tab.rows[0]._tr.get_or_add_trPr();repeat=OxmlElement('w:tblHeader');trPr.append(repeat)
@@ -271,6 +283,12 @@ def batch_word(result):
  homogeneous_reference_report(doc,result)
  ue_reference_report(doc,result)
  ue_family_reference_report(doc,result)
+ deflection_scope_report(doc,result)
+ gross_component_report(doc,result)
+ from .study_completion import report_global
+ report_global(doc,result)
+ from .torsion_study_ui import report as torsion_report
+ torsion_report(doc,result)
  doc.add_paragraph('Projeto: '+result['project']+' | versão: '+result['version'])
  if result['synthetic']:doc.add_paragraph('EXEMPLO DIDÁTICO — DADOS SINTÉTICOS.')
  doc.add_heading('Entradas e premissas',1)
@@ -288,7 +306,8 @@ def batch_word(result):
  doc.add_paragraph('Travessa: área no plano da fachada × distância tributária. PP e CP verticais no eixo fraco; vento normal no forte. Usam-se apenas linhas da matriz do usuário sem SC (12 ELU, 3 ELS raras, 3 frequentes e 1 quase permanente antes do filtro de famílias). Não se adiciona P automática de cobertura; não é gerador normativo universal.' if is_girt(d) else 'Área → linha pela distância entre terças; PP uma única vez pela massa linear. Vento para cima negativo. As 48 combinações de origem são as fornecidas por Lucas em 31/10/2026, filtradas pelos tipos selecionados. Adicionam-se quatro ELU G+1,5P e uma ELS rara G+P, conforme seleção, com P=1 kN isolada de outras variáveis. Cada combinação com P é calculada em duas posições: centro e limite junto ao apoio (x→0+). Não há varredura intermediária.')
  doc.add_paragraph('Tipos selecionados: '+', '.join(d['selected_types']))
  if not is_girt(d):doc.add_paragraph(f"Limites de flecha: L/{fmt(d['ELS_down_denominator'])} descendente; L/{fmt(d['ELS_up_denominator'])} ascendente. Critérios informados, aplicados a cada combinação ELS.")
- doc.add_paragraph('O resultado contém avaliações separadas por combinação; esta exportação não recalcula resultados. A interação biaxial §9.9 (N=0) requer resistências rastreadas por eixo e sentido. Nesta Travessa por área não se adiciona P de cobertura. A flecha horizontal usa a rota de Ief; a vertical é diagnóstico bruto separado, sem conclusão ELS. Não há dimensionamento de torção primária, axial, continuidade ou balanços; o estudo elástico de tirantes não modifica a resistência do vão livre.' if is_girt(d) else 'O resultado contém avaliações separadas por combinação; esta exportação não recalcula resultados. Não se somam índices resistentes ou flechas calculadas com diferentes inércias efetivas. A interação biaxial §9.9 (N=0) usa resistências rastreadas por eixo e sentido. O envelope ao longo do vão é calculado para uma posição fixa de P; nas combinações com P, os resultados cobrem as duas posições prescritas, não o máximo contínuo da interação ou FLT. Sem dimensionamento de torção primária, axial, continuidade ou balanços.')
+ if is_girt_result(result):doc.add_paragraph('Flecha horizontal: componente flexional biaxial com tensor bruto próprio somente quando o crivo suficiente demonstra seção integral. Vetores horizontal/vertical concomitantes preservados; limite wall_els aplicado somente à horizontal. Sem critério vertical novo, crédito de tirantes, ELS físico completo ou aprovação global.')
+ else:doc.add_paragraph(('Flecha horizontal: componente uniaxial isolada com Ief; vertical fora do escopo selecionado. Ações e resistência biaxial permanecem presentes. Sem aprovação ELS completa.' if result.get('deflection_scope_evidence') else 'O resultado contém avaliações separadas por combinação; esta exportação não recalcula resultados. A interação biaxial §9.9 (N=0) requer resistências rastreadas por eixo e sentido. Nesta Travessa por área não se adiciona P de cobertura. A flecha horizontal usa a rota de Ief; a vertical é diagnóstico bruto separado, sem conclusão ELS. Não há dimensionamento de torção primária, axial, continuidade ou balanços; o estudo elástico de tirantes não modifica a resistência do vão livre.') if is_girt(d) else 'O resultado contém avaliações separadas por combinação; esta exportação não recalcula resultados. Não se somam índices resistentes ou flechas calculadas com diferentes inércias efetivas. A interação biaxial §9.9 (N=0) usa resistências rastreadas por eixo e sentido. O envelope ao longo do vão é calculado para uma posição fixa de P; nas combinações com P, os resultados cobrem as duas posições prescritas, não o máximo contínuo da interação ou FLT. Sem dimensionamento de torção primária, axial, continuidade ou balanços.')
  for s in d['segments']:
   cb={'one':'Adotar Cb = 1,0','quarter_formula':'Calcular pelos momentos do trecho'}.get(s.get('Cb_mode'),s.get('Cb_mode'))
   doc.add_paragraph(f"Trecho {fmt(s['start_mm'])} a {fmt(s['end_mm'])} mm. Ly superior: {fmt(s.get('Ly_top_effective_mm',s.get('Ly_effective_mm')))} mm; Ly inferior: {fmt(s.get('Ly_bottom_effective_mm',s.get('Ly_effective_mm')))} mm; Lz: {fmt(s.get('Lz_effective_mm'))} mm. {cb}. {s.get('restraint_provenance','')}")
@@ -301,15 +320,17 @@ def batch_word(result):
  t=doc.add_table(rows=1,cols=4);t.style='Table Grid'
  t.rows[0]._tr.get_or_add_trPr().append(OxmlElement('w:tblHeader'))
  for c,v in zip(t.rows[0].cells,['Critério','Combinação','Índice','Situação']):c.text=v
- for r in display_records(historical_rows(result,result['summary'])):
-  for c,v in zip(t.add_row().cells,[r['Verificação'],r['Combinação'],'—' if r['Índice'] is None else f"{fmt(r['Índice'])}",r['Situação']]):c.text=display(v)
+ for r in display_records(historical_rows(result,gross_component_rows(result,result['summary']))):
+  summary_row=t.add_row()
+  if is_girt_result(result):summary_row._tr.get_or_add_trPr().append(OxmlElement('w:cantSplit'))
+  for c,v in zip(summary_row.cells,[r['Verificação'],r['Combinação'],'—' if r['Índice'] is None else f"{fmt(r['Índice'])}",r['Situação']]):c.text=display(v)
  doc.add_heading('Todas as combinações selecionadas',1)
  for item in result['cases']:
   c=item['combination'];doc.add_heading(f"{c['id']} — {c['type']}",2)
   doc.add_paragraph(f"{measurement_text(c['expression'])} → q normal={fmt(c['q_kN_m'])} kN/m. P normal={fmt(c.get('P_N',0)/1000)} kN. Forças/efeitos superpostos antes das verificações.")
   if item.get('evidence',{}).get('inclination'):inclination_report(doc,historical_inclination(result,item['evidence']['inclination']))
-  wall_vertical_report(doc,item.get('evidence',{}))
-  for row in display_records(historical_rows(result,item['rows'])):
+  if not is_girt_result(result):wall_vertical_report(doc,item.get('evidence',{}))
+  for row in display_records(historical_rows(result,gross_component_rows(result,item['rows']))):
    index='—' if row['Índice'] is None else f"{fmt(row['Índice'])}"
    doc.add_paragraph(f"{row['Verificação']}: {row['Situação']}; índice {index}; {row['Demanda / valor']}; limite/resistência {row['Resistência / limite']}. {row['Referência']}. {row['Observação']}")
   for warning in item['warnings']:doc.add_paragraph('Aviso: '+warning)

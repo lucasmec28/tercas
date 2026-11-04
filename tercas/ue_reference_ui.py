@@ -8,6 +8,7 @@ from .presentation import display_frame
 from .batch import area_bundle
 from .drawing_cases import drawing_cases
 from .drawing import svg
+from .new_study_policy import for_new_study
 
 
 def loader(st, revision, load):
@@ -17,7 +18,7 @@ def loader(st, revision, load):
                             format_func=lambda v: f'{v:+g}° · 58 combinações', key=f'ue_ref_angle_loader_{revision}')
         st.caption('Abre novo estudo sintético próprio de 4 m, separado do catálogo e das referências U. Não converte nem requalifica automaticamente entradas existentes. Inclinação e ações podem ser editadas depois; ELS biaxial continua pendente.')
         if st.button('Carregar referência própria Ue100', key=f'ue_ref_load_{revision}'):
-            try:new = load_reference('Ue100', angle)
+            try:new = for_new_study(load_reference('Ue100', angle))
             except (ValueError, OSError, KeyError) as exc:st.error('Referência não carregada: ' + str(exc))
             else:load(new);st.rerun()
 
@@ -36,7 +37,11 @@ def render_span(st, data, revision, load):
         values=reference(preview['L_mm'])['global_criticals']
         st.caption('Prévia não aplicada: Lx=Ly=Lz='+fmt(preview['L_mm'])+' mm. Ne/Me/FLT recalculados para esta proposta.')
         st.dataframe(display_frame([{'Derivado':k,'Valor':v,'Unidade':'N·mm' if k.startswith('Me_') else 'N'} for k,v in values.items()]),hide_index=True)
-        st.caption('Critério ELS direto armazenado: L/'+fmt(data['ELS_down_denominator'])+' = '+fmt(preview['ELS_limit_mm'])+' mm. Critério de teste, sem conclusão ELS global. P direto ELU='+str(data['x_uls'])+' mm; ELS='+str(data['x_sls'])+' mm, sem reposicionamento.')
+        if preview.get('member_application')=='wall_girt':
+            from .member_application import normal_els_limit
+            normal_limit=normal_els_limit(preview)
+            st.caption('Critério horizontal da travessa: '+fmt(normal_limit['value'])+' mm. '+normal_limit['origin']+' P direto mantém suas posições absolutas.')
+        else:st.caption('Critério ELS direto armazenado: L/'+fmt(data['ELS_down_denominator'])+' = '+fmt(preview['ELS_limit_mm'])+' mm. Critério de teste, sem conclusão ELS global. P direto ELU='+str(data['x_uls'])+' mm; ELS='+str(data['x_sls'])+' mm, sem reposicionamento.')
         outside=[k for k in ('x_uls','x_sls') if data[k] is not None and not 0<data[k]<preview['L_mm']]
         if outside:st.warning('P direto fora do novo vão: '+', '.join(outside)+'. Corrija explicitamente antes de calcular em modo direto.')
     except (ValueError,TypeError,KeyError,ArithmeticError,OSError) as exc:
@@ -59,7 +64,6 @@ def render(st, data, revision, load, render_results, render_import):
     st.subheader('Referência própria Ue100 — R01, 209 nós')
     st.warning(SCOPE)
     st.caption(FROZEN)
-    st.caption(TRACE_NOTE)
     st.caption('Ações sintéticas e identificação editáveis; vão somente pela prévia e aplicação explícita abaixo. Não há seletor de painel nem crédito de travamento.')
     if st.button('Encerrar modo referência (inspeção)', key=f'ue_ref_exit_{revision}'):
         data.pop(FIELD, None);load(data);st.rerun()
@@ -75,11 +79,15 @@ def render(st, data, revision, load, render_results, render_import):
         format_func=lambda v: {'area':'Área — matriz de combinações','direct':'Direto — componentes locais combinadas'}[v], key=f'ue_ref_load_mode_{revision}')
     # Roof angle changes action decomposition only; section/material/supports do
     # not rotate into another structural application or change effective lengths.
-    data['inclination']['value'] = number('Inclinação da cobertura [graus]', 'inclination', data['inclination']['value'])
+    girt=data.get('member_application')=='wall_girt'
+    if girt:st.caption('Inclinação e SC de cobertura armazenadas, inativas na travessa; nenhuma ação direta é girada novamente.')
+    else:data['inclination']['value'] = number('Inclinação da cobertura [graus]', 'inclination', data['inclination']['value'])
     if data['load_mode'] == 'area':
-        st.caption('PP calculado uma única vez da massa própria. Matriz de 48 linhas + P nas duas posições prescritas: 58 casos completos com todas as famílias selecionadas.')
+        st.caption('Travessa isolada: PP uma vez, CP vertical por área de influência e vento horizontal. Sem SC usual/P automática de cobertura; 19 casos com todas as famílias selecionadas.' if girt else 'PP calculado uma única vez da massa própria. Matriz de 48 linhas + P nas duas posições prescritas: 58 casos completos com todas as famílias selecionadas.')
         labels = {'spacing_m':'Distância entre terças [m]', 'permanent_kgf_m2':'Permanente [kgf/m²]',
                   'live_kgf_m2':'Sobrecarga [kgf/m²]', 'wind_up_kgf_m2':'Vento para cima [kgf/m²]', 'wind_down_kgf_m2':'Vento para baixo [kgf/m²]'}
+        if girt:
+            labels={'spacing_m':'Distância entre travessas [m]','permanent_kgf_m2':'Permanente do fechamento [kgf/m²]','wind_up_kgf_m2':'Vento normal negativo [kgf/m²]','wind_down_kgf_m2':'Vento normal positivo [kgf/m²]'}
         for key, label in labels.items():data['area_inputs'][key] = number(label, key, data['area_inputs'][key])
         data['selected_types'] = st.multiselect('Famílias de combinações', source(state['reference_id'])['selected_types'],
                                               default=data['selected_types'], key=f'ue_ref_types_{revision}')
@@ -93,9 +101,19 @@ def render(st, data, revision, load, render_results, render_import):
                     value = number(f'{title} {label} [{unit}]', key, data.get(key, 0.))
                     # Do not silently append even zero-valued optional fields.
                     if key in data or value != 0:data[key] = value
+    from .deflection_scope import render_choice
+    render_choice(st, data, f'ue_ref_deflection_model_{revision}')
+    from .deflection_scope import enabled as uniaxial_component_enabled
+    from .biaxial_component import selected as gross_component_selected
+    st.caption(TRACE_NOTE.split(' A evidência MLE')[0] if uniaxial_component_enabled(data) or gross_component_selected(data) else TRACE_NOTE)
+    from .torsion_study_ui import render_choice as render_torsion_choice
+    render_torsion_choice(st, data, f'torsion_choice_{revision}')
     # Read action widgets before an explicit length commit, so the same event
     # cannot overwrite newly entered actions or absolute P positions.
-    length_draft_pending=render_span(st,data,revision,load)
+    from .ue_member_application_ui import render_choice as render_application_choice,render_horizontal_limit
+    render_horizontal_limit(st,data,'ue_ref_wall_els_'+str(revision))
+    application_draft_pending=render_application_choice(st,data,'ue_ref_application_'+str(revision),load)
+    length_draft_pending=application_draft_pending or render_span(st,data,revision,load)
     st.session_state.last_input = copy.deepcopy(data)
     current = assess(data)
     token = fingerprint(data)
@@ -128,7 +146,8 @@ def render(st, data, revision, load, render_results, render_import):
         st.session_state.pop('result', None)
         try:
             with st.spinner('Calculando a referência própria…'):
-                st.session_state.result = calculate_reference(data)
+                from .study_completion import complete_result
+                st.session_state.result = complete_result(calculate_reference(data))
         except (ValueError, TypeError, KeyError, ArithmeticError, OSError) as exc:
             st.error('Não foi possível calcular: ' + str(exc))
     st.download_button('Baixar entradas da referência (JSON)', json.dumps(data, ensure_ascii=False, indent=2),

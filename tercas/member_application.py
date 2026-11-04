@@ -50,6 +50,8 @@ def tie_config(data):
  return out
 
 def validate(data):
+ from .deflection_scope import enabled as uniaxial_component_enabled
+ uniaxial_component_enabled(data)
  kind=member_kind(data)
  if kind=='wall_girt':
   _positive(data.get('L_mm'),'Vão do modelo');wall_els_config(data);tie_config(data)

@@ -1,0 +1,111 @@
+AGREGAÇÃO GLOBAL — ESCOPO E CONTRATO, 03/11/2026
+
+OBJETIVO
+Avançar a decisão agregada sem aguardar a rota de torção, mantendo cada pendência
+visível e sem promover resultados parciais a aprovação. O módulo conserva os números da rota de flexão. A integração registra a
+evidência somente após um cálculo novo e explícito na interface.
+
+ESTADOS
+- aprovado: somente no motor genérico, quando o inventário independente de
+  verificações está completo/qualificado e todos os checks aplicáveis atendem.
+  É aprovação do checklist e modelo declarados, não inspeção de obra.
+- reprovado: ao menos um critério calculado e válido não atende. Pendências
+  continuam enumeradas; esse estado não afirma que todos os mecanismos tenham
+  sido avaliados nem que um diagnóstico fora do domínio prove falha física.
+- inconclusivo: nenhuma falha qualificada demonstrada, mas há resultado, domínio,
+  combinação ou mecanismo pendente. Não significa aprovado ou índice zero.
+
+O adaptador atual do app SEMPRE insere torção/empenamento como pendentes e
+whole_member_approved=False. Nem os novos dados de Tsv/Tw/B, nem ausência de
+contato da telha, N=0, garfos ou índice baixo de flexão liberam esse bloqueio.
+Não há um override por flag fornecida no arquivo de resultado.
+
+ARQUIVOS/APIs
+tercas/global_verification.py:
+  check(...): registro tipado; índice, dispensa ou condição explicitamente
+  qualificados. None, NaN, infinito, booleano, texto e índice negativo não são zero.
+  aggregate(required_ids, records, inventory_qualified=...): checklist genérico;
+  faltas, duplicatas e resultados inesperados não desaparecem. Não soma índices.
+  build_global_verification(result): leitura não mutante das evidências finais
+  de terça/travessa isolada, lote de combinações ou diagnóstico de três travessas.
+  attach_global_verification(result): devolve cópia do resultado com a evidência.
+  axial_interaction_record(...): fronteira de consumo de UM segmento concomitante
+  produzido pelo backend axial revisado. Valida todas as seções, índice máximo,
+  combinação, seção, membro físico, região de N, segmento e lado.
+
+INTEGRAÇÃO RECOMENDADA
+O responsável pela candidata deve chamar o builder somente DEPOIS das anotações
+de referência própria, ELS e correções de P no limite do apoio. Gravar o resultado
+global junto ao resultado numérico e exportar essa mesma evidência histórica.
+Não reconstruir/requalificar um Word histórico na renderização. O cache de
+resultados ativos deve ser revisto na integração, sem apagar entradas/projetos.
+
+Não foram alterados os pontos de entrada application.calculate,
+batch.calculate_batch ou three_girt_application.calculate desta cópia. O módulo
+é consumido por study_completion.complete_result após as anotações finais do
+cálculo novo na interface. Os testes também o exercitam separadamente. Abrir
+um resultado histórico ou gerar seu Word não executa uma nova qualificação.
+
+INTERFACE E LIMITES
+Um banner pode usar global_verification.display_summary. Não reintroduzir as
+linhas de cortante paralelo, flecha paralela ou casos condicionais retiradas.
+Faltas de abrangência ficam na evidência interna/memória e na decisão, sem nova
+linha de cálculo ou índice inventado. O índice ELS uniaxial local opcional, quando
+presente, não fecha a rigidez efetiva combinada, deslocamento total ou torção.
+
+Introdução local de P no PERFIL é mantida internamente apenas quando há força
+concentrada real. Ausência de patch/detalhe gera pendência, não reprovação. P no
+limite do apoio não apaga a reação ou a transferência local. Isto não dimensiona
+parafusos, chapas, tirantes, cantoneiras ou ancoragens.
+
+MODELO E COBERTURA
+Um critério de modelo não exige inspeção/certificação de campo artificialmente.
+Hipóteses declaradas e domínio coerente continuam necessários. A cobertura ELU e
+ELS é independente: filtrar todos os ELS não dispensa ELS. Combinação ausente no
+inventário declarado gera pendência, sem desaparecer no máximo numérico.
+O resumo by_limit_state incorpora os gates comuns MODEL, inclusive torção.
+O resumo separado listed_checks_only cobre apenas os checks listados e traz
+flag explícita de que não representa aprovação completa do estado limite.
+
+FLT legado: o produtor verificado itera spec.segments em ordem, com exatamente
+um resultado por trecho. O adaptador registra binding_basis=producer_order_v1,
+intervalo e posição, sem chamar isso de identidade independente comprovada.
+Cardinalidade divergente, vínculo explícito contraditório ou snapshot direto
+incoerente impedem atendimento. Um fingerprint sozinho não autentica resultados.
+Nenhum trecho de malha/tirante vira comprimento de estabilidade automaticamente.
+
+N+M NAS TRAVESSAS
+A fronteira axial foi testada com backend independente em validação portátil,
+sem importá-lo automaticamente no aplicativo. A saída do diagnóstico 3D atual
+CONTINUA com N+M pendente: não há integração fim a fim das capacidades necessárias
+do frame, nem reaproveitamento da rota isolada N=0. Isso é deliberado.
+
+Um índice axial concomitante precisa permanecer separado da qualificação da
+análise global e de T/B. N negativo não reduz a soma adversa. Não se somam máximos
+independentes de N, Mforte e Mfraco. Falta de Nt/Nc ou de resistência de um sentido
+mantém o índice completo ausente. B desconhecido permanece desconhecido e não
+ganha denominador/termo fictício no §9.9.
+
+PREPARAÇÃO PARA TORÇÃO
+Contrato esperado: por combinação/estado limite/elemento/seção/lado, informar
+convenções explícitas de N, Mforte, Mfraco, Vy, Vz, Tsv, Tw, B e phi; None para
+ausentes; origem, domínio da análise, cobertura e pendências. Tensões/demandas
+calculadas são diferentes de verificações resistentes qualificadas. Não trocar
+automaticamente Mx/My físicos por My/Mz do frame ou sinais da FSM R01.
+Somente a integração posteriormente revisada poderá substituir o check de
+torção; este módulo não contém uma equação resistente T/B nova.
+
+VERIFICAÇÃO
+tests/test_global_verification.py roda em unittest ou pytest; controles incluem
+1.364 combinações da tabela-verdade independente de estados, limites exatos de 1,
+faltas/NaN, duplicatas, falhas com pendências, filtros ELU/ELS, P no apoio,
+concomitância, FLT e 3D. Reproduções independentes adicionais ficam no pacote
+externo de revisão, com recibos identificados por hash.
+
+Os controles em validation/run_controls.py calculam exemplos sintéticos Ue100:
+baixo carregamento uniaxial, alto carregamento, biaxial e 58 combinações por área.
+No controle axial N=+/-10, Mforte=80u, Mfraco=-80(1-u), capacidades sintéticas 100,
+o índice concomitante é exatamente 0,9; somar máximos independentes daria 1,7.
+Remover a capacidade axial deixa índice None. Não se trata de projeto real.
+
+Nenhum teste ou esse agregador equivale a validação física ou normativa integral.

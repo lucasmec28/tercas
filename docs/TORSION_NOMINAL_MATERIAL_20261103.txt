@@ -1,0 +1,73 @@
+ENVOLTÓRIA CONCOMITANTE E REFERÊNCIA DE ESCOAMENTO NOMINAL
+Suplemento à análise Vlasov revisada. 03/11/2026. Cópia de desenvolvimento.
+
+DECISÃO E SIGNIFICADO
+
+Esta entrega fecha o máximo concomitante do campo elástico adotado, antes ausente da análise de torção. Ela NÃO cria uma resistência torsional de cálculo pela NBR 14762 e não muda os critérios existentes de flexão, ELS ou aprovação global.
+
+Há uma única rota mecânica: Vlasov de primeira ordem, com GJ e ECw da mesma seção R01. Sobre esse campo recupera-se a referência nominal de início do escoamento do material isotrópico por J2. Não se importam BRd, fatores LRFD, curvas de instabilidade ou inequações de outra norma. Nenhum coeficiente de resistência gamma é inventado.
+
+O fator apresentado é uma extrapolação algébrica do campo:
+  lambda_y = fy / máximo(s,p,face) sqrt[sigma(s,p)^2 + 3 tau(s,p,face)^2].
+Ele multiplica TODAS as ações proporcionalmente, inclusive PP, mantendo as mesmas linhas e apoios. Não é uma autorização para aumentar apenas vento ou sobrecarga mantendo as outras ações fixas. Não é a carga da primeira falha da barra, pois instabilidade ou perda de validade geométrica pode ocorrer antes.
+
+CAMPO DE TENSÕES EFETIVAMENTE ENVOLVIDO
+
+O campo normal é o da linha média da parede:
+  sigma = N/A + Mx_físico*y/Ix - My_físico*x/Iy + B*omega/Cw.
+N é zero no modelo de terça atual. Tração é positiva. Mforte_R01=-Mx_físico e Mfraco_R01=-My_físico preservam os sentidos do aplicativo.
+
+O fluxo vem dos mesmos Vx, Vy e Tw, e as duas faces recebem:
+  tau_face = q(Vx,Vy,Tw)/t +/- Tsv*t/J.
+Sigma e tau são combinados no MESMO ponto, mesma seção, lado, combinação e face. Não se somam os máximos isolados de sigma e tau para produzir a tensão equivalente. Os máximos isolados são resultados separados, cada qual com sua própria testemunha.
+
+Usa-se B e T recuperados por equilíbrio no elemento, não o B_constitutive derivado diretamente da interpolação cúbica de giro. A diferença entre esses campos faz parte do erro de discretização a qualificar, não é eliminada pela envoltória. O certificado se refere precisamente ao campo recuperado.
+
+O tensor material aproximado contém apenas a tensão longitudinal sigma e o cisalhamento longitudinal-contorno tau. A contração do tensor desviador no critério J2 fornece sigma_eq=sqrt(sigma^2+3 tau^2). O valor de referência é o fy nominal do mesmo material salvo, com origem explícita, sem encruamento ou aumento por trabalho a frio.
+
+A normal de linha média não é um limite da tensão normal real na fibra exterior de uma parede de espessura finita. O emprego das duas faces para Saint-Venant não elimina essa limitação. Tampouco são representadas as tensões transversais locais, contato ou concentrações junto à introdução de força.
+
+COMO O MÁXIMO É DELIMITADO
+
+Cada retângulo é formado por um elemento longitudinal, um segmento do contorno e uma face. Nele, sigma tem grau até 3 na direção longitudinal e até 1 no contorno; tau tem grau até 2 em ambas. O quadrado da tensão equivalente tem grau até 6 por 4.
+
+A montagem das tensões e a transformação polinomial usam aritmética intervalar com arredondamento para fora. As propriedades, ações, coordenadas e coeficientes binários armazenados são entradas da delimitação. As somas, diferenças, produtos, divisões positivas e raízes são enclausurados, incluindo a recuperação dos momentos e cortantes.
+
+A base de Bernstein fornece limites em todo o retângulo, não só nos pontos amostrados. O produto de polinômios sigma^2+3 tau^2 preserva sua correlação espacial. Subdivisão de Casteljau refina apenas os retângulos que ainda podem governar. Uma testemunha avaliada com arredondamento para baixo fornece o limite inferior do máximo. O limite superior cobre todos os retângulos, inclusive os já descartados por tolerância.
+
+A conclusão padrão requer diferença entre os limites menor que o maior entre 1e-6 MPa e 1e-6 vezes a magnitude do resultado. Esses são controles de precisão numérica, não limites normativos. Caso o orçamento de subdivisões ou profundidade seja esgotado, os limites continuam válidos, mas o retorno informa que não houve fechamento à tolerância. Não há aprovação implícita.
+
+São incluídos os dois lados de cada elemento, as descontinuidades de cortante/torque em P e a camada analítica anterior a P_APOIO (a->0+). A camada tem identificação própria e não é um elemento fictício de comprimento nulo. A força exatamente no apoio, sem essa camada, é tratada separadamente.
+
+Os limites de lambda são invertidos corretamente:
+  fy/VM_superior <= lambda_y <= fy/VM_inferior.
+Se o limite inferior de VM for zero, o limite superior de lambda não foi determinado: ele é null no JSON, acompanhado do motivo. Isso não significa que a solução tenha provado lambda infinito. O caso de ações e campo exatamente nulos tem uma identificação separada. Não há Infinity ou NaN exportado.
+
+O QUE O CERTIFICADO NÃO DEMONSTRA
+
+- Não limita o erro da malha da análise Vlasov nem o erro da hipótese de parede fina.
+- Não confirma pequenas rotações, geometria não linear, cargas seguidoras ou a realização física dos vínculos.
+- Não verifica instabilidades local, distorcional ou global sob o campo combinado.
+- Não demonstra que a barra consegue atingir lambda_y antes de outra falha.
+- Não calcula resistência de projeto, reserva plástica, rigidez efetiva combinada ou ELS completo.
+- Não dimensiona a introdução local das forças ou ligações.
+
+A apresentação inclui o giro máximo da fonte e sua escala algébrica no intervalo de lambda_y. Mesmo lambda_y<1 pode corresponder a um giro muito grande. Não se usa o aviso de 0,05 rad como limite normativo nem se concede validade automaticamente quando o giro fica abaixo dele.
+
+BASE BRASILEIRA E COMPARAÇÕES NÃO ADOTADAS
+
+A NBR 14762:2010 fornecida continua sendo a base das verificações existentes. Os itens 1 e 8.1 exigem tratamento tecnicamente fundamentado e análise representativa. O Anexo A do manual CBCA 2014 sustenta as parcelas elásticas de tensão; não fornece, por si, um critério completo de resistência da barra sob T/B.
+
+A revisão encontrou uma lacuna específica: o item 9.2.3 da NBR trata a mesa com enrijecedor simples uniformemente comprimida, enquanto B altera o gradiente nas mesas. A interação 9.9 não inclui B. As dispensas de distorção da flexão forte não podem ser transferidas automaticamente ao novo campo. Não foi criada uma verificação sqrt(sigma^2+3 tau^2)<=fy/1,10 como se fosse uma resistência torsional NBR.
+
+Um comparador local normal suficiente foi identificado para o R01 de 3,35 mm: sob compressão uniforme até fy=250 MPa, com alma AA e mesas/lábios AL sem crédito de enrijecimento, lambda_p de cada parede fica abaixo de 0,673. Isso é evidência de efetividade LOCAL normal nesse comparador, não dispensa de distorção/global ou flambagem por cisalhamento, e não altera flags.
+
+AISI 2024 e EN 1993-1-3 foram examinados como comparações, não adotados. AISI contém interação com B, mas exige capacidades de sua própria edição e deixa reservado o cisalhamento de torção. A regra seccional europeia também pressupõe suas propriedades efetivas e verificações. Nenhuma dessas regras foi inserida nas capacidades NBR.
+
+FONTES
+
+- ABNT NBR 14762:2010, cópia fornecida, itens 1, 8.1, 8.4, 9.2, 9.3, 9.8 e 9.9. Não se afirma atualização/vigência da edição além do documento fornecido.
+- CBCA, Estruturas compostas por perfis formados a frio, 2014, Anexo A, pp.84-89. Referência de mecânica elástica de seções abertas. Catálogo oficial: https://www.cbca-acobrasil.org.br/site/biblioteca/
+- MIT OpenCourseWare, Mechanics of Materials, D. Roylance, Yield and Plastic Flow, p.5, critério J2/von Mises como referência de material, sem fatores de projeto: https://ocw.mit.edu/courses/3-11-mechanics-of-materials-fall-1999/913c0305981479e7474e1a229f53d2d9_MIT3_11F99_yield.pdf
+
+Conclusão: a envoltória concomitante e a referência nominal de material estão disponíveis no domínio explicitado. A resistência torsional normativa completa e a aprovação física/global permanecem pendentes.

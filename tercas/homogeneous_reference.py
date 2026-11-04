@@ -112,6 +112,12 @@ def _action_errors(data, expected):
 def _editor_errors(data, expected):
     """Shape/complete data only. Recoverable values stay in the restricted UI."""
     errors = []
+    from .deflection_scope import enabled as uniaxial_component_enabled
+    from .torsion_study import configuration as torsion_configuration
+    try:torsion_configuration(data)
+    except ValueError as exc:errors.append(str(exc))
+    try:uniaxial_component_enabled(data)
+    except ValueError as exc:errors.append(str(exc))
     missing = (EDITABLE - DIRECT_OPTIONAL) - set(data)
     if missing:errors.append('Campos de ações/identificação ausentes: ' + ', '.join(sorted(missing)))
     for key in ('project', 'actions_origin'):

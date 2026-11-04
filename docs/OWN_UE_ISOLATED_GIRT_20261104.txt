@@ -1,0 +1,69 @@
+EXTENSÃO EXPLÍCITA DA FONTE PRÓPRIA Ue À TRAVESSA ISOLADA
+Cópia de desenvolvimento de 04/11/2026. Não é aprovação física/global.
+
+1. Domínio e decisão
+A mesma seção própria R01 Ue 100 x 50 x 17, ri=t, de 209 nós, com sete
+espessuras e vão de 3000 a 6000 mm, admite uma aplicação isolada declarada.
+A transformação recebe marcador versionado own_ue_isolated_application.
+Alterar somente member_application no JSON não ativa essa fonte.
+Não há alteração das propriedades, críticos, material, resistências escalares,
+comprimentos de estabilidade ou condições ideais da fonte própria. O método
+suficiente de seção integral e a viga tensorial são os mesmos da candidata de
+terça já revisada; a transformação de aplicação não prova novo modelo 3D.
+As fontes Pierin e as fontes próprias continuam distintas. Não se transfere
+qualificação por correspondência nominal, espessura vizinha ou sentido inferido.
+
+2. Eixos e ações
+Travessa com boca para baixo, vista A para B: normal local é horizontal para
+a esquerda, paralelo local é vertical para baixo. Na entrada por área, vento
+atua no normal, PP e permanente do fechamento atuam no paralelo. A permanente
+usa a largura de influência informada. PP do perfil entra uma vez, por massa.
+Os valores armazenados de inclinação e sobrecarga de cobertura ficam inativos,
+sem apagamento. Não há SC usual nem P automática de manutenção da cobertura.
+Com todas as famílias selecionadas, o subconjunto da matriz declarada contém
+19 casos, sendo 12 ELU e 7 ELS; não é gerador normativo universal. Ações especiais
+podem exigir componentes já combinadas no modo direto. Nesse modo, q/P e sua
+posição são preservados literalmente, sem rotação ou PP automático.
+
+3. Critério horizontal
+A opção de componente flexional biaxial é explícita, nunca padrão automático.
+O crivo considera os dois momentos concomitantes e todo o vão. Quando suficiente,
+a resposta nova usa o tensor bruto da mesma seção, inclusive Ixy, com extremos
+por trechos. O índice compara só a componente horizontal com o critério wall_els:
+normal_reference_mm/normal_denominator. Referência vazia usa L do modelo.
+O antigo ELS_limit_mm da cobertura não é usado como limite da travessa.
+Comprimento de referência e denominador são declarados, não prescritos
+automaticamente pela norma. Eles não alteram L físico, estabilidade ou esforços.
+Crivo inconclusivo não é reprovação nem autoriza usar I bruto por substituição.
+O diagnóstico vertical legado pode permanecer no JSON, sem novo índice ou
+linha de critério vertical na opção biaxial. Seus campos preservados não mudam
+o limite horizontal; rascunhos importados inválidos têm reparo explícito na UI.
+Não há conclusão de ELS físico completo ou aprovação global.
+
+4. Exclusões físicas
+Nenhum crédito de rigidez de tirantes, molas, fechamento/telha ou redistribuição
+entre três travessas. Telha/fechamento contribui somente como ação e área de
+obstrução/recepção de carga no domínio declarado. Torção e empenamento resistentes,
+introdução local de carga e ligações permanecem pendentes. N=B=0 descreve apenas
+a componente flexional estudada; não afirma sua nulidade na estrutura real.
+A escolha de torção da terça, se armazenada, fica inativa/preservada na travessa,
+com resultado pendente antes de qualquer chamada do solver de Vlasov. A extensão
+não converte a análise de terça para travessa por simples troca de rótulo.
+
+5. Ciclo de uso e histórico
+A seleção propõe a aplicação; só o botão Aplicar faz a transformação. Mudanças
+retiram o resultado ativo. A troca usa apenas geometria já aplicada; não consome
+uma proposta de vão/espessura ainda não aplicada. Aplicar novo vão/espessura
+preserva o contexto, wall_els e posições absolutas de P. Voltar para terça conserva
+campos inativos. Importação não migra escolhas nem requalifica resultados salvos.
+A nova evidência tem schema próprio de travessa. Leitura, UI e Word verificam o
+registro salvo e não executam fonte, crivo ou solver. Registro incoerente perde
+seu índice visível e mostra recusa; não se recalcula silenciosamente.
+
+6. Referências e rastreabilidade
+As derivação e fontes do crivo/tensor estão em BIAXIAL_GROSS_COMPONENT_20261104.txt
+e nos documentos dos módulos respectivos. As convenções de travessa e limites
+separados já constam em member_application.py e na documentação do modelo lateral.
+As expressões de viga isolada não substituem o modelo físico solicitado de três
+travessas. Nesta extensão, os controles independentes de ações locais e resposta
+foram feitos com o mesmo contorno, sem alterar a geometria solicitada do conjunto.

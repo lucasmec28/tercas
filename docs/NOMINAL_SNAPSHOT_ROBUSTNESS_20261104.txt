@@ -1,0 +1,28 @@
+LEITURA SEGURA DOS DETALHES NOMINAIS SALVOS
+
+Esta alteração não muda o cálculo de Vlasov, a envoltória de tensões, as
+combinações, resistências, índices, ELS ou avaliação global. Trata somente
+a leitura e apresentação de um anexo nominal salvo incompleto/inconsistente.
+
+Antes de exibir, confere esquema, tipos, finitude, ordem dos intervalos,
+convergência, identidade do caso e seção, fy do material, linhas/apoios,
+ações e giro contra a análise já preservada. Os limites proporcionais e
+avisos devem ser coerentes com os números do mesmo registro. Não executa
+solver, não consulta propriedades vivas, não recalcula máximos e não repara
+um histórico. Um hash de campo denso é apenas preservado com formato válido,
+não anunciado como autenticação criptográfica reexecutada a partir do resumo.
+
+Casos válidos continuam aceitos: orçamento numérico não convergido, campo
+exatamente nulo, limite superior de fator não determinado, giro elevado,
+fator nominal inferior a 1 e camada analítica antes de P junto ao apoio.
+Eles mantêm os avisos e todas as flags de aprovação falsas.
+
+Se o anexo estiver inválido, o painel e o Word dizem isso explicitamente e
+omitem apenas sua reprodução, sem impedir a consulta da memória principal.
+O objeto original permanece intacto; não há remoção de dados nem concessão
+de qualificação. Um novo cálculo explícito é necessário para produzir outro
+registro válido. As entradas e resultados antigos sem anexo continuam iguais.
+
+Intervalos finitos muito grandes também são formatados com arredondamento
+externo, sem depender da precisão decimal padrão. Isso não amplia o domínio
+físico ou numérico do solver.

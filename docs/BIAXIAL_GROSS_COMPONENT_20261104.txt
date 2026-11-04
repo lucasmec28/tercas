@@ -1,0 +1,81 @@
+COMPARAÇÃO SUFICIENTE MLE E COMPONENTE FLEXIONAL BIAXIAL BRUTA
+Versão de integração em cópia, 04/11/2026. Não publicada.
+
+Escolha explícita: deflection_model=gross_biaxial_sufficient_component_v1.
+Omissão preserva comportamento legado. local_uniaxial_component_v1 mantém a
+escolha expressa de componente isolada. Não há mudança automática por horário
+ou nos estudos novos: a política preparada para o prazo foi cancelada.
+
+DOMÍNIO
+Somente Ue100×50×17, ri=t, sete fontes próprias de 1,20 a 3,35 mm,
+sem interpolação, com vãos 3000–6000 mm. Perfil U simples, geometria comercial
+não demonstrada e conjunto de três travessas/3D estão fora desta rota. A extensão
+explícita à travessa isolada tem contrato próprio, descrito em
+OWN_UE_ISOLATED_GIRT_20261104.txt. Ela preserva fontes/ações e usa wall_els
+para a componente horizontal; não reinterpreta automaticamente uma terça.
+O conjunto 3D tem outro contrato físico.
+Não usa críticos/sentidos
+de Pierin como prova; a correspondência com Pierin continua nominal.
+A fonte protegida e o contorno próprio R01 são conferidos em todo cálculo.
+O tensor A/CG/Ix/Iy/Ixy é reintegrado do contorno pinado, com dA=t ds.
+
+MÉTODO COERENTE E LIMITES
+NBR14762:2010 fornecida, SHA256
+c2a01615a3ce9e2b93aeb7fee757f7bf9dd932adaefbc242e848ce813dc82407:
+§9.2.2/Tabela5 para alma sob gradiente; §9.2.3 para o comparador uniforme
+da mesa enrijecida; AL k=0,43 para cada lábio. Limite local 0,673.
+Uma condição suficiente de engenharia domina o campo real com compressão
+uniforme nas mesas, preservando o gradiente da alma. Não se diz que a norma
+contenha fórmula direta para toda mesa com gradiente biaxial nem se cria
+exigência normativa de montar uma seção efetiva conjunta em todos os casos.
+
+O crivo cobre o vão todo e as cinco paredes conjuntamente, com limite
+elástico conservador nas fibras exteriores incluindo dobras. Vetores locais
+q/P assinados, simultâneos e sem nova rotação. Não utiliza IDs/ângulos como
+aceite, nem pisos de outra espessura, resistências ou Ml puros como rigidez.
+Se suficiente, o ramo integral usa a viga Euler–Bernoulli tensorial:
+K=E[[Ix,-Ixy],[-Ixy,Iy]], K v''''=q, [Mx,My]=-K v''.
+Coordenadas conjugadas: [normal para baixo (-y), paralelo à abertura (+x)].
+Máximos contínuos por trechos; derivadas polinomiais isoladas por Sturm
+racional. Extremos por eixo e da norma vetorial podem estar em posições
+diferentes; não se somam máximos independentes. O limite informado é aplicado
+somente à componente normal, nunca à resultante ou ao eixo paralelo.
+
+N=0/B=0 define só o campo flexional estudado, não a demanda física observada.
+Não inclui torção/empenamento, instabilidade física, deformações de cisalhamento,
+ligações, continuidade ou sistema3D. A condição integral pode qualificar a
+componente flexional sem qualificar ELS físico completo ou aprovação global.
+A NBR não é substituída por EN/AISI. Vlasov permanece uma análise separada;
+tensões/escoamento nominais não completam resistência com T/B.
+
+FALHA FECHADA E TRAÇABILIDADE
+Crivo inconclusivo significa falta desta prova suficiente, não reprovação nem
+prova de seção reduzida. Ele NÃO libera o raw escalar, mesmo se a carga for
+uniaxial. Falha numérica/resolução insuficiente não retém um índice parcial.
+Uma nova resposta própria é calculada inclusive quando o scalar antigo não
+cobria reversão; seu índice não é recuperado do scalar nem de um histórico.
+O raw anterior é preservado como diagnóstico separado. Históricos sem registro
+novo não recebem qualificação ao abrir, exportar ou selecionar o novo token.
+
+P junto ao apoio preserva força original, reação e camada antes de P, mas
+sua flexão interior tende a zero no limite a→0+. P em posição finita não é
+convertido nesse limite, mesmo muito próximo do apoio. Não há aprovação de
+introdução localizada, contato ou ligação.
+
+A evidência salva contém fonte, ações, critério, crivo, tensor, resposta e
+identidade das entradas. Seu hash detecta alteração acidental; não é assinatura
+ou certificação criptográfica do modelo físico. Leitura/Word/UI verificam o
+snapshot e nunca consultam fonte viva ou executam solver. Registro inválido é
+recusado visivelmente; o usuário pode pedir novo cálculo, sem reparo silencioso.
+
+MATEMÁTICA REVISADA ANTES DESTA INTEGRAÇÃO
+Crivo revision2 SHA6c55ca5d6ee5ef7c371b93963f7101fea4cb2b1426f12acff442520eb0fd03ca.
+Tensor SHA f3080817668d9584f8c01bdc220da85d2d1a0d8a72422acc574a127598c6860f.
+Raízes SHA510d92dbeb0f745ad45fecf7280e74e9c3dda39d0ec47449537f31c972735a7d.
+Crivo:10.080 estados e328 do contrato, revisão independente por reintegração.
+Tensor:19 testes/18subtestes e15 casos FE/Green independentes, covariância,
+energia, continuidade, salto de cortante e extremos. Cruzamento:328 respostas
+finitas,324 crivos suficientes e4 inconclusivos. Não é percentual universal de
+cobertura de projetos; depende das cargas, vão, geometria e posição reais.
+A aprovação da integração exige seus próprios testes e revisão, separados
+dos recibos matemáticos. Não há publicação nesta cópia.

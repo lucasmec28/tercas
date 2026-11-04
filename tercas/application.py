@@ -178,8 +178,11 @@ def _calculate(data):
  from .weak_axis import integrate
  integrate(result)
  from .member_application import is_girt,add_vertical_studies
+ from .deflection_scope import enabled as uniaxial_component_enabled,annotate_direct
  if is_girt(data):
-  result['member_application']='wall_girt';add_vertical_studies(result)
+  result['member_application']='wall_girt'
+  if not uniaxial_component_enabled(data):add_vertical_studies(result)
+ annotate_direct(result)
  return result
 
 STATUS={'not_evaluated':'Não avaliado','invalid_inputs':'Entrada inválida','FLT_not_evaluated':'Não avaliado','route_domain_not_declared':'Domínio não informado','computed':'Calculado','computed_bending_component':'Componente de flexão calculada','computed_from_supplied_inputs':'Calculado com dados informados','computed_fixed_load_position':'Calculado na posição informada','computed_from_supplied_effective_lengths':'Calculado com comprimentos informados','not_applicable':'Não aplicável','exempt_Table14':'Dispensado pela Tabela 14 (eixo forte)','stiffener_exception_9_5_1':'Exceção de enrijecedor §9.5.1','outside_implemented_family':'Fora da versão','invalid_or_outside_implemented_domain':'Entrada inválida ou fora do domínio'}
@@ -231,7 +234,11 @@ def rows(result):
   for row in out:
    if row['Verificação']=='Flecha — flexão':row['Verificação']='Flecha horizontal — eixo forte'
    if row['Verificação']=='Flexão biaxial':row['Observação']+=' Travessa: Mx devido à componente horizontal, My devido à vertical; hipóteses de tirantes não alteram esta resistência de vão livre.'
-  out.append(vertical_row(result))
+  if 'elastic_vertical' in result:out.append(vertical_row(result))
+ from .deflection_scope import presentation_rows
+ out=presentation_rows(result,out)
+ from .biaxial_component import presentation_rows as gross_component_rows
+ out=gross_component_rows(result,out)
  from .model_domain import historical_rows
  return historical_rows(result,out)
 

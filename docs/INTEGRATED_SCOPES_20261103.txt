@@ -1,0 +1,99 @@
+Escopos integrados de flecha torção e estado global
+
+Esta atualização preserva os cálculos de flexão já disponíveis. Os novos campos
+são escolhas explícitas e fotografias do cálculo, não uma aprovação retroativa
+de projetos ou memórias anteriores. A ausência de uma escolha mantém a rota
+matemática anterior. A interface retira caches de resultados, preserva entradas
+e calcula novamente apenas quando solicitado.
+
+Flecha uniaxial local
+
+Atualização de 04/11/2026: a adoção automática preparada para o prazo foi
+cancelada. Sessão vazia, exemplo didático e nova referência NÃO ativam essa
+escolha nem a nova componente biaxial. Ambas exigem escolha explícita.
+Importação, sessão existente, ativação de fonte e troca de perfil no mesmo
+estudo preservam a escolha gravada ou sua ausência. Os defaults físicos do
+backend não mudam; não existe migração de projeto nem gatilho por relógio.
+
+deflection_model=local_uniaxial_component_v1 seleciona somente a componente
+flexional normal local com Ix efetivo escalar, pela rota de NBR 14762:2010
+9.8.5 já implementada. Na terça inclinada, a direção vertical local é normal
+à cobertura, não a projeção vertical global. Na travessa isolada é horizontal.
+As cargas paralelas e as verificações resistentes não são apagadas. A tensão
+combinada na rigidez, a outra flecha e o giro/empenamento não são resolvidos
+por essa seleção. O conjunto de três travessas não é substituído por uma viga.
+
+Componente flexional biaxial integral, 04/11/2026
+
+A opção gross_biaxial_sufficient_component_v1 da terça própria Ue100 usa uma
+condição suficiente MLE para demonstrar seção integralmente efetiva e, só nesse
+ramo, uma nova resposta de viga com o tensor bruto do mesmo contorno. A flecha
+normal recebe seu próprio critério parcial; crivo inconclusivo permanece sem
+índice. Não recupera índices escalares antigos ou de histórico. Não há liberação
+de ELS físico/global, torção ou 3D. A exclusão da travessa isolada nesta integração
+é recorte de implementação/testes, não limitação normativa da prova matemática.
+Ver docs/BIAXIAL_GROSS_COMPONENT_20261104.txt para fontes e domínio.
+
+Torção da terça própria Ue100
+
+torsion_model habilita apenas o modelo elástico de Vlasov GJ+ECw. As sete
+espessuras próprias Ue100×50×17, ri=t, usam seus contornos individuais de 209
+nós, com arquivos e propriedades conferidos, sem utilizar J/Cw do catálogo.
+O domínio do adaptador é 3000 a 6000 mm, um vão prismático de cobertura,
+ações por área e combinações existentes. As rotas direta, catálogo genérico
+e sistema 3D não são convertidas silenciosamente para essa análise.
+
+Apoios: garfos ideais da referência R01, giro torsional impedido e empenamento
+livre. Trata-se de hipótese de análise, não de confirmação da ligação real.
+A telha não está em contato com a seção e não contribui com rigidez/travamento.
+PP do perfil atua em seu próprio CG, uma vez. CP, SC, ventos e P requerem linha
+de aplicação declarada em [x,y] a partir do CG da seção local, x para a abertura,
+y para cima. Os campos começam vazios. Ações nulas não exigem novos dados;
+linhas não informadas tornam pendentes somente as combinações que as utilizam.
+Na aplicação explícita de outra espessura, offsets relativos ao CG são
+preservados em mm; devem ser conferidos para a nova posição física.
+
+O carregamento e a convenção dos momentos são coerentes com a rota de flexão:
+forças físicas [x,y]=[paralelo,-normal], Mforte_R01=-Mx e Mfraco_R01=-My.
+P_APOIO é o limite a→0+, não uma força exatamente no apoio. Sua camada anterior
+à força mantém o salto de V/T; não se inventa um elemento finito de comprimento
+nulo. Uma força finita a menos de L/100 de outra estação é recusada na API
+genérica desta malha qualificada. Esse limite é computacional, não normativo.
+O app mantém CENTRO e APOIO-limite da matriz existente.
+
+Os resultados compactos preservam reações, balanço, extremos individuais com
+testemunhas concomitantes, sinais, posições e lados. Não combinam máximos de
+seções diferentes. A malha densa é omitida do JSON comum; é reproduzível pelos
+arquivos de seção, entradas e núcleo incluídos. Não se afirma envelope máximo
+de tensão combinada nem interação resistente por somar esses extremos.
+
+Giros elevados podem invalidar a interpretação física da primeira ordem. O
+aviso de 0,05 rad é triagem do estudo, não limite da NBR nem dispensa de análise
+adicional. Resíduos pequenos e convergência não validam grandes rotações.
+
+Este módulo não libera resistência com T/B. NBR 14762:2010 9.9, aplicada na
+rota N=0 de flexão, não recebe um denominador inventado de torção ou bimomento.
+Tensões elásticas ou von Mises abaixo de fy, sozinhas, não qualificam flambagem
+local, distorcional ou estabilidade sob esse campo. O método mecânico é único;
+não se compõem fórmulas resistentes de referências incompatíveis.
+
+Fonte mecânica: Manual CBCA Estruturas compostas por perfis formados a frio,
+2014, Anexo A, páginas 84 a 87. URL:
+https://www.jodi.com.br/wp-content/uploads/2021/01/Manual-CBCA-Estrutura-composta-por-perfis-formados-a-frio.pdf
+Fonte normativa: cópia fornecida de ABNT NBR 14762:2010, itens 9.8.5 e 9.9.
+
+Estado global
+
+complete_result registra global_verification somente no cálculo novo da UI.
+Não modifica os números anteriores. Uma falha em um critério qualificado é
+preservada mesmo que outras verificações estejam pendentes. Falta de dados não
+vira índice zero e filtros de combinações não dispensam ELU ou ELS. Os estados
+ELU/ELS herdam os gates comuns de modelo. O maior índice disponível não é uma
+utilização global; não se somam verificações diferentes.
+
+Nesta emissão, torção/empenamento resistentes permanecem pendentes, assim como
+o ELS completo biaxial quando aplicável. Nenhuma saída atual recebe aprovação
+global. Isso não é uma impossibilidade normativa universal: descreve o escopo
+implementado e validado. Tirantes, cantoneiras, ligações e ancoragens continuam
+fora do dimensionamento solicitado; não se exige certificação de campo para
+calcular as hipóteses declaradas.

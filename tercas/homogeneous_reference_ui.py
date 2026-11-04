@@ -101,7 +101,8 @@ def render(st, data, revision, load, render_results, render_import):
         st.session_state.pop('result', None)
         try:
             with st.spinner('Calculando a referência própria…'):
-                st.session_state.result = calculate_reference(data)
+                from .study_completion import complete_result
+                st.session_state.result = complete_result(calculate_reference(data))
         except (ValueError, TypeError, KeyError, ArithmeticError) as exc:
             st.error('Não foi possível calcular: ' + str(exc))
     st.download_button('Baixar entradas da referência (JSON)', json.dumps(data, ensure_ascii=False, indent=2),

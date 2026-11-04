@@ -21,7 +21,8 @@ VERSION = 'own_Ue100_six_scalar_components_app_v1'
 REPORTING_VERSION = 'own_Ue100_six_self_contained_snapshot_v1'
 EDITABLE = {'project', 'actions_origin', 'load_mode', 'area_inputs', 'selected_types',
             'q_uls', 'q_sls', 'P_uls', 'P_sls', 'x_uls', 'x_sls',
-            'q_parallel_uls', 'q_parallel_sls', 'P_parallel_uls', 'P_parallel_sls'}
+            'q_parallel_uls', 'q_parallel_sls', 'P_parallel_uls', 'P_parallel_sls',
+            'deflection_model', 'torsion_model'}
 SCOPE = ('Seis referências numéricas próprias Ue100×50×17, ri=t, linha '
          'facetada R01 de 209 nós. E=200000 MPa, ν=0,3, G=E/2,6, fy=250 MPa. '
          '3000≤L≤6000 mm, Lx=Ly=Lz=L, K=Cb=Cm=1, garfos ideais e empenamento livre. '
@@ -249,7 +250,8 @@ def source(thickness_mm, L_mm=4000., angle=0.):
 
 
 def _protected(data):
-    p = {k:copy.deepcopy(v) for k,v in data.items() if k not in EDITABLE|{FIELD}}
+    from .ue_member_application import editable
+    p = {k:copy.deepcopy(v) for k,v in data.items() if k not in EDITABLE|editable(data)|{FIELD}}
     if isinstance(p.get('inclination'),dict):p['inclination'].pop('value',None)
     return p
 
@@ -260,13 +262,16 @@ def assess(data):
     if not isinstance(data.get('properties'),dict):
         return dict(failed,reasons=['Conjunto de propriedades deve ser um objeto JSON.'])
     try:
-        expected = source(data['properties'].get('t'), data.get('L_mm'))
+        from .ue_member_application import expected as application_expected
+        expected = application_expected(source(data['properties'].get('t'), data.get('L_mm')),data)
     except (OSError,ValueError,TypeError,KeyError,ArithmeticError) as exc:
         return dict(failed,reasons=[str(exc)])
     from .homogeneous_reference import differences, _editor_errors, _action_errors
     changed = differences(_protected(data),_protected(expected))
     reasons = ['Campos protegidos divergentes: '+', '.join(changed)] if changed else []
     reasons.extend(_editor_errors(data,expected))
+    from .ue_member_application import editor_errors as application_editor_errors
+    reasons.extend(application_editor_errors(data))
     token = dict(schema=VERSION,reference_id=expected['ue_family_sources']['reference_id'])
     if FIELD in data and differences(data[FIELD],token):reasons.append('Marcador de lote inválido.')
     action_errors = _action_errors(data,expected) if not reasons else []
@@ -297,14 +302,15 @@ def apply_geometry(data,thickness_mm,L_mm):
     """Explicit complete section replacement; retain actions and absolute P positions."""
     state=assess(data)
     if not state['active']:raise ValueError('Ative referência íntegra antes de mudar seção ou vão.')
-    out=source(thickness_mm,L_mm,data['inclination']['value'])
-    for key in EDITABLE:
+    from .ue_member_application import expected as application_expected,editable
+    out=application_expected(source(thickness_mm,L_mm,data['inclination']['value']),data)
+    for key in EDITABLE | editable(data):
         if key in data:out[key]=copy.deepcopy(data[key])
         else:out.pop(key,None)
     return activate(out)
 
 
-def evidence(data):
+def _evidence(data):
     state=assess(data)
     if not state['calculable']:
         raise ValueError('Lote desativado: '+'; '.join(state['reasons'] or state['action_errors'] or ['ative explicitamente.']))
@@ -321,7 +327,14 @@ def evidence(data):
         app_route_connected=True,requires_research_adapter=False)
 
 
+def evidence(data):
+    from .ue_member_application import annotate_evidence
+    return annotate_evidence(_evidence(data),data)
+
+
 def _annotate_els(result):
+    from .deflection_scope import enabled
+    if enabled(result['input_data']):return  # Explicit isolated component, not combined ELS.
     def mark(block,q,p):
         uniaxial=q==0. and p==0.
         block['family_ELS_scope']=dict(strong_uniaxial_actions=uniaxial,combined_ELS_approved=False,
@@ -396,7 +409,8 @@ def calculate_reference(data):
                   combined_ELS_approved=False,torsion_physical_loading_qualified=False,
                   app_route_connected=True,requires_research_adapter=False)
     gate()  # Fail if a frozen source changed during this operation.
-    return result
+    from .biaxial_component import attach_fresh
+    return attach_fresh(result,record)
 
 
 def report(doc,result):
@@ -418,7 +432,8 @@ def report(doc,result):
             ' mm³; Ml='+format(c['Ml_Nmm'],'.15g')+' Nmm; Me='+format(c['Me_Nmm'],'.15g')+
             ' Nmm; MRd local/FLT/D='+ '/'.join(format(c[k],'.15g') for k in ('MRd_local_Nmm','MRd_FLT_Nmm','MRd_dist_Nmm'))+
             ' Nmm; mínimo='+format(c['MRd_Nmm'],'.15g')+' Nmm.')
-    doc.add_paragraph('ELS forte uniaxial: somente critério parcial quando as ações locais reais q e P paralelas forem nulas. Estados biaxiais permanecem sem índice ELS por rigidez combinada pendente. Não se transfere evidência de outra seção, carga ou comprimento.')
+    if not result.get('deflection_scope_evidence') and 'gross_biaxial_component_evidence' not in result:
+        doc.add_paragraph('ELS forte uniaxial: somente critério parcial quando as ações locais reais q e P paralelas forem nulas. Estados biaxiais permanecem sem índice ELS por rigidez combinada pendente. Não se transfere evidência de outra seção, carga ou comprimento.')
     doc.add_paragraph('N=0 e torque primário imposto=0 apenas nesta componente matemática. PP físico no CG pode ser excêntrico ao centro de cisalhamento. Torção/empenamento físico, introdução local, ligações e aprovação global permanecem pendentes.')
     doc.add_paragraph('Fontes da emissão: '+json.dumps(r['source_documents'],ensure_ascii=False,sort_keys=True))
     doc.add_paragraph('SHA-256 das entradas desta referência: '+r['input_sha256'])

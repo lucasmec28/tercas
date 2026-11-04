@@ -83,7 +83,8 @@ def _calculate_batch(data, *, _calculate_case=None):
    result['NBR_branches']['point']={
     'status':'not_evaluated','force_N':combo['P_N'],'position':'support_limit',
     'reason':'Força concentrada no limite junto ao apoio: sua flexão tende a zero, mas a transferência local permanece. Fora do subconjunto interno isolado implementado; sem conclusão de resistência local ou ligação.'}
-  rs=[r for r in rows(result) if (r['Verificação'] in ('Flecha — flexão','Flecha paralela à cobertura','Flecha horizontal — eixo forte','Flecha vertical — eixo fraco'))==(combo['limit_state']=='ELS')]
+  from .deflection_scope import ROWS as uniaxial_component_rows
+  rs=[r for r in rows(result) if (r['Verificação'] in ('Flecha — flexão','Flecha paralela à cobertura','Flecha horizontal — eixo forte','Flecha vertical — eixo fraco',*uniaxial_component_rows))==(combo['limit_state']=='ELS')]
   mobile={}
   if combo.get('P_N',0):mobile=mobile_rows(rs,result,combo)
   evidence=({'ELS':result['ELS']} if combo['limit_state']=='ELS' else {k:result[k] for k in ['NBR_branches','FLT_segments','section_checks']})
@@ -117,7 +118,10 @@ def _calculate_batch(data, *, _calculate_case=None):
  from .weak_pierin import reference_for_inputs
  from .strong_pierin import qualify
  from .weak_u_assumption import evidence as u_evidence
- return {'model_domain_evidence':copy.deepcopy(common_spec['model_domain_evidence']),'common_input_snapshot':common_snapshot,'strong_critical_reference':qualify(data)[1],'weak_sense_assumption':u_evidence(data),'weak_critical_reference':reference_for_inputs(data),'schema':'tercas_batch_results_v1','version':VERSION,'project':data['project'],'synthetic':data['synthetic'],'input_fingerprint':fingerprint(data),'input_data':copy.deepcopy(data),'load_bundle':bundle,'cases':cases,'whole_member_approved':False,'summary':governing(cases)}
+ result={'model_domain_evidence':copy.deepcopy(common_spec['model_domain_evidence']),'common_input_snapshot':common_snapshot,'strong_critical_reference':qualify(data)[1],'weak_sense_assumption':u_evidence(data),'weak_critical_reference':reference_for_inputs(data),'schema':'tercas_batch_results_v1','version':VERSION,'project':data['project'],'synthetic':data['synthetic'],'input_fingerprint':fingerprint(data),'input_data':copy.deepcopy(data),'load_bundle':bundle,'cases':cases,'whole_member_approved':False,'summary':governing(cases)}
+ from .deflection_scope import annotate_batch
+ annotate_batch(result)
+ return result
 
 def governing(cases):
  groups={}

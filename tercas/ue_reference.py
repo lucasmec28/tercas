@@ -49,7 +49,8 @@ ELS_POLICY = ('Qualificação por ações locais reais de cada estado: somente q
               'combinada; os 34 estados MLE de 4 m não são transferidos automaticamente.')
 EDITABLE = {'project', 'actions_origin', 'load_mode', 'area_inputs', 'selected_types',
             'q_uls', 'q_sls', 'P_uls', 'P_sls', 'x_uls', 'x_sls',
-            'q_parallel_uls', 'q_parallel_sls', 'P_parallel_uls', 'P_parallel_sls'}
+            'q_parallel_uls', 'q_parallel_sls', 'P_parallel_uls', 'P_parallel_sls',
+            'deflection_model', 'torsion_model'}
 
 
 def number(value, name='Vão'):
@@ -179,7 +180,8 @@ def claims_reference(data):
 
 
 def _protected(data):
-    out = {k: copy.deepcopy(v) for k, v in data.items() if k not in EDITABLE | {FIELD}}
+    from .ue_member_application import editable
+    out = {k: copy.deepcopy(v) for k, v in data.items() if k not in EDITABLE | editable(data) | {FIELD}}
     if isinstance(out.get('inclination'), dict):out['inclination'].pop('value', None)
     return out
 
@@ -188,13 +190,17 @@ def assess(data):
     """Read-only check, including complete physical vectors and source documents."""
     failed = dict(eligible=False, active=False, calculable=False, reference_id=None, action_errors=[])
     if not isinstance(data, dict):return dict(failed, reasons=['Objeto JSON inválido.'])
-    try:expected = source(L_mm=data.get('L_mm'))
+    try:
+        from .ue_member_application import expected as application_expected
+        expected = application_expected(source(L_mm=data.get('L_mm')),data)
     except (OSError, ValueError, TypeError, KeyError, ArithmeticError) as exc:
         return dict(failed, reasons=[str(exc)])
     from .homogeneous_reference import differences, _editor_errors, _action_errors
     changed = differences(_protected(data), _protected(expected))
     reasons = ['Campos protegidos divergentes: ' + ', '.join(changed)] if changed else []
     reasons.extend(_editor_errors(data, expected))
+    from .ue_member_application import editor_errors as application_editor_errors
+    reasons.extend(application_editor_errors(data))
     token = dict(schema=VERSION, reference_id=ID)
     if FIELD in data and differences(data[FIELD], token):reasons.append('Marcador próprio Ue inválido.')
     action_errors = _action_errors(data, expected) if not reasons else []
@@ -218,23 +224,30 @@ def apply_span(data, L_mm):
     """Only explicit application may rewrite length-derived fields. Keep actions."""
     state = assess(data)
     if not state['active']:raise ValueError('Ative uma referência Ue íntegra antes de alterar o vão.')
-    out = source(L_mm=L_mm, angle=data['inclination']['value'])
-    for key in EDITABLE:
+    from .ue_member_application import expected as application_expected,editable
+    out = application_expected(source(L_mm=L_mm, angle=data['inclination']['value']),data)
+    for key in EDITABLE | editable(data):
         if key in data:out[key] = copy.deepcopy(data[key])
         else:out.pop(key, None)
     out[FIELD] = copy.deepcopy(data[FIELD])
     return out
 
 
-def evidence(data):
+def _evidence(data):
     state = assess(data)
     if not state['calculable']:
         raise ValueError('Cálculo da referência Ue desativado: ' + '; '.join(
             state['reasons'] or state['action_errors'] or ['ative explicitamente a referência.']))
     manifest, _ = gate(); ref = reference(data['L_mm'])
+    from .deflection_scope import enabled, TEXT
+    isolated = enabled(data)
+    from .biaxial_component import selected as gross_selected, scope_text as gross_scope_text
+    gross=gross_selected(data)
     from .application import fingerprint
     return dict(schema=VERSION, reporting_version=REPORTING_VERSION, reference_id=ID,
-        scope=SCOPE, frozen_scope=FROZEN, distortion_note=TRACE_NOTE, ELS_status=ELS_POLICY,
+        scope=SCOPE, frozen_scope=FROZEN,
+        distortion_note=(TRACE_NOTE.split(' A evidência MLE')[0] if isolated or gross else TRACE_NOTE),
+        ELS_status=(TEXT if isolated else gross_scope_text(data) if gross else ELS_POLICY),
         input_sha256=fingerprint(data), source_documents=copy.deepcopy(data['ue_source_documents']),
         source_manifest=manifest, active_numeric_source=ref['active_numeric_source'],
         model=ref['model'], global_criticals=ref['global_criticals'],
@@ -246,8 +259,15 @@ def evidence(data):
         whole_member_approved=False)
 
 
+def evidence(data):
+    from .ue_member_application import annotate_evidence
+    return annotate_evidence(_evidence(data),data)
+
+
 def _pending_els(result):
     """Gate combined stiffness by actual local actions, never angle or case ID."""
+    from .deflection_scope import enabled
+    if enabled(result['input_data']):return  # Explicit isolated component, not combined ELS.
     def uniaxial(q, p):return q == 0. and p == 0.
     def mark(block, qualified):
         block['ue_ELS_scope'] = dict(strong_uniaxial_actions=qualified,
@@ -324,7 +344,8 @@ def calculate_reference(data):
     result['strong_critical_reference'] = None
     result['ue_reference_evidence'] = record
     result['whole_member_approved'] = False
-    return result
+    from .biaxial_component import attach_fresh
+    return attach_fresh(result,record)
 
 
 def report(doc, result):

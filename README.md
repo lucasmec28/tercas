@@ -151,3 +151,57 @@ Não há nova linha de cortante/flecha paralela, migração para travessas 3D,
 interpolação de espessura ou generalização para seção livre.
 
 Veja `docs/UE_FAMILY_INTEGRATION_20261103.txt` para escopo e QA.
+
+
+## Componente flexional biaxial própria — opção explícita de 04/11/2026
+
+Nas sete espessuras próprias Ue100×50×17, ri=t, entre 3 e 6 m, a opção
+**Flecha flexional biaxial por crivo de seção integral** verifica uma condição
+suficiente MLE nas cinco paredes e em todo o vão. Quando demonstrada, calcula
+nova resposta simultânea com Ix/Iy/Ixy do mesmo contorno, incluindo q/P assinados,
+reversão e posição interior de P. Somente a componente normal é comparada com
+o limite declarado. A condição suficiente é uma interpretação de engenharia
+documentada; não é fórmula normativa geral de seção reduzida biaxial.
+
+Crivo inconclusivo permanece sem índice, sem recuperar o resultado escalar.
+A viga é uma componente flexional biapoiada, não inclui a resposta torsional,
+ligações ou instabilidade física. ELS completo e aprovação global continuam
+pendentes. O primeiro contrato de integração cobriu a terça. A extensão explícita
+à travessa isolada está descrita abaixo; o conjunto 3D tem contrato físico próprio.
+As rotas anteriores sem essa escolha e a opção uniaxial explícita são preservadas.
+
+O prazo foi cancelado: nenhum estudo novo ativa automaticamente o fallback
+uniaxial ou esta nova rota. Importações e escolhas existentes não são migradas.
+Não são restauradas linhas de flecha/cortante paralelo. Históricos só exibem
+sua evidência salva, sem executar cálculo novo; registros inconsistentes perdem
+o índice na apresentação e solicitam recálculo explícito.
+
+Esta integração permanece em cópia, sem publicação. Ver
+`docs/BIAXIAL_GROSS_COMPONENT_20261104.txt` e os recibos de QA separados.
+
+
+## Travessa isolada com fonte própria — extensão explícita de 04/11/2026
+
+Nas mesmas sete fontes Ue e vãos de 3 a 6 m, a seleção **Aplicação da referência
+própria** permite propor e aplicar uma **Travessa lateral isolada — boca para
+baixo**. Um contrato versionado preserva propriedades, ações, critérios e fontes.
+Mudar apenas o rótulo no JSON não ativa essa transformação. Nenhum apoio ou crédito
+de tirantes, molas, telha ou conjunto de três travessas é inferido.
+
+No modo por área, PP e permanente do fechamento entram verticalmente, pela área
+de influência; vento atua horizontalmente. SC, inclinação e P automática de
+cobertura ficam inativos, com dados antigos preservados. No modo direto, os
+componentes já combinados e as posições de P são mantidos sem nova rotação ou PP.
+O limite horizontal é `wall_els.normal_reference_mm / normal_denominator`, com
+referência vazia igual ao vão. Ele não usa o limite armazenado da cobertura,
+não encurta o vão de cálculo e não representa prescrição normativa automática.
+
+A escolha biaxial permanece opt-in. Quando o crivo demonstra a seção integral,
+somente a componente horizontal da resposta flexional tensorial é comparada com
+o critério. Crivos inconclusivos continuam sem índice. Não há nova linha vertical,
+resistência torsional, aprovação ELS física/global ou extensão ao conjunto 3D.
+A escolha de torção da terça, se armazenada, é preservada e fica inativa e pendente
+na travessa isolada. Históricos inconsistentes são recusados sem recálculo.
+
+Veja `docs/OWN_UE_ISOLATED_GIRT_20261104.txt`. A candidata foi preparada e testada
+em cópia; publicação e confirmação do runtime online são etapas separadas.

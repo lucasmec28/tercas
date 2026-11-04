@@ -7,6 +7,7 @@ import pytest
 import streamlit as st
 from streamlit.testing.v1 import AppTest
 from tercas import ue_family_reference as f
+from tercas.new_study_policy import for_new_study
 
 APP=str(Path(__file__).resolve().parents[1]/'app.py')
 def button(a,label):return next(x for x in a.button if x.label==label)
@@ -29,7 +30,7 @@ def test_loader_and_section_span_preview_preserve_applied_state():
     assert button(a,'Carregar referência própria Ue100')
     select(a,'Espessura da referência Ue100 [mm]').set_value(2.65).run(timeout=30)
     button(a,'Carregar família própria Ue100').click().run(timeout=30)
-    assert not a.exception and a.session_state.last_input==f.load_reference(2.65)
+    assert not a.exception and a.session_state.last_input==for_new_study(f.load_reference(2.65))
     text(a,'Identificação do estudo').set_value('Nome preservado').run(timeout=30)
     number(a,'Permanente [kgf/m²]').set_value(13.).run(timeout=30)
     old=copy.deepcopy(a.session_state.last_input)
@@ -95,7 +96,7 @@ def test_catalogue_change_leaves_family_and_preserves_actions(monkeypatch):
     assert not button(a,'Calcular todas as seções do catálogo').disabled
     button(a,'Carregar referência própria Ue100').click().run(timeout=30)
     from tercas import ue_reference as old
-    assert a.session_state.last_input==old.load_reference()
+    assert a.session_state.last_input==for_new_study(old.load_reference())
 
 
 def test_research_marker_does_not_activate_app_route(monkeypatch):

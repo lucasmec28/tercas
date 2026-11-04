@@ -1,10 +1,12 @@
 """UI/SVG-only tests; no independent qualification of backend mechanics."""
 import copy,math,xml.etree.ElementTree as ET
+import pytest
 from pathlib import Path
 from streamlit.testing.v1 import AppTest
 from tercas.application import defaults
 from tercas.drawing import svg
 from tercas.member_application import is_girt
+from tercas import deflection_scope as scope
 APP=str(Path(__file__).resolve().parents[1]/'app.py')
 def select(a,label):return next(x for x in a.selectbox if x.label==label)
 def number(a,prefix):return next(x for x in a.number_input if x.label.startswith(prefix))
@@ -65,8 +67,12 @@ def test_invalid_application_stops_ui():
  assert any('Aplicação inválida' in e.value for e in a.error)
  assert not any(b.label=='Calcular verificações disponíveis' for b in a.button)
 
-def test_girt_area_calculation_preview_and_evidence():
+@pytest.mark.parametrize('uniaxial',[True,False])
+def test_girt_area_calculation_preview_and_evidence(uniaxial):
  a=AppTest.from_file(APP).run(timeout=30)
+ assert not next(c for c in a.checkbox if c.label==scope.LABEL).value
+ if uniaxial:
+  next(c for c in a.checkbox if c.label==scope.LABEL).check().run(timeout=30)
  select(a,'Aplicação do elemento').set_value('wall_girt').run(timeout=30)
  a.radio[0].set_value('Cargas por área e combinações automáticas').run(timeout=30)
  a.multiselect[0].set_value(['ELS rara']).run(timeout=30)
@@ -77,8 +83,27 @@ def test_girt_area_calculation_preview_and_evidence():
  assert r['input_data']['member_application']=='wall_girt'
  assert not r['whole_member_approved']
  assert all(c['combination']['P_N']==0 and 'SC' not in c['combination']['coefficients'] for c in r['cases'])
- assert all('elastic_vertical' in c['evidence'] for c in r['cases'])
- assert any('Flecha vertical' in row['Verificação'] and row['Índice'] is None for c in r['cases'] for row in c['rows'])
+ # Explicitly choosing the uniaxial scope omits the gross vertical diagnostic.
+ # The omitted choice retains it; neither choice removes
+ # actual vertical actions or qualifies a full ELS conclusion.
+ data=r['input_data']; g=9.80665/1000.
+ for case in r['cases']:
+  c=case['combination']; factors=c['coefficients']
+  expected_vertical=(factors.get('PP',0.)*data['properties']['mass_kg_m']*g+
+                     factors.get('CP',0.)*data['area_inputs']['permanent_kgf_m2']*
+                     data['area_inputs']['spacing_m']*g)
+  assert c['q_vector']['parallel']==pytest.approx(expected_vertical)
+ assert any(c['combination']['q_vector']['parallel']>0 for c in r['cases'])
+ assert all(('elastic_vertical' in c['evidence']) is (not uniaxial) for c in r['cases'])
+ if uniaxial:
+  assert all(c['evidence']['ELS']['local_uniaxial_component']['displacement_axis']=='local_normal_horizontal' for c in r['cases'])
+  assert any(row['Verificação']==scope.GIRT_ROW for c in r['cases'] for row in c['rows'])
+  assert not any('Flecha vertical' in row['Verificação'] for c in r['cases'] for row in c['rows'])
+  assert r['combined_ELS_approved'] is False
+ else:
+  assert scope.FIELD not in data
+  assert any('Flecha vertical' in row['Verificação'] and row['Índice'] is None for c in r['cases'] for row in c['rows'])
+ assert r['global_verification']['by_limit_state']['ELS']['status']!='aprovado'
  assert len(a.get('download_button'))==3
  # Changing application invalidates all previously computed results, including exports.
  select(a,'Aplicação do elemento').set_value('purlin').run(timeout=30)
