@@ -50,7 +50,7 @@ ELS_POLICY = ('Qualificação por ações locais reais de cada estado: somente q
 EDITABLE = {'project', 'actions_origin', 'load_mode', 'area_inputs', 'selected_types',
             'q_uls', 'q_sls', 'P_uls', 'P_sls', 'x_uls', 'x_sls',
             'q_parallel_uls', 'q_parallel_sls', 'P_parallel_uls', 'P_parallel_sls',
-            'deflection_model', 'torsion_model'}
+            'deflection_model', 'torsion_model', 'point_contact'}
 
 
 def number(value, name='Vão'):

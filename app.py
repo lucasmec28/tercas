@@ -22,6 +22,7 @@ from tercas.ue_family_reference import FIELD as UE_FAMILY_FIELD, claims_referenc
 from tercas.ue_family_ui import loader as ue_family_loader, render as render_ue_family
 from tercas.ux_inputs import CB_LABELS,cb_code,flange_segments,whole_span
 from tercas.new_study_policy import for_new_study, initialize_session
+from tercas.point_contact_ui import render as render_point_contact, show_saved_results as show_point_contact_results
 
 def show_elastic_wall(evidence):
  if not isinstance(evidence,dict):return
@@ -108,6 +109,7 @@ def render_results(result,d):
    st.dataframe(display_frame(rows(result)),hide_index=True,width='stretch')
    if result.get('inclination_evidence'):show_inclination(domain_historical_inclination(result,result['inclination_evidence']),girt=girt)
    if girt and not is_girt_result(result):show_elastic_wall(result)
+  show_point_contact_results(st,result)
   c1,c2,c3=st.columns(3)
   with c1:st.download_button('Baixar memória parcial (Word)',batch_word(result) if batch else word(result),file_name='MC_terca_parcial.docx',mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
   with c2:st.download_button('Baixar estudo e resultados (JSON)',json.dumps(result,ensure_ascii=False,indent=2),file_name='terca_estudo_resultados.json',mime='application/json')
@@ -290,8 +292,12 @@ with left:
   load(changed);st.rerun()
 reference_data=st.session_state.get('last_input',st.session_state.base) if (REFERENCE_FIELD in st.session_state.base or claims_ue_reference(st.session_state.base) or claims_ue_family(st.session_state.base)) else st.session_state.base
 if claims_ue_family(reference_data) and assess_ue_family(reference_data)['active']:
+ reference_data=copy.deepcopy(reference_data)
+ render_point_contact(st,reference_data,f'point_contact_{st.session_state.revision}',disabled=reference_data.get('member_application')=='wall_girt' and st.session_state.get(f'three_warping_{st.session_state.revision}_enabled',False))
  render_ue_family(st,reference_data,st.session_state.revision,load,render_results,render_input_import)
 if claims_ue_reference(reference_data) and assess_ue_reference(reference_data)['active']:
+ reference_data=copy.deepcopy(reference_data)
+ render_point_contact(st,reference_data,f'point_contact_{st.session_state.revision}',disabled=reference_data.get('member_application')=='wall_girt' and st.session_state.get(f'three_warping_{st.session_state.revision}_enabled',False))
  render_ue_reference(st,reference_data,st.session_state.revision,load,render_results,render_input_import)
 if assess_reference(reference_data)['active']:
  render_reference(st,reference_data,st.session_state.revision,load,render_results,render_input_import)
@@ -303,7 +309,7 @@ b=copy.deepcopy(st.session_state.base);r=st.session_state.revision
 last=st.session_state.get('last_input',b)
 for key in ['load_mode','area_inputs','selected_types','ELS_down_denominator','ELS_up_denominator','q_uls','P_uls','x_uls','q_sls','P_sls','x_sls','actions_origin','ELS_limit_mm','ELS_origin']:
  b[key]=copy.deepcopy(last[key])
-for key in ['torsion_model','deflection_model','member_application','wall_els','wall_tie_study','three_girt_model','weak_catalog','weak_axis','model_domain','u_panel_condition','inclination','q_parallel_uls','q_parallel_sls','P_parallel_uls','P_parallel_sls']:
+for key in ['point_contact','torsion_model','deflection_model','member_application','wall_els','wall_tie_study','three_girt_model','weak_catalog','weak_axis','model_domain','u_panel_condition','inclination','q_parallel_uls','q_parallel_sls','P_parallel_uls','P_parallel_sls']:
  if key in last:b[key]=copy.deepcopy(last[key])
 d=copy.deepcopy(b)
 try:
@@ -663,6 +669,7 @@ if any(tag in provenance_text.casefold() for tag in ['sintétic','sintetic','did
  st.warning('Há referências a dados sintéticos/didáticos nas entradas ou origens. Foram preservadas; confira essas premissas antes de usar como dados de projeto.')
 from tercas.deflection_scope import render_choice as render_deflection_choice
 render_deflection_choice(st,d,f'deflection_model_{r}')
+render_point_contact(st,d,f'point_contact_{r}',disabled=three_girt)
 st.session_state['last_input']=copy.deepcopy(d)
 try:
  if three_girt:

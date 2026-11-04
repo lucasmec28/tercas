@@ -114,6 +114,9 @@ def _editor_errors(data, expected):
     errors = []
     from .deflection_scope import enabled as uniaxial_component_enabled
     from .torsion_study import configuration as torsion_configuration
+    from .point_contact import configuration as point_contact_configuration
+    try:point_contact_configuration(data)
+    except ValueError as exc:errors.append(str(exc))
     try:torsion_configuration(data)
     except ValueError as exc:errors.append(str(exc))
     try:uniaxial_component_enabled(data)

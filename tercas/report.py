@@ -165,6 +165,8 @@ def word(result):
  gross_component_report(doc,result);aa_component_report(doc,result)
  from .study_completion import report_global
  report_global(doc,result)
+ from .point_contact import report as report_point_contact
+ report_point_contact(doc,result)
  from .torsion_study_ui import report as torsion_report
  torsion_report(doc,result)
  from .aisi_torsion_ui import report as aisi_torsion_report
@@ -300,6 +302,8 @@ def batch_word(result):
  gross_component_report(doc,result);aa_component_report(doc,result)
  from .study_completion import report_global
  report_global(doc,result)
+ from .point_contact import report as report_point_contact
+ report_point_contact(doc,result)
  from .torsion_study_ui import report as torsion_report
  torsion_report(doc,result)
  from .aisi_torsion_ui import report as aisi_torsion_report

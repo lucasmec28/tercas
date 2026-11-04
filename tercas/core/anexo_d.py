@@ -15,19 +15,29 @@ ROWS={
 (False,False,2,'internal'):(1,14,.47,.25,.04)}
 
 
-def classify(h,end_distance,opposite_clear_distance):
+def classify(h,end_distance,opposite_clear_distance,*,no_opposite_force=False):
     # Distâncias fornecidas já medidas segundo FiguraD.1; não estimadas pelo centróide.
+    if type(no_opposite_force) is not bool:
+        raise ValueError('declaração de ausência de força oposta deve ser booleana')
+    if no_opposite_force:
+        if opposite_clear_distance is not None:
+            raise ValueError('ausência de força oposta não admite distância concorrente')
+        if not all(math.isfinite(v) and v>=0 for v in (h,end_distance)) or h==0:
+            raise ValueError('distancias invalidas')
+        return (1, 'end' if end_distance<=1.5*h else 'internal')
+    if opposite_clear_distance is None:
+        raise ValueError('ausência de força oposta não declarada; distância física não informada')
     if not all(math.isfinite(v) and v>=0 for v in (h,end_distance,opposite_clear_distance)) or h==0:
         raise ValueError('distancias invalidas')
     return (1 if opposite_clear_distance>=1.5*h else 2,
             'end' if end_distance<=1.5*h else 'internal')
 
-def frd(*,h,t,ri,c,fy,end_distance,opposite_clear_distance,connected=False,lip=True,theta=90):
+def frd(*,h,t,ri,c,fy,end_distance,opposite_clear_distance,connected=False,lip=True,theta=90,no_opposite_force=False):
     if not all(math.isfinite(v) for v in (h,t,ri,c,fy,theta)) or min(h,t,c,fy)<=0 or ri<0:
         raise ValueError('geometria/material invalido')
     if c<20: raise ValueError('contato fora do dominio: nao elevar c automaticamente')
     if theta!=90 or h/t>200 or c/t>210 or c/h>2: raise ValueError('fora da TabelaD.2')
-    n,loc=classify(h,end_distance,opposite_clear_distance)
+    n,loc=classify(h,end_distance,opposite_clear_distance,no_opposite_force=no_opposite_force)
     key=(connected,lip,n,loc)
     if key not in ROWS: raise ValueError('configuracao sem linha tabulada')
     if connected and n==2 and loc=='internal' and end_distance<=2.5*h:

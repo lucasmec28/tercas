@@ -49,6 +49,8 @@ def finite(x):return isinstance(x,(int,float)) and not isinstance(x,bool) and ma
 
 def build_spec(data):
  if not isinstance(data,dict):raise ValueError('O arquivo deve conter um objeto de entradas JSON.')
+ from .point_contact import configuration as point_contact_configuration
+ point_contact_configuration(data)
  from .member_application import validate as validate_member
  validate_member(data)
  from .inclination_adapter import configuration,number
@@ -151,6 +153,9 @@ def _calculate(data):
  # No concentrated compressive action means this particular check is inapplicable,
  # not a missing field. Negative force is outside this compression-only adapter.
  if data['P_uls']==0:b['point']={'status':'not_applicable','reason':'Sem força concentrada de compressão no caso informado.'}
+ from .point_contact import evaluate as evaluate_point_contact
+ contact=evaluate_point_contact(data,spec)
+ if contact is not None:b['point']=contact
  result['inclination_evidence']=inclination_evidence
  result['whole_member_approved']=False
  from .weak_pierin import reference_for_inputs

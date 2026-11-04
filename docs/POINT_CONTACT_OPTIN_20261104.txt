@@ -1,0 +1,74 @@
+INTRODUÇÃO LOCAL DE P — OPT-IN RESTRITO, 04/11/2026
+
+Objetivo
+Corrigir a mensagem de contato ausente sem inventar dimensão e oferecer declaração
+explícita do subconjunto interno já representado pela NBR14762:2010 Anexo D.
+É somente um critério local. Não conclui ligações, apoios, elemento completo,
+ELS físico, torção/empenamento ou sistema3D.
+
+Fontes do domínio
+NBR14762:2010 §9.5.1 (p.33/PDF39), Anexo D (p.78/PDF84), Tabela D.2 e notas
+(p.79/PDF85), Figura D.1 (p.81/PDF87), fonte fornecida pelo usuário e conferida
+visualmente. Não é equação nova nem extensão automática para qualquer geometria.
+
+Declarações obrigatórias, sem valores marcados por padrão
+- Geometria/material correspondentes: H externo, t, ri, fy e dois cantos90° da alma.
+- P compressiva via mesa no eixo forte local; alma90° à superfície de apoio/carga.
+- Mesa não conectada de modo a restringir sua rotação na região carregada.
+- Ausência de enrijecedor transversal nessa região.
+- Nenhuma outra força concentrada na mesa oposta no trecho modelado.
+- Ambas as reações transferidas exclusivamente pelas almas ligadas a outra
+  viga ou pilar, conforme§9.5.1, e ausência de assento/contato pelas mesas.
+- Extremos físicos da peça coincidentes com0/L, sem balanços/continuidade.
+- Origem do comprimento c e do detalhe de P, identificando os dois apoios.
+As declarações são dados do usuário, não inspeção ou certificação física do app.
+O contato não presume contato, ligação, distribuição de P ou travamento pela telha
+nem modifica o domínio já declarado sobre telha/painel.
+
+Limites da opção
+h=H−2(ri+t)>0 é a parte plana da alma. c é comprimento longitudinal real de contato,
+não largura da mesa e não intervalo permitido para deslocar a força matemática.
+c≥20mm; h/t≤200; c/t≤210; c/h≤2; ri/t≤5 para Ue ou≤1 para U.
+A distância livre da borda de contato ao extremo físico deve superar1,5h.
+O comprimento de contato é centrado na posição P declarada para o caso.
+O mínimo de20mm não é default nem correção automática de c menor.
+Uma mesa é classificada pela ausência declarada de outra força oposta, sem uma
+distância oposta fictícia. A extensão no_opposite_force da API do núcleo exige
+opposite_clear_distance=None. Não altera as chamadas antigas.
+P no apoio-limite permanece fora do subconjunto. P paralelo local não nulo,
+P não compressiva, ausência de origem/dado/declaração ou domínio excedido mantêm
+introdução local pendente, sem índice ativo. Não se cria interação M–F.
+
+Contrato opcional
+Campo point_contact, schema point_contact_internal_compression_v1, com chaves:
+schema, enabled, c_mm, origin, declarations, basis.
+Ausente ou disabled: ramo legado preservado. Padrão: disabled, c=None, origem
+vazia, oito declarações false e basis=None. Campo c pode ser finito ou não informado;
+entrada malformada é rejeitada sem conversão ou substituição automática.
+O vínculo basis guarda catálogo, aplicação, L, posição ativa e h/bf/lip/t/ri/fy.
+Na área usa centro L/2; x_uls direto inativo não o altera. Título/origens/ações
+não físicas não o alteram. Mudança de seção, material local, aplicação, vão ou
+posição direta exige reconfirmar geometria/material. Os valores antigos ficam
+preservados; o ramo fica pendente. O vínculo só é atualizado pela ação explícita
+de desmarcar/marcar a declaração de geometria/material na UI.
+As fontes próprias Ue aceitam somente este objeto separado. patch_mm, patch_origin,
+left_web, right_web, support_origin e as demais fontes/vínculos antigos continuam
+protegidos. O objeto não altera forças, posições, flexão, FLT, AA/AISI ou3D.
+
+Resultados e histórico
+Bloco complementar independente da tabela principal removida, com combinação,
+Pnormal/paralelo, c, FRd/índice quando realmente salvos, e motivo de pendência.
+Word inclui declarações e traço salvos. Nada é calculado ao abrir/exportar.
+O registro novo contém digest e ligações entre contrato, forças e geometria para
+não promover um snapshot incompleto/divergente. O digest é controle de integridade,
+não certificação física. Histórico sem vínculo ou digest permanece pendente no
+complemento; nenhuma evidência histórica é alterada ou requalificada.
+O global apenas consome o ramo local elegível existente. Apoio-limite, torção,
+ELS físico e demais pendências não são eliminados por esse opt-in.
+
+Qualificação
+Testes focais de contrato, limites, dados ausentes, declarações, paridade,
+3D inativo, AA/AISI, import/export, mudança de contexto, snapshots adversariais
+e AppTest são registrados fora da candidata. Não representam validação experimental,
+projeto real, suíte integral ou publicação. O contato c40mm usado em QA é sintético
+e nunca é assumido por padrão no aplicativo.

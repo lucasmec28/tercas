@@ -44,6 +44,7 @@ def calculate(spec,base):
  patch=intro.get('point') if isinstance(intro.get('point'),dict) else {}
  try:
   if not patch or not isinstance(patch.get('origin'),str) or not patch['origin'].strip():raise ValueError('point patch geometry and origin missing')
+  if not good(patch.get('c_mm')):raise ValueError('Comprimento de contato da carga concentrada ausente ou inválido (é necessário um valor finito e positivo). Introdução local permanece pendente; nenhum comprimento foi presumido.')
   c=patch['c_mm'];x=u['x_mm'];h=v('h')-2*(v('ri_mm')+v('t'));dist=min(x-c/2,L-x-c/2)
   if not all(good(a) for a in [c,h,fy,u['P_N']]) or dist<=1.5*h:raise ValueError('outside isolated internal positive patch subset')
   if any(s['status']!='stiffener_exception_9_5_1' for s in result['supports'].values()):raise ValueError('current patch subset needs declared end-web connections; flange contacts need separate geometry')
