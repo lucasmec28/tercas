@@ -55,7 +55,9 @@ def show(st,result):
     st.warning(lines[0])
     for line in lines[1:]:st.caption(line)
     if ev['records']:st.dataframe(display_frame(rows(ev)),hide_index=True,width='stretch')
-    with st.expander('Memória G8.1/H4, capacidades e estados concomitantes',expanded=False):st.json(ev)
+    with st.expander('Memória G8.1/H4, capacidades e estados concomitantes',expanded=False):
+        if result.get('schema')=='tercas_three_girt_results_v1' or result.get('input_data',{}).get('member_application','purlin')!='purlin':st.json(ev)
+        else:st.caption('As capacidades e todos os estados estão preservados no arquivo JSON. Em “Memória numérica e rastreabilidade”, selecione explicitamente uma combinação para consultar o registro AISI salvo, sem novo cálculo.')
 
 
 def report(doc,result):

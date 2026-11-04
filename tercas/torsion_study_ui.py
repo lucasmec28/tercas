@@ -115,7 +115,9 @@ def show_result(st,result):
         st.dataframe(display_frame(summary_rows(evidence)),hide_index=True,width='stretch')
         warnings=sum(bool(r.get('analysis',{}).get('small_rotation_warning')) for r in records if isinstance(r.get('analysis'),dict))
         if warnings:st.error(f'{warnings} combinações excedem o aviso de pequeno giro do estudo. A solução linear não é validação física para giros elevados. 0,05 rad é triagem numérica, não limite normativo.')
-    with st.expander('Premissas, reações e estados de torção preservados',expanded=False):st.json(evidence)
+    with st.expander('Premissas, reações e estados de torção preservados',expanded=False):
+        if result.get('schema')=='tercas_three_girt_results_v1' or result.get('input_data',{}).get('member_application','purlin')!='purlin':st.json(evidence)
+        else:st.caption('A memória completa está preservada no arquivo JSON. Em “Memória numérica e rastreabilidade”, selecione explicitamente uma combinação para consultar seus dados salvos de torção, sem novo cálculo.')
 
 
 def summary_rows(evidence):

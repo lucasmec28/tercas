@@ -112,7 +112,41 @@ def render_results(result,d):
   with c1:st.download_button('Baixar memória parcial (Word)',batch_word(result) if batch else word(result),file_name='MC_terca_parcial.docx',mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
   with c2:st.download_button('Baixar estudo e resultados (JSON)',json.dumps(result,ensure_ascii=False,indent=2),file_name='terca_estudo_resultados.json',mime='application/json')
   with c3:st.download_button('Baixar entradas (JSON)',json.dumps(copy.deepcopy(d) if (result.get('homogeneous_reference_evidence') or result.get('ue_reference_evidence') or result.get('ue_family_reference_evidence')) else domain_export_inputs(d),ensure_ascii=False,indent=2),file_name='terca_entradas.json',mime='application/json')
-  with st.expander('Memória numérica e rastreabilidade'):st.json(result)
+  with st.expander('Memória numérica e rastreabilidade'):
+   if girt:st.json(result)
+   else:st.caption('Consulta parcial de dados já salvos, sem novo cálculo. O arquivo “Baixar estudo e resultados (JSON)” conserva o lote completo, todas as evidências e a precisão original.')
+   if batch and not girt:
+    detail_index=st.selectbox('Combinação para abrir a memória numérica',range(len(result['cases'])),index=None,
+     placeholder='Selecione uma combinação para exibir os dados salvos',
+     format_func=lambda i:result['cases'][i]['combination']['id']+' — '+result['cases'][i]['combination']['type'],
+     key='saved_numeric_detail_'+str(result.get('input_fingerprint','historical')))
+    if detail_index is not None:
+     selected_case=result['cases'][detail_index];cid=selected_case['combination']['id']
+     detail={'view_scope':'Consulta parcial de uma combinação; não é um novo resultado nem substitui o JSON completo.',
+      'source_input_fingerprint':result.get('input_fingerprint'),'selected_case':selected_case}
+     torsion=result.get('torsion_evidence')
+     if isinstance(torsion,dict):
+      detail['torsion_saved_context']={k:v for k,v in torsion.items() if k!='records'}
+      detail['torsion_selected_record']=next((r for r in torsion.get('records',[]) if r.get('combination_id')==cid),None)
+     from tercas.aisi_torsion_ui import _saved as saved_aisi_component
+     try:aisi=saved_aisi_component(result)
+     except (ValueError,TypeError,KeyError) as exc:
+      st.error('Registro do complemento AISI inválido; detalhe não reproduzido: '+str(exc));aisi=None
+     if isinstance(aisi,dict):
+      detail['aisi_saved_context']={k:v for k,v in aisi.items() if k!='records'}
+      detail['aisi_selected_record']=next((r for r in aisi.get('records',[]) if r.get('combination_id')==cid),None)
+      if detail['aisi_selected_record'] is None:st.caption('Não há registro AISI para esta combinação no arquivo salvo. Nenhum cálculo foi acrescentado; H4 não verifica ELS.')
+     if result.get('aa_web_component_evidence') is not None:
+      from tercas.aa_component_ui import _read as saved_aa_component
+      aa,aa_error=saved_aa_component(result)
+      if aa_error:st.error(aa_error)
+      elif isinstance(aa,dict):
+       detail['aa_saved_context']={k:v for k,v in aa.items() if k!='records'}
+       detail['aa_selected_record']=aa.get('records',{}).get(cid)
+     st.caption('Os contextos e seus identificadores pertencem à emissão completa original; somente os registros da combinação escolhida são exibidos abaixo. Ausência de registro permanece ausência, sem recompor ou requalificar o histórico.')
+     st.json(detail,expanded=False)
+   elif not girt and st.checkbox('Exibir memória numérica salva do caso direto',value=False,key='saved_numeric_direct_'+str(result.get('input_fingerprint','historical'))):
+    st.json(result,expanded=False)
 
 
 st.set_page_config(page_title='LRO | Terças',page_icon='🏗️',layout='wide')
