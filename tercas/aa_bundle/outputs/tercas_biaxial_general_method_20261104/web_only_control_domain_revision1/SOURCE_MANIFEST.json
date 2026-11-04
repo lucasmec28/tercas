@@ -1,0 +1,12 @@
+{
+  "authority": "Own fixed R01 manifest preserved; Bernstein and psi extension independent reviews explicitly pinned by parent",
+  "files": {
+    "outputs/tercas_biaxial_general_method_20261104/gross_mle_domain_revision2/gross_mle.py": "6c55ca5d6ee5ef7c371b93963f7101fea4cb2b1426f12acff442520eb0fd03ca",
+    "outputs/tercas_biaxial_general_method_20261104/web_only_independent/pure_weak_oracle.py": "fa90b12620c78f04c8bf302bb7b23ab3b00f6b10431324fd3fd08bf5f4d039e0",
+    "outputs/tercas_biaxial_general_method_20261104/web_only_domain_bound/bound_ray.py": "2e540f8498be508631a0a6115f90117f8b900d82412dd90e89673eb23e15a66a",
+    "outputs/tercas_biaxial_research_integration_20261104/candidate/tercas/data/torsion_profiles/ue100x50x17_t1.20.json": "f74d3f941e59af0bceb3a2fdae414e8aa479b14b16cbe284c1dff3f3e816b005",
+    "outputs/tercas_biaxial_general_method_20261104/web_only_domain_api_revision1/bound_core.py": "7d887228de934bdfd50a95e834205adf6b47680bb6c5037d55c49b5e21c888ce",
+    "outputs/tercas_biaxial_resumed_20261103/variable_field_independent/web_psd_independent/ADDENDUM_BERNSTEIN_Q_AND_P.txt": "1ead80d17ce62c29e9b822c1ff334d735123645b9cff09a235465db6ef57c225",
+    "outputs/tercas_biaxial_resumed_20261103/variable_field_independent/web_psd_independent/REVIEW_CONTINUITY_EXTENSION.txt": "8bf94f47cc0434dcfeb81e6c277c0c31782ca8449decb2a78026c3482314d672"
+  }
+}

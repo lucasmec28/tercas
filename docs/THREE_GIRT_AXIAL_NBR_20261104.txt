@@ -1,0 +1,102 @@
+TRAVESSAS 3D — COMPONENTE NBR DE COMPRESSÃO/FLEXÃO
+04/11/2026 | Cópia isolada, sem alteração de main ou da base7DOF congelada
+
+ENTREGA
+Overlay tercas/three_girt_axial, reutilizando integralmente o backend axial
+NBR14762:2010 já auditado e as capacidades escalares próprias do app. API:
+  from tercas.three_girt_axial import calculate, reference_configuration, summary
+  config = reference_configuration(demand_7DOF)
+  result = calculate(demand_7DOF, config)
+Salvar a configuração separada junto do resultado. É referência explícita de
+vão inteiro K=Cb=Cm=1, não herança automática de uma aprovação da terça isolada.
+
+A base compatível é a candidate congelada em
+outputs/tercas_practical_girts_warping_20261104/candidate.
+Aplicar o overlay somente numa NOVA cópia dessa base. O runner já monta os dois
+caminhos sem modificar a base. O pacote não roda modelos antigos GJ por engano.
+
+RESULTADO NO CONTROLE ATUAL
+Caso de QA, Ue100×50×17×1,50, L=4m, não projeto físico de Lucas:
+-12 combinações ELU,108 trechos;7 combinações ELS excluídas da resistência.
+-Nc,Rd de referência=9573,73717696N; Aef=Ag=336,19723531mm² na tensão chi*fy.
+-Dispensa distorcional de COMPRESSÃO pela Tabela11; não transportada à flexão.
+-KL/r fraco=208,771683>200 na referência de vão inteiro. §9.7.4 é limite de
+ compressão na edição consultada. Não confundir com a recomendação L/r<=300
+ da tração em§9.6.3. Nós de barras/tirantes NÃO encurtam essa referência.
+-MRd fortes±=833893,971041Nmm; fraco alma=795740,977342Nmm;
+ fraco lábios=396628,332635Nmm, oriundos das fontes próprias congeladas.
+-Envelope aritmético de referência: superior1,871623; inferior1,869096.
+-Central:20/36 trechos com aritmética completa, máximo PARCIAL3,721206;
+16 trechos tracionados permanecem sem Nt. Não há envelope completo da central.
+-Material já fornece fy250/fu400MPa. Faltam An0 fora da ligação, An nos caminhos
+ pertinentes da ligação e Ct aplicável/origem. Não se usou Ag como An implícito.
+-465 estados da interação preservam N/M/V/B/T na MESMA seção e combinação.
+ Nenhum B foi zerado por ausência e H4 não foi usado para fechar N+M+B.
+-Os giros observados no controle são grandes: consultar campo
+ maximum_observed_abs_twist_at_exported_stations_rad. O modelo é linear e sua
+ aplicabilidade a pequenas rotações não foi certificada. Não interpretar esses
+ números de QA como resposta física validada ou solução do projeto.
+
+CONVENÇÕES E CÁLCULO
+N positivo=tração; solicitações entram na soma pelas magnitudes adversas.
+No quadro boca para baixo: NBR forte=My_frame; NBR fraco=Mz_frame.
+Mz_frame>0 comprime a alma (x_R01<0). O momento FÍSICO R01/AISI é−Mz_frame,
+portanto não se inverte o sinal outra vez ao escolher o ramo resistente NBR.
+O backend procura zeros e raízes da derivada da SOMA por trecho, não apenas
+máximos individuais. Combinações, lados das juntas e travessas ficam separados.
+N constante por região de introdução de força não cria novo apoio de flambagem.
+
+QUALIFICAÇÃO E LACUNAS REAIS
+A aritmética §9.9 está disponível com os denominadores aplicáveis conhecidos.
+O domínio corrente é de sete referências próprias Ue,3–6m, e comprimentos de
+referência iguais ao vão físico. Não há fallback para propriedades manuais,
+escala de outra espessura, área efetiva reduzida ou Nt faltante.
+A fonte anterior N=0 fornece denominadores escalares §9.8.2, não comprova por
+si a instabilidade do conjunto3D com torque/empenamento e carga excêntrica.
+Permanecem separados: análise§8.1/limites lineares, vínculos reais, interação
+com T/B/cisalhamento, efeitos locais, ligações e ELS. Um índice dentro de1 não
+aprova esses escopos. Os resultados mantêm actual_member_criterion=None e
+whole_member_approved=False. Não se impôs segunda ordem automaticamente.
+Não houve dimensionamento de barras redondas/cantoneiras/tirantes.
+
+TESTES
+31 testes iniciais, incluindo campos atuais, sinais em fibra, ausência de Nt,
+forças diminutas, limites de configuração, fontes1,20/3,35mm e vãos3/6m,
+envelopes com máximo entre os extremos componentes,150 campos aleatórios
+confrontados com grade independente, escalas1e−8 a1e6 e imutabilidade.
+Revisão independente apontou amarração insuficiente de snapshot; corrigida
+reconstruindo combinações/cargas das entradas atuais e comparando o modelo
+assinado, seus carregamentos e sua identidade de combinação. Quatro adversos
+remoção+bundle, bundle ausente, renomeação e troca de modelos viraram regressão.
+A suíte final e a revisão independente estão em results/ e pasta do revisor.
+Não representa execução integral de toda a suíte do app nem revisão normativa
+nova das capacidades previamente auditadas.
+
+REPRODUZIR
+python run_current.py DEMAND_7DOF.json RESULT.json --base CAMINHO_APP
+python -m pytest -q tests
+Usar o pytest já disponível no ambiente de QA; nenhuma instalação foi feita.
+
+FONTES/REUSO
+-NBR14762:2010, exemplar do usuário já consultado:§§9.2,9.6,9.7,9.8.2,9.9.
+ Não é verificação de vigência de todas as referências normativas atuais.
+-Backend anterior:outputs/tercas_axial_interaction_20261103/axial_interaction.py,
+ byte-a-byte, com tabela compressiva11 e revisões documentadas desse pacote.
+-Capacidades próprias:tercas.ue_reference e tercas.ue_family_reference,
+ fontes/pins do app verificados a cada execução. Nenhuma fonte Pierin herdada.
+-Esforços exatos:tercas.three_girt_warping, solução atual7GL por membro/combinação.
+ Arquivos protegidos da norma e imagens de consulta não são redistribuídos.
+
+INTEGRAÇÃO CONCLUÍDA
+A pasta candidate contém a cópia completa do app atual com UI NBR e memória
+conjunta Vlasov/G8.1/NBR. O cálculo NBR é selecionável no painel3D, com dados de
+tração separados. Alterar as hipóteses invalida o resultado salvo; visualização
+e exportação não recalculam a rede ou as capacidades. Se a demanda só tem ELS,
+o modelo resolvido permanece disponível e a resistência NBR fica pendente.
+O fixture utilizado nos testes está dentro da candidate, sem caminho externo.
+
+Verificação focal final:147 testes +100 subtests passaram, cobrindo componente
+axial, integração, UI, fontes próprias e eixo fraco. Mais1 teste específico ELS
+passou. Os4 testes de exportação/integridade foram reexecutados após o ajuste
+editorial final e passaram. A memória conjunta tem5páginas, todas renderizadas
+e inspecionadas. Não se afirma execução da suíte integral inteira do app.

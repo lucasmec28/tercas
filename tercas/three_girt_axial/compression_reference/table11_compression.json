@@ -1,0 +1,33 @@
+{
+  "source": {
+    "document": "ABNT NBR 14762:2010, segunda edição 09.07.2010, exemplar fornecido pelo usuário",
+    "source_sha256": "c2a01615a3ce9e2b93aeb7fee757f7bf9dd932adaefbc242e848ce813dc82407",
+    "clause": "9.7.3",
+    "table": 11,
+    "printed_page": 43,
+    "pdf_page_1_based": 49,
+    "verified_by": "Leitura visual da página integral e conferência das 45 células"
+  },
+  "scope": "Valores mínimos de D/bw para dispensa de flambagem distorcional em U enrijecido e Z enrijecido sob COMPRESSÃO CENTRADA",
+  "families": ["Ue", "Ze"],
+  "nominal_dimensions": true,
+  "dimension_reference": "Figuras da Tabela 9; bf, bw e D são dimensões nominais",
+  "row_axis": "bf/bw",
+  "column_axis": "bw/t",
+  "columns_bw_over_t": [250, 200, 125, 100, 50],
+  "rows": [
+    {"bf_over_bw": 0.4, "minimum_D_over_bw": [0.02, 0.03, 0.04, 0.04, 0.08]},
+    {"bf_over_bw": 0.6, "minimum_D_over_bw": [0.03, 0.04, 0.06, 0.06, 0.15]},
+    {"bf_over_bw": 0.8, "minimum_D_over_bw": [0.05, 0.06, 0.08, 0.10, 0.22]},
+    {"bf_over_bw": 1.0, "minimum_D_over_bw": [0.06, 0.07, 0.10, 0.12, 0.27]},
+    {"bf_over_bw": 1.2, "minimum_D_over_bw": [0.06, 0.07, 0.12, 0.15, 0.27]},
+    {"bf_over_bw": 1.4, "minimum_D_over_bw": [0.06, 0.08, 0.12, 0.15, 0.27]},
+    {"bf_over_bw": 1.6, "minimum_D_over_bw": [0.07, 0.08, 0.12, 0.15, 0.27]},
+    {"bf_over_bw": 1.8, "minimum_D_over_bw": [0.07, 0.08, 0.12, 0.15, 0.27]},
+    {"bf_over_bw": 2.0, "minimum_D_over_bw": [0.07, 0.08, 0.12, 0.15, 0.27]}
+  ],
+  "interpolation": "Nota 2 permite interpolação linear para valores intermediários. Interpolação bilinear sucessiva nas duas coordenadas é a interpretação numérica usada pelo oracle.",
+  "domain": {"bf_over_bw_min": 0.4, "bf_over_bw_max": 2.0, "bw_over_t_min": 50, "bw_over_t_max": 250, "extrapolation_qualified": false},
+  "exemption_condition": "D/bw >= minimum_D_over_bw",
+  "limitations": ["Não é tabela de flexão", "Não dispensa flambagem local/global ou limites geométricos", "Fora da grade, retornar pendente sem extrapolar", "Não identifica propriedades ou geometria de Pierin"]
+}

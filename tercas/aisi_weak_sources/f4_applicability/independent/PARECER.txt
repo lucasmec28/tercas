@@ -1,0 +1,21 @@
+REVISÃO INDEPENDENTE DE APLICABILIDADE F4, FLEXÃO FRACA PURA COM ALMA COMPRIMIDA
+4 de novembro de 2026. Revisão técnica para comparador de pesquisa AISI2024 separado.
+
+DECISÃO DELIMITADA
+É justificado tratar F4 como não aplicável à capacidade componente de flexão fraca pura com alma comprimida das seis geometrias identificadas, desde que o gate mantenha a topologia, identidade e campo de tensões verificados. Permanecem F2 e F3. Não é Mcrd infinito, resistência igual ao infinito, prova geral de ausência de qualquer autovalor instável, dispensa para tensões combinadas nem aprovação da barra.
+
+BASE PRIMÁRIA E DIFERENÇA ENTRE EVIDÊNCIA E INTERPRETAÇÃO
+1. AISI RP21-01 (março de 2021), Example I, item4, página10/PDF15. A publicação da própria AISI calcula flexão fraca com alma comprimida de canal enrijecido e não usa o estado limite D em razão dos lábios tracionados. Fonte oficial inspecionada visualmente:
+https://www.buildusingsteel.org/wp-content/uploads/2021/03/AISI-RP21-01-Development-of-Design-Tables-for-the-Cold-Formed-Steel-Cross-Sections-in-AISI-D100.pdf
+O exemplo é plenamente travado para instabilidade global. Isso NÃO autoriza eliminar F2 para os casos não travados; sua justificativa para não aplicar D é a condição dos lábios. O relatório usa edição antiga da norma; não foram transplantadas suas fórmulas ou resistências para2024.
+2. ANSI/SDI AISI S100-2024, F1 e F4, páginas48 e54/PDF93 e99. F1 combina somente os estados aplicáveis. F4 delimita sua aplicação por geometria de elementos comprimidos/enrijecedores. O enquadramento específico aqui é uma interpretação técnica coerente com esse escopo e com o exemplo AISI, não uma frase explícita universal da norma excluindo qualquer C de alma comprimida.
+https://sdi.org/wp-content/uploads/2025/01/ANSI-SDI-AISI-S100-2024-SDI-AISI-S100-2024-C.pdf
+Para uma comparação AISI delimitada, não se justifica inventar um Mcrd positivo nem exigir a identificação de um modo que não pertence a esse estado limite. A confirmação independente do campo de tensão permite resolver a decisão de aplicabilidade, em vez de mascarar o campo ausente com infinito ou com autovalor do espectro total.
+
+CONFIRMAÇÃO INDEPENDENTE
+O script review_geometry.py importa somente dados congelados, NumPy e biblioteca padrão. Reintegra área, centróide, inércias e resultantes por quadratura de Gauss de quatro pontos em cada faceta, sem importar o produtor nem suas fórmulas de integração. A tensão linear recuperada coincide com os seis inputs. Os dois lábios e seus cantos estão inteiramente tracionados, mesmo incluindo extensão conservadora t/2 para além da linha média; distância mínima à linha neutra23,89 a28,39mm. Testes de sentido oposto e compressão superposta rejeitam a justificativa. Essa confirmação de sinal não é um modelo de resistência finita dos cantos.
+
+LIMITES DO GATE
+Somente perfis OWN_Ue100x50x17 das espessuras1,50;2,00;2,25;2,65;3,00;3,35mm com hashes preservados. Seção prismática, sem furos ou enrijecedores intermediários; flexão fraca pura e uniforme no sentido que comprime a alma, tensão elástica de seção bruta, N=Mforte=B=V=T=0 para a definição da capacidade componente. A capacidade My a ser usada em uma interação continua sendo uma capacidade de ação pura. Esse gate NÃO deve testar os esforços reais combinados e declarar ausência de D da barra, nem dispensar a interação normativa aplicável.
+A demonstração algébrica de matriz D auxiliar de cantos retos é evidência suplementar, não fundamento para transformar o modelo facetado em contínuo ou excluir todos os modos de uma seção real. F2, F3, material, comprimento, cargas, apoios e hipóteses dos valores críticos continuam sujeitos a seus próprios controles.
+A validação desta classificação libera apenas a rota componente de pesquisa F2/F3. Não libera dimensionamento NBR, aprovação física global, comparador geral fora das seis identidades ou mistura de capacidades entre normas.

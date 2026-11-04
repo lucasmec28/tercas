@@ -1,0 +1,122 @@
+{
+  "status": "PASS_INDEPENDENT_SIGN_GEOMETRY_REVIEW",
+  "profiles": 6,
+  "negative_controls": 12,
+  "rows": [
+    {
+      "profile_id": "OWN_Ue100x50x17_t1p50_ri1p50_n12_a16_v1_cd50bf66f299",
+      "t_mm": 1.5,
+      "cg_mm": [
+        17.10910249145776,
+        49.249999999999986
+      ],
+      "Iy_mm4": 123415.84920326463,
+      "signed_resultants_N_Nmm": [
+        -9.094947017729282e-12,
+        -1.1641532182693481e-10,
+        1000000.0
+      ],
+      "stress_match_max_MPa": 1.9895196601282805e-13,
+      "entire_lip_corner_min_x_minus_CG_mm": 28.39089750854224,
+      "compression_positive_stress_upper_MPa_per_kNm": -230.04255686627997,
+      "both_lips_and_their_corners_in_tension": true,
+      "profile_sha256": "9a30115583275a30ab25eb8c782398a8aa5d547b8272743da9cd2f8342f880d4"
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce",
+      "t_mm": 2.0,
+      "cg_mm": [
+        16.827450875915396,
+        49.00000000000001
+      ],
+      "Iy_mm4": 157717.66001159302,
+      "signed_resultants_N_Nmm": [
+        2.1827872842550278e-11,
+        -5.820766091346741e-11,
+        999999.9999999998
+      ],
+      "stress_match_max_MPa": 2.2737367544323206e-13,
+      "entire_lip_corner_min_x_minus_CG_mm": 27.172549124084604,
+      "compression_positive_stress_upper_MPa_per_kNm": -172.28602758934724,
+      "both_lips_and_their_corners_in_tension": true,
+      "profile_sha256": "fde5d287a73df9adf1b9ab3e392d7207c3423acb7a8894de5553d402cc7aef90"
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p25_ri2p25_n12_a16_v1_e30a0bd327de",
+      "t_mm": 2.25,
+      "cg_mm": [
+        16.686268820177027,
+        48.87499999999999
+      ],
+      "Iy_mm4": 173644.83957874868,
+      "signed_resultants_N_Nmm": [
+        3.456079866737127e-11,
+        0.0,
+        1000000.0
+      ],
+      "stress_match_max_MPa": 8.526512829121202e-14,
+      "entire_lip_corner_min_x_minus_CG_mm": 26.563731179822973,
+      "compression_positive_stress_upper_MPa_per_kNm": -152.97737176794251,
+      "both_lips_and_their_corners_in_tension": true,
+      "profile_sha256": "8db5d3c4a037e01e665860c1ad8878bab01330cc07fc4165f74a40c0862ec562"
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p65_ri2p65_n12_a16_v1_243974742f83",
+      "t_mm": 2.65,
+      "cg_mm": [
+        16.45986627571011,
+        48.6750000000001
+      ],
+      "Iy_mm4": 197472.35297784623,
+      "signed_resultants_N_Nmm": [
+        -5.4569682106375694e-11,
+        -5.820766091346741e-11,
+        1000000.0
+      ],
+      "stress_match_max_MPa": 4.263256414560601e-13,
+      "entire_lip_corner_min_x_minus_CG_mm": 25.59013372428989,
+      "compression_positive_stress_upper_MPa_per_kNm": -129.58843776556793,
+      "both_lips_and_their_corners_in_tension": true,
+      "profile_sha256": "40aada8e49914bb1384c8ac205d8035225d5c033e1e76de8fa65f022ebdd99f1"
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t3p00_ri3p00_n12_a16_v1_c3d1e69d48f6",
+      "t_mm": 3.0,
+      "cg_mm": [
+        16.2612320289145,
+        48.499999999999986
+      ],
+      "Iy_mm4": 216685.30773850373,
+      "signed_resultants_N_Nmm": [
+        4.729372449219227e-11,
+        0.0,
+        1000000.0
+      ],
+      "stress_match_max_MPa": 1.9895196601282805e-13,
+      "entire_lip_corner_min_x_minus_CG_mm": 24.7387679710855,
+      "compression_positive_stress_upper_MPa_per_kNm": -114.16910647647738,
+      "both_lips_and_their_corners_in_tension": true,
+      "profile_sha256": "e45b3298a2a95cca875b558269046090751e3bff2fa1b9dfae3cc0c1a2a97919"
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t3p35_ri3p35_n12_a16_v1_90bf516ec976",
+      "t_mm": 3.35,
+      "cg_mm": [
+        16.062084276097398,
+        48.324999999999974
+      ],
+      "Iy_mm4": 234407.80729924078,
+      "signed_resultants_N_Nmm": [
+        -1.9826984498649836e-10,
+        0.0,
+        1000000.0000000002
+      ],
+      "stress_match_max_MPa": 4.831690603168681e-13,
+      "entire_lip_corner_min_x_minus_CG_mm": 23.887915723902605,
+      "compression_positive_stress_upper_MPa_per_kNm": -101.90750896538067,
+      "both_lips_and_their_corners_in_tension": true,
+      "profile_sha256": "f1e9676c843459bcb7c14341a32ab10cc90c8ab6765e056fe9bcd47e3b58dd05"
+    }
+  ],
+  "release": "Bounded research applicability of F4 for PURE weak bending only; no design or combined stress exemption."
+}

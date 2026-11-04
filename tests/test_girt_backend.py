@@ -9,6 +9,7 @@ from tercas.batch import calculate_batch,area_bundle,case_inputs
 from tercas.load_combinations import COMBINATION_TYPES
 from tercas.member_application import member_kind,validate,wall_els_config
 from tercas.report import word,batch_word
+from tercas.report_audit import technical_value
 
 def fixture(mode='direct'):
  d=defaults(19)
@@ -152,9 +153,12 @@ class GirtBackend(unittest.TestCase):
   self.assertTrue(table.rows[0]._tr.xpath('./w:trPr/w:tblHeader'))
   for row in table.rows[1:]:self.assertTrue(row._tr.xpath('./w:trPr/w:cantSplit'))
  def test_area_MC_common_fields_and_inactive_inputs(self):
-  d=fixture('area');d['selected_types']=['ELS quase permanente'];r=calculate_batch(d);before=copy.deepcopy(r);s=doctext(batch_word(r));self.assertEqual(before,r)
-  for token in ('SC de cobertura armazenada e INATIVA','99,00','E_MPa','200000,00','4590000,00','Flecha vertical','Não se adiciona P automática'):
+  d=fixture('area');d['selected_types']=['ELS quase permanente'];r=calculate_batch(d);before=copy.deepcopy(r);blob=batch_word(r);s=doctext(blob);self.assertEqual(before,r)
+  for token in ('SC de cobertura armazenada e INATIVA','99,00','E_MPa','4590000,00','Flecha vertical','Não se adiciona P automática'):
    self.assertIn(token,s)
+  table=next(t for t in Document(BytesIO(blob)).tables if t.rows[0].cells[0].text=='Campo e unidade')
+  values={row.cells[0].text:row.cells[1].text for row in table.rows[1:]}
+  self.assertEqual(values['E_MPa'],technical_value(d['properties']['E_MPa']))
   self.assertEqual(len(r['cases']),1)
 
 if __name__=='__main__':unittest.main(verbosity=2)

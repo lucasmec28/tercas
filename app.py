@@ -57,12 +57,16 @@ def show_inclination(evidence,girt=False):
 
 def render_results(result,d):
  from tercas.biaxial_component_ui import show as show_biaxial_component
- from tercas.biaxial_component import presentation_rows as gross_component_rows,is_girt_result
+ from tercas.flexural_components import presentation_rows as gross_component_rows,is_girt_result
  show_biaxial_component(st,result)
+ from tercas.aa_component_ui import show as show_aa_component
+ show_aa_component(st,result)
  from tercas.study_completion import show_global
  show_global(st,result)
  from tercas.torsion_study_ui import show_result as show_torsion
  show_torsion(st,result)
+ from tercas.aisi_torsion_ui import show as show_aisi_torsion
+ show_aisi_torsion(st,result)
  from tercas.torsion_material_ui import render as show_nominal_material
  result=show_nominal_material(st,result)
  if result.get('deflection_scope_evidence'):
@@ -79,7 +83,7 @@ def render_results(result,d):
    record=result['ue_family_reference_evidence']
    st.caption('Fonte numérica ativa: '+record['reference_id']+'; propriedades e críticos próprios individuais.')
    st.warning('Família Ue100: D forte calculado, sem dispensa Tabela 14. D da alma é piso conservador discreto individual, não modo identificado.')
-   st.caption(('A componente flexional biaxial tem o alcance registrado acima; ELS físico completo, torção e aprovação global permanecem pendentes. ' if 'gross_biaxial_component_evidence' in result else 'ELS biaxial, torção física e aprovação global continuam pendentes. ')+'Pierin somente corresponde à família nominal.')
+   st.caption(('A componente flexional biaxial tem o alcance registrado acima; ELS físico completo, torção e aprovação global permanecem pendentes. ' if ('gross_biaxial_component_evidence' in result or 'aa_web_component_evidence' in result) else 'ELS biaxial, torção física e aprovação global continuam pendentes. ')+'Pierin somente corresponde à família nominal.')
   if result.get('ue_reference_evidence'):
    record=result['ue_reference_evidence']
    st.caption('Fonte numérica ativa: '+record['active_numeric_reference'])
@@ -100,7 +104,7 @@ def render_results(result,d):
     if girt and not is_girt_result(result):show_elastic_wall(item.get('evidence',{}))
   else:
    for warning in result.get('coverage_warnings',[])+result.get('critical_warnings',[]):st.warning(warning)
-   if result.get('numerical_warnings'):st.warning('O integrador escalar anterior emitiu aviso numérico, preservado como diagnóstico. O estado da componente tensorial nova é informado separadamente.' if 'gross_biaxial_component_evidence' in result else 'A integração da flecha emitiu aviso numérico. A verificação ELS ficou pendente; demais resultados foram preservados.')
+   if result.get('numerical_warnings'):st.warning('O integrador escalar anterior emitiu aviso numérico, preservado como diagnóstico. O estado da componente tensorial nova é informado separadamente.' if ('gross_biaxial_component_evidence' in result or 'aa_web_component_evidence' in result) else 'A integração da flecha emitiu aviso numérico. A verificação ELS ficou pendente; demais resultados foram preservados.')
    st.dataframe(display_frame(rows(result)),hide_index=True,width='stretch')
    if result.get('inclination_evidence'):show_inclination(domain_historical_inclination(result,result['inclination_evidence']),girt=girt)
    if girt and not is_girt_result(result):show_elastic_wall(result)
@@ -126,6 +130,10 @@ if 'revision' not in st.session_state:st.session_state.revision=0
 from tercas.ui_cache_epoch import refresh as refresh_calculation_cache
 if refresh_calculation_cache(st.session_state):
  st.info('Atualização do cálculo: resultados e comparação anteriores retirados. Entradas preservadas; calcule novamente quando desejar.')
+
+# Isolated AISI research: before any project renderer can stop the page.
+from tercas.aisi_research.panel import render as render_aisi_research
+render_aisi_research(st)
 
 def load(d):
  st.session_state.base=copy.deepcopy(d);st.session_state.last_input=copy.deepcopy(d);st.session_state.revision+=1

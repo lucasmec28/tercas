@@ -1,0 +1,21 @@
+{
+  "status": "PASS_focused_independent_review",
+  "runtime_pins": {
+    "outputs/tercas_biaxial_general_method_20261104/web_only_family_api_revision1/api.py": "f5265fe813db00322d8cd7eb182cf2f4f498b385fdfc96721cc83eee6378e311",
+    "outputs/tercas_biaxial_general_method_20261104/web_only_family_api_revision1/control_core.py": "6329623c9fa417d43ac087aa4bda075d89ea339f371d4f70217b0b5112f3fb51",
+    "outputs/tercas_biaxial_general_method_20261104/web_only_family_api_revision1/bound_core.py": "6b5f592f327573116c7e2170c792108bcf47a034b5be2866b5268bf8874b625f",
+    "outputs/tercas_biaxial_general_method_20261104/web_only_family_api_revision1/geometry_source.py": "8fc9f1402d71d337301710ce82f27e40d65522f4107887294f3061dd1b1b1727",
+    "outputs/tercas_biaxial_general_method_20261104/web_only_family_api_revision1/SOURCE_MANIFEST.json": "a8c791eba3fc368e4d3e84cfe85e734766301089e3eb8e881adcab626dbaa81a",
+    "outputs/tercas_biaxial_general_method_20261104/web_only_family_api_revision1/CORE_SOURCE_MANIFEST.json": "f6fd7f570bbf357908a963a7246fb35e6ad66deb991e4f1443dc89df5ecfe08e"
+  },
+  "audit_files": {
+    "outputs/tercas_biaxial_general_method_20261104/web_only_family_api_audit/PROBES.log": "23e9853afecb9e512bf2fd7326c48a1b9f4ae444fe5af8fceb5e6169487aa2d0",
+    "outputs/tercas_biaxial_general_method_20261104/web_only_family_api_audit/RESULTS.json": "f26db91e247f9626e067d03c7da4204c4f362ff37389670ffcab71113a14fb6c",
+    "outputs/tercas_biaxial_general_method_20261104/web_only_family_api_audit/REVIEW.md": "500d27a034fbb5c5d161f30637c3eac8143013138bcade5779503355bde6a7b3",
+    "outputs/tercas_biaxial_general_method_20261104/web_only_family_api_audit/probes.py": "bc70782f3e8018f07586dc90cfb680d7329f91bcff43a9a46fcf33f2937326b4"
+  },
+  "command": "PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONPATH=/tmp/tercas_publish_deps python -B outputs/tercas_biaxial_general_method_20261104/web_only_family_api_audit/probes.py",
+  "physical_ELS_approved": false,
+  "whole_member_approved": false,
+  "published": false
+}

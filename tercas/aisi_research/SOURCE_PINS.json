@@ -1,0 +1,112 @@
+[
+  {
+    "original": "outputs/tercas_aa_component_integration_20261104/candidate_r3/tercas/data/torsion_profiles/ue100x50x17_t1.50.json",
+    "copy": "inputs/ue100x50x17_t1.50.json",
+    "sha256": "9a30115583275a30ab25eb8c782398a8aa5d547b8272743da9cd2f8342f880d4"
+  },
+  {
+    "original": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t1.50/strong/valley_0.npz",
+    "copy": "modes/t1.50_strong_local.npz",
+    "sha256": "97ba8af0f19a8e2f09fdeefe3da169b9a84b32f7dba00d8d72e0f1efa695f3c4"
+  },
+  {
+    "original": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t1.50/strong/valley_1.npz",
+    "copy": "modes/t1.50_strong_distortional.npz",
+    "sha256": "7a6671de294a657100d1d873210192ebc3d9d5f73d699d8c70487a63c1e94525"
+  },
+  {
+    "original": "outputs/tercas_aa_component_integration_20261104/candidate_r3/tercas/data/torsion_profiles/ue100x50x17_t2.00.json",
+    "copy": "inputs/ue100x50x17_t2.00.json",
+    "sha256": "fde5d287a73df9adf1b9ab3e392d7207c3423acb7a8894de5553d402cc7aef90"
+  },
+  {
+    "original": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t2.00/strong/valley_0.npz",
+    "copy": "modes/t2.00_strong_local.npz",
+    "sha256": "f869b3e21d912e52170b95b8dd5c3b689cf6120c159c73c3a5373b9455f4c8fd"
+  },
+  {
+    "original": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t2.00/strong/valley_1.npz",
+    "copy": "modes/t2.00_strong_distortional.npz",
+    "sha256": "a9a1d406f979372e17b3692abfb168868a0f8ebef9752278d0c5bce07aa0b39c"
+  },
+  {
+    "original": "outputs/tercas_aa_component_integration_20261104/candidate_r3/tercas/data/torsion_profiles/ue100x50x17_t2.25.json",
+    "copy": "inputs/ue100x50x17_t2.25.json",
+    "sha256": "8db5d3c4a037e01e665860c1ad8878bab01330cc07fc4165f74a40c0862ec562"
+  },
+  {
+    "original": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t2.25/strong/valley_0.npz",
+    "copy": "modes/t2.25_strong_local.npz",
+    "sha256": "46ebe1ba1e59e3296ad604112eaff0df0bfef413140e1068df27af77a7bf852c"
+  },
+  {
+    "original": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t2.25/strong/valley_1.npz",
+    "copy": "modes/t2.25_strong_distortional.npz",
+    "sha256": "f2c0a1158996504ef17ccef7d405c059f527be92b0ffaca3d783dc33bf3ebb74"
+  },
+  {
+    "original": "outputs/tercas_aa_component_integration_20261104/candidate_r3/tercas/data/torsion_profiles/ue100x50x17_t2.65.json",
+    "copy": "inputs/ue100x50x17_t2.65.json",
+    "sha256": "40aada8e49914bb1384c8ac205d8035225d5c033e1e76de8fa65f022ebdd99f1"
+  },
+  {
+    "original": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t2.65/strong/valley_0.npz",
+    "copy": "modes/t2.65_strong_local.npz",
+    "sha256": "9e23bfda5402e338c4becb3e1d61ec9689ea16424e64bee38bbe47cd0b96a7d6"
+  },
+  {
+    "original": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t2.65/strong/valley_1.npz",
+    "copy": "modes/t2.65_strong_distortional.npz",
+    "sha256": "b963f08a4da47149a499b70680d34961a57797dbd06ac70425b301a98de52360"
+  },
+  {
+    "original": "outputs/tercas_aa_component_integration_20261104/candidate_r3/tercas/data/torsion_profiles/ue100x50x17_t3.00.json",
+    "copy": "inputs/ue100x50x17_t3.00.json",
+    "sha256": "e45b3298a2a95cca875b558269046090751e3bff2fa1b9dfae3cc0c1a2a97919"
+  },
+  {
+    "original": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t3.00/strong/valley_0.npz",
+    "copy": "modes/t3.00_strong_local.npz",
+    "sha256": "d1ec889039818d7cc5bce52003c125d99345fa5c0d39ec061f6f2c4d5ec87ff6"
+  },
+  {
+    "original": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t3.00/strong/valley_1.npz",
+    "copy": "modes/t3.00_strong_distortional.npz",
+    "sha256": "f00d8aa1ed6d33fab603e4dba6983e2b0d92f6437f7d86ea4d2b68dceb389127"
+  },
+  {
+    "original": "outputs/tercas_aa_component_integration_20261104/candidate_r3/tercas/data/torsion_profiles/ue100x50x17_t3.35.json",
+    "copy": "inputs/ue100x50x17_t3.35.json",
+    "sha256": "f1e9676c843459bcb7c14341a32ab10cc90c8ab6765e056fe9bcd47e3b58dd05"
+  },
+  {
+    "original": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t3.35/strong/valley_0.npz",
+    "copy": "modes/t3.35_strong_local.npz",
+    "sha256": "f7fdb30d3f878b2fd3bab9f1ea417c1c2713a727f5a3ca34b7b548df9a35c47d"
+  },
+  {
+    "original": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t3.35/strong/valley_1.npz",
+    "copy": "modes/t3.35_strong_distortional.npz",
+    "sha256": "b9ebb6b8ed259ebf2f8319ba180e5548d4d0221b61d4881c7f35101f6ac0fb77"
+  },
+  {
+    "original": "outputs/tercas_aa_component_integration_20261104/candidate_r3/tercas/torsion_vlasov/__init__.py",
+    "copy": "vendor/__init__.py",
+    "sha256": "475a1e779fb0a770c5d89dc83b3f41c2e6911ef05c8855f75641306fe0e703b6"
+  },
+  {
+    "original": "outputs/tercas_aa_component_integration_20261104/candidate_r3/tercas/torsion_vlasov/section.py",
+    "copy": "vendor/section.py",
+    "sha256": "a0fbb76a1051879aa67446586a2100e6015344a9b636826321ecc1af5d4f3797"
+  },
+  {
+    "original": "outputs/tercas_aa_component_integration_20261104/candidate_r3/tercas/torsion_vlasov/bounded_polynomial.py",
+    "copy": "vendor/bounded_polynomial.py",
+    "sha256": "2dc3f67ee5c7a8ddee18f9e9b77102432348dd2339e8523a698b6bc78768b2b4"
+  },
+  {
+    "original": "outputs/weak_ue100_diagnostic_20261102/kernel/core.py",
+    "copy": "vendor/fsm_core.py",
+    "sha256": "11595d158c1f52a9865e176d3853eb45879e8cad5d2c50197a6b3923d15fc81d"
+  }
+]

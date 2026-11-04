@@ -1,0 +1,23 @@
+{
+  "date_utc": "2026-11-04",
+  "status": "PASS_focused_independent_review",
+  "api_sha256": "21c39d34197c48dc110cc254d475ec661baa40cd5e24f3ba0eaf93b715422809",
+  "source_manifest_sha256": "49944f1a3fdb9ab5d3904f5e0e65c94ed92871090ce2957098fda50a65ad1ba6",
+  "author_receipt_sha256": "e438479525ba1196d568cebd7761fc3623dbcc2aca8fe7b9adab398eec0c69c9",
+  "files": {
+    "BINDINGS.json": "f3b4c7121b6c1b5bc43d97914b450ab990a3e04a9291a2b2bc466a2757c55f1f",
+    "BINDINGS.log": "128e4e15b7fdfbcc24ab3f9e0d1d5cba4f199016cfab715291f763b61228d430",
+    "PROBES.log": "0e24ffb9a9fd26b5966b394b191539b1c63e72c7b97f697bd760f3d9b166b779",
+    "RESULTS.json": "c38fada440c182df62bd495c9bffb07fb9cc38345ec34cc23b0942a9a1f2e1ed",
+    "REVIEW.md": "7472367bc85dd9ebc1fb6f69079d083c3393c7f47c5505175d23a2531f70e972",
+    "bindings.py": "ff53abc554474d23cdeda6599b5652ae64def5dcc67a5e59209bce7ebb4c5108",
+    "probes.py": "3ffef5964ca8a46f7f47a2a11e9e9b7ab9b45717751838f92dc33d84e6a493ea"
+  },
+  "full_suite_runs": 0,
+  "solver_runs": 0,
+  "FSM_runs": 0,
+  "physical_ELS_approved": false,
+  "whole_member_approved": false,
+  "published": false,
+  "scope": "finite local partition delta; global Green independent audit owned separately by parent"
+}

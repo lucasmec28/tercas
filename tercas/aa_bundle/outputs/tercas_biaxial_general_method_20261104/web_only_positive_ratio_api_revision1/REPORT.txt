@@ -1,0 +1,49 @@
+RESULTADO DA IMPLEMENTAÇÃO FOCAL — 2026-11-04
+
+Nova API de pesquisa fechada para revisão independente, sem app/UI/índice,
+sem publicação, sem solver seccional/FSM ou reintegração dos benchmarks.
+CONTRACT.txt define domínio, versões, evidência, limites e mudanças.
+
+Última rodada: 9 grupos de testes passaram, 39 respostas integrais salvas em
+cases/. Cobertura: alvo/controle/misto; zero/grosso/transição nas sete fontes;
+q+P não proporcional, reversão e cargas negativas, posição estritamente
+interior inclusive subnormal; sete admissões salvas preservadas; dois
+benchmarks biaxiais e benchmark puro contidos; JSON de expoente gigante,
+contexto Decimal hostil, pinos/manifestações adulterados em cópias temporárias,
+bindings e falhas/schema. Não é uma suíte global do aplicativo nem revisão
+independente. O teste verifica outward binary64>=fração para cada teto salvo.
+
+Alvo t1,50/L6000/q=[0,.2024009036485318]: a revisão2 era inconclusiva por
+material; a nova rota é suficiente no modelo. Face máxima 241,75742331012626
+MPa. Tetos dos componentes [0,20330347585010872; 146,27429435933485] mm.
+Não se descarta o segundo componente. Isso NÃO aprova ELS físico/global.
+
+Controle t1,20/L4000/q=[0,.19740699082746035]: face máxima
+126,63702991320082 MPa; tetos [0,01716847886489191; 33,570443883135646] mm,
+componente paralelo contém benchmark puro salvo 33,132826804 mm.
+
+Misto t1,20/L4000/q=[.24,.15]: razão recusada em todos os 12 estágios;
+controles e tetos idênticos à revisão2 com mesmo orçamento. Tetos
+[9,913980165214365; 33,04101613541565] mm.
+
+ELSF_00002: tetos [10,981859058529377; 42,78572291529334] mm contêm os
+máximos salvos [10,16613557702167; 33,35844309131156] mm.
+ELSF_00004: tetos [7,323328131847957; 40,68093327158961] mm contêm os
+máximos salvos. Nenhum benchmark foi resolvido novamente.
+
+As três respostas alvo/controle/misto têm eta e controles exatamente iguais
+aos resultados ratio12 congelados da feasibility. O compositor Green é o
+racional revisado, não o resumo experimental. A assertiva de monotonicidade
+do piso geral isolado foi substituída por limites finitos/físicos dos pisos
+e nesting explícito da união max. A guarda PSD herdada não foi modificada.
+
+Os manifests novos prendem implementações/dependências reais. Cada saída
+suficiente tem request/source/implementation bindings; o receipt fixa também
+a identidade de lançamento da própria api.py sem ciclo de hashes. Schemas
+novos explícitos para API, core e comparação, inclusive caminhos de falha.
+Falhas/inconclusões não retornam displacement_component_bounds.
+
+A aritmética de suporte é 70 dígitos com PAD 1e-20, não intervalo formal.
+A prova de razão e auditoria prévia de feasibility não são alegadas como
+revisão da nova API. Essa revisão está separada. Parada desta tarefa: código,
+pinos e testes focais fechados. Todos os flags físicos/globais permanecem false.

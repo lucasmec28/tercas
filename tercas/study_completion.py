@@ -15,6 +15,8 @@ def complete_result(result):
         raise ValueError('Resultado/entradas divergentes; calcule novamente.')
     from .torsion_study import attach
     out = attach(result)
+    from .aisi_torsion_component import finalize
+    out = finalize(out)
     out['global_verification'] = build_global_verification(out)
     out['whole_member_approved'] = False
     out['completion_snapshot'] = dict(schema=VERSION,
@@ -32,6 +34,8 @@ def show_global(st, result):
     st.caption('Estado global do modelo declarado. Índices de verificações diferentes '
                'não são somados nem representam uma utilização global. '
                'Tirantes, cantoneiras, ligações e ancoragens não são dimensionados.')
+    from .report_audit import show_saved_issues
+    show_saved_issues(st,result)
 
 
 def report_global(doc, result):
@@ -46,3 +50,5 @@ def report_global(doc, result):
     for state in ('ELU','ELS'):
         r=record.get('by_limit_state',{}).get(state)
         if r:doc.add_paragraph(state+': '+r['status']+'. Inclui as pendências comuns do modelo.')
+    from .report_audit import report_saved_issues
+    report_saved_issues(doc,result)

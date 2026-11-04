@@ -409,7 +409,7 @@ def calculate_reference(data):
                   combined_ELS_approved=False,torsion_physical_loading_qualified=False,
                   app_route_connected=True,requires_research_adapter=False)
     gate()  # Fail if a frozen source changed during this operation.
-    from .biaxial_component import attach_fresh
+    from .flexural_components import attach_fresh
     return attach_fresh(result,record)
 
 
@@ -432,7 +432,7 @@ def report(doc,result):
             ' mm³; Ml='+format(c['Ml_Nmm'],'.15g')+' Nmm; Me='+format(c['Me_Nmm'],'.15g')+
             ' Nmm; MRd local/FLT/D='+ '/'.join(format(c[k],'.15g') for k in ('MRd_local_Nmm','MRd_FLT_Nmm','MRd_dist_Nmm'))+
             ' Nmm; mínimo='+format(c['MRd_Nmm'],'.15g')+' Nmm.')
-    if not result.get('deflection_scope_evidence') and 'gross_biaxial_component_evidence' not in result:
+    if not result.get('deflection_scope_evidence') and 'gross_biaxial_component_evidence' not in result and 'aa_web_component_evidence' not in result:
         doc.add_paragraph('ELS forte uniaxial: somente critério parcial quando as ações locais reais q e P paralelas forem nulas. Estados biaxiais permanecem sem índice ELS por rigidez combinada pendente. Não se transfere evidência de outra seção, carga ou comprimento.')
     doc.add_paragraph('N=0 e torque primário imposto=0 apenas nesta componente matemática. PP físico no CG pode ser excêntrico ao centro de cisalhamento. Torção/empenamento físico, introdução local, ligações e aprovação global permanecem pendentes.')
     doc.add_paragraph('Fontes da emissão: '+json.dumps(r['source_documents'],ensure_ascii=False,sort_keys=True))

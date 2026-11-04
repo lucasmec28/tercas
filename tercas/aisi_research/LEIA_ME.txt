@@ -1,0 +1,59 @@
+TERÇAS Ue SEM TELHA: COMPARADOR LONGITUDINAL SIMPLIFICADO
+Estudo isolado de 04/11/2026. Não é uma liberação de projeto ou uma substituição do cálculo NBR.
+
+RESULTADO ÚTIL
+Foi implementada e auditada uma simplificação algébrica conservadora da resistência à flexão, associada à verificação longitudinal de flexão + bimomento AISI2024. Mantém-se a física elástica de Vlasov com Saint-Venant e empenamento. Não se alterou o aplicativo nem a branch main.
+
+O QUE JÁ EXISTIA
+O aplicativo experimental possui propriedades setoriais próprias, centro de cisalhamento, J, Cw, solução de Vlasov e recuperação de tensões para a terça isolada do domínio declarado. Um modelo de travessas com sete graus de liberdade existe em pesquisa separada, mas este pacote NÃO o qualifica. A comparação PP anterior verificou numericamente a solução de torção contra expressão fechada. Isso qualificou equações/implementação no modelo ideal, não a resistência física integral da peça.
+
+RECORTE DESTE PACOTE
+Seis geometrias próprias Ue100x50x17, com t=1,50;2,00;2,25;2,65;3,00;3,35 mm e raio interno igual à espessura. Vãos de 3, 4, 5 e 6 m, apoios simples à flexão, garfos torcionais e empenamento livre. Sem telha, contato ou travamento intermediário. Não transferir os resultados a seções comerciais diferentes.
+Carga vertical uniformemente distribuída no CG, cujo nível coincide com o centro de cisalhamento na geometria inicial. A excentricidade horizontal permanece e produz torque. Há 24 casos de peso próprio isolado com coeficiente 1 e 24 controles matemáticos a 1% dessa carga. NENHUM desses coeficientes representa uma combinação de projeto.
+O estudo AISI é separado: E=203000 MPa, G=78000 MPa, nu=0,30, Fy=250 MPa. Material real, tolerâncias e ligações não foram certificados.
+
+A SIMPLIFICAÇÃO DERIVADA
+Para o eixo forte simétrico, sem furos, beta=1. Definimos Y=My, Ce=Mcre, Cl=Mcrl, Cd=Mcrd:
+P = Y*(1-0,25*Y/Ce), quando Ce>Y/2; caso contrário P=Ce.
+L = P/(1+0,55*P/Cl).
+D = Y/(1+0,60*Y/Cd).
+Mn_piso = min(P,L,D); Ma_piso=0,90*Mn_piso.
+Trata-se de um piso ALGÉBRICO das equações, condicionado aos mesmos dados elásticos elegíveis. Não é capacidade literal publicada nem limite inferior universal da resistência física.
+Nossa prova usa Mp>=My, numeradores de reserva >=1 e a monotonicidade de x/(1+a*x), para a>0. O teto My3>=My não invalida o piso. O domínio local é testado conservadoramente com sqrt(My/Mcrl)<=5, não com o piso P; o domínio distorcional usa sqrt(My/Mcrd)<=5. O código rejeita beta diferente de 1.
+Ba=0,90*Fy*Cw/max|omega|. O comparador soma |Mx|/Ma_piso+|B|/Ba. My transversal é zero neste recorte. Mx e B máximos são concomitantes no meio do vão para esta carga e estes vínculos. Não se utilizou qualquer benefício de sinais favoráveis.
+
+RESULTADOS CALCULADOS
+Para t=1,50 mm e vão 4 m, PP isolado:
+- Mx=51762,407 N.mm; B=-1406010,663 N.mm²; giro=-0,04020969 rad.
+- Ma_piso=792540,758 N.mm; Ba=27996380,637 N.mm².
+- Parcelas longitudinais 0,06531198 + 0,05022116 = 0,11553314.
+Nos 24 casos de PP, esse índice condicional varia de 0,03484733 a 0,34605889. Não é índice global de utilização. Os controles a 1% apenas verificam a homogeneidade da demanda linear; não validam uma carga real nem criam um limiar universal de pequeno giro.
+Nos mesmos casos, kL=L*sqrt(GJ/ECw)=1,7319 a 8,4243. A fração Saint-Venant do TORQUE nos apoios varia de 19,24% a 76,27%. Não é fração da tensão ou da resistência e não prova falha. Mostra por que a simplificação escolhida conserva os dois mecanismos.
+
+EVIDÊNCIA COMPUTACIONAL
+- 14 verificações locais, incluindo 10000 comparações aleatórias entre piso e expressões completas.
+- Revisão independente: 20000 comparações adicionais, 48 registros, estação crítica em 401 pontos, simetria, dimensões e rejeição de domínios inválidos.
+- Reconstituição das matrizes dos 12 modos FSM: com nu fixo e tensão de referência fixa, K203=1,015*K200 e Kg não muda. Apenas os críticos elásticos foram escalados. Duas novas soluções de autovalores confirmam a escala; não se escalou a capacidade pronta nem B.
+- Montagem independente de outro caso: erro relativo de K=1,43e-16; Kg idêntica.
+Os críticos permanecem os do mesmo problema discreto de faixas finitas convencional. A auditoria de escala não substitui a qualificação física dos modos, malha, comprimento e seção efetiva do produto.
+
+REFERÊNCIAS E LIMITES DE USO
+AISI2024: F2.2/F3.2/F4 fornecem o contexto do piso; G8.1 admite By; H4 trata a interação longitudinal; B4 delimita dimensões. C1 exige análise de estabilidade adequada. G8.2 está reservado, mas isso não proíbe H4. O comentário G8 permite desprezar Saint-Venant quando kL<0,5: nenhum caso satisfaz. B3 exige considerar estados aplicáveis; não há dispensa universal de cisalhamento identificada. A1.2.6(c) permite análise racional, sem tornar qualquer fórmula automaticamente suficiente. O Apêndice2 alerta que a posição da carga afeta a instabilidade. Essas disposições não impõem cascas não lineares em todo caso.
+Fonte oficial, cláusulas e comentário:
+https://sdi.org/wp-content/uploads/2025/01/ANSI-SDI-AISI-S100-2024-SDI-AISI-S100-2024-C.pdf
+
+CBCA2014, Anexo A, sustenta separar torção uniforme/empenamento e recuperar tensões normais/tangenciais. Não fornece sozinho a resistência integral adotada aqui. O estudo brasileiro anterior não encontrou na NBR14762:2010 §9.9 uma interação pronta incluindo B independente. Não se misturam capacidades NBR e fatores AISI neste comparador. Para aplicação brasileira, a justificativa do procedimento especial permanece uma tarefa de engenharia.
+
+PENDÊNCIAS CONCRETAS
+1. Qualificar a demanda e a estabilidade para carga/apoios reais, inclusive altura, giros e segunda ordem relevantes. Carga de mesa não equivale automaticamente ao caso de CG estudado.
+2. Demonstrar a relevância e cobrir o escoamento/cisalhamento/instabilidade sob o campo tangencial real, sem assumir que H4 já verifica tudo. O próximo ensaio proporcional é recuperar tau_SV e tau_w conjuntamente com V, conferir equilíbrio e testar um complemento racional delimitado. Uma comparação de von Mises sozinha não fecha flambagem.
+3. Confirmar modos críticos, propriedades/material do produto, serviço e introdução local das forças.
+4. CYPE é comparador futuro: antes de usar, verificar módulo/versão, representação de empenamento e vínculos. Nenhuma execução CYPE foi feita neste pacote.
+
+REPRODUÇÃO
+Python 3.12, NumPy e SciPy. A partir desta pasta:
+  OPENBLAS_NUM_THREADS=1 python3 check_material_scaling.py
+  OPENBLAS_NUM_THREADS=1 python3 aisi_candidate.py
+  OPENBLAS_NUM_THREADS=1 python3 test_candidate.py
+  OPENBLAS_NUM_THREADS=1 python3 independent_review/review.py
+São ensaios offline. SOURCE_PINS.json identifica os insumos congelados; as origens são somente proveniência e não dependências de execução. RESULTS.json e SUMMARY.json mantêm whole_member_approved=false e NBR_design_check=false. PORTABLE_REPLAY.json registra a execução em pasta renomeada sem acesso à pasta original.

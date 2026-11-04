@@ -122,6 +122,8 @@ def render(st, data, revision, load, render_results, render_import):
     length_draft_pending=application_draft_pending or render_geometry(st,data,revision,load)
     st.session_state.last_input = copy.deepcopy(data)
     current = assess(data)
+    from .three_girt_warping.ui import render_panel as render_three_girt_warping
+    render_three_girt_warping(st,data,revision,disabled=not current.get('calculable') or length_draft_pending)
     token = fingerprint(data)
     old = st.session_state.get('result')
     if old and (old.get('input_fingerprint') != token or

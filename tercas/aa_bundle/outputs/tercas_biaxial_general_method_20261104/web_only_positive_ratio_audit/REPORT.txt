@@ -1,0 +1,74 @@
+INDEPENDENT POSITIVE-RATIO FOCAL AUDIT — 2026-11-04
+VERDICT: PASS for the three frozen experimental cases and the reviewed finite
+bootstrap construction. No blocker. Not production/API qualification or a
+formal interval-arithmetic certificate. No runtime files changed.
+
+MATHEMATICAL REVIEW
+The proof's rho floor is correct: the capped rational law remains one through
+lambda*=(1+sqrt(.12))/2; beyond that threshold its derivative is negative.
+k>=4 and the actual (not normalized-away) stress maximum bound lambda above.
+For 0<psi<=1 and psi>=r, each physical edge owns at least rho_min/(3-r):
+the smaller law strip is rho/(3-psi), the other is at least rho/2. This
+survives orientation changes; the equal-stress state matches continuously.
+Individual positivity plus both combined support floors under the SAME H
+proves the ratio throughout the hull by concavity. No independent interval
+subtraction or interpolation of incompatible ratios is involved.
+
+The implementation uses one H per stage/control family, normalizes by exact
+positive load scale, then rescales to actual stresses before S/rho/guards.
+Zero is exact, excluded from strict positivity. Bisection starts with certified
+lo=0, raises lo only on nonnegative padded combined floors, rejects inconclusive
+midpoints, and shrinks its saved lo by (1-PAD). Shrinking preserves the exact
+inequalities because both stresses are positive. No convergence assertion.
+The cap and two further conservative shrinks keep eta_ratio<=1/2. Finite max
+with previous/general retains induction. PSD ordering is also justified by
+actual nested area subsets, not eigenvalue tolerance alone.
+
+INDEPENDENT NUMERICAL METHOD
+No producer geometry, matrix, support, guard, or bootstrap implementation was
+imported. audit.py parses the SHA-pinned raw 209-node geometry, preserves every
+binary64 coordinate exactly as a rational, and uses independent 90-digit
+three-point Gauss-Legendre quadrature, exact for the quadratic stiffness
+integrand. Nonweb and both retained edge strips are integrated directly,
+rather than copying the producer's removed-web closed form. Gross yc and
+full unsymmetrized tensor remain. Every saved eta reconstructs low stiffness,
+Cg and H independently. Direct hyperbolic cubic inversion independently checks
+the general eta route and every next_eta=max update; no sectional solver.
+
+All 12 runs and 192 saved stages PASS. Checks include positive eligibility,
+actual S, combined-covector padded floors, rho, eta, eta<=.5, low SPD, H PSD,
+nested H differences, final H, physical face extrema, all nonweb local guards,
+web endpoint supports, existing continuity-cone guards and curvatures. The
+largest final H absolute discrepancy is <8.2e-68. Comparison tolerance is
+1e-50 relative to max(1,magnitude), well below every relevant saved margin.
+Min combined padded floors remain >1.33e-18 MPa (target) and >6.96e-19 MPa
+(pure control), not zeroed negative residues. These are high-precision
+numerical corroborations, not formal directed-rounding proofs.
+
+Target: symmetric12 face 264.227566784718; symmetric20 264.227040801675;
+ratio12 241.757423310126; ratio20 241.757402765308 MPa. Ratio12/20 satisfy
+existing material/nonweb sufficient guards; symmetric12/20 do not.
+Pure control: symmetric12 135.946375093605 versus ratio12 126.637029913201.
+Mixed control: ratio refused at every stage, and eta/complete final controls
+are byte-for-byte equivalent JSON values to equal-budget symmetric outputs.
+Thus the gain is not just eight additional iterations.
+
+PROVENANCE / SCOPE
+All four transformed-core diffs contain only stage budget, ratio insertion,
+trace evidence and experimental result metadata. Original binding removed;
+original source pins are lineage only. Case/RESULTS/receipt schemas are
+experimental. Every recorded file digest and raw-lineage pin verifies.
+IMPORTANT: transformed_core_sha256 alone does NOT bind tighten(), because it
+is injected from run.py. Reproduction must retain the complete receipt, run.py,
+transformed module and baseline dependencies together. Current receipt does.
+The inherited failure() schema still uses the original family schema for
+failure-only diagnostics; no successful case falsely carries original binding.
+That is a cleanup item before any future API promotion, not a blocker to the
+three successful experimental cases. The transformed module is not standalone.
+
+Green metadata independently matches upward 60-digit Decimal multiplication
+of saved outward curvature endpoints by exact 5 L^2 /48. Those values are
+component upper envelopes only, never actual beam displacement. physical_ELS,
+whole_member, published and uniqueness flags remain false. No physical/global
+index or verdict, negative-branch tightening, added tension strip, flange law,
+FSM, app execution, broad search, or production change was introduced.

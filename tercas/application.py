@@ -237,7 +237,7 @@ def rows(result):
   if 'elastic_vertical' in result:out.append(vertical_row(result))
  from .deflection_scope import presentation_rows
  out=presentation_rows(result,out)
- from .biaxial_component import presentation_rows as gross_component_rows
+ from .flexural_components import presentation_rows as gross_component_rows
  out=gross_component_rows(result,out)
  from .model_domain import historical_rows
  return historical_rows(result,out)

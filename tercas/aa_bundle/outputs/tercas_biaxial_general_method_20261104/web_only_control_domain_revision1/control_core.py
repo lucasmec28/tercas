@@ -1,0 +1,197 @@
+"""Finite supplied-moment convex hull only. No beam/load builder or solver."""
+from pathlib import Path
+from fractions import Fraction
+from decimal import Decimal,Context,localcontext,ROUND_FLOOR,ROUND_CEILING,ROUND_HALF_EVEN,MAX_EMAX,MIN_EMIN,InvalidOperation,DivisionByZero,Overflow
+import json,hashlib,math,importlib.util,sys
+
+def private_decimal_context(precision=80,rounding=ROUND_HALF_EVEN):
+ return Context(prec=precision,rounding=rounding,Emin=MIN_EMIN,Emax=MAX_EMAX,capitals=1,clamp=0,
+                flags=[],traps=[InvalidOperation,DivisionByZero,Overflow])
+
+def json_binary64(token):
+ with localcontext(private_decimal_context()):
+  exact=Decimal(token);value=float(exact)
+  if not math.isfinite(value) or (value==0 and exact!=0):
+   raise ValueError('JSON number cannot be represented as finite nonzero binary64')
+  return value
+
+HERE=Path(__file__).resolve().parent
+ROOT=HERE.parents[2]
+MANIFEST_SHA='ff8be4704ff75092cb205ba1898239167ca61868a7d68dc0bf1655b9f1ba914d'
+GEOMETRY_SHA='f74d3f941e59af0bceb3a2fdae414e8aa479b14b16cbe284c1dff3f3e816b005'
+PSI_EXTENSION_REVIEWED=True
+
+def failure(status,reason):
+ return dict(schema='aa_web_control_hull_v1',scope='convex_hull_of_supplied_moment_vectors',status=status,sufficient=False,reason=reason,physical_ELS_approved=False,whole_member_approved=False,published=False)
+def rational(x):
+ if type(x) is bool:raise ValueError('bool is not a control value')
+ if isinstance(x,Fraction):return x
+ if type(x) is int:return Fraction(x)
+ if type(x) is float and math.isfinite(x):return Fraction.from_float(x)
+ raise ValueError('Control values must be finite exact int/Fraction or finite binary64')
+def pair(x):return [str(x.numerator),str(x.denominator)]
+def validate(req):
+ if type(req) is not dict or set(req)!={'schema','geometry_sha256','material','controls'}:raise ValueError('Missing/extra fields; no q, P, L or case IDs')
+ if req['schema']!='aa_web_control_hull_v1' or req['geometry_sha256']!=GEOMETRY_SHA:raise ValueError('Source/schema identity')
+ m=req['material']
+ if type(m) is not dict or set(m)!={'E_MPa','nu','fy_MPa'}:raise ValueError('Material fields')
+ for k,v in [('E_MPa',200000.),('nu',.3),('fy_MPa',250.)]:
+  if type(m[k]) not in (int,float) or not math.isfinite(m[k]) or m[k]!=v:raise ValueError('Material outside R01')
+ raw=req['controls']
+ if type(raw) is not list or not raw:raise ValueError('Nonempty finite control list required')
+ vals=[]
+ for row in raw:
+  if type(row) not in (list,tuple) or len(row)!=3:raise ValueError('Each control is [N,Mx,My]')
+  r=tuple(rational(x) for x in row)
+  if r[0]!=0:raise ValueError('N=0 component scope required')
+  vals.append(r)
+ unique=sorted(set(vals));canon=[[pair(x) for x in row] for row in unique]
+ digest=hashlib.sha256(json.dumps(canon,separators=(',',':')).encode()).hexdigest()
+ return unique,canon,digest
+
+def load():
+ raw=(HERE/'SOURCE_MANIFEST.json').read_bytes()
+ if hashlib.sha256(raw).hexdigest()!=MANIFEST_SHA:raise ValueError('Own fixed manifest changed')
+ pins=json.loads(raw)['files']
+ for p,sha in pins.items():
+  if hashlib.sha256((ROOT/p).read_bytes()).hexdigest()!=sha:raise ValueError('Pinned source changed: '+p)
+ def mod(name,p):
+  spec=importlib.util.spec_from_file_location(name,p);obj=importlib.util.module_from_spec(spec);sys.modules[name]=obj;spec.loader.exec_module(obj);return obj
+ core=mod('hull_private_bound_core',HERE.parent/'web_only_domain_api_revision1/bound_core.py')
+ source=mod('hull_geom_source',HERE.parent/'web_only_independent/pure_weak_oracle.py')
+ return core,core.model(source),pins
+
+def decimal_out(x,mp,upper):
+ if not mp.isfinite(x):raise ArithmeticError('Nonfinite support')
+ if not x:return '0'
+ with localcontext(private_decimal_context(60,ROUND_CEILING if upper else ROUND_FLOOR)) as ctx:
+  return str(+Decimal(mp.nstr(x,80)))
+def interval_out(bounds,mp):
+ return {'lower_decimal':decimal_out(bounds[0],mp,False),'upper_decimal':decimal_out(bounds[1],mp,True)}
+def scalar_out(x,mp):return mp.nstr(x,60)
+def _binary64_interval_impl(interval):
+ try:
+  values=[]
+  for k,direction in [('lower_decimal',-math.inf),('upper_decimal',math.inf)]:
+   exact=Decimal(interval[k]);f=float(exact)
+   if not math.isfinite(f) or (f==0 and exact!=0):raise ArithmeticError('binary64 over/underflow; decimal support remains available')
+   values.append(0. if exact==0 else math.nextafter(f,direction))
+  if not all(math.isfinite(x) for x in values):raise ArithmeticError('outward binary64 conversion overflow')
+  return dict(status='converted',interval=values)
+ except (ValueError,TypeError,KeyError,ArithmeticError) as exc:return dict(status='numerical_conversion_failure',reason=str(exc))
+
+def binary64_interval(interval):
+ with localcontext(private_decimal_context()):
+  return _binary64_interval_impl(interval)
+
+def _assess_impl(req):
+ try:controls,canonical,digest=validate(req)
+ except (ValueError,TypeError,OverflowError) as exc:return failure('invalid_input',str(exc))
+ try:core,g,pins=load()
+ except (ValueError,OSError,KeyError) as exc:return failure('source_mismatch',str(exc))
+ try:
+  mp=core.mp;r=mp.mpf('.236')
+  def convert(f):return mp.mpf(f.numerator)/mp.mpf(f.denominator)
+  prepared=[]
+  for c,exact in zip(controls,canonical):
+   scale=max(abs(c[1]),abs(c[2]));cn=[Fraction(0)]*3 if not scale else [x/scale for x in c]
+   prepared.append(dict(exact=exact,scale=scale,s=convert(scale),Rn=mp.matrix([convert(x) for x in cn]),
+    digest=hashlib.sha256(json.dumps(exact,separators=(',',':')).encode()).hexdigest()))
+  def support(H,c,w):
+   if not c['scale']:return (mp.mpf(0),mp.mpf(0))
+   lo,hi=core.functional_bounds(g,H,c['Rn'],w)
+   lo*=c['s'];hi*=c['s'];pad=core.PAD*max(abs(lo),abs(hi))
+   return lo-pad,hi+pad
+  def vector(pt):return g['E']*mp.matrix([1,pt[1]-g['yc'],-pt[0]])
+  def stress(H,c,pt):return support(H,c,vector(pt))
+  i,j=g['walls'][2][1:3];ends=[g['points'][z] for z in (i,j)]
+  eta=mp.mpf(0);trace=[];nonzero=[c for c in prepared if c['scale']]
+  if nonzero:
+   for stage in range(12):
+    H,low=core.compliance_difference(g,eta)
+    S=max(mp.mpf(0),*(stress(H,c,p)[1] for c in nonzero for p in ends))
+    improved,formula=core.guaranteed_edge_fraction(g,S)
+    if improved<eta-core.PAD*max(1,eta):raise ArithmeticError('Nonmonotone retained subset')
+    trace.append(dict(stage=stage,eta_used=scalar_out(eta,mp),S_actual_MPa=scalar_out(S,mp),next_eta=scalar_out(max(eta,improved),mp)))
+    eta=max(eta,improved)
+  else:eta=mp.mpf('.5')
+  H,low=core.compliance_difference(g,eta)
+  outputs=[];allguards=True;oldexist=True;newexist=True
+  for c in prepared:
+   zero=not c['scale'];endpoint=[stress(H,c,p) for p in ends]
+   v0,v1=map(vector,ends);cone=[support(H,c,v0+r*v1),support(H,c,v1+r*v0)]
+   old=zero or all(a>0 for a,b in endpoint);new=zero or all(a>0 for a,b in cone)
+   oldexist &= old;newexist &= new;wallrows=[]
+   for name,a,b,width,n in g['walls']:
+    if name=='web':continue
+    vals=[stress(H,c,[g['points'][z][k]+sign*g['t']/2*n[k] for k in (0,1)])[1] for z in (a,b) for sign in (-1,1)]
+    S=max(mp.mpf(0),*vals)*(1+core.PAD);lp0=width/g['t']/mp.mpf('.623')*mp.sqrt(S/g['E']);Ia=Is=None
+    if 'lip' in name:k=mp.mpf('.43');lp=width/g['t']/mp.mpf('.95')*mp.sqrt(S/(g['E']*k));full=lp<=mp.mpf('.673')*(1-core.PAD)
+    elif lp0<=mp.mpf('.673')*(1-core.PAD):lp=lp0;full=True
+    else:
+     d=g['walls'][0 if name.startswith('bottom') else 4][3];ratio=mp.mpf(17)/width;k=min(4,4 if ratio<=mp.mpf('.25') else mp.mpf('5.25')-5*ratio)
+     Is=g['t']*d**3/12;Ia=min(g['t']**4*(56*lp0+5),399*g['t']**4*(mp.mpf('.487')*(lp0-mp.mpf('.673')))**3)
+     lp=width/g['t']/mp.mpf('.95')*mp.sqrt(S/(g['E']*k));full=Is>=Ia*(1+core.PAD) and lp<=mp.mpf('.673')*(1-core.PAD)
+    wallrows.append(dict(wall=name,sigma_upper_MPa=decimal_out(S,mp,True),lambda_local=scalar_out(lp,mp),full_sufficient=bool(full)))
+   face=mp.mpf(0)
+   for a,b in zip(g['points'][:-1],g['points'][1:]):
+    le=mp.sqrt(sum((b[k]-a[k])**2 for k in (0,1)));n=(-(b[1]-a[1])/le,(b[0]-a[0])/le)
+    for p in (a,b):
+     for sign in (-1,1):face=max(face,*map(abs,stress(H,c,[p[k]+sign*g['t']/2*n[k] for k in (0,1)])))
+   guards=all(w['full_sufficient'] for w in wallrows) and face<=250*(1-core.PAD);allguards &= guards
+   curv=[]
+   for k in (1,2):
+    w=mp.matrix([0,0,0]);w[k]=1;curv.append(interval_out(support(H,c,w),mp))
+   normalized_web=[(mp.mpf(0),mp.mpf(0)) if zero else core.functional_bounds(g,H,c['Rn'],vector(p)) for p in ends]
+   normalized_cone=[(mp.mpf(0),mp.mpf(0)) if zero else core.functional_bounds(g,H,c['Rn'],w) for w in (v0+r*v1,v1+r*v0)]
+   outputs.append(dict(control_digest=c['digest'],exact_resultants_N_Nmm=c['exact'],zero_identity=zero,
+    normalized_web_supports_MPa=[interval_out(z,mp) for z in normalized_web],
+    normalized_cone_supports_MPa=[interval_out(z,mp) for z in normalized_cone],
+    normalization_scale_fraction=pair(c['scale']),normalization='R=scale*Rn, ||Rn||inf=1 when nonzero; fixed H, actual scale used in all bootstrap and final supports',
+    web_endpoint_intervals_MPa=[interval_out(z,mp) for z in endpoint],cone_intervals_MPa=[interval_out(z,mp) for z in cone],
+    two_positive_edges_sufficient=old,psi_gt_minus0236_sufficient=new,
+    guards=dict(walls=wallrows,face_upper_MPa=decimal_out(face,mp,True),all_sufficient=bool(guards)),curvature_supports_per_mm=curv))
+  full_section=(eta==mp.mpf('.5'))
+  existence=full_section or oldexist or (PSI_EXTENSION_REVIEWED and newexist)
+  sufficient=bool(allguards and existence)
+  route='zero_identity' if not nonzero else 'constructive_full_section' if full_section else 'retained_subset_psi_cone' if PSI_EXTENSION_REVIEWED and newexist else 'retained_subset_positive_edges' if oldexist else 'inconclusive_existence'
+  result=dict(schema='aa_web_control_hull_v1',scope='convex_hull_of_supplied_moment_vectors',status='sufficient_control_hull' if sufficient else 'inconclusive_control_hull',sufficient=sufficient,
+   source_pins=pins,source_manifest_sha256=MANIFEST_SHA,controls_digest=digest,material=dict(req['material']),controls=outputs,
+   domain_binding_digest=hashlib.sha256(json.dumps(dict(schema='aa_web_control_hull_v1',source_manifest=MANIFEST_SHA,controls_digest=digest,material=req['material']),sort_keys=True,separators=(',',':')).encode()).hexdigest(),
+   coordinate_convention='Compression positive; b=[1,y,-x], resultants=[N,Mx,My]; core shifts y by gross yc only, N=0 leaves moments unchanged',
+   common_internal_y_origin_mm=scalar_out(g['yc'],mp),
+   common_H_compliance_diagnostic=[[scalar_out(H[i,j],mp) for j in range(3)] for i in range(3)],
+   existence_route=route,constructive_full_section=bool(full_section),existence_sufficient=bool(existence),
+   eta_common=scalar_out(eta,mp),bootstrap_trace=trace,nonweb_and_material_sufficient=bool(allguards),
+   existence_positive_edges=bool(oldexist),existence_psi_cone=bool(newexist),psi_extension_reviewed=PSI_EXTENSION_REVIEWED,
+   no_beam_field_asserted=True,no_beam_bound_returned=True,N_scope=0,bimoment_scope=0,
+   numeric_context='Private 70-digit mpmath context, normalized functional PAD plus relative rescaling PAD; not formal interval arithmetic',
+   exact_controls='Fraction input and canonical numerator/denominator pairs; no direction snapping; zero only exact',
+   uniqueness_proved=False,physical_ELS_approved=False,whole_member_approved=False,published=False)
+  json.dumps(result,allow_nan=False);return result
+ except (ValueError,TypeError,ArithmeticError,OverflowError,ZeroDivisionError) as exc:return failure('numerical_failure',str(exc))
+
+
+def assess(request):
+ try:
+  with localcontext(private_decimal_context()):
+   return _assess_impl(request)
+ except (ArithmeticError,ValueError,TypeError,OverflowError) as exc:
+  return failure('numerical_failure',str(exc))
+
+def assess_json(raw):
+ def pairs(items):
+  d={}
+  for k,v in items:
+   if k in d:raise ValueError('Duplicate JSON key')
+   d[k]=v
+  return d
+ try:
+  req=json.loads(raw,object_pairs_hook=pairs,parse_float=json_binary64,parse_int=int,parse_constant=lambda s:(_ for _ in ()).throw(ValueError('Nonfinite JSON')))
+  for row in req['controls']:
+   for i,x in enumerate(row):
+    if type(x) is dict:
+     if set(x)!={'numerator','denominator'} or any(type(x[k]) is not str for k in x):raise ValueError('Exact rational JSON requires integer strings')
+     row[i]=Fraction(int(x['numerator']),int(x['denominator']))
+  return assess(req)
+ except (ValueError,TypeError,KeyError,ArithmeticError):return failure('invalid_input','Invalid strict rational JSON')

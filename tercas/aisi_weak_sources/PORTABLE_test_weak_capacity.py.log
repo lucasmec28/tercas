@@ -1,0 +1,34 @@
+test_B4 (__main__.TestWeakReference.test_B4) ... ok
+test_F2_join (__main__.TestWeakReference.test_F2_join) ... ok
+test_F4_corner_tension_geometric (__main__.TestWeakReference.test_F4_corner_tension_geometric) ... ok
+test_F4_mixed_field_rejected (__main__.TestWeakReference.test_F4_mixed_field_rejected) ... ok
+test_F4_sense_and_profile_rejected (__main__.TestWeakReference.test_F4_sense_and_profile_rejected) ... ok
+test_actual_nu_E_G_explicit (__main__.TestWeakReference.test_actual_nu_E_G_explicit) ... ok
+test_algebra_floor_random (__main__.TestWeakReference.test_algebra_floor_random) ... ok
+test_bad_beta (__main__.TestWeakReference.test_bad_beta) ... ok
+test_bad_numbers (__main__.TestWeakReference.test_bad_numbers) ... ok
+test_beta_both_sides (__main__.TestWeakReference.test_beta_both_sides) ... ok
+test_compression_modulus_not_first_yield (__main__.TestWeakReference.test_compression_modulus_not_first_yield) ... ok
+test_diagnostic_not_capacity (__main__.TestWeakReference.test_diagnostic_not_capacity) ... ok
+test_diagnostic_requires_ack (__main__.TestWeakReference.test_diagnostic_requires_ack) ... ok
+test_dist_bound_monotone (__main__.TestWeakReference.test_dist_bound_monotone) ... ok
+test_first_yield_modulus_corruption (__main__.TestWeakReference.test_first_yield_modulus_corruption) ... ok
+test_global_independent_decimal (__main__.TestWeakReference.test_global_independent_decimal) ... ok
+test_global_root_product (__main__.TestWeakReference.test_global_root_product) ... ok
+test_global_uses_strong_flexural_stiffness (__main__.TestWeakReference.test_global_uses_strong_flexural_stiffness) ... ok
+test_invalid_side (__main__.TestWeakReference.test_invalid_side) ... ok
+test_lips_24_reference_cases (__main__.TestWeakReference.test_lips_24_reference_cases) ... ok
+test_load_support_axial_holes (__main__.TestWeakReference.test_load_support_axial_holes) ... ok
+test_partial_F2_F3_is_not_capacity (__main__.TestWeakReference.test_partial_F2_F3_is_not_capacity) ... ok
+test_scaled_bound_outward (__main__.TestWeakReference.test_scaled_bound_outward) ... ok
+test_sign_conventions_opposite (__main__.TestWeakReference.test_sign_conventions_opposite) ... ok
+test_sources (__main__.TestWeakReference.test_sources) ... ok
+test_spans_and_thickness (__main__.TestWeakReference.test_spans_and_thickness) ... ok
+test_sufficient_lambda_not_floor_lambda (__main__.TestWeakReference.test_sufficient_lambda_not_floor_lambda) ... ok
+test_web_component_F4_not_applicable (__main__.TestWeakReference.test_web_component_F4_not_applicable) ... ok
+test_wrong_material_row_rejected (__main__.TestWeakReference.test_wrong_material_row_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 29 tests in 0.517s
+
+OK

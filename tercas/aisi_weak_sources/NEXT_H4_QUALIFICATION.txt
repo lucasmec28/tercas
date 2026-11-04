@@ -1,0 +1,48 @@
+PRÓXIMO ESTUDO DELIMITADO PARA H4 DO ESTADO FINITO
+Proposta de ensaio, não executada nesta frente.
+
+O que agora existe: denominadores componentes de flexão forte e fraca nos dois
+sentidos, como pisos AISI derivados dentro das referências qualificadas; By/G8.1
+na frente anterior. Isso não valida automaticamente as demandas do estado finito.
+
+1. CONTRATO DE EIXOS E SINAIS
+Extrair do estudo de rotação finita, em cada estação, os momentos locais da
+seção girada e B, sem confundir momentos nos eixos globais fixos com os da
+seção. Reconstruir o campo normal pelas mesmas propriedades e convenções.
+O sinal fraco tension-positive deve selecionar lábios para My>0 e alma para
+My<0. Controles: giro zero reproduz o anterior, troca do sentido fraco troca a
+capacidade física, inversão coerente dos eixos não muda a razão final.
+
+2. CONCOMITÂNCIA E ENVELOPE
+Calcular |Mx|/Max+|My|/May+|B|/Ba na MESMA estação e para a mesma combinação,
+com teto1 e sem benefício1,25. Não somar máximos em estações diferentes para
+alegar utilização exata. Qualificar o máximo contínuo ou fornecer majorante
+numérica demonstrada; uma malha de amostragem sozinha pode perder o máximo.
+Primeiro teste: controles infinitesimais devem convergir à solução linear.
+Em seguida testar o lote PP finito já calculado e as combinações AISI definidas,
+sem chamar coeficiente PP1 de combinação de projeto.
+
+3. PARCELA NORMAL WAGNER
+O estado finito contém campo autoequilibrado adicional. Sua projeção sobre
+N/Mx/My/B é nula, portanto H4 desses quatro resultantes não o representa.
+Não substituir por B equivalente nem descartá-lo por pequena amplitude.
+Recuperar separadamente sigma_W e demonstrar seu limite e influência sobre
+escoamento/estabilidade no domínio adotado; justificar complemento racional
+compatível com a rota AISI antes de declarar verificação longitudinal completa.
+H4 pode ser calculado como parcela da avaliação, mantendo esse gate aberto.
+
+4. ESTABILIDADE, CARGAS E C1
+Os denominadores atuais usam referências puras de garfo/empenamento livre,
+sem ação da telha, com Mcre global analítico. Demonstrar a compatibilidade com
+a aplicação real de cargas, eventuais alturas desestabilizantes, vínculos,
+imperfeições e rigidezes exigidas por C1. Positividade da tangente elástica no
+estado PP, por si só, não qualifica uma resistência de membro imperfeito ou
+todas as combinações. A proposta mínima é comparar demanda finita e linear
+com mesmas rigidezes e verificar estabilidade relevante em cada combinação,
+sem impor GMNIA como requisito universal.
+
+5. LIMITE DO RESULTADO
+Mesmo que as parcelas H4 e o campo normal sejam fechados, continuam separados
+o cisalhamento torsional/G8.2, serviço, material/produto real e introdução das
+cargas/ligações. Não transferir o resultado para travessas externas com outros
+B de ponta, vínculos ou campo de carga. Não dimensionar tirantes por este teste.

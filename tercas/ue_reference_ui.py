@@ -104,7 +104,7 @@ def render(st, data, revision, load, render_results, render_import):
     from .deflection_scope import render_choice
     render_choice(st, data, f'ue_ref_deflection_model_{revision}')
     from .deflection_scope import enabled as uniaxial_component_enabled
-    from .biaxial_component import selected as gross_component_selected
+    from .flexural_components import selected as gross_component_selected
     st.caption(TRACE_NOTE.split(' A evidência MLE')[0] if uniaxial_component_enabled(data) or gross_component_selected(data) else TRACE_NOTE)
     from .torsion_study_ui import render_choice as render_torsion_choice
     render_torsion_choice(st, data, f'torsion_choice_{revision}')
@@ -116,6 +116,8 @@ def render(st, data, revision, load, render_results, render_import):
     length_draft_pending=application_draft_pending or render_span(st,data,revision,load)
     st.session_state.last_input = copy.deepcopy(data)
     current = assess(data)
+    from .three_girt_warping.ui import render_panel as render_three_girt_warping
+    render_three_girt_warping(st,data,revision,disabled=not current.get('calculable') or length_draft_pending)
     token = fingerprint(data)
     old = st.session_state.get('result')
     if old and (old.get('input_fingerprint') != token or

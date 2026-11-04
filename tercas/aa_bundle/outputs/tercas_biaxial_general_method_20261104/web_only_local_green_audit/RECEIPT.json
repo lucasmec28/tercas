@@ -1,0 +1,12 @@
+{
+  "status": "independent_exact_global_Green_replay_pass",
+  "files": {
+    "RESULTS.json": "40657b701c24525e7108c4ec4802af5915bae83736e5c8b5f46e680a2d6606dd",
+    "REVIEW.txt": "1f55e5effa953bf6c53902caac7bb3f34d51d598112a832dc1566edd646b816f",
+    "RUN.log": "8cc4cc8a94608ff01f79f007c292e981549d7e7b3667b6e4e7e102ba281a2e31",
+    "audit.py": "ca3f4738c20a5269d9ded1eb3d865fc90bc08813bedfd698c32283b5da721f25"
+  },
+  "source_sha256": "5aafaebdc4286f0f50c074b6cdcc25d7c12f5fd61a82e6b981c506fcb5934fef",
+  "physical_ELS_approved": false,
+  "published": false
+}

@@ -1,0 +1,107 @@
+INDEPENDENT POSITIVE-RATIO RESEARCH API AUDIT — 2026-11-04
+VERDICT: PASS within the declared research component-ceiling contract.
+No blocking finding remains. Not a production, actual-deflection, physical ELS,
+whole-member, uniqueness, flange/lip-law or stability qualification.
+
+FROZEN IMPLEMENTATION
+api.py a186eecdfc2f5a8e5be73cc0f385d93df8602f0190e3af80c1a50b3fb5b0e8e1
+control_core.py 4dab6f4b1e2f58e51f5bfcbe24fab0efd692c75a663fb6390736304fd0a4b4c5
+SOURCE_MANIFEST.json 50c94fec4c24b44f012bd2a95993f964e93716133407617083b93dcf6286bce8
+CORE_SOURCE_MANIFEST.json 03f552f6d57c6e0f303bb1df78a0f57a83a580d96110716fc27eda35dcd7696a
+Producer receipt 10bfeed2bbc13560e610f60c129d8260e716337f1ade7805d2e7635ded6110d8
+All 51 receipt file hashes and 3 untouched baseline revision2 hashes verified.
+
+DELTA / PROOF
+Compared actual files against revision2. Bound and geometry modules are byte
+identical. Runtime Green/polynomial modules retain the previously audited pins.
+The changed mathematics is the finite common-H positive-ratio certificate.
+The support is evaluated for each combined covector, not by subtracting
+independent endpoint intervals. Endpoint positivity excludes exact zeros;
+all controls share H; actual scales feed S, rho and final guards. The saved
+lo only advances on nonnegative combined floors; final shrunk r is rechecked.
+The capped rho law and eta_ratio=rho/(3-r) match the reviewed proof. The
+max of previous/general/ratio candidates preserves physical-strip induction.
+Removing general_eta>=previous_eta is correct: the general floor need not
+match the already stronger ratio certificate. Added finite/range/nesting
+checks do not expand the inherited PSD arithmetic tolerance. Twelve stages
+and 100 bisections are finite construction budgets, not convergence claims.
+Existence and nonweb/material checks still run after the final H.
+The separate proof and 192-stage independent numeric audit are dependencies;
+this audit did not repeat their section quadrature or solve a section/FSM.
+
+INDEPENDENT EXECUTION
+Eight focal groups passed (audit.py, RUN.log):
+- Changed AST functions and full manifest verification.
+- Target: newly sufficient, previous revision2 inconclusive; trace max and
+  physical ranges checked. Face ceiling below 250 MPa. Component ceilings
+  [0.20330347585010872, 146.27429435933485] mm.
+- Mixed control: every ratio attempt ineligible; exact final controls and
+  displacement_component_bounds identical to revision2.
+- Nonproportional q+P and its reflected position: same canonical hull and
+  ceilings (within 1e-12 mm); neither point action snapped nor projected.
+- All seven exact zero routes; gross control; positive/reversed/high load;
+  minimal binary64 subnormal q, P and point coordinate preserved as nonzero.
+- Lexical huge-exponent zeros, nonzero overflow/underflow, NaN/Infinity,
+  duplicate keys, malformed inputs, invalid mechanics/material scope.
+- Hostile Decimal precision/exponents/traps/flags preserved; three concurrent
+  fresh calls exactly equal serial result, global mpmath precision unchanged,
+  fresh module names removed and no bytecode cache written in the new API.
+- Dependency tampering rejected despite unchanged manifest identity; request,
+  field, source, actual implementation and hull/control bindings checked.
+  Noncanonical/duplicate/missing/foreign or reversed control records rejected
+  by the internal helper. Public API never imports a caller hull/snapshot.
+
+Composition checks independently assert exact rational zero displacement at
+both supports and exact d/d' continuity across q+P splits for both component
+and lower/upper envelopes. Binary64 upper_float is the least binary64 value
+not below each exact reported rational ceiling, including tiny responses.
+No experimental run.py Green summary is used. The full previously reviewed
+Sturm/Green implementation is unchanged; the 288-check suite was not repeated.
+
+Additional coherence.py checks passed: 120 normalized-to-actual support pairs
+agree with exact scales and the documented relative PAD, to 1e-55 relative
+comparison tolerance; 84 saved trace max updates agree; face/wall and zero
+flags agree with their records. All three final schemas remain explicit on
+success/invalid_input/source_mismatch/inconclusive paths. Artificial local
+ArithmeticError injection, without modifying any source file, also confirmed
+new numerical_failure schemas and no usable displacement ceiling. Exact
+9007199254740993 integer length and rational JSON 1/3 are preserved.
+
+receipts.py independently replayed all SEVEN previously sufficient saved
+family admissions: all remain sufficient, none has a larger component ceiling,
+and all full outputs equal the producer's frozen cases. Both existing
+biaxial benchmark maxima are enclosed by the saved new ceilings; benchmarks
+were read, never solved or reintegrated. Producer's separate nine test groups
+and 39 cases were inspected and their hashes verified, not substituted for
+this independent execution.
+
+CONTRACT / CORRECTIONS / LIMITS
+Before freeze, comparison outputs lacked a distinct schema and hull_mapping
+lacked its explicit schema check. Author corrected both before these final
+runs. Comparison schema is aa_web_positive_ratio_component_comparison_v1;
+component/hull schemas are aa_web_positive_ratio_qp_component_v1 and
+ aa_web_positive_ratio_control_hull_v1. No stale family success/failure schema.
+An initial harness run expected the old comparison schema set and stopped;
+that harness expectation was corrected, then the final frozen bytes passed.
+No author/API/app sources were changed by this audit.
+
+A domain-inconclusive result has no displacement_component_bounds. A valid
+component ceiling above a criterion gives inconclusive, never structural
+failure; the comparison may report that mathematically valid ceiling for
+context, not call it a physical response or failed structure. No physical,
+whole-member or published flag is true. Old snapshots are not upgraded.
+
+Self-generated implementation hashes are evidence, not external trust anchors.
+Consumers must check these frozen release pins/receipt; copying a hash into
+an altered file does not certify it. No claim is made to authenticate an
+adversarially replaced API that also replaces its external trust anchor.
+Likewise hull_mapping is internal consistency, not a universal certificate
+validator. Actual redundant computed outputs were checked above; arbitrary
+external hulls remain outside the public input contract.
+
+All section support numerics remain private 70-digit mpmath with PAD 1e-20,
+not formal interval arithmetic. Exact rational Green conservatism is
+conditional on those supports. There is no new physical branch, flange/lip
+reduction law, torsion/warping/distortion or global stability qualification.
+No deadline fallback, convergence stopping rule, full-app suite, 378-case
+rerun, publication, or production integration was introduced.

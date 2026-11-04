@@ -1,0 +1,143 @@
+{
+  "schema": "independent_saved_valley_review_v1",
+  "producer_result": "outputs/tercas_ue100_family_critical_20261103/producer/t2.00/web/RESULT.json",
+  "producer_result_sha256": "94fa5d1836f2ee80b85619181168bccb2f4ad23ce779b6acd55fc2c154a2ef4d",
+  "profile_id": "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce",
+  "thickness_mm": 2.0,
+  "state": "web",
+  "valleys": [
+    {
+      "L_mm": 76.18280917251073,
+      "matrix_relative_errors": {
+        "K": 4.2109893333407745e-16,
+        "G": 2.1961830626056114e-16
+      },
+      "eigenvalues_kNm": [
+        3.9888695889298957,
+        18.084673574707413,
+        59.12609459179626,
+        149.2931014495184,
+        311.9741709576784,
+        480.81629107866416,
+        586.9803056746609,
+        742.498949643612
+      ],
+      "QZ_kNm": [
+        3.988869592281271,
+        18.08467357654292,
+        59.12609459222131,
+        149.29310144395802,
+        311.97417094819724,
+        480.8162910738376,
+        586.9803056625578,
+        742.4989496247669
+      ],
+      "QZ_max_relative_error": 8.401817019887403e-10,
+      "reference_residuals": [
+        3.2749971138462637e-10,
+        1.4733512291311402e-10,
+        6.841365371988572e-11,
+        4.275403340190413e-11,
+        3.2100706137834435e-11,
+        4.066338997793198e-11,
+        1.9319199943258193e-11,
+        2.389165665722856e-11
+      ],
+      "elapsed_s": 1.3960147550096735,
+      "artifact": "t2.00/web/valley_0.npz",
+      "sha256": "610f6b68ee3cb1cbd79edf85f2466f24052b7094bb632db012a788a8298a2b86",
+      "resultants": [
+        6.768630100850714e-11,
+        3.3296601031906903e-09,
+        999999.9999999978
+      ],
+      "shape_descriptive_metrics": [
+        {
+          "whole": {
+            "displacement_residual_over_total": 0.8499046622735532,
+            "rotation_rad_at_raw_amplitude": -2.6208510867874198e-15,
+            "translation_mm_at_raw_amplitude": [
+              0.027028781993225236,
+              1.3735578957418227e-13
+            ]
+          },
+          "lower_flange_lip": {
+            "displacement_residual_over_total": 0.3317520001438845,
+            "rotation_rad_at_raw_amplitude": 0.0003317689956130096,
+            "translation_mm_at_raw_amplitude": [
+              -0.0006357663877479495,
+              -0.005576065708004823
+            ]
+          },
+          "upper_flange_lip": {
+            "displacement_residual_over_total": 0.33175200014311174,
+            "rotation_rad_at_raw_amplitude": -0.00033176899562954113,
+            "translation_mm_at_raw_amplitude": [
+              -0.0006357663877280707,
+              0.005576065708533202
+            ]
+          },
+          "web": {
+            "displacement_residual_over_total": 0.44608366860633275,
+            "rotation_rad_at_raw_amplitude": -2.255805886442753e-14,
+            "translation_mm_at_raw_amplitude": [
+              0.07715558683912467,
+              -1.2625128406392278e-14
+            ]
+          }
+        },
+        {
+          "whole": {
+            "displacement_residual_over_total": 0.9529386492573861,
+            "rotation_rad_at_raw_amplitude": -0.00015118457665520921,
+            "translation_mm_at_raw_amplitude": [
+              -2.7992104465591653e-14,
+              0.0026398047037373305
+            ]
+          },
+          "lower_flange_lip": {
+            "displacement_residual_over_total": 0.31714527443444585,
+            "rotation_rad_at_raw_amplitude": -0.0003083354967787017,
+            "translation_mm_at_raw_amplitude": [
+              -6.629409860613976e-05,
+              0.004858778564186402
+            ]
+          },
+          "upper_flange_lip": {
+            "displacement_residual_over_total": 0.31714527443122476,
+            "rotation_rad_at_raw_amplitude": -0.0003083354967853948,
+            "translation_mm_at_raw_amplitude": [
+              6.629409868432316e-05,
+              0.004858778564465664
+            ]
+          },
+          "web": {
+            "displacement_residual_over_total": 0.6113815101806149,
+            "rotation_rad_at_raw_amplitude": -0.0011907423868772193,
+            "translation_mm_at_raw_amplitude": [
+              -1.8000428222969523e-13,
+              -0.00032620829595036353
+            ]
+          }
+        }
+      ],
+      "coarse_157_first_eigenvalue_kNm": 3.988882432480304,
+      "mesh_209_vs157_relative": -3.219836790302466e-06,
+      "mesh_modal_subspace_dimension": 1,
+      "mesh_transverse_principal_cosines": [
+        0.9999999995901424
+      ],
+      "neighbor_minimum_verified": true,
+      "classification": "pending_manual_shape_review"
+    }
+  ],
+  "source_hashes": {
+    "outputs/tercas_ue100_family_critical_20261103/producer/t2.00/web/RESULT.json": "94fa5d1836f2ee80b85619181168bccb2f4ad23ce779b6acd55fc2c154a2ef4d",
+    "outputs/tercas_ue100_family_critical_20261103/producer/t2.00/web/valley_0.npz": "610f6b68ee3cb1cbd79edf85f2466f24052b7094bb632db012a788a8298a2b86"
+  },
+  "source_files_unmodified": true,
+  "atlas": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.00/web/mode_atlas.png",
+  "scope": "Saved valleys and nearby conventional shapes, own-model identity; matrix/QZ, residual and 157-to209 subspace comparison. Descriptive rigid fits are not cFSM mode fractions or normative acceptance limits.",
+  "not_evaluated_grid_count": 8,
+  "classification_pending": true
+}

@@ -1,0 +1,12 @@
+{
+  "status": "independent_revision2_parser_delta_pass",
+  "files": {
+    "REVIEW.txt": "583e083c412236ce1918bb9ba7d042fee8ebcb4431bd10449454a8de7b758c45",
+    "review_delta.py": "fa03ed2a4e1ebb501dd51883f75104811838a2f35274b1c6e92999dad84366cb",
+    "REVIEW_RUN.log": "78bdd1e6976df227f86d00cd4d33c95fe247f2f172c004185584ed4e0338ff14",
+    "ORIGINAL_FAILURE.json": "c1a9c4239698d599189f1bddbad3e5319e7096641256f0902ff489edb4823c1b",
+    "REVIEW_RESULTS.json": "ceec50283a35f70ddce9a950417858872d7acb94fa7dced1b899c7709c89890a"
+  },
+  "physical_ELS_approved": false,
+  "published": false
+}

@@ -1,0 +1,15 @@
+{
+  "outputs/tercas_biaxial_research_integration_20261104/candidate/tercas/data/torsion_profiles/ue100x50x17_t1.20.json": "f74d3f941e59af0bceb3a2fdae414e8aa479b14b16cbe284c1dff3f3e816b005",
+  "outputs/tercas_biaxial_research_integration_20261104/candidate/tercas/data/torsion_profiles/ue100x50x17_t1.50.json": "9a30115583275a30ab25eb8c782398a8aa5d547b8272743da9cd2f8342f880d4",
+  "outputs/tercas_biaxial_research_integration_20261104/candidate/tercas/data/torsion_profiles/ue100x50x17_t2.00.json": "fde5d287a73df9adf1b9ab3e392d7207c3423acb7a8894de5553d402cc7aef90",
+  "outputs/tercas_biaxial_research_integration_20261104/candidate/tercas/data/torsion_profiles/ue100x50x17_t2.25.json": "8db5d3c4a037e01e665860c1ad8878bab01330cc07fc4165f74a40c0862ec562",
+  "outputs/tercas_biaxial_research_integration_20261104/candidate/tercas/data/torsion_profiles/ue100x50x17_t2.65.json": "40aada8e49914bb1384c8ac205d8035225d5c033e1e76de8fa65f022ebdd99f1",
+  "outputs/tercas_biaxial_research_integration_20261104/candidate/tercas/data/torsion_profiles/ue100x50x17_t3.00.json": "e45b3298a2a95cca875b558269046090751e3bff2fa1b9dfae3cc0c1a2a97919",
+  "outputs/tercas_biaxial_research_integration_20261104/candidate/tercas/data/torsion_profiles/ue100x50x17_t3.35.json": "f1e9676c843459bcb7c14341a32ab10cc90c8ab6765e056fe9bcd47e3b58dd05",
+  "outputs/tercas_biaxial_research_integration_20261104/candidate/tercas/batch.py": "9914aaa40ff79abc89ca4dcd5a131692875667904444c7028f3cbcc4ff250596",
+  "outputs/tercas_biaxial_research_integration_20261104/candidate/tercas/point_combinations.py": "ede66c5886fe0d9a3e54a4fff3d0f8f5e9fe5fa42ca731c872c04bb2959199c4",
+  "outputs/tercas_biaxial_research_integration_20261104/candidate/tercas/inclination.py": "6f375aa0022b1bba95389bb40ffebb61c26a8e7ffc87c0cb9b453280855fd526",
+  "outputs/tercas_biaxial_research_integration_20261104/candidate/tercas/load_combinations.py": "de4d5db5d916a63bacfd8583c1f8b882f96b029e8614b17d21672ad4e247fb9e",
+  "outputs/tercas_biaxial_research_integration_20261104/candidate/tercas/inclination_adapter.py": "8133273b396ed6b3be06286fd17232d29813c064a7921a469e8e7418ad58b73e",
+  "outputs/tercas_three_girts_qualification_20261103/sources/Automação MC/NBR14762 Dim. perfis formados a frio.pdf": "c2a01615a3ce9e2b93aeb7fee757f7bf9dd932adaefbc242e848ce813dc82407"
+}

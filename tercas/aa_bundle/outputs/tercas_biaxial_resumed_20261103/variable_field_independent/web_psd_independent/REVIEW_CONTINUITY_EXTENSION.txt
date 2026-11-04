@@ -1,0 +1,123 @@
+Revisão da extensão de continuidade da alma AA
+4 de novembro de 2026
+
+Conclusão
+
+A extensão é válida para a lei AA matemática exata já delimitada.
+Substituir a positividade de cada borda pela positividade dos dois
+funcionais combinados amplia o domínio suficiente de continuidade sem
+alterar o conjunto PSD, sua invariância ou as guardas das outras paredes.
+Os quatro ganhos publicados foram confirmados por controles independentes
+3x3 nos eta já calculados. Não há necessidade matemática de um solver
+seccional para essa inferência. A API atual permanece congelada.
+
+1  Equivalência do cone
+
+Com r=0.236, A=s0+r*s1 e B=s1+r*s0, A>0 e B>0 implicam
+s0+s1=(A+B)/(1+r)>0. Logo a maior tensão é positiva. Ordenando
+s0<=s1, A=s1*(psi+r), onde psi=s0/s1; assim psi>-r.
+Reciprocamente, max>0 e psi>-r dão A>0 e
+B=s1*(1+r*psi)>s1*(1-r^2)>0. O caso invertido é simétrico.
+
+Portanto o teste é exatamente equivalente a max>0 e psi>-0.236.
+O uso de v0+r*v1 e v1+r*v0 na fórmula PSD preserva a correlação
+das tensões no MESMO estado. Somar limites separados seria válido
+mas poderia ser mais conservador. Ambos os novos pisos devem valer
+em todo Omega, não só num equilíbrio presumido ou numa amostra.
+
+2  Continuidade inclusive em psi zero
+
+No cone, max(s0,s1)>0, psi e k são contínuos. Rho com cap físico
+é contínuo. Para psi próximo de zero dos dois lados, b2=rho-b1.
+No lado negativo, bc=1/(1-psi) tende a 1. Assim os intervalos
+[0,min(b1,bc)] e [max(0,bc-b2),1] tendem exatamente a
+[0,b1] e [1-b2,1], usados em psi=0. Não há salto nessa interface.
+
+Extremos contínuos de uma quantidade finita de intervalos implicam
+convergência em medida da união. Os integrandos polinomiais da
+matriz seccional são limitados; suas integrais são contínuas, mesmo
+quando as faixas se tocam ou sobrepõem. Em psi=1 a troca de borda
+também é contínua, porque b1=b2=rho/2. A não alma fixa mantém K
+uniformemente positiva, logo sua inversa é contínua.
+
+Em e=0, a deformação limita a compressão por zero e k>=4 implica
+lambda->0. A alma volta a ser integral; o limite também é contínuo.
+Isso diz respeito à lei exata. Cutoffs, merges e padding numéricos
+não recebem, por esse argumento, uma prova de continuidade literal.
+
+3  Invariância e existência
+
+O novo teste NÃO recorta Omega. A área mínima comum e a sequência
+de inclusões anteriores continuam provando T(Omega) contido em Omega.
+Somente se reconhece agora continuidade de T em um domínio maior,
+psi>-0.236, em vez de exigir ambas as bordas positivas.
+
+Brouwer permanece aplicável. Para 0<alpha<=1, Omega(alpha*R)=
+alpha*Omega(R); os dois funcionais escalam por alpha e conservam
+positividade. Em alpha=0, e=0 é imediato. O mesmo gráfico compacto
+de soluções, com fibras não vazias, permite seleção Borel limitada.
+Green produz uma resposta fraca W^{2,infinito}, sem exigir seleção
+contínua, unicidade ou estabilidade. O adendo anterior de seleção
+mensurável contém a referência acadêmica aplicável e permanece intacto.
+
+A mesma substituição de covetores é compatível, algebricamente, com
+o contrato Bernstein separado: os suportes dos funcionais combinados
+continuam côncavos/convexos em R. Isso não qualifica automaticamente
+qualquer nova entrada, nem altera a API q-only.
+
+4  Salto real no limiar excluído
+
+Conferi os limites laterais por frações exatas, sem amostragem epsilon.
+Em psi=-59/250 e lambda=6/5:
+  rho=49/72, b1=rho/(3+59/250), bc=250/309.
+Os dois limites de b2 são rho/2 e rho-b1. As faixas não se sobrepõem.
+A diferença da fração de área retida é exatamente
+  rho/2-b1 = 5047/38832 = 0.12997012772970745...
+Logo há salto de área e de K00. Fixar lambda permite escolher
+sigma_max(psi)=E*k(psi)*(lambda*0.95*t/b)^2 continuamente, portanto
+o exemplo corresponde a um caminho contínuo de tensões da lei AA.
+Ele demonstra a descontinuidade matemática geral, não um estado
+físico admissível ou um equilíbrio de uma das quatro entradas.
+
+O ponto psi=-0.236 e o domínio inferior continuam excluídos desta
+prova suficiente. Um caso particular com união integral pode ocultar
+o salto; isso não autoriza declarar continuidade geral nesse limiar.
+
+5  Controles focais e resultados
+
+Código próprio integrou a geometria pinada em uma base centrada e
+escalada, montando apenas Kg e Kmin em cada eta publicado. Não
+importou o integrador do autor, API, solver ou rotina de bootstrap.
+Foram reavaliados os dois suportes combinados, tensões de borda,
+faces e guardas suficientes não alma dos QUATRO ganhos, sem repetir
+o grid completo, o bootstrap ou os controles escalares anteriores.
+
+Momento Mx/My em Nmm; piso mínimo do cone e máximo de faces em MPa:
+  480000/300000: 22.0295808454; 160.1601723742.
+  540000/300000: 16.6044045587; 167.7075221707.
+  560000/350000: 25.0604919225; 189.9461829392.
+  630000/350000: 18.6176343607; 198.7959786149.
+Todos passam as guardas não alma. Os pisos isolados de uma borda
+são negativos nos quatro, confirmando a falha do certificado antigo.
+Maior diferença dos novos suportes contra o recibo: 1.14e-13 MPa.
+Execução focal: aproximadamente 0.08 s, sem solver ou integração de
+barra. É uma verificação independente binary64, não prova intervalar.
+
+6  Limites da conclusão
+
+Falhar o piso antigo não prova que um equilíbrio real seja misto,
+reduzido ou único. Eta<0.5 descreve o subconjunto comum garantido,
+não a alma efetiva de uma solução encontrada. As duas outras entradas
+publicadas que falham guardas não alma continuam inconclusivas.
+
+Para uma implementação futura, a homogeneidade exata pode preservar
+o cone em cargas pequenas por normalização positiva dos funcionais
+com H fixo e reescala conservadora. Padding absoluto não deve criar
+uma lacuna fictícia perto dos apoios; zeros são tratados por identidade.
+Isso não substitui o fechamento das demais guardas ou das margens.
+
+Não se validam resistência, torção, estabilidade global, solução
+física completa, seleção pelo integrador ou qualquer mudança de
+classificação ELS. Os hashes de PROOF.md e RESULTS.json coincidiram
+com os fornecidos. Os arquivos pinados, recibos anteriores e a API
+não foram alterados. O manifesto novo documenta fontes e controles.

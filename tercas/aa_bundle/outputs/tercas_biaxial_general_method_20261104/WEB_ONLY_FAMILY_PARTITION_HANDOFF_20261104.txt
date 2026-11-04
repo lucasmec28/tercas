@@ -1,0 +1,84 @@
+EXTENSÃO AA DA ALMA: FAMÍLIA E PARTIÇÃO LOCAL FECHADAS
+04/11/2026 06:07 UTC. Pesquisa separada; nenhuma alteração de app/publicação.
+
+RESULTADO PRÁTICO
+A API q+P agora admite as sete fontes próprias Ue100x50x17 t1,20/1,50/2,00/
+2,25/2,65/3,00/3,35 e permite certificados locais exatos quando o hull único
+não basta. Não depende de ID de combinação, malha de máximos, projeção de
+carga ou remendo de índice antigo. O dado retornado é TETO suficiente de
+uma componente de deslocamento flexional, não flecha real estimada.
+
+CAMINHO REVISADO
+1. web_only_family_api_revision1: assess/assess_json/compare_component.
+   Schema aa_web_family_qp_component_v1; registro explícito de sete fontes,
+   E=200000 MPa, nu=.3, fy=250 MPa, N=B=0, viga simples, q/P assinados em
+   coordenadas de momento. P não nulo exige a estritamente interior exato.
+   Sem support_limit, interpolação ou geometria fornecida pelo chamador.
+   API f5265fe813db00322d8cd7eb182cf2f4f498b385fdfc96721cc83eee6378e311
+   Manifesto a8c791eba3fc368e4d3e84cfe85e734766301089e3eb8e881adcab626dbaa81a
+   Autor: 25 métodos e geometria das sete fontes. Independente: web_only_family_api_audit,
+   REVIEW.md: 500d27a034fbb5c5d161f30637c3eac8143013138bcade5779503355bde6a7b3.
+   Integração Gauss de 85 dígitos de Kg/não-alma nas sete fontes, erro <7,82e-58;
+   R01 integral e reduzido matematicamente exato à versão anterior.
+   Exemplo independente t1,50 q=[0,.305], L=4000: teto normal 0,07506424394 mm,
+   paralelo 43,83557373533 mm; face 162,3067 MPa, dentro do modelo elástico.
+
+2. web_only_local_partition_revision1: assess(request,refinement_budget=64).
+   Retorna literalmente o anterior se já suficiente ou recusado. Só um
+   resultado inconclusivo de domínio tenta hulls locais/de Casteljau exato.
+   Cada folha tem H e suportes próprios. Exige TODA a partição certificada.
+   O orçamento é recurso computacional, não limite físico/normativo.
+   Falta de cobertura/erro nunca entrega teto parcial utilizável.
+   API: 21c39d34197c48dc110cc254d475ec661baa40cd5e24f3ba0eaf93b715422809
+   Manifesto: 49944f1a3fdb9ab5d3904f5e0e65c94ed92871090ce2957098fda50a65ad1ba6
+   Autor: 14 testes. Independente: web_only_local_partition_audit,
+   REVIEW.md: 7472367bc85dd9ebc1fb6f69079d083c3393c7f47c5505175d23a2531f70e972,
+   RECEIPT.json: f6836bc9ac4ab7c87258989201f09ef11256a093adf9ced93eed518d35d93c44.
+   Modelo e ações permanecem os mesmos; não são vigas curtas por folha.
+   Um único Green global mantém d/d' contínuos. Não há apoio em zero de M.
+   Prova: web_psd_independent/ADDENDUM_FINITE_LOCAL_PARTITION.txt
+   SHA: 977fccc26f42028988cd2572a0a86d64d00c7b32755ecac52f6886b2e87b9c13.
+
+GANHOS COMPROVADOS
+- R01, q=[0,.6], P=[0,-1200], a=2000, L=4000: antigo inconclusivo; agora 8 avaliações,
+  6 folhas e tetos [0.0005621287530866161, 19.88099370020125] mm.
+  Mcentro=-3125/70368744177664 Nmm permanece NEGATIVO e exato.
+- Novo caso independente q=[.0001,.6], P=[.01,-1200], a=1987, L=4000: 6 avaliações,
+  5 folhas e tetos [0.010225019171691612, 20.085458665669808] mm.
+- Controle Green separado web_only_local_green_audit: 288 igualdades racionais
+  de d/d', 40 C1, 4 enclosures completos de raízes, teto racional igual.
+  Recibo: 7f0ec4c1d6c059d1a0d2916456904ad1402b08dc0e8f818374c7ab8b45e48fad.
+
+COBERTURA NOS DADOS SINTÉTICOS SALVOS
+web_only_family_saved_cases_audit reaplicou SOMENTE os 44 campos anteriormente
+inconclusivos do contrato de travessa, 38 pedidos únicos, sem reexecutar os 334
+suficientes. Família sem refinamento local: 9 linhas agora têm teto suficiente.
+Três já eram recuperadas pelo refinamento bruto exato anterior; são 6 linhas e 
+4 campos distintos adicionais além dele. 35 continuam inconclusivas. Não se
+interpreta todo novo passe como alma realmente reduzida. Nenhum campo tinha
+support_limit; posições/cargas foram preservadas. Limites ausentes continuam
+nulos. Estes são dados sintéticos, não verificação de obra ou novo resultado
+no app. Recibo: 77851b4c136dfd659c8d04346be4d8206250408eb19811d004cd0d956421ffd4.
+
+INTERPRETAÇÃO E ADOÇÃO FUTURA
+- Se teto<=critério declarado, há suficiência DA COMPONENTE no modelo.
+  Teto>critério é inconclusivo, nunca prova de falha da estrutura.
+- Um adaptador futuro deve exibir teto como teto, não sobrescrever o campo de
+  flecha real nem recuperar índice histórico. Novo cálculo explícito, fonte,
+  ações simultâneas, critério e aplicação devem ficar vinculados.
+- Não adicionar a linha paralela retirada pelo usuário. Para travessa isolada,
+  normal é horizontal e seu critério próprio é necessário; a resposta do
+  conjunto 3D com tirantes não pode ser usada como viga isolada sem novo modelo.
+- A base é NBR 14762:2010 MLE/Table5 AA; guardas de não-alma integral usam os
+  comparadores previamente revisados. Tensor, PSD e Green são a derivação
+  mecânica explícita. Não há mistura de lei EC3 nem uso de prévia incompleta.
+- A seção é faceteada dA=t ds; contorno/curvas/centroide/Ixy reais preservados.
+  Faces entram na guarda de tensão. Os suportes seccionais usam 70 dígitos e
+  padding, não aritmética intervalar formal. A camada racional é conservadora
+  condicionada a esses suportes. Existe resposta fraca no modelo, não prova
+  de unicidade, seleção contínua/estável ou comportamento físico geral.
+- Mesas/lábios reduzidos continuam fora deste método. Torção, empenamento,
+  distorção, estabilidade global, apoios/conexões e resistência não foram
+  qualificados por esta entrega. Nenhum ELS físico/global/published é true.
+- Empacotamento/autorização/integração UI, Word, imports e históricos são
+  trabalho separado do integrador. Nenhuma candidata foi modificada aqui.

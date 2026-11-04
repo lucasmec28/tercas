@@ -1,0 +1,203 @@
+APERTO POR RAZÃO POSITIVA DE TENSÕES DA ALMA AA
+4 de novembro de 2026. Adendo matemático focal, sem execução de runtime/solver/FSM.
+
+PARECER
+A hipótese é correta. Em um enclosure comum no qual ambas as tensões
+extremas são positivas, certificar psi>=r, 0<=r<=1, permite as duas faixas
+físicas simétricas de largura eta_ratio*b, com
+ eta_ratio=rho_min/(3-r).
+A orientação da borda mais comprimida pode variar entre estados e controles:
+as DUAS bordas físicas possuem essa garantia. O ganho se incorpora por
+união/max a qualquer estágio finito do bootstrap anterior. Não se exige
+convergência de iteração, ramo negativo, nova lei ou solver seccional.
+
+O campo motivador t=1,50 mm, L=6 m, q=[0,.2024009036485318] foi informado
+pelo solicitante com existência positiva e teto de face aproximadamente
+264 MPa. Este adendo NÃO recalcula esse campo e NÃO declara que sua guarda
+material passa. A aplicação numérica e a revisão independente ficam separadas.
+
+1. BASE, SUBCONJUNTO E DOMÍNIO COMUNS
+
+Fixar materiais/geometria pinados, lei AA na alma, não alma integral e a
+mesma base b=[1,y-yc,-x]. Para um subconjunto físico F_n já certificado,
+ K_n=K_nao_alma+E integral_{F_n} b b^T dA,
+ C_n=K_n^{-1}, H_n=C_n-C_g>=0,
+ Omega_n(R)={C_g R+Delta R:0<=Delta<=H_n}.
+Um certificado local contém um único H_n e um único F_n para TODOS os
+controles R_j e TODO P=conv{R_j}. Os controles podem ter magnitudes
+diferentes. Não substituir H por um H específico de cada controle e
+não interpolar valores de r calculados sob domínios incompatíveis.
+
+Para as duas extremidades reais p0,p1 da alma, v_i=E*b(p_i), s_i=v_i^T e.
+Os suportes sharp são
+ h+/-_{w,H}(R)=w^T(C_g+H/2)R
+                +/- sqrt((w^T H w)*(R^T H R))/2.
+H singular é permitido. h- é côncavo em R, h+ convexo e ambos são
+positivamente homogêneos; h+/- (0)=0 exatamente.
+
+2. POSITIVIDADE UNIVERSAL E RAZÃO
+
+Primeiro, certificar h-_{v0,H}(R_j)>0 e h-_{v1,H}(R_j)>0 em TODOS os
+controles não zero. Zero exato é separado: Omega_H(0)={0}, lei integral.
+Depois, para UM r em [0,1], certificar para todos os controles não zero:
+ h-_{v0-r*v1,H}(R_j)>=0,
+ h-_{v1-r*v0,H}(R_j)>=0.
+Os dois covetores combinados mantêm a correlação das tensões no mesmo
+e. Somar/subtrair intervalos independentes é conservador, não necessário.
+
+Por concavidade, para R=sum_j theta_j R_j, theta_j>=0, sum theta_j=1,
+ h-_{w,H}(R)>=sum_j theta_j h-_{w,H}(R_j).
+Assim os dois pisos combinados permanecem não negativos em TODO hull.
+Os pisos individuais permanecem estritamente positivos sempre que a
+combinação contém algum controle não zero com peso positivo. Não há
+cancelamento desses termos para R=0: a desigualdade individual daria
+h-_{vi,H}(0)>0, contradizendo a identidade zero. Portanto todo R não zero
+do hull e todo e em Omega_H(R) têm s0,s1>0 e os dois pisos combinados.
+
+Ordenando sc=max(s0,s1)>0, so=min(s0,s1)>0, a desigualdade referente à
+borda menor diz so-r*sc>=0. Logo psi=so/sc>=r; também psi<=1. A outra
+desigualdade é redundante em cada orientação fixada, mas testar ambas
+permite que a orientação varie sem escolha nem amostragem de ramo.
+Reciprocamente, psi>=r implica ambas as desigualdades para s0,s1>0.
+
+O uso de >=0 nos pisos combinados admite r exato e igualdade de tensões.
+Não autoriza transformar um valor negativo pequeno em zero. Positividade
+individual é estrita no domínio não zero. Se essa prova de positividade
+falhar, esta rota de eta_ratio não é aceita, ainda que outra rota de
+existência da AA esteja disponível.
+
+3. COMO CERTIFICAR r SEM SOLVER
+
+A. Suportes combinados: com H fixo e positividade já certificada, definir
+ f01(r)=min_j h-_{v0-r*v1,H}(R_j),
+ f10(r)=min_j h-_{v1-r*v0,H}(R_j), excluindo controles zero.
+Para cada controle, o suporte é o ínfimo de s0-r*s1 (ou s1-r*s0),
+portanto é contínuo, côncavo e não crescente em r, pois ambas as tensões
+são positivas em todo enclosure. O mínimo FINITO preserva continuidade
+e concavidade. O conjunto admissível r em [0,1] é um intervalo fechado
+que contém 0; há margem positiva em 0 para conjunto finito não vazio.
+Bisseção finita pode guardar somente limites inferiores r já certificados.
+Um ponto numericamente inconclusivo não é prova de que a condição exata
+falhe; rejeitá-lo para fins de avanço é seguro, mas pode perder ganho.
+Não é necessário achar a razão ótima nem convergir a ela.
+
+B. Intervalos positivos: se, no controle j, 0<L0_j<=s0<=U0_j e
+0<L1_j<=s1<=U1_j, então qualquer
+ r<=min_j {1,L0_j/U1_j,L1_j/U0_j}
+é válido. Os denominadores são positivos. Cada desigualdade é provada
+no controle com seu enclosure, e a transferência por concavidade acima
+cobre todo hull; não se trata de interpolar razões. Essa opção pode ser
+mais conservadora que o teste com os covetores combinados.
+
+Escalas pequenas: para R_j=a_j*Rn_j, a_j>0, testar os pisos em Rn_j
+com o MESMO H. A homogeneidade conserva sinais e razões, mesmo quando
+a_j tende a zero. Usar as magnitudes REAIS a_j na obtenção do teto de
+compressão S e nas demais guardas. Não impor um piso absoluto arbitrário
+de carga, não fazer snapping de controle pequeno para zero e não provar
+apenas controles normalizados esquecendo de reescalar o bootstrap.
+Se os únicos controles forem zero, o mapa é integral construtivo e a
+razão não precisa ser definida. Falha de representação é inconclusiva.
+
+4. TETO DE ESBELTEZ E PISO DE rho COM CAP
+
+Se S>=0 limita a compressão nas extremidades para todo P e Omega_H,
+a afinidade na alma reta limita a compressão em toda ela por S. Com
+ k(psi)=4+2(1-psi)+2(1-psi)^3>=4,
+ lambda=(b/(.95*t))*sqrt(sc/(E*k))<=lambda_u
+        =(b/(.95*t))*sqrt(S/(4*E)).
+A lei exata usa rho=1 para lambda<=.673 e, depois, o mínimo entre 1 e
+(1-.22/lambda)/lambda. Seus coeficientes decimais são os declarados.
+O término real do platô com cap é
+ lambda*=(1+sqrt(.12))/2 > .673.
+Assim, em todo lambda>=0, rho é não crescente: vale 1 até lambda*, e
+para lambda>lambda* sua derivada é (.44-lambda)/lambda^3<0.
+Logo o piso seguro é
+ rho_min=1, se lambda_u<=lambda*;
+ rho_min=(1-.22/lambda_u)/lambda_u, se lambda_u>lambda*.
+Esta forma evita divisão por zero e não aplica a expressão racional
+fora do ramo apropriado. No caso integral lambda_u<=lambda*, toda a
+alma é garantida e pode-se usar diretamente eta=1/2.
+
+Não se precisa de monotonicidade de k em psi para este argumento:
+k>=4 já fornece lambda_u e rho_min universais. A razão positiva apenas
+aperta a distribuição das faixas, sem enfraquecer o teto de compressão.
+
+5. DUAS FAIXAS FÍSICAS, MESMO COM ORIENTAÇÃO VARIÁVEL
+
+No ramo comprimido reduzido, 0<psi<=1, a AA distribui
+ b1/b=rho/(3-psi), b2/b=rho-rho/(3-psi).
+Como psi>=r e rho>=rho_min,
+ b1/b>=rho_min/(3-r)=eta_ratio.
+Como psi<=1, 3-psi>=2 e b1/b<=rho/2, logo
+ b2/b>=rho/2>=rho_min/2>=rho_min/(3-r)=eta_ratio.
+A última desigualdade usa r<=1. Portanto a união física retida contém
+[0,eta_ratio] e [1-eta_ratio,1] nas coordenadas físicas originais,
+independentemente de qual borda seja mais comprimida. No ramo integral
+a inclusão é trivial. Além disso 0<=eta_ratio<=1/2, de modo que nunca
+se exige largura impossível nem se soma área sobreposta indevidamente.
+
+Na troca s0=s1, psi=1, b1=b2=rho/2; a lei física já é contínua. O
+certificado não introduz mudança de ramo negativo nem nova distribuição.
+
+6. ESTÁGIOS FINITOS, INVARIÂNCIA E EXISTÊNCIA
+
+Em cada estágio válido, obter eta_geral pela prova anterior e, quando
+as condições desta nota passam, eta_ratio. Se F_n contém somente as
+faixas simétricas anteriores, usar
+ eta_{n+1}=max(eta_n,eta_geral,eta_ratio).
+Se F_n também contiver segmentos universalmente tracionados ou outro
+subconjunto já provado, conservar a UNIÃO física de F_n com as novas
+faixas; uma única variável eta não representa em geral essa geometria.
+
+As novas faixas foram provadas para todo e em Omega_n(R). As antigas
+continuam válidas no domínio menor por indução. Logo F_{n+1} está
+contido na alma AA(e) em Omega_n e K_{n+1}<=K(e)<=K_g ali. Portanto
+ T_R(Omega_n)⊂Omega_{n+1}⊂Omega_n.
+O enclosure inicial com não alma integral contém TODO equilíbrio;
+a indução mantém essa propriedade em qualquer estágio finito. Não
+se pressupõe convergência do bootstrap nem de um solver de equilíbrio.
+
+No conjunto final Omega_N, as faixas usadas foram certificadas no
+domínio anterior, que contém Omega_N. Assim T_R(Omega_N)⊂Omega_N.
+A positividade, uma vez provada, persiste sob a inclusão dos conjuntos.
+A lei física AA no domínio de duas bordas positivas é contínua, inclusive
+na troca de orientação e cap integral; a não alma fixa mantém SPD.
+Brouwer fornece existência. Zero é tratado pela identidade e pela
+vizinhança integral da origem, como nas provas anteriores. Certificar
+r=0 ainda requer a positividade individual, e não a dispensa.
+
+O subconjunto computacional pode mudar abruptamente entre entradas.
+Uma vez fixados F_N,H_N no campo local, isso não altera a continuidade
+da lei física K(e) usada em Brouwer. A seleção Borel pelo gráfico
+compacto e a colagem por partição finita permanecem como já revisadas.
+Este adendo não afirma seleção contínua, unicidade ou estabilidade.
+
+7. GUARDAS DE MATERIAL/NÃO ALMA E TETOS
+
+A nova retenção não substitui as guardas. Todas devem ser verificadas
+novamente com o H final, no MESMO domínio e nos pontos físicos requeridos.
+Como F cresce, K_min cresce, C_min diminui e Omega se aninha. Portanto,
+para qualquer covetor, h- não diminui e h+ não aumenta. Em cada face,
+max(h+,-h-) não aumenta. O teto máximo absoluto das faces não piora
+quando se usa o mesmo domínio e o suporte exato; nada assegura que
+caia estritamente nem que atravesse 250 MPa no caso motivador.
+
+Os tetos de compressão das paredes não alma também não aumentam.
+As guardas suficientes existentes baseadas nas esbeltezes não pioram:
+lambda e lambda_p0 crescem com S; no ramo lambda_p0>.673, os dois
+termos usados para Ia são crescentes, seu mínimo é crescente, Is e
+k geométrico permanecem fixos; abaixo do limiar a guarda integral é
+direta. Isso não elimina a checagem final nem inventa lei de mesa/lábio.
+
+Os suportes sharp de curvatura e os envelopes integrados pelo mesmo
+Green positivo não pioram. Não se afirma monotonicidade de uma
+componente de C_min*R, nem se usa essa expressão como resposta real.
+Comparações de implementações com folgas/conversões diferentes precisam
+de revisão numérica própria; o teorema concerne aos enclosures exatos.
+
+ESCOPO FINAL
+A prova de retenção por razão positiva está fechada no modelo declarado.
+Nenhum valor novo de eta, face máxima, flecha ou aprovação foi calculado.
+Não se altera a AA original, a prova anterior de tração ou seu
+contraexemplo congelado. O resultado é um teto de componente do modelo
+AA alma/não-alma integral, não lei Ue geral nem aprovação de ELS físico.

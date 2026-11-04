@@ -318,12 +318,18 @@ def _case_records(result, combination, evidence, *, batch, warnings=()):
         if claims_result(result):
             try:gross_record=preserved_snapshot(result)
             except (ValueError,TypeError,KeyError,ArithmeticError):conflict=True
+        aa_record=None
+        from .aa_component import preserved_snapshot as aa_snapshot, claims_result as aa_claims, SCHEMAS as AA_SCHEMAS
+        if aa_claims(result):
+            try:aa_record=aa_snapshot(result)
+            except (ValueError,TypeError,KeyError,ArithmeticError,IndexError):conflict=True
         compatible = (raw.get('criterion_status') in ('meets', 'fails')
                       and raw.get('diagnostic_only') is not True and not conflict)
         records.append(_record(prefix+'deflection', state, raw,
             source=raw.get('source','NBR14762:2010 9.8.5, critério declarado'),
             trace=dict(trace, x_mm=raw.get('x_mm'),
                 gross_biaxial_component=(dict(schema=gross_record['schema'],snapshot_sha256=gross_record['snapshot_sha256'],case_id=cid) if gross_record else None),
+                **({'aa_web_component':dict(schema=aa_record['schema'],snapshot_sha256=aa_record['snapshot_sha256'],case_id=cid,upper_bound_mm=raw.get('upper_bound_mm'),index_kind=raw.get('index_kind'))} if aa_record else {}),
                 criterion_scope=raw.get('criterion_scope'),
                 local_uniaxial_component=deepcopy(raw.get('local_uniaxial_component')),
                 deflection_scope_evidence=deepcopy(result.get('deflection_scope_evidence'))),
@@ -332,6 +338,10 @@ def _case_records(result, combination, evidence, *, batch, warnings=()):
             records.append(_pending(prefix+'combined_ELS_scope',state,
                 ('Componente flexional biaxial integral qualificada no campo/contorno registrado; ' if gross_record and raw.get('qualified_gross_flexural_component') else 'Componente flexional biaxial ainda inconclusiva ou sem registro válido; ')+
                 'ELS físico completo permanece pendente, inclusive torção/empenamento e aplicabilidade da primeira ordem.', trace))
+        elif raw.get('component_schema') in AA_SCHEMAS:
+            records.append(_pending(prefix+'combined_ELS_scope',state,
+                ('Teto suficiente da componente flexional AA no modelo registrado; ' if aa_record and raw.get('criterion_status')=='meets' else 'Teto AA inconclusivo ou sem registro válido; ')+
+                'não é flecha exata e não qualifica ELS físico completo, torção, empenamento ou estabilidade.',trace))
         elif _zero_components(ev, 'parallel'):
             records.append(check(prefix+'combined_ELS_scope', limit_state=state,
                 source=SCHEMA, qualified=True, not_applicable=True, trace=trace,

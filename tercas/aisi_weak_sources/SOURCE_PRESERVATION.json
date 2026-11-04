@@ -1,0 +1,9 @@
+{
+  "sources": {
+    "/workspace/scratch/200bd23c4a9b/outputs/tercas_ue100_family_critical_20261103/FAMILY_ELASTIC_REGISTRY.json": "3919d41d60e8423d7ae44a2bfb32bbd7c75783c7165bd78c027a20757e61cbe3",
+    "/workspace/scratch/200bd23c4a9b/outputs/tercas_aisi_app_integration_20261104/candidate/tercas/data/ue_family/elastic_registry.json": "3919d41d60e8423d7ae44a2bfb32bbd7c75783c7165bd78c027a20757e61cbe3",
+    "/workspace/scratch/200bd23c4a9b/outputs/tercas_aisi_app_integration_20261104/candidate/tercas/ue_family_reference.py": "2910603eb1fcff6561075263a0b32c4f52b89eea85a75b11cdbf7b1560ed099d"
+  },
+  "candidate_elastic_rows_identical": true,
+  "candidate_resistance_code_imported": false
+}

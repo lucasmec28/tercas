@@ -1,0 +1,901 @@
+{
+  "schema": "AISI_weak_elastic_only_v1",
+  "profiles": [
+    {
+      "profile_id": "OWN_Ue100x50x17_t1p50_ri1p50_n12_a16_v1_cd50bf66f299",
+      "thickness_mm": 1.5,
+      "dimensions_external_mm": {
+        "h": 100.0,
+        "b": 50.0,
+        "lip": 17.0,
+        "t": 1.5,
+        "ri": 1.5
+      },
+      "nodes_sha256": "cd50bf66f299d1c072b5a45016cf2ffca777b390332d3386175c34d53c234931",
+      "material": {
+        "E_MPa": 200000.0,
+        "nu": 0.3,
+        "G_MPa": 76923.07692307692
+      },
+      "properties": {
+        "A_mm2": 336.1972353094446,
+        "centerline_length_mm": 224.13149020629638,
+        "centroid_xy_mm": [
+          17.109102491457765,
+          49.25
+        ],
+        "Ix_strong_mm4": 541613.3229048009,
+        "Iy_weak_mm4": 123415.84920326462,
+        "Ixy_mm4": 3.723243935382925e-12,
+        "J_mm4": 252.14792648208342,
+        "Cw_mm6": 290718629.073364,
+        "shear_center_xy_mm": [
+          -25.33166429056801,
+          49.25000000000007
+        ],
+        "x0_mm": 42.440766782025776,
+        "j_mm": 60.066792107238506,
+        "beta_mm5": 4350661.767178755,
+        "r0_mm": 61.4761011595799,
+        "sectorial_orthogonality_raw": [
+          -6.690825671284983e-11,
+          7.293579074030276e-10,
+          7.476685937035654e-10
+        ],
+        "sectorial_orthogonality_dimensionless": [
+          2.1401598616287431e-16,
+          1.2176396927415417e-16,
+          5.958377813064211e-17
+        ]
+      },
+      "property_convention": {
+        "area": "dA=t ds along the same faceted open midsurface",
+        "inertia": "Exact segment line integrals; finite-through-thickness inertia terms omitted",
+        "J": "Saint-Venant thin-wall approximation integral(t^3 ds)/3, not exact finite-thickness torsion",
+        "Cw": "Vlasov line-sectorial integral normalized orthogonal to 1,x,y",
+        "x0": "CGx-CTx, positive from CT toward the lips",
+        "j": "integral[(x-CGx)^3+(x-CGx)*(y-CGy)^2]dA/(2Iy)+x0",
+        "signs": "Own coordinate convention only; no sign assigned to historical Pierin Mly."
+      },
+      "exterior_moduli": {
+        "extents_mm": {
+          "x": [
+            -0.75,
+            49.25
+          ],
+          "y": [
+            -0.75,
+            99.25
+          ]
+        },
+        "extreme_distance_from_CG_mm": {
+          "strong_top": 50.0,
+          "strong_bottom": 50.0,
+          "weak_web": 17.859102491457765,
+          "weak_lips": 32.14089750854224
+        },
+        "Wx_top_mm3": 10832.266458096017,
+        "Wx_bottom_mm3": 10832.266458096017,
+        "Wx_first_yield_mm3": 10832.266458096017,
+        "Wy_web_mm3": 6910.529197214472,
+        "Wy_lips_mm3": 3839.8382985560315,
+        "Wy_first_yield_mm3": 3839.8382985560315,
+        "weak_web_compressed": {
+          "W_mm3": 3839.8382985560315,
+          "Wc_mm3": 6910.529197214472,
+          "Cs": 1
+        },
+        "weak_lips_compressed": {
+          "W_mm3": 3839.8382985560315,
+          "Wc_mm3": 3839.8382985560315,
+          "Cs": -1
+        }
+      },
+      "modal_criticals": {
+        "web_local": {
+          "value_Nmm": 1703485.2401189709,
+          "half_wave_mm": 76.57934696908491,
+          "kind": "local_conventional_web_predominant",
+          "source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t1.50/web/valley_0.npz",
+            "sha256": "039756e6c2192f15fca67034ccc4ca9c157454270a17543aa4d2fd46ae31dacc"
+          },
+          "not_pure_constrained_D": true,
+          "finite_member_exact_eigenvalue": false,
+          "interpretation": "Own continuous-half-wave signature valley, conventional mode of the frozen section and declared pure bending state. Not an exact eigenvalue for every finite span.",
+          "bundle_file": "modes/t1.50_web_local.npz"
+        },
+        "lips_local": {
+          "value_Nmm": 5117990.107788971,
+          "half_wave_mm": 41.90680154324868,
+          "kind": "local_conventional_predominant_near_doublet",
+          "source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t1.50/lips/valley_0.npz",
+            "sha256": "8d2f00ef36eed2a0d280b5688a2c6405aa42a3a8a395a0072fbc71558eaafe68"
+          },
+          "not_pure_constrained_D": true,
+          "finite_member_exact_eigenvalue": false,
+          "interpretation": "Own continuous-half-wave signature valley, conventional mode of the frozen section and declared pure bending state. Not an exact eigenvalue for every finite span.",
+          "bundle_file": "modes/t1.50_lips_local.npz"
+        },
+        "lips_distortional": {
+          "value_Nmm": 2647297.1967503936,
+          "half_wave_mm": 489.68071075666063,
+          "kind": "distortional_conventional_predominant",
+          "source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t1.50/lips/valley_1.npz",
+            "sha256": "4982e4df9d4c3b6fd3a67d4d9191df32437faa7f7a69fe175e529a0d5febd3ef"
+          },
+          "not_pure_constrained_D": true,
+          "finite_member_exact_eigenvalue": false,
+          "interpretation": "Own continuous-half-wave signature valley, conventional mode of the frozen section and declared pure bending state. Not an exact eigenvalue for every finite span.",
+          "bundle_file": "modes/t1.50_lips_distortional.npz"
+        }
+      },
+      "web_all_spectrum_bound": {
+        "identified_Nmm": null,
+        "lower_bound_Nmm": 1530000,
+        "bound_source": {
+          "path": "outputs/tercas_ue100_family_critical_20261103/web_floor/t1.50/CERTIFICATE.json",
+          "sha256": "f61d3968cf9e57e2b15741dfc958241889d1fba03d06c30355855d3a9aebeb7d"
+        },
+        "span_domain_mm": [
+          3000,
+          6000
+        ],
+        "all_harmonics_and_infinite_tail": true,
+        "physical_continuum_proof": false,
+        "is_exemption": false,
+        "interpretation": "Certified conservative lower bound for every admissible conventional discrete eigenvalue; not identification or absence of a D mode.",
+        "bundle_certificate": "certificates/t1.50.json"
+      }
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce",
+      "thickness_mm": 2.0,
+      "dimensions_external_mm": {
+        "h": 100.0,
+        "b": 50.0,
+        "lip": 17.0,
+        "t": 2.0,
+        "ri": 2.0
+      },
+      "nodes_sha256": "13c8bf700cce34d8fb2bc607e9ae06c305cc59cd7e0e67234a38fb0218704638",
+      "material": {
+        "E_MPa": 200000.0,
+        "nu": 0.3,
+        "G_MPa": 76923.07692307692
+      },
+      "properties": {
+        "A_mm2": 441.68397388345704,
+        "centerline_length_mm": 220.84198694172852,
+        "centroid_xy_mm": [
+          16.82745087591539,
+          49.00000000000001
+        ],
+        "Ix_strong_mm4": 701539.2822004888,
+        "Iy_weak_mm4": 157717.66001159302,
+        "Ixy_mm4": -1.993072373807081e-12,
+        "J_mm4": 588.9119651779428,
+        "Cw_mm6": 365444260.9319717,
+        "shear_center_xy_mm": [
+          -24.985063393599717,
+          49.000000000000014
+        ],
+        "x0_mm": 41.812514269515106,
+        "j_mm": 59.609396294018914,
+        "beta_mm5": 5613765.176814246,
+        "r0_mm": 60.77579726084086,
+        "sectorial_orthogonality_raw": [
+          -2.516387098694395e-10,
+          -7.285336778295459e-10,
+          -4.469320913358388e-09
+        ],
+        "sectorial_orthogonality_dimensionless": [
+          6.263413098159413e-16,
+          9.596191302661616e-17,
+          2.791290064210864e-16
+        ]
+      },
+      "property_convention": {
+        "area": "dA=t ds along the same faceted open midsurface",
+        "inertia": "Exact segment line integrals; finite-through-thickness inertia terms omitted",
+        "J": "Saint-Venant thin-wall approximation integral(t^3 ds)/3, not exact finite-thickness torsion",
+        "Cw": "Vlasov line-sectorial integral normalized orthogonal to 1,x,y",
+        "x0": "CGx-CTx, positive from CT toward the lips",
+        "j": "integral[(x-CGx)^3+(x-CGx)*(y-CGy)^2]dA/(2Iy)+x0",
+        "signs": "Own coordinate convention only; no sign assigned to historical Pierin Mly."
+      },
+      "exterior_moduli": {
+        "extents_mm": {
+          "x": [
+            -1.0,
+            49.0
+          ],
+          "y": [
+            -1.0,
+            99.0
+          ]
+        },
+        "extreme_distance_from_CG_mm": {
+          "strong_top": 49.99999999999999,
+          "strong_bottom": 50.00000000000001,
+          "weak_web": 17.82745087591539,
+          "weak_lips": 32.17254912408461
+        },
+        "Wx_top_mm3": 14030.785644009778,
+        "Wx_bottom_mm3": 14030.785644009775,
+        "Wx_first_yield_mm3": 14030.785644009775,
+        "Wy_web_mm3": 8846.89915060527,
+        "Wy_lips_mm3": 4902.243195069812,
+        "Wy_first_yield_mm3": 4902.243195069812,
+        "weak_web_compressed": {
+          "W_mm3": 4902.243195069812,
+          "Wc_mm3": 8846.89915060527,
+          "Cs": 1
+        },
+        "weak_lips_compressed": {
+          "W_mm3": 4902.243195069812,
+          "Wc_mm3": 4902.243195069812,
+          "Cs": -1
+        }
+      },
+      "modal_criticals": {
+        "web_local": {
+          "value_Nmm": 3988869.588929896,
+          "half_wave_mm": 76.18280917251073,
+          "kind": "local_conventional_web_predominant",
+          "source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t2.00/web/valley_0.npz",
+            "sha256": "b0213be73df25a55f2b7e239c8f0f62dc93eb23775dd7df185b6ab818ca73e0f"
+          },
+          "not_pure_constrained_D": true,
+          "finite_member_exact_eigenvalue": false,
+          "interpretation": "Own continuous-half-wave signature valley, conventional mode of the frozen section and declared pure bending state. Not an exact eigenvalue for every finite span.",
+          "bundle_file": "modes/t2.00_web_local.npz"
+        },
+        "lips_local": {
+          "value_Nmm": 12086244.455138076,
+          "half_wave_mm": 41.46349169449415,
+          "kind": "local_conventional_predominant_near_doublet",
+          "source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t2.00/lips/valley_0.npz",
+            "sha256": "c619f92310833bf9445bc981aedf3dd77e413e300ff67da71048acda4d286624"
+          },
+          "not_pure_constrained_D": true,
+          "finite_member_exact_eigenvalue": false,
+          "interpretation": "Own continuous-half-wave signature valley, conventional mode of the frozen section and declared pure bending state. Not an exact eigenvalue for every finite span.",
+          "bundle_file": "modes/t2.00_lips_local.npz"
+        },
+        "lips_distortional": {
+          "value_Nmm": 4822053.201043427,
+          "half_wave_mm": 413.0770852956704,
+          "kind": "distortional_conventional_predominant",
+          "source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t2.00/lips/valley_1.npz",
+            "sha256": "89d5df12c0697e2f3865ced823ab0f13814637c40e9be84d0452c4c29ca445b0"
+          },
+          "not_pure_constrained_D": true,
+          "finite_member_exact_eigenvalue": false,
+          "interpretation": "Own continuous-half-wave signature valley, conventional mode of the frozen section and declared pure bending state. Not an exact eigenvalue for every finite span.",
+          "bundle_file": "modes/t2.00_lips_distortional.npz"
+        }
+      },
+      "web_all_spectrum_bound": {
+        "identified_Nmm": null,
+        "lower_bound_Nmm": 3580000,
+        "bound_source": {
+          "path": "outputs/tercas_ue100_family_critical_20261103/web_floor/t2.00/CERTIFICATE.json",
+          "sha256": "171875bcf45a86f46a703c5698816271b6be56631f0c3d998f2de1e39c0dcbbc"
+        },
+        "span_domain_mm": [
+          3000,
+          6000
+        ],
+        "all_harmonics_and_infinite_tail": true,
+        "physical_continuum_proof": false,
+        "is_exemption": false,
+        "interpretation": "Certified conservative lower bound for every admissible conventional discrete eigenvalue; not identification or absence of a D mode.",
+        "bundle_certificate": "certificates/t2.00.json"
+      }
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p25_ri2p25_n12_a16_v1_e30a0bd327de",
+      "thickness_mm": 2.25,
+      "dimensions_external_mm": {
+        "h": 100.0,
+        "b": 50.0,
+        "lip": 17.0,
+        "t": 2.25,
+        "ri": 2.25
+      },
+      "nodes_sha256": "e30a0bd327deb1523b527a5737a9f14ac8f8fd189c884588c0339ef7c0b80e47",
+      "material": {
+        "E_MPa": 200000.0,
+        "nu": 0.3,
+        "G_MPa": 76923.07692307692
+      },
+      "properties": {
+        "A_mm2": 493.1937794462503,
+        "centerline_length_mm": 219.19723530944458,
+        "centroid_xy_mm": [
+          16.686268820177016,
+          48.875
+        ],
+        "Ix_strong_mm4": 777737.809476927,
+        "Iy_weak_mm4": 173644.83957874868,
+        "Ixy_mm4": 4.369837824924616e-12,
+        "J_mm4": 832.2645028155474,
+        "Cw_mm6": 398947170.62785316,
+        "shear_center_xy_mm": [
+          -24.80851687520163,
+          48.87500000000005
+        ],
+        "x0_mm": 41.494785695378646,
+        "j_mm": 59.37921663154163,
+        "beta_mm5": 6211078.281734463,
+        "r0_mm": 60.42219181673948,
+        "sectorial_orthogonality_raw": [
+          -5.2729376420757035e-11,
+          -2.4869564185792115e-09,
+          3.1915163845042116e-09
+        ],
+        "sectorial_orthogonality_dimensionless": [
+          1.188737999119511e-16,
+          2.987992750105725e-16,
+          1.811852240569623e-16
+        ]
+      },
+      "property_convention": {
+        "area": "dA=t ds along the same faceted open midsurface",
+        "inertia": "Exact segment line integrals; finite-through-thickness inertia terms omitted",
+        "J": "Saint-Venant thin-wall approximation integral(t^3 ds)/3, not exact finite-thickness torsion",
+        "Cw": "Vlasov line-sectorial integral normalized orthogonal to 1,x,y",
+        "x0": "CGx-CTx, positive from CT toward the lips",
+        "j": "integral[(x-CGx)^3+(x-CGx)*(y-CGy)^2]dA/(2Iy)+x0",
+        "signs": "Own coordinate convention only; no sign assigned to historical Pierin Mly."
+      },
+      "exterior_moduli": {
+        "extents_mm": {
+          "x": [
+            -1.125,
+            48.875
+          ],
+          "y": [
+            -1.125,
+            98.875
+          ]
+        },
+        "extreme_distance_from_CG_mm": {
+          "strong_top": 50.0,
+          "strong_bottom": 50.0,
+          "weak_web": 17.811268820177016,
+          "weak_lips": 32.18873117982298
+        },
+        "Wx_top_mm3": 15554.75618953854,
+        "Wx_bottom_mm3": 15554.75618953854,
+        "Wx_first_yield_mm3": 15554.75618953854,
+        "Wy_web_mm3": 9749.15607258927,
+        "Wy_lips_mm3": 5394.584788343423,
+        "Wy_first_yield_mm3": 5394.584788343423,
+        "weak_web_compressed": {
+          "W_mm3": 5394.584788343423,
+          "Wc_mm3": 9749.15607258927,
+          "Cs": 1
+        },
+        "weak_lips_compressed": {
+          "W_mm3": 5394.584788343423,
+          "Wc_mm3": 5394.584788343423,
+          "Cs": -1
+        }
+      },
+      "modal_criticals": {
+        "web_local": {
+          "value_Nmm": 5643464.4610719895,
+          "half_wave_mm": 76.00205065222771,
+          "kind": "local_conventional_web_predominant",
+          "source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t2.25/web/valley_0.npz",
+            "sha256": "294df4cb59a547c9ae1397357d4fc2ac3c7ab8650eb0bb86dc80ba99e534d9fa"
+          },
+          "not_pure_constrained_D": true,
+          "finite_member_exact_eigenvalue": false,
+          "interpretation": "Own continuous-half-wave signature valley, conventional mode of the frozen section and declared pure bending state. Not an exact eigenvalue for every finite span.",
+          "bundle_file": "modes/t2.25_web_local.npz"
+        },
+        "lips_local": {
+          "value_Nmm": 17168585.93688186,
+          "half_wave_mm": 41.23938407640051,
+          "kind": "local_conventional_predominant_near_doublet",
+          "source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t2.25/lips/valley_0.npz",
+            "sha256": "75670a977919a0b4a20009b4f66d7c8bd51ad90a00807e5f3af48d315584baed"
+          },
+          "not_pure_constrained_D": true,
+          "finite_member_exact_eigenvalue": false,
+          "interpretation": "Own continuous-half-wave signature valley, conventional mode of the frozen section and declared pure bending state. Not an exact eigenvalue for every finite span.",
+          "bundle_file": "modes/t2.25_lips_local.npz"
+        },
+        "lips_distortional": {
+          "value_Nmm": 6175112.8545977995,
+          "half_wave_mm": 384.29378816133743,
+          "kind": "distortional_conventional_predominant",
+          "source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t2.25/lips/valley_1.npz",
+            "sha256": "94babe5fc233878581bad2b3d82d750bc5433f652400348138446c52573d2f41"
+          },
+          "not_pure_constrained_D": true,
+          "finite_member_exact_eigenvalue": false,
+          "interpretation": "Own continuous-half-wave signature valley, conventional mode of the frozen section and declared pure bending state. Not an exact eigenvalue for every finite span.",
+          "bundle_file": "modes/t2.25_lips_distortional.npz"
+        }
+      },
+      "web_all_spectrum_bound": {
+        "identified_Nmm": null,
+        "lower_bound_Nmm": 5070000,
+        "bound_source": {
+          "path": "outputs/tercas_ue100_family_critical_20261103/web_floor/t2.25/CERTIFICATE.json",
+          "sha256": "9ac9454fcb4ec9f96ad0e4c17372b771a075aec3e6bb18d3bc939d4ef2393582"
+        },
+        "span_domain_mm": [
+          3000,
+          6000
+        ],
+        "all_harmonics_and_infinite_tail": true,
+        "physical_continuum_proof": false,
+        "is_exemption": false,
+        "interpretation": "Certified conservative lower bound for every admissible conventional discrete eigenvalue; not identification or absence of a D mode.",
+        "bundle_certificate": "certificates/t2.25.json"
+      }
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p65_ri2p65_n12_a16_v1_243974742f83",
+      "thickness_mm": 2.65,
+      "dimensions_external_mm": {
+        "h": 100.0,
+        "b": 50.0,
+        "lip": 17.0,
+        "t": 2.65,
+        "ri": 2.65
+      },
+      "nodes_sha256": "243974742f83ef47937ec56c938718a37b3e037248c4016eddae0d42af062746",
+      "material": {
+        "E_MPa": 200000.0,
+        "nu": 0.3,
+        "G_MPa": 76923.07692307692
+      },
+      "properties": {
+        "A_mm2": 573.8989266491442,
+        "centerline_length_mm": 216.56563269779028,
+        "centroid_xy_mm": [
+          16.45986627571013,
+          48.675000000000004
+        ],
+        "Ix_strong_mm4": 894506.1894874149,
+        "Iy_weak_mm4": 197472.35297784623,
+        "Ixy_mm4": -2.6716406864579767e-12,
+        "J_mm4": 1343.4017374645384,
+        "Cw_mm6": 447410171.6382088,
+        "shear_center_xy_mm": [
+          -24.521504760050956,
+          48.674999999999976
+        ],
+        "x0_mm": 40.981371035761086,
+        "j_mm": 59.00895140100466,
+        "beta_mm5": 7119897.426443738,
+        "r0_mm": 59.85156187723915,
+        "sectorial_orthogonality_raw": [
+          1.638937874304247e-10,
+          -2.5327437924715923e-09,
+          -8.184414923562144e-09
+        ],
+        "sectorial_orthogonality_dimensionless": [
+          3.2343860750645484e-16,
+          2.6945433964302755e-16,
+          4.0911277113730555e-16
+        ]
+      },
+      "property_convention": {
+        "area": "dA=t ds along the same faceted open midsurface",
+        "inertia": "Exact segment line integrals; finite-through-thickness inertia terms omitted",
+        "J": "Saint-Venant thin-wall approximation integral(t^3 ds)/3, not exact finite-thickness torsion",
+        "Cw": "Vlasov line-sectorial integral normalized orthogonal to 1,x,y",
+        "x0": "CGx-CTx, positive from CT toward the lips",
+        "j": "integral[(x-CGx)^3+(x-CGx)*(y-CGy)^2]dA/(2Iy)+x0",
+        "signs": "Own coordinate convention only; no sign assigned to historical Pierin Mly."
+      },
+      "exterior_moduli": {
+        "extents_mm": {
+          "x": [
+            -1.325,
+            48.675
+          ],
+          "y": [
+            -1.325,
+            98.675
+          ]
+        },
+        "extreme_distance_from_CG_mm": {
+          "strong_top": 49.99999999999999,
+          "strong_bottom": 50.00000000000001,
+          "weak_web": 17.78486627571013,
+          "weak_lips": 32.21513372428987
+        },
+        "Wx_top_mm3": 17890.1237897483,
+        "Wx_bottom_mm3": 17890.123789748297,
+        "Wx_first_yield_mm3": 17890.123789748297,
+        "Wy_web_mm3": 11103.392621374172,
+        "Wy_lips_mm3": 6129.8008156009655,
+        "Wy_first_yield_mm3": 6129.8008156009655,
+        "weak_web_compressed": {
+          "W_mm3": 6129.8008156009655,
+          "Wc_mm3": 11103.392621374172,
+          "Cs": 1
+        },
+        "weak_lips_compressed": {
+          "W_mm3": 6129.8008156009655,
+          "Wc_mm3": 6129.8008156009655,
+          "Cs": -1
+        }
+      },
+      "modal_criticals": {
+        "web_local": {
+          "value_Nmm": 9123303.216215128,
+          "half_wave_mm": 75.73704632842913,
+          "kind": "local_conventional_web_predominant",
+          "source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t2.65/web/valley_0.npz",
+            "sha256": "5a2348da9a42460aec09828656ce8d8b3df45bbc12ca2696b38f1e1dea1b7268"
+          },
+          "not_pure_constrained_D": true,
+          "finite_member_exact_eigenvalue": false,
+          "interpretation": "Own continuous-half-wave signature valley, conventional mode of the frozen section and declared pure bending state. Not an exact eigenvalue for every finite span.",
+          "bundle_file": "modes/t2.65_web_local.npz"
+        },
+        "lips_local": {
+          "value_Nmm": 27916760.7371563,
+          "half_wave_mm": 40.871719361332616,
+          "kind": "local_conventional_predominant_near_doublet",
+          "source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t2.65/lips/valley_0.npz",
+            "sha256": "c14a6776991d3cadcced4239274914ec12e7ff31d5bd500bda69fc56c34f519c"
+          },
+          "not_pure_constrained_D": true,
+          "finite_member_exact_eigenvalue": false,
+          "interpretation": "Own continuous-half-wave signature valley, conventional mode of the frozen section and declared pure bending state. Not an exact eigenvalue for every finite span.",
+          "bundle_file": "modes/t2.65_lips_local.npz"
+        },
+        "lips_distortional": {
+          "value_Nmm": 8724404.545407081,
+          "half_wave_mm": 346.40540522029437,
+          "kind": "distortional_conventional_predominant",
+          "source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t2.65/lips/valley_1.npz",
+            "sha256": "062cbc8ac89118d059043e651151fad5e8f6ba3582eddbe3d7b3b332c0cd5ea8"
+          },
+          "not_pure_constrained_D": true,
+          "finite_member_exact_eigenvalue": false,
+          "interpretation": "Own continuous-half-wave signature valley, conventional mode of the frozen section and declared pure bending state. Not an exact eigenvalue for every finite span.",
+          "bundle_file": "modes/t2.65_lips_distortional.npz"
+        }
+      },
+      "web_all_spectrum_bound": {
+        "identified_Nmm": null,
+        "lower_bound_Nmm": 5940000,
+        "bound_source": {
+          "path": "outputs/tercas_ue100_family_critical_20261103/web_floor/t2.65/CERTIFICATE.json",
+          "sha256": "ef4cd3d0f07e8c22e6454230bcc4f1ac2e829d0e98c907221e404a483f334bb4"
+        },
+        "span_domain_mm": [
+          3000,
+          6000
+        ],
+        "all_harmonics_and_infinite_tail": true,
+        "physical_continuum_proof": false,
+        "is_exemption": false,
+        "interpretation": "Certified conservative lower bound for every admissible conventional discrete eigenvalue; not identification or absence of a D mode.",
+        "bundle_certificate": "certificates/t2.65.json"
+      }
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t3p00_ri3p00_n12_a16_v1_c3d1e69d48f6",
+      "thickness_mm": 3.0,
+      "dimensions_external_mm": {
+        "h": 100.0,
+        "b": 50.0,
+        "lip": 17.0,
+        "t": 3.0,
+        "ri": 3.0
+      },
+      "nodes_sha256": "c3d1e69d48f6ad2980e6779eb2509e42e07a2b957ce71c158095fda6b71a4e00",
+      "material": {
+        "E_MPa": 200000.0,
+        "nu": 0.3,
+        "G_MPa": 76923.07692307692
+      },
+      "properties": {
+        "A_mm2": 642.7889412377783,
+        "centerline_length_mm": 214.26298041259278,
+        "centroid_xy_mm": [
+          16.261232028914485,
+          48.5
+        ],
+        "Ix_strong_mm4": 991541.7423503583,
+        "Iy_weak_mm4": 216685.3077385037,
+        "Ixy_mm4": -2.7782220968219917e-12,
+        "J_mm4": 1928.3668237133352,
+        "Cw_mm6": 484808615.2415438,
+        "shear_center_xy_mm": [
+          -24.26575607573298,
+          48.500000000000036
+        ],
+        "x0_mm": 40.526988104647465,
+        "j_mm": 58.683047060372814,
+        "beta_mm5": 7868302.444279527,
+        "r0_mm": 59.34728705798193,
+        "sectorial_orthogonality_raw": [
+          -9.93054527498316e-11,
+          -4.309896439735894e-09,
+          2.3791315584276163e-09
+        ],
+        "sectorial_orthogonality_dimensionless": [
+          1.7789090033584395e-16,
+          4.20500907948893e-16,
+          1.0851200606739117e-16
+        ]
+      },
+      "property_convention": {
+        "area": "dA=t ds along the same faceted open midsurface",
+        "inertia": "Exact segment line integrals; finite-through-thickness inertia terms omitted",
+        "J": "Saint-Venant thin-wall approximation integral(t^3 ds)/3, not exact finite-thickness torsion",
+        "Cw": "Vlasov line-sectorial integral normalized orthogonal to 1,x,y",
+        "x0": "CGx-CTx, positive from CT toward the lips",
+        "j": "integral[(x-CGx)^3+(x-CGx)*(y-CGy)^2]dA/(2Iy)+x0",
+        "signs": "Own coordinate convention only; no sign assigned to historical Pierin Mly."
+      },
+      "exterior_moduli": {
+        "extents_mm": {
+          "x": [
+            -1.5,
+            48.5
+          ],
+          "y": [
+            -1.5,
+            98.5
+          ]
+        },
+        "extreme_distance_from_CG_mm": {
+          "strong_top": 50.0,
+          "strong_bottom": 50.0,
+          "weak_web": 17.761232028914485,
+          "weak_lips": 32.238767971085515
+        },
+        "Wx_top_mm3": 19830.834847007165,
+        "Wx_bottom_mm3": 19830.834847007165,
+        "Wx_first_yield_mm3": 19830.834847007165,
+        "Wy_web_mm3": 12199.902990161369,
+        "Wy_lips_mm3": 6721.2651529625955,
+        "Wy_first_yield_mm3": 6721.2651529625955,
+        "weak_web_compressed": {
+          "W_mm3": 6721.2651529625955,
+          "Wc_mm3": 12199.902990161369,
+          "Cs": 1
+        },
+        "weak_lips_compressed": {
+          "W_mm3": 6721.2651529625955,
+          "Wc_mm3": 6721.2651529625955,
+          "Cs": -1
+        }
+      },
+      "modal_criticals": {
+        "web_local": {
+          "value_Nmm": 13109580.05110014,
+          "half_wave_mm": 75.52744033228073,
+          "kind": "local_conventional_web_predominant",
+          "source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t3.00/web/valley_0.npz",
+            "sha256": "a8816b428871d856838ade54aca75b386aea586a58605ba7d66759df11dfe520"
+          },
+          "not_pure_constrained_D": true,
+          "finite_member_exact_eigenvalue": false,
+          "interpretation": "Own continuous-half-wave signature valley, conventional mode of the frozen section and declared pure bending state. Not an exact eigenvalue for every finite span.",
+          "bundle_file": "modes/t3.00_web_local.npz"
+        },
+        "lips_local": {
+          "value_Nmm": 40275147.520756595,
+          "half_wave_mm": 40.540760829842355,
+          "kind": "local_conventional_predominant_near_doublet",
+          "source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t3.00/lips/valley_0.npz",
+            "sha256": "0b3b61142e409d31f66c6fae3a2ebf7234abcbec87da72957b3bc224335f94f8"
+          },
+          "not_pure_constrained_D": true,
+          "finite_member_exact_eigenvalue": false,
+          "interpretation": "Own continuous-half-wave signature valley, conventional mode of the frozen section and declared pure bending state. Not an exact eigenvalue for every finite span.",
+          "bundle_file": "modes/t3.00_lips_local.npz"
+        },
+        "lips_distortional": {
+          "value_Nmm": 11357093.840761252,
+          "half_wave_mm": 319.228429658417,
+          "kind": "distortional_conventional_predominant",
+          "source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t3.00/lips/valley_1.npz",
+            "sha256": "80e652881449427dddc70bc7adeb46266e6be4a2c68930e1914c09f98029e51e"
+          },
+          "not_pure_constrained_D": true,
+          "finite_member_exact_eigenvalue": false,
+          "interpretation": "Own continuous-half-wave signature valley, conventional mode of the frozen section and declared pure bending state. Not an exact eigenvalue for every finite span.",
+          "bundle_file": "modes/t3.00_lips_distortional.npz"
+        }
+      },
+      "web_all_spectrum_bound": {
+        "identified_Nmm": null,
+        "lower_bound_Nmm": 6750000,
+        "bound_source": {
+          "path": "outputs/tercas_ue100_family_critical_20261103/web_floor/t3.00/CERTIFICATE.json",
+          "sha256": "923381dbc2fe02e00be1c1b70f67dd0e7a5bf8faca85a6d73bfa0db83274d094"
+        },
+        "span_domain_mm": [
+          3000,
+          6000
+        ],
+        "all_harmonics_and_infinite_tail": true,
+        "physical_continuum_proof": false,
+        "is_exemption": false,
+        "interpretation": "Certified conservative lower bound for every admissible conventional discrete eigenvalue; not identification or absence of a D mode.",
+        "bundle_certificate": "certificates/t3.00.json"
+      }
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t3p35_ri3p35_n12_a16_v1_90bf516ec976",
+      "thickness_mm": 3.35,
+      "dimensions_external_mm": {
+        "h": 100.0,
+        "b": 50.0,
+        "lip": 17.0,
+        "t": 3.35,
+        "ri": 3.35
+      },
+      "nodes_sha256": "90bf516ec9761304d22aba266bdf9c2f06bf6f73bc6989b46194bbd5d218eab3",
+      "material": {
+        "E_MPa": 200000.0,
+        "nu": 0.3,
+        "G_MPa": 76923.07692307692
+      },
+      "properties": {
+        "A_mm2": 710.0670992267742,
+        "centerline_length_mm": 211.96032812739526,
+        "centroid_xy_mm": [
+          16.062084276097462,
+          48.325
+        ],
+        "Ix_strong_mm4": 1083846.48676098,
+        "Iy_weak_mm4": 234407.8072992408,
+        "Ixy_mm4": -1.2363443602225743e-11,
+        "J_mm4": 2656.242673690824,
+        "Cw_mm6": 517722882.6538054,
+        "shear_center_xy_mm": [
+          -24.005669538520483,
+          48.32500000000011
+        ],
+        "x0_mm": 40.067753814617944,
+        "j_mm": 58.355432224778596,
+        "beta_mm5": 8573549.19343885,
+        "r0_mm": 58.83830072583838,
+        "sectorial_orthogonality_raw": [
+          -2.0945378764736233e-10,
+          4.265331199349021e-09,
+          -5.0052975097969465e-09
+        ],
+        "sectorial_orthogonality_dimensionless": [
+          3.4545369547977085e-16,
+          3.871845711784204e-16,
+          2.1129894525729985e-16
+        ]
+      },
+      "property_convention": {
+        "area": "dA=t ds along the same faceted open midsurface",
+        "inertia": "Exact segment line integrals; finite-through-thickness inertia terms omitted",
+        "J": "Saint-Venant thin-wall approximation integral(t^3 ds)/3, not exact finite-thickness torsion",
+        "Cw": "Vlasov line-sectorial integral normalized orthogonal to 1,x,y",
+        "x0": "CGx-CTx, positive from CT toward the lips",
+        "j": "integral[(x-CGx)^3+(x-CGx)*(y-CGy)^2]dA/(2Iy)+x0",
+        "signs": "Own coordinate convention only; no sign assigned to historical Pierin Mly."
+      },
+      "exterior_moduli": {
+        "extents_mm": {
+          "x": [
+            -1.675,
+            48.325
+          ],
+          "y": [
+            -1.675,
+            98.325
+          ]
+        },
+        "extreme_distance_from_CG_mm": {
+          "strong_top": 50.0,
+          "strong_bottom": 50.0,
+          "weak_web": 17.737084276097463,
+          "weak_lips": 32.26291572390254
+        },
+        "Wx_top_mm3": 21676.9297352196,
+        "Wx_bottom_mm3": 21676.9297352196,
+        "Wx_first_yield_mm3": 21676.9297352196,
+        "Wy_web_mm3": 13215.690000138824,
+        "Wy_lips_mm3": 7265.549378898068,
+        "Wy_first_yield_mm3": 7265.549378898068,
+        "weak_web_compressed": {
+          "W_mm3": 7265.549378898068,
+          "Wc_mm3": 13215.690000138824,
+          "Cs": 1
+        },
+        "weak_lips_compressed": {
+          "W_mm3": 7265.549378898068,
+          "Wc_mm3": 7265.549378898068,
+          "Cs": -1
+        }
+      },
+      "modal_criticals": {
+        "web_local": {
+          "value_Nmm": 18071363.62161283,
+          "half_wave_mm": 75.33631763479463,
+          "kind": "local_conventional_web_predominant",
+          "source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t3.35/web/valley_0.npz",
+            "sha256": "7fcfc9ce644de19355d10533fe5115f0623662a87f1869cd045f0cdcc1f72e81"
+          },
+          "not_pure_constrained_D": true,
+          "finite_member_exact_eigenvalue": false,
+          "interpretation": "Own continuous-half-wave signature valley, conventional mode of the frozen section and declared pure bending state. Not an exact eigenvalue for every finite span.",
+          "bundle_file": "modes/t3.35_web_local.npz"
+        },
+        "lips_local": {
+          "value_Nmm": 55639994.93868789,
+          "half_wave_mm": 40.2179712936465,
+          "kind": "local_conventional_predominant_near_doublet",
+          "source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t3.35/lips/valley_0.npz",
+            "sha256": "4ccef45e9a07a2ee954e3d29b61e743b9e1aa2617f6e85dece8702f1699469c1"
+          },
+          "not_pure_constrained_D": true,
+          "finite_member_exact_eigenvalue": false,
+          "interpretation": "Own continuous-half-wave signature valley, conventional mode of the frozen section and declared pure bending state. Not an exact eigenvalue for every finite span.",
+          "bundle_file": "modes/t3.35_lips_local.npz"
+        },
+        "lips_distortional": {
+          "value_Nmm": 14379485.12271021,
+          "half_wave_mm": 296.0699536211233,
+          "kind": "distortional_conventional_predominant",
+          "source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t3.35/lips/valley_1.npz",
+            "sha256": "af243fa713e5ea7779786e47bea9d2dd0ba7e700b45c583a4e1c176689caa251"
+          },
+          "not_pure_constrained_D": true,
+          "finite_member_exact_eigenvalue": false,
+          "interpretation": "Own continuous-half-wave signature valley, conventional mode of the frozen section and declared pure bending state. Not an exact eigenvalue for every finite span.",
+          "bundle_file": "modes/t3.35_lips_distortional.npz"
+        }
+      },
+      "web_all_spectrum_bound": {
+        "identified_Nmm": null,
+        "lower_bound_Nmm": 7570000,
+        "bound_source": {
+          "path": "outputs/tercas_ue100_family_critical_20261103/web_floor/t3.35/CERTIFICATE.json",
+          "sha256": "7e9a5a9e7ce628b3e342daf1a2c09f27d0d7b8c6b2c857da487d6c64e61ef8b2"
+        },
+        "span_domain_mm": [
+          3000,
+          6000
+        ],
+        "all_harmonics_and_infinite_tail": true,
+        "physical_continuum_proof": false,
+        "is_exemption": false,
+        "interpretation": "Certified conservative lower bound for every admissible conventional discrete eigenvalue; not identification or absence of a D mode.",
+        "bundle_certificate": "certificates/t3.35.json"
+      }
+    }
+  ],
+  "NBR_capacities_used": false,
+  "original_registry_sha256": "3919d41d60e8423d7ae44a2bfb32bbd7c75783c7165bd78c027a20757e61cbe3"
+}

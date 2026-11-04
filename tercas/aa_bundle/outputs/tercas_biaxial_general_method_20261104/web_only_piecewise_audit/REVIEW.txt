@@ -1,0 +1,45 @@
+INDEPENDENT MECHANICAL REVIEW, 4 NOVEMBER 2026
+
+Result: no blocking defect found in the declared mechanical module.
+Source: web_only_piecewise_field/piecewise_field.py
+SHA256 8cf6b069614e7dc1114655b9fe693bdae1746987f6042f33d6b40ff5f07801f4.
+
+The review read the full implementation and separately assembled exact
+rational Euler-Bernoulli finite-element equations, including consistent
+uniform loads and the exact quartic UDL bubble. This does not use the
+author's Green integration or Simpson oracle. Eight vector-load cases,
+sixteen components and300 displacement comparisons agree EXACTLY as
+Fractions; endpoint reactions independently agree with equilibrium.
+Cases include nonproportional q/P, an off-center point, central touching
+zero, reversal, a finite point at the smallest binary64 positive position,
+and subnormal uniform loads. No position was snapped to a support.
+
+The root isolator was checked on120 constructed cubics, including repeated,
+endpoint, outside and two distinct roots with identical binary64 positions.
+It enclosed every distinct interior root exactly once, in disjoint rational
+intervals. Two additional real/complex-root controls passed. The inspected
+Sturm endpoint convention includes a right-end root and excludes a left-end
+root, preserving uniqueness under subdivision. Repeated factors and roots
+at0/1 are removed algebraically, not with a coefficient threshold.
+
+The maximum certificate is conditional on valid curvature envelopes.
+Its derivative roots isolate all possible interior stationary points; exact
+rational interval Horner encloses the displacement on each root interval.
+Together with physical endpoints this supplies conservative extrema, not a
+sampled maximum or the exact value at a rounded root. Green constants are
+global; interior load interfaces are not fictitious supports. Curvature
+can jump while displacement and first derivative remain continuous.
+
+Limit: this module supplies no AA/NBR section law or physical/global ELS
+acceptance. Its dataclass/intermediate objects are internal mechanical
+representations; future JSON/API binding must construct them from validated
+loads and verified section-domain evidence, not trust arbitrary imported
+curvature bounds. No component/resultant acceptance or index is emitted.
+One fixed component is bounded at a time. It does not identify a simultaneous
+vector maximum by combining incompatible component maxima.
+
+The first attempted audit command did not start because exec-server transport
+was disconnected. The next read confirmed no audit directory/process; the
+command was then executed once successfully in0.293 seconds. No completed
+solver, beam integration or application test was repeated. No app or earlier
+source was edited.

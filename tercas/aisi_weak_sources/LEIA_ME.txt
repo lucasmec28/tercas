@@ -1,0 +1,67 @@
+FLEXÃO FRACA AISI2024: COMPARADOR RESTRITO, SEIS Ue PRÓPRIOS
+04/11/2026. Nenhuma edição de app, main ou candidatas; nenhuma publicação.
+
+RESULTADO
+- 24 referências com lábios comprimidos: piso algébrico de F2.2/F3.2/F4,
+  beta correto por sentido, material AISI e modos elásticos próprios.
+- 24 referências com alma comprimida: piso F2/F3, com interpretação
+  F4_NOT_APPLICABLE_PURE_WEAK_WEB revisada independentemente e limitada
+  ao componente puro das seis identidades. Mcrd permanece nulo, não infinito.
+- 24 diagnósticos separados: piso condicional do MESMO problema discreto
+  usando o certificado espectral da alma. Não é Mcrd identificado, dispensa
+  ou denominador liberado para H4 real.
+- Nenhuma capacidade NBR foi usada. Os registros da candidata foram apenas
+  lidos para confirmar identidade dos dados ELÁSTICOS.
+
+Referência t1,50/L4m, lábios comprimidos:
+My=0,959960; Mcre=0,442690; Mcrl=5,194760; Mcrd=2,687007 kN.m.
+Ma_piso=0,375777 kN.m; não é aplicação literal completa do DSM nem aprovação.
+Para alma, a capacidade componente F2/F3 é0,692901 kN.m. O diagnóstico
+discreto anterior de0,683001 kN.m permanece separado; ele não fundamenta
+a decisão de não aplicabilidade de F4 e não vira Mcrd identificado.
+
+SINAIS
+O sentido físico é obrigatório. My positivo do arquivo FSM significa alma
+comprimida; My positivo na convenção Vlasov de tensão positiva significa
+lábios comprimidos. Usar os seletores explícitos, nunca o sinal sem convenção.
+My de primeiro escoamento é o mesmo nos dois sentidos, governado pela fibra
+mais afastada nos lábios. Com alma comprimida, essa fibra está TRACIONADA.
+Beta=2yc/50 é cerca de0,71 para alma e1,29 para lábios, não1.
+A não aplicabilidade de F4 na alma depende de ambos os lábios/cantos estarem
+tracionados no campo PURO definidor. Não dispensar D ou interação da barra
+real sob Mx+My+B. A hipótese plenamente travada do exemplo RP21 não foi
+transferida: F2 global é calculado para cada vão.
+
+ARQUIVOS
+weak_capacity.py: API somente da referência ideal, com gates negativos.
+RESULTS.json e SUMMARY.json:48 referências +24 diagnósticos separados.
+source_review/FORMULAS_AND_GATES.txt: equações, prova, domínios e fontes.
+MATERIAL_SCALING.json: nova prova dos18 modos fracos a E203000/nu.3.
+independent_review/REVIEW.md: revisão independente da álgebra e fonte.
+test_weak_capacity.py e TESTS.log:29 testes, incluindo12mil provas amostradas.
+f4_applicability/independent: parecer documental, integração Gauss4 própria,
+12 negativos e manifesto pinado da decisão F4 componente.
+independent_review/CONSUMER_REVIEW.md:11 grupos independentes aprovados,
+incluindo gates novos da alma, identidade e manifesto adulterado.
+FINAL_RECEIPT.json: resultado consolidado e preservação das fontes.
+SOURCE_PINS.json: insumos e suas identidades; inputs contém somente dados
+elásticos próprios, sem capacidades anteriores.
+
+REPRODUÇÃO
+Python3.12; somente stdlib para o comparador/testes ordinários.
+  python weak_capacity.py
+  python test_weak_capacity.py
+Para repetir a qualificação material opcional dos18 pares novos:
+  OPENBLAS_NUM_THREADS=1 python check_material_scaling.py
+Requer numpy2.3.5/scipy1.17.0. Não rodar prepare_inputs.py fora do workspace
+original: ele documenta a extração única de fontes históricas, não é dependência
+do replay portátil. As provas de espectro anteriores são reutilizadas por hash,
+não refeitas nem promovidas a prova de contínuo físico.
+
+LIMITES
+Suportes ideais de garfo, empenamento livre, N=0, sem furos, momentos puros,
+L3–6m, seis contornos R01 próprios Ue100x50x17, t1.5/2/2.25/2.65/3/3.35,
+Fy250MPa, E203000MPa, G78000MPa no global, nu.3 nas placas.
+A interação H4 real, estabilidade/demanda C1, efeito Wagner, cisalhamento,
+serviço, apoios/ligações e material/produto real continuam fora da aprovação.
+Não há transferência para travessas externas ou qualquer tirante.

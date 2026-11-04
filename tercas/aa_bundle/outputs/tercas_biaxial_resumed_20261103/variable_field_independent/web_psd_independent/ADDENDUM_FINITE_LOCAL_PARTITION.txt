@@ -1,0 +1,150 @@
+Partição finita com certificados seccionais locais
+Adendo matemático independente de 4 de novembro de 2026
+
+Conclusão
+
+É suficiente certificar cada subtrecho por seu próprio subconjunto
+retido e H, usando depois UM Green global. Não é necessário que H,
+curvatura ou limites de curvatura sejam contínuos nas interfaces.
+A partição finita permite existência fraca e envelopes globais com
+deslocamento e rotação contínuos. Não exige seleção contínua de
+equilíbrios, ramo estável ou uma matriz efetiva uniforme na barra.
+
+Este adendo não executa runtime ou solver, não implementa a composição
+e não altera APIs ou recibos congelados. Estabelece um contrato
+suficiente, sem afirmar que uma partição específica já foi qualificada.
+
+1  Certificação local e alcance universal do limite
+
+Tome uma partição finita exata 0=z0<z1<...<zm=L. Cada intervalo
+Ii=[zi,zi+1] contém uma única expressão polinomial do campo mecânico;
+interfaces reais de carregamento permanecem na partição. Seu campo
+R(z)=[0,Mx(z),My(z)] pertence ao hull dos controles Bernstein exatos.
+
+Para cada Ii, exija o contrato já revisado do núcleo de controles:
+mesma geometria, materiais, lei AA, base de resultantes e não alma
+integral; subconjunto físico mínimo comum aos controles DESSE trecho;
+guardas de material e não alma; e uma rota suficiente de existência.
+Ela pode ser o cone psi>-0.236 com invariância de Omega_i, ou a
+integralidade construtiva eta_i=0.5. Cada trecho tem seu próprio
+Cmin_i e H_i=Cmin_i-Cg. Não é necessário nem desejável formar um
+novo hull global dos controles locais ou reutilizar o pior H global.
+
+O bound para TODAS as respostas admissíveis depende de uma propriedade
+preservada pelo bootstrap revisado: todo equilíbrio do modelo AA com
+não alma integral pertence ao enclosure local. De fato, para qualquer
+equilíbrio e, K_nao_alma<=K(e)<=Kg implica e em Omega_0(R). A retenção
+provada em Omega_0 coloca todo equilíbrio no conjunto seguinte; a
+indução vale em cada estágio finito. Portanto todo equilíbrio pertence
+ao Omega_i final, não somente o ponto fixo escolhido para existência.
+Uma caixa arbitrária que contenha apenas um ramo não daria essa
+conclusão universal e não pode substituir esse certificado.
+
+H_i é um limite de compliance, não uma mudança física de seção,
+uma compliance real por degraus ou uma nova lei constitutiva. A lei
+K(e)e=R é a mesma em todos os trechos.
+
+2  Existência fraca e interfaces
+
+Em cada trecho certificado, o argumento anterior fornece uma seleção
+Borel limitada e_i(z) de equilíbrios. Na rota integral, a seleção é
+explicitamente Cg*R(z). Na rota do cone, valem o gráfico compacto e
+a seleção mensurável já revisados. Escolha e_i nos intervalos
+semiabertos e um valor admissível nas interfaces e no último extremo.
+Uma colagem FINITA é Borel e limitada; logo a curvatura global pertence
+a L-infinito. Nenhum pareamento contínuo de ramos é necessário.
+
+R é contínuo na interface de uma força pontual, embora R' tenha o
+salto prescrito. Uma seleção de qualquer lado fornece um equilíbrio
+para o mesmo R na interface. Valores em um conjunto finito de pontos
+não alteram a resposta fraca ou as integrais. Cortes artificiais não
+criam força, momento concentrado ou novo apoio. A deformação axial de
+referência também pode ser integrada no recorte N=0, sem acrescentar
+um vínculo axial global que não pertencia ao modelo.
+
+Com o Green dos DOIS apoios originais,
+  G(x,z)=min(x,z)*(L-max(x,z))/L,
+  d(x)=integral_0^L G(x,z)*kappa(z) dz,
+obtém-se d em W^{2,infinito}, d(0)=d(L)=0 e -d''=kappa quase em
+toda parte. Em particular, d e d' são contínuos e d' é Lipschitz.
+Um salto admissível de kappa pode produzir salto de d'', mas não
+salto de d' nem uma distribuição delta em d''. Não se impõe d=0
+ou d'=0 em cortes, zeros de momento ou interfaces de certificados.
+
+3  Envelopes locais e integração global
+
+Para um covetor FIXO de curvatura w, na mesma base global, defina
+em Ii, com seus pesos Bernstein Bj e controles cij:
+  li(z)=sum_j Bj(z)*h^-_{w,H_i}(cij),
+  ui(z)=sum_j Bj(z)*h^+_{w,H_i}(cij).
+Toda resposta admissível do modelo declarado satisfaz li<=kappa_w<=ui.
+Monte l e u por trechos e integre ambos com o MESMO Green global.
+Sua positividade dá D_-<=d_w<=D_+. Os envelopes podem saltar numa
+interface porque H muda; isso não prejudica a desigualdade integrada.
+
+Para f=l ou u, as constantes são globais:
+  A_f=(1/L)*integral_0^L (L-z)*f(z) dz,
+  D_f(x)=A_f*x-integral_0^x (x-z)*f(z) dz,
+  D_f'(x)=A_f-integral_0^x f(z) dz.
+Assim D_f e D_f' são contínuos, mesmo se f não for. Em geral não
+se promete D_f em C2. Para campos quadráticos, D_f é quartico por
+trecho e D_f' é cúbico. O máximo contínuo é obtido nos extremos
+dos trechos e nas raízes reais internas da derivada, incluindo graus
+degenerados. Um teto da magnitude é
+  max_x |d_w(x)| <= max(max_x D_+(x), -min_x D_-(x)).
+Não se somam máximos independentes de flecha de vigas locais. Também
+não se substitui kappa por Cmin_i*R para alegar uma solução real.
+
+4  Zeros e pequenas reversões
+
+Há uma vizinhança de R=0 na qual a rota integral é construtiva em
+qualquer direção: K_nao_alma é positiva, os suportes iniciais são
+limitados por uma constante vezes ||R||, e todas as esbeltezes
+suficientes tendem a zero com a carga. As guardas de material também
+fecham para cargas suficientemente pequenas. Pela continuidade do
+campo, uma vizinhança espacial de um zero verdadeiro pode, portanto,
+ser coberta por um certificado integral, mesmo quando há inversão de
+sinal. Controles Bernstein de intervalos encolhidos aproximam esse
+campo. Não é necessário isolar cada raiz microscópica se TODO um
+subtrecho de pequena amplitude já for certificado integral.
+
+No exemplo motivador, q=0.6 é o float exato
+5404319552844595/9007199254740992. Com P=-1200, L=4000 e a=L/2,
+o momento central é exatamente
+  2000000*q-1200000 = -3125/70368744177664 Nmm.
+Esse resíduo não é zero e não pode ser removido. Um hull único que
+inclua o pico e essa pequena direção oposta pode falhar no cone;
+certificados locais permitem uma região integral perto do centro
+e outra região reduzida no pico. Isso explica a oportunidade de
+ganho, mas NÃO certifica aqui uma partição numérica desse exemplo.
+
+5  Contrato mínimo de uma composição futura
+
+- Partição finita, ordenada e sem lacunas, preservando exatamente os
+  valores de entrada e o campo em cada intervalo. Força ou posição
+  não nula minúscula não vira zero/apoio; cortes distintos não são
+  fundidos por tolerância. Identidade zero só para zero exato.
+- Ligação exata de cada trecho aos seus controles, pesos e certificado,
+  incluindo fontes, materiais, eixos e digests. Os suportes de um
+  H_i só podem ser usados no trecho/domínio que ele cobre.
+- TODOS os subtrechos devem fechar existência, não alma, material e
+  representação numérica. Não basta cobertura de amostras ou de
+  quase todo o comprimento deixando um intervalo pequeno sem prova.
+- Normalização dos suportes e reescala conservadora preservadas;
+  o bootstrap usa magnitudes reais. Saída ou conversão insuficiente
+  devolve inconclusivo numérico, sem snapping.
+- Green global, constantes compartilhadas e maximização contínua dos
+  envelopes. Não há apoios adicionais nem continuidade obrigatória
+  dos certificados, da curvatura ou da seleção de equilíbrio.
+
+Refinamento exato de Casteljau com orçamento finito é um procedimento
+numérico possível, não requisito normativo. A teoria não garante que
+todo campo ou orçamento encontre uma cobertura suficiente. Quando
+qualquer subtrecho fica inconclusivo, a composição permanece inconclusiva;
+isso não demonstra falha física ou inexistência de solução.
+
+O bound se refere às soluções admissíveis do modelo AA declarado com
+não alma integral e cinemática flexional adotada. Não cobre todas as
+soluções físicas de casca, torção, imperfeições, estabilidade global,
+história de carga ou escolha de um ramo estável. As provas e recibos
+anteriores permanecem inalterados; este é somente um adendo matemático.

@@ -1,0 +1,4813 @@
+{
+  "schema": "AISI2024_strong_bending_bimoment_conservative_research_v1",
+  "profiles": 6,
+  "cases": 48,
+  "method": "AISI2024 F2.2/F3.2/F4 algebraic flexural lower bounds + literal G8.1 By option + H4 threshold1",
+  "source_editions_mixed": false,
+  "NBR_capacities_used": false,
+  "section_effective_calculation_needed": false,
+  "steel_constants_source": "AISI2024 Appendix2 section2.3.1",
+  "records": [
+    {
+      "profile_id": "OWN_Ue100x50x17_t1p50_ri1p50_n12_a16_v1_cd50bf66f299",
+      "thickness_mm": 1.5,
+      "length_mm": 3000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 62.666666666666664,
+        "b_t": 29.333333333333332,
+        "d_t": 9.333333333333334,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 2708066.6145240045,
+        "Mcre_Nmm": 1522637.4921014353,
+        "Mcrl_Nmm": 8966731.775280444,
+        "Mcrd_Nmm": 7256647.507423084,
+        "Mne_floor_Nmm": 1503967.6699718514,
+        "Mnl_floor_Nmm": 1376944.3660538974,
+        "Mnd_floor_Nmm": 2212634.4152395986,
+        "Mn_floor_Nmm": 1376944.3660538974,
+        "Ma_floor_Nmm": 1239249.9294485077,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.5495567951575403,
+        "lambda_distortional": 0.6108880894634021,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 31107089.596525945,
+        "Ba_Nmm2": 27996380.63687335,
+        "omega_max_mm2": 2336.4338551446453,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.02588120364853181
+      ],
+      "application_xy_mm": [
+        17.109102491457765,
+        49.25
+      ],
+      "CG_minus_SC_mm": [
+        42.440766782025776,
+        -7.105427357601002e-14
+      ],
+      "load_factor": 1.0,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 29116.354104598286,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -939922.5236166423,
+        "phi_rad": -0.01503990313809774
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.023495142838180896,
+        "My": 0.0,
+        "B": 0.03357300130355755
+      },
+      "H4_ratio_upper": 0.05706814414173845,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 1500.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t1p50_ri1p50_n12_a16_v1_cd50bf66f299",
+      "thickness_mm": 1.5,
+      "length_mm": 3000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 62.666666666666664,
+        "b_t": 29.333333333333332,
+        "d_t": 9.333333333333334,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 2708066.6145240045,
+        "Mcre_Nmm": 1522637.4921014353,
+        "Mcrl_Nmm": 8966731.775280444,
+        "Mcrd_Nmm": 7256647.507423084,
+        "Mne_floor_Nmm": 1503967.6699718514,
+        "Mnl_floor_Nmm": 1376944.3660538974,
+        "Mnd_floor_Nmm": 2212634.4152395986,
+        "Mn_floor_Nmm": 1376944.3660538974,
+        "Ma_floor_Nmm": 1239249.9294485077,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.5495567951575403,
+        "lambda_distortional": 0.6108880894634021,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 31107089.596525945,
+        "Ba_Nmm2": 27996380.63687335,
+        "omega_max_mm2": 2336.4338551446453,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.0002588120364853181
+      ],
+      "application_xy_mm": [
+        17.109102491457765,
+        49.25
+      ],
+      "CG_minus_SC_mm": [
+        42.440766782025776,
+        -7.105427357601002e-14
+      ],
+      "load_factor": 0.01,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 291.16354104598287,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -9399.225236166423,
+        "phi_rad": -0.0001503990313809774
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.00023495142838180896,
+        "My": 0.0,
+        "B": 0.0003357300130355755
+      },
+      "H4_ratio_upper": 0.0005706814414173845,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 1500.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t1p50_ri1p50_n12_a16_v1_cd50bf66f299",
+      "thickness_mm": 1.5,
+      "length_mm": 4000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 62.666666666666664,
+        "b_t": 29.333333333333332,
+        "d_t": 9.333333333333334,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 2708066.6145240045,
+        "Mcre_Nmm": 930881.6294539168,
+        "Mcrl_Nmm": 8966731.775280444,
+        "Mcrd_Nmm": 7256647.507423084,
+        "Mne_floor_Nmm": 930881.6294539168,
+        "Mnl_floor_Nmm": 880600.8424076986,
+        "Mnd_floor_Nmm": 2212634.4152395986,
+        "Mn_floor_Nmm": 880600.8424076986,
+        "Ma_floor_Nmm": 792540.7581669288,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.5495567951575403,
+        "lambda_distortional": 0.6108880894634021,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 31107089.596525945,
+        "Ba_Nmm2": 27996380.63687335,
+        "omega_max_mm2": 2336.4338551446453,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.02588120364853181
+      ],
+      "application_xy_mm": [
+        17.109102491457765,
+        49.25
+      ],
+      "CG_minus_SC_mm": [
+        42.440766782025776,
+        -7.105427357601002e-14
+      ],
+      "load_factor": 1.0,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 51762.40729706362,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -1406010.662727763,
+        "phi_rad": -0.0402096888163302
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.06531198145163554,
+        "My": 0.0,
+        "B": 0.0502211582620055
+      },
+      "H4_ratio_upper": 0.11553313971364104,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 2000.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t1p50_ri1p50_n12_a16_v1_cd50bf66f299",
+      "thickness_mm": 1.5,
+      "length_mm": 4000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 62.666666666666664,
+        "b_t": 29.333333333333332,
+        "d_t": 9.333333333333334,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 2708066.6145240045,
+        "Mcre_Nmm": 930881.6294539168,
+        "Mcrl_Nmm": 8966731.775280444,
+        "Mcrd_Nmm": 7256647.507423084,
+        "Mne_floor_Nmm": 930881.6294539168,
+        "Mnl_floor_Nmm": 880600.8424076986,
+        "Mnd_floor_Nmm": 2212634.4152395986,
+        "Mn_floor_Nmm": 880600.8424076986,
+        "Ma_floor_Nmm": 792540.7581669288,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.5495567951575403,
+        "lambda_distortional": 0.6108880894634021,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 31107089.596525945,
+        "Ba_Nmm2": 27996380.63687335,
+        "omega_max_mm2": 2336.4338551446453,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.0002588120364853181
+      ],
+      "application_xy_mm": [
+        17.109102491457765,
+        49.25
+      ],
+      "CG_minus_SC_mm": [
+        42.440766782025776,
+        -7.105427357601002e-14
+      ],
+      "load_factor": 0.01,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 517.6240729706362,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -14060.106627277628,
+        "phi_rad": -0.00040209688816330197
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.0006531198145163555,
+        "My": 0.0,
+        "B": 0.000502211582620055
+      },
+      "H4_ratio_upper": 0.0011553313971364105,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 2000.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t1p50_ri1p50_n12_a16_v1_cd50bf66f299",
+      "thickness_mm": 1.5,
+      "length_mm": 5000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 62.666666666666664,
+        "b_t": 29.333333333333332,
+        "d_t": 9.333333333333334,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 2708066.6145240045,
+        "Mcre_Nmm": 651892.8141355888,
+        "Mcrl_Nmm": 8966731.775280444,
+        "Mcrd_Nmm": 7256647.507423084,
+        "Mne_floor_Nmm": 651892.8141355888,
+        "Mnl_floor_Nmm": 626828.632416526,
+        "Mnd_floor_Nmm": 2212634.4152395986,
+        "Mn_floor_Nmm": 626828.632416526,
+        "Ma_floor_Nmm": 564145.7691748734,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.5495567951575403,
+        "lambda_distortional": 0.6108880894634021,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 31107089.596525945,
+        "Ba_Nmm2": 27996380.63687335,
+        "omega_max_mm2": 2336.4338551446453,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.02588120364853181
+      ],
+      "application_xy_mm": [
+        17.109102491457765,
+        49.25
+      ],
+      "CG_minus_SC_mm": [
+        42.440766782025776,
+        -7.105427357601002e-14
+      ],
+      "load_factor": 1.0,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 80878.7614016619,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -1821424.9019859333,
+        "phi_rad": -0.0819183227978711
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.1433650056792169,
+        "My": 0.0,
+        "B": 0.06505929911479268
+      },
+      "H4_ratio_upper": 0.20842430479400958,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 2500.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t1p50_ri1p50_n12_a16_v1_cd50bf66f299",
+      "thickness_mm": 1.5,
+      "length_mm": 5000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 62.666666666666664,
+        "b_t": 29.333333333333332,
+        "d_t": 9.333333333333334,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 2708066.6145240045,
+        "Mcre_Nmm": 651892.8141355888,
+        "Mcrl_Nmm": 8966731.775280444,
+        "Mcrd_Nmm": 7256647.507423084,
+        "Mne_floor_Nmm": 651892.8141355888,
+        "Mnl_floor_Nmm": 626828.632416526,
+        "Mnd_floor_Nmm": 2212634.4152395986,
+        "Mn_floor_Nmm": 626828.632416526,
+        "Ma_floor_Nmm": 564145.7691748734,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.5495567951575403,
+        "lambda_distortional": 0.6108880894634021,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 31107089.596525945,
+        "Ba_Nmm2": 27996380.63687335,
+        "omega_max_mm2": 2336.4338551446453,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.0002588120364853181
+      ],
+      "application_xy_mm": [
+        17.109102491457765,
+        49.25
+      ],
+      "CG_minus_SC_mm": [
+        42.440766782025776,
+        -7.105427357601002e-14
+      ],
+      "load_factor": 0.01,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 808.787614016619,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -18214.24901985933,
+        "phi_rad": -0.0008191832279787109
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.001433650056792169,
+        "My": 0.0,
+        "B": 0.0006505929911479267
+      },
+      "H4_ratio_upper": 0.002084243047940096,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 2500.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t1p50_ri1p50_n12_a16_v1_cd50bf66f299",
+      "thickness_mm": 1.5,
+      "length_mm": 6000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 62.666666666666664,
+        "b_t": 29.333333333333332,
+        "d_t": 9.333333333333334,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 2708066.6145240045,
+        "Mcre_Nmm": 496202.54277351336,
+        "Mcrl_Nmm": 8966731.775280444,
+        "Mcrd_Nmm": 7256647.507423084,
+        "Mne_floor_Nmm": 496202.54277351336,
+        "Mnl_floor_Nmm": 481546.205147391,
+        "Mnd_floor_Nmm": 2212634.4152395986,
+        "Mn_floor_Nmm": 481546.205147391,
+        "Ma_floor_Nmm": 433391.58463265194,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.5495567951575403,
+        "lambda_distortional": 0.6108880894634021,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 31107089.596525945,
+        "Ba_Nmm2": 27996380.63687335,
+        "omega_max_mm2": 2336.4338551446453,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.02588120364853181
+      ],
+      "application_xy_mm": [
+        17.109102491457765,
+        49.25
+      ],
+      "CG_minus_SC_mm": [
+        42.440766782025776,
+        -7.105427357601002e-14
+      ],
+      "load_factor": 1.0,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 116465.41641839314,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -2164922.9175480967,
+        "phi_rad": -0.14124587537703925
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.26873022123193896,
+        "My": 0.0,
+        "B": 0.07732867136035183
+      },
+      "H4_ratio_upper": 0.3460588925922908,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 3000.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t1p50_ri1p50_n12_a16_v1_cd50bf66f299",
+      "thickness_mm": 1.5,
+      "length_mm": 6000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 62.666666666666664,
+        "b_t": 29.333333333333332,
+        "d_t": 9.333333333333334,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 2708066.6145240045,
+        "Mcre_Nmm": 496202.54277351336,
+        "Mcrl_Nmm": 8966731.775280444,
+        "Mcrd_Nmm": 7256647.507423084,
+        "Mne_floor_Nmm": 496202.54277351336,
+        "Mnl_floor_Nmm": 481546.205147391,
+        "Mnd_floor_Nmm": 2212634.4152395986,
+        "Mn_floor_Nmm": 481546.205147391,
+        "Ma_floor_Nmm": 433391.58463265194,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.5495567951575403,
+        "lambda_distortional": 0.6108880894634021,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 31107089.596525945,
+        "Ba_Nmm2": 27996380.63687335,
+        "omega_max_mm2": 2336.4338551446453,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.0002588120364853181
+      ],
+      "application_xy_mm": [
+        17.109102491457765,
+        49.25
+      ],
+      "CG_minus_SC_mm": [
+        42.440766782025776,
+        -7.105427357601002e-14
+      ],
+      "load_factor": 0.01,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 1164.6541641839315,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -21649.229175480963,
+        "phi_rad": -0.0014124587537703926
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.0026873022123193894,
+        "My": 0.0,
+        "B": 0.0007732867136035182
+      },
+      "H4_ratio_upper": 0.0034605889259229075,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 3000.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce",
+      "thickness_mm": 2.0,
+      "length_mm": 3000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 46.0,
+        "b_t": 21.0,
+        "d_t": 6.5,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 3507696.4110024436,
+        "Mcre_Nmm": 2114029.429602309,
+        "Mcrl_Nmm": 21076119.654945258,
+        "Mcrd_Nmm": 13193012.516988106,
+        "Mne_floor_Nmm": 2052662.9640373702,
+        "Mnl_floor_Nmm": 1948300.2039414758,
+        "Mnd_floor_Nmm": 3025114.449509462,
+        "Mn_floor_Nmm": 1948300.2039414758,
+        "Ma_floor_Nmm": 1753470.1835473282,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.4079582042501273,
+        "lambda_distortional": 0.5156309910782864,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 39935390.50894137,
+        "Ba_Nmm2": 35941851.45804723,
+        "omega_max_mm2": 2287.7218444261257,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.034001805118501
+      ],
+      "application_xy_mm": [
+        16.82745087591539,
+        49.00000000000001
+      ],
+      "CG_minus_SC_mm": [
+        41.812514269515106,
+        -7.105427357601002e-15
+      ],
+      "load_factor": 1.0,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 38252.030758313624,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -1007087.8655604413,
+        "phi_rad": -0.012894829600229949
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.021815044884840016,
+        "My": 0.0,
+        "B": 0.028019921754335736
+      },
+      "H4_ratio_upper": 0.04983496663917575,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 1500.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce",
+      "thickness_mm": 2.0,
+      "length_mm": 3000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 46.0,
+        "b_t": 21.0,
+        "d_t": 6.5,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 3507696.4110024436,
+        "Mcre_Nmm": 2114029.429602309,
+        "Mcrl_Nmm": 21076119.654945258,
+        "Mcrd_Nmm": 13193012.516988106,
+        "Mne_floor_Nmm": 2052662.9640373702,
+        "Mnl_floor_Nmm": 1948300.2039414758,
+        "Mnd_floor_Nmm": 3025114.449509462,
+        "Mn_floor_Nmm": 1948300.2039414758,
+        "Ma_floor_Nmm": 1753470.1835473282,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.4079582042501273,
+        "lambda_distortional": 0.5156309910782864,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 39935390.50894137,
+        "Ba_Nmm2": 35941851.45804723,
+        "omega_max_mm2": 2287.7218444261257,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.00034001805118501
+      ],
+      "application_xy_mm": [
+        16.82745087591539,
+        49.00000000000001
+      ],
+      "CG_minus_SC_mm": [
+        41.812514269515106,
+        -7.105427357601002e-15
+      ],
+      "load_factor": 0.01,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 382.52030758313623,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -10070.878655604412,
+        "phi_rad": -0.0001289482960022995
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.00021815044884840014,
+        "My": 0.0,
+        "B": 0.00028019921754335737
+      },
+      "H4_ratio_upper": 0.0004983496663917575,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 1500.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce",
+      "thickness_mm": 2.0,
+      "length_mm": 4000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 46.0,
+        "b_t": 21.0,
+        "d_t": 6.5,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 3507696.4110024436,
+        "Mcre_Nmm": 1345717.603133467,
+        "Mcrl_Nmm": 21076119.654945258,
+        "Mcrd_Nmm": 13193012.516988106,
+        "Mne_floor_Nmm": 1345717.603133467,
+        "Mnl_floor_Nmm": 1300062.4115896658,
+        "Mnd_floor_Nmm": 3025114.449509462,
+        "Mn_floor_Nmm": 1300062.4115896658,
+        "Ma_floor_Nmm": 1170056.1704306994,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.4079582042501273,
+        "lambda_distortional": 0.5156309910782864,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 39935390.50894137,
+        "Ba_Nmm2": 35941851.45804723,
+        "omega_max_mm2": 2287.7218444261257,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.034001805118501
+      ],
+      "application_xy_mm": [
+        16.82745087591539,
+        49.00000000000001
+      ],
+      "CG_minus_SC_mm": [
+        41.812514269515106,
+        -7.105427357601002e-15
+      ],
+      "load_factor": 1.0,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 68003.610237002,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -1383487.619126143,
+        "phi_rad": -0.03178208486442747
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.058119953516393805,
+        "My": 0.0,
+        "B": 0.038492385979086385
+      },
+      "H4_ratio_upper": 0.09661233949548019,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 2000.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce",
+      "thickness_mm": 2.0,
+      "length_mm": 4000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 46.0,
+        "b_t": 21.0,
+        "d_t": 6.5,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 3507696.4110024436,
+        "Mcre_Nmm": 1345717.603133467,
+        "Mcrl_Nmm": 21076119.654945258,
+        "Mcrd_Nmm": 13193012.516988106,
+        "Mne_floor_Nmm": 1345717.603133467,
+        "Mnl_floor_Nmm": 1300062.4115896658,
+        "Mnd_floor_Nmm": 3025114.449509462,
+        "Mn_floor_Nmm": 1300062.4115896658,
+        "Ma_floor_Nmm": 1170056.1704306994,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.4079582042501273,
+        "lambda_distortional": 0.5156309910782864,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 39935390.50894137,
+        "Ba_Nmm2": 35941851.45804723,
+        "omega_max_mm2": 2287.7218444261257,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.00034001805118501
+      ],
+      "application_xy_mm": [
+        16.82745087591539,
+        49.00000000000001
+      ],
+      "CG_minus_SC_mm": [
+        41.812514269515106,
+        -7.105427357601002e-15
+      ],
+      "load_factor": 0.01,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 680.03610237002,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -13834.87619126143,
+        "phi_rad": -0.0003178208486442747
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.0005811995351639381,
+        "My": 0.0,
+        "B": 0.0003849238597908639
+      },
+      "H4_ratio_upper": 0.0009661233949548021,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 2000.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce",
+      "thickness_mm": 2.0,
+      "length_mm": 5000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 46.0,
+        "b_t": 21.0,
+        "d_t": 6.5,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 3507696.4110024436,
+        "Mcre_Nmm": 975082.2898486523,
+        "Mcrl_Nmm": 21076119.654945258,
+        "Mcrd_Nmm": 13193012.516988106,
+        "Mne_floor_Nmm": 975082.2898486523,
+        "Mnl_floor_Nmm": 950886.3815404341,
+        "Mnd_floor_Nmm": 3025114.449509462,
+        "Mn_floor_Nmm": 950886.3815404341,
+        "Ma_floor_Nmm": 855797.7433863907,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.4079582042501273,
+        "lambda_distortional": 0.5156309910782864,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 39935390.50894137,
+        "Ba_Nmm2": 35941851.45804723,
+        "omega_max_mm2": 2287.7218444261257,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.034001805118501
+      ],
+      "application_xy_mm": [
+        16.82745087591539,
+        49.00000000000001
+      ],
+      "CG_minus_SC_mm": [
+        41.812514269515106,
+        -7.105427357601002e-15
+      ],
+      "load_factor": 1.0,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 106255.64099531561,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -1666184.7198772065,
+        "phi_rad": -0.060446777596057
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.12415975832661366,
+        "My": 0.0,
+        "B": 0.04635778771224526
+      },
+      "H4_ratio_upper": 0.17051754603885894,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 2500.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce",
+      "thickness_mm": 2.0,
+      "length_mm": 5000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 46.0,
+        "b_t": 21.0,
+        "d_t": 6.5,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 3507696.4110024436,
+        "Mcre_Nmm": 975082.2898486523,
+        "Mcrl_Nmm": 21076119.654945258,
+        "Mcrd_Nmm": 13193012.516988106,
+        "Mne_floor_Nmm": 975082.2898486523,
+        "Mnl_floor_Nmm": 950886.3815404341,
+        "Mnd_floor_Nmm": 3025114.449509462,
+        "Mn_floor_Nmm": 950886.3815404341,
+        "Ma_floor_Nmm": 855797.7433863907,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.4079582042501273,
+        "lambda_distortional": 0.5156309910782864,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 39935390.50894137,
+        "Ba_Nmm2": 35941851.45804723,
+        "omega_max_mm2": 2287.7218444261257,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.00034001805118501
+      ],
+      "application_xy_mm": [
+        16.82745087591539,
+        49.00000000000001
+      ],
+      "CG_minus_SC_mm": [
+        41.812514269515106,
+        -7.105427357601002e-15
+      ],
+      "load_factor": 0.01,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 1062.5564099531562,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -16661.847198772066,
+        "phi_rad": -0.00060446777596057
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.0012415975832661367,
+        "My": 0.0,
+        "B": 0.00046357787712245264
+      },
+      "H4_ratio_upper": 0.0017051754603885894,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 2500.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce",
+      "thickness_mm": 2.0,
+      "length_mm": 6000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 46.0,
+        "b_t": 21.0,
+        "d_t": 6.5,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 3507696.4110024436,
+        "Mcre_Nmm": 762704.8442577822,
+        "Mcrl_Nmm": 21076119.654945258,
+        "Mcrd_Nmm": 13193012.516988106,
+        "Mne_floor_Nmm": 762704.8442577822,
+        "Mnl_floor_Nmm": 747820.6277317022,
+        "Mnd_floor_Nmm": 3025114.449509462,
+        "Mn_floor_Nmm": 747820.6277317022,
+        "Ma_floor_Nmm": 673038.564958532,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.4079582042501273,
+        "lambda_distortional": 0.5156309910782864,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 39935390.50894137,
+        "Ba_Nmm2": 35941851.45804723,
+        "omega_max_mm2": 2287.7218444261257,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.034001805118501
+      ],
+      "application_xy_mm": [
+        16.82745087591539,
+        49.00000000000001
+      ],
+      "CG_minus_SC_mm": [
+        41.812514269515106,
+        -7.105427357601002e-15
+      ],
+      "load_factor": 1.0,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 153008.1230332545,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -1866572.9208368326,
+        "phi_rad": -0.0986408677393123
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.22733931010726227,
+        "My": 0.0,
+        "B": 0.051933132131926234
+      },
+      "H4_ratio_upper": 0.2792724422391885,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 3000.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce",
+      "thickness_mm": 2.0,
+      "length_mm": 6000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 46.0,
+        "b_t": 21.0,
+        "d_t": 6.5,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 3507696.4110024436,
+        "Mcre_Nmm": 762704.8442577822,
+        "Mcrl_Nmm": 21076119.654945258,
+        "Mcrd_Nmm": 13193012.516988106,
+        "Mne_floor_Nmm": 762704.8442577822,
+        "Mnl_floor_Nmm": 747820.6277317022,
+        "Mnd_floor_Nmm": 3025114.449509462,
+        "Mn_floor_Nmm": 747820.6277317022,
+        "Ma_floor_Nmm": 673038.564958532,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.4079582042501273,
+        "lambda_distortional": 0.5156309910782864,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 39935390.50894137,
+        "Ba_Nmm2": 35941851.45804723,
+        "omega_max_mm2": 2287.7218444261257,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.00034001805118501
+      ],
+      "application_xy_mm": [
+        16.82745087591539,
+        49.00000000000001
+      ],
+      "CG_minus_SC_mm": [
+        41.812514269515106,
+        -7.105427357601002e-15
+      ],
+      "load_factor": 0.01,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 1530.081230332545,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -18665.729208368328,
+        "phi_rad": -0.0009864086773931232
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.0022733931010726228,
+        "My": 0.0,
+        "B": 0.0005193313213192624
+      },
+      "H4_ratio_upper": 0.0027927244223918853,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 3000.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p25_ri2p25_n12_a16_v1_e30a0bd327de",
+      "thickness_mm": 2.25,
+      "length_mm": 3000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 40.44444444444444,
+        "b_t": 18.22222222222222,
+        "d_t": 5.555555555555555,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 3888689.047384635,
+        "Mcre_Nmm": 2437721.54059692,
+        "Mcrl_Nmm": 29860950.62932724,
+        "Mcrd_Nmm": 16882382.774915066,
+        "Mne_floor_Nmm": 2337865.639602552,
+        "Mnl_floor_Nmm": 2241352.0039281286,
+        "Mnd_floor_Nmm": 3416513.1435857355,
+        "Mn_floor_Nmm": 2241352.0039281286,
+        "Ma_floor_Nmm": 2017216.803535316,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.36086918079282776,
+        "lambda_distortional": 0.47993755757884293,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 44067052.76303188,
+        "Ba_Nmm2": 39660347.48672869,
+        "omega_max_mm2": 2263.296190768471,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.03796714340107157
+      ],
+      "application_xy_mm": [
+        16.686268820177016,
+        48.875
+      ],
+      "CG_minus_SC_mm": [
+        41.494785695378646,
+        -4.973799150320701e-14
+      ],
+      "load_factor": 1.0,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 42713.03632620551,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -1004676.5517735628,
+        "phi_rad": -0.011825809851163719
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.021174241782711642,
+        "My": 0.0,
+        "B": 0.025332015865714534
+      },
+      "H4_ratio_upper": 0.046506257648426176,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 1500.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p25_ri2p25_n12_a16_v1_e30a0bd327de",
+      "thickness_mm": 2.25,
+      "length_mm": 3000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 40.44444444444444,
+        "b_t": 18.22222222222222,
+        "d_t": 5.555555555555555,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 3888689.047384635,
+        "Mcre_Nmm": 2437721.54059692,
+        "Mcrl_Nmm": 29860950.62932724,
+        "Mcrd_Nmm": 16882382.774915066,
+        "Mne_floor_Nmm": 2337865.639602552,
+        "Mnl_floor_Nmm": 2241352.0039281286,
+        "Mnd_floor_Nmm": 3416513.1435857355,
+        "Mn_floor_Nmm": 2241352.0039281286,
+        "Ma_floor_Nmm": 2017216.803535316,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.36086918079282776,
+        "lambda_distortional": 0.47993755757884293,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 44067052.76303188,
+        "Ba_Nmm2": 39660347.48672869,
+        "omega_max_mm2": 2263.296190768471,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.00037967143401071576
+      ],
+      "application_xy_mm": [
+        16.686268820177016,
+        48.875
+      ],
+      "CG_minus_SC_mm": [
+        41.494785695378646,
+        -4.973799150320701e-14
+      ],
+      "load_factor": 0.01,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 427.13036326205525,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -10046.765517735632,
+        "phi_rad": -0.00011825809851163722
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.0002117424178271165,
+        "My": 0.0,
+        "B": 0.00025332015865714544
+      },
+      "H4_ratio_upper": 0.00046506257648426194,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 1500.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p25_ri2p25_n12_a16_v1_e30a0bd327de",
+      "thickness_mm": 2.25,
+      "length_mm": 4000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 40.44444444444444,
+        "b_t": 18.22222222222222,
+        "d_t": 5.555555555555555,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 3888689.047384635,
+        "Mcre_Nmm": 1580439.566300643,
+        "Mcrl_Nmm": 29860950.62932724,
+        "Mcrd_Nmm": 16882382.774915066,
+        "Mne_floor_Nmm": 1580439.566300643,
+        "Mnl_floor_Nmm": 1535734.8649753,
+        "Mnd_floor_Nmm": 3416513.1435857355,
+        "Mn_floor_Nmm": 1535734.8649753,
+        "Ma_floor_Nmm": 1382161.37847777,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.36086918079282776,
+        "lambda_distortional": 0.47993755757884293,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 44067052.76303188,
+        "Ba_Nmm2": 39660347.48672869,
+        "omega_max_mm2": 2263.296190768471,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.03796714340107157
+      ],
+      "application_xy_mm": [
+        16.686268820177016,
+        48.875
+      ],
+      "CG_minus_SC_mm": [
+        41.494785695378646,
+        -4.973799150320701e-14
+      ],
+      "load_factor": 1.0,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 75934.28680214313,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -1327300.8712130263,
+        "phi_rad": -0.028091046197455494
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.05493879946621908,
+        "My": 0.0,
+        "B": 0.033466697982340504
+      },
+      "H4_ratio_upper": 0.08840549744855958,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 2000.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p25_ri2p25_n12_a16_v1_e30a0bd327de",
+      "thickness_mm": 2.25,
+      "length_mm": 4000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 40.44444444444444,
+        "b_t": 18.22222222222222,
+        "d_t": 5.555555555555555,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 3888689.047384635,
+        "Mcre_Nmm": 1580439.566300643,
+        "Mcrl_Nmm": 29860950.62932724,
+        "Mcrd_Nmm": 16882382.774915066,
+        "Mne_floor_Nmm": 1580439.566300643,
+        "Mnl_floor_Nmm": 1535734.8649753,
+        "Mnd_floor_Nmm": 3416513.1435857355,
+        "Mn_floor_Nmm": 1535734.8649753,
+        "Ma_floor_Nmm": 1382161.37847777,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.36086918079282776,
+        "lambda_distortional": 0.47993755757884293,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 44067052.76303188,
+        "Ba_Nmm2": 39660347.48672869,
+        "omega_max_mm2": 2263.296190768471,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.00037967143401071576
+      ],
+      "application_xy_mm": [
+        16.686268820177016,
+        48.875
+      ],
+      "CG_minus_SC_mm": [
+        41.494785695378646,
+        -4.973799150320701e-14
+      ],
+      "load_factor": 0.01,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 759.3428680214315,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -13273.008712130268,
+        "phi_rad": -0.000280910461974555
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.000549387994662191,
+        "My": 0.0,
+        "B": 0.00033466697982340515
+      },
+      "H4_ratio_upper": 0.0008840549744855962,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 2000.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p25_ri2p25_n12_a16_v1_e30a0bd327de",
+      "thickness_mm": 2.25,
+      "length_mm": 5000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 40.44444444444444,
+        "b_t": 18.22222222222222,
+        "d_t": 5.555555555555555,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 3888689.047384635,
+        "Mcre_Nmm": 1161169.0795231531,
+        "Mcrl_Nmm": 29860950.62932724,
+        "Mcrd_Nmm": 16882382.774915066,
+        "Mne_floor_Nmm": 1161169.0795231531,
+        "Mnl_floor_Nmm": 1136854.9031984708,
+        "Mnd_floor_Nmm": 3416513.1435857355,
+        "Mn_floor_Nmm": 1136854.9031984708,
+        "Ma_floor_Nmm": 1023169.4128786238,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.36086918079282776,
+        "lambda_distortional": 0.47993755757884293,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 44067052.76303188,
+        "Ba_Nmm2": 39660347.48672869,
+        "omega_max_mm2": 2263.296190768471,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.03796714340107157
+      ],
+      "application_xy_mm": [
+        16.686268820177016,
+        48.875
+      ],
+      "CG_minus_SC_mm": [
+        41.494785695378646,
+        -4.973799150320701e-14
+      ],
+      "load_factor": 1.0,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 118647.32312834865,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -1550942.9145108666,
+        "phi_rad": -0.05194820292848866
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.1159605844691367,
+        "My": 0.0,
+        "B": 0.039105631009154665
+      },
+      "H4_ratio_upper": 0.15506621547829136,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 2500.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p25_ri2p25_n12_a16_v1_e30a0bd327de",
+      "thickness_mm": 2.25,
+      "length_mm": 5000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 40.44444444444444,
+        "b_t": 18.22222222222222,
+        "d_t": 5.555555555555555,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 3888689.047384635,
+        "Mcre_Nmm": 1161169.0795231531,
+        "Mcrl_Nmm": 29860950.62932724,
+        "Mcrd_Nmm": 16882382.774915066,
+        "Mne_floor_Nmm": 1161169.0795231531,
+        "Mnl_floor_Nmm": 1136854.9031984708,
+        "Mnd_floor_Nmm": 3416513.1435857355,
+        "Mn_floor_Nmm": 1136854.9031984708,
+        "Ma_floor_Nmm": 1023169.4128786238,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.36086918079282776,
+        "lambda_distortional": 0.47993755757884293,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 44067052.76303188,
+        "Ba_Nmm2": 39660347.48672869,
+        "omega_max_mm2": 2263.296190768471,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.00037967143401071576
+      ],
+      "application_xy_mm": [
+        16.686268820177016,
+        48.875
+      ],
+      "CG_minus_SC_mm": [
+        41.494785695378646,
+        -4.973799150320701e-14
+      ],
+      "load_factor": 0.01,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 1186.4732312834867,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -15509.429145108672,
+        "phi_rad": -0.0005194820292848866
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.0011596058446913672,
+        "My": 0.0,
+        "B": 0.00039105631009154676
+      },
+      "H4_ratio_upper": 0.0015506621547829139,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 2500.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p25_ri2p25_n12_a16_v1_e30a0bd327de",
+      "thickness_mm": 2.25,
+      "length_mm": 6000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 40.44444444444444,
+        "b_t": 18.22222222222222,
+        "d_t": 5.555555555555555,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 3888689.047384635,
+        "Mcre_Nmm": 917561.5693126331,
+        "Mcrl_Nmm": 29860950.62932724,
+        "Mcrd_Nmm": 16882382.774915066,
+        "Mne_floor_Nmm": 917561.5693126331,
+        "Mnl_floor_Nmm": 902312.2268441787,
+        "Mnd_floor_Nmm": 3416513.1435857355,
+        "Mn_floor_Nmm": 902312.2268441787,
+        "Ma_floor_Nmm": 812081.0041597609,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.36086918079282776,
+        "lambda_distortional": 0.47993755757884293,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 44067052.76303188,
+        "Ba_Nmm2": 39660347.48672869,
+        "omega_max_mm2": 2263.296190768471,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.03796714340107157
+      ],
+      "application_xy_mm": [
+        16.686268820177016,
+        48.875
+      ],
+      "CG_minus_SC_mm": [
+        41.494785695378646,
+        -4.973799150320701e-14
+      ],
+      "load_factor": 1.0,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 170852.14530482204,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -1698745.6184188332,
+        "phi_rad": -0.08304077761465535
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.21038805787804177,
+        "My": 0.0,
+        "B": 0.04283234328663597
+      },
+      "H4_ratio_upper": 0.25322040116467776,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 3000.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p25_ri2p25_n12_a16_v1_e30a0bd327de",
+      "thickness_mm": 2.25,
+      "length_mm": 6000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 40.44444444444444,
+        "b_t": 18.22222222222222,
+        "d_t": 5.555555555555555,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 3888689.047384635,
+        "Mcre_Nmm": 917561.5693126331,
+        "Mcrl_Nmm": 29860950.62932724,
+        "Mcrd_Nmm": 16882382.774915066,
+        "Mne_floor_Nmm": 917561.5693126331,
+        "Mnl_floor_Nmm": 902312.2268441787,
+        "Mnd_floor_Nmm": 3416513.1435857355,
+        "Mn_floor_Nmm": 902312.2268441787,
+        "Ma_floor_Nmm": 812081.0041597609,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.36086918079282776,
+        "lambda_distortional": 0.47993755757884293,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 44067052.76303188,
+        "Ba_Nmm2": 39660347.48672869,
+        "omega_max_mm2": 2263.296190768471,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.00037967143401071576
+      ],
+      "application_xy_mm": [
+        16.686268820177016,
+        48.875
+      ],
+      "CG_minus_SC_mm": [
+        41.494785695378646,
+        -4.973799150320701e-14
+      ],
+      "load_factor": 0.01,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 1708.521453048221,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -16987.456184188337,
+        "phi_rad": -0.0008304077761465536
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.0021038805787804184,
+        "My": 0.0,
+        "B": 0.00042832343286635977
+      },
+      "H4_ratio_upper": 0.0025322040116467783,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 3000.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p65_ri2p65_n12_a16_v1_243974742f83",
+      "thickness_mm": 2.65,
+      "length_mm": 3000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 33.735849056603776,
+        "b_t": 14.867924528301886,
+        "d_t": 4.415094339622641,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 4472530.947437074,
+        "Mcre_Nmm": 2997468.3224975467,
+        "Mcrl_Nmm": 48323659.02844177,
+        "Mcrd_Nmm": 23830381.750560295,
+        "Mne_floor_Nmm": 2804161.933689245,
+        "Mnl_floor_Nmm": 2717432.844036383,
+        "Mnd_floor_Nmm": 4019858.209701146,
+        "Mn_floor_Nmm": 2717432.844036383,
+        "Ma_floor_Nmm": 2445689.5596327446,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.304226311167466,
+        "lambda_distortional": 0.433222672733162,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 50290701.268815145,
+        "Ba_Nmm2": 45261631.141933635,
+        "omega_max_mm2": 2224.1197694117473,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.04418000338583705
+      ],
+      "application_xy_mm": [
+        16.45986627571013,
+        48.675000000000004
+      ],
+      "CG_minus_SC_mm": [
+        40.981371035761086,
+        2.842170943040401e-14
+      ],
+      "load_factor": 1.0,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 49702.503809066686,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -966702.8172923375,
+        "phi_rad": -0.010213012416095922
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.020322490895586205,
+        "My": 0.0,
+        "B": 0.021358108245390087
+      },
+      "H4_ratio_upper": 0.04168059914097629,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 1500.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p65_ri2p65_n12_a16_v1_243974742f83",
+      "thickness_mm": 2.65,
+      "length_mm": 3000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 33.735849056603776,
+        "b_t": 14.867924528301886,
+        "d_t": 4.415094339622641,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 4472530.947437074,
+        "Mcre_Nmm": 2997468.3224975467,
+        "Mcrl_Nmm": 48323659.02844177,
+        "Mcrd_Nmm": 23830381.750560295,
+        "Mne_floor_Nmm": 2804161.933689245,
+        "Mnl_floor_Nmm": 2717432.844036383,
+        "Mnd_floor_Nmm": 4019858.209701146,
+        "Mn_floor_Nmm": 2717432.844036383,
+        "Ma_floor_Nmm": 2445689.5596327446,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.304226311167466,
+        "lambda_distortional": 0.433222672733162,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 50290701.268815145,
+        "Ba_Nmm2": 45261631.141933635,
+        "omega_max_mm2": 2224.1197694117473,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.0004418000338583706
+      ],
+      "application_xy_mm": [
+        16.45986627571013,
+        48.675000000000004
+      ],
+      "CG_minus_SC_mm": [
+        40.981371035761086,
+        2.842170943040401e-14
+      ],
+      "load_factor": 0.01,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 497.0250380906669,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -9667.028172923376,
+        "phi_rad": -0.00010213012416095925
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.00020322490895586205,
+        "My": 0.0,
+        "B": 0.00021358108245390087
+      },
+      "H4_ratio_upper": 0.0004168059914097629,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 1500.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p65_ri2p65_n12_a16_v1_243974742f83",
+      "thickness_mm": 2.65,
+      "length_mm": 4000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 33.735849056603776,
+        "b_t": 14.867924528301886,
+        "d_t": 4.415094339622641,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 4472530.947437074,
+        "Mcre_Nmm": 1994104.8651677365,
+        "Mcrl_Nmm": 48323659.02844177,
+        "Mcrd_Nmm": 23830381.750560295,
+        "Mne_floor_Nmm": 1994104.8651677365,
+        "Mnl_floor_Nmm": 1949850.8915439667,
+        "Mnd_floor_Nmm": 4019858.209701146,
+        "Mn_floor_Nmm": 1949850.8915439667,
+        "Ma_floor_Nmm": 1754865.80238957,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.304226311167466,
+        "lambda_distortional": 0.433222672733162,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 50290701.268815145,
+        "Ba_Nmm2": 45261631.141933635,
+        "omega_max_mm2": 2224.1197694117473,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.04418000338583705
+      ],
+      "application_xy_mm": [
+        16.45986627571013,
+        48.675000000000004
+      ],
+      "CG_minus_SC_mm": [
+        40.981371035761086,
+        2.842170943040401e-14
+      ],
+      "load_factor": 1.0,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 88360.0067716741,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -1207993.8648922946,
+        "phi_rad": -0.023029180040445765
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.050351432372410375,
+        "My": 0.0,
+        "B": 0.026689136790148116
+      },
+      "H4_ratio_upper": 0.0770405691625585,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 2000.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p65_ri2p65_n12_a16_v1_243974742f83",
+      "thickness_mm": 2.65,
+      "length_mm": 4000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 33.735849056603776,
+        "b_t": 14.867924528301886,
+        "d_t": 4.415094339622641,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 4472530.947437074,
+        "Mcre_Nmm": 1994104.8651677365,
+        "Mcrl_Nmm": 48323659.02844177,
+        "Mcrd_Nmm": 23830381.750560295,
+        "Mne_floor_Nmm": 1994104.8651677365,
+        "Mnl_floor_Nmm": 1949850.8915439667,
+        "Mnd_floor_Nmm": 4019858.209701146,
+        "Mn_floor_Nmm": 1949850.8915439667,
+        "Ma_floor_Nmm": 1754865.80238957,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.304226311167466,
+        "lambda_distortional": 0.433222672733162,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 50290701.268815145,
+        "Ba_Nmm2": 45261631.141933635,
+        "omega_max_mm2": 2224.1197694117473,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.0004418000338583706
+      ],
+      "application_xy_mm": [
+        16.45986627571013,
+        48.675000000000004
+      ],
+      "CG_minus_SC_mm": [
+        40.981371035761086,
+        2.842170943040401e-14
+      ],
+      "load_factor": 0.01,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 883.6000677167411,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -12079.938648922946,
+        "phi_rad": -0.0002302918004044577
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.0005035143237241038,
+        "My": 0.0,
+        "B": 0.00026689136790148115
+      },
+      "H4_ratio_upper": 0.000770405691625585,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 2000.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p65_ri2p65_n12_a16_v1_243974742f83",
+      "thickness_mm": 2.65,
+      "length_mm": 5000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 33.735849056603776,
+        "b_t": 14.867924528301886,
+        "d_t": 4.415094339622641,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 4472530.947437074,
+        "Mcre_Nmm": 1491892.400759532,
+        "Mcrl_Nmm": 48323659.02844177,
+        "Mcrd_Nmm": 23830381.750560295,
+        "Mne_floor_Nmm": 1491892.400759532,
+        "Mnl_floor_Nmm": 1466982.8769854335,
+        "Mnd_floor_Nmm": 4019858.209701146,
+        "Mn_floor_Nmm": 1466982.8769854335,
+        "Ma_floor_Nmm": 1320284.58928689,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.304226311167466,
+        "lambda_distortional": 0.433222672733162,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 50290701.268815145,
+        "Ba_Nmm2": 45261631.141933635,
+        "omega_max_mm2": 2224.1197694117473,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.04418000338583705
+      ],
+      "application_xy_mm": [
+        16.45986627571013,
+        48.675000000000004
+      ],
+      "CG_minus_SC_mm": [
+        40.981371035761086,
+        2.842170943040401e-14
+      ],
+      "load_factor": 1.0,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 138062.51058074078,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -1356255.5056246088,
+        "phi_rad": -0.041052838597827
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.10457026591161749,
+        "My": 0.0,
+        "B": 0.029964795156665842
+      },
+      "H4_ratio_upper": 0.13453506106828333,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 2500.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p65_ri2p65_n12_a16_v1_243974742f83",
+      "thickness_mm": 2.65,
+      "length_mm": 5000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 33.735849056603776,
+        "b_t": 14.867924528301886,
+        "d_t": 4.415094339622641,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 4472530.947437074,
+        "Mcre_Nmm": 1491892.400759532,
+        "Mcrl_Nmm": 48323659.02844177,
+        "Mcrd_Nmm": 23830381.750560295,
+        "Mne_floor_Nmm": 1491892.400759532,
+        "Mnl_floor_Nmm": 1466982.8769854335,
+        "Mnd_floor_Nmm": 4019858.209701146,
+        "Mn_floor_Nmm": 1466982.8769854335,
+        "Ma_floor_Nmm": 1320284.58928689,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.304226311167466,
+        "lambda_distortional": 0.433222672733162,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 50290701.268815145,
+        "Ba_Nmm2": 45261631.141933635,
+        "omega_max_mm2": 2224.1197694117473,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.0004418000338583706
+      ],
+      "application_xy_mm": [
+        16.45986627571013,
+        48.675000000000004
+      ],
+      "CG_minus_SC_mm": [
+        40.981371035761086,
+        2.842170943040401e-14
+      ],
+      "load_factor": 0.01,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 1380.625105807408,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -13562.55505624609,
+        "phi_rad": -0.0004105283859782701
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.0010457026591161752,
+        "My": 0.0,
+        "B": 0.0002996479515666585
+      },
+      "H4_ratio_upper": 0.0013453506106828337,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 2500.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p65_ri2p65_n12_a16_v1_243974742f83",
+      "thickness_mm": 2.65,
+      "length_mm": 6000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 33.735849056603776,
+        "b_t": 14.867924528301886,
+        "d_t": 4.415094339622641,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 4472530.947437074,
+        "Mcre_Nmm": 1193837.4724104581,
+        "Mcrl_Nmm": 48323659.02844177,
+        "Mcrd_Nmm": 23830381.750560295,
+        "Mne_floor_Nmm": 1193837.4724104581,
+        "Mnl_floor_Nmm": 1177833.3475540318,
+        "Mnd_floor_Nmm": 4019858.209701146,
+        "Mn_floor_Nmm": 1177833.3475540318,
+        "Ma_floor_Nmm": 1060050.0127986285,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.304226311167466,
+        "lambda_distortional": 0.433222672733162,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 50290701.268815145,
+        "Ba_Nmm2": 45261631.141933635,
+        "omega_max_mm2": 2224.1197694117473,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.04418000338583705
+      ],
+      "application_xy_mm": [
+        16.45986627571013,
+        48.675000000000004
+      ],
+      "CG_minus_SC_mm": [
+        40.981371035761086,
+        2.842170943040401e-14
+      ],
+      "load_factor": 1.0,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 198810.01523626674,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -1444413.2923766212,
+        "phi_rad": -0.06396976899714978
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.1875477692900453,
+        "My": 0.0,
+        "B": 0.0319125328878926
+      },
+      "H4_ratio_upper": 0.21946030217793788,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 3000.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p65_ri2p65_n12_a16_v1_243974742f83",
+      "thickness_mm": 2.65,
+      "length_mm": 6000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 33.735849056603776,
+        "b_t": 14.867924528301886,
+        "d_t": 4.415094339622641,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 4472530.947437074,
+        "Mcre_Nmm": 1193837.4724104581,
+        "Mcrl_Nmm": 48323659.02844177,
+        "Mcrd_Nmm": 23830381.750560295,
+        "Mne_floor_Nmm": 1193837.4724104581,
+        "Mnl_floor_Nmm": 1177833.3475540318,
+        "Mnd_floor_Nmm": 4019858.209701146,
+        "Mn_floor_Nmm": 1177833.3475540318,
+        "Ma_floor_Nmm": 1060050.0127986285,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.304226311167466,
+        "lambda_distortional": 0.433222672733162,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 50290701.268815145,
+        "Ba_Nmm2": 45261631.141933635,
+        "omega_max_mm2": 2224.1197694117473,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.0004418000338583706
+      ],
+      "application_xy_mm": [
+        16.45986627571013,
+        48.675000000000004
+      ],
+      "CG_minus_SC_mm": [
+        40.981371035761086,
+        2.842170943040401e-14
+      ],
+      "load_factor": 0.01,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 1988.1001523626676,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -14444.132923766212,
+        "phi_rad": -0.0006396976899714978
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.0018754776929004531,
+        "My": 0.0,
+        "B": 0.00031912532887892606
+      },
+      "H4_ratio_upper": 0.0021946030217793793,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 3000.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t3p00_ri3p00_n12_a16_v1_c3d1e69d48f6",
+      "thickness_mm": 3.0,
+      "length_mm": 3000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 29.333333333333332,
+        "b_t": 12.666666666666666,
+        "d_t": 3.6666666666666665,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 4957708.711751792,
+        "Mcre_Nmm": 3530087.845885298,
+        "Mcrl_Nmm": 69344932.95805883,
+        "Mcrd_Nmm": 31005953.548277073,
+        "Mne_floor_Nmm": 3217038.4548324794,
+        "Mnl_floor_Nmm": 3136996.3999701114,
+        "Mnd_floor_Nmm": 4523715.944887703,
+        "Mn_floor_Nmm": 3136996.3999701114,
+        "Ma_floor_Nmm": 2823296.7599731004,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.26738259684227544,
+        "lambda_distortional": 0.3998692030865883,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 55349890.124996684,
+        "Ba_Nmm2": 49814901.11249702,
+        "omega_max_mm2": 2189.7451564343683,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.049483308439127245
+      ],
+      "application_xy_mm": [
+        16.261232028914485,
+        48.5
+      ],
+      "CG_minus_SC_mm": [
+        40.526988104647465,
+        -3.552713678800501e-14
+      ],
+      "load_factor": 1.0,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 55668.72199401815,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -911149.6537565434,
+        "phi_rad": -0.00894164365727366
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.01971763038985266,
+        "My": 0.0,
+        "B": 0.018290704857546414
+      },
+      "H4_ratio_upper": 0.03800833524739908,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 1500.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t3p00_ri3p00_n12_a16_v1_c3d1e69d48f6",
+      "thickness_mm": 3.0,
+      "length_mm": 3000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 29.333333333333332,
+        "b_t": 12.666666666666666,
+        "d_t": 3.6666666666666665,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 4957708.711751792,
+        "Mcre_Nmm": 3530087.845885298,
+        "Mcrl_Nmm": 69344932.95805883,
+        "Mcrd_Nmm": 31005953.548277073,
+        "Mne_floor_Nmm": 3217038.4548324794,
+        "Mnl_floor_Nmm": 3136996.3999701114,
+        "Mnd_floor_Nmm": 4523715.944887703,
+        "Mn_floor_Nmm": 3136996.3999701114,
+        "Ma_floor_Nmm": 2823296.7599731004,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.26738259684227544,
+        "lambda_distortional": 0.3998692030865883,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 55349890.124996684,
+        "Ba_Nmm2": 49814901.11249702,
+        "omega_max_mm2": 2189.7451564343683,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.0004948330843912725
+      ],
+      "application_xy_mm": [
+        16.261232028914485,
+        48.5
+      ],
+      "CG_minus_SC_mm": [
+        40.526988104647465,
+        -3.552713678800501e-14
+      ],
+      "load_factor": 0.01,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 556.6872199401815,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -9111.496537565434,
+        "phi_rad": -8.94164365727366e-05
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.0001971763038985266,
+        "My": 0.0,
+        "B": 0.00018290704857546413
+      },
+      "H4_ratio_upper": 0.0003800833524739907,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 1500.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t3p00_ri3p00_n12_a16_v1_c3d1e69d48f6",
+      "thickness_mm": 3.0,
+      "length_mm": 4000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 29.333333333333332,
+        "b_t": 12.666666666666666,
+        "d_t": 3.6666666666666665,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 4957708.711751792,
+        "Mcre_Nmm": 2393414.84598219,
+        "Mcrl_Nmm": 69344932.95805883,
+        "Mcrd_Nmm": 31005953.548277073,
+        "Mne_floor_Nmm": 2393414.84598219,
+        "Mnl_floor_Nmm": 2348826.9520746954,
+        "Mnd_floor_Nmm": 4523715.944887703,
+        "Mn_floor_Nmm": 2348826.9520746954,
+        "Ma_floor_Nmm": 2113944.2568672257,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.26738259684227544,
+        "lambda_distortional": 0.3998692030865883,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 55349890.124996684,
+        "Ba_Nmm2": 49814901.11249702,
+        "omega_max_mm2": 2189.7451564343683,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.049483308439127245
+      ],
+      "application_xy_mm": [
+        16.261232028914485,
+        48.5
+      ],
+      "CG_minus_SC_mm": [
+        40.526988104647465,
+        -3.552713678800501e-14
+      ],
+      "load_factor": 1.0,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 98966.61687825448,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -1092300.8386693427,
+        "phi_rad": -0.019403413202271957
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.04681609581556268,
+        "My": 0.0,
+        "B": 0.02192719074564856
+      },
+      "H4_ratio_upper": 0.06874328656121124,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 2000.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t3p00_ri3p00_n12_a16_v1_c3d1e69d48f6",
+      "thickness_mm": 3.0,
+      "length_mm": 4000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 29.333333333333332,
+        "b_t": 12.666666666666666,
+        "d_t": 3.6666666666666665,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 4957708.711751792,
+        "Mcre_Nmm": 2393414.84598219,
+        "Mcrl_Nmm": 69344932.95805883,
+        "Mcrd_Nmm": 31005953.548277073,
+        "Mne_floor_Nmm": 2393414.84598219,
+        "Mnl_floor_Nmm": 2348826.9520746954,
+        "Mnd_floor_Nmm": 4523715.944887703,
+        "Mn_floor_Nmm": 2348826.9520746954,
+        "Ma_floor_Nmm": 2113944.2568672257,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.26738259684227544,
+        "lambda_distortional": 0.3998692030865883,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 55349890.124996684,
+        "Ba_Nmm2": 49814901.11249702,
+        "omega_max_mm2": 2189.7451564343683,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.0004948330843912725
+      ],
+      "application_xy_mm": [
+        16.261232028914485,
+        48.5
+      ],
+      "CG_minus_SC_mm": [
+        40.526988104647465,
+        -3.552713678800501e-14
+      ],
+      "load_factor": 0.01,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 989.6661687825449,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -10923.00838669343,
+        "phi_rad": -0.0001940341320227196
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.0004681609581556268,
+        "My": 0.0,
+        "B": 0.00021927190745648563
+      },
+      "H4_ratio_upper": 0.0006874328656121125,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 2000.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t3p00_ri3p00_n12_a16_v1_c3d1e69d48f6",
+      "thickness_mm": 3.0,
+      "length_mm": 5000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 29.333333333333332,
+        "b_t": 12.666666666666666,
+        "d_t": 3.6666666666666665,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 4957708.711751792,
+        "Mcre_Nmm": 1812919.9807925592,
+        "Mcrl_Nmm": 69344932.95805883,
+        "Mcrd_Nmm": 31005953.548277073,
+        "Mne_floor_Nmm": 1812919.9807925592,
+        "Mnl_floor_Nmm": 1787221.644516501,
+        "Mnd_floor_Nmm": 4523715.944887703,
+        "Mn_floor_Nmm": 1787221.644516501,
+        "Ma_floor_Nmm": 1608499.480064851,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.26738259684227544,
+        "lambda_distortional": 0.3998692030865883,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 55349890.124996684,
+        "Ba_Nmm2": 49814901.11249702,
+        "omega_max_mm2": 2189.7451564343683,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.049483308439127245
+      ],
+      "application_xy_mm": [
+        16.261232028914485,
+        48.5
+      ],
+      "CG_minus_SC_mm": [
+        40.526988104647465,
+        -3.552713678800501e-14
+      ],
+      "load_factor": 1.0,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 154635.33887227264,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -1193066.9468754844,
+        "phi_rad": -0.03373279352224918
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.09613639344542287,
+        "My": 0.0,
+        "B": 0.02395000130947125
+      },
+      "H4_ratio_upper": 0.12008639475489412,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 2500.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t3p00_ri3p00_n12_a16_v1_c3d1e69d48f6",
+      "thickness_mm": 3.0,
+      "length_mm": 5000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 29.333333333333332,
+        "b_t": 12.666666666666666,
+        "d_t": 3.6666666666666665,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 4957708.711751792,
+        "Mcre_Nmm": 1812919.9807925592,
+        "Mcrl_Nmm": 69344932.95805883,
+        "Mcrd_Nmm": 31005953.548277073,
+        "Mne_floor_Nmm": 1812919.9807925592,
+        "Mnl_floor_Nmm": 1787221.644516501,
+        "Mnd_floor_Nmm": 4523715.944887703,
+        "Mn_floor_Nmm": 1787221.644516501,
+        "Ma_floor_Nmm": 1608499.480064851,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.26738259684227544,
+        "lambda_distortional": 0.3998692030865883,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 55349890.124996684,
+        "Ba_Nmm2": 49814901.11249702,
+        "omega_max_mm2": 2189.7451564343683,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.0004948330843912725
+      ],
+      "application_xy_mm": [
+        16.261232028914485,
+        48.5
+      ],
+      "CG_minus_SC_mm": [
+        40.526988104647465,
+        -3.552713678800501e-14
+      ],
+      "load_factor": 0.01,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 1546.3533887227265,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -11930.669468754844,
+        "phi_rad": -0.00033732793522249185
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.0009613639344542289,
+        "My": 0.0,
+        "B": 0.0002395000130947125
+      },
+      "H4_ratio_upper": 0.0012008639475489414,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 2500.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t3p00_ri3p00_n12_a16_v1_c3d1e69d48f6",
+      "thickness_mm": 3.0,
+      "length_mm": 6000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 29.333333333333332,
+        "b_t": 12.666666666666666,
+        "d_t": 3.6666666666666665,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 4957708.711751792,
+        "Mcre_Nmm": 1462617.5695638733,
+        "Mcrl_Nmm": 69344932.95805883,
+        "Mcrd_Nmm": 31005953.548277073,
+        "Mne_floor_Nmm": 1462617.5695638733,
+        "Mnl_floor_Nmm": 1445844.9664575025,
+        "Mnd_floor_Nmm": 4523715.944887703,
+        "Mn_floor_Nmm": 1445844.9664575025,
+        "Ma_floor_Nmm": 1301260.4698117522,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.26738259684227544,
+        "lambda_distortional": 0.3998692030865883,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 55349890.124996684,
+        "Ba_Nmm2": 49814901.11249702,
+        "omega_max_mm2": 2189.7451564343683,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.049483308439127245
+      ],
+      "application_xy_mm": [
+        16.261232028914485,
+        48.5
+      ],
+      "CG_minus_SC_mm": [
+        40.526988104647465,
+        -3.552713678800501e-14
+      ],
+      "load_factor": 1.0,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 222674.8879760726,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -1247878.189257627,
+        "phi_rad": -0.05170087953825149
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.17112245637361598,
+        "My": 0.0,
+        "B": 0.025050299436298044
+      },
+      "H4_ratio_upper": 0.19617275580991403,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 3000.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t3p00_ri3p00_n12_a16_v1_c3d1e69d48f6",
+      "thickness_mm": 3.0,
+      "length_mm": 6000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 29.333333333333332,
+        "b_t": 12.666666666666666,
+        "d_t": 3.6666666666666665,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 4957708.711751792,
+        "Mcre_Nmm": 1462617.5695638733,
+        "Mcrl_Nmm": 69344932.95805883,
+        "Mcrd_Nmm": 31005953.548277073,
+        "Mne_floor_Nmm": 1462617.5695638733,
+        "Mnl_floor_Nmm": 1445844.9664575025,
+        "Mnd_floor_Nmm": 4523715.944887703,
+        "Mn_floor_Nmm": 1445844.9664575025,
+        "Ma_floor_Nmm": 1301260.4698117522,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.26738259684227544,
+        "lambda_distortional": 0.3998692030865883,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 55349890.124996684,
+        "Ba_Nmm2": 49814901.11249702,
+        "omega_max_mm2": 2189.7451564343683,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.0004948330843912725
+      ],
+      "application_xy_mm": [
+        16.261232028914485,
+        48.5
+      ],
+      "CG_minus_SC_mm": [
+        40.526988104647465,
+        -3.552713678800501e-14
+      ],
+      "load_factor": 0.01,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 2226.748879760726,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -12478.78189257627,
+        "phi_rad": -0.000517008795382515
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.0017112245637361599,
+        "My": 0.0,
+        "B": 0.00025050299436298046
+      },
+      "H4_ratio_upper": 0.00196172755809914,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 3000.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t3p35_ri3p35_n12_a16_v1_90bf516ec976",
+      "thickness_mm": 3.35,
+      "length_mm": 3000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 25.850746268656714,
+        "b_t": 10.925373134328359,
+        "d_t": 3.074626865671642,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 5419232.4338049,
+        "Mcre_Nmm": 4101916.3022756707,
+        "Mcrl_Nmm": 95026013.6247503,
+        "Mcrd_Nmm": 39248753.68693738,
+        "Mne_floor_Nmm": 3629332.420772571,
+        "Mnl_floor_Nmm": 3554662.565838663,
+        "Mnd_floor_Nmm": 5004627.102921099,
+        "Mn_floor_Nmm": 3554662.565838663,
+        "Ma_floor_Nmm": 3199196.3092547967,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.23880731947850078,
+        "lambda_distortional": 0.37158310031420266,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 60052780.9021001,
+        "Ba_Nmm2": 54047502.811890095,
+        "omega_max_mm2": 2155.2827149579184,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.05466252922126311
+      ],
+      "application_xy_mm": [
+        16.062084276097462,
+        48.325
+      ],
+      "CG_minus_SC_mm": [
+        40.067753814617944,
+        -1.0658141036401503e-13
+      ],
+      "load_factor": 1.0,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 61495.345373921,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -844503.5991001225,
+        "phi_rad": -0.0078165006423789
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.01922212313011995,
+        "My": 0.0,
+        "B": 0.015625210327281525
+      },
+      "H4_ratio_upper": 0.03484733345740147,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 1500.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t3p35_ri3p35_n12_a16_v1_90bf516ec976",
+      "thickness_mm": 3.35,
+      "length_mm": 3000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 25.850746268656714,
+        "b_t": 10.925373134328359,
+        "d_t": 3.074626865671642,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 5419232.4338049,
+        "Mcre_Nmm": 4101916.3022756707,
+        "Mcrl_Nmm": 95026013.6247503,
+        "Mcrd_Nmm": 39248753.68693738,
+        "Mne_floor_Nmm": 3629332.420772571,
+        "Mnl_floor_Nmm": 3554662.565838663,
+        "Mnd_floor_Nmm": 5004627.102921099,
+        "Mn_floor_Nmm": 3554662.565838663,
+        "Ma_floor_Nmm": 3199196.3092547967,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.23880731947850078,
+        "lambda_distortional": 0.37158310031420266,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 60052780.9021001,
+        "Ba_Nmm2": 54047502.811890095,
+        "omega_max_mm2": 2155.2827149579184,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.0005466252922126312
+      ],
+      "application_xy_mm": [
+        16.062084276097462,
+        48.325
+      ],
+      "CG_minus_SC_mm": [
+        40.067753814617944,
+        -1.0658141036401503e-13
+      ],
+      "load_factor": 0.01,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 614.9534537392101,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -8445.035991001225,
+        "phi_rad": -7.816500642378901e-05
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.0001922212313011995,
+        "My": 0.0,
+        "B": 0.00015625210327281527
+      },
+      "H4_ratio_upper": 0.0003484733345740148,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 1500.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t3p35_ri3p35_n12_a16_v1_90bf516ec976",
+      "thickness_mm": 3.35,
+      "length_mm": 4000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 25.850746268656714,
+        "b_t": 10.925373134328359,
+        "d_t": 3.074626865671642,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 5419232.4338049,
+        "Mcre_Nmm": 2825670.7884033644,
+        "Mcrl_Nmm": 95026013.6247503,
+        "Mcrd_Nmm": 39248753.68693738,
+        "Mne_floor_Nmm": 2820904.2516852384,
+        "Mnl_floor_Nmm": 2775587.020015068,
+        "Mnd_floor_Nmm": 5004627.102921099,
+        "Mn_floor_Nmm": 2775587.020015068,
+        "Ma_floor_Nmm": 2498028.318013561,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.23880731947850078,
+        "lambda_distortional": 0.37158310031420266,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 60052780.9021001,
+        "Ba_Nmm2": 54047502.811890095,
+        "omega_max_mm2": 2155.2827149579184,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.05466252922126311
+      ],
+      "application_xy_mm": [
+        16.062084276097462,
+        48.325
+      ],
+      "CG_minus_SC_mm": [
+        40.067753814617944,
+        -1.0658141036401503e-13
+      ],
+      "load_factor": 1.0,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 109325.05844252622,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -977461.4561505421,
+        "phi_rad": -0.016424530713127692
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.043764539278506584,
+        "My": 0.0,
+        "B": 0.018085228831987904
+      },
+      "H4_ratio_upper": 0.06184976811049449,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 2000.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t3p35_ri3p35_n12_a16_v1_90bf516ec976",
+      "thickness_mm": 3.35,
+      "length_mm": 4000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 25.850746268656714,
+        "b_t": 10.925373134328359,
+        "d_t": 3.074626865671642,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 5419232.4338049,
+        "Mcre_Nmm": 2825670.7884033644,
+        "Mcrl_Nmm": 95026013.6247503,
+        "Mcrd_Nmm": 39248753.68693738,
+        "Mne_floor_Nmm": 2820904.2516852384,
+        "Mnl_floor_Nmm": 2775587.020015068,
+        "Mnd_floor_Nmm": 5004627.102921099,
+        "Mn_floor_Nmm": 2775587.020015068,
+        "Ma_floor_Nmm": 2498028.318013561,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.23880731947850078,
+        "lambda_distortional": 0.37158310031420266,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 60052780.9021001,
+        "Ba_Nmm2": 54047502.811890095,
+        "omega_max_mm2": 2155.2827149579184,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.0005466252922126312
+      ],
+      "application_xy_mm": [
+        16.062084276097462,
+        48.325
+      ],
+      "CG_minus_SC_mm": [
+        40.067753814617944,
+        -1.0658141036401503e-13
+      ],
+      "load_factor": 0.01,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 1093.2505844252623,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -9774.614561505421,
+        "phi_rad": -0.00016424530713127694
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.0004376453927850659,
+        "My": 0.0,
+        "B": 0.00018085228831987905
+      },
+      "H4_ratio_upper": 0.000618497681104945,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 2000.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t3p35_ri3p35_n12_a16_v1_90bf516ec976",
+      "thickness_mm": 3.35,
+      "length_mm": 5000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 25.850746268656714,
+        "b_t": 10.925373134328359,
+        "d_t": 3.074626865671642,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 5419232.4338049,
+        "Mcre_Nmm": 2161386.7266989187,
+        "Mcrl_Nmm": 95026013.6247503,
+        "Mcrd_Nmm": 39248753.68693738,
+        "Mne_floor_Nmm": 2161386.7266989187,
+        "Mnl_floor_Nmm": 2134682.1391246696,
+        "Mnd_floor_Nmm": 5004627.102921099,
+        "Mn_floor_Nmm": 2134682.1391246696,
+        "Ma_floor_Nmm": 1921213.9252122026,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.23880731947850078,
+        "lambda_distortional": 0.37158310031420266,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 60052780.9021001,
+        "Ba_Nmm2": 54047502.811890095,
+        "omega_max_mm2": 2155.2827149579184,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.05466252922126311
+      ],
+      "application_xy_mm": [
+        16.062084276097462,
+        48.325
+      ],
+      "CG_minus_SC_mm": [
+        40.067753814617944,
+        -1.0658141036401503e-13
+      ],
+      "load_factor": 1.0,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 170820.40381644721,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -1044641.785765863,
+        "phi_rad": -0.027992828222870983
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.08891274499667168,
+        "My": 0.0,
+        "B": 0.019328215577354087
+      },
+      "H4_ratio_upper": 0.10824096057402577,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 2500.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t3p35_ri3p35_n12_a16_v1_90bf516ec976",
+      "thickness_mm": 3.35,
+      "length_mm": 5000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 25.850746268656714,
+        "b_t": 10.925373134328359,
+        "d_t": 3.074626865671642,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 5419232.4338049,
+        "Mcre_Nmm": 2161386.7266989187,
+        "Mcrl_Nmm": 95026013.6247503,
+        "Mcrd_Nmm": 39248753.68693738,
+        "Mne_floor_Nmm": 2161386.7266989187,
+        "Mnl_floor_Nmm": 2134682.1391246696,
+        "Mnd_floor_Nmm": 5004627.102921099,
+        "Mn_floor_Nmm": 2134682.1391246696,
+        "Ma_floor_Nmm": 1921213.9252122026,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.23880731947850078,
+        "lambda_distortional": 0.37158310031420266,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 60052780.9021001,
+        "Ba_Nmm2": 54047502.811890095,
+        "omega_max_mm2": 2155.2827149579184,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.0005466252922126312
+      ],
+      "application_xy_mm": [
+        16.062084276097462,
+        48.325
+      ],
+      "CG_minus_SC_mm": [
+        40.067753814617944,
+        -1.0658141036401503e-13
+      ],
+      "load_factor": 0.01,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 1708.2040381644724,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -10446.417857658631,
+        "phi_rad": -0.00027992828222870984
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.0008891274499667169,
+        "My": 0.0,
+        "B": 0.0001932821557735409
+      },
+      "H4_ratio_upper": 0.0010824096057402578,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 2500.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t3p35_ri3p35_n12_a16_v1_90bf516ec976",
+      "thickness_mm": 3.35,
+      "length_mm": 6000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 25.850746268656714,
+        "b_t": 10.925373134328359,
+        "d_t": 3.074626865671642,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 5419232.4338049,
+        "Mcre_Nmm": 1754642.9077110784,
+        "Mcrl_Nmm": 95026013.6247503,
+        "Mcrd_Nmm": 39248753.68693738,
+        "Mne_floor_Nmm": 1754642.9077110784,
+        "Mnl_floor_Nmm": 1737002.4698824405,
+        "Mnd_floor_Nmm": 5004627.102921099,
+        "Mn_floor_Nmm": 1737002.4698824405,
+        "Ma_floor_Nmm": 1563302.2228941964,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.23880731947850078,
+        "lambda_distortional": 0.37158310031420266,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 60052780.9021001,
+        "Ba_Nmm2": 54047502.811890095,
+        "omega_max_mm2": 2155.2827149579184,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.05466252922126311
+      ],
+      "application_xy_mm": [
+        16.062084276097462,
+        48.325
+      ],
+      "CG_minus_SC_mm": [
+        40.067753814617944,
+        -1.0658141036401503e-13
+      ],
+      "load_factor": 1.0,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 245981.381495684,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -1078094.2853628919,
+        "phi_rad": -0.04236670340598777
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.15734729848991708,
+        "My": 0.0,
+        "B": 0.01994716183493529
+      },
+      "H4_ratio_upper": 0.17729446032485235,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 3000.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t3p35_ri3p35_n12_a16_v1_90bf516ec976",
+      "thickness_mm": 3.35,
+      "length_mm": 6000.0,
+      "material": {
+        "E_MPa": 203000.0,
+        "G_MPa": 78000.0,
+        "nu": 0.3,
+        "Fy_MPa": 250.0
+      },
+      "dimensional_gate": {
+        "standard": "AISI2024 B4.1 TableB4.1-1 DSM column",
+        "h_t": 25.850746268656714,
+        "b_t": 10.925373134328359,
+        "d_t": 3.074626865671642,
+        "R_t": 1.0,
+        "do_bo": 0.34,
+        "Fy_MPa": 250.0,
+        "checks": {
+          "web_bending_h_t": true,
+          "edge_stiffened_b_t": true,
+          "unstiffened_d_t": true,
+          "R_t": true,
+          "do_bo": true,
+          "intermediate_stiffeners_absent": true,
+          "fy_max": true
+        },
+        "passed": true,
+        "scope": "Dimension/material-range gates only; not certification of actual product, A3 ductility, holes or delivered thickness"
+      },
+      "flexure": {
+        "My_Nmm": 5419232.4338049,
+        "Mcre_Nmm": 1754642.9077110784,
+        "Mcrl_Nmm": 95026013.6247503,
+        "Mcrd_Nmm": 39248753.68693738,
+        "Mne_floor_Nmm": 1754642.9077110784,
+        "Mnl_floor_Nmm": 1737002.4698824405,
+        "Mnd_floor_Nmm": 5004627.102921099,
+        "Mn_floor_Nmm": 1737002.4698824405,
+        "Ma_floor_Nmm": 1563302.2228941964,
+        "phi_b": 0.9,
+        "beta": 1.0,
+        "lambda_local_real_sufficient_upper": 0.23880731947850078,
+        "lambda_distortional": 0.37158310031420266,
+        "governing_floor": [
+          "F3"
+        ],
+        "floor_scope": "Algebraic lower bound of AISI2024 F2.2/F3.2/F4 at fixed eligible elastic inputs, Mp>=My and alpha_s>=0. Not the literal exact AISI strength or universal physical lower bound."
+      },
+      "bimoment": {
+        "By_Nmm2": 60052780.9021001,
+        "Ba_Nmm2": 54047502.811890095,
+        "omega_max_mm2": 2155.2827149579184,
+        "option": "AISI2024 G8.1-1/2, no inelastic Bp option"
+      },
+      "declared_uniform_force_N_mm": [
+        0.0,
+        -0.0005466252922126312
+      ],
+      "application_xy_mm": [
+        16.062084276097462,
+        48.325
+      ],
+      "CG_minus_SC_mm": [
+        40.067753814617944,
+        -1.0658141036401503e-13
+      ],
+      "load_factor": 0.01,
+      "load_case_kind": "PP isolated reference at coefficient1, or a scaled mathematical control; not an AISI design combination",
+      "required_midspan": {
+        "Mx_magnitude_Nmm": 2459.8138149568404,
+        "My_Nmm": 0.0,
+        "B_Nmm2": -10780.94285362892,
+        "phi_rad": -0.00042366703405987777
+      },
+      "H4_terms_using_flexural_floor": {
+        "Mx": 0.001573472984899171,
+        "My": 0.0,
+        "B": 0.00019947161834935292
+      },
+      "H4_ratio_upper": 0.0017729446032485239,
+      "H4_threshold": 1.0,
+      "H4_algebraic_sufficient_condition": true,
+      "H4_sufficiency_is_conditional_on_remaining_applicability": true,
+      "critical_location_mm": 3000.0,
+      "Cb": 1.0,
+      "support": "Ideal forks, warping free, flexure simply supported, no sheeting or intermediate brace",
+      "load_height_term_zero_in_initial_configuration": true,
+      "analysis_scope": "Linear Vlasov; no physical threshold for small rotation is assigned. G8.2 shear, C1 applicability, serviceability and load introduction remain open.",
+      "pending": [
+        "AISI C1 applicability of demands for intended actual loads",
+        "Representativeness/qualification of elastic critical inputs for intended member",
+        "Torsion shear and relevant interactions, G8.2 reserved",
+        "Actual material/product requirements A3 and B7",
+        "Serviceability and local introduction of loads"
+      ],
+      "NBR_design_check": false,
+      "whole_member_approved": false,
+      "physical_design_approved": false
+    }
+  ],
+  "whole_member_approved": false
+}

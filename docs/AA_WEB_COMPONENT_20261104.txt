@@ -1,0 +1,145 @@
+TETO DA COMPONENTE FLEXIONAL BIAXIAL: ALMA AA REDUZÍVEL, NÃO-ALMA INTEGRAL
+Integração em cópia sobre a candidata R4 de 04/11/2026. Não publicada.
+
+ESCOLHA E COMPATIBILIDADE
+A rota é explícita, sem ativação por horário, perfil, carregamento, ID ou
+abertura de histórico. Três escolhas independentes preservam os métodos da API:
+- aa_web_family_bound_component_v1: família AA, domínio único;
+- aa_web_local_partition_bound_component_v1: família + partição local,
+  orçamento fixo de 64 avaliações locais;
+- aa_web_positive_ratio_bound_component_v1: aperto por razão positiva.
+Não há seletor automático, fusão entre razão positiva e partição, nem troca
+silenciosa da escolha. A partição é o método existente que preserva literalmente
+sua base quando suficiente/recusada e refina somente inconclusão do domínio.
+Orçamento é recurso computacional, não uma restrição física/normativa.
+Omissão do token, escolha uniaxial e crivo integral anterior continuam separados.
+
+CONCLUSÃO SOBRE O LIMITE ELS
+Se |d_normal(x)| <= U para todo x do vão e U <= limite declarado positivo,
+então esta componente atende suficientemente ao critério no modelo declarado.
+É a transitividade de uma desigualdade, não uma nova expressão da NBR. Não é
+necessário conhecer a flecha exata para essa conclusão condicional suficiente.
+Ela depende de todas as guardas, fontes, ações e condições do certificado.
+Se U > limite, nada nessa desigualdade prova que a flecha excedeu o limite.
+O resultado fica INCONCLUSIVO, nunca falha física ou reprovação por teto.
+Sem certificado de domínio, não há U utilizável nem reaproveitamento escalar.
+
+UI/JSON/Word chamam o valor de TETO do máximo absoluto, não flecha calculada.
+Não se preenche deflection_mm nem x_mm; não se inventa a posição do extremo.
+O índice só existe quando U <= limite, explicitamente classificado como razão
+conservadora teto/limite. Acima do limite permanece apenas a razão diagnóstica,
+sem índice ativo e sem criterion_status='fails'. O texto distingue essa razão
+numérica de utilização por flecha exata. Valores visuais são arredondados;
+a comparação usa os binary64 originais como racionais exatos, sem tolerância.
+O teto binary64 retornado pela API é arredondado para cima do teto racional.
+A razão teto/limite também é convertida para cima; overflow diagnóstico vira
+nulo, nunca valor finito inventado.
+
+DOMÍNIO
+Sete fontes próprias Ue100x50x17, ri=t, t=1,20/1,50/2,00/2,25/2,65/3,00/3,35,
+sem interpolação, vãos de 3 a 6 m, E=200000 MPa, nu=0,3 e fy=250 MPa. A
+aplicação preserva seus contratos próprios de terça ou travessa isolada.
+Não se ativa por rótulo trocado, seção comercial não demonstrada ou JSON
+protegido incompatível. Tirantes, molas e conjunto 3D não viram viga isolada.
+A alma usa a lei AA; mesas/lábios reduzidos continuam fora desta rota.
+As guardas de não-alma integral e material elástico são obrigatórias.
+Um passe não afirma que a alma efetivamente se reduziu: pode ser ramo integral.
+
+AÇÕES, EIXOS, P E CRITÉRIO
+Vetores originais simultâneos locais [normal, paralelo] são encaminhados a
+[Mx, My] na convenção b=[1,y-yc,-x], R=[0,Mx,My], -d''=[kappa_x,kappa_y].
+É a mesma convenção de seção/ações do contrato R4, não uma segunda rotação.
+Não se apaga ação, não se soma máximo separado e não se duplica PP.
+As sete identidades de contorno são verificadas contra a fonte própria ativa.
+Centro usa a=L/2; posição finita permanece literal. P não nulo exige 0<a<L.
+P no limite a→0+ permanece fora da API e sem teto nessa rota. Não é transformado
+em P=0 ou em ponto no apoio. A ação/reação/camada original permanece no resultado.
+
+Na terça usa o critério normal preservado da referência. Na travessa isolada,
+a componente normal é horizontal e usa wall_els.normal_reference_mm dividido
+por normal_denominator, com sua origem. Lref não modifica L ou comprimentos FLT.
+Nunca se aplica o limite normal à resultante ou ao segundo componente.
+Ambos tetos são preservados no registro, sem nova linha paralela/vertical.
+A partição usa um Green global do vão original e não cria apoios locais.
+
+FONTE NORMATIVA REALMENTE INSPECIONADA
+NBR 14762:2010 fornecida pelo usuário, SHA-256
+c2a01615a3ce9e2b93aeb7fee757f7bf9dd932adaefbc242e848ce813dc82407.
+Imagens inspecionadas: páginas impressas 26, 27 e 51 (PDF 32, 33 e 57).
+§9.8.5(a) remete ao MLE, §§9.2.2/9.2.3, sob combinações de serviço.
+§9.2.2.2 liga larguras efetivas à tensão da seção efetiva e a aproximações
+sucessivas. A alma usa a lei/distribuição AA da Tabela 5. As outras paredes
+só permanecem integrais quando seus comparadores suficientes demonstram isso.
+Não se inventou lei para mesa/lábio sob gradiente reduzido; EN/EC3 não é
+substituto da NBR e não foi incluído no bundle ou runtime.
+
+Equilíbrio com matriz seccional 3x3, centroide móvel/Ixy, ordenação PSD,
+certificado de existência e Green são a implementação/derivação mecânica
+explícita. A NBR não fornece textualmente este algoritmo tensorial biaxial ou
+este certificado. O método foi transportado byte a byte, não reinterpretado.
+Não se afirma atualização de edição normativa ou exigência física universal.
+
+LIMITES MATEMÁTICOS/FÍSICOS
+Contorno faceteado R01 e dA=t ds; dobras retidas uma vez. Faces exteriores
+entram na guarda material. Suportes seccionais em 70 dígitos com padding não
+são aritmética intervalar formal. As operações racionais/Green são conservadoras
+condicionadas a esses suportes. Há existência no modelo delimitado, não prova
+de unicidade, escolha contínua/estável ou estabilidade física.
+N=B=0 define apenas o campo flexional, não mede as ações físicas da estrutura.
+Torção, empenamento, distorção, instabilidade, cisalhamento, ligações e introdução
+local permanecem fora da conclusão. ELS físico completo e aprovação global
+permanecem false e a agregação mantém sua pendência mesmo quando U<=limite.
+
+INTEGRIDADE E HISTÓRICO
+Bundle portátil de 58 arquivos, originais/evidências preservados byte a byte.
+Loader SHA-256:
+5724db13d47d130e95d508cff7f39f01ce244e5ee71f4f84c5e8f8082af1327c.
+Manifesto externo SHA-256:
+efa22491705213d7e5d1b51f75e945f8677b8a99a1ffca494d3914167ed8a812.
+O loader é verificado antes da execução. Bundle e fontes são verificados antes
+e depois da emissão. Integridade é de distribuição, não sandbox contra troca
+concorrente hostil. Exige mpmath 1.3.0 instalado, sem biblioteca vendorizada.
+
+Cada snapshot novo vincula fonte/contrato da aplicação, entradas, ações,
+posição, critério, método, request, resposta integral, tetos e contagens.
+A leitura verifica hashes e identidades algébricas salvas: pedidos, reações,
+controles de momentos, cobertura do vão/partição e teto racional/arredondamento.
+Ela não consulta fontes vivas nem executa crivo/solver. Hash não é assinatura.
+Registro inválido perde o índice na apresentação e exige recálculo explícito,
+sem reparar histórico, mudar a escolha ou promover resultado escalar antigo.
+A atualização de cache ativo não altera JSONs/históricos armazenados.
+
+QUALIFICAÇÃO
+Testes focais, regressão, portabilidade e revisão do delta possuem recibos
+separados. Esses recibos qualificam o transporte/ciclo de dados no escopo
+registrado, não a estrutura real ou uma lei geral de seção biaxial reduzida.
+A preparação em cópia não implica merge, publicação ou runtime online.
+
+REVISÃO R2: CONSISTÊNCIA DO CERTIFICADO SALVO
+A R1 permaneceu intacta como registro de qualificação. A R2 liga também a
+fonte salva inteira e as flags externas de ELS/global. Falha de integridade ou
+runtime aborta a emissão inteira com erro legível; a UI retira o resultado
+ativo antes de tentar calcular e não conserva emissão parcial.
+
+O leitor agora confere a estrutura dos certificados Green; os coeficientes
+satisfazem -d''=curvatura, os apoios e C1 em todas as interfaces. Confere por
+aritmética racional os enclosures Horner salvos e a completude dos intervalos
+de raízes já salvos, via contagens de Sturm, sem buscar ou isolar raízes novas.
+O teto racional deve ser exatamente o extremo indicado por esses certificados.
+Intervalos não podem contar novamente uma raiz em fronteira compartilhada.
+
+As curvaturas são ligadas aos suportes do mesmo controle/hull. Na partição,
+os controles de cada folha devem ser a restrição Bernstein exata do campo
+original; interfaces e cobertura completa são conferidas. No ramo bruto,
+os suportes devem conter o tensor Cg salvo com o enclosure do arredondamento
+de sua impressão decimal de 60 dígitos. Guardas de cada parede, material,
+existência e Is>=Ia quando aplicável não podem contradizer seus agregados.
+Os registros do hull portátil não fornecem Is/Ia separados: não são inventados
+campos ou nova lei para esse caso, e as guardas realmente retornadas são mantidas.
+
+Essa validação é de identidades/consistência do certificado já emitido, não
+novo cálculo de seção, raiz, viga ou fonte viva, nem requalificação física.
+Não transforma hashes em assinatura. Continua possível fabricar um registro
+inteiramente coerente e recalcular todos os hashes; autenticidade criptográfica
+não é prometida por este formato. Históricos incompatíveis exigem novo cálculo
+explícito e não são reparados silenciosamente.

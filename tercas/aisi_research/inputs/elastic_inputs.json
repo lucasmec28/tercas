@@ -1,0 +1,654 @@
+{
+  "profiles": [
+    {
+      "profile_id": "OWN_Ue100x50x17_t1p50_ri1p50_n12_a16_v1_cd50bf66f299",
+      "thickness_mm": 1.5,
+      "dimensions_external_mm": {
+        "h": 100.0,
+        "b": 50.0,
+        "lip": 17.0,
+        "t": 1.5,
+        "ri": 1.5
+      },
+      "nodes_sha256": "cd50bf66f299d1c072b5a45016cf2ffca777b390332d3386175c34d53c234931",
+      "material": {
+        "E_MPa": 200000.0,
+        "nu": 0.3,
+        "G_MPa": 76923.07692307692
+      },
+      "properties": {
+        "A_mm2": 336.1972353094446,
+        "centerline_length_mm": 224.13149020629638,
+        "centroid_xy_mm": [
+          17.109102491457765,
+          49.25
+        ],
+        "Ix_strong_mm4": 541613.3229048009,
+        "Iy_weak_mm4": 123415.84920326462,
+        "Ixy_mm4": 3.723243935382925e-12,
+        "J_mm4": 252.14792648208342,
+        "Cw_mm6": 290718629.073364,
+        "shear_center_xy_mm": [
+          -25.33166429056801,
+          49.25000000000007
+        ],
+        "x0_mm": 42.440766782025776,
+        "j_mm": 60.066792107238506,
+        "beta_mm5": 4350661.767178755,
+        "r0_mm": 61.4761011595799,
+        "sectorial_orthogonality_raw": [
+          -6.690825671284983e-11,
+          7.293579074030276e-10,
+          7.476685937035654e-10
+        ],
+        "sectorial_orthogonality_dimensionless": [
+          2.1401598616287431e-16,
+          1.2176396927415417e-16,
+          5.958377813064211e-17
+        ]
+      },
+      "exterior_moduli": {
+        "extents_mm": {
+          "x": [
+            -0.75,
+            49.25
+          ],
+          "y": [
+            -0.75,
+            99.25
+          ]
+        },
+        "extreme_distance_from_CG_mm": {
+          "strong_top": 50.0,
+          "strong_bottom": 50.0,
+          "weak_web": 17.859102491457765,
+          "weak_lips": 32.14089750854224
+        },
+        "Wx_top_mm3": 10832.266458096017,
+        "Wx_bottom_mm3": 10832.266458096017,
+        "Wx_first_yield_mm3": 10832.266458096017,
+        "Wy_web_mm3": 6910.529197214472,
+        "Wy_lips_mm3": 3839.8382985560315,
+        "Wy_first_yield_mm3": 3839.8382985560315,
+        "weak_web_compressed": {
+          "W_mm3": 3839.8382985560315,
+          "Wc_mm3": 6910.529197214472,
+          "Cs": 1
+        },
+        "weak_lips_compressed": {
+          "W_mm3": 3839.8382985560315,
+          "Wc_mm3": 3839.8382985560315,
+          "Cs": -1
+        }
+      },
+      "modal_criticals": {
+        "strong_local": {
+          "value_Nmm": 8834218.497813245,
+          "half_wave_mm": 50.94535098295141,
+          "kind": "local_conventional_predominant",
+          "source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t1.50/strong/valley_0.npz",
+            "sha256": "97ba8af0f19a8e2f09fdeefe3da169b9a84b32f7dba00d8d72e0f1efa695f3c4"
+          },
+          "not_pure_constrained_D": true,
+          "finite_member_exact_eigenvalue": false,
+          "interpretation": "Own continuous-half-wave signature valley, conventional mode of the frozen section and declared pure bending state. Not an exact eigenvalue for every finite span."
+        },
+        "strong_distortional": {
+          "value_Nmm": 7149406.411254271,
+          "half_wave_mm": 444.989061825825,
+          "kind": "distortional_conventional_predominant",
+          "source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t1.50/strong/valley_1.npz",
+            "sha256": "7a6671de294a657100d1d873210192ebc3d9d5f73d699d8c70487a63c1e94525"
+          },
+          "not_pure_constrained_D": true,
+          "finite_member_exact_eigenvalue": false,
+          "interpretation": "Own continuous-half-wave signature valley, conventional mode of the frozen section and declared pure bending state. Not an exact eigenvalue for every finite span."
+        }
+      }
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce",
+      "thickness_mm": 2.0,
+      "dimensions_external_mm": {
+        "h": 100.0,
+        "b": 50.0,
+        "lip": 17.0,
+        "t": 2.0,
+        "ri": 2.0
+      },
+      "nodes_sha256": "13c8bf700cce34d8fb2bc607e9ae06c305cc59cd7e0e67234a38fb0218704638",
+      "material": {
+        "E_MPa": 200000.0,
+        "nu": 0.3,
+        "G_MPa": 76923.07692307692
+      },
+      "properties": {
+        "A_mm2": 441.68397388345704,
+        "centerline_length_mm": 220.84198694172852,
+        "centroid_xy_mm": [
+          16.82745087591539,
+          49.00000000000001
+        ],
+        "Ix_strong_mm4": 701539.2822004888,
+        "Iy_weak_mm4": 157717.66001159302,
+        "Ixy_mm4": -1.993072373807081e-12,
+        "J_mm4": 588.9119651779428,
+        "Cw_mm6": 365444260.9319717,
+        "shear_center_xy_mm": [
+          -24.985063393599717,
+          49.000000000000014
+        ],
+        "x0_mm": 41.812514269515106,
+        "j_mm": 59.609396294018914,
+        "beta_mm5": 5613765.176814246,
+        "r0_mm": 60.77579726084086,
+        "sectorial_orthogonality_raw": [
+          -2.516387098694395e-10,
+          -7.285336778295459e-10,
+          -4.469320913358388e-09
+        ],
+        "sectorial_orthogonality_dimensionless": [
+          6.263413098159413e-16,
+          9.596191302661616e-17,
+          2.791290064210864e-16
+        ]
+      },
+      "exterior_moduli": {
+        "extents_mm": {
+          "x": [
+            -1.0,
+            49.0
+          ],
+          "y": [
+            -1.0,
+            99.0
+          ]
+        },
+        "extreme_distance_from_CG_mm": {
+          "strong_top": 49.99999999999999,
+          "strong_bottom": 50.00000000000001,
+          "weak_web": 17.82745087591539,
+          "weak_lips": 32.17254912408461
+        },
+        "Wx_top_mm3": 14030.785644009778,
+        "Wx_bottom_mm3": 14030.785644009775,
+        "Wx_first_yield_mm3": 14030.785644009775,
+        "Wy_web_mm3": 8846.89915060527,
+        "Wy_lips_mm3": 4902.243195069812,
+        "Wy_first_yield_mm3": 4902.243195069812,
+        "weak_web_compressed": {
+          "W_mm3": 4902.243195069812,
+          "Wc_mm3": 8846.89915060527,
+          "Cs": 1
+        },
+        "weak_lips_compressed": {
+          "W_mm3": 4902.243195069812,
+          "Wc_mm3": 4902.243195069812,
+          "Cs": -1
+        }
+      },
+      "modal_criticals": {
+        "strong_local": {
+          "value_Nmm": 20764649.90635001,
+          "half_wave_mm": 51.31313650921165,
+          "kind": "local_conventional_predominant",
+          "source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t2.00/strong/valley_0.npz",
+            "sha256": "f869b3e21d912e52170b95b8dd5c3b689cf6120c159c73c3a5373b9455f4c8fd"
+          },
+          "not_pure_constrained_D": true,
+          "finite_member_exact_eigenvalue": false,
+          "interpretation": "Own continuous-half-wave signature valley, conventional mode of the frozen section and declared pure bending state. Not an exact eigenvalue for every finite span."
+        },
+        "strong_distortional": {
+          "value_Nmm": 12998041.888658233,
+          "half_wave_mm": 375.2841169144437,
+          "kind": "distortional_conventional_predominant",
+          "source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t2.00/strong/valley_1.npz",
+            "sha256": "a9a1d406f979372e17b3692abfb168868a0f8ebef9752278d0c5bce07aa0b39c"
+          },
+          "not_pure_constrained_D": true,
+          "finite_member_exact_eigenvalue": false,
+          "interpretation": "Own continuous-half-wave signature valley, conventional mode of the frozen section and declared pure bending state. Not an exact eigenvalue for every finite span."
+        }
+      }
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p25_ri2p25_n12_a16_v1_e30a0bd327de",
+      "thickness_mm": 2.25,
+      "dimensions_external_mm": {
+        "h": 100.0,
+        "b": 50.0,
+        "lip": 17.0,
+        "t": 2.25,
+        "ri": 2.25
+      },
+      "nodes_sha256": "e30a0bd327deb1523b527a5737a9f14ac8f8fd189c884588c0339ef7c0b80e47",
+      "material": {
+        "E_MPa": 200000.0,
+        "nu": 0.3,
+        "G_MPa": 76923.07692307692
+      },
+      "properties": {
+        "A_mm2": 493.1937794462503,
+        "centerline_length_mm": 219.19723530944458,
+        "centroid_xy_mm": [
+          16.686268820177016,
+          48.875
+        ],
+        "Ix_strong_mm4": 777737.809476927,
+        "Iy_weak_mm4": 173644.83957874868,
+        "Ixy_mm4": 4.369837824924616e-12,
+        "J_mm4": 832.2645028155474,
+        "Cw_mm6": 398947170.62785316,
+        "shear_center_xy_mm": [
+          -24.80851687520163,
+          48.87500000000005
+        ],
+        "x0_mm": 41.494785695378646,
+        "j_mm": 59.37921663154163,
+        "beta_mm5": 6211078.281734463,
+        "r0_mm": 60.42219181673948,
+        "sectorial_orthogonality_raw": [
+          -5.2729376420757035e-11,
+          -2.4869564185792115e-09,
+          3.1915163845042116e-09
+        ],
+        "sectorial_orthogonality_dimensionless": [
+          1.188737999119511e-16,
+          2.987992750105725e-16,
+          1.811852240569623e-16
+        ]
+      },
+      "exterior_moduli": {
+        "extents_mm": {
+          "x": [
+            -1.125,
+            48.875
+          ],
+          "y": [
+            -1.125,
+            98.875
+          ]
+        },
+        "extreme_distance_from_CG_mm": {
+          "strong_top": 50.0,
+          "strong_bottom": 50.0,
+          "weak_web": 17.811268820177016,
+          "weak_lips": 32.18873117982298
+        },
+        "Wx_top_mm3": 15554.75618953854,
+        "Wx_bottom_mm3": 15554.75618953854,
+        "Wx_first_yield_mm3": 15554.75618953854,
+        "Wy_web_mm3": 9749.15607258927,
+        "Wy_lips_mm3": 5394.584788343423,
+        "Wy_first_yield_mm3": 5394.584788343423,
+        "weak_web_compressed": {
+          "W_mm3": 5394.584788343423,
+          "Wc_mm3": 9749.15607258927,
+          "Cs": 1
+        },
+        "weak_lips_compressed": {
+          "W_mm3": 5394.584788343423,
+          "Wc_mm3": 5394.584788343423,
+          "Cs": -1
+        }
+      },
+      "modal_criticals": {
+        "strong_local": {
+          "value_Nmm": 29419655.792440634,
+          "half_wave_mm": 51.63567884795748,
+          "kind": "local_conventional_predominant",
+          "source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t2.25/strong/valley_0.npz",
+            "sha256": "46ebe1ba1e59e3296ad604112eaff0df0bfef413140e1068df27af77a7bf852c"
+          },
+          "not_pure_constrained_D": true,
+          "finite_member_exact_eigenvalue": false,
+          "interpretation": "Own continuous-half-wave signature valley, conventional mode of the frozen section and declared pure bending state. Not an exact eigenvalue for every finite span."
+        },
+        "strong_distortional": {
+          "value_Nmm": 16632889.433413858,
+          "half_wave_mm": 349.06091820549034,
+          "kind": "distortional_conventional_predominant",
+          "source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t2.25/strong/valley_1.npz",
+            "sha256": "f2c0a1158996504ef17ccef7d405c059f527be92b0ffaca3d783dc33bf3ebb74"
+          },
+          "not_pure_constrained_D": true,
+          "finite_member_exact_eigenvalue": false,
+          "interpretation": "Own continuous-half-wave signature valley, conventional mode of the frozen section and declared pure bending state. Not an exact eigenvalue for every finite span."
+        }
+      }
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t2p65_ri2p65_n12_a16_v1_243974742f83",
+      "thickness_mm": 2.65,
+      "dimensions_external_mm": {
+        "h": 100.0,
+        "b": 50.0,
+        "lip": 17.0,
+        "t": 2.65,
+        "ri": 2.65
+      },
+      "nodes_sha256": "243974742f83ef47937ec56c938718a37b3e037248c4016eddae0d42af062746",
+      "material": {
+        "E_MPa": 200000.0,
+        "nu": 0.3,
+        "G_MPa": 76923.07692307692
+      },
+      "properties": {
+        "A_mm2": 573.8989266491442,
+        "centerline_length_mm": 216.56563269779028,
+        "centroid_xy_mm": [
+          16.45986627571013,
+          48.675000000000004
+        ],
+        "Ix_strong_mm4": 894506.1894874149,
+        "Iy_weak_mm4": 197472.35297784623,
+        "Ixy_mm4": -2.6716406864579767e-12,
+        "J_mm4": 1343.4017374645384,
+        "Cw_mm6": 447410171.6382088,
+        "shear_center_xy_mm": [
+          -24.521504760050956,
+          48.674999999999976
+        ],
+        "x0_mm": 40.981371035761086,
+        "j_mm": 59.00895140100466,
+        "beta_mm5": 7119897.426443738,
+        "r0_mm": 59.85156187723915,
+        "sectorial_orthogonality_raw": [
+          1.638937874304247e-10,
+          -2.5327437924715923e-09,
+          -8.184414923562144e-09
+        ],
+        "sectorial_orthogonality_dimensionless": [
+          3.2343860750645484e-16,
+          2.6945433964302755e-16,
+          4.0911277113730555e-16
+        ]
+      },
+      "exterior_moduli": {
+        "extents_mm": {
+          "x": [
+            -1.325,
+            48.675
+          ],
+          "y": [
+            -1.325,
+            98.675
+          ]
+        },
+        "extreme_distance_from_CG_mm": {
+          "strong_top": 49.99999999999999,
+          "strong_bottom": 50.00000000000001,
+          "weak_web": 17.78486627571013,
+          "weak_lips": 32.21513372428987
+        },
+        "Wx_top_mm3": 17890.1237897483,
+        "Wx_bottom_mm3": 17890.123789748297,
+        "Wx_first_yield_mm3": 17890.123789748297,
+        "Wy_web_mm3": 11103.392621374172,
+        "Wy_lips_mm3": 6129.8008156009655,
+        "Wy_first_yield_mm3": 6129.8008156009655,
+        "weak_web_compressed": {
+          "W_mm3": 6129.8008156009655,
+          "Wc_mm3": 11103.392621374172,
+          "Cs": 1
+        },
+        "weak_lips_compressed": {
+          "W_mm3": 6129.8008156009655,
+          "Wc_mm3": 6129.8008156009655,
+          "Cs": -1
+        }
+      },
+      "modal_criticals": {
+        "strong_local": {
+          "value_Nmm": 47609516.28417909,
+          "half_wave_mm": 52.48089678224584,
+          "kind": "local_conventional_predominant",
+          "source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t2.65/strong/valley_0.npz",
+            "sha256": "9e23bfda5402e338c4becb3e1d61ec9689ea16424e64bee38bbe47cd0b96a7d6"
+          },
+          "not_pure_constrained_D": true,
+          "finite_member_exact_eigenvalue": false,
+          "interpretation": "Own continuous-half-wave signature valley, conventional mode of the frozen section and declared pure bending state. Not an exact eigenvalue for every finite span."
+        },
+        "strong_distortional": {
+          "value_Nmm": 23478208.621241674,
+          "half_wave_mm": 314.6400902485021,
+          "kind": "distortional_conventional_predominant",
+          "source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t2.65/strong/valley_1.npz",
+            "sha256": "b963f08a4da47149a499b70680d34961a57797dbd06ac70425b301a98de52360"
+          },
+          "not_pure_constrained_D": true,
+          "finite_member_exact_eigenvalue": false,
+          "interpretation": "Own continuous-half-wave signature valley, conventional mode of the frozen section and declared pure bending state. Not an exact eigenvalue for every finite span."
+        }
+      }
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t3p00_ri3p00_n12_a16_v1_c3d1e69d48f6",
+      "thickness_mm": 3.0,
+      "dimensions_external_mm": {
+        "h": 100.0,
+        "b": 50.0,
+        "lip": 17.0,
+        "t": 3.0,
+        "ri": 3.0
+      },
+      "nodes_sha256": "c3d1e69d48f6ad2980e6779eb2509e42e07a2b957ce71c158095fda6b71a4e00",
+      "material": {
+        "E_MPa": 200000.0,
+        "nu": 0.3,
+        "G_MPa": 76923.07692307692
+      },
+      "properties": {
+        "A_mm2": 642.7889412377783,
+        "centerline_length_mm": 214.26298041259278,
+        "centroid_xy_mm": [
+          16.261232028914485,
+          48.5
+        ],
+        "Ix_strong_mm4": 991541.7423503583,
+        "Iy_weak_mm4": 216685.3077385037,
+        "Ixy_mm4": -2.7782220968219917e-12,
+        "J_mm4": 1928.3668237133352,
+        "Cw_mm6": 484808615.2415438,
+        "shear_center_xy_mm": [
+          -24.26575607573298,
+          48.500000000000036
+        ],
+        "x0_mm": 40.526988104647465,
+        "j_mm": 58.683047060372814,
+        "beta_mm5": 7868302.444279527,
+        "r0_mm": 59.34728705798193,
+        "sectorial_orthogonality_raw": [
+          -9.93054527498316e-11,
+          -4.309896439735894e-09,
+          2.3791315584276163e-09
+        ],
+        "sectorial_orthogonality_dimensionless": [
+          1.7789090033584395e-16,
+          4.20500907948893e-16,
+          1.0851200606739117e-16
+        ]
+      },
+      "exterior_moduli": {
+        "extents_mm": {
+          "x": [
+            -1.5,
+            48.5
+          ],
+          "y": [
+            -1.5,
+            98.5
+          ]
+        },
+        "extreme_distance_from_CG_mm": {
+          "strong_top": 50.0,
+          "strong_bottom": 50.0,
+          "weak_web": 17.761232028914485,
+          "weak_lips": 32.238767971085515
+        },
+        "Wx_top_mm3": 19830.834847007165,
+        "Wx_bottom_mm3": 19830.834847007165,
+        "Wx_first_yield_mm3": 19830.834847007165,
+        "Wy_web_mm3": 12199.902990161369,
+        "Wy_lips_mm3": 6721.2651529625955,
+        "Wy_first_yield_mm3": 6721.2651529625955,
+        "weak_web_compressed": {
+          "W_mm3": 6721.2651529625955,
+          "Wc_mm3": 12199.902990161369,
+          "Cs": 1
+        },
+        "weak_lips_compressed": {
+          "W_mm3": 6721.2651529625955,
+          "Wc_mm3": 6721.2651529625955,
+          "Cs": -1
+        }
+      },
+      "modal_criticals": {
+        "strong_local": {
+          "value_Nmm": 68320130.99316142,
+          "half_wave_mm": 53.87437733704376,
+          "kind": "local_conventional_predominant",
+          "source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t3.00/strong/valley_0.npz",
+            "sha256": "d1ec889039818d7cc5bce52003c125d99345fa5c0d39ec061f6f2c4d5ec87ff6"
+          },
+          "not_pure_constrained_D": true,
+          "finite_member_exact_eigenvalue": false,
+          "interpretation": "Own continuous-half-wave signature valley, conventional mode of the frozen section and declared pure bending state. Not an exact eigenvalue for every finite span."
+        },
+        "strong_distortional": {
+          "value_Nmm": 30547737.48598727,
+          "half_wave_mm": 289.9893962462265,
+          "kind": "distortional_conventional_predominant",
+          "source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t3.00/strong/valley_1.npz",
+            "sha256": "f00d8aa1ed6d33fab603e4dba6983e2b0d92f6437f7d86ea4d2b68dceb389127"
+          },
+          "not_pure_constrained_D": true,
+          "finite_member_exact_eigenvalue": false,
+          "interpretation": "Own continuous-half-wave signature valley, conventional mode of the frozen section and declared pure bending state. Not an exact eigenvalue for every finite span."
+        }
+      }
+    },
+    {
+      "profile_id": "OWN_Ue100x50x17_t3p35_ri3p35_n12_a16_v1_90bf516ec976",
+      "thickness_mm": 3.35,
+      "dimensions_external_mm": {
+        "h": 100.0,
+        "b": 50.0,
+        "lip": 17.0,
+        "t": 3.35,
+        "ri": 3.35
+      },
+      "nodes_sha256": "90bf516ec9761304d22aba266bdf9c2f06bf6f73bc6989b46194bbd5d218eab3",
+      "material": {
+        "E_MPa": 200000.0,
+        "nu": 0.3,
+        "G_MPa": 76923.07692307692
+      },
+      "properties": {
+        "A_mm2": 710.0670992267742,
+        "centerline_length_mm": 211.96032812739526,
+        "centroid_xy_mm": [
+          16.062084276097462,
+          48.325
+        ],
+        "Ix_strong_mm4": 1083846.48676098,
+        "Iy_weak_mm4": 234407.8072992408,
+        "Ixy_mm4": -1.2363443602225743e-11,
+        "J_mm4": 2656.242673690824,
+        "Cw_mm6": 517722882.6538054,
+        "shear_center_xy_mm": [
+          -24.005669538520483,
+          48.32500000000011
+        ],
+        "x0_mm": 40.067753814617944,
+        "j_mm": 58.355432224778596,
+        "beta_mm5": 8573549.19343885,
+        "r0_mm": 58.83830072583838,
+        "sectorial_orthogonality_raw": [
+          -2.0945378764736233e-10,
+          4.265331199349021e-09,
+          -5.0052975097969465e-09
+        ],
+        "sectorial_orthogonality_dimensionless": [
+          3.4545369547977085e-16,
+          3.871845711784204e-16,
+          2.1129894525729985e-16
+        ]
+      },
+      "exterior_moduli": {
+        "extents_mm": {
+          "x": [
+            -1.675,
+            48.325
+          ],
+          "y": [
+            -1.675,
+            98.325
+          ]
+        },
+        "extreme_distance_from_CG_mm": {
+          "strong_top": 50.0,
+          "strong_bottom": 50.0,
+          "weak_web": 17.737084276097463,
+          "weak_lips": 32.26291572390254
+        },
+        "Wx_top_mm3": 21676.9297352196,
+        "Wx_bottom_mm3": 21676.9297352196,
+        "Wx_first_yield_mm3": 21676.9297352196,
+        "Wy_web_mm3": 13215.690000138824,
+        "Wy_lips_mm3": 7265.549378898068,
+        "Wy_first_yield_mm3": 7265.549378898068,
+        "weak_web_compressed": {
+          "W_mm3": 7265.549378898068,
+          "Wc_mm3": 13215.690000138824,
+          "Cs": 1
+        },
+        "weak_lips_compressed": {
+          "W_mm3": 7265.549378898068,
+          "Wc_mm3": 7265.549378898068,
+          "Cs": -1
+        }
+      },
+      "modal_criticals": {
+        "strong_local": {
+          "value_Nmm": 93621688.30024661,
+          "half_wave_mm": 57.284178302567376,
+          "kind": "local_conventional_predominant",
+          "source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t3.35/strong/valley_0.npz",
+            "sha256": "f7fdb30d3f878b2fd3bab9f1ea417c1c2713a727f5a3ca34b7b548df9a35c47d"
+          },
+          "not_pure_constrained_D": true,
+          "finite_member_exact_eigenvalue": false,
+          "interpretation": "Own continuous-half-wave signature valley, conventional mode of the frozen section and declared pure bending state. Not an exact eigenvalue for every finite span."
+        },
+        "strong_distortional": {
+          "value_Nmm": 38668722.844273284,
+          "half_wave_mm": 269.0595279054736,
+          "kind": "distortional_conventional_predominant",
+          "source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/producer_v2/t3.35/strong/valley_1.npz",
+            "sha256": "b9ebb6b8ed259ebf2f8319ba180e5548d4d0221b61d4881c7f35101f6ac0fb77"
+          },
+          "not_pure_constrained_D": true,
+          "finite_member_exact_eigenvalue": false,
+          "interpretation": "Own continuous-half-wave signature valley, conventional mode of the frozen section and declared pure bending state. Not an exact eigenvalue for every finite span."
+        }
+      }
+    }
+  ],
+  "source": "Own conventional pure-bending elastic FSM valleys only; not NBR strengths or NBR Table12 local formula",
+  "original_registry_sha256": "3919d41d60e8423d7ae44a2bfb32bbd7c75783c7165bd78c027a20757e61cbe3"
+}

@@ -1,0 +1,347 @@
+{
+  "status": "PASS same discrete eigenproblem only",
+  "E_original_MPa": 200000.0,
+  "E_AISI_MPa": 203000.0,
+  "nu": 0.3,
+  "ratio": 1.015,
+  "theorem": "K(E,nu)=E*K(1,nu), Kg independent of E at fixed reference moment; all eigenvalues scale with E, eigenvectors and valley stations unchanged",
+  "scope": "Same 209-node conventional FSM, stress field and fixed nu. Not a new continuum buckling proof or material test. AISI G=78000 is used separately in global/Vlasov formulas; plate FSM uses E and nu.",
+  "rows": [
+    {
+      "file": "t1.50_strong_distortional.npz",
+      "half_wave_mm": 444.989061825825,
+      "K_scaling_relative_error": 1.5473367245577913e-16,
+      "geometric_matrix_relative_error": 0.0,
+      "scaled_eigenpair_residual": 1.4081244891536163e-07,
+      "direct_eigensolve_max_relative_error": null,
+      "original_eigenvalues": [
+        7.149406411254271,
+        42.68147504212687,
+        152.01318152769826,
+        477.14774368427163,
+        1121.4118488889367,
+        2769.876379327362,
+        4087.730805335058,
+        6020.249560080997
+      ],
+      "AISI_E_eigenvalues": [
+        7.256647507423084,
+        43.32169716775877,
+        154.29337925061373,
+        484.3049598395357,
+        1138.2330266222707,
+        2811.424525017272,
+        4149.046767415083,
+        6110.553303482211
+      ]
+    },
+    {
+      "file": "t1.50_strong_local.npz",
+      "half_wave_mm": 50.94535098295141,
+      "K_scaling_relative_error": 1.5402454200264256e-16,
+      "geometric_matrix_relative_error": 0.0,
+      "scaled_eigenpair_residual": 2.623680343172906e-10,
+      "direct_eigensolve_max_relative_error": 5.839284611397488e-11,
+      "original_eigenvalues": [
+        8.834218497813245,
+        15.758011779557963,
+        27.55025028239401,
+        68.48433456836547,
+        105.83889810417539,
+        196.39269434215322,
+        309.43995737384756,
+        401.4555811910091
+      ],
+      "AISI_E_eigenvalues": [
+        8.966731775280442,
+        15.994381956251331,
+        27.963504036629917,
+        69.51159958689094,
+        107.42648157573801,
+        199.3385847572855,
+        314.08155673445526,
+        407.4774149088742
+      ]
+    },
+    {
+      "file": "t2.00_strong_distortional.npz",
+      "half_wave_mm": 375.2841169144437,
+      "K_scaling_relative_error": 1.423804571365456e-16,
+      "geometric_matrix_relative_error": 0.0,
+      "scaled_eigenpair_residual": 6.846569319958539e-08,
+      "direct_eigensolve_max_relative_error": null,
+      "original_eigenvalues": [
+        12.998041888658234,
+        73.5621379090527,
+        263.8735287797142,
+        825.2523244007979,
+        1934.6516800286963,
+        3780.3049987953677,
+        6693.298229687785,
+        8770.04690415518
+      ],
+      "AISI_E_eigenvalues": [
+        13.193012516988107,
+        74.66556997768848,
+        267.8316317114099,
+        837.6311092668097,
+        1963.6714552291267,
+        3837.009573777298,
+        6793.697703133102,
+        8901.597607717507
+      ]
+    },
+    {
+      "file": "t2.00_strong_local.npz",
+      "half_wave_mm": 51.31313650921165,
+      "K_scaling_relative_error": 1.417651768552703e-16,
+      "geometric_matrix_relative_error": 0.0,
+      "scaled_eigenpair_residual": 1.2816081719598132e-10,
+      "direct_eigensolve_max_relative_error": null,
+      "original_eigenvalues": [
+        20.76464990635001,
+        37.263294293210734,
+        66.75729925794315,
+        148.16244480607662,
+        229.66593668083198,
+        347.427166845634,
+        652.9520963688811,
+        749.495194240982
+      ],
+      "AISI_E_eigenvalues": [
+        21.076119654945256,
+        37.82224370760889,
+        67.75865874681229,
+        150.38488147816776,
+        233.11092573104443,
+        352.6385743483185,
+        662.7463778144142,
+        760.7376221545966
+      ]
+    },
+    {
+      "file": "t2.25_strong_distortional.npz",
+      "half_wave_mm": 349.06091820549034,
+      "K_scaling_relative_error": 1.3958186559284043e-16,
+      "geometric_matrix_relative_error": 0.0,
+      "scaled_eigenpair_residual": 3.485379588251679e-08,
+      "direct_eigensolve_max_relative_error": null,
+      "original_eigenvalues": [
+        16.632889433413858,
+        91.68369278185106,
+        329.9249011634806,
+        1029.9309296849785,
+        2400.025666621895,
+        4259.3676078654935,
+        8066.83250054291,
+        10097.86584958356
+      ],
+      "AISI_E_eigenvalues": [
+        16.882382774915065,
+        93.05894817357883,
+        334.8737746809328,
+        1045.379893630253,
+        2436.0260516212234,
+        4323.258121983476,
+        8187.834988051052,
+        10249.333837327313
+      ]
+    },
+    {
+      "file": "t2.25_strong_local.npz",
+      "half_wave_mm": 51.63567884795748,
+      "K_scaling_relative_error": 1.4309018774046755e-16,
+      "geometric_matrix_relative_error": 0.0,
+      "scaled_eigenpair_residual": 9.951175239559383e-11,
+      "direct_eigensolve_max_relative_error": null,
+      "original_eigenvalues": [
+        29.419655792440633,
+        53.016808925714116,
+        95.68351937017549,
+        191.20198395721232,
+        310.91708998248566,
+        464.8417725519359,
+        799.2663643085519,
+        1012.3497804275808
+      ],
+      "AISI_E_eigenvalues": [
+        29.860950629327238,
+        53.81206105959982,
+        97.11877216072811,
+        194.0700137165705,
+        315.5808463322229,
+        471.8143991402149,
+        811.2553597731801,
+        1027.5350271339944
+      ]
+    },
+    {
+      "file": "t2.65_strong_distortional.npz",
+      "half_wave_mm": 314.6400902485021,
+      "K_scaling_relative_error": 1.6657801498433492e-16,
+      "geometric_matrix_relative_error": 0.0,
+      "scaled_eigenpair_residual": 2.5544370687241653e-08,
+      "direct_eigensolve_max_relative_error": null,
+      "original_eigenvalues": [
+        23.478208621241674,
+        124.10200408002868,
+        448.73607049000947,
+        1396.4282560383865,
+        3194.8733704602773,
+        5018.952410762834,
+        10022.24677046332,
+        12572.13982672654
+      ],
+      "AISI_E_eigenvalues": [
+        23.830381750560296,
+        125.96353414122909,
+        455.4671115473596,
+        1417.374679878962,
+        3242.7964710171814,
+        5094.236696924276,
+        10172.580472020269,
+        12760.721924127436
+      ]
+    },
+    {
+      "file": "t2.65_strong_local.npz",
+      "half_wave_mm": 52.48089678224584,
+      "K_scaling_relative_error": 1.5199852627211231e-16,
+      "geometric_matrix_relative_error": 0.0,
+      "scaled_eigenpair_residual": 8.622497185368297e-11,
+      "direct_eigensolve_max_relative_error": null,
+      "original_eigenvalues": [
+        47.609516284179094,
+        86.62214350969886,
+        154.84157845666726,
+        256.04382774722694,
+        489.2565621393686,
+        718.058727181971,
+        1008.5183302808516,
+        1605.5608061923915
+      ],
+      "AISI_E_eigenvalues": [
+        48.323659028441774,
+        87.92147566234433,
+        157.16420213351725,
+        259.88448516343533,
+        496.59541057145907,
+        728.8296080897005,
+        1023.6461052350643,
+        1629.6442182852772
+      ]
+    },
+    {
+      "file": "t3.00_strong_distortional.npz",
+      "half_wave_mm": 289.9893962462265,
+      "K_scaling_relative_error": 2.2601003325491316e-16,
+      "geometric_matrix_relative_error": 0.0,
+      "scaled_eigenpair_residual": 1.524075635665023e-08,
+      "direct_eigensolve_max_relative_error": null,
+      "original_eigenvalues": [
+        30.54773748598727,
+        155.67342055152443,
+        565.182144549397,
+        1753.2596594401791,
+        3905.941591168443,
+        5693.963242234053,
+        11438.610466682105,
+        15222.587523094871
+      ],
+      "AISI_E_eigenvalues": [
+        31.005953548277077,
+        158.00852185979727,
+        573.6598767176379,
+        1779.5585543317816,
+        3964.5307150359695,
+        5779.372690867563,
+        11610.189623682336,
+        15450.926335941293
+      ]
+    },
+    {
+      "file": "t3.00_strong_local.npz",
+      "half_wave_mm": 53.87437733704376,
+      "K_scaling_relative_error": 2.1729105125084372e-16,
+      "geometric_matrix_relative_error": 0.0,
+      "scaled_eigenpair_residual": 9.517950720585205e-11,
+      "direct_eigensolve_max_relative_error": null,
+      "original_eigenvalues": [
+        68.32013099316143,
+        126.07654327267277,
+        210.20031280408037,
+        325.71808159295176,
+        710.7896859467354,
+        949.0721473008141,
+        1298.5221356210686,
+        2186.622735527431
+      ],
+      "AISI_E_eigenvalues": [
+        69.34493295805885,
+        127.96769142176285,
+        213.35331749614156,
+        330.60385281684603,
+        721.4515312359364,
+        963.3082295103262,
+        1317.9999676553846,
+        2219.4220765603422
+      ]
+    },
+    {
+      "file": "t3.35_strong_distortional.npz",
+      "half_wave_mm": 269.0595279054736,
+      "K_scaling_relative_error": 1.7213383095777271e-16,
+      "geometric_matrix_relative_error": 0.0,
+      "scaled_eigenpair_residual": 1.1334630624504077e-08,
+      "direct_eigensolve_max_relative_error": 4.922442231602986e-09,
+      "original_eigenvalues": [
+        38.66872284427328,
+        189.9597193380872,
+        692.6270479094264,
+        2140.477746908818,
+        4595.375702142838,
+        6388.437828214803,
+        12760.125830995821,
+        18206.898214972574
+      ],
+      "AISI_E_eigenvalues": [
+        39.24875368693738,
+        192.8091151281585,
+        703.0164536280678,
+        2172.58491311245,
+        4664.306337674981,
+        6484.264395638024,
+        12951.527718460757,
+        18480.00168819716
+      ]
+    },
+    {
+      "file": "t3.35_strong_local.npz",
+      "half_wave_mm": 57.284178302567376,
+      "K_scaling_relative_error": 2.0437477986377255e-16,
+      "geometric_matrix_relative_error": 0.0,
+      "scaled_eigenpair_residual": 9.203822770051919e-11,
+      "direct_eigensolve_max_relative_error": null,
+      "original_eigenvalues": [
+        93.62168830024662,
+        178.3557939552004,
+        246.97983844337196,
+        448.6605791685519,
+        987.9721019962276,
+        1183.447431145714,
+        1836.6044687472208,
+        2823.149911655114
+      ],
+      "AISI_E_eigenvalues": [
+        95.0260136247503,
+        181.0311308645284,
+        250.6845360200225,
+        455.39048785608014,
+        1002.7916835261709,
+        1201.1991426128995,
+        1864.153535778429,
+        2865.4971603299405
+      ]
+    }
+  ]
+}

@@ -107,7 +107,7 @@ def show_result(st,result):
     st.warning(SCOPE)
     if evidence.get('reason'):st.warning(evidence['reason'])
     st.caption(str(evidence.get('computed_cases',0))+' combinações calculadas; '+str(evidence.get('pending_model_cases',0))+' pendentes de dados. '+
-        'Tsv, Tw e B não alimentam as resistências de flexão pura existentes. Nenhum índice de resistência à torção é apresentado.')
+        'Tsv, Tw e B não alteram as resistências de flexão pura existentes. O complemento longitudinal AISI, quando calculado, aparece separadamente.')
     if evidence.get('pending_numerical_cases'):
         st.error(str(evidence['pending_numerical_cases'])+' combinações não passaram na qualificação numérica. Não foram omitidas nem liberadas como demanda válida.')
     records=evidence.get('records',[])
@@ -142,7 +142,7 @@ def report(doc,result):
     doc.add_paragraph(evidence.get('scope_pt',SCOPE))
     if evidence.get('reason'):doc.add_paragraph(evidence['reason'])
     doc.add_paragraph('Combinações calculadas: '+str(evidence.get('computed_cases',0))+'. Pendentes de dados: '+str(evidence.get('pending_model_cases',0))+'. '+
-        'Não há resistência com bimomento/torção qualificada. O critério de flexão pura não foi requalificado por este anexo.')
+        'A demanda NBR permanece separada. O complemento longitudinal AISI, quando calculado, tem memória própria e não requalifica os critérios NBR de flexão pura.')
     if evidence.get('pending_numerical_cases'):
         doc.add_paragraph('Qualificação numérica pendente em '+str(evidence['pending_numerical_cases'])+' combinações. Nenhuma resposta inválida foi promovida a demanda qualificada.')
     choice=evidence.get('choice_snapshot',{}).get('load_lines',{})

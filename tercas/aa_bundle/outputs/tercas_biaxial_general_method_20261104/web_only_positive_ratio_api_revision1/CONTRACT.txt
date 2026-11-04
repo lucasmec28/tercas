@@ -1,0 +1,73 @@
+POSITIVE-RATIO AA WEB COMPONENT CEILING API, RESEARCH REVISION 1
+
+Purpose: a new explicit version of the seven-profile family component-ceiling
+API. It does not reinterpret old snapshots, modify app/UI/index, run a section
+solver/FSM, claim a real deflection, or approve physical/global ELS.
+
+Entry points: api.assess(dict), api.assess_json(strict JSON),
+api.compare_component(request, component 0 or 1, positive criterion_mm).
+The input schema_version is aa_web_positive_ratio_qp_component_v1.
+Comparison responses always use aa_web_positive_ratio_component_comparison_v1,
+including invalid/inconclusive paths. hull_mapping explicitly checks the new
+core schema; it is an internal consistency helper, not an imported-certificate
+verification API. The API always recomputes the hull internally.
+Required fields remain geometry_sha256, material, L_mm, q_N_mm, P_N, a_mm,
+N_N, bimoment_Nmm2, supports, stress_scope, plus schema_version.
+No case ID, interpolated geometry, caller bounds/hull, or fallback selector.
+Seven explicit source SHA values in ALLOWED_SHA. Material E=200000 MPa,
+nu=.3, fy=250 MPa. N=B=0. Simply-supported bending component only.
+q/P are signed in moment coordinates, not inferred physical directions.
+P nonzero requires 0<a<L; support_limit and snapped endpoints are rejected.
+The two components are retained independently; neither is discarded.
+
+Core input schema: aa_web_positive_ratio_control_hull_v1, with explicit
+geometry_sha256/material/finite controls [N,Mx,My]. Canonical exact fractions,
+zero identity and normalized homogeneous supports are inherited unchanged.
+Core failures use the new schema too.
+
+Construction: fixed 12 stages, no convergence requirement. In a COMMON H,
+strictly positive lower endpoint supports for every nonzero control enable
+the correlated covectors v0-r*v1 and v1-r*v0. A fixed 100 bisections retain
+only certified lower r in [0,1]; final shrunken r is checked again. Uniform
+S/k>=4 gives rho_min; eta_ratio=rho_min/(3-r), conservatively padded.
+eta_next=max(eta_previous, eta_general, eta_ratio). The general-only
+monotonicity assertion from revision2 is deliberately removed: after a ratio
+advance, the general floor alone may lie below the retained subset. The max
+preserves the previous physical strips by union, so the actual subset cannot
+shrink. Explicit finitude/physical range checks cover eta, general_eta and
+ratio_eta; eta<=next_eta<=1/2 checks nesting of the physical strips. The
+inherited PSD arithmetic guard is unchanged, with no expanded tolerance. This is not a new law, tensile region, negative-branch tightening,
+independent-interval ratio, or altered Omega. Final nonweb/material guards,
+positive/cone existence proof, exact zero, and gross routes are preserved.
+
+Trace records eta_used, general_eta, next_eta, actual S and ratio evidence.
+The source manifests are new, pin the actual owned dependencies and the
+proof/audit documents. API and core outputs bind their actual implementation
+SHA; core domain binding includes implementation SHA, schema, source manifest,
+geometry, material and exact controls. API binding includes implementation,
+request, source manifest, field and route. api.py is not self-pinned inside
+its own dependency manifest (which would form a hash cycle); its fixed
+release identity is in RECEIPT.json. Historical pins are dependency/derivation
+provenance, not review of this new implementation. The standalone core's
+release identity must likewise be checked against the receipt by consumers.
+
+Green composition is the original rational Bernstein/piecewise Green code,
+with Sturm root enclosures and upward binary64 ceiling conversion. No
+experimental Green summary is used at runtime. Section supports still use
+private 70-digit arithmetic and 1e-20 padding, NOT formal interval arithmetic;
+rigorous rational Green enclosure is conditional on those section supports.
+Strict JSON lexical zero detection avoids constructing Decimal with arbitrary
+exponents. Nonzero overflow/underflow, duplicates and nonfinite tokens fail.
+No caller Decimal or mpmath precision, trap, or context is mutated.
+
+Sufficient output means a component upper bound within the declared model.
+Both component ceilings and rational evidence are returned. Inconclusive
+output has no displacement_component_bounds; compare_component never treats
+an inconclusive result as a usable ceiling. All physical_ELS_approved,
+whole_member_approved and published flags remain false. Uniqueness is not
+claimed. Local partition revision2 is independent and not ported here.
+
+Validation: test_focal.py executes focused API/core checks and reads saved
+benchmarks without rerunning their solvers/integrals. This implementation
+awaits separate independent review; proof/feasibility reviews are not falsely
+presented as API review. No source outside this new folder is modified.

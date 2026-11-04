@@ -1,0 +1,18 @@
+{
+  "PARECER.txt": "f0220bf69684867ca269e831c3a3e800b7c43bd0e8ad58740137012d9bf76390",
+  "RESULTS.json": "f9ba321322bb38ac3f947e3ca5ee9bad2043111834ba60a110a8450eeef334ae",
+  "RUN.log": "f9ba321322bb38ac3f947e3ca5ee9bad2043111834ba60a110a8450eeef334ae",
+  "inputs/profile_1.50.json": "9a30115583275a30ab25eb8c782398a8aa5d547b8272743da9cd2f8342f880d4",
+  "inputs/profile_2.00.json": "fde5d287a73df9adf1b9ab3e392d7207c3423acb7a8894de5553d402cc7aef90",
+  "inputs/profile_2.25.json": "8db5d3c4a037e01e665860c1ad8878bab01330cc07fc4165f74a40c0862ec562",
+  "inputs/profile_2.65.json": "40aada8e49914bb1384c8ac205d8035225d5c033e1e76de8fa65f022ebdd99f1",
+  "inputs/profile_3.00.json": "e45b3298a2a95cca875b558269046090751e3bff2fa1b9dfae3cc0c1a2a97919",
+  "inputs/profile_3.35.json": "f1e9676c843459bcb7c14341a32ab10cc90c8ab6765e056fe9bcd47e3b58dd05",
+  "inputs/weak_web_1.50.npz": "5ceece989bf00aed2e17e30a515c18933acd33ab40a5738c1ecab5499b4c1dd2",
+  "inputs/weak_web_2.00.npz": "8bc69fa89782fe338e920b951764d92c42721d99eec372935a661fbbc1f029f5",
+  "inputs/weak_web_2.25.npz": "fea51f7bd36224268ca27a126672e882d2b54634018cc6820e12ea769540926d",
+  "inputs/weak_web_2.65.npz": "98a014b1969d8e10155124955afb68c86fa4e7a7b7fd92df8a7461b4490a88bc",
+  "inputs/weak_web_3.00.npz": "bb9f949a67f679b55daf1abc86ad156ebde391187b53ce3c8e84aeedbb217cad",
+  "inputs/weak_web_3.35.npz": "03a540a51beda8f600e6162239ac21e592cad04ef9a53e84c9ae830ae87248c9",
+  "review_geometry.py": "b34841e508ae4b2a70a1e576d8c7c31bd464fa8066bcc73d53b451e20347f243"
+}

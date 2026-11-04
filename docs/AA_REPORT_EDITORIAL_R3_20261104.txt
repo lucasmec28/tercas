@@ -1,0 +1,25 @@
+R3 EDITORIAL — MEMÓRIA WORD DO TETO AA — 4 NOV 2026
+
+Esta revisão altera apenas dois emissores de texto: report.py e aa_component_ui.py.
+As premissas da memória direta e da memória em lote da travessa distinguem agora
+explicitamente o teto AA (alma reduzível, mesas/lábios sujeitos a guardas de
+integralidade) da rota tensorial de seção integral. Os textos antigos da rota
+bruta continuam inalterados. A identificação AA usa os marcadores históricos já
+existentes, inclusive quando o bloco principal está ausente e o anexo é recusado.
+
+Em registro AA inválido, quando existe resumo global salvo, o Word identifica
+que suas contagens são as originalmente salvas e não foram recompostas após a
+recusa. A leitura não recalcula/requalifica histórico ou modifica dados/resultados.
+Não há alteração do agregador global, do cálculo, dos índices ou dos limites.
+
+Teto suficiente continua distinto de flecha exata. Teto acima do limite ou
+estado sem demonstração permanece inconclusivo. Domínio, guardas, métodos
+explícitos separados e ausência de aprovação física/global são os mesmos da R2.
+
+Testes novos: tests/test_aa_report_premises.py. Cobertura dos três métodos,
+aplicações cobertura/travessa, emissão direta/lote, registros ausente/nulo/com
+hash inválido, leitura sem solver/fontes vivas, teto acima do critério e
+preservação textual da rota bruta. Recibos, comparação R2/R3 e revisão visual
+estão fora da árvore de código, na pasta de entrega da integração.
+
+R2 e R4 de origem permanecem congeladas. Esta revisão não executa publicação.

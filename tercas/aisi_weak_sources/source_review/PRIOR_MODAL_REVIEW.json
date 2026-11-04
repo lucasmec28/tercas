@@ -1,0 +1,714 @@
+{
+  "schema": "manually_reviewed_conventional_valleys_v1",
+  "valley_count": 30,
+  "section_count": 6,
+  "atlas_count": 18,
+  "model": "R01 own rounded209node contours, ri=t, E200000MPa nu0.3, homogeneous S-S pure bending.",
+  "manual_visual_review": "All18atlases viewed, both first/second modes at valleys and adjacent sampled lengths. Signs of eigenvectors are arbitrary and have no load-direction meaning.",
+  "scope": "Accepts30own-model conventional critical candidates after matrix/QZ/residual, neighboring-length minimum and focal mesh checks. It does not certify global wavelength coverage, pure mode separation, resistance formulas, or a real purlin.",
+  "normative_source": "ABNT NBR14762:2010 section9.8.2.3, printed49/PDF55; Table14 printed50/PDF56. Stability analysis is required for Mdist; no per-profile cFSM or physical test is invented as a normative requirement.",
+  "table14": "The strong-axis exemption for1.20mm is not transferred. Six new strongD values were directly evaluated and checked.",
+  "source_version": "Producerv1 preserved as diagnostic. Numerical/mode acceptance transfers to v2 only through exact field-equivalence audit; never by matching names.",
+  "excluded_diagnostic_snapshots": [
+    "producer/t1.50/lips/sample_L1200.npz",
+    "producer/t2.00/web/sample_L3000.npz"
+  ],
+  "profiles": [
+    {
+      "thickness_mm": 1.5,
+      "profile_id": "OWN_Ue100x50x17_t1p50_ri1p50_n12_a16_v1_cd50bf66f299",
+      "states": {
+        "strong": {
+          "manual_atlas_review_complete": true,
+          "atlas": "outputs/tercas_ue100_family_critical_20261103/modal_review/t1.50/strong/mode_atlas.png",
+          "review_file": "outputs/tercas_ue100_family_critical_20261103/modal_review/t1.50/strong/REVIEW.json",
+          "review_sha256": "d9b9c21234a24e9c5779cbb4b7c225505a104bf72ce00e95a4662f5eb49a488e",
+          "valleys": [
+            {
+              "artifact": "t1.50/strong/valley_0.npz",
+              "sha256": "c1b41bbee3c2dd2077dceac67bb9552d11a0d29fa389397fde16ca4e4fc9129b",
+              "L_mm": 50.94535098295141,
+              "eigenvalue_kNm": 8.834218497813245,
+              "classification": "local_conventional_predominant",
+              "manual_shape_observation": "Strong compressed-flange curvature and web out-of-plane curvature; principal plate junction translations remain small compared with plate bending. Local-dominated conventional mode with coupled plate deformation.",
+              "numerical_audit_pass": true,
+              "QZ_max_relative_error": 5.02172525784772e-10,
+              "reference_residual_max": 2.49072632718257e-10,
+              "mesh_subspace_dimension": 1,
+              "pure_D_claim": false,
+              "accepted_for_own_conventional_critical_analysis": true,
+              "whole_member_approved": false,
+              "resistance_release": false
+            },
+            {
+              "artifact": "t1.50/strong/valley_1.npz",
+              "sha256": "572051932a38f90da8255a3dc382fe9c056a42cc30716b67e0128b66c3ee64f2",
+              "L_mm": 444.989061825825,
+              "eigenvalue_kNm": 7.149406411254271,
+              "classification": "distortional_conventional_predominant",
+              "manual_shape_observation": "Compressed upper flange-lip assembly rotates nearly rigidly about the web-flange junction; upper flange stays almost straight. The web bends slightly and the tension side is not exactly motionless. Distortional-dominated conventional mode, not a pure constrained-D eigensolution.",
+              "numerical_audit_pass": true,
+              "QZ_max_relative_error": 1.5179366030793062e-07,
+              "reference_residual_max": 1.1587235420182314e-07,
+              "mesh_subspace_dimension": 1,
+              "pure_D_claim": false,
+              "accepted_for_own_conventional_critical_analysis": true,
+              "whole_member_approved": false,
+              "resistance_release": false
+            }
+          ],
+          "identified_distortional_critical_kNm": 7.149406411254271,
+          "web_distortion_note": null
+        },
+        "web": {
+          "manual_atlas_review_complete": true,
+          "atlas": "outputs/tercas_ue100_family_critical_20261103/modal_review/t1.50/web/mode_atlas.png",
+          "review_file": "outputs/tercas_ue100_family_critical_20261103/modal_review/t1.50/web/REVIEW.json",
+          "review_sha256": "38168e8d1066c5658c52c6ac7f767c2e1e6eec8b1e5bc663b636104a7fe89582",
+          "valleys": [
+            {
+              "artifact": "t1.50/web/valley_0.npz",
+              "sha256": "f7006de468a7d93eae752d23468b7bdd24d51bcea0908d409b6e4214710093a1",
+              "L_mm": 76.57934696908491,
+              "eigenvalue_kNm": 1.7034852401189708,
+              "classification": "local_conventional_web_predominant",
+              "manual_shape_observation": "Web bends with one main transverse bulge between almost stationary flange-web junctions; flange-lip assemblies remain nearly in their original lines. Local-web dominated conventional mode.",
+              "numerical_audit_pass": true,
+              "QZ_max_relative_error": 2.93034707610218e-10,
+              "reference_residual_max": 4.77762415729375e-10,
+              "mesh_subspace_dimension": 1,
+              "pure_D_claim": false,
+              "accepted_for_own_conventional_critical_analysis": true,
+              "whole_member_approved": false,
+              "resistance_release": false
+            }
+          ],
+          "identified_distortional_critical_kNm": null,
+          "web_distortion_note": "No separate D valley identified in this lowest-branch signature. Absence of a visible D valley is not a waiver or a bound; consume the separate per-profile web-floor review."
+        },
+        "lips": {
+          "manual_atlas_review_complete": true,
+          "atlas": "outputs/tercas_ue100_family_critical_20261103/modal_review/t1.50/lips/mode_atlas.png",
+          "review_file": "outputs/tercas_ue100_family_critical_20261103/modal_review/t1.50/lips/REVIEW.json",
+          "review_sha256": "07a26293c04740120eb982a21e6e4620620520cc5d6d2cd781575a7daf4a1755",
+          "valleys": [
+            {
+              "artifact": "t1.50/lips/valley_0.npz",
+              "sha256": "7308ecc4142078d181df59ae45fcf2c346b517bf22b91418c0ca3c0d970dd377",
+              "L_mm": 41.90680154324868,
+              "eigenvalue_kNm": 5.1179901077889705,
+              "classification": "local_conventional_predominant_near_doublet",
+              "manual_shape_observation": "Near-degenerate pair of plate-local flange/lip patterns; flange curves while primary junctions remain nearly fixed. Two-dimensional transverse eigenspace compared between meshes to avoid arbitrary sign or pair rotation.",
+              "numerical_audit_pass": true,
+              "QZ_max_relative_error": 8.923639605029621e-11,
+              "reference_residual_max": 1.695524180818607e-10,
+              "mesh_subspace_dimension": 2,
+              "pure_D_claim": false,
+              "accepted_for_own_conventional_critical_analysis": true,
+              "whole_member_approved": false,
+              "resistance_release": false
+            },
+            {
+              "artifact": "t1.50/lips/valley_1.npz",
+              "sha256": "9371d6a8632590e6491a1e6e984562859e63c438ad0d6f8499151038ef8731b0",
+              "L_mm": 489.68071075666063,
+              "eigenvalue_kNm": 2.6472971967503938,
+              "classification": "distortional_conventional_predominant",
+              "manual_shape_observation": "Both flange-lip assemblies rotate as near-rigid components, with clear flange-lip junction motion and modest web flexure. Distortional-dominated conventional mode, not a pure constrained-D eigensolution.",
+              "numerical_audit_pass": true,
+              "QZ_max_relative_error": 3.3051741876732876e-07,
+              "reference_residual_max": 2.482716167879353e-07,
+              "mesh_subspace_dimension": 1,
+              "pure_D_claim": false,
+              "accepted_for_own_conventional_critical_analysis": true,
+              "whole_member_approved": false,
+              "resistance_release": false
+            }
+          ],
+          "identified_distortional_critical_kNm": 2.6472971967503938,
+          "web_distortion_note": null
+        }
+      }
+    },
+    {
+      "thickness_mm": 2.0,
+      "profile_id": "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce",
+      "states": {
+        "strong": {
+          "manual_atlas_review_complete": true,
+          "atlas": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.00/strong/mode_atlas.png",
+          "review_file": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.00/strong/REVIEW.json",
+          "review_sha256": "b7a661c20646d2de403cfd907c89825cd2f318d5cbcc3b7e745ab94702b64695",
+          "valleys": [
+            {
+              "artifact": "t2.00/strong/valley_0.npz",
+              "sha256": "813e10e95dac009b2b0cd4ca0c6440bb514d4b4783d0ef86d9e92d6ce177256d",
+              "L_mm": 51.31313650921165,
+              "eigenvalue_kNm": 20.76464990635001,
+              "classification": "local_conventional_predominant",
+              "manual_shape_observation": "Strong compressed-flange curvature and web out-of-plane curvature; principal plate junction translations remain small compared with plate bending. Local-dominated conventional mode with coupled plate deformation.",
+              "numerical_audit_pass": true,
+              "QZ_max_relative_error": 7.740230678621174e-11,
+              "reference_residual_max": 1.1491664142391944e-10,
+              "mesh_subspace_dimension": 1,
+              "pure_D_claim": false,
+              "accepted_for_own_conventional_critical_analysis": true,
+              "whole_member_approved": false,
+              "resistance_release": false
+            },
+            {
+              "artifact": "t2.00/strong/valley_1.npz",
+              "sha256": "9df26830132e7e841051772a9d1b400cf67450bae4b08e32fc352a13a933fe86",
+              "L_mm": 375.2841169144437,
+              "eigenvalue_kNm": 12.998041888658234,
+              "classification": "distortional_conventional_predominant",
+              "manual_shape_observation": "Compressed upper flange-lip assembly rotates nearly rigidly about the web-flange junction; upper flange stays almost straight. The web bends slightly and the tension side is not exactly motionless. Distortional-dominated conventional mode, not a pure constrained-D eigensolution.",
+              "numerical_audit_pass": true,
+              "QZ_max_relative_error": 5.3172763969655534e-08,
+              "reference_residual_max": 7.026370879465493e-08,
+              "mesh_subspace_dimension": 1,
+              "pure_D_claim": false,
+              "accepted_for_own_conventional_critical_analysis": true,
+              "whole_member_approved": false,
+              "resistance_release": false
+            }
+          ],
+          "identified_distortional_critical_kNm": 12.998041888658234,
+          "web_distortion_note": null
+        },
+        "web": {
+          "manual_atlas_review_complete": true,
+          "atlas": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.00/web/mode_atlas.png",
+          "review_file": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.00/web/REVIEW.json",
+          "review_sha256": "c38e380055990233cb1b213609348e3856aac6eeff97953541fe3c136c5a3ad5",
+          "valleys": [
+            {
+              "artifact": "t2.00/web/valley_0.npz",
+              "sha256": "610f6b68ee3cb1cbd79edf85f2466f24052b7094bb632db012a788a8298a2b86",
+              "L_mm": 76.18280917251073,
+              "eigenvalue_kNm": 3.9888695889298957,
+              "classification": "local_conventional_web_predominant",
+              "manual_shape_observation": "Web bends with one main transverse bulge between almost stationary flange-web junctions; flange-lip assemblies remain nearly in their original lines. Local-web dominated conventional mode.",
+              "numerical_audit_pass": true,
+              "QZ_max_relative_error": 8.401817019887403e-10,
+              "reference_residual_max": 3.2749971138462637e-10,
+              "mesh_subspace_dimension": 1,
+              "pure_D_claim": false,
+              "accepted_for_own_conventional_critical_analysis": true,
+              "whole_member_approved": false,
+              "resistance_release": false
+            }
+          ],
+          "identified_distortional_critical_kNm": null,
+          "web_distortion_note": "No separate D valley identified in this lowest-branch signature. Absence of a visible D valley is not a waiver or a bound; consume the separate per-profile web-floor review."
+        },
+        "lips": {
+          "manual_atlas_review_complete": true,
+          "atlas": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.00/lips/mode_atlas.png",
+          "review_file": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.00/lips/REVIEW.json",
+          "review_sha256": "70f4eee6acecea239ccdc55de1708b80f1a04ea83ba73d4b32ae1f1fa18bad91",
+          "valleys": [
+            {
+              "artifact": "t2.00/lips/valley_0.npz",
+              "sha256": "025f3cff1d30006113538162ed255d57880374f3f287dd09ebf6e0896d0f3a67",
+              "L_mm": 41.46349169449415,
+              "eigenvalue_kNm": 12.086244455138075,
+              "classification": "local_conventional_predominant_near_doublet",
+              "manual_shape_observation": "Near-degenerate pair of plate-local flange/lip patterns; flange curves while primary junctions remain nearly fixed. Two-dimensional transverse eigenspace compared between meshes to avoid arbitrary sign or pair rotation.",
+              "numerical_audit_pass": true,
+              "QZ_max_relative_error": 1.3929746245366914e-11,
+              "reference_residual_max": 8.179283511887524e-11,
+              "mesh_subspace_dimension": 2,
+              "pure_D_claim": false,
+              "accepted_for_own_conventional_critical_analysis": true,
+              "whole_member_approved": false,
+              "resistance_release": false
+            },
+            {
+              "artifact": "t2.00/lips/valley_1.npz",
+              "sha256": "3430946c5bb82992043b6cd0240c5002a28fee6e0c618b3e3cec1db5a726999b",
+              "L_mm": 413.0770852956704,
+              "eigenvalue_kNm": 4.822053201043427,
+              "classification": "distortional_conventional_predominant",
+              "manual_shape_observation": "Both flange-lip assemblies rotate as near-rigid components, with clear flange-lip junction motion and modest web flexure. Distortional-dominated conventional mode, not a pure constrained-D eigensolution.",
+              "numerical_audit_pass": true,
+              "QZ_max_relative_error": 3.4309468444071456e-07,
+              "reference_residual_max": 8.29598016453355e-08,
+              "mesh_subspace_dimension": 1,
+              "pure_D_claim": false,
+              "accepted_for_own_conventional_critical_analysis": true,
+              "whole_member_approved": false,
+              "resistance_release": false
+            }
+          ],
+          "identified_distortional_critical_kNm": 4.822053201043427,
+          "web_distortion_note": null
+        }
+      }
+    },
+    {
+      "thickness_mm": 2.25,
+      "profile_id": "OWN_Ue100x50x17_t2p25_ri2p25_n12_a16_v1_e30a0bd327de",
+      "states": {
+        "strong": {
+          "manual_atlas_review_complete": true,
+          "atlas": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.25/strong/mode_atlas.png",
+          "review_file": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.25/strong/REVIEW.json",
+          "review_sha256": "b8278c9bef856373a9fa4ee5c069b284008422edbfe231a65fd3ef6329aa21b7",
+          "valleys": [
+            {
+              "artifact": "t2.25/strong/valley_0.npz",
+              "sha256": "77dab76650c91347371a0fd87286f09acbe8508c3c3b7adcc95fb368f5704ba1",
+              "L_mm": 51.63567884795748,
+              "eigenvalue_kNm": 29.419655792440633,
+              "classification": "local_conventional_predominant",
+              "manual_shape_observation": "Strong compressed-flange curvature and web out-of-plane curvature; principal plate junction translations remain small compared with plate bending. Local-dominated conventional mode with coupled plate deformation.",
+              "numerical_audit_pass": true,
+              "QZ_max_relative_error": 6.636136085091948e-11,
+              "reference_residual_max": 1.1230190198615423e-10,
+              "mesh_subspace_dimension": 1,
+              "pure_D_claim": false,
+              "accepted_for_own_conventional_critical_analysis": true,
+              "whole_member_approved": false,
+              "resistance_release": false
+            },
+            {
+              "artifact": "t2.25/strong/valley_1.npz",
+              "sha256": "cf6d633895e948a546e47fbf26ba68629487ce57fa30bb88722e1f5660966900",
+              "L_mm": 349.06091820549034,
+              "eigenvalue_kNm": 16.632889433413858,
+              "classification": "distortional_conventional_predominant",
+              "manual_shape_observation": "Compressed upper flange-lip assembly rotates nearly rigidly about the web-flange junction; upper flange stays almost straight. The web bends slightly and the tension side is not exactly motionless. Distortional-dominated conventional mode, not a pure constrained-D eigensolution.",
+              "numerical_audit_pass": true,
+              "QZ_max_relative_error": 5.0258998740559946e-08,
+              "reference_residual_max": 4.213087822454774e-08,
+              "mesh_subspace_dimension": 1,
+              "pure_D_claim": false,
+              "accepted_for_own_conventional_critical_analysis": true,
+              "whole_member_approved": false,
+              "resistance_release": false
+            }
+          ],
+          "identified_distortional_critical_kNm": 16.632889433413858,
+          "web_distortion_note": null
+        },
+        "web": {
+          "manual_atlas_review_complete": true,
+          "atlas": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.25/web/mode_atlas.png",
+          "review_file": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.25/web/REVIEW.json",
+          "review_sha256": "8018064ff2b320aa7152ce5cd44a1bdce1cd138cfe78f7b049c2c5994c49ea66",
+          "valleys": [
+            {
+              "artifact": "t2.25/web/valley_0.npz",
+              "sha256": "5b87b6d9d6008748bdf8e7dddfb73836bfd8359710a855af85d983cffaf6e74b",
+              "L_mm": 76.00205065222771,
+              "eigenvalue_kNm": 5.643464461071989,
+              "classification": "local_conventional_web_predominant",
+              "manual_shape_observation": "Web bends with one main transverse bulge between almost stationary flange-web junctions; flange-lip assemblies remain nearly in their original lines. Local-web dominated conventional mode.",
+              "numerical_audit_pass": true,
+              "QZ_max_relative_error": 2.383160335739376e-10,
+              "reference_residual_max": 3.3117236501384736e-10,
+              "mesh_subspace_dimension": 1,
+              "pure_D_claim": false,
+              "accepted_for_own_conventional_critical_analysis": true,
+              "whole_member_approved": false,
+              "resistance_release": false
+            }
+          ],
+          "identified_distortional_critical_kNm": null,
+          "web_distortion_note": "No separate D valley identified in this lowest-branch signature. Absence of a visible D valley is not a waiver or a bound; consume the separate per-profile web-floor review."
+        },
+        "lips": {
+          "manual_atlas_review_complete": true,
+          "atlas": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.25/lips/mode_atlas.png",
+          "review_file": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.25/lips/REVIEW.json",
+          "review_sha256": "56051c71803e3979295b23d13db33877563900179923c5cca70d2456c12b191c",
+          "valleys": [
+            {
+              "artifact": "t2.25/lips/valley_0.npz",
+              "sha256": "c7f83b52f9d59abd64b24846109157c7d4ee74033ee08615f6dd3249825080a4",
+              "L_mm": 41.23938407640051,
+              "eigenvalue_kNm": 17.168585936881858,
+              "classification": "local_conventional_predominant_near_doublet",
+              "manual_shape_observation": "Near-degenerate pair of plate-local flange/lip patterns; flange curves while primary junctions remain nearly fixed. Two-dimensional transverse eigenspace compared between meshes to avoid arbitrary sign or pair rotation.",
+              "numerical_audit_pass": true,
+              "QZ_max_relative_error": 3.4688918404413016e-11,
+              "reference_residual_max": 7.727459365474193e-11,
+              "mesh_subspace_dimension": 2,
+              "pure_D_claim": false,
+              "accepted_for_own_conventional_critical_analysis": true,
+              "whole_member_approved": false,
+              "resistance_release": false
+            },
+            {
+              "artifact": "t2.25/lips/valley_1.npz",
+              "sha256": "2440a116e4299f1048a2d08469f181f56a139ec3395aafb602106b92ef3cf14d",
+              "L_mm": 384.29378816133743,
+              "eigenvalue_kNm": 6.175112854597799,
+              "classification": "distortional_conventional_predominant",
+              "manual_shape_observation": "Both flange-lip assemblies rotate as near-rigid components, with clear flange-lip junction motion and modest web flexure. Distortional-dominated conventional mode, not a pure constrained-D eigensolution.",
+              "numerical_audit_pass": true,
+              "QZ_max_relative_error": 1.5119460772261561e-07,
+              "reference_residual_max": 4.9599084118542036e-08,
+              "mesh_subspace_dimension": 1,
+              "pure_D_claim": false,
+              "accepted_for_own_conventional_critical_analysis": true,
+              "whole_member_approved": false,
+              "resistance_release": false
+            }
+          ],
+          "identified_distortional_critical_kNm": 6.175112854597799,
+          "web_distortion_note": null
+        }
+      }
+    },
+    {
+      "thickness_mm": 2.65,
+      "profile_id": "OWN_Ue100x50x17_t2p65_ri2p65_n12_a16_v1_243974742f83",
+      "states": {
+        "strong": {
+          "manual_atlas_review_complete": true,
+          "atlas": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.65/strong/mode_atlas.png",
+          "review_file": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.65/strong/REVIEW.json",
+          "review_sha256": "79f568110fb5736732079c16a51c7eabdea52ca0155963683fdb1acf5e0fa3db",
+          "valleys": [
+            {
+              "artifact": "t2.65/strong/valley_0.npz",
+              "sha256": "768b91531fbd156181e0ec84c0c3862317eb467537eddae0dcd6b79e1b476b16",
+              "L_mm": 52.48089678224584,
+              "eigenvalue_kNm": 47.609516284179094,
+              "classification": "local_conventional_predominant",
+              "manual_shape_observation": "Strong compressed-flange curvature and web out-of-plane curvature; principal plate junction translations remain small compared with plate bending. Local-dominated conventional mode with coupled plate deformation.",
+              "numerical_audit_pass": true,
+              "QZ_max_relative_error": 6.511768901873438e-11,
+              "reference_residual_max": 8.161189526367236e-11,
+              "mesh_subspace_dimension": 1,
+              "pure_D_claim": false,
+              "accepted_for_own_conventional_critical_analysis": true,
+              "whole_member_approved": false,
+              "resistance_release": false
+            },
+            {
+              "artifact": "t2.65/strong/valley_1.npz",
+              "sha256": "761b4a6a05444c5eec005365f3fcce9ad87f3fcd884978ece1fba87fd820fe8f",
+              "L_mm": 314.6400902485021,
+              "eigenvalue_kNm": 23.478208621241674,
+              "classification": "distortional_conventional_predominant",
+              "manual_shape_observation": "Compressed upper flange-lip assembly rotates nearly rigidly about the web-flange junction; upper flange stays almost straight. The web bends slightly and the tension side is not exactly motionless. Distortional-dominated conventional mode, not a pure constrained-D eigensolution.",
+              "numerical_audit_pass": true,
+              "QZ_max_relative_error": 3.781883495257432e-08,
+              "reference_residual_max": 2.828461190796622e-08,
+              "mesh_subspace_dimension": 1,
+              "pure_D_claim": false,
+              "accepted_for_own_conventional_critical_analysis": true,
+              "whole_member_approved": false,
+              "resistance_release": false
+            }
+          ],
+          "identified_distortional_critical_kNm": 23.478208621241674,
+          "web_distortion_note": null
+        },
+        "web": {
+          "manual_atlas_review_complete": true,
+          "atlas": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.65/web/mode_atlas.png",
+          "review_file": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.65/web/REVIEW.json",
+          "review_sha256": "bfd2dfea27d831c94e47ad7585849139bb618a67c17d84369d34a351d420e277",
+          "valleys": [
+            {
+              "artifact": "t2.65/web/valley_0.npz",
+              "sha256": "e5e3023355e1738aa9a24094e650787986df832369614cfb04319972646e0c51",
+              "L_mm": 75.73704632842913,
+              "eigenvalue_kNm": 9.123303216215128,
+              "classification": "local_conventional_web_predominant",
+              "manual_shape_observation": "Web bends with one main transverse bulge between almost stationary flange-web junctions; flange-lip assemblies remain nearly in their original lines. Local-web dominated conventional mode.",
+              "numerical_audit_pass": true,
+              "QZ_max_relative_error": 1.1387051301881002e-09,
+              "reference_residual_max": 2.3482292895254155e-10,
+              "mesh_subspace_dimension": 1,
+              "pure_D_claim": false,
+              "accepted_for_own_conventional_critical_analysis": true,
+              "whole_member_approved": false,
+              "resistance_release": false
+            }
+          ],
+          "identified_distortional_critical_kNm": null,
+          "web_distortion_note": "No separate D valley identified in this lowest-branch signature. Absence of a visible D valley is not a waiver or a bound; consume the separate per-profile web-floor review."
+        },
+        "lips": {
+          "manual_atlas_review_complete": true,
+          "atlas": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.65/lips/mode_atlas.png",
+          "review_file": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.65/lips/REVIEW.json",
+          "review_sha256": "377cf8492a7af7d3c56613ddb9b414edba552a97201d9eefac24699deb41b14c",
+          "valleys": [
+            {
+              "artifact": "t2.65/lips/valley_0.npz",
+              "sha256": "7c0b2a53b7bbfcf95db7fed67fb6b71c06ed57c4283ec66f67a541f46caf183f",
+              "L_mm": 40.871719361332616,
+              "eigenvalue_kNm": 27.916760737156302,
+              "classification": "local_conventional_predominant_near_doublet",
+              "manual_shape_observation": "Near-degenerate pair of plate-local flange/lip patterns; flange curves while primary junctions remain nearly fixed. Two-dimensional transverse eigenspace compared between meshes to avoid arbitrary sign or pair rotation.",
+              "numerical_audit_pass": true,
+              "QZ_max_relative_error": 8.038325560733028e-11,
+              "reference_residual_max": 5.316815117855276e-11,
+              "mesh_subspace_dimension": 2,
+              "pure_D_claim": false,
+              "accepted_for_own_conventional_critical_analysis": true,
+              "whole_member_approved": false,
+              "resistance_release": false
+            },
+            {
+              "artifact": "t2.65/lips/valley_1.npz",
+              "sha256": "9391c9e2d7dbb1bff3cb6177456e3c471c26e9193d588772ca76724dc3622539",
+              "L_mm": 346.40540522029437,
+              "eigenvalue_kNm": 8.724404545407081,
+              "classification": "distortional_conventional_predominant",
+              "manual_shape_observation": "Both flange-lip assemblies rotate as near-rigid components, with clear flange-lip junction motion and modest web flexure. Distortional-dominated conventional mode, not a pure constrained-D eigensolution.",
+              "numerical_audit_pass": true,
+              "QZ_max_relative_error": 2.287994926852832e-08,
+              "reference_residual_max": 3.1717746317503536e-08,
+              "mesh_subspace_dimension": 1,
+              "pure_D_claim": false,
+              "accepted_for_own_conventional_critical_analysis": true,
+              "whole_member_approved": false,
+              "resistance_release": false
+            }
+          ],
+          "identified_distortional_critical_kNm": 8.724404545407081,
+          "web_distortion_note": null
+        }
+      }
+    },
+    {
+      "thickness_mm": 3.0,
+      "profile_id": "OWN_Ue100x50x17_t3p00_ri3p00_n12_a16_v1_c3d1e69d48f6",
+      "states": {
+        "strong": {
+          "manual_atlas_review_complete": true,
+          "atlas": "outputs/tercas_ue100_family_critical_20261103/modal_review/t3.00/strong/mode_atlas.png",
+          "review_file": "outputs/tercas_ue100_family_critical_20261103/modal_review/t3.00/strong/REVIEW.json",
+          "review_sha256": "f2d0e270fc218711696df842ca072216def213ecc088de25c5fa370da60b9555",
+          "valleys": [
+            {
+              "artifact": "t3.00/strong/valley_0.npz",
+              "sha256": "d59a3c2a127fb4dbabebb0e927b851b7aa06db022bea4f705aaf9554b22f5b3b",
+              "L_mm": 53.87437733704376,
+              "eigenvalue_kNm": 68.32013099316143,
+              "classification": "local_conventional_predominant",
+              "manual_shape_observation": "Strong compressed-flange curvature and web out-of-plane curvature; principal plate junction translations remain small compared with plate bending. Local-dominated conventional mode with coupled plate deformation.",
+              "numerical_audit_pass": true,
+              "QZ_max_relative_error": 1.8891310737956246e-10,
+              "reference_residual_max": 7.91087775070468e-11,
+              "mesh_subspace_dimension": 1,
+              "pure_D_claim": false,
+              "accepted_for_own_conventional_critical_analysis": true,
+              "whole_member_approved": false,
+              "resistance_release": false
+            },
+            {
+              "artifact": "t3.00/strong/valley_1.npz",
+              "sha256": "959169dd29ad9e1f4bbc250305aa7343a6cce9494b45dd5eeb97862c0fedcb47",
+              "L_mm": 289.9893962462265,
+              "eigenvalue_kNm": 30.54773748598727,
+              "classification": "distortional_conventional_predominant",
+              "manual_shape_observation": "Compressed upper flange-lip assembly rotates nearly rigidly about the web-flange junction; upper flange stays almost straight. The web bends slightly and the tension side is not exactly motionless. Distortional-dominated conventional mode, not a pure constrained-D eigensolution.",
+              "numerical_audit_pass": true,
+              "QZ_max_relative_error": 2.5345766041517948e-08,
+              "reference_residual_max": 1.230163522287464e-08,
+              "mesh_subspace_dimension": 1,
+              "pure_D_claim": false,
+              "accepted_for_own_conventional_critical_analysis": true,
+              "whole_member_approved": false,
+              "resistance_release": false
+            }
+          ],
+          "identified_distortional_critical_kNm": 30.54773748598727,
+          "web_distortion_note": null
+        },
+        "web": {
+          "manual_atlas_review_complete": true,
+          "atlas": "outputs/tercas_ue100_family_critical_20261103/modal_review/t3.00/web/mode_atlas.png",
+          "review_file": "outputs/tercas_ue100_family_critical_20261103/modal_review/t3.00/web/REVIEW.json",
+          "review_sha256": "a035ae776fafbc6d741adb1afd4dd8c8d5bd51e9e9e6ade732a91429d5a51a23",
+          "valleys": [
+            {
+              "artifact": "t3.00/web/valley_0.npz",
+              "sha256": "8edd10c7f557f4d67dba7b80951b5fae49ede68473602d3acd1dba0f5b573d73",
+              "L_mm": 75.52744033228073,
+              "eigenvalue_kNm": 13.10958005110014,
+              "classification": "local_conventional_web_predominant",
+              "manual_shape_observation": "Web bends with one main transverse bulge between almost stationary flange-web junctions; flange-lip assemblies remain nearly in their original lines. Local-web dominated conventional mode.",
+              "numerical_audit_pass": true,
+              "QZ_max_relative_error": 3.151101601872597e-10,
+              "reference_residual_max": 2.037030193405446e-10,
+              "mesh_subspace_dimension": 1,
+              "pure_D_claim": false,
+              "accepted_for_own_conventional_critical_analysis": true,
+              "whole_member_approved": false,
+              "resistance_release": false
+            }
+          ],
+          "identified_distortional_critical_kNm": null,
+          "web_distortion_note": "No separate D valley identified in this lowest-branch signature. Absence of a visible D valley is not a waiver or a bound; consume the separate per-profile web-floor review."
+        },
+        "lips": {
+          "manual_atlas_review_complete": true,
+          "atlas": "outputs/tercas_ue100_family_critical_20261103/modal_review/t3.00/lips/mode_atlas.png",
+          "review_file": "outputs/tercas_ue100_family_critical_20261103/modal_review/t3.00/lips/REVIEW.json",
+          "review_sha256": "a3b6f9812ea8934c9fec7a82e3252fca8d7d40ae96599f14abdc9f06b92b332e",
+          "valleys": [
+            {
+              "artifact": "t3.00/lips/valley_0.npz",
+              "sha256": "bd4a40351bebac62acc5e6ac6bc9ad73b207261572404eda99da419fcf38c42a",
+              "L_mm": 40.540760829842355,
+              "eigenvalue_kNm": 40.2751475207566,
+              "classification": "local_conventional_predominant_near_doublet",
+              "manual_shape_observation": "Near-degenerate pair of plate-local flange/lip patterns; flange curves while primary junctions remain nearly fixed. Two-dimensional transverse eigenspace compared between meshes to avoid arbitrary sign or pair rotation.",
+              "numerical_audit_pass": true,
+              "QZ_max_relative_error": 1.681710326550956e-11,
+              "reference_residual_max": 4.690556868870424e-11,
+              "mesh_subspace_dimension": 2,
+              "pure_D_claim": false,
+              "accepted_for_own_conventional_critical_analysis": true,
+              "whole_member_approved": false,
+              "resistance_release": false
+            },
+            {
+              "artifact": "t3.00/lips/valley_1.npz",
+              "sha256": "37343e5d1bda3083f312853964e8ce50d57e73177d09766aed3dc07d9bfc53df",
+              "L_mm": 319.228429658417,
+              "eigenvalue_kNm": 11.357093840761252,
+              "classification": "distortional_conventional_predominant",
+              "manual_shape_observation": "Both flange-lip assemblies rotate as near-rigid components, with clear flange-lip junction motion and modest web flexure. Distortional-dominated conventional mode, not a pure constrained-D eigensolution.",
+              "numerical_audit_pass": true,
+              "QZ_max_relative_error": 3.07853083025833e-08,
+              "reference_residual_max": 2.1034843771664186e-08,
+              "mesh_subspace_dimension": 1,
+              "pure_D_claim": false,
+              "accepted_for_own_conventional_critical_analysis": true,
+              "whole_member_approved": false,
+              "resistance_release": false
+            }
+          ],
+          "identified_distortional_critical_kNm": 11.357093840761252,
+          "web_distortion_note": null
+        }
+      }
+    },
+    {
+      "thickness_mm": 3.35,
+      "profile_id": "OWN_Ue100x50x17_t3p35_ri3p35_n12_a16_v1_90bf516ec976",
+      "states": {
+        "strong": {
+          "manual_atlas_review_complete": true,
+          "atlas": "outputs/tercas_ue100_family_critical_20261103/modal_review/t3.35/strong/mode_atlas.png",
+          "review_file": "outputs/tercas_ue100_family_critical_20261103/modal_review/t3.35/strong/REVIEW.json",
+          "review_sha256": "179916e79f380c708ef7722a9684cf5b9688846b93afe30d7bc0969458a005ac",
+          "valleys": [
+            {
+              "artifact": "t3.35/strong/valley_0.npz",
+              "sha256": "b61734a4f1d17eb5064ff2c9835850585453cb5595d1c3c34dd7b568e871166d",
+              "L_mm": 57.284178302567376,
+              "eigenvalue_kNm": 93.62168830024662,
+              "classification": "local_conventional_predominant",
+              "manual_shape_observation": "Strong compressed-flange curvature and web out-of-plane curvature; principal plate junction translations remain small compared with plate bending. Local-dominated conventional mode with coupled plate deformation.",
+              "numerical_audit_pass": true,
+              "QZ_max_relative_error": 1.1128742372079614e-10,
+              "reference_residual_max": 8.2282463927632e-11,
+              "mesh_subspace_dimension": 1,
+              "pure_D_claim": false,
+              "accepted_for_own_conventional_critical_analysis": true,
+              "whole_member_approved": false,
+              "resistance_release": false
+            },
+            {
+              "artifact": "t3.35/strong/valley_1.npz",
+              "sha256": "f1f8c6c6ced974f85a6dab35840293c92f951dd4d6986e1bafb6002171458055",
+              "L_mm": 269.0595279054736,
+              "eigenvalue_kNm": 38.66872284427328,
+              "classification": "distortional_conventional_predominant",
+              "manual_shape_observation": "Compressed upper flange-lip assembly rotates nearly rigidly about the web-flange junction; upper flange stays almost straight. The web bends slightly and the tension side is not exactly motionless. Distortional-dominated conventional mode, not a pure constrained-D eigensolution.",
+              "numerical_audit_pass": true,
+              "QZ_max_relative_error": 1.538074800855327e-08,
+              "reference_residual_max": 1.111964478620383e-08,
+              "mesh_subspace_dimension": 1,
+              "pure_D_claim": false,
+              "accepted_for_own_conventional_critical_analysis": true,
+              "whole_member_approved": false,
+              "resistance_release": false
+            }
+          ],
+          "identified_distortional_critical_kNm": 38.66872284427328,
+          "web_distortion_note": null
+        },
+        "web": {
+          "manual_atlas_review_complete": true,
+          "atlas": "outputs/tercas_ue100_family_critical_20261103/modal_review/t3.35/web/mode_atlas.png",
+          "review_file": "outputs/tercas_ue100_family_critical_20261103/modal_review/t3.35/web/REVIEW.json",
+          "review_sha256": "7b7a49c48178912776106b7696d8ebb56b9f6da316c93235696b1f282d69d0da",
+          "valleys": [
+            {
+              "artifact": "t3.35/web/valley_0.npz",
+              "sha256": "60d93683b2c0393f5d23106ddcaff79cd9f8ce32c5fcc21966fd44298da7572e",
+              "L_mm": 75.33631763479463,
+              "eigenvalue_kNm": 18.07136362161283,
+              "classification": "local_conventional_web_predominant",
+              "manual_shape_observation": "Web bends with one main transverse bulge between almost stationary flange-web junctions; flange-lip assemblies remain nearly in their original lines. Local-web dominated conventional mode.",
+              "numerical_audit_pass": true,
+              "QZ_max_relative_error": 4.743525572337148e-10,
+              "reference_residual_max": 1.677991313705353e-10,
+              "mesh_subspace_dimension": 1,
+              "pure_D_claim": false,
+              "accepted_for_own_conventional_critical_analysis": true,
+              "whole_member_approved": false,
+              "resistance_release": false
+            }
+          ],
+          "identified_distortional_critical_kNm": null,
+          "web_distortion_note": "No separate D valley identified in this lowest-branch signature. Absence of a visible D valley is not a waiver or a bound; consume the separate per-profile web-floor review."
+        },
+        "lips": {
+          "manual_atlas_review_complete": true,
+          "atlas": "outputs/tercas_ue100_family_critical_20261103/modal_review/t3.35/lips/mode_atlas.png",
+          "review_file": "outputs/tercas_ue100_family_critical_20261103/modal_review/t3.35/lips/REVIEW.json",
+          "review_sha256": "cc6d01fe0d6a9135b2fcbac14e8d5c66e39e2a7d448da22845ab31d786ba3d28",
+          "valleys": [
+            {
+              "artifact": "t3.35/lips/valley_0.npz",
+              "sha256": "affe6313848ca9202a317ba0ec06b37fdc698131d4293979d3420625c8bc74f4",
+              "L_mm": 40.2179712936465,
+              "eigenvalue_kNm": 55.63999493868789,
+              "classification": "local_conventional_predominant_near_doublet",
+              "manual_shape_observation": "Near-degenerate pair of plate-local flange/lip patterns; flange curves while primary junctions remain nearly fixed. Two-dimensional transverse eigenspace compared between meshes to avoid arbitrary sign or pair rotation.",
+              "numerical_audit_pass": true,
+              "QZ_max_relative_error": 6.139977415386966e-11,
+              "reference_residual_max": 3.720838619838418e-11,
+              "mesh_subspace_dimension": 2,
+              "pure_D_claim": false,
+              "accepted_for_own_conventional_critical_analysis": true,
+              "whole_member_approved": false,
+              "resistance_release": false
+            },
+            {
+              "artifact": "t3.35/lips/valley_1.npz",
+              "sha256": "550a9ba1de3ed0844841d08c3f22ec13d5923c40f3d0e0f8b35d4860dc6e38f1",
+              "L_mm": 296.0699536211233,
+              "eigenvalue_kNm": 14.379485122710209,
+              "classification": "distortional_conventional_predominant",
+              "manual_shape_observation": "Both flange-lip assemblies rotate as near-rigid components, with clear flange-lip junction motion and modest web flexure. Distortional-dominated conventional mode, not a pure constrained-D eigensolution.",
+              "numerical_audit_pass": true,
+              "QZ_max_relative_error": 2.12979367475441e-09,
+              "reference_residual_max": 1.175274403052509e-08,
+              "mesh_subspace_dimension": 1,
+              "pure_D_claim": false,
+              "accepted_for_own_conventional_critical_analysis": true,
+              "whole_member_approved": false,
+              "resistance_release": false
+            }
+          ],
+          "identified_distortional_critical_kNm": 14.379485122710209,
+          "web_distortion_note": null
+        }
+      }
+    }
+  ]
+}

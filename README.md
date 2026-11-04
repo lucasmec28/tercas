@@ -205,3 +205,40 @@ na travessa isolada. Históricos inconsistentes são recusados sem recálculo.
 
 Veja `docs/OWN_UE_ISOLATED_GIRT_20261104.txt`. A candidata foi preparada e testada
 em cópia; publicação e confirmação do runtime online são etapas separadas.
+
+## Teto biaxial com alma AA reduzível — cópia de 04/11/2026
+
+Opção explícita nas sete fontes próprias Ue, 3–6 m, para terça ou travessa
+isolada. Família, partição local e razão positiva permanecem três métodos
+separados. Usa o pacote portátil pinado, com mpmath 1.3.0; a alma pode ser
+reduzível enquanto mesas/lábios exigem prova de integralidade.
+
+O valor é **teto de componente**, nunca flecha exata. Teto ≤ limite declarado
+prova suficiência somente da componente no modelo. Teto acima do limite ou
+domínio inconclusivo fica pendente, sem reprovação ou recuperação escalar.
+P no limite do apoio está fora desta API e permanece preservado/pendente.
+Não há nova linha paralela/vertical, composição automática de métodos,
+requalificação histórica, ELS físico completo ou aprovação global.
+
+Detalhes: `docs/AA_WEB_COMPONENT_20261104.txt`. Cópia em qualificação, sem
+publicação e sem alteração da candidata R4 de origem.
+
+## Memória auditável — revisão de apresentação de 04/11/2026
+
+Sem alterar o motor, a MC acrescenta precisão técnica seletiva aos dados salvos,
+separa a origem do limite ELS da base do método e torna legível o traço M–V por
+combinação/posição. Dados ausentes não são reconstruídos. Pendências e não
+atendimentos do resumo salvo têm seus motivos expostos no Word e em uma seção
+recolhível da tela, sem nova avaliação ou aprovação. As duas casas usuais e o
+JSON permanecem preservados. Veja `docs/MC_PRESENTATION_20261104.txt`.
+
+## Complemento atual G8.1/H4 — candidata de 04/11/2026
+
+A verificação complementar de flexão e empenamento usa as ações ELU atuais
+NBR e capacidades AISI2024 separadas, sem importar MRd NBR. Calcula By/Ba
+para contornos próprios e H4 N=0 nos seis perfis elegíveis, com Mx/My/B
+concomitantes. Demanda AISI recalculada pelo mesmo solver, com constantes e
+fatores explícitos, sem alterar a análise NBR. Não rebatiza os48PP congelados.
+Veja `docs/AISI_CURRENT_INPUT_COMPONENT_20261104.txt` para escopo, sinais,
+fontes, faltas específicas e interpretação suficiente dos pisos. Sem publicação
+ou aprovação global.

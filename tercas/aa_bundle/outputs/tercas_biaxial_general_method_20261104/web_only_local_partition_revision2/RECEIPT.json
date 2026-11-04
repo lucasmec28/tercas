@@ -1,0 +1,54 @@
+{
+  "FSM_runs": 0,
+  "api_sha256": "82e8d55e16d3d0930979d13876d840665c37a02481f4f17ae728a6fa79110e6f",
+  "change_scope": [
+    "lexical_zero_significand_classification",
+    "family_revision2_dependency_path",
+    "dependency_pins"
+  ],
+  "date_utc": "2026-11-04",
+  "elapsed_seconds": 11.734,
+  "files": {
+    "CONTRACT.md": "ce2a99aba53f33183ac6ab8111eddd5933297fcc9aa5037656481626751b0336",
+    "FINDINGS.md": "a43d62b3fac05a05299a6ff3d211e12dd9a76ee86902f06b5e33b21767c30a13",
+    "MOTIVATING_RESULT.json": "b48f11ded1657b64a6516ea3cfd59fee69e452ba20ec958c693851f0b312c7a8",
+    "PRIOR_SUFFICIENT_RESULT.json": "1c54fc09d8e3edfb2f3d2cd702fe4c168c009750d3f65842951fb392e5b93c29",
+    "RED_REPRODUCTION.json": "f018875c6af27a83919c55c45c7843fb2fee1c21f02b3d86542941191221c3ee",
+    "SOURCE_MANIFEST.json": "a8ba233933a7040b5cb5ef5860861822968ca99d9c8e109c935dbe7241fb9ba9",
+    "TEST_PARSER_REVISION.log": "7315b6133fc27e02a80b85f5f9524e43e6cbba16cc654fa746d911b325efe6e8",
+    "api.py": "82e8d55e16d3d0930979d13876d840665c37a02481f4f17ae728a6fa79110e6f",
+    "test_parser_revision.py": "1dcde47d969a49090f1e5774a202a2e1f58620e2c14471fdc21ffa8c0cbdd0fc"
+  },
+  "full_prior_suites": 0,
+  "mathematical_equivalence": {
+    "budget_zero_inconclusive": true,
+    "excluded_keys": [
+      "source_manifest_sha256",
+      "source_pins",
+      "domain_binding_digest",
+      "local_domain_digest",
+      "binding_digest",
+      "partition_digest"
+    ],
+    "motivator_tree_controls_H_supports_green_extrema": true,
+    "prior_sufficient_nonproportional": true
+  },
+  "motivator_component_bounds_mm": [
+    0.0005621287530866161,
+    19.88099370020125
+  ],
+  "original_failure_preserved": true,
+  "physical_ELS_approved": false,
+  "prior_local_revision1_unchanged": {
+    "RECEIPT.json": "e438479525ba1196d568cebd7761fc3623dbcc2aca8fe7b9adab398eec0c69c9",
+    "SOURCE_MANIFEST.json": "49944f1a3fdb9ab5d3904f5e0e65c94ed92871090ce2957098fda50a65ad1ba6",
+    "api.py": "21c39d34197c48dc110cc254d475ec661baa40cd5e24f3ba0eaf93b715422809"
+  },
+  "published": false,
+  "solver_runs": 0,
+  "source_manifest_sha256": "a8ba233933a7040b5cb5ef5860861822968ca99d9c8e109c935dbe7241fb9ba9",
+  "status": "parser_delta_focal_pass_pending_independent_review",
+  "tests_passed": 10,
+  "tests_total": 10,
+  "whole_member_approved": false
+}

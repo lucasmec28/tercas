@@ -1,0 +1,134 @@
+AISI S100-2024: WEAK-AXIS REFERENCE ROUTE
+04 November 2026. Engineering research on six own Ue100x50x17 contours.
+
+PRIMARY SOURCE
+Official ANSI/SDI AISI S100-2024, with Commentary:
+https://sdi.org/wp-content/uploads/2025/01/ANSI-SDI-AISI-S100-2024-SDI-AISI-S100-2024-C.pdf
+Full-source digest and visually inspected pages are recorded in PRIMARY_SOURCE.json.
+No full standard is redistributed. Clause locators below use printed pages/PDF pages.
+
+FORMULA TRANSCRIPTION
+F2.1-2, p48/PDF93 and definition p49/PDF94: Y=My=Fy*Sf. Sf refers to the
+extreme fiber first reaching yield, in either tension or compression. It is not
+necessarily Sfc, which refers specifically to the compression extreme.
+F2.2-1/2, p50/PDF95: Mne=Mp*(1-.25*Mp/Mcre) when Mcre>.5*Mp;
+otherwise Mne=Mcre. Mp=Fy*Zf.
+F3.2-1 to -5, p52/PDF97: barM=min(Mne,My); lambda_l^2=barM/Mcrl;
+ks=Mp/My; Mnl=min[ks*barM*(1+.10*alpha_l*lambda_l^2)/(1+.55*beta_s*lambda_l^2),My3].
+F4-1 to -3, p54-55/PDF99-100: lambda_d^2=My/Mcrd;
+Mnd=min[Mp*(1+.07*alpha_d*lambda_d^2)/(1+.60*beta_s*lambda_d^2),My3].
+For both, My3=Mp-(Mp-My)/9; beta_s=max(.4,2*yc/d). Each slenderness must
+not exceed5. For this no-hole reference, available resistance factor phi=.90.
+
+GLOBAL WEAK REFERENCE
+Appendix2 2.3.1-1,-3,-6,-7, p2-3/2-4, PDF208/209; 2.3.1.2.2-1,
+p2-8/PDF213:
+Pex=pi^2*E*Ix/(Kx*Lx)^2; T=G*J+pi^2*E*Cw/(Kt*Lt)^2; Pt=T/r0^2.
+j=integral(x^3+x*y^2)dA/(2Iy)-x0, with x0=SCx-CGx.
+Mcre=Cb*Pex*[Cs*abs(j)+sqrt(j^2+T/Pex)].
+Cs=+1 for compression on the shear-center side, -1 for tension there.
+The abs(j) bars were verified visually; extracted text loses these bars.
+For Cs=-1 compute Mcre=Cb*T/[sqrt(j^2+T/Pex)+abs(j)] to avoid cancellation.
+The registry defines x0=CGx-SCx, opposite to the AISI variable; its j already
+has the correct combined value. Pex uses Ix STRONG, not Iy weak.
+Current reference: Cb=Kx=Kt=1; Lx=Lt=L; ideal fork supports; warping free;
+no sheeting or intermediate restraints; uniform pure end moments; N=0.
+App2.3 p2-2/2-3, PDF207/208, restricts the analytic route to its geometry/
+boundaries; transverse-load expressions assume shear-center application.
+Do not equate this reference to a real eccentric-load, combined-stress or
+changed-end-bimoment critical factor merely by taking Cb=1.
+
+GEOMETRY, SENSE AND ALPHA
+The depth perpendicular to WEAK bending is50mm, not100mm. yc changes from
+web distance to lip distance. beta_web=0.709483...0.714364;
+beta_lips=1.285636...1.290517. My uses the farther lip exterior fiber in both
+senses; that fiber is in tension when the web is compressed.
+F3.2 alpha_l and F4 alpha_d have different corner-displacement requirements.
+The algebraic floor removes their nonnegative reserve terms. This does not
+claim that either actual alpha is zero, nor that local alpha equals D alpha.
+The mode's corner translation cannot be inferred solely from the section name.
+
+DERIVED FLOOR, NOT A LITERAL NORMATIVE EQUATION
+P=F2.2 evaluated at Mp=My.
+L=P/(1+.55*beta_s*P/Mcrl).
+D=My/(1+.60*beta_s*My/Mcrd).
+Ma_floor=.90*min(P,L,D) when F4 applies. For the independently qualified
+pure weak-web component below, Ma_floor=.90*min(P,L) because F4 is not
+applicable. That is a limit-state applicability decision, not D=infinity.
+F2.2 is monotone in Mp up to its plateau, so P<=min(Mne,My). The function
+x/(1+a*x) is increasing for a>0. Removing ks>=1 and positive alpha terms
+therefore gives a lower value of F3.2 and F4. All floor branches are <=My,
+while My3>=My. This proof holds for beta_s>0, not only beta=1.
+The code uses sqrt(My/Mcrl)<=5, a sufficient bound on the REAL local
+slenderness; checking sqrt(P/Mcrl)<=5 alone would not establish the domain.
+Independent analytic review is in independent_review/REVIEW.md.
+
+ELASTIC INPUTS VERSUS PRIOR CAPACITIES
+Only geometry, first-yield moduli, conventional weak local/D critical modes,
+and the separate web spectral certificate were extracted. The preexisting
+candidate's elastic records are exactly equal to the original family register.
+Its NBR curve code, phi/gamma values and already-computed resistances were
+not imported. There is no import from any app or candidate in weak_capacity.py.
+Every source copy is pinned. Modes are the18 already reviewed own weak modes,
+not borrowed120x50x17 data and not a thickness-scaled1.20-mm curve.
+E203000/200000 scaling of these modes is separately checked at fixed nu=.3.
+Global formulas are recomputed using E203000 and G78000. The plate constitutive
+model uses its own consistent G=E/[2(1+nu)], as in the prior FSM; nominal AISI
+G78000 is not silently substituted into that isotropic plate matrix.
+
+WEB SPECTRAL DIAGNOSTIC
+A certificate establishes positive definiteness of K-Q*Kg throughout the
+same discrete wavelength range and infinite tail. At fixed nu, K scales
+linearly with E while Kg is unchanged. Scaling Q by203/200 preserves the
+certificate: Knew-Qnew*Kg=(203/200)*(Kold-Qold*Kg).
+The interval coefficient kernel was inspected; its constitutive C,G,F are
+linear in E, and its geometric coefficients contain no E. No expensive
+interval proof was repeated. The saved independent prior proof is preserved.
+Q therefore bounds every admissible D eigenvalue OF THAT DISCRETE PROBLEM,
+if such a mode exists. Since D(z)=My*z/(z+.60*beta*My) increases with z,
+D(Q) is a valid conditional scalar floor. sqrt(My/Q)<=5 also bounds the
+unknown real discrete lambda_d. Exact-rational scaling and downward-safe float
+conversion are recorded. This is neither an identified Mcrd nor a continuum
+proof, and provides no F4 exemption. This diagnostic is preserved separately
+from the following independently reviewed applicability decision.
+
+
+F4 APPLICABILITY RESOLVED FOR THE PURE WEAK-WEB COMPONENT ONLY
+Independent source/geometry review: f4_applicability/independent/PARECER.txt,
+manifest SHA2565d48a42b3a9b9bc7717a53574b5409ab22c81902154b9075ad3f787aa08ef248.
+AISI RP21-01 Example I item4 p10/PDF15 uses F2/F3 for weak bending with web
+compression of a lipped channel because the lips are in tension. It is primary
+AISI technical guidance, not a literal universal exclusion in S100-2024. Read
+with the unchanged relevant geometric scope of F4 and F1's applicable-limit-
+state rule, the independently checked six own profiles support the bounded
+interpretation F4_NOT_APPLICABLE_PURE_WEAK_WEB.
+Source: https://www.buildusingsteel.org/wp-content/uploads/2021/03/AISI-RP21-01-Development-of-Design-Tables-for-the-Cold-Formed-Steel-Cross-Sections-in-AISI-D100.pdf
+No prior-edition resistance law or sample capacity is copied.
+Independent four-point Gauss integration confirms the whole lip/corner material
+on both sides lies in tension in pure weak-web compression, including a safe
+t/2 envelope. Minimum clearances from the neutral axis are23.89–28.39mm.
+Six identities,12 negative controls, primary pages visually reviewed. The
+consumer pins and rechecks the reviewed geometry and interpretation evidence.
+It defines a pure component with N=Mx=B=V=T=0 and nonzero weak moment in
+web compression; no holes/intermediate stiffeners, prismatic frozen topology.
+Mcrd and Mnd remain null with the NOT_APPLICABLE classification, never infinity.
+F2 and F3 still apply. RP21's fully braced example does not eliminate the
+unbraced global buckling calculation in this bundle. This decision does not
+assert continuum absence of every instability or waive D in a real combined
+field. A pure-action denominator can be used only inside a separately justified
+interaction and demand domain; no H4 result is calculated here.
+
+H4 INTEGRATION GATES
+1. Resolve physical compression side, not an unqualified sign. The saved FSM
+   uses sigma_compression=-My*x/Iy: positive My compresses the web. Vlasov's
+   sigma_tension=-My*x/Iy means positive My compresses the lips. Helpers differ
+   intentionally. Zero weak moment has no compressed side.
+2. Reference capacities do not verify combined-demand stability. Real support,
+   load-height, moment variation, warping restraints and C1 must be justified.
+3. These are principal-axis denominator references, not the resultant-axis
+   Mcre of Appendix2.3.1.2.5 nor a generalized-stress buckling solution.
+4. B4.1 dimension gates pass; A3 material/ductility and B7 actual delivered
+   thickness remain unverified. No cold-work increase, holes or tension-only
+   restraint is introduced. No girt/tie-rod design is performed.
+5. No revised H4, Wagner shear recovery, G8.2 completion, serviceability,
+   connection/local load introduction or whole-member approval is claimed.

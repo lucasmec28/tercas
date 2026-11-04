@@ -1,0 +1,56 @@
+VERIFICAÇÃO COMPLEMENTAR DE FLEXÃO E EMPENAMENTO — CRITÉRIO AISI2024
+
+As combinações ELU existentes continuam sendo as do projeto NBR14762. Não são
+renomeadas como combinações LRFD AISI. O complemento usa somente capacidades
+AISI (F2/F3/F4 e G8.1) em H4, sem reutilizar MRd NBR. NBR9.8/9.9, AA, MC,
+modos de cálculo anteriores e painel de48PP congelados são preservados.
+
+Entradas: geometria própria, Fy atual, ações atuais com PP único, posiçõesP e
+linhas declaradas. Nova análise separada usa o solver Vlasov já existente com
+Ea=.9×203000 e Ga=.9×78000MPa. O fator.9é rigidez de análise, não um fator
+adicional de resistência. As capacidades usam material nominal E203000,
+G78000MPa, Fy atual, φb=φB=.90 aplicados uma vez. A análise NBR não é alterada.
+G8.1: Bn=By=FyCw/max|ω|; Ba=.90By. Sem exigir Bp, Bcr ou novo autovalor
+combinado. Os fatores de material são expostos separadamente na memória.
+
+H4: N=0 em cada estado do solver, soma de magnitudes concomitantes de Mx/Max,
+My/May e B/Ba. O envelope particiona zeros dos componentes e extremos da soma
+polinomial em todo o campo longitudinal existente. My físico positivo comprime
+lábios, negativo alma. A capacidade fraca por lado vem de fonte própria pinada;
+F4 não aplicável na alma é somente o componente puro definidor do denominador,
+não uma dispensa de D para campo misto. Os pisos algébricos fornecem condição
+suficiente: índice≤1 satisfaz o componente condicional; >1 é inconclusivo pelo
+piso, não prova de falha da capacidade literal AISI.
+
+Domínio reutilizado H4: seis contornos próprios Ue100×50×17, ri=t,
+t1.50/2/2.25/2.65/3/3.35, L3–6m, Fy≤655MPa e λDSM≤5, garfos ideais,
+empenamento livre, sem furos e membro isolado. É limite desta implementação,
+não limite geral de G8.1/H4. G8.1 By também funciona no contorno próprio t1.20;
+H4 indica ausência específica de capacidades. Material/produto real não é
+certificado; fontes antigas não são alteradas nem suas flags gerais usadas
+como bloqueio automático da correspondência agora verificada.
+
+Primeira ordem racional de membro isolado N=0: P–δ/P–Δ axiais nulos.
+Não declara certificação das rotas estruturais C1.2/C1.3. O aviso pré-existente
+de giro não é limite normativo novo. Cisalhamento/interações continuam
+separados; G8.2 reservado. Serviço, introdução local, ligações, tirantes e
+ancoragens conservam verificações próprias. Nunca aprovação global.
+
+TRAVESSAS E TIRANTES
+three_girt_frame.py é6DOF Euler–Bernoulli/GJ, bilateral deprimeiraordem;
+seus estados N/M/V/T_SC não contêm B nem empenamentoECw. A nova memória
+explicita essa falta, sem chamar T de B nem substituir o modelo por terça.
+By é mostrado quando o contorno setorial próprio existe, mesmo sem demandaB.
+N≠0 não é H4 reduzido. A resistência dos tirantes não é calculada.
+
+Fontes pinadas: aisi_research inalterado e cópia exata de106arquivos do pacote
+fraco com manifesto f634a4809f1fbe97a93f973f0afecfd17b59eaa040f0689bce69740e40d5f835.
+Memória é um snapshot novo independente. Abrir/exportar não recalcula nem
+requalifica snapshots históricos. Publicação não realizada.
+
+EXCENTRICIDADES
+As linhas de cada ação produzem torque em relação ao centro de cisalhamento
+na configuração inicial. As forças mantêm direção fixa. Os denominadores
+puros Cb=1 não são apresentados como autovalor do carregamento misto atual;
+efeitos geométricos de altura de carga ou Wagner não são incluídos. Essa
+limitação está explícita no complemento, sem inventar dados nem novo modelo.

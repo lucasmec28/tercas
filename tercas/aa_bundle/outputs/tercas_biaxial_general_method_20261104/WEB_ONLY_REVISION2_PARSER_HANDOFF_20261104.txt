@@ -1,0 +1,41 @@
+ATUALIZAÇÃO FINAL DOS PINS DE PESQUISA: PARSER JSON
+04/11/2026 06:17 UTC
+
+Substitui apenas os pins de consumo do handoff de família/partição
+WEB_ONLY_FAMILY_PARTITION_HANDOFF_20261104.txt. Seus resultados matemáticos,
+limites, contratos físicos e verificações permanecem válidos. O arquivo
+anterior e as versões1 não foram reescritos. Nenhuma candidata/app alterada.
+
+Falha comprovada: um número JSON com expoente negativo maior que o limite
+interno do Decimal escapava como InvalidOperation e alterava um flag do
+chamador. O delta reconhece zero textual lexicalmente pelo significando,
+sem construir Decimal de expoente arbitrário. Zero é preservado; underflow
+nãozero e overflow são recusados. Não há arredondamento de cargas para zero.
+
+FAMÍLIA NOVA
+Pasta web_only_family_api_revision2
+API b2406ea7836f591c6bf99566d8396ed4d8cdd29654343d48b822c05ac7658c87
+Manifesto b2c5e25d350be488c52046a97573fb2f9feb95dfe552d2f8126be1a0a446e794
+Core 9722bcf88b4d9697a2e816d0c21713b7e3b54736bf1246b8d0cc39509a331d42
+Recibo do autor 70f7d5367aef2c67cd5717549ae56af33b7965c043de9ba9f89a14b1c2d7ed68
+Seis grupos focais passaram e seis casos R01/t1,50 reproduzem exatamente
+a matemática anterior. Geometria e bound_core são byte-idênticos.
+
+PARTIÇÃO NOVA
+Pasta web_only_local_partition_revision2
+API 82e8d55e16d3d0930979d13876d840665c37a02481f4f17ae728a6fa79110e6f
+Manifesto a8ba233933a7040b5cb5ef5860861822968ca99d9c8e109c935dbe7241fb9ba9
+Recibo do autor 1bde4fc82fadca4e88efca7fe1694baefbca61ba62b34cada4800746e47dc6cc
+Dez testes focais passaram, com identidade de todos os valores do motivador
+e do caso anterior suficiente após excluir apenas pins/bindings.
+
+REVISÃO INDEPENDENTE
+Pasta web_only_json_exponent_audit
+Recibo 3b636ca425ab8abc742016241eb25743dec13df723bbd937f35f8aa7e6adb547
+44 tokens nos wrappers, 11 no núcleo, contextos hostis preservados, inteiro
+exato e subnormal nãozero preservados. AST de40 funções/classes não parser
+idêntico; não houve repetição de matemática/FSM/app. Falha original salva.
+
+Continuam sendo tetos suficientes da componente no modelo AA declarado,
+não flecha real, índice, resistência ou aprovação ELS físico/global.
+Integração/empacotamento e publicação permanecem separados desta pesquisa.

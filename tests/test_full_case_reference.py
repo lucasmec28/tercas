@@ -10,6 +10,7 @@ from docx import Document
 from tercas.application import defaults,calculate,rows
 from tercas.batch import calculate_batch
 from tercas.report import batch_word,word
+from tercas.report_audit import technical_value
 
 ORACLE=json.loads((Path(__file__).parent/'fixtures/full_case_oracle_20261103.json').read_text())
 
@@ -82,8 +83,11 @@ class FullCaseReference(unittest.TestCase):
  def test_MC_keeps_strong_inputs_failure_and_physical_scope(self):
   r=self.batches[130.];before=copy.deepcopy(r);doc=Document(BytesIO(batch_word(r)))
   s='\n'.join([p.text for p in doc.paragraphs]+[c.text for t in doc.tables for row in t.rows for c in row.cells])
-  for token in ('J_mm4','130,00','4590000,00','4610000,00','Não atende','NÃO É APROVAÇÃO GLOBAL','sem travamento da telha'):
+  for token in ('J_mm4','4590000,00','4610000,00','Não atende','NÃO É APROVAÇÃO GLOBAL','sem travamento da telha'):
    self.assertIn(token,s)
+  table=next(t for t in doc.tables if t.rows[0].cells[0].text=='Campo e unidade')
+  values={row.cells[0].text:row.cells[1].text for row in table.rows[1:]}
+  self.assertEqual(values['J_mm4'],technical_value(r['common_input_snapshot']['selected_section']['fields']['J_mm4']['value']))
   self.assertEqual(r,before)
 
 if __name__=='__main__':unittest.main(verbosity=2)

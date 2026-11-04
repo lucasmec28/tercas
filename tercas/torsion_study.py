@@ -115,6 +115,8 @@ def attach(result):
         'Hipótese R01 da referência própria: garfo ideal, empenamento livre; não comprova ligação real.')
         for side in ('left','right')}
     out = attach_torsion_evidence(result, section=section, load_lines=lines, supports=supports)
+    from .aisi_torsion_component import attach_dense
+    out = attach_dense(out, section)
     out['torsion_evidence'] = summarize_torsion_evidence(out['torsion_evidence'])
     out['torsion_evidence']['choice_snapshot'] = copy.deepcopy(c)
     out['torsion_evidence']['scope_pt'] = SCOPE

@@ -1,0 +1,269 @@
+{
+  "schema": "independent_saved_valley_review_v1",
+  "producer_result": "outputs/tercas_ue100_family_critical_20261103/producer/t2.00/lips/RESULT.json",
+  "producer_result_sha256": "9dff6571ac840c169eaae5d1de9dd6abeaf1cc1ff403625c6f9e75c8eb9fb797",
+  "profile_id": "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce",
+  "thickness_mm": 2.0,
+  "state": "lips",
+  "valleys": [
+    {
+      "L_mm": 41.46349169449415,
+      "matrix_relative_errors": {
+        "K": 3.8947240979835774e-16,
+        "G": 3.1441539309245414e-16
+      },
+      "eigenvalues_kNm": [
+        12.086244455138075,
+        12.086350658483495,
+        36.36752485797009,
+        36.367546523998264,
+        110.4795340369523,
+        110.481607587845,
+        253.4454041095594,
+        253.44706963387566
+      ],
+      "QZ_kNm": [
+        12.08624445525084,
+        12.086350658637029,
+        36.36752485817244,
+        36.36754652450485,
+        110.47953403590871,
+        110.481607589124,
+        253.44540410965732,
+        253.44706963335437
+      ],
+      "QZ_max_relative_error": 1.3929746245366914e-11,
+      "reference_residuals": [
+        6.705112970041697e-11,
+        8.179283511887524e-11,
+        2.7757696518083888e-11,
+        2.8307312653945866e-11,
+        3.585314375151247e-11,
+        3.329279964708306e-11,
+        9.430725268305265e-12,
+        1.2045052086807999e-11
+      ],
+      "elapsed_s": 1.3978330130048562,
+      "artifact": "t2.00/lips/valley_0.npz",
+      "sha256": "025f3cff1d30006113538162ed255d57880374f3f287dd09ebf6e0896d0f3a67",
+      "resultants": [
+        -6.768630100850714e-11,
+        -3.3296601031906903e-09,
+        -999999.9999999978
+      ],
+      "shape_descriptive_metrics": [
+        {
+          "whole": {
+            "displacement_residual_over_total": 0.9272692679726611,
+            "rotation_rad_at_raw_amplitude": -9.244033564752502e-05,
+            "translation_mm_at_raw_amplitude": [
+              -1.1623609153773362e-09,
+              -0.002961770659578064
+            ]
+          },
+          "lower_flange_lip": {
+            "displacement_residual_over_total": 0.762014102933768,
+            "rotation_rad_at_raw_amplitude": 0.00045610531630040275,
+            "translation_mm_at_raw_amplitude": [
+              -0.008797081377680848,
+              -0.005707626048844122
+            ]
+          },
+          "upper_flange_lip": {
+            "displacement_residual_over_total": 0.7620141029232578,
+            "rotation_rad_at_raw_amplitude": 0.000456105065639016,
+            "translation_mm_at_raw_amplitude": [
+              0.008797076542787401,
+              -0.005707622912132023
+            ]
+          },
+          "web": {
+            "displacement_residual_over_total": 0.22029837805473756,
+            "rotation_rad_at_raw_amplitude": 2.619250692580732e-05,
+            "translation_mm_at_raw_amplitude": [
+              1.6208128952178523e-10,
+              -3.177591310463468e-05
+            ]
+          }
+        },
+        {
+          "whole": {
+            "displacement_residual_over_total": 0.9521714111321221,
+            "rotation_rad_at_raw_amplitude": 2.540296282455098e-11,
+            "translation_mm_at_raw_amplitude": [
+              -0.004229733069570651,
+              8.13921325054223e-10
+            ]
+          },
+          "lower_flange_lip": {
+            "displacement_residual_over_total": 0.7620329309466752,
+            "rotation_rad_at_raw_amplitude": 0.00045606839329353637,
+            "translation_mm_at_raw_amplitude": [
+              -0.008796882146007703,
+              -0.00570725905014021
+            ]
+          },
+          "upper_flange_lip": {
+            "displacement_residual_over_total": 0.7620329309361655,
+            "rotation_rad_at_raw_amplitude": -0.0004560686439713281,
+            "translation_mm_at_raw_amplitude": [
+              -0.008796886980920713,
+              0.00570726218715543
+            ]
+          },
+          "web": {
+            "displacement_residual_over_total": 0.5739390661651547,
+            "rotation_rad_at_raw_amplitude": -7.197751587078975e-12,
+            "translation_mm_at_raw_amplitude": [
+              0.0005897991648838571,
+              8.732029771003935e-12
+            ]
+          }
+        }
+      ],
+      "coarse_157_first_eigenvalue_kNm": 12.086788270066776,
+      "mesh_209_vs157_relative": -4.49925088906733e-05,
+      "mesh_modal_subspace_dimension": 2,
+      "mesh_transverse_principal_cosines": [
+        0.9999999913905776,
+        0.9999999913868585
+      ],
+      "neighbor_minimum_verified": true,
+      "classification": "pending_manual_shape_review"
+    },
+    {
+      "L_mm": 413.0770852956704,
+      "matrix_relative_errors": {
+        "K": 2.9581306064594722e-16,
+        "G": 1.937154083726453e-16
+      },
+      "eigenvalues_kNm": [
+        4.822053201043427,
+        6.600738545913275,
+        67.1876942229757,
+        81.43897823172453,
+        669.1478678732221,
+        688.8572853677392,
+        2605.3944097341887,
+        2609.5828456110135
+      ],
+      "QZ_kNm": [
+        4.822054855464248,
+        6.600738659480173,
+        67.18769360622612,
+        81.43897728243473,
+        669.147865903962,
+        688.8572843775393,
+        2605.3944097406343,
+        2609.582845588588
+      ],
+      "QZ_max_relative_error": 3.4309468444071456e-07,
+      "reference_residuals": [
+        8.29598016453355e-08,
+        6.25879960706804e-08,
+        5.867133101388541e-09,
+        5.006919971991018e-09,
+        7.213581110260473e-10,
+        5.786540304453768e-10,
+        1.098906652762755e-10,
+        1.1739693231999365e-10
+      ],
+      "elapsed_s": 1.357541236007819,
+      "artifact": "t2.00/lips/valley_1.npz",
+      "sha256": "3430946c5bb82992043b6cd0240c5002a28fee6e0c618b3e3cec1db5a726999b",
+      "resultants": [
+        -6.768630100850714e-11,
+        -3.3296601031906903e-09,
+        -999999.9999999978
+      ],
+      "shape_descriptive_metrics": [
+        {
+          "whole": {
+            "displacement_residual_over_total": 0.9432673852875634,
+            "rotation_rad_at_raw_amplitude": 6.425162445489683e-12,
+            "translation_mm_at_raw_amplitude": [
+              -0.09214601590761937,
+              1.1349737443353098e-09
+            ]
+          },
+          "lower_flange_lip": {
+            "displacement_residual_over_total": 0.018083488754038427,
+            "rotation_rad_at_raw_amplitude": 0.009920738296287914,
+            "translation_mm_at_raw_amplitude": [
+              -0.06921173169923513,
+              0.3291960624378297
+            ]
+          },
+          "upper_flange_lip": {
+            "displacement_residual_over_total": 0.018083488583371953,
+            "rotation_rad_at_raw_amplitude": -0.009920738159505393,
+            "translation_mm_at_raw_amplitude": [
+              -0.06921173092561086,
+              -0.32919605808190283
+            ]
+          },
+          "web": {
+            "displacement_residual_over_total": 0.25068509286267304,
+            "rotation_rad_at_raw_amplitude": -1.158416219895434e-11,
+            "translation_mm_at_raw_amplitude": [
+              -0.143419375734525,
+              5.271232802959169e-11
+            ]
+          }
+        },
+        {
+          "whole": {
+            "displacement_residual_over_total": 0.7126416501938662,
+            "rotation_rad_at_raw_amplitude": 0.0009901789659466365,
+            "translation_mm_at_raw_amplitude": [
+              4.675449674262987e-10,
+              0.14301695913143578
+            ]
+          },
+          "lower_flange_lip": {
+            "displacement_residual_over_total": 0.029565477008181983,
+            "rotation_rad_at_raw_amplitude": 0.0082200564403135,
+            "translation_mm_at_raw_amplitude": [
+              -0.033960197991073846,
+              0.2690397567702769
+            ]
+          },
+          "upper_flange_lip": {
+            "displacement_residual_over_total": 0.029565476861848492,
+            "rotation_rad_at_raw_amplitude": 0.008220056558541244,
+            "translation_mm_at_raw_amplitude": [
+              0.03396019867065574,
+              0.269039760674631
+            ]
+          },
+          "web": {
+            "displacement_residual_over_total": 0.3588962334876157,
+            "rotation_rad_at_raw_amplitude": -0.0011162387467577254,
+            "translation_mm_at_raw_amplitude": [
+              7.57367229709423e-10,
+              0.012226542012897761
+            ]
+          }
+        }
+      ],
+      "coarse_157_first_eigenvalue_kNm": 4.822237280445232,
+      "mesh_209_vs157_relative": -3.817302863784455e-05,
+      "mesh_modal_subspace_dimension": 1,
+      "mesh_transverse_principal_cosines": [
+        0.9999999994269728
+      ],
+      "neighbor_minimum_verified": true,
+      "classification": "pending_manual_shape_review"
+    }
+  ],
+  "source_hashes": {
+    "outputs/tercas_ue100_family_critical_20261103/producer/t2.00/lips/RESULT.json": "9dff6571ac840c169eaae5d1de9dd6abeaf1cc1ff403625c6f9e75c8eb9fb797",
+    "outputs/tercas_ue100_family_critical_20261103/producer/t2.00/lips/valley_0.npz": "025f3cff1d30006113538162ed255d57880374f3f287dd09ebf6e0896d0f3a67",
+    "outputs/tercas_ue100_family_critical_20261103/producer/t2.00/lips/valley_1.npz": "3430946c5bb82992043b6cd0240c5002a28fee6e0c618b3e3cec1db5a726999b"
+  },
+  "source_files_unmodified": true,
+  "atlas": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.00/lips/mode_atlas.png",
+  "scope": "Saved valleys and nearby conventional shapes, own-model identity; matrix/QZ, residual and 157-to209 subspace comparison. Descriptive rigid fits are not cFSM mode fractions or normative acceptance limits.",
+  "not_evaluated_grid_count": 18,
+  "classification_pending": true
+}

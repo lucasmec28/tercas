@@ -1,0 +1,34 @@
+REVISÃO INDEPENDENTE DO COMPARADOR AISI2024
+04/11/2026. Sem editar fontes do autor. Resultados reproduzíveis: review.py e TEST_RESULTS.json neste diretório.
+
+RESULTADO
+PASS condicional para álgebra, escala de material no mesmo autoproblema e cálculos dos48 casos. Nenhuma liberação global/física. Fonte revisada aisi_candidate.py SHA256 5a8d6b14d94a935f36a0522099ae966d4571c459694fc924c9466939b5d780e3.
+
+TESTES EXECUTADOS
+-20.000 conjuntos aleatórios de My,Mp,Mcre,Mcrl,Mcrd e αl/αd=0/1: piso calculado pelo autor nunca superou a resistência das fórmulas completas F2.2/F3.2/F4 reimplementadas independentemente no teste. Máxima razão0,99999939.
+-48 registros: conferência de H4, B no meio, Mx concomitante, Ba, Mcre global, estação crítica mediante grade401 pontos, larguras planas B4 calculadas da geometria externa/ri e simetria em relação ao eixo forte.
+-Testes negativos: β≠1 e λl/λd fora do domínio rejeitados.
+-Material: nova montagem das matrizes do caso t2.25 local com E200000 e203000, ν=.30; diferença relativa K-1,015Koriginal=1,43e-16; matriz geométrica idêntica. Código strip() confirma que E só multiplica a matriz constitutiva elástica enquanto Kg depende da tensão de referência. A prova cobre o mesmo problema discreto, não uma prova independente da exatidão física do FSM.
+
+PROVA DO PISO E GATES
+O piso P de F2 é crescente na substituição Mp>=My e não ultrapassa My. F3 usa Mne_bar=min(Mne,My), não o Mne sem teto, e ks=Mp/My. Como P<=Mne_bar, ks>=1, αs>=0 e x/(1+ax) é crescente para x,a positivos, o piso local vale. F4 suprime Mp/My>=1 e numerador>=1. My3=(8Mp+My)/9>=My não invalida esses limites. O piso é um limite algébrico condicionado aos mesmos dados elásticos, não capacidade literal publicada nem limite inferior universal da realidade.
+O teste sqrt(My/Mcrl)<=5 é suficiente para o λl REAL, não apenas para seu piso. λd usa My diretamente. β=1 foi verificado pela simetria geométrica forte. B4 dimensional está coerente com DSM: h/t300,b/t160,d/t60,ri/t20,do/bo.7,Fy655; material/ductilidade A3, espessura entregue, qualidade B7 e adequação de apoios continuam expressamente fora do passe.
+Os críticos de flexão usados precisam continuar qualificados como modos locais/distorcionais para a seção/carga correspondentes. Não se convertem em críticos de empenamento. O uso de By é a opção G8.1 expressa; o comparador corretamente não afirma By como limite físico conservador universal.
+H4 no meio é correto para o caso ideal uniforme, com capacidades constantes e garfos/empenamento livre: |Mx| e |B| atingem seu máximo concomitantemente no meio. O caso PPcoef1 e controle1% não são combinações de projeto AISI. Nenhum resultado permite alterar whole_member_approved=False.
+
+CISALHAMENTO: O QUE A FONTE DIZ E O QUE NÃO DIZ
+1. O comentário G8 p.102/PDF370 contém um critério explícito de mecanismo, confirmado visualmente na página:
+   Lt<0,5*sqrt(ECw/GJ): torção pura pode ser desprezada.
+   Lt>20*sqrt(ECw/GJ): empenamento pode ser desprezado.
+   p.103/PDF371: perto de3*sqrt(ECw/GJ) os mecanismos contribuem de forma semelhante.
+   A variável é o comprimento destravado para GIRO, não automaticamente a meia onda local/distorcional, nem a distância entre pontos de inflexão.
+2. O mesmo comentário reconhece efeito maior das tensões longitudinais de empenamento que das tangenciais para capacidade de membros, explica por que G8.1 foca nelas e declara não haver estado-limite prescritivo de cisalhamento Saint-Venant. H4 comenta empenamento como preocupação principal, mas não fornece limite tau/Fy nem dispensa categórica de tau_w ou tau_SV para todo canal usual.
+3. G8.2 reservado NÃO proíbe aplicação de H4. H4 é aplicável e é uma verificação longitudinal válida dentro do domínio; a edição2024 deliberadamente a oferece. Não se deve dizer 'não existe dimensionamento AISI de canal com torção' nem 'H4 só pode ser usado depois de GMNIA'.
+4. Também não se localizou autorização para chamar H4 um cheque completo de qualquer torsão. B3 p.22/PDF67 exige não exceder nenhum estado resistente/de serviço aplicável. A consequência de avaliar a relevância do cisalhamento, eventualmente por A1.2.6(c), é uma interpretação de cobertura técnica consistente com B3 e com a lacuna reconhecida em G8, não um comando textual que obrigue sempre um modelo específico. Se for demonstrado que um estado tangencial não é relevante, não se precisa inventar uma verificação desnecessária. Essa demonstração deve ser específica e rastreável.
+5. Nos48 casos, Lt*sqrt(GJ/ECw)=1,731856 a8,424337. Nenhum satisfaz o critério explícito de desprezo da torção pura. Reduzir a carga a1% não muda esse número, embora reduza as tensões e possa tornar sua utilização resistente pequena. Não atender ao critério não prova insegurança; apenas impede essa justificativa de desprezo.
+6. Diagnóstico independente adicional, derivado da mesma solução uniforme: no apoio, a fração Saint-Venant do torque total é1-2*tanh(kL/2)/(kL), k=sqrt(GJ/ECw). Ela varia de19,24% a76,27%. É uma fração de torque, NÃO de tensão, energia ou resistência. Não convertê-la em falha ou margem de segurança. Ela confirma que não convém declarar SV sempre inexistente no lote.
+
+FONTES
+ANSI/SDI AISI S100-2024 e comentário, documento oficial já consultado integralmente:
+https://sdi.org/wp-content/uploads/2025/01/ANSI-SDI-AISI-S100-2024-SDI-AISI-S100-2024-C.pdf
+Cláusulas: B3 p.22/PDF67; B4 p.25–26/PDF70–71; F2.2/F3.2/F4 p.50–55/PDF95–100; G8.1/G8.2 p.67–68/PDF112–113; H4 p.73–74/PDF118–119; comentárioG8 p.102–103/PDF370–371 eH4 p.113/PDF381. Sem nova condição universal de desprezo tangencial encontrada nos estudos primários Xia2022/2023 revisados anteriormente.

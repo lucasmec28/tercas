@@ -1,0 +1,38 @@
+GREEN DIAGNOSTIC PROVENANCE CLARIFICATION — 2026-11-04
+This addendum does not alter or rerun the frozen audit, REPORT.txt, or RECEIPT.json.
+
+The distinction requested by the coordinator is correct for run.py alone:
+its initial Green summary converts saved curvature endpoints to binary64,
+multiplies by a binary64 factor, and saves the resulting decimal spelling.
+That calculation is not outward directed. Those initial diagnostic floats
+must not be used to emit a criterion. An independent Decimal reference cannot
+retroactively turn those floats into certified outward values.
+
+However, the actual frozen files reviewed by this audit are the subsequent
+analyze.py outputs, not the initial run.py-only outputs. analyze.py explicitly
+REPLACES q_only_Green_component_absolute_envelopes_mm using precision-60
+Decimal ROUND_CEILING, saved decimal curvature endpoints, and exact 5 L^2/48.
+metadata_checks.py compared against these replaced values. Thus the final
+paragraph of REPORT.txt describes the frozen postprocessed metadata, rather
+than claiming outward rounding for run.py's original binary64 diagnostic.
+
+Concrete evidence: frozen target_t150_L6000.json SHA256
+69b0781667c1775aaff607aac2c460183a700e0e7ef829a9273ca0a41c842fe7
+contains ratio12 components
+0.203303475850108705297838194074234694359683790377841123307300
+146.27429435933482483370254617968609833437181839655609813220
+and a Green_diagnostic_note identifying the upward-rounded 60-digit product.
+This is the same input hash pinned by the audit receipt. analyze.py SHA256:
+8ee465dc4b712600d8cfdd17f65a81d5883cf32c02c695184e43976247178f96.
+
+Even that postprocessing is only a directed arithmetic composition relative
+to the saved endpoints. It does not convert the underlying padded mpmath
+computation into formal interval arithmetic, establish actual displacement,
+or qualify the experimental summary for physical/global criteria. The focal
+audit's substantive finding remains the material/nonweb guard improvement
+and independently reconstructed sectional support bounds.
+
+Any future API extraction is to use the separately reviewed rational
+compositor and outward upper_float conversion, not the initial binary64
+summary or an unreviewed reuse of this experimental postprocessing. This
+addendum does not audit or approve that future integration.

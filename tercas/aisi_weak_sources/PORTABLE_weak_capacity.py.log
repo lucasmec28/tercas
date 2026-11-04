@@ -1,0 +1,252 @@
+{
+  "reference_cases": 48,
+  "conditional_lips_cases": 24,
+  "conditional_web_F2_F3_cases": 24,
+  "strict_web_cases_blocked": 0,
+  "web_discrete_diagnostics": 24,
+  "baseline_web": {
+    "profile_id": "OWN_Ue100x50x17_t1p50_ri1p50_n12_a16_v1_cd50bf66f299",
+    "thickness_mm": 1.5,
+    "L_mm": 4000.0,
+    "compressed_side": "web",
+    "material": {
+      "E_MPa": 203000.0,
+      "G_MPa": 78000.0,
+      "nu_plate": 0.3,
+      "Fy_MPa": 250.0
+    },
+    "yield_and_asymmetry": {
+      "My_Nmm": 959959.5746390079,
+      "Sf_first_yield_mm3": 3839.8382985560315,
+      "Sfc_mm3": 6910.529197214472,
+      "depth_perpendicular_to_bending_axis_mm": 50.0,
+      "yc_mm": 17.859102491457765,
+      "beta_raw": 0.7143640996583106,
+      "beta": 0.7143640996583106,
+      "first_yield_fiber": "lips",
+      "first_yield_state": "tension"
+    },
+    "global_elastic": {
+      "Mcre_Nmm": 8590287.55305185,
+      "Pex_N": 67821.14842451627,
+      "Pt_N": 14836.434715828253,
+      "torsion_warping_stiffness_Nmm2": 56071501.12680069,
+      "j_AISI_mm": 60.066792107238506,
+      "abs_j_mm": 60.066792107238506,
+      "x0_AISI_mm": -42.440766782025776,
+      "x0_registry_mm": 42.440766782025776,
+      "Cs": 1,
+      "Cb": 1.0,
+      "clause": "AISI2024 A2 2.3.1.2.2-1",
+      "coordinates": "Own x increases from web to lips; Cs follows physical shear-center side, not moment-sign label"
+    },
+    "Mcrl_Nmm": 1729037.5187207554,
+    "Mcrd_identified_Nmm": null,
+    "Mcrd_kind": "not_applicable_pure_weak_web",
+    "F4_applicability": {
+      "classification": "F4_NOT_APPLICABLE_PURE_WEAK_WEB",
+      "Mcrd_Nmm": null,
+      "Mcrd_is_infinite": false,
+      "independent_manifest_sha256": "5d48a42b3a9b9bc7717a53574b5409ab22c81902154b9075ad3f787aa08ef248",
+      "lip_corner_clearance_lower_mm": 28.390897508542235,
+      "source": "AISI RP21-01 Example I item4 p10/PDF15, interpreted with AISI2024 F1/F4 scope",
+      "normative_universal_exclusion_clause": false,
+      "pure_component_only": true,
+      "mixed_field_waiver": false,
+      "F2_and_F3_still_required": true,
+      "fully_braced_RP21_assumption_transferred": false,
+      "physical_continuum_absence_proven": false
+    },
+    "partial_F2_F3": {
+      "Mne_floor_Nmm": 933140.8453691793,
+      "Mnl_floor_Nmm": 769890.5170603758,
+      "Ma_F2_F3_only_Nmm": 692901.4653543382,
+      "lambda_local_true_sufficient_upper": 0.7451166425741537,
+      "F4_not_resolved_by_this_partial_result": true
+    },
+    "dimensional_gate": {
+      "passed": true,
+      "checks": {
+        "stiffened_web_uniform_compression": true,
+        "stiffened_element_bending": true,
+        "edge_stiffened_element": true,
+        "unstiffened_lip": true,
+        "inside_R_t": true,
+        "lip_ratio": true,
+        "no_intermediate_stiffeners": true,
+        "Fy": true
+      },
+      "h_t": 62.666666666666664,
+      "b_t": 29.333333333333332,
+      "d_t": 9.333333333333334,
+      "scope": "B4.1 numerical geometry/material-range only; A3 material and B7 delivered thickness remain unverified"
+    },
+    "reference_formula_floor": {
+      "Mne_floor_Nmm": 933140.8453691793,
+      "Mnl_floor_Nmm": 769890.5170603758,
+      "Mnd_floor_Nmm": null,
+      "Mn_floor_Nmm": 769890.5170603758,
+      "Ma_formula_floor_Nmm": 692901.4653543382,
+      "phi_b": 0.9,
+      "beta": 0.7143640996583106,
+      "lambda_local_true_sufficient_upper": 0.7451166425741537,
+      "lambda_dist_true_upper": null,
+      "branches_controlling_floor": [
+        "F3"
+      ],
+      "literal_AISI_strength": false,
+      "physical_lower_bound_proven": false,
+      "F4_non_applicability": "F4_NOT_APPLICABLE_PURE_WEAK_WEB"
+    },
+    "Ma_reference_floor_Nmm": 692901.4653543382,
+    "status": "CONDITIONAL_IDEAL_REFERENCE_FLOOR",
+    "H4_for_actual_member_eligible": false,
+    "whole_member_approved": false,
+    "NBR_capacities_used": false,
+    "modal_scope": "Inherited 209-node conventional signature minima, not exact eigenvalues for each finite span or all boundary conditions",
+    "pending": [
+      "Actual product/material A3 and B7",
+      "Demand C1 and actual load/support correspondence",
+      "Combined Mx+My+B/Wagner/shear and their stability domain",
+      "No transfer to external girts or changed end bimoment conditions",
+      "F4 pure-web component interpretation is not a combined-field D waiver"
+    ]
+  },
+  "baseline_lips": {
+    "profile_id": "OWN_Ue100x50x17_t1p50_ri1p50_n12_a16_v1_cd50bf66f299",
+    "thickness_mm": 1.5,
+    "L_mm": 4000.0,
+    "compressed_side": "lips",
+    "material": {
+      "E_MPa": 203000.0,
+      "G_MPa": 78000.0,
+      "nu_plate": 0.3,
+      "Fy_MPa": 250.0
+    },
+    "yield_and_asymmetry": {
+      "My_Nmm": 959959.5746390079,
+      "Sf_first_yield_mm3": 3839.8382985560315,
+      "Sfc_mm3": 3839.8382985560315,
+      "depth_perpendicular_to_bending_axis_mm": 50.0,
+      "yc_mm": 32.14089750854224,
+      "beta_raw": 1.2856359003416895,
+      "beta": 1.2856359003416895,
+      "first_yield_fiber": "lips",
+      "first_yield_state": "compression"
+    },
+    "global_elastic": {
+      "Mcre_Nmm": 442689.90727268,
+      "Pex_N": 67821.14842451627,
+      "Pt_N": 14836.434715828253,
+      "torsion_warping_stiffness_Nmm2": 56071501.12680069,
+      "j_AISI_mm": 60.066792107238506,
+      "abs_j_mm": 60.066792107238506,
+      "x0_AISI_mm": -42.440766782025776,
+      "x0_registry_mm": 42.440766782025776,
+      "Cs": -1,
+      "Cb": 1.0,
+      "clause": "AISI2024 A2 2.3.1.2.2-1",
+      "coordinates": "Own x increases from web to lips; Cs follows physical shear-center side, not moment-sign label"
+    },
+    "Mcrl_Nmm": 5194759.959405805,
+    "Mcrd_identified_Nmm": 2687006.654701649,
+    "Mcrd_kind": "own_conventional_distortional_valley",
+    "F4_applicability": {
+      "classification": "F4_APPLICABLE_LIPS_COMPRESSED",
+      "pure_component_only": true,
+      "mixed_field_waiver": false
+    },
+    "partial_F2_F3": {
+      "Mne_floor_Nmm": 442689.90727268,
+      "Mnl_floor_Nmm": 417530.35699316784,
+      "Ma_F2_F3_only_Nmm": 375777.32129385107,
+      "lambda_local_true_sufficient_upper": 0.4298765256074771,
+      "F4_not_resolved_by_this_partial_result": true
+    },
+    "dimensional_gate": {
+      "passed": true,
+      "checks": {
+        "stiffened_web_uniform_compression": true,
+        "stiffened_element_bending": true,
+        "edge_stiffened_element": true,
+        "unstiffened_lip": true,
+        "inside_R_t": true,
+        "lip_ratio": true,
+        "no_intermediate_stiffeners": true,
+        "Fy": true
+      },
+      "h_t": 62.666666666666664,
+      "b_t": 29.333333333333332,
+      "d_t": 9.333333333333334,
+      "scope": "B4.1 numerical geometry/material-range only; A3 material and B7 delivered thickness remain unverified"
+    },
+    "reference_formula_floor": {
+      "Mne_floor_Nmm": 442689.90727268,
+      "Mnl_floor_Nmm": 417530.35699316784,
+      "Mnd_floor_Nmm": 752564.973995667,
+      "Mn_floor_Nmm": 417530.35699316784,
+      "Ma_formula_floor_Nmm": 375777.32129385107,
+      "phi_b": 0.9,
+      "beta": 1.2856359003416895,
+      "lambda_local_true_sufficient_upper": 0.4298765256074771,
+      "lambda_dist_true_upper": 0.5977121737448989,
+      "branches_controlling_floor": [
+        "F3"
+      ],
+      "literal_AISI_strength": false,
+      "physical_lower_bound_proven": false
+    },
+    "Ma_reference_floor_Nmm": 375777.32129385107,
+    "status": "CONDITIONAL_IDEAL_REFERENCE_FLOOR",
+    "H4_for_actual_member_eligible": false,
+    "whole_member_approved": false,
+    "NBR_capacities_used": false,
+    "modal_scope": "Inherited 209-node conventional signature minima, not exact eigenvalues for each finite span or all boundary conditions",
+    "pending": [
+      "Actual product/material A3 and B7",
+      "Demand C1 and actual load/support correspondence",
+      "Combined Mx+My+B/Wagner/shear and their stability domain",
+      "No transfer to external girts or changed end bimoment conditions",
+      "F4 pure-web component interpretation is not a combined-field D waiver"
+    ]
+  },
+  "baseline_web_discrete": {
+    "profile_id": "OWN_Ue100x50x17_t1p50_ri1p50_n12_a16_v1_cd50bf66f299",
+    "thickness_mm": 1.5,
+    "L_mm": 4000.0,
+    "compressed_side": "web",
+    "Mcrd_identified_Nmm": null,
+    "spectral_lower_bound_AISI_E_Nmm": 1552950.0,
+    "scaled_bound_exact_rational": "1552950",
+    "scaled_bound_float_not_above_exact": true,
+    "scalar_conditional_floor": {
+      "Mne_floor_Nmm": 933140.8453691793,
+      "Mnl_floor_Nmm": 769890.5170603758,
+      "Mnd_floor_Nmm": 758890.434141065,
+      "Mn_floor_Nmm": 758890.434141065,
+      "Ma_formula_floor_Nmm": 683001.3907269585,
+      "phi_b": 0.9,
+      "beta": 0.7143640996583106,
+      "lambda_local_true_sufficient_upper": 0.7451166425741537,
+      "lambda_dist_true_upper": 0.786226605038604,
+      "branches_controlling_floor": [
+        "F4"
+      ],
+      "literal_AISI_strength": false,
+      "physical_lower_bound_proven": false
+    },
+    "status": "DISCRETE_DIAGNOSTIC_ONLY",
+    "capacity_for_H4_Nmm": null,
+    "ordering_statement": "Within the same discrete admissible space, every critical including any D critical exceeds Q; floor decreases when Q replaces that critical.",
+    "unresolved": [
+      "Continuum adequacy/convergence of the certified lower bound",
+      "Identification or equivalent justified finite-member D domain",
+      "Nonuniform/biaxial/Wagner stress or changed support has no bound here"
+    ],
+    "physical_continuum_proof": false,
+    "distortional_exemption": false,
+    "whole_member_approved": false
+  },
+  "whole_member_approved": false,
+  "new_H4_check_performed": false
+}

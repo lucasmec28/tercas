@@ -1,0 +1,49 @@
+PAINEL DE PESQUISA LONGITUDINAL AISI 2024 — CÓPIA LOCAL DE 04/11/2026
+
+Integração isolada sobre a candidata final de apresentação MC, manifesto base
+54ac4689eb001139c478c44d3c27140f757217bcbc315176f5d1077c21866996.
+Uma chamada antes dos caminhos com st.stop permite o painel nos editores comuns,
+referências próprias e inspeção preservada. render_results, motores do projeto,
+relatórios Word e contagens não foram alterados. Sem publicação ou mudança remota.
+
+Opt-in por toggle exclusivo. Seis seções próprias t=1,50/2,00/2,25/2,65/3,00/3,35,
+Ue100×50×17, ri=t, 209 nós. Somente L=3000/4000/5000/6000 mm; PP isolado ×1
+ou controle matemático ×0,01. Não há entrada contínua, interpolações ou leitura
+de valores/cargas do projeto. Todas as combinações totalizam exatamente 48 casos.
+
+E=203000, G=78000, Fy=250 MPa, nu=0,30; phi_b=phi_B=0,90, beta=Cb=1.
+Carga vertical uniforme no CG, garfos torcionais, empenamento livre e flexão
+biapoiada. Vlasov inclui Saint-Venant e empenamento; sem telha/apoio intermediário.
+A altura relativa ao SC é nula na configuração inicial, mas a excentricidade
+horizontal e torque não são zero. Sem cargas de mesa, ângulos, tirantes ou travessa.
+
+O resultado é índice LONGITUDINAL CONDICIONAL com piso algébrico conservador
+F2.2/F3.2/F4 e opção By G8.1/H4. Não é capacidade literal publicada ou limite
+inferior universal da peça real. Não há tela verde, mensagem de aprovação ou
+incorporação na lista resistente do projeto. PP×1 não é combinação AISI; 1% não
+é carga real ou limiar de pequeno giro. Pendências explícitas: aplicabilidade das
+hipóteses, cisalhamento/interações, estabilidade, serviço, produto e ligações reais.
+
+Cada chamada ativa confere hashes sem cache. O kernel foi copiado, alterando
+somente um import absoluto em import relativo. Todas as funções mecânicas têm
+AST idêntica à fonte. O resultado calculado precisa coincidir literalmente, em
+JSON canônico, com o registro congelado. Snapshot armazenado/exportado precisa
+coincidir integralmente com a evidência congelada e as escolhas atuais. Não há
+recomposição automática de snapshot antigo. Arquivo ou manifesto alterado,
+resultado adulterado ou escolha inválida retira somente o snapshot AISI.
+
+Alterar escolhas, limpar ou desativar retira resultado; retornar às escolhas ou
+reativar não restaura o snapshot. Repetir cálculo é determinístico. Recolher o
+expander é apenas apresentação; não muda a escolha ativa. Para encerrar a pesquisa,
+desative o toggle. O resultado AISI válido é independente de mudanças no projeto.
+
+JSON dedicado contém seleção, snapshot dos insumos, registro integral, material,
+proveniência e avisos. physical_design_approved, whole_member_approved e
+NBR_design_check são false no invólucro e no registro. O booleano matemático
+H4_algebraic_sufficient_condition permanece evidência condicional, sem rótulo
+visual de aprovação. Valores pequenos nas tabelas usam 10 algarismos significativos
+como texto, sem arredondamento do JSON. Link para PDF oficial fica no painel.
+
+Reprodução atual e distinção entre testes incorporados e auditoria original FSM:
+tercas/aisi_research/README.txt. LEIA_ME/provenance são fontes históricas, não
+instruções atuais de replay. Matrizes FSM não são necessárias à execução do painel.

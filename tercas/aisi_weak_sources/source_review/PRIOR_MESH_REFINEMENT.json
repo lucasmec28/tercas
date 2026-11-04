@@ -1,0 +1,1550 @@
+[
+  {
+    "profile_id": "OWN_Ue100x50x17_t1p50_ri1p50_n12_a16_v1_cd50bf66f299",
+    "thickness_mm": 1.5,
+    "state": "lips",
+    "base_review_sha256": "07a26293c04740120eb982a21e6e4620620520cc5d6d2cd781575a7daf4a1755",
+    "valleys": [
+      {
+        "L_mm": 41.90680154324868,
+        "node_counts": [
+          157,
+          209,
+          253
+        ],
+        "meshes_nflat_narc": [
+          [
+            9,
+            12
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            14,
+            21
+          ]
+        ],
+        "first_eigenvalues_kNm": [
+          5.118109095737594,
+          5.1179901077889705,
+          5.117932610324235
+        ],
+        "refinement_209_to253_relative": -1.1234383717861895e-05,
+        "monotone_decreasing": true,
+        "refined_residuals": [
+          2.503951027919493e-10,
+          2.4616738533746366e-10,
+          8.77106649886889e-11,
+          9.400135237484273e-11,
+          9.278924802476426e-11,
+          1.1763549608157436e-10,
+          4.39422464076761e-11,
+          4.291614095238797e-11
+        ],
+        "transverse_subspace_dimension": 2,
+        "principal_cosines_209_to253": [
+          0.9999999988870768,
+          0.9999999988867916
+        ],
+        "refined_artifact": "outputs/tercas_ue100_family_critical_20261103/modal_review/t1.50/lips/valley_0_253.npz",
+        "refined_sha256": "b10b856f421de06547eb56b8b21f22f8a3b3d59496cdd759903e46d238b2a7a4",
+        "geometry_identity_note": "New convergence-only253node mesh, never the frozen209 profile identity or a different nominal thickness."
+      },
+      {
+        "L_mm": 489.68071075666063,
+        "node_counts": [
+          157,
+          209,
+          253
+        ],
+        "meshes_nflat_narc": [
+          [
+            9,
+            12
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            14,
+            21
+          ]
+        ],
+        "first_eigenvalues_kNm": [
+          2.647456727034192,
+          2.6472971967503938,
+          2.647249036779604
+        ],
+        "refinement_209_to253_relative": -1.819212850329155e-05,
+        "monotone_decreasing": true,
+        "refined_residuals": [
+          3.8321097007094126e-07,
+          3.0198721157006806e-07,
+          2.736721124367351e-08,
+          2.4196239807233404e-08,
+          3.6708195862075e-09,
+          3.2426984957776424e-09,
+          5.593926173416306e-10,
+          5.413817869525584e-10
+        ],
+        "transverse_subspace_dimension": 1,
+        "principal_cosines_209_to253": [
+          0.9999999999197086
+        ],
+        "refined_artifact": "outputs/tercas_ue100_family_critical_20261103/modal_review/t1.50/lips/valley_1_253.npz",
+        "refined_sha256": "e3e0ab457ec0e3feaca73880a0b9f16b5a5ba3e8809cde2770576fb072d836b4",
+        "geometry_identity_note": "New convergence-only253node mesh, never the frozen209 profile identity or a different nominal thickness."
+      }
+    ],
+    "scope": "One additional own-mesh point at each saved209node valley length; no refined-length minimization, continuum proof, or physical-member validation."
+  },
+  {
+    "profile_id": "OWN_Ue100x50x17_t1p50_ri1p50_n12_a16_v1_cd50bf66f299",
+    "thickness_mm": 1.5,
+    "state": "strong",
+    "base_review_sha256": "d9b9c21234a24e9c5779cbb4b7c225505a104bf72ce00e95a4662f5eb49a488e",
+    "valleys": [
+      {
+        "L_mm": 50.94535098295141,
+        "node_counts": [
+          157,
+          209,
+          253
+        ],
+        "meshes_nflat_narc": [
+          [
+            9,
+            12
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            14,
+            21
+          ]
+        ],
+        "first_eigenvalues_kNm": [
+          8.834424221407895,
+          8.834218497813245,
+          8.834122730909407
+        ],
+        "refinement_209_to253_relative": -1.0840449991333934e-05,
+        "monotone_decreasing": true,
+        "refined_residuals": [
+          5.062405031630493e-10,
+          2.657495127322292e-10,
+          1.884077509421033e-10,
+          1.1738346274763123e-10,
+          1.1380563596463278e-10,
+          1.3818115189619504e-10,
+          6.876667780272155e-11,
+          4.030276758185746e-11
+        ],
+        "transverse_subspace_dimension": 1,
+        "principal_cosines_209_to253": [
+          0.9999999988402761
+        ],
+        "refined_artifact": "outputs/tercas_ue100_family_critical_20261103/modal_review/t1.50/strong/valley_0_253.npz",
+        "refined_sha256": "e7889510cacb0d1a701d800ca02f1946efe29138bc9a721f07cb1d51e610f436",
+        "geometry_identity_note": "New convergence-only253node mesh, never the frozen209 profile identity or a different nominal thickness."
+      },
+      {
+        "L_mm": 444.989061825825,
+        "node_counts": [
+          157,
+          209,
+          253
+        ],
+        "meshes_nflat_narc": [
+          [
+            9,
+            12
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            14,
+            21
+          ]
+        ],
+        "first_eigenvalues_kNm": [
+          7.149881723406572,
+          7.149406411254271,
+          7.149253486744159
+        ],
+        "refinement_209_to253_relative": -2.1389819142347832e-05,
+        "monotone_decreasing": true,
+        "refined_residuals": [
+          3.7185138734822423e-07,
+          3.785493196600652e-08,
+          8.917974319521746e-09,
+          1.8940334687645026e-09,
+          1.1045752028899487e-09,
+          5.15317554237592e-10,
+          1.8549498702519418e-10,
+          2.3906053947611894e-10
+        ],
+        "transverse_subspace_dimension": 1,
+        "principal_cosines_209_to253": [
+          0.9999999999091447
+        ],
+        "refined_artifact": "outputs/tercas_ue100_family_critical_20261103/modal_review/t1.50/strong/valley_1_253.npz",
+        "refined_sha256": "364583f63f2364440cfa3498a081dc2b20ec044ce71634a00d43b85a82f9d2d9",
+        "geometry_identity_note": "New convergence-only253node mesh, never the frozen209 profile identity or a different nominal thickness."
+      }
+    ],
+    "scope": "One additional own-mesh point at each saved209node valley length; no refined-length minimization, continuum proof, or physical-member validation."
+  },
+  {
+    "profile_id": "OWN_Ue100x50x17_t1p50_ri1p50_n12_a16_v1_cd50bf66f299",
+    "thickness_mm": 1.5,
+    "state": "web",
+    "base_review_sha256": "38168e8d1066c5658c52c6ac7f767c2e1e6eec8b1e5bc663b636104a7fe89582",
+    "valleys": [
+      {
+        "L_mm": 76.57934696908491,
+        "node_counts": [
+          157,
+          209,
+          253
+        ],
+        "meshes_nflat_narc": [
+          [
+            9,
+            12
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            14,
+            21
+          ]
+        ],
+        "first_eigenvalues_kNm": [
+          1.7034833287531956,
+          1.7034852401189708,
+          1.7034866490048555
+        ],
+        "refinement_209_to253_relative": 8.270608111704547e-07,
+        "monotone_decreasing": false,
+        "refined_residuals": [
+          8.451217976832664e-10,
+          4.103196990154834e-10,
+          2.1671120035696322e-10,
+          1.5065397821433677e-10,
+          9.678307787827429e-11,
+          7.775900826892735e-11,
+          4.8838784941075426e-11,
+          8.390645274028948e-11
+        ],
+        "transverse_subspace_dimension": 1,
+        "principal_cosines_209_to253": [
+          0.9999999999419279
+        ],
+        "refined_artifact": "outputs/tercas_ue100_family_critical_20261103/modal_review/t1.50/web/valley_0_253.npz",
+        "refined_sha256": "7e88ebf519be6fbbc17c43137b38cccfb8063686d2910a60fb2a4cda495da96c",
+        "geometry_identity_note": "New convergence-only253node mesh, never the frozen209 profile identity or a different nominal thickness."
+      }
+    ],
+    "scope": "One additional own-mesh point at each saved209node valley length; no refined-length minimization, continuum proof, or physical-member validation."
+  },
+  {
+    "profile_id": "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce",
+    "thickness_mm": 2.0,
+    "state": "lips",
+    "base_review_sha256": "70f4eee6acecea239ccdc55de1708b80f1a04ea83ba73d4b32ae1f1fa18bad91",
+    "valleys": [
+      {
+        "L_mm": 41.46349169449415,
+        "node_counts": [
+          157,
+          209,
+          253
+        ],
+        "meshes_nflat_narc": [
+          [
+            9,
+            12
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            14,
+            21
+          ]
+        ],
+        "first_eigenvalues_kNm": [
+          12.086788270066776,
+          12.086244455138075,
+          12.085972402439094
+        ],
+        "refinement_209_to253_relative": -2.2509283176597172e-05,
+        "monotone_decreasing": true,
+        "refined_residuals": [
+          1.5222771175084676e-10,
+          1.4109478629631017e-10,
+          6.792915479013707e-11,
+          5.857797684668591e-11,
+          6.631760923751806e-11,
+          6.395620169260254e-11,
+          1.8231712824986106e-11,
+          2.069813479833647e-11
+        ],
+        "transverse_subspace_dimension": 2,
+        "principal_cosines_209_to253": [
+          0.9999999973445215,
+          0.9999999973437895
+        ],
+        "refined_artifact": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.00/lips/valley_0_253.npz",
+        "refined_sha256": "b41198ad4c93b9f0dbc45b186368dc64e1b9fc5f562fa0e3317a86afac74d9d6",
+        "geometry_identity_note": "New convergence-only253node mesh, never the frozen209 profile identity or a different nominal thickness."
+      },
+      {
+        "L_mm": 413.0770852956704,
+        "node_counts": [
+          157,
+          209,
+          253
+        ],
+        "meshes_nflat_narc": [
+          [
+            9,
+            12
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            14,
+            21
+          ]
+        ],
+        "first_eigenvalues_kNm": [
+          4.822237280445232,
+          4.822053201043427,
+          4.82201277337604
+        ],
+        "refinement_209_to253_relative": -8.383911521026022e-06,
+        "monotone_decreasing": true,
+        "refined_residuals": [
+          1.324311958561971e-07,
+          8.49945501207568e-08,
+          1.1147428213362535e-08,
+          8.686269437607934e-09,
+          1.2309532431109985e-09,
+          1.2738373352434238e-09,
+          1.4881334261358803e-10,
+          1.558980394390778e-10
+        ],
+        "transverse_subspace_dimension": 1,
+        "principal_cosines_209_to253": [
+          0.9999999998148988
+        ],
+        "refined_artifact": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.00/lips/valley_1_253.npz",
+        "refined_sha256": "4c26acbfa3084d814f00268cb74d7df2a6cf901d5fe24eb18ceeae51011fbc03",
+        "geometry_identity_note": "New convergence-only253node mesh, never the frozen209 profile identity or a different nominal thickness."
+      }
+    ],
+    "scope": "One additional own-mesh point at each saved209node valley length; no refined-length minimization, continuum proof, or physical-member validation."
+  },
+  {
+    "profile_id": "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce",
+    "thickness_mm": 2.0,
+    "state": "strong",
+    "base_review_sha256": "b7a661c20646d2de403cfd907c89825cd2f318d5cbcc3b7e745ab94702b64695",
+    "valleys": [
+      {
+        "L_mm": 51.31313650921165,
+        "node_counts": [
+          157,
+          209,
+          253
+        ],
+        "meshes_nflat_narc": [
+          [
+            9,
+            12
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            14,
+            21
+          ]
+        ],
+        "first_eigenvalues_kNm": [
+          20.765785935387445,
+          20.76464990635001,
+          20.76409345010911
+        ],
+        "refinement_209_to253_relative": -2.6798248147996695e-05,
+        "monotone_decreasing": true,
+        "refined_residuals": [
+          2.711450616191351e-10,
+          1.7934510378544465e-10,
+          1.2793747033297408e-10,
+          1.2557409373255654e-10,
+          1.0135529918874291e-10,
+          8.092329843538012e-11,
+          3.040153777050867e-11,
+          2.977927302532839e-11
+        ],
+        "transverse_subspace_dimension": 1,
+        "principal_cosines_209_to253": [
+          0.9999999970993823
+        ],
+        "refined_artifact": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.00/strong/valley_0_253.npz",
+        "refined_sha256": "b52d51b369fd290b8fcb4e5074e25dbe73738e514bc973b8107e69298249d5a6",
+        "geometry_identity_note": "New convergence-only253node mesh, never the frozen209 profile identity or a different nominal thickness."
+      },
+      {
+        "L_mm": 375.2841169144437,
+        "node_counts": [
+          157,
+          209,
+          253
+        ],
+        "meshes_nflat_narc": [
+          [
+            9,
+            12
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            14,
+            21
+          ]
+        ],
+        "first_eigenvalues_kNm": [
+          12.99865984899142,
+          12.998041888658234,
+          12.997869917958997
+        ],
+        "refinement_209_to253_relative": -1.3230508157269227e-05,
+        "monotone_decreasing": true,
+        "refined_residuals": [
+          1.3279420504448164e-07,
+          1.373556973645566e-08,
+          2.778463566455992e-09,
+          8.895137031345435e-10,
+          5.416706465364918e-10,
+          2.4295044380284734e-10,
+          1.2130887255921105e-10,
+          1.301964767877641e-10
+        ],
+        "transverse_subspace_dimension": 1,
+        "principal_cosines_209_to253": [
+          0.9999999997972541
+        ],
+        "refined_artifact": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.00/strong/valley_1_253.npz",
+        "refined_sha256": "c9c7d42b4a02112b779e886e7972883869ab57c8e2a077b50a5f54c6802d6cbd",
+        "geometry_identity_note": "New convergence-only253node mesh, never the frozen209 profile identity or a different nominal thickness."
+      }
+    ],
+    "scope": "One additional own-mesh point at each saved209node valley length; no refined-length minimization, continuum proof, or physical-member validation."
+  },
+  {
+    "profile_id": "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce",
+    "thickness_mm": 2.0,
+    "state": "web",
+    "base_review_sha256": "c38e380055990233cb1b213609348e3856aac6eeff97953541fe3c136c5a3ad5",
+    "valleys": [
+      {
+        "L_mm": 76.18280917251073,
+        "node_counts": [
+          157,
+          209,
+          253
+        ],
+        "meshes_nflat_narc": [
+          [
+            9,
+            12
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            14,
+            21
+          ]
+        ],
+        "first_eigenvalues_kNm": [
+          3.988882432480304,
+          3.9888695889298957,
+          3.988864021235355
+        ],
+        "refinement_209_to253_relative": -1.3958076132691843e-06,
+        "monotone_decreasing": true,
+        "refined_residuals": [
+          6.297289545184613e-10,
+          3.163435327327379e-10,
+          1.5121938195210582e-10,
+          7.901851998038071e-11,
+          4.544320859543782e-11,
+          5.888281106194146e-11,
+          3.4782467121566196e-11,
+          4.434156966038826e-11
+        ],
+        "transverse_subspace_dimension": 1,
+        "principal_cosines_209_to253": [
+          0.9999999998803409
+        ],
+        "refined_artifact": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.00/web/valley_0_253.npz",
+        "refined_sha256": "607fa4a470625f9de34fe77d51893c9c2eece3f1044176ccdf35f60dfb0924ed",
+        "geometry_identity_note": "New convergence-only253node mesh, never the frozen209 profile identity or a different nominal thickness."
+      }
+    ],
+    "scope": "One additional own-mesh point at each saved209node valley length; no refined-length minimization, continuum proof, or physical-member validation."
+  },
+  {
+    "profile_id": "OWN_Ue100x50x17_t2p25_ri2p25_n12_a16_v1_e30a0bd327de",
+    "thickness_mm": 2.25,
+    "state": "lips",
+    "base_review_sha256": "56051c71803e3979295b23d13db33877563900179923c5cca70d2456c12b191c",
+    "valleys": [
+      {
+        "L_mm": 41.23938407640051,
+        "node_counts": [
+          157,
+          209,
+          253
+        ],
+        "meshes_nflat_narc": [
+          [
+            9,
+            12
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            14,
+            21
+          ]
+        ],
+        "first_eigenvalues_kNm": [
+          17.169553256641038,
+          17.168585936881858,
+          17.168098440599795
+        ],
+        "refinement_209_to253_relative": -2.839466708870475e-05,
+        "monotone_decreasing": true,
+        "refined_residuals": [
+          1.2797153702969904e-10,
+          1.3814046926283031e-10,
+          7.921689507950892e-11,
+          7.66478167659927e-11,
+          5.957010588338271e-11,
+          5.820043764674989e-11,
+          1.9076668618588806e-11,
+          1.777625640566865e-11
+        ],
+        "transverse_subspace_dimension": 2,
+        "principal_cosines_209_to253": [
+          0.9999999966083551,
+          0.999999996607311
+        ],
+        "refined_artifact": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.25/lips/valley_0_253.npz",
+        "refined_sha256": "634056e84ce22a4bb1cb6d95faf5855efade39fc40892e14ac8c873f04563b74",
+        "geometry_identity_note": "New convergence-only253node mesh, never the frozen209 profile identity or a different nominal thickness."
+      },
+      {
+        "L_mm": 384.29378816133743,
+        "node_counts": [
+          157,
+          209,
+          253
+        ],
+        "meshes_nflat_narc": [
+          [
+            9,
+            12
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            14,
+            21
+          ]
+        ],
+        "first_eigenvalues_kNm": [
+          6.175278331074405,
+          6.175112854597799,
+          6.175092315440161
+        ],
+        "refinement_209_to253_relative": -3.3261185862221154e-06,
+        "monotone_decreasing": true,
+        "refined_residuals": [
+          1.0128006930233494e-07,
+          7.78264698530292e-08,
+          8.398397896721458e-09,
+          7.098819633763045e-09,
+          8.887093653133975e-10,
+          8.555461709734615e-10,
+          1.2665451703069418e-10,
+          1.1196136945252026e-10
+        ],
+        "transverse_subspace_dimension": 1,
+        "principal_cosines_209_to253": [
+          0.9999999997679742
+        ],
+        "refined_artifact": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.25/lips/valley_1_253.npz",
+        "refined_sha256": "0608f78f5d9821770232ab119a0f4fa1cc4c827bf7634afb3c64adcb5c9e26f4",
+        "geometry_identity_note": "New convergence-only253node mesh, never the frozen209 profile identity or a different nominal thickness."
+      }
+    ],
+    "scope": "One additional own-mesh point at each saved209node valley length; no refined-length minimization, continuum proof, or physical-member validation."
+  },
+  {
+    "profile_id": "OWN_Ue100x50x17_t2p25_ri2p25_n12_a16_v1_e30a0bd327de",
+    "thickness_mm": 2.25,
+    "state": "strong",
+    "base_review_sha256": "b8278c9bef856373a9fa4ee5c069b284008422edbfe231a65fd3ef6329aa21b7",
+    "valleys": [
+      {
+        "L_mm": 51.63567884795748,
+        "node_counts": [
+          157,
+          209,
+          253
+        ],
+        "meshes_nflat_narc": [
+          [
+            9,
+            12
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            14,
+            21
+          ]
+        ],
+        "first_eigenvalues_kNm": [
+          29.421838075384386,
+          29.419655792440633,
+          29.4185751539499
+        ],
+        "refinement_209_to253_relative": -3.6731853640947776e-05,
+        "monotone_decreasing": true,
+        "refined_residuals": [
+          2.6552875120695865e-10,
+          1.4949352591951339e-10,
+          1.222513454583032e-10,
+          1.369186264055554e-10,
+          6.58812899026266e-11,
+          4.0078728835204854e-11,
+          2.720931742270244e-11,
+          2.2097664028721477e-11
+        ],
+        "transverse_subspace_dimension": 1,
+        "principal_cosines_209_to253": [
+          0.9999999959206618
+        ],
+        "refined_artifact": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.25/strong/valley_0_253.npz",
+        "refined_sha256": "c73a25123ffe67f08ec0b693ce01823cda55a4c5af6247be22d3af2af2b08f51",
+        "geometry_identity_note": "New convergence-only253node mesh, never the frozen209 profile identity or a different nominal thickness."
+      },
+      {
+        "L_mm": 349.06091820549034,
+        "node_counts": [
+          157,
+          209,
+          253
+        ],
+        "meshes_nflat_narc": [
+          [
+            9,
+            12
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            14,
+            21
+          ]
+        ],
+        "first_eigenvalues_kNm": [
+          16.633518110671854,
+          16.632889433413858,
+          16.632741530832522
+        ],
+        "refinement_209_to253_relative": -8.892176066477298e-06,
+        "monotone_decreasing": true,
+        "refined_residuals": [
+          6.502158001157921e-08,
+          1.054840594631959e-08,
+          1.636353748506598e-09,
+          4.859906942522272e-10,
+          3.776940301892835e-10,
+          1.7965023856396902e-10,
+          1.1654947480652865e-10,
+          1.0587749191345386e-10
+        ],
+        "transverse_subspace_dimension": 1,
+        "principal_cosines_209_to253": [
+          0.9999999997447493
+        ],
+        "refined_artifact": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.25/strong/valley_1_253.npz",
+        "refined_sha256": "cefe717f9c8325309b3f02c2471deabe86335efa148a7755dff47befdf510674",
+        "geometry_identity_note": "New convergence-only253node mesh, never the frozen209 profile identity or a different nominal thickness."
+      }
+    ],
+    "scope": "One additional own-mesh point at each saved209node valley length; no refined-length minimization, continuum proof, or physical-member validation."
+  },
+  {
+    "profile_id": "OWN_Ue100x50x17_t2p25_ri2p25_n12_a16_v1_e30a0bd327de",
+    "thickness_mm": 2.25,
+    "state": "web",
+    "base_review_sha256": "8018064ff2b320aa7152ce5cd44a1bdce1cd138cfe78f7b049c2c5994c49ea66",
+    "valleys": [
+      {
+        "L_mm": 76.00205065222771,
+        "node_counts": [
+          157,
+          209,
+          253
+        ],
+        "meshes_nflat_narc": [
+          [
+            9,
+            12
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            14,
+            21
+          ]
+        ],
+        "first_eigenvalues_kNm": [
+          5.643498427888289,
+          5.643464461071989,
+          5.643448411395358
+        ],
+        "refinement_209_to253_relative": -2.8439404096136656e-06,
+        "monotone_decreasing": true,
+        "refined_residuals": [
+          3.964637988364006e-10,
+          1.892466725175547e-10,
+          1.0600827530385183e-10,
+          6.455214396795114e-11,
+          3.929494727799443e-11,
+          6.111066680151046e-11,
+          2.7976087317266807e-11,
+          3.464964493319102e-11
+        ],
+        "transverse_subspace_dimension": 1,
+        "principal_cosines_209_to253": [
+          0.9999999998408419
+        ],
+        "refined_artifact": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.25/web/valley_0_253.npz",
+        "refined_sha256": "dd4655fa6d6576be55496c40f96db2191b35ef96ad1e4ec0e699cb11cdc97e67",
+        "geometry_identity_note": "New convergence-only253node mesh, never the frozen209 profile identity or a different nominal thickness."
+      }
+    ],
+    "scope": "One additional own-mesh point at each saved209node valley length; no refined-length minimization, continuum proof, or physical-member validation."
+  },
+  {
+    "profile_id": "OWN_Ue100x50x17_t2p65_ri2p65_n12_a16_v1_243974742f83",
+    "thickness_mm": 2.65,
+    "state": "lips",
+    "base_review_sha256": "377cf8492a7af7d3c56613ddb9b414edba552a97201d9eefac24699deb41b14c",
+    "valleys": [
+      {
+        "L_mm": 40.871719361332616,
+        "node_counts": [
+          157,
+          209,
+          253
+        ],
+        "meshes_nflat_narc": [
+          [
+            9,
+            12
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            14,
+            21
+          ]
+        ],
+        "first_eigenvalues_kNm": [
+          27.9187967281408,
+          27.916760737156302,
+          27.915729523568956
+        ],
+        "refinement_209_to253_relative": -3.6938869701130805e-05,
+        "monotone_decreasing": true,
+        "refined_residuals": [
+          8.324695388136624e-11,
+          9.196603413693007e-11,
+          6.354216470906032e-11,
+          6.872362801619826e-11,
+          5.670540225431676e-11,
+          4.796999655385429e-11,
+          1.5029485598156026e-11,
+          1.4465939882712678e-11
+        ],
+        "transverse_subspace_dimension": 2,
+        "principal_cosines_209_to253": [
+          0.9999999932536523,
+          0.9999999932521724
+        ],
+        "refined_artifact": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.65/lips/valley_0_253.npz",
+        "refined_sha256": "f92b34c239f679842023eceea5bf8eac7ca535f8c1664f510eb8427c87295c28",
+        "geometry_identity_note": "New convergence-only253node mesh, never the frozen209 profile identity or a different nominal thickness."
+      },
+      {
+        "L_mm": 346.40540522029437,
+        "node_counts": [
+          157,
+          209,
+          253
+        ],
+        "meshes_nflat_narc": [
+          [
+            9,
+            12
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            14,
+            21
+          ]
+        ],
+        "first_eigenvalues_kNm": [
+          8.724479219300989,
+          8.724404545407081,
+          8.724447817056138
+        ],
+        "refinement_209_to253_relative": 4.959839818408085e-06,
+        "monotone_decreasing": false,
+        "refined_residuals": [
+          7.192855737936946e-08,
+          5.833427900317333e-08,
+          4.936591118993932e-09,
+          4.3152256694969035e-09,
+          5.602327156371085e-10,
+          5.994802352202247e-10,
+          5.282222740628932e-11,
+          6.248276702088711e-11
+        ],
+        "transverse_subspace_dimension": 1,
+        "principal_cosines_209_to253": [
+          0.999999999580044
+        ],
+        "refined_artifact": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.65/lips/valley_1_253.npz",
+        "refined_sha256": "6f4eb530df4bbd468977ab8477031b92cbe0680f3d30dce1d5c4af7158cfe080",
+        "geometry_identity_note": "New convergence-only253node mesh, never the frozen209 profile identity or a different nominal thickness."
+      }
+    ],
+    "scope": "One additional own-mesh point at each saved209node valley length; no refined-length minimization, continuum proof, or physical-member validation."
+  },
+  {
+    "profile_id": "OWN_Ue100x50x17_t2p65_ri2p65_n12_a16_v1_243974742f83",
+    "thickness_mm": 2.65,
+    "state": "strong",
+    "base_review_sha256": "79f568110fb5736732079c16a51c7eabdea52ca0155963683fdb1acf5e0fa3db",
+    "valleys": [
+      {
+        "L_mm": 52.48089678224584,
+        "node_counts": [
+          157,
+          209,
+          253
+        ],
+        "meshes_nflat_narc": [
+          [
+            9,
+            12
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            14,
+            21
+          ]
+        ],
+        "first_eigenvalues_kNm": [
+          47.61475864008076,
+          47.609516284179094,
+          47.60689462740294
+        ],
+        "refinement_209_to253_relative": -5.506581416425682e-05,
+        "monotone_decreasing": true,
+        "refined_residuals": [
+          1.9198188169076823e-10,
+          1.0540492958591501e-10,
+          8.934058093687414e-11,
+          9.916183861253431e-11,
+          4.6018437559951245e-11,
+          2.649384691145156e-11,
+          2.132983547444133e-11,
+          1.0742541281307169e-11
+        ],
+        "transverse_subspace_dimension": 1,
+        "principal_cosines_209_to253": [
+          0.9999999928052605
+        ],
+        "refined_artifact": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.65/strong/valley_0_253.npz",
+        "refined_sha256": "8372cc579e1f4af6edf241b0a6f979aac091987e8582325784b79f9f88a21308",
+        "geometry_identity_note": "New convergence-only253node mesh, never the frozen209 profile identity or a different nominal thickness."
+      },
+      {
+        "L_mm": 314.6400902485021,
+        "node_counts": [
+          157,
+          209,
+          253
+        ],
+        "meshes_nflat_narc": [
+          [
+            9,
+            12
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            14,
+            21
+          ]
+        ],
+        "first_eigenvalues_kNm": [
+          23.478728798608255,
+          23.478208621241674,
+          23.478161167163226
+        ],
+        "refinement_209_to253_relative": -2.0211967280969745e-06,
+        "monotone_decreasing": true,
+        "refined_residuals": [
+          6.044297308483542e-08,
+          5.533688188392542e-09,
+          1.1016537349078033e-09,
+          3.1174240073818874e-10,
+          2.104773321370015e-10,
+          9.641125731983551e-11,
+          8.306047679750781e-11,
+          5.2558920679149405e-11
+        ],
+        "transverse_subspace_dimension": 1,
+        "principal_cosines_209_to253": [
+          0.9999999995528281
+        ],
+        "refined_artifact": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.65/strong/valley_1_253.npz",
+        "refined_sha256": "f46b7ea7fcd64f33902a2bf994ca4307b96a426980221b3b7b93f76fe7e3592d",
+        "geometry_identity_note": "New convergence-only253node mesh, never the frozen209 profile identity or a different nominal thickness."
+      }
+    ],
+    "scope": "One additional own-mesh point at each saved209node valley length; no refined-length minimization, continuum proof, or physical-member validation."
+  },
+  {
+    "profile_id": "OWN_Ue100x50x17_t2p65_ri2p65_n12_a16_v1_243974742f83",
+    "thickness_mm": 2.65,
+    "state": "web",
+    "base_review_sha256": "bfd2dfea27d831c94e47ad7585849139bb618a67c17d84369d34a351d420e277",
+    "valleys": [
+      {
+        "L_mm": 75.73704632842913,
+        "node_counts": [
+          157,
+          209,
+          253
+        ],
+        "meshes_nflat_narc": [
+          [
+            9,
+            12
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            14,
+            21
+          ]
+        ],
+        "first_eigenvalues_kNm": [
+          9.12340485601266,
+          9.123303216215128,
+          9.12325295637665
+        ],
+        "refinement_209_to253_relative": -5.508951888000269e-06,
+        "monotone_decreasing": true,
+        "refined_residuals": [
+          3.7173367021193487e-10,
+          1.5194951715328794e-10,
+          7.530790166007421e-11,
+          4.735422706562653e-11,
+          4.7316303565433986e-11,
+          2.9924031840526725e-11,
+          3.046220118237265e-11,
+          2.128445119526445e-11
+        ],
+        "transverse_subspace_dimension": 1,
+        "principal_cosines_209_to253": [
+          0.9999999997184251
+        ],
+        "refined_artifact": "outputs/tercas_ue100_family_critical_20261103/modal_review/t2.65/web/valley_0_253.npz",
+        "refined_sha256": "73818963de8828b648afa3aba2803ee1c6383ab64253b47a2e74f7856db2b747",
+        "geometry_identity_note": "New convergence-only253node mesh, never the frozen209 profile identity or a different nominal thickness."
+      }
+    ],
+    "scope": "One additional own-mesh point at each saved209node valley length; no refined-length minimization, continuum proof, or physical-member validation."
+  },
+  {
+    "profile_id": "OWN_Ue100x50x17_t3p00_ri3p00_n12_a16_v1_c3d1e69d48f6",
+    "thickness_mm": 3.0,
+    "state": "lips",
+    "base_review_sha256": "a3b6f9812ea8934c9fec7a82e3252fca8d7d40ae96599f14abdc9f06b92b332e",
+    "valleys": [
+      {
+        "L_mm": 40.540760829842355,
+        "node_counts": [
+          157,
+          209,
+          253
+        ],
+        "meshes_nflat_narc": [
+          [
+            9,
+            12
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            14,
+            21
+          ]
+        ],
+        "first_eigenvalues_kNm": [
+          40.27849089700147,
+          40.2751475207566,
+          40.27345793672327
+        ],
+        "refinement_209_to253_relative": -4.19510327667183e-05,
+        "monotone_decreasing": true,
+        "refined_residuals": [
+          7.32348486113058e-11,
+          7.71858500612356e-11,
+          6.022320706146616e-11,
+          6.087561612003762e-11,
+          2.6432497748400797e-11,
+          2.5589355102278593e-11,
+          1.493977329225132e-11,
+          1.3649522970232597e-11
+        ],
+        "transverse_subspace_dimension": 2,
+        "principal_cosines_209_to253": [
+          0.9999999894184789,
+          0.9999999894167226
+        ],
+        "refined_artifact": "outputs/tercas_ue100_family_critical_20261103/modal_review/t3.00/lips/valley_0_253.npz",
+        "refined_sha256": "4005f40e5c7dab6ffd1d466145c74c425397cb5aa0ff16d228ade03f4970963f",
+        "geometry_identity_note": "New convergence-only253node mesh, never the frozen209 profile identity or a different nominal thickness."
+      },
+      {
+        "L_mm": 319.228429658417,
+        "node_counts": [
+          157,
+          209,
+          253
+        ],
+        "meshes_nflat_narc": [
+          [
+            9,
+            12
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            14,
+            21
+          ]
+        ],
+        "first_eigenvalues_kNm": [
+          11.357011477178476,
+          11.357093840761252,
+          11.357233009564137
+        ],
+        "refinement_209_to253_relative": 1.2253909744464053e-05,
+        "monotone_decreasing": false,
+        "refined_residuals": [
+          4.273824210169231e-08,
+          2.681793381222778e-08,
+          4.021794995964443e-09,
+          3.0568340017896848e-09,
+          3.819932258628761e-10,
+          3.4462185732434783e-10,
+          3.457550848632814e-11,
+          3.303025296595061e-11
+        ],
+        "transverse_subspace_dimension": 1,
+        "principal_cosines_209_to253": [
+          0.999999999453694
+        ],
+        "refined_artifact": "outputs/tercas_ue100_family_critical_20261103/modal_review/t3.00/lips/valley_1_253.npz",
+        "refined_sha256": "a56a1a3060c148f9483b248a84b30bbdf1c9c5f5aa04014a2c16057c8af065af",
+        "geometry_identity_note": "New convergence-only253node mesh, never the frozen209 profile identity or a different nominal thickness."
+      }
+    ],
+    "scope": "One additional own-mesh point at each saved209node valley length; no refined-length minimization, continuum proof, or physical-member validation."
+  },
+  {
+    "profile_id": "OWN_Ue100x50x17_t3p00_ri3p00_n12_a16_v1_c3d1e69d48f6",
+    "thickness_mm": 3.0,
+    "state": "strong",
+    "base_review_sha256": "f2d0e270fc218711696df842ca072216def213ecc088de25c5fa370da60b9555",
+    "valleys": [
+      {
+        "L_mm": 53.87437733704376,
+        "node_counts": [
+          157,
+          209,
+          253
+        ],
+        "meshes_nflat_narc": [
+          [
+            9,
+            12
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            14,
+            21
+          ]
+        ],
+        "first_eigenvalues_kNm": [
+          68.33010011373244,
+          68.32013099316143,
+          68.31512975556284
+        ],
+        "refinement_209_to253_relative": -7.32029860875949e-05,
+        "monotone_decreasing": true,
+        "refined_residuals": [
+          1.3657610218119856e-10,
+          8.065548904059518e-11,
+          1.3482534966061767e-10,
+          1.0072712444541714e-10,
+          3.311052590810691e-11,
+          2.5122550590198752e-11,
+          1.5487220512290616e-11,
+          1.0572318971672731e-11
+        ],
+        "transverse_subspace_dimension": 1,
+        "principal_cosines_209_to253": [
+          0.9999999900519868
+        ],
+        "refined_artifact": "outputs/tercas_ue100_family_critical_20261103/modal_review/t3.00/strong/valley_0_253.npz",
+        "refined_sha256": "cf94fdc35e5d36f26840a1d29b76b91be2ffc3ffea2875b3749a5587f3709c74",
+        "geometry_identity_note": "New convergence-only253node mesh, never the frozen209 profile identity or a different nominal thickness."
+      },
+      {
+        "L_mm": 289.9893962462265,
+        "node_counts": [
+          157,
+          209,
+          253
+        ],
+        "meshes_nflat_narc": [
+          [
+            9,
+            12
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            14,
+            21
+          ]
+        ],
+        "first_eigenvalues_kNm": [
+          30.548002303543708,
+          30.54773748598727,
+          30.547863591087708
+        ],
+        "refinement_209_to253_relative": 4.128132255143413e-06,
+        "monotone_decreasing": false,
+        "refined_residuals": [
+          3.059561632440405e-08,
+          4.599180754433161e-09,
+          6.896875339401676e-10,
+          2.191935176580766e-10,
+          1.5208330456185114e-10,
+          5.0092588157425156e-11,
+          6.42827366378673e-11,
+          2.622369883898313e-11
+        ],
+        "transverse_subspace_dimension": 1,
+        "principal_cosines_209_to253": [
+          0.9999999994205876
+        ],
+        "refined_artifact": "outputs/tercas_ue100_family_critical_20261103/modal_review/t3.00/strong/valley_1_253.npz",
+        "refined_sha256": "a5ebe432677a9aff47579568923facd452070dd935ea4ba3ce2bf79972764ac6",
+        "geometry_identity_note": "New convergence-only253node mesh, never the frozen209 profile identity or a different nominal thickness."
+      }
+    ],
+    "scope": "One additional own-mesh point at each saved209node valley length; no refined-length minimization, continuum proof, or physical-member validation."
+  },
+  {
+    "profile_id": "OWN_Ue100x50x17_t3p00_ri3p00_n12_a16_v1_c3d1e69d48f6",
+    "thickness_mm": 3.0,
+    "state": "web",
+    "base_review_sha256": "a035ae776fafbc6d741adb1afd4dd8c8d5bd51e9e9e6ade732a91429d5a51a23",
+    "valleys": [
+      {
+        "L_mm": 75.52744033228073,
+        "node_counts": [
+          157,
+          209,
+          253
+        ],
+        "meshes_nflat_narc": [
+          [
+            9,
+            12
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            14,
+            21
+          ]
+        ],
+        "first_eigenvalues_kNm": [
+          13.109790594004702,
+          13.10958005110014,
+          13.109474090102335
+        ],
+        "refinement_209_to253_relative": -8.082714884283249e-06,
+        "monotone_decreasing": true,
+        "refined_residuals": [
+          2.7801792267457966e-10,
+          1.3604682151152968e-10,
+          5.360915864012913e-11,
+          3.352958807100659e-11,
+          4.703262578267344e-11,
+          1.94233776842418e-11,
+          2.3467659484048527e-11,
+          1.696632992917592e-11
+        ],
+        "transverse_subspace_dimension": 1,
+        "principal_cosines_209_to253": [
+          0.9999999996536671
+        ],
+        "refined_artifact": "outputs/tercas_ue100_family_critical_20261103/modal_review/t3.00/web/valley_0_253.npz",
+        "refined_sha256": "22b87bf24e074ad3fda94533ec1fdce603d8f5e0b98033f9aa13b3a5dd4edc94",
+        "geometry_identity_note": "New convergence-only253node mesh, never the frozen209 profile identity or a different nominal thickness."
+      }
+    ],
+    "scope": "One additional own-mesh point at each saved209node valley length; no refined-length minimization, continuum proof, or physical-member validation."
+  },
+  {
+    "profile_id": "OWN_Ue100x50x17_t3p35_ri3p35_n12_a16_v1_90bf516ec976",
+    "thickness_mm": 3.35,
+    "state": "lips",
+    "base_review_sha256": "cc6d01fe0d6a9135b2fcbac14e8d5c66e39e2a7d448da22845ab31d786ba3d28",
+    "valleys": [
+      {
+        "L_mm": 40.2179712936465,
+        "node_counts": [
+          157,
+          209,
+          253
+        ],
+        "meshes_nflat_narc": [
+          [
+            9,
+            12
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            14,
+            21
+          ]
+        ],
+        "first_eigenvalues_kNm": [
+          55.644674638019275,
+          55.63999493868789,
+          55.63766193178284
+        ],
+        "refinement_209_to253_relative": -4.193039391220399e-05,
+        "monotone_decreasing": true,
+        "refined_residuals": [
+          6.194923051637406e-11,
+          6.558635239410686e-11,
+          5.860210657747355e-11,
+          5.616224220336063e-11,
+          1.8391906206230734e-11,
+          1.7241457729460162e-11,
+          9.734315727109279e-12,
+          1.061796769667767e-11
+        ],
+        "transverse_subspace_dimension": 2,
+        "principal_cosines_209_to253": [
+          0.9999999803611412,
+          0.9999999803590538
+        ],
+        "refined_artifact": "outputs/tercas_ue100_family_critical_20261103/modal_review/t3.35/lips/valley_0_253.npz",
+        "refined_sha256": "196f218eefcf64157ccf4abc134db53999edd5e220864a4d901c3eacc6d89b7e",
+        "geometry_identity_note": "New convergence-only253node mesh, never the frozen209 profile identity or a different nominal thickness."
+      },
+      {
+        "L_mm": 296.0699536211233,
+        "node_counts": [
+          157,
+          209,
+          253
+        ],
+        "meshes_nflat_narc": [
+          [
+            9,
+            12
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            14,
+            21
+          ]
+        ],
+        "first_eigenvalues_kNm": [
+          14.379161129296973,
+          14.379485122710209,
+          14.379764155164693
+        ],
+        "refinement_209_to253_relative": 1.9404898861319353e-05,
+        "monotone_decreasing": false,
+        "refined_residuals": [
+          2.6911030768358907e-08,
+          1.772558203382055e-08,
+          2.701286496395677e-09,
+          2.1475980776296615e-09,
+          2.6361699979321776e-10,
+          2.953288495978712e-10,
+          3.717207558668011e-11,
+          4.0543107484183974e-11
+        ],
+        "transverse_subspace_dimension": 1,
+        "principal_cosines_209_to253": [
+          0.9999999992194165
+        ],
+        "refined_artifact": "outputs/tercas_ue100_family_critical_20261103/modal_review/t3.35/lips/valley_1_253.npz",
+        "refined_sha256": "4c40d47c69af15b178193ce26204e35cf5546029a5803419920fbfe9ed30c326",
+        "geometry_identity_note": "New convergence-only253node mesh, never the frozen209 profile identity or a different nominal thickness."
+      }
+    ],
+    "scope": "One additional own-mesh point at each saved209node valley length; no refined-length minimization, continuum proof, or physical-member validation."
+  },
+  {
+    "profile_id": "OWN_Ue100x50x17_t3p35_ri3p35_n12_a16_v1_90bf516ec976",
+    "thickness_mm": 3.35,
+    "state": "strong",
+    "base_review_sha256": "179916e79f380c708ef7722a9684cf5b9688846b93afe30d7bc0969458a005ac",
+    "valleys": [
+      {
+        "L_mm": 57.284178302567376,
+        "node_counts": [
+          157,
+          209,
+          253
+        ],
+        "meshes_nflat_narc": [
+          [
+            9,
+            12
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            14,
+            21
+          ]
+        ],
+        "first_eigenvalues_kNm": [
+          93.63893772555262,
+          93.62168830024662,
+          93.61307778923207
+        ],
+        "refinement_209_to253_relative": -9.197132812788222e-05,
+        "monotone_decreasing": true,
+        "refined_residuals": [
+          1.3099767232915426e-10,
+          8.327212082005898e-11,
+          1.5639344027095028e-10,
+          5.032218329610772e-11,
+          3.3969270792441236e-11,
+          2.23362812575884e-11,
+          1.2628919660709995e-11,
+          1.0009740545418389e-11
+        ],
+        "transverse_subspace_dimension": 1,
+        "principal_cosines_209_to253": [
+          0.9999999875196841
+        ],
+        "refined_artifact": "outputs/tercas_ue100_family_critical_20261103/modal_review/t3.35/strong/valley_0_253.npz",
+        "refined_sha256": "05f8aed7f2776b6732866d7915250e994cb06755e09451972c52731b5da6e148",
+        "geometry_identity_note": "New convergence-only253node mesh, never the frozen209 profile identity or a different nominal thickness."
+      },
+      {
+        "L_mm": 269.0595279054736,
+        "node_counts": [
+          157,
+          209,
+          253
+        ],
+        "meshes_nflat_narc": [
+          [
+            9,
+            12
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            14,
+            21
+          ]
+        ],
+        "first_eigenvalues_kNm": [
+          38.66855860151639,
+          38.66872284427328,
+          38.66910864533894
+        ],
+        "refinement_209_to253_relative": 9.977083215595428e-06,
+        "monotone_decreasing": false,
+        "refined_residuals": [
+          2.3975898557205497e-08,
+          3.4650513988799397e-09,
+          6.869033630909064e-10,
+          1.4459279925000126e-10,
+          1.2306268206271732e-10,
+          3.98961233320774e-11,
+          5.1972930100663196e-11,
+          2.4457161579165888e-11
+        ],
+        "transverse_subspace_dimension": 1,
+        "principal_cosines_209_to253": [
+          0.9999999991867292
+        ],
+        "refined_artifact": "outputs/tercas_ue100_family_critical_20261103/modal_review/t3.35/strong/valley_1_253.npz",
+        "refined_sha256": "1eeb8c4347c9f379ee40fe02ccfe39575c3353956c03fa50d0d7068f58feb814",
+        "geometry_identity_note": "New convergence-only253node mesh, never the frozen209 profile identity or a different nominal thickness."
+      }
+    ],
+    "scope": "One additional own-mesh point at each saved209node valley length; no refined-length minimization, continuum proof, or physical-member validation."
+  },
+  {
+    "profile_id": "OWN_Ue100x50x17_t3p35_ri3p35_n12_a16_v1_90bf516ec976",
+    "thickness_mm": 3.35,
+    "state": "web",
+    "base_review_sha256": "7b7a49c48178912776106b7696d8ebb56b9f6da316c93235696b1f282d69d0da",
+    "valleys": [
+      {
+        "L_mm": 75.33631763479463,
+        "node_counts": [
+          157,
+          209,
+          253
+        ],
+        "meshes_nflat_narc": [
+          [
+            9,
+            12
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            14,
+            21
+          ]
+        ],
+        "first_eigenvalues_kNm": [
+          18.071746112887126,
+          18.07136362161283,
+          18.071169111202934
+        ],
+        "refinement_209_to253_relative": -1.0763460575935468e-05,
+        "monotone_decreasing": true,
+        "refined_residuals": [
+          2.8185438437650383e-10,
+          1.0280376610024631e-10,
+          4.892682360935715e-11,
+          3.0773200354842795e-11,
+          3.253519646771428e-11,
+          2.1914720726860264e-11,
+          2.319907506648387e-11,
+          1.241890772053103e-11
+        ],
+        "transverse_subspace_dimension": 1,
+        "principal_cosines_209_to253": [
+          0.9999999995230513
+        ],
+        "refined_artifact": "outputs/tercas_ue100_family_critical_20261103/modal_review/t3.35/web/valley_0_253.npz",
+        "refined_sha256": "f17267682e96b16ee04bb0b0a52133a70f962ebc66801981fcc40438b5f2346f",
+        "geometry_identity_note": "New convergence-only253node mesh, never the frozen209 profile identity or a different nominal thickness."
+      }
+    ],
+    "scope": "One additional own-mesh point at each saved209node valley length; no refined-length minimization, continuum proof, or physical-member validation."
+  }
+]

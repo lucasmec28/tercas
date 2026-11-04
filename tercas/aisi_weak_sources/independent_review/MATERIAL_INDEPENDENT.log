@@ -1,0 +1,42 @@
+{
+  "passed": true,
+  "rows": [
+    {
+      "file": "t1.50_web_local.npz",
+      "sha256": "039756e6c2192f15fca67034ccc4ca9c157454270a17543aa4d2fd46ae31dacc",
+      "max_eigenpair_relative_residual": 5.325604943631178e-10,
+      "stiffness_scaling_relative_error": 1.759571524682154e-16
+    },
+    {
+      "file": "t1.50_lips_local.npz",
+      "sha256": "8d2f00ef36eed2a0d280b5688a2c6405aa42a3a8a395a0072fbc71558eaafe68",
+      "max_eigenpair_relative_residual": 1.6015678331125737e-10,
+      "stiffness_scaling_relative_error": 1.49054441437832e-16
+    },
+    {
+      "file": "t1.50_lips_distortional.npz",
+      "sha256": "4982e4df9d4c3b6fd3a67d4d9191df32437faa7f7a69fe175e529a0d5febd3ef",
+      "max_eigenpair_relative_residual": 2.0437562888388833e-07,
+      "stiffness_scaling_relative_error": 1.3932433651779508e-16
+    },
+    {
+      "file": "t3.35_web_local.npz",
+      "sha256": "7fcfc9ce644de19355d10533fe5115f0623662a87f1869cd045f0cdcc1f72e81",
+      "max_eigenpair_relative_residual": 1.5279470753594925e-10,
+      "stiffness_scaling_relative_error": 1.5369703943340566e-16
+    },
+    {
+      "file": "t3.35_lips_local.npz",
+      "sha256": "4ccef45e9a07a2ee954e3d29b61e743b9e1aa2617f6e85dece8702f1699469c1",
+      "max_eigenpair_relative_residual": 4.573099472415346e-11,
+      "stiffness_scaling_relative_error": 1.9981802019144675e-16
+    },
+    {
+      "file": "t3.35_lips_distortional.npz",
+      "sha256": "af243fa713e5ea7779786e47bea9d2dd0ba7e700b45c583a4e1c176689caa251",
+      "max_eigenpair_relative_residual": 1.3798089707367232e-08,
+      "stiffness_scaling_relative_error": 1.5117340839952066e-16
+    }
+  ],
+  "scope": "Six extreme-thickness specimens; every stored eigenpair in each file; same discrete model only."
+}

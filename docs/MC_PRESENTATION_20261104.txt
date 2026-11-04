@@ -1,0 +1,52 @@
+MC R1 — APRESENTAÇÃO AUDITÁVEL DOS DADOS SALVOS — 4 NOV 2026
+
+Base: cópia AA R3, manifesto externo SHA-256
+49acc271b2cd3e7b6c232cd9ff333ccbdbc3f3cf20d5b81dfb5cd0975153e40c.
+Nenhuma publicação ou alteração de motor/R3/R4/main nesta revisão.
+
+O QUE JÁ EXISTIA E FOI PRESERVADO
+Duas casas usuais com sinal para valores menores que 0,01 e indicação do lado
+do limite 1; JSON integral; snapshots de propriedades/origens; casos governantes
+por combinação; eixos e posições concomitantes; ELU/ELS separados; limites de
+escopo e proibição de aprovação global. Não se criou outro quadro resistente.
+
+MELHORIAS
+1. Propriedades nas tabelas existentes usam até oito algarismos significativos.
+   Detalhes técnicos do ELS e M–V leem valores numéricos salvos, preservam sinais
+   e valores pequenos. fmt()/resumos/entradas continuam com duas casas. Isto não
+   acrescenta precisão à origem nem altera JSON ou cálculo.
+2. ELS separa base do método, limite declarado e origem efetivamente registrada
+   no objeto ELS. Não deduz limite de entradas distantes nem trata uma referência
+   normativa como aprovação do limite escolhido. Teto AA continua não exato,
+   sem posição de máximo inventada. A situação/índice permanecem os da linha
+   existente. Históricos AA/gross recusados não ganham detalhe numérico novo.
+3. M–V mostra combinação, x, ramo e índice quadrático do traço salvo. M/V ausentes
+   permanecem não registrados. P normal nula deixa a partição a explicitamente
+   inativa. Divergência de posição finita bloqueia promoção como governante.
+   No apoio, somente os dois estados reconciliados e seus vínculos salvos são
+   apresentados; traço legado/vazio/inconsistente não transforma a do adaptador
+   interior em posição física, não recupera índice de outro objeto e não calcula
+   novo máximo. Sinais, empates e a→0+ são preservados.
+4. Motivos do estado salvo: quadro textual compacto no Word e expander na UI,
+   somente pendências/não atendimentos já registrados. Agrupa motivos idênticos
+   preservando identidades de combinação. Não expõe índices diagnósticos como
+   ativos, não reconstitui inventário/contagem e não aprova métodos incompletos.
+5. Registro AA inválido mostra na UI o mesmo aviso Word de contagens globais
+   originalmente salvas. Não apaga ou requalifica histórico.
+6. Rótulos de posição ficam unidos aos dois eixos; linhas da síntese não são
+   partidas; identificação final fica com o parágrafo anterior.
+
+LIMITES
+A auditoria CYPE inspirou somente organização/clareza. Nenhum valor, vínculo,
+método, resistência, norma ou conclusão CYPE foi importado para o app. O uso de
+J em mm4 já evitava parte do problema do It arredondado em cm4 daquele relatório;
+aqui não se atribuiu automaticamente o mesmo defeito ao motor existente.
+A documentação normativa e as guardas físicas/matemáticas da AA R3 permanecem
+inalteradas. Esta é melhoria de apresentação, não certificação do sistema.
+
+VALIDAÇÃO
+Testes novos em tests/test_report_audit.py; expectativas de duas antigas
+verificações da tabela de propriedades atualizadas para a exceção técnica.
+O restante do contrato de duas casas permanece. Recibos de igualdade integral
+de resultados, AST da função complete_result, fontes mecânicos intactos,
+portabilidade, reconstrução do patch e inspeção visual ficam fora da árvore.

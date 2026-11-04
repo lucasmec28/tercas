@@ -1,0 +1,89 @@
+ENTREGA DE PESQUISA: API DE RETENÇÃO DA ALMA POR RAZÃO POSITIVA
+4 de novembro de 2026, 07:05 UTC. Implementação e revisão independente encerradas.
+
+RESULTADO ÚTIL
+Nova API recupera o campo sintético Ue100x50x17/t1,50/L6000,
+q=[0,0.2024009036485318] N/mm, P=0, sem alterar a lei AA da NBR14762:2010.
+A guarda exterior passa de teto 264.227566785 MPa para 241.75742331012626 MPa.
+Os tetos racionais de componente, convertidos para binary64 para cima, são
+[0.20330347585010872, 146.27429435933485] mm. NÃO são flechas reais.
+O segundo componente permanece explícito. O teto normal pequeno não libera
+ELS físico, torção, distorção, estabilidade ou aprovação global.
+
+ENTREGA / PINS CONGELADOS
+Pasta web_only_positive_ratio_api_revision1/
+- api.py: a186eecdfc2f5a8e5be73cc0f385d93df8602f0190e3af80c1a50b3fb5b0e8e1
+- control_core.py: 4dab6f4b1e2f58e51f5bfcbe24fab0efd692c75a663fb6390736304fd0a4b4c5
+- SOURCE_MANIFEST.json: 50c94fec4c24b44f012bd2a95993f964e93716133407617083b93dcf6286bce8
+- CORE_SOURCE_MANIFEST.json: 03f552f6d57c6e0f303bb1df78a0f57a83a580d96110716fc27eda35dcd7696a
+- RECEIPT.json: 10bfeed2bbc13560e610f60c129d8260e716337f1ade7805d2e7635ded6110d8
+CONTRACT.txt e REPORT.txt explicam uso/escopo; test_focal.py e cases/ preservam
+as verificações. Manifestos pinam todas as dependências reais. O SHA calculado
+pelo próprio código é rastreabilidade, não autoridade externa: consumidores
+precisam verificar os pins desta entrega/recibo. Pacote ainda depende da árvore
+outputs pinada; portabilidade/integração são trabalho separado.
+
+REVISÃO INDEPENDENTE ENCERRADA
+Pasta web_only_positive_ratio_api_audit/
+- REPORT.txt: 328377a0b20d0d7b7bf2564dfd6cbc43fd6bb03eb80a97f1fe20383ad1297d10
+- RECEIPT.json: d84fa4e5a2b0406a036b2c8ccfc58ffd645fa1a6c11bdcf39750d6d4e0462f29
+8 grupos independentes verdes; 120 pares de suportes e 84 atualizações de trace
+coerentes; sete admissões salvas preservadas sem teto pior; 51 arquivos do recibo
+e três pins da revisão2 conferidos. 9 grupos autorais e 39 respostas salvas.
+Green racional, extremos, upper_float dirigido, q/P não proporcionais/refletidos,
+zero/subnormal, JSON/contextos hostis/concorrentes, schemas e bindings revisados.
+Benchmarks puro e dois biaxiais salvos permanecem contidos; nenhum solver,
+integração dessas barras, FSM, suíte integral do app ou lote378 foi repetido.
+O recibo do autor conserva o estado histórico 'revisão separada pendente';
+a revisão separada acima é o encerramento posterior, sem reescrever o recibo.
+
+CONTRATO
+- assess(dict), assess_json(JSON estrito), compare_component(request,0|1,limite).
+- Entrada: schema_version='aa_web_positive_ratio_qp_component_v1'.
+- Núcleo: 'aa_web_positive_ratio_control_hull_v1'. Comparador:
+  'aa_web_positive_ratio_component_comparison_v1', inclusive nas falhas.
+- Mesmos campos assinados da revisão2: fonte própria explícita entre sete SHA,
+  E200000/nu.3/fy250, N=B=0, L positivo, q/P em coordenadas de momento já definidas,
+  viga simples. Não infere orientação física do app. P não nulo requer 0<a<L.
+  Não aceita support_limit, carga apagada, ID de caso, hull/bounds importados,
+  interpolação de geometria ou snapshot histórico como prova.
+- Zero e ramo bruto preservados. Ramo reduzido mantém não-alma integral,
+  guardas de material/paredes e prova de existência no domínio declarado.
+- 12 estágios finitos. Em H comum, positividade das duas extremidades de todos
+  controles nãozero permite pisos correlacionados de v0-r*v1 e v1-r*v0.
+  O piso certificado psi>=r garante ambas faixas físicas rho_min/(3-r).
+  eta_next=max(eta_anterior,eta_geral,eta_razao). Não exige convergência.
+  O antigo teste eta_geral>=eta_anterior foi corretamente removido: o piso
+  geral pode ser menor que uma faixa já certificada pela razão; o max mantém
+  a união física. Há testes explícitos de finitude, faixa e aninhamento.
+- Se o aperto positivo não se aplica, a construção anterior permanece.
+  O controle misto conserva exatamente controles/tetos da revisão2.
+- Inconclusão do domínio não retorna teto de deslocamento utilizável.
+  Teto válido acima de um critério permanece inconclusivo, não reprovação.
+  O comparador pode mostrar esse teto para contexto, sem chamar flecha real.
+- Não há índice, aprovação física/global ou publicação. Opções/históricos/
+  fontes do app e APIs revisão2 permanecem intactos; partição local revisão2
+  não foi portado nem reinterpretado por esta entrega.
+
+BASE MATEMÁTICA / NUMÉRICA
+Prova: web_only_positive_ratio_proof/PROOF.txt
+32eedddc210969f4e7287588d6ae5fa1a2fe444bc61567d3799ca8b9ca715fab.
+Auditoria focal anterior de12 execuções/192 estágios:
+web_only_positive_ratio_audit/REPORT.txt
+6462b717c0b2f8f730193c133c298f1a3a49c180dd0228f6a901878495851b05.
+Não há fórmula nova de mesa/lábio ou ramo negativo. A construção é derivação
+mecânica explícita a partir da lei AA declarada, não algoritmo textual da norma.
+Suportes seccionais usam70 dígitos privados e padding1e-20: isto NÃO é aritmética
+intervalar formal. Green e extremos racionais são conservadores condicionados
+a esses suportes. Não se provou unicidade, seleção contínua/estável ou resposta
+física da estrutura completa.
+
+LACUNA RESTANTE
+Nos31 campos sintéticos anteriormente inconclusivos,29 têm exclusão necessária
+da guarda elástica do modelo alma AA/não-alma integral, auditada separadamente.
+A razão positiva recupera o alvo acima. O outro campo, t1,20/L4m,
+q=[-0.8825985000000001,0.02088729082746036], ainda não tem prova de mesa integral.
+As29 exclusões não são reprovações físicas, nem prova sobre outros modelos
+com mesa/lábio reduzidos. A lei geral reduzida de mesa/lábio permanece aberta.
+Não há fundamento para apagar o lábio, comparar uma flecha U isolada ou trocar
+flags de aprovação para suprir essa lacuna.

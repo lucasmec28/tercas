@@ -26,9 +26,10 @@ def enabled(data):
     """Omitted means unchanged legacy policy; unknown values fail closed."""
     if FIELD not in data:return False
     from .biaxial_component import MODE as GROSS_MODE, eligible_choice
-    if not isinstance(data[FIELD], str) or data[FIELD] not in (MODE,GROSS_MODE):
+    from .aa_component import MODES as AA_MODES
+    if not isinstance(data[FIELD], str) or data[FIELD] not in (MODE,GROSS_MODE,*AA_MODES):
         raise ValueError('Modelo de flecha não reconhecido; entradas não convertidas.')
-    if data[FIELD] == GROSS_MODE:
+    if data[FIELD] in (GROSS_MODE,*AA_MODES):
         if not eligible_choice(data):
             raise ValueError('Componente biaxial integral exclusiva das referências próprias Ue de viga isolada com aplicação explícita.')
         return False
@@ -149,6 +150,7 @@ def render_choice(st, data, key):
         # Clear only the mutually exclusive widget choice, before rendering it.
         # A hidden checkbox can otherwise retain a stale True across reruns.
         st.session_state[key+'_gross']=False
+        st.session_state[key+'_aa']=False
         st.caption(TEXT)
     else:
         if data.get(FIELD)==MODE:data.pop(FIELD,None)
@@ -157,5 +159,9 @@ def render_choice(st, data, key):
             gross=st.checkbox(GROSS_LABEL,value=selected(data),key=key+'_gross')
             if gross:
                 data[FIELD]=GROSS_MODE;st.caption(gross_scope_text(data))
-            elif data.get(FIELD)==GROSS_MODE:data.pop(FIELD,None)
+                st.session_state[key+'_aa']=False
+            else:
+                if data.get(FIELD)==GROSS_MODE:data.pop(FIELD,None)
+                from .aa_component_ui import render_choice as render_aa_choice
+                render_aa_choice(st,data,key+'_aa')
     return active

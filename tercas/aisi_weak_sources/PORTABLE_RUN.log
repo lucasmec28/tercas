@@ -1,0 +1,49 @@
+{
+  "passed": true,
+  "consumer_sha256": "2136c382bfaec30f4ad665583d0f8585d9f8d805302a68d6ba7d6d06ba481d9d",
+  "commands": [
+    {
+      "script": "weak_capacity.py",
+      "returncode": 0,
+      "log": "PORTABLE_weak_capacity.py.log",
+      "passed": true
+    },
+    {
+      "script": "test_weak_capacity.py",
+      "returncode": 0,
+      "log": "PORTABLE_test_weak_capacity.py.log",
+      "passed": true
+    },
+    {
+      "script": "check_material_scaling.py",
+      "returncode": 0,
+      "log": "PORTABLE_check_material_scaling.py.log",
+      "passed": true
+    },
+    {
+      "script": "independent_review/test_consumer_independent.py",
+      "returncode": 0,
+      "log": "PORTABLE_independent_review_test_consumer_independent.py.log",
+      "passed": true
+    },
+    {
+      "script": "independent_review/check_material_independent.py",
+      "returncode": 0,
+      "log": "PORTABLE_independent_review_check_material_independent.py.log",
+      "passed": true
+    }
+  ],
+  "exact_json_replays": [
+    "RESULTS.json",
+    "SUMMARY.json",
+    "MATERIAL_SCALING.json",
+    "independent_review/MATERIAL_INDEPENDENT.json"
+  ],
+  "source_preservation": {
+    "/workspace/scratch/200bd23c4a9b/outputs/tercas_ue100_family_critical_20261103/FAMILY_ELASTIC_REGISTRY.json": true,
+    "/workspace/scratch/200bd23c4a9b/outputs/tercas_aisi_app_integration_20261104/candidate/tercas/data/ue_family/elastic_registry.json": true,
+    "/workspace/scratch/200bd23c4a9b/outputs/tercas_aisi_app_integration_20261104/candidate/tercas/ue_family_reference.py": true
+  },
+  "source_candidate_imported": false,
+  "temporary_replay": "/tmp/aisi_weak_portable_4cfhvhaz/renamed_reference_bundle"
+}

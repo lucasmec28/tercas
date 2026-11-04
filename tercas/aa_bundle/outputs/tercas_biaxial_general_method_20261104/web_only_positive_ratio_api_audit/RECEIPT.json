@@ -1,0 +1,14 @@
+{
+  "schema": "independent_positive_ratio_api_audit_receipt",
+  "verdict": "pass_research_contract",
+  "files": {
+    "COHERENCE.log": "156e2667bd27c8977e858be03d62b211ce913fe6203d2a8f2e222a79d3eed39a",
+    "RECEIPTS.log": "33a3ad4a46acd850414a4f9d450eebf4ec3fd580ba653549a825cf2de3e35130",
+    "REPORT.txt": "328377a0b20d0d7b7bf2564dfd6cbc43fd6bb03eb80a97f1fe20383ad1297d10",
+    "RESULTS.json": "b62f993473b25b8af3992f86e42109ffefa987550d581a374e82c74a540aaf1d",
+    "RUN.log": "2ea5afeed983805755d8213b564199d8ace105b95b91d446f4b9b0797683c1a7",
+    "audit.py": "9b6eca27ae8bb442c44f576c6b8d7344841ff8e36f93eeac8931486fc3fe01d7",
+    "coherence.py": "4177abf5c90c240d4c7c06584e3f99164ff61ab9197e4163b342d1338b3763e7",
+    "receipts.py": "5d1e5237b543331bc096697688e3649b7d0a7b48394cf7961e3808253eac0e42"
+  }
+}

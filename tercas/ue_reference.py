@@ -241,7 +241,7 @@ def _evidence(data):
     manifest, _ = gate(); ref = reference(data['L_mm'])
     from .deflection_scope import enabled, TEXT
     isolated = enabled(data)
-    from .biaxial_component import selected as gross_selected, scope_text as gross_scope_text
+    from .flexural_components import selected as gross_selected, scope_text as gross_scope_text
     gross=gross_selected(data)
     from .application import fingerprint
     return dict(schema=VERSION, reporting_version=REPORTING_VERSION, reference_id=ID,
@@ -344,7 +344,7 @@ def calculate_reference(data):
     result['strong_critical_reference'] = None
     result['ue_reference_evidence'] = record
     result['whole_member_approved'] = False
-    from .biaxial_component import attach_fresh
+    from .flexural_components import attach_fresh
     return attach_fresh(result,record)
 
 

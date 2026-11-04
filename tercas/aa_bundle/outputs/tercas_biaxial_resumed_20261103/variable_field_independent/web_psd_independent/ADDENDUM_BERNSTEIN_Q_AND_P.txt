@@ -1,0 +1,268 @@
+Extensão por Bernstein para carga uniforme e força interior
+Revisão matemática independente em 4 de novembro de 2026
+
+Conclusão e alcance
+
+A extensão proposta é válida como critério SUFICIENTE. Ela cobre campos
+vetoriais realmente não proporcionais sem aproximar direções por snapping.
+Um intervalo PSD comum, os controles Bernstein exatos, as guardas de
+retenção e a positividade da alma permitem transportar a prova anterior de
+existência seccional e de resposta fraca da barra. Green fornece envelopes
+quarticos de deslocamento por trecho; os extremos exigem raízes cúbicas.
+
+Este documento prova o contrato matemático, não que uma nova entrada
+numérica passe. Nenhum runtime de cálculo, solver ou app foi executado.
+Não modifica a prova q-only, API revision1, recibos anteriores ou candidata.
+
+1  Campo mecânico e controles exatos
+
+Use a mesma base fixa R=[N,Mx,My], b=[1,y,-x], K=E integral b b^T dA e
+N=0. Q e P abaixo são os vetores de carregamento já convertidos para as
+duas componentes de momento, com os sinais e unidades desse equilíbrio.
+Não confundir esse mapa de sinais com as coordenadas físicas de força.
+
+Para 0<a<L, viga simples e força interior sem momento concentrado:
+  M(z)=R_A z-Q z^2/2-P max(z-a,0),
+  R_A=Q L/2+P(L-a)/L.
+Equivalentemente M(z)=Q z(L-z)/2+P G(z,a), com o mesmo Green positivo
+da prova anterior. M é contínuo; M' salta por -P na interface a.
+
+Particione em 0, a, L e, opcionalmente, em outros pontos. Em [u,v],
+sem interface de força no interior, ponha ell=v-u, tau=(z-u)/ell e:
+  c0=R(u),
+  c1=c0+ell R'(u+)/2,
+  c2=R(v).
+Então, exatamente,
+  R(z)=(1-tau)^2 c0+2tau(1-tau)c1+tau^2 c2.
+Os três pesos B_j são não negativos e somam 1. Os controles não são
+amostras e não precisam ser estados mecanicamente realizados. São um
+superset algébrico do campo, não novos casos ou dados normativos.
+
+A derivada unilateral deve ser a do trecho. O controle final do trecho
+à esquerda e o inicial à direita da força são o mesmo R(a). Nenhuma
+continuidade de cortante é exigida ali; o salto já está no equilíbrio.
+
+2  Suportes PSD e bootstrap comum
+
+Fixe Cg=Kg^-1, Cmin=Kmin^-1 e H=Cmin-Cg>=0, na MESMA base e origem.
+Para qualquer covetor fixo w, os extremos de w^T C R, Cg<=C<=Cmin, são:
+  h_w^+(R)=w^T(Cg+H/2)R+sqrt(w^T H w)*sqrt(R^T H R)/2,
+  h_w^-(R)=w^T(Cg+H/2)R-sqrt(w^T H w)*sqrt(R^T H R)/2.
+O primeiro é linear mais seminorma, logo convexo; o segundo é côncavo.
+Valem mesmo com H singular, são positivamente homogêneos e h_w^±(0)=0.
+Portanto, em cada trecho:
+  sum B_j h_w^-(c_j) <= h_w^-(R(z)),
+  h_w^+(R(z)) <= sum B_j h_w^+(c_j).
+
+Para tensão use w=E[1,y,-x]. A tensão é afim na linha da alma; basta
+limitar suas duas extremidades para obter S>=0 que domina toda compressão
+da alma. Um S suficiente é o máximo de 0 e dos h^+ dessas duas bordas
+em TODOS os controles de TODOS os trechos. Aplica-se então, sem mudança,
+a prova de retenção de duas faixas físicas eta*b do parecer anterior.
+
+Kmin deve conter apenas material garantido COMUM a todo esse domínio.
+O bootstrap pode começar pela não alma integral, usar o S global e
+conservar max(eta_anterior,eta_novo). Cada estágio é uma implicação de
+inclusão de área; não pressupõe convergência de um ponto fixo. A mesma
+guarda suficiente das mesas, lábios e faces deve fechar para TODOS os
+estados cobertos, usando esses limites, não apenas tensões grosseiras
+ou valores amostrados ao longo do vão.
+
+Para existência, a invariância final deve estar justificada: em
+Omega_eta(R)={C R: Cg<=C<=Cmin_eta}, a lei AA retém pelo menos eta.
+Pode-se verificá-la diretamente por eta_novo>=eta ou herdar a implicação
+do estágio anterior: se T_R(Omega_anterior) está contido em Omega_eta
+e Omega_eta está contido em Omega_anterior, então T_R também preserva
+Omega_eta. Não basta escolher uma seção mínima sem essa demonstração.
+
+3  Domínio contínuo e existência
+
+Suponha, no H final comum, que para cada controle c_j diferente de zero
+as DUAS bordas da alma satisfaçam h^-_borda(c_j)>0. Controles exatamente
+zero são tratados como zero; tolerância numérica não autoriza substituir
+por zero uma direção residual não coberta pela guarda.
+
+Para qualquer combinação convexa R de controles, a concavidade fornece
+  h^-_borda(R) >= sum B_j h^-_borda(c_j).
+Se algum controle não nulo tem peso positivo, o lado direito é positivo.
+Logo R não pode ser zero e toda deformação em Omega_eta(R) mantém ambas
+as bordas comprimidas. Isso também vale para o invólucro convexo D de
+todos os controles, não apenas para a curva mecânica R(z). Há até uma
+margem cônica: para cada borda, delta=min_{c_j!=0} h^-(c_j)/||c_j||>0
+implica h^-(R)>=delta ||R|| em D. O caso de todos os controles zero é
+tratado diretamente por R=e=0.
+
+Em R!=0, a lei AA matemática exata é contínua nesse conjunto: psi>0,
+cap físico rho<=1 e troca de borda em psi=1. A descontinuidade possível
+da distribuição em psi=-0.236 fica fora do domínio. K é uniformemente
+positiva porque contém a não alma. Omega_eta(R) é compacto, convexo,
+não vazio, e T_R(e)=K(e)^-1 R o preserva. Brouwer fornece um equilíbrio
+em cada R de D. Em R=0, Omega_eta(0)={0} e esse é o equilíbrio.
+
+Também se fecha a existência da barra, sem uma seleção contínua. O tubo
+  A={(R,C R): R em D, Cg<=C<=Cmin}
+é compacto. O gráfico dos equilíbrios K(e)e=R nesse tubo é fechado:
+para R!=0 usa-se a continuidade AA; quando R tende a zero, e tende a
+zero pela limitação uniforme de C. As fibras são compactas não vazias.
+Projeções das interseções do gráfico com D x B, B fechado, são compactas.
+Assim vale a mesma seleção Borel do adendo anterior. Com R(z) contínuo,
+obtém-se e(z) Borel e limitado, curvatura em L-infinito e deslocamento
+por Green em W^{2,infinito}, com constitutiva e equilíbrio fracos.
+
+Na interface a não é necessário escolher dois equilíbrios distintos:
+um seletor em R escolhe o mesmo e para o mesmo R(a). Mesmo uma escolha
+diferente num único ponto não mudaria a resposta fraca. Isso não exige
+continuidade da seleção, unicidade ou estabilidade de uma trajetória.
+O momento contínuo e seu salto de derivada satisfazem corretamente a
+carga pontual em sentido de distribuições.
+
+4  Zeros e cargas opostas
+
+Dentro aberto de um trecho, os três B_j são estritamente positivos.
+Sob a guarda acima, um zero interno de R só é possível se TODOS os
+controles daquele trecho forem zero, portanto se ele for identicamente
+nulo. Zeros isolados podem existir nas interfaces, cujos controles de
+extremidade são zero. Neles e=0 é imediato; o argumento de gráfico
+compacto cobre aproximações vindas de qualquer lado.
+
+A guarda não afirma que q e P devam ter o mesmo sentido. Exemplo
+algébrico normalizado L=1, a=1/2, Q numa direção admissível:
+- P=-Q/2 dá R(a)=0 e momentos na direção positiva de Q em ambos os
+  lados. Os controles não nulos podem passar; o zero da interface não
+  impede existência nem Green.
+- P=-3Q/4 dá, no trecho esquerdo, R(z)=Q*z*(1-4z)/8. Há zero em z=1/4
+  e inversão de sentido. Seus controles são 0, Q/32, -Q/16. Não podem
+  passar todos no mesmo cone de compressão estrita da alma.
+
+O segundo caso é INCONCLUSIVO para este certificado, não demonstra
+inexistência, instabilidade ou falha física. De fato,
+h^-(-R)=-h^+(R), de modo que R e -R não podem ambos passar nessa guarda.
+Se a própria curva visita uma direção fora do cone, só refinar Bernstein
+não resolve esse impedimento. Seria necessário outro domínio contínuo
+ou outro argumento, fora deste contrato.
+
+O invólucro pode ser mais amplo do que a curva. Como ilustração algébrica
+geral, [(tau-1/2)^2+epsilon]R*, 0<epsilon<1/4, nunca troca a direção R*,
+mas seu controle central é (epsilon-1/4)R*. Isso mostra por que falha de
+um controle não basta para reprovar o campo. Não se afirma que esse
+polinômio isolado já seja um vão inteiro q+P com extremos simplesmente
+apoiados; ele ilustra a possível perda por invólucro em um trecho.
+
+5  Envelopes de curvatura e Green global
+
+Para a componente flexional fixa desejada, use seu covetor w de
+curvatura, sem o fator E usado no funcional de tensão. Em cada trecho:
+  l(z)=sum B_j h_w^-(c_j),
+  u(z)=sum B_j h_w^+(c_j).
+Toda resposta admissível satisfaz l(z)<=kappa_w(z)<=u(z). Os extremos
+em controles diferentes podem corresponder a compliances diferentes;
+não se afirma realização simultânea nem exatidão. A desigualdade de
+convexidade basta para o envelope conservador.
+
+Como G(x,z)>=0, defina em TODO o vão:
+  D_-(x)=integral_0^L G(x,z) l(z) dz,
+  D_+(x)=integral_0^L G(x,z) u(z) dz.
+Então D_-<=d_w<=D_+, inclusive quando curvaturas ou deslocamentos
+mudam de sinal. Não é lícito substituir esse passo por uma compliance
+uniforme real, combinar picos assinados sem pesos ou tratar cada trecho
+como uma viga independente com deslocamento nulo nas interfaces.
+
+Para qualquer envelope f=l ou u, a fórmula global útil é:
+  A_f=(1/L) integral_0^L (L-z) f(z) dz,
+  D_f(x)=A_f*x-integral_0^x (x-z) f(z) dz,
+  D_f'(x)=A_f-integral_0^x f(z) dz.
+Como f é quadrático por trecho, D_f é quartico e D_f' é cúbico por
+trecho. As constantes contêm as integrais dos trechos anteriores e a
+condição do apoio direito. D_f e D_f' são contínuos. Com H e w comuns,
+os controles compartilhados também fazem f contínuo nas interfaces;
+nesse caso D_f é C2, embora D_f''' possa ter saltos.
+
+Um limite global da magnitude da componente é:
+  max_x |d_w(x)| <= max(max_x D_+(x), -min_x D_-(x)).
+Calcule os extremos dos dois polinômios globais por trecho em seus
+extremos/interfaces e nas raízes REAIS de D_f' dentro do trecho,
+incluindo casos degenerados de grau menor. Não há hipótese de máximo
+no meio do vão. Uma malha de amostras não substitui essa maximização.
+
+6  Viabilidade e contrato mínimo
+
+A extensão exige apenas álgebra de matrizes 3x3, a mesma raiz cúbica da
+retenção, controles Bernstein, integrais polinomiais e raízes cúbicas
+de extrema. Não requer FSM, solver seccional ou novo programa de
+pesquisa para demonstrar esta passagem matemática. A futura
+implementação e suas margens numéricas ainda devem ser verificadas;
+este adendo não certifica bytes de uma implementação inexistente.
+
+Para não degradar o q-only, inclua também raízes interiores de cada
+componente de M' na partição, além de a. Com uma única parábola no vão
+inteiro, o controle central vale 2*M_meio; cortando em L/2, os controles
+máximos voltam a M_meio e recuperam o envelope anterior. No caso não
+proporcional, essas raízes não são, por si, os extremos dos suportes de
+tensão; a prova continua sendo o invólucro Bernstein. Refinamentos
+de Casteljau geram controles por combinações convexas dos anteriores,
+portanto nunca alargam o invólucro. São refinamentos exatos, não amostras.
+
+Contrato mínimo para declarar cobertura de uma entrada:
+1. Mesma geometria, materiais, lei AA exata, base e componente de
+   deslocamento; N=0, viga simples, q uniforme e P interior com mapa
+   de sinais explícito, sem torção ou vínculos axiais novos.
+2. Campo contínuo por equilíbrio e controles Bernstein exatos em uma
+   partição que respeita todas as interfaces de carregamento. A
+   construção deve preservar o valor EXATO dos floats finitos de
+   entrada, não um decimal arredondado posterior. Fraction ou razões
+   inteiras exatas são uma opção. Reações, cortes, comprimentos de
+   trechos e controles devem conservar esses valores até a avaliação
+   numérica com margem controlada.
+3. Kmin comum, positivo e obtido por inclusão física de área, com
+   bootstrap/invariância justificados em todos os controles.
+4. Guardas suficientes de mesas, lábios e faces no mesmo domínio;
+   ambas as bordas da alma com h^->0 em cada controle não nulo.
+5. Zero exato tratado diretamente, sem snapping de resíduos; margens
+   numéricas conservadoras e estado inconclusivo quando não fecharem.
+6. Envelopes assinados integrados com Green global e extremos contínuos
+   por raízes, sem confundir limite superior com flecha calculada exata.
+
+Em particular, P finito aplicado em a=5e-324, representando o menor
+float binário positivo usual, continua INTERIOR para L>a. Não pode
+virar força no apoio porque uma conversão zera a ou porque a subtração
+L-a arredonda para L. Nem cortes distintos podem ser fundidos apenas
+por estarem abaixo da resolução de uma representação intermediária.
+Não se promete que uma precisão fixa qualquer resolva toda entrada
+finita: se não for possível preservar o campo e fechar seus enclosures,
+o resultado é inconclusivo numérico. Não se ajusta a, P, q ou suas
+direções para fazê-los passar. Essa é uma condição de fidelidade do
+contrato computacional futuro, não uma exigência normativa nova.
+
+A homogeneidade h^±(sR)=s*h^±(R), s>0, pertence ao modelo EXATO.
+Uma avaliação numérica que acrescente padding absoluto 1e-20 não é
+literalmente homogênea e pode produzir um piso negativo artificial
+para controles não nulos muito pequenos perto dos apoios. Controles
+zero devem devolver zero por identidade, sem um padding que fabrique
+carregamento. Para um controle não zero c=s*c_normalizado, pode-se
+testar sua direção com o MESMO H fixo na escala normalizada, obter
+limites conservadores e reescalá-los por s com arredondamento para
+fora. A evidência deve guardar a escala positiva e os limites usados.
+Isso transfere a positividade sem snapping nem uma lacuna arbitrária
+perto do apoio. Não pressupõe que a seção efetiva real seja homogênea
+na carga e não autoriza refazer o bootstrap como se c_normalizado
+fosse um carregamento físico adicional. S e os envelopes finais usam
+as magnitudes REAIS reescaladas. Underflow, sinal não resolvido ou
+enclosure insuficiente ainda resultam em inconclusivo numérico, não
+em aprovação por proximidade ou reclassificação da carga como zero.
+
+Essas condições permitem existência de pelo menos uma resposta fraca
+mensurável e bounds para TODAS as respostas admissíveis. Não provam
+unicidade, seleção contínua, estabilidade global, resistência, torção,
+ELS físico completo ou adequação de uma candidata de app.
+
+Referências e preservação
+
+As provas da retenção física AA, dos extremos PSD e do domínio contínuo
+estão em REVIEW_PSD_BOOTSTRAP.txt, preservado. A seleção mensurável usa
+o mesmo resultado já conferido em ADDENDUM_MEASURABLE_BEAM_EXISTENCE.txt:
+Himmelberg e Van Vleck, Some Selection Theorems for Measurable Functions,
+Canadian Journal of Mathematics 21 (1969), 394-399, Teorema 1, p.395.
+https://doi.org/10.4153/CJM-1969-041-7
+A passagem convexa, os controles e a integração acima foram derivados
+diretamente neste adendo. O manifesto novo registra os hashes anteriores
+e deste documento; nenhum recibo fechado foi reescrito.

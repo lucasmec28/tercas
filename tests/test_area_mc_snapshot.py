@@ -6,6 +6,7 @@ from tercas.application import defaults,calculate
 from tercas.batch import calculate_batch,case_inputs
 from tercas.report import batch_word,word
 from tercas.presentation import fmt
+from tercas.report_audit import technical_value
 
 def text(blob):
  d=Document(BytesIO(blob))
@@ -32,7 +33,7 @@ class AreaMCSnapshot(unittest.TestCase):
  def test_all_properties_and_strong_criticals_exported(self):
   d=specimen();r=calculate_batch(d);s=text(batch_word(r))
   for value in d['properties'].values():
-   if value is not None:self.assertIn(fmt(value),s)
+   if value is not None:self.assertIn(technical_value(value),s)
   for key in ('Ml_Nmm','Mdist_Nmm'):self.assertIn(fmt(d[key]),s)
   self.assertIn('Snapshot comum às combinações',s)
   self.assertIn('Ml declarado [N·mm]',s);self.assertIn('Mdist disponibilizado ao cálculo [N·mm]',s)
@@ -56,7 +57,7 @@ class AreaMCSnapshot(unittest.TestCase):
  def test_old_result_exports_declared_only_without_recalculation(self):
   d=specimen();r=calculate_batch(d);r.pop('common_input_snapshot')
   s=text(batch_word(r));self.assertIn('Resultado anterior sem snapshot comum',s)
-  self.assertIn('Nenhum recálculo',s);self.assertIn(fmt(d['properties']['E_MPa']),s)
+  self.assertIn('Nenhum recálculo',s);self.assertIn(technical_value(d['properties']['E_MPa']),s)
   self.assertIn('valor efetivamente disponibilizado não registrado',s)
  def test_no_structural_approval_added(self):
   r=calculate_batch(specimen());s=text(batch_word(r))

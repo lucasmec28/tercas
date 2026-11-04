@@ -1,0 +1,32 @@
+{
+  "authority": "Positive-ratio retention research API revision1. New implementation pending independent API review; proof and feasibility audit are separate evidence. Historical sources are derivation provenance, not approval of this API.",
+  "files": {
+    "outputs/tercas_biaxial_general_method_20261104/gross_mle_domain/SOURCE_PINS.json": "8a6a3b64d98cc05909c791c33facf92fe07ae5a4df8f2f13774c73b1b857cc39",
+    "outputs/tercas_biaxial_general_method_20261104/gross_mle_domain_revision2/gross_mle.py": "6c55ca5d6ee5ef7c371b93963f7101fea4cb2b1426f12acff442520eb0fd03ca",
+    "outputs/tercas_biaxial_general_method_20261104/web_only_control_domain_revision1/SOURCE_MANIFEST.json": "ff8be4704ff75092cb205ba1898239167ca61868a7d68dc0bf1655b9f1ba914d",
+    "outputs/tercas_biaxial_general_method_20261104/web_only_control_domain_revision1/control_core.py": "da042ecc53cfb4c296ab541ef069ec6b3bf120a33d0ee24574125420ef3f3e75",
+    "outputs/tercas_biaxial_general_method_20261104/web_only_domain_api_revision1/api.py": "0626f4490ee41d29db07663872a5c5945648933fed762b4c4f1d554ba3dd21da",
+    "outputs/tercas_biaxial_general_method_20261104/web_only_domain_api_revision1/bound_core.py": "7d887228de934bdfd50a95e834205adf6b47680bb6c5037d55c49b5e21c888ce",
+    "outputs/tercas_biaxial_general_method_20261104/web_only_domain_bound/bound_ray.py": "2e540f8498be508631a0a6115f90117f8b900d82412dd90e89673eb23e15a66a",
+    "outputs/tercas_biaxial_general_method_20261104/web_only_independent/pure_weak_oracle.py": "fa90b12620c78f04c8bf302bb7b23ab3b00f6b10431324fd3fd08bf5f4d039e0",
+    "outputs/tercas_biaxial_general_method_20261104/web_only_piecewise_audit/REVIEW.txt": "64641095a3e3931d3a84ce78b75fae1dc2bb877944e49c143ddc57b5fea38cae",
+    "outputs/tercas_biaxial_general_method_20261104/web_only_piecewise_field/bounded_polynomial_source.py": "510d92dbeb0f745ad45fecf7280e74e9c3dda39d0ec47449537f31c972735a7d",
+    "outputs/tercas_biaxial_general_method_20261104/web_only_piecewise_field/piecewise_field.py": "8cf6b069614e7dc1114655b9fe693bdae1746987f6042f33d6b40ff5f07801f4",
+    "outputs/tercas_biaxial_research_integration_20261104/candidate/tercas/data/torsion_profiles/ue100x50x17_t1.20.json": "f74d3f941e59af0bceb3a2fdae414e8aa479b14b16cbe284c1dff3f3e816b005",
+    "outputs/tercas_biaxial_research_integration_20261104/candidate/tercas/data/torsion_profiles/ue100x50x17_t1.50.json": "9a30115583275a30ab25eb8c782398a8aa5d547b8272743da9cd2f8342f880d4",
+    "outputs/tercas_biaxial_research_integration_20261104/candidate/tercas/data/torsion_profiles/ue100x50x17_t2.00.json": "fde5d287a73df9adf1b9ab3e392d7207c3423acb7a8894de5553d402cc7aef90",
+    "outputs/tercas_biaxial_research_integration_20261104/candidate/tercas/data/torsion_profiles/ue100x50x17_t2.25.json": "8db5d3c4a037e01e665860c1ad8878bab01330cc07fc4165f74a40c0862ec562",
+    "outputs/tercas_biaxial_research_integration_20261104/candidate/tercas/data/torsion_profiles/ue100x50x17_t2.65.json": "40aada8e49914bb1384c8ac205d8035225d5c033e1e76de8fa65f022ebdd99f1",
+    "outputs/tercas_biaxial_research_integration_20261104/candidate/tercas/data/torsion_profiles/ue100x50x17_t3.00.json": "e45b3298a2a95cca875b558269046090751e3bff2fa1b9dfae3cc0c1a2a97919",
+    "outputs/tercas_biaxial_research_integration_20261104/candidate/tercas/data/torsion_profiles/ue100x50x17_t3.35.json": "f1e9676c843459bcb7c14341a32ab10cc90c8ab6765e056fe9bcd47e3b58dd05",
+    "outputs/tercas_biaxial_resumed_20261103/variable_field_independent/web_psd_independent/ADDENDUM_BERNSTEIN_Q_AND_P.txt": "1ead80d17ce62c29e9b822c1ff334d735123645b9cff09a235465db6ef57c225",
+    "outputs/tercas_biaxial_resumed_20261103/variable_field_independent/web_psd_independent/REVIEW_CONTINUITY_EXTENSION.txt": "8bf94f47cc0434dcfeb81e6c277c0c31782ca8449decb2a78026c3482314d672",
+    "outputs/tercas_biaxial_general_method_20261104/web_only_positive_ratio_api_revision1/bound_core.py": "6b5f592f327573116c7e2170c792108bcf47a034b5be2866b5268bf8874b625f",
+    "outputs/tercas_biaxial_general_method_20261104/web_only_positive_ratio_api_revision1/geometry_source.py": "8fc9f1402d71d337301710ce82f27e40d65522f4107887294f3061dd1b1b1727",
+    "outputs/tercas_biaxial_general_method_20261104/web_only_positive_ratio_api_revision1/control_core.py": "4dab6f4b1e2f58e51f5bfcbe24fab0efd692c75a663fb6390736304fd0a4b4c5",
+    "outputs/tercas_biaxial_general_method_20261104/web_only_positive_ratio_api_revision1/CORE_SOURCE_MANIFEST.json": "03f552f6d57c6e0f303bb1df78a0f57a83a580d96110716fc27eda35dcd7696a",
+    "outputs/tercas_biaxial_general_method_20261104/web_only_positive_ratio_proof/PROOF.txt": "32eedddc210969f4e7287588d6ae5fa1a2fe444bc61567d3799ca8b9ca715fab",
+    "outputs/tercas_biaxial_general_method_20261104/web_only_positive_ratio_audit/REPORT.txt": "6462b717c0b2f8f730193c133c298f1a3a49c180dd0228f6a901878495851b05",
+    "outputs/tercas_biaxial_general_method_20261104/web_only_positive_ratio_audit/ADDENDUM_GREEN.txt": "b0f50e9dfc1034dcde576788c7b5810f4cfcc21286130f6dd7848436d0e3df90"
+  }
+}
