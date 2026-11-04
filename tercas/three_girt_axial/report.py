@@ -27,6 +27,8 @@ def append(doc,demand,selected=0):
     nt='pendente' if t['Nt_Rd_N'] is None else f"{t['Nt_Rd_N']/1000:.6f} kN"
     aef='pendente' if comp['local']['Aef_mm2'] is None else f"{comp['local']['Aef_mm2']:.6f}"
     doc.add_paragraph(f"Nc,Rd = {nc}; Nt,Rd = {nt}. Compressão: Ne = {e['Ne_N']:.6f} N, chi = {e['chi']:.8f}, tensão para Aef = {e['sigma_effective_MPa']:.6f} MPa. Aef = {aef} mm²; gamma de compressão = 1,20. A dispensa distorcional compressiva, quando atendida pela Tabela 11, não foi transportada à flexão.")
+    from .tension_detail_ui import append_report as append_tension_detail
+    append_tension_detail(doc,t)
     doc.add_paragraph('Momentos resistentes da referência em kNm: forte positivo '+f"{b['strong_positive']['MRd_Nmm']/1e6:.6f}"+', forte negativo '+f"{b['strong_negative']['MRd_Nmm']/1e6:.6f}"+', fraco com alma comprimida '+f"{b['weak_web_compressed']['MRd_Nmm']/1e6:.6f}"+' e fraco com lábios comprimidos '+f"{b['weak_lips_compressed']['MRd_Nmm']/1e6:.6f}"+'. Fontes próprias e sentido da fibra comprimida preservados; não são novas capacidades de N+M+B.')
     sl=e['compression_slenderness'];maxsl=max(sl['symmetry_axis'],sl['orthogonal_axis'])
     ll=component['configuration']['effective_lengths_mm']

@@ -59,7 +59,8 @@ def _validate(demand, config):
     if demand.get('input_fingerprint') != expected:
         raise ValueError('Demand source inputs/configuration changed after solving')
     template=reference_configuration(demand)
-    if not isinstance(config,dict) or set(config) != set(template):
+    allowed=set(template) | ({'tension_connection'} if isinstance(config,dict) and 'tension_connection' in config else set())
+    if not isinstance(config,dict) or set(config) != allowed:
         raise ValueError('Exact separate axial/bending configuration required')
     for k in ('schema','enabled','demand_input_fingerprint','reference_mode','effective_lengths_mm'):
         if config[k] != template[k]:
@@ -183,7 +184,13 @@ def _capacities(demand,config,source,ref):
     dist=a.centered_compression_distortion(**{k:v for k,v in geom.items() if k!='ri_mm'},origin=o)
     widths=a.section_width_limits(local=local,t_mm=p['t'],bending_present=True,origin=o)
     compression=a.compression_capacity(elastic=elastic,local=local,distortion=dist,geometry_limits=widths,origin=o)
-    tension=a.tension_capacity(Ag_mm2=s['A_mm2'],fy_MPa=p['fy_MPa'],fu_MPa=p['fu_MPa'],**config['tension'])
+    if config.get('tension_connection') is None:
+        tension=a.tension_capacity(Ag_mm2=s['A_mm2'],fy_MPa=p['fy_MPa'],fu_MPa=p['fu_MPa'],**config['tension'])
+    else:
+        from .tension_detail import capacity as detail_capacity
+        tension=detail_capacity(config['tension_connection'],config['tension'],
+            A_mm2=s['A_mm2'],t_mm=p['t'],h_mm=p['h'],ri_mm=p['ri_mm'],
+            fy_MPa=p['fy_MPa'],fu_MPa=p['fu_MPa'])
     return dict(compression=dict(elastic=elastic,local=local,distortion=dist,width_limits=widths,capacity=compression),
         tension=tension,bending_scalar_source=copy.deepcopy(source),
         bending=copy.deepcopy(ref['resistances_exterior_primary']),

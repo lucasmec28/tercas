@@ -1,0 +1,68 @@
+ENTRADA SIMPLES DO DETALHE DE TRAÇÃO
+Cópia de estudo, sem publicação e sem dimensionamento da ligação
+
+A entrada fica no complemento NBR das três travessas, dentro de Dados de tração.
+A opção inicial Manual: An0, An e Ct auditados permanece igual à versão anterior.
+Não há inventário por travessa, lista de ligações ou transferência automática de
+parâmetros reais. Um detalhe explícito representa a referência comum das três
+travessas somente após confirmação do usuário.
+
+PARAFUSOS NA ALMA
+Domínio automático: perfil uniforme Ue atual, t <= 4,75 mm, furos circulares,
+uma única fileira vertical, todos os parafusos na mesma seção transversal,
+passo vertical regular e ausência confirmada de outros furos/recortes nessa
+seção. Quantidade sugerida 2, mas diâmetro e passo começam sem escolha.
+Diâmetros disponíveis: 1/2 pol = 12,7 mm e 5/8 pol = 15,875 mm.
+Folga real adotada a pedido: 2 mm. Portanto df=14,7 mm ou 17,875 mm.
+A Tabela 15 da NBR14762:2010 dá d+1,5 mm para furo-padrão desses diâmetros.
+O d+2 é identificado como furo circular alargado, não como furo-padrão.
+
+An = 0,9 [A - n df t]. O fator 0,9 é aplicado uma única vez.
+A seção é desdobrada conforme Figura 4b; a própria figura inclui Ue com lábios.
+B = A/t inclui alma, mesas, curvas e lábios.
+Para n>=2: span=(n-1)p; e1+e2=B-span; g=max(p,e1+e2).
+Para n=1: g=B, sem passo.
+Ct=min(2,5d/g,1). Dois parafusos verticais NÃO são duas posições longitudinais.
+Não usar só p quando a soma desenvolvida e1+e2 for maior.
+Comprimento longitudinal L e excentricidade x não participam deste ramo Ct.
+
+Validações necessárias do ramo automático: área positiva, inteiro n>=1,
+valores finitos, furo e fileira cabendo inteiramente na alma plana, passo p
+satisfazendo vão livre entre furos >= 2d (§10.3.3.1). Elas não verificam todas
+as posições, bordas, distâncias de extremidade ou a ligação executada.
+A limitação t<=4,75 é condição suficiente do domínio de §10.3.1; não implica
+que todo perfil mais espesso esteja proibido (a parte oposta poderia ser mais
+fina). Para casos fora desse ramo, usar a entrada manual auditada.
+
+SOLDA DA MESA INFERIOR NO TOPO DA VIGA
+A escolha soldada sozinha não define An/Ct. O usuário informa a orientação.
+Somente transversais: Ct=1; An é a área bruta somente das partes efetivamente
+conectadas, informada explicitamente, nunca a área total automática do perfil.
+Longitudinais ou mistas: An/Ct precisam estar auditados, com origem do método,
+comprimento longitudinal e excentricidade registrados. A Figura 4d mostra U
+ligado pela alma. O programa não estende automaticamente essa fórmula à mesa
+inferior do Ue, nem deduz Ct=1 da ausência de furos. L/x são dados de auditoria,
+não uma fórmula oculta. Os demais casos seguem pela opção manual.
+
+FORA DA LIGAÇÃO E RESISTÊNCIA
+An0 continua independente. Pode ser informado manualmente ou receber A apenas
+após confirmação explícita de ausência de furos/recortes fora das ligações,
+com origem. Campos incompletos não liberam Nt,Rd.
+Nt,Rd=min[A fy/1,10; An0 fu/1,35; Ct An fu/1,65].
+A entrada atualiza só o denominador axial da referência NBR. O manual não
+recebe outro fator 0,9. Os dados e cálculos intermediários ficam no snapshot,
+na tela e na memória Word; exibição/exportação não recalculam a estrutura.
+
+LIMITES
+Não verifica parafusos, soldas, esmagamento, rasgamento, bloco de cisalhamento,
+chapas, apoio, tirantes ou transferência completa das forças. Ct não elimina
+excentricidade física ou momentos. Não altera vínculos, esforços, estabilidade,
+P/contato ou geometria física. Furos não são transferidos às capacidades de
+flexão/torção ou ao modelo intacto EN. A região perfurada não é aprovada por
+estes outros resultados. Todas as flags de aprovação global continuam falsas.
+
+FONTES EXAMINADAS
+Exemplar fornecido da ABNT NBR14762:2010, §9.6.2/Figura4, pp.34-37;
+§10.3.1/§10.3.2/Tabela 15/§10.3.3.1, pp.57-58 (PDF 40-43 e 63-64).
+Fórmulas avaliadas para essa edição; esta cópia não é certificação de projeto
+ou confirmação de vigência de todas as normas.

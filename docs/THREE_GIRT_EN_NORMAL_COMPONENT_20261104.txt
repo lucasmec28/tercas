@@ -1,0 +1,98 @@
+COMPLEMENTO NORMAL N Mx My B DAS TRAVESSAS
+Base ad29914c. Cópia de desenvolvimento, sem publicação.
+
+FINALIDADE
+
+EN1993-1-3:2006 §6.1.6 fornece a combinação de tensões normais N/M/B que
+não aparece na NBR14762 §9.9 nem na AISI H4. O complemento preserva NBR9.9,
+tração simplificada An0/An/Ct e G8.1 como verificações distintas. Não utiliza
+seus denominadores no critério EN e não dimensiona ligações.
+
+CRITÉRIO E MODELO
+
+sigma_total = sigma_N + sigma_Mx + sigma_My + sigma_B.
+Índice normal = max |sigma_total| / (fya/gammaM0).
+EN §6.1.6(3): N/M usam respectivas seções efetivas; B usa omega/Cw bruto.
+Esta implementação admite somente as componentes puras demonstradas
+integralmente efetivas no ELU. Não oferece seção bruta como fallback.
+
+Geometria própria Ue100x50x17, ri=t, sete contornos pinados. Domínio fixo:
+fyb=fya=250 MPa, E=210000 MPa, nu=0,3 e gammaM0=1,0. E EN vem da remissão
+§3.2.1(5) a EN1993-1-1 §3.2.6. Não se credita aumento de fy por conformação.
+O modelo nominal intacto, sem furos/recortes, exige declaração e origem.
+Isso não é inventário de ligações nem certificação da seção/material real.
+
+A prova local usa fyb, não a tensão de serviço. A prova distorcional usa
+As físico, rigidez de mola e Eq.5.17 no campo puro de ELU. Aceita o ponto
+fixo integral quando rho=1 e As,red=As, inclusive se chi_d<1: seção final
+igual à inicial significa mesmo campo, mesma tensão no centroide de As e
+mesmas propriedades. Qualquer redução necessária não implementada bloqueia.
+Não há novo método de seção reduzida nem promoção de resultado de serviço.
+
+CONVENÇÃO E ENVELOPE
+
+N>0 é tração. Nos eixos físicos R01: sigma=N/A+Mx*y/Istrong−My*x/Iweak+Bω/Cw.
+Na travessa boca para baixo: Mx_R01=−My_frame; My_R01=−Mz_frame; B preservado.
+My_R01 positivo comprime os lábios; negativo comprime a alma.
+
+N é constante e Mx/My são quadráticos em cada trecho físico. B vem da solução
+Vlasov hiperbólica salva. As raízes de sigma'''/sigma''/sigma' dividem o campo
+em intervalos monótonos e encontram os extremos, sem malha longitudinal.
+São conferidos os quatro vértices das faces de cada segmento de parede:
+N/M usam as coordenadas exteriores; omega é o valor da extremidade da linha
+média correspondente, constante através da espessura. O campo é afim em
+cada retângulo. Esse modelo facetado de parede fina não é um sólido curvo exato.
+
+A seleção dos ramos de sinal usa discriminante racional exato dos floats,
+localização Decimal e sinal de extremos/vértice por Fraction. Nas vizinhanças
+de raízes não representáveis, todos os sinais possíveis são exigidos.
+Intervalos minúsculos de sentido não coberto não são apagados por tolerância.
+Se ambos os ramos forem necessários, seus coeficientes integrais devem ser
+iguais. Uma futura seção reduzida não pode herdar esse atalho silenciosamente.
+
+Os campos N/M/B/V/T são recuperados na MESMA estação e fibra da testemunha.
+Não são somados máximos de posições ou combinações diferentes. O envelope
+completo só existe quando todos os intervalos ELU de cada travessa são
+elegíveis. Máximo parcial não implica atendimento nem envelope completo. Se uma
+testemunha elegível já excede 1, esse excesso normal é explicitado mesmo com
+envelope incompleto, sem convertê-lo em conclusão global da barra.
+
+O QUE PERMANECE SEPARADO
+
+Este critério não encerra EN §6.1.6(4), que também exige o limite de tau e a
+interação sqrt(sigma_total²+3tau_total²) <= 1,1 fya/gammaM0. Cisalhamento,
+interação sigma–tau, estabilidade de membro, segunda ordem/pequenas rotações,
+introdução localizada, ruptura líquida, serviço e efeitos adicionais quando
+relevantes mantêm conclusões próprias. Não se impõe GMNIA nem um limite de
+0,05 rad como regra normativa. Tirantes permanecem bilaterais de primeira
+ordem e não viram apoios fictícios de flambagem.
+
+A demanda e suas combinações NBR não são recalculadas com E EN nem renomeadas
+como combinações EN. E da análise e E da prova resistente são exibidos
+separadamente. O complemento não reivindica conformidade integral de projeto
+EN/NBR, escolha de Anexo Nacional ou certificação do material.
+
+INTEGRAÇÃO
+
+Opt-in independente, inicialmente desligado. Alterações retiram o resultado
+antigo; visualizar, trocar combinação e exportar não recalculam a rede nem
+as seções. O componente EN é anexado antes do snapshot NBR para preservar
+os dois vínculos de integridade. Snapshots históricos sem EN continuam
+legíveis e exportáveis. A correção de P e app.py não foram alterados.
+
+REPRODUÇÃO
+
+Testes em tests/: test_three_girt_en_normal_sections.py,
+test_three_girt_en_normal_envelope.py, test_three_girt_en_normal_application.py
+e test_ui_three_girt_en_normal.py.
+A fixture compacta tests/data/three_girt_normal_QA_input.json contém apenas
+entradas sintéticas; não é um projeto físico. O script qa/run_examples.py
+no pacote gera novamente os controles e resumos a partir dessa fixture.
+
+FONTES CONSULTADAS LOCALMENTE
+
+EN1993-1-3:2006 §§2,3.2.1,5.1,5.2,5.5,6.1.2–6.1.6; EN1993-1-5:2006
+§4.4/Tabela4.1; EN1993-1-1:2005 §3.2.6. NBR14762:2010 §9.9 e AISI2024
+H1/H4 foram usados somente para delimitar a lacuna, não para misturar
+resistências. Edições inspecionadas, sem declaração de vigência em uma obra.
+PDFs normativos não integram este pacote.

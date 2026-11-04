@@ -1,0 +1,466 @@
+{
+  "input_data": {
+    "schema": "tercas_input_v2",
+    "catalog_index": 20,
+    "synthetic": true,
+    "project": "QA de integração ATUAL Ue próprio t=1.50; não é projeto físico",
+    "properties": {
+      "h": 100,
+      "bf": 50,
+      "lip": 17,
+      "t": 1.5,
+      "mass_kg_m": 2.6391482971791396,
+      "A_cm2": 3.361972353094446,
+      "Ix_cm4": 54.16133229048009,
+      "Wx_cm3": 10.832266458096017,
+      "Iy_cm4": 12.341584920326461,
+      "J_mm4": 252.14792648208342,
+      "Cw_mm6": 290718629.073364,
+      "ri_mm": 1.5,
+      "fy_MPa": 250.0,
+      "fu_MPa": 400.0,
+      "E_MPa": 200000.0,
+      "G_MPa": 76923.07692307692
+    },
+    "property_origin": "Referência própria OWN_Ue100x50x17_t1p50_ri1p50_n12_a16_v1_cd50bf66f299; R01 209 nós, ri=t=1.5; propriedades e módulos exteriores próprios, material declarado do ensaio. Não são propriedades consumidas de Pierin/catálogo.",
+    "L_mm": 4000.0,
+    "q_uls": 0.0,
+    "P_uls": 0.0,
+    "x_uls": 2000.0,
+    "q_sls": 0.0,
+    "P_sls": 0.0,
+    "x_sls": 2000.0,
+    "actions_origin": "Ações sintéticas para auditoria, não projeto real. Matriz fornecida por Lucas em 31/10/2026 preservada; P de manutenção separado. Não é rederivação normativa dos coeficientes.",
+    "Ml_Nmm": 8439553.128395863,
+    "Mdist_Nmm": 7149406.411254271,
+    "critical_origin": "Local forte: NBR14762:2010 Tabela12(b) com W exterior próprio. D forte e críticos fracos: FSM R01 próprios, material e sinais rastreados. Nenhuma dispensa T14 nas seis espessuras; nenhum crítico ou sentido de Pierin consumido.",
+    "ELS_limit_mm": 22.22222222222222,
+    "ELS_origin": "L/180 selecionado para ensaio; não regra universal.",
+    "route_domain": true,
+    "segments": [
+      {
+        "start_mm": 0.0,
+        "end_mm": 4000.0,
+        "Ly_top_effective_mm": 4000.0,
+        "Ly_bottom_effective_mm": 4000.0,
+        "Lz_effective_mm": 4000.0,
+        "Cb_mode": "one",
+        "restraint_provenance": "Lx=Ly=Lz=L, K=Cb=Cm=1; garfos ideais/empenamento livre. Sem apoio intermediário ou telha estrutural."
+      }
+    ],
+    "left_web": false,
+    "right_web": false,
+    "support_origin": "Garfos matemáticos, rotações de flexão e empenamento livres; ligação real não comprovada.",
+    "patch_mm": null,
+    "patch_origin": "Introdução local de P não qualificada neste ensaio.",
+    "steel_name": "ASTM A36",
+    "load_mode": "area",
+    "selected_types": [
+      "ELU normal",
+      "ELS rara",
+      "ELS frequente",
+      "ELS quase permanente"
+    ],
+    "area_inputs": {
+      "spacing_m": 1.5,
+      "permanent_kgf_m2": 8.0,
+      "live_kgf_m2": 25.0,
+      "wind_up_kgf_m2": 60.0,
+      "wind_down_kgf_m2": 40.0
+    },
+    "ELS_down_denominator": 180.0,
+    "ELS_up_denominator": 120.0,
+    "member_application": "wall_girt",
+    "inclination": {
+      "value": 5.0,
+      "unit": "degrees",
+      "spacing_basis": "roof",
+      "permanent_basis": "roof",
+      "live_basis": "horizontal",
+      "wind_basis": "roof"
+    },
+    "model_domain": "cladding_actions_only_20261103_r1",
+    "weak_axis": {
+      "positive": {
+        "W_mm3": 3839.8382985560315,
+        "Wc_mm3": 6910.529197214472,
+        "Ml_Nmm": 1703485.2401189709,
+        "Mdist_Nmm": 1530000,
+        "Nex_N": 66818.86544287318,
+        "Nez_N": 14622.233366214923,
+        "r0_mm": 61.4761011595799,
+        "j_mm": 60.066792107238506,
+        "Cm": 1.0,
+        "Cs": 1,
+        "plain_u_no_distortion": false,
+        "provenance": "OWN_Ue100x50x17_t1p50_ri1p50_n12_a16_v1_cd50bf66f299; mesmo contorno/material e sentido próprio: My positivo comprime alma, negativo lábios. Garfos ideais, L=4000, K=Cb=Cm=1, N0, torque imposto0; sem Pierin. Entrada numérica D=1.53e+06 é piso conservador DISCRETO individual, não autovalor D identificado nem dispensa; identificado continua nulo no registro. Domínio 3000–6000 mm."
+      },
+      "negative": {
+        "W_mm3": 3839.8382985560315,
+        "Wc_mm3": 3839.8382985560315,
+        "Ml_Nmm": 5117990.107788971,
+        "Mdist_Nmm": 2647297.1967503936,
+        "Nex_N": 66818.86544287318,
+        "Nez_N": 14622.233366214923,
+        "r0_mm": 61.4761011595799,
+        "j_mm": 60.066792107238506,
+        "Cm": 1.0,
+        "Cs": -1,
+        "plain_u_no_distortion": false,
+        "provenance": "OWN_Ue100x50x17_t1p50_ri1p50_n12_a16_v1_cd50bf66f299; mesmo contorno/material e sentido próprio: My positivo comprime alma, negativo lábios. Garfos ideais, L=4000, K=Cb=Cm=1, N0, torque imposto0; sem Pierin. D convencional predominante próprio=2647297.1967503936 Nmm, vale da assinatura contínua; não D puro ou autovalor finito exato."
+      }
+    },
+    "ue_family_model": {
+      "H_external_mm": 100.0,
+      "B_external_mm": 50.0,
+      "lip_external_mm": 17.0,
+      "t_mm": 1.5,
+      "ri_mm": 1.5,
+      "L_mm": 4000.0,
+      "web_flat_mm": 94.0,
+      "E_MPa": 200000.0,
+      "G_MPa": 76923.07692307692,
+      "nu": 0.3,
+      "fy_MPa": 250.0,
+      "stability_lengths": {
+        "Lx_mm": 4000.0,
+        "Ly_mm": 4000.0,
+        "Lz_mm": 4000.0
+      },
+      "Kx": 1.0,
+      "Ky": 1.0,
+      "Kz": 1.0,
+      "Cb": 1.0,
+      "Cm": 1.0,
+      "supports": "ideal forks; bending rotations and warping free",
+      "N_N": 0.0,
+      "imposed_primary_torque_Nmm": 0.0,
+      "cladding": "no contact or structural contribution; actions only",
+      "geometry_convention": "R01 faceted thin-wall line with exterior fibres; ri=t, 209 nodes",
+      "physical_geometry_verified": false,
+      "Pierin_critical_values_or_signs_used": false,
+      "member_application": "wall_girt"
+    },
+    "ue_family_sources": {
+      "reference_id": "OWN_Ue100x50x17_t1p50_ri1p50_n12_a16_v1_cd50bf66f299",
+      "registry_sha256": "3919d41d60e8423d7ae44a2bfb32bbd7c75783c7165bd78c027a20757e61cbe3",
+      "profile_sha256": "9a30115583275a30ab25eb8c782398a8aa5d547b8272743da9cd2f8342f880d4",
+      "nodes_sha256": "cd50bf66f299d1c072b5a45016cf2ffca777b390332d3386175c34d53c234931",
+      "manifest_sha256": "e7237c35f9b557a820d3b478c1db02101e9a39e368addbbab64465f535288e95",
+      "consumption_decision_sha256": "f1790861e5373f00184f2481840e48c3f14c1a494d9666531ac2d6aa2158d6d4",
+      "web_bound_source": {
+        "path": "outputs/tercas_ue100_family_critical_20261103/web_floor/t1.50/CERTIFICATE.json",
+        "sha256": "f61d3968cf9e57e2b15741dfc958241889d1fba03d06c30355855d3a9aebeb7d"
+      }
+    },
+    "wall_els": {
+      "normal_denominator": 120.0,
+      "vertical_denominator": 180.0,
+      "normal_reference_mm": null,
+      "vertical_reference_mm": null,
+      "origin": "Critérios declarados no estudo; conferir aplicação. Referência histórica CBCA/Gerdau, não nova prescrição normativa."
+    },
+    "own_ue_isolated_application": {
+      "schema": "own_Ue_isolated_application_20261104_v1",
+      "member_application": "wall_girt",
+      "structural_model": "isolated_simply_supported_member",
+      "tie_or_cladding_stiffness_credit": false,
+      "three_girt_redistribution": false
+    },
+    "ue_family_reference": {
+      "schema": "own_Ue100_six_scalar_components_app_v1",
+      "reference_id": "OWN_Ue100x50x17_t1p50_ri1p50_n12_a16_v1_cd50bf66f299"
+    }
+  },
+  "configuration": {
+    "enabled": true,
+    "three_girt": {
+      "enabled": true,
+      "tie_count": 2,
+      "position_mode": "uniform",
+      "positions_mm": [],
+      "geometry_declared": true,
+      "axial_bars_declared": true,
+      "connections_declared": true,
+      "load_line_declared": true,
+      "origin": "QA atual: três travessas contínuas, barras bilaterais/1a ordem; não é projeto",
+      "sc_y_mm": null,
+      "sc_z_mm": 0.0,
+      "sc_origin": "",
+      "load_y_from_CG_mm": 12.0,
+      "load_z_from_CG_mm": 5.0,
+      "connection_mode": "individual",
+      "connection_arm_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "connection_offsets": {
+        "blue_diag_left": [
+          [
+            0.0,
+            -31.390897508542235,
+            33.0
+          ],
+          [
+            0.0,
+            -31.390897508542235,
+            33.0
+          ]
+        ],
+        "blue_diag_right": [
+          [
+            0.0,
+            -31.390897508542235,
+            33.0
+          ],
+          [
+            0.0,
+            -31.390897508542235,
+            33.0
+          ]
+        ],
+        "blue_vertical_left": [
+          [
+            0.0,
+            -31.390897508542235,
+            33.0
+          ],
+          [
+            0.0,
+            -31.390897508542235,
+            33.0
+          ]
+        ],
+        "blue_vertical_right": [
+          [
+            0.0,
+            -31.390897508542235,
+            33.0
+          ],
+          [
+            0.0,
+            -31.390897508542235,
+            33.0
+          ]
+        ],
+        "green_left": [
+          [
+            0.0,
+            -31.390897508542235,
+            33.0
+          ],
+          [
+            0.0,
+            -31.390897508542235,
+            33.0
+          ]
+        ],
+        "green_right": [
+          [
+            0.0,
+            -31.390897508542235,
+            33.0
+          ],
+          [
+            0.0,
+            -31.390897508542235,
+            33.0
+          ]
+        ]
+      },
+      "blue": {
+        "label": "Barra redonda ASTM A36 Ø3/8 — Gerdau",
+        "A_mm2": 71.25573924808562,
+        "E_MPa": 200000.0,
+        "mass_kg_m": 0.56,
+        "origin": "Gerdau tabela de bolso p8: massa nominal; A calculada com d=(3/8)×25.4=9.525 mm. E=200000 MPa declarado, não fornecido nessa tabela."
+      },
+      "green": {
+        "label": "Cantoneira ASTM A36 L3×3×3/16 — Gerdau",
+        "A_mm2": 703.0,
+        "E_MPa": 200000.0,
+        "mass_kg_m": 5.52,
+        "origin": "Gerdau tabela de bolso p3: A=7.03 cm² e massa=5.52 kg/m nominais. E=200000 MPa declarado, não fornecido nessa tabela."
+      },
+      "brace_self_weight": true,
+      "direct_pp_uls_N_mm": null,
+      "direct_pp_sls_N_mm": null,
+      "direct_brace_factor_uls": null,
+      "direct_brace_factor_sls": null
+    },
+    "section_orientation": "mouth_down_Y_minus_x_Z_minus_y",
+    "warping_end_condition": "free_assumed",
+    "warping_condition_origin": "QA garfos matemáticos, psi livre; não comprovação física",
+    "connections": {
+      "blue_diag_left": [
+        {
+          "model": "material_point",
+          "segment_index": 0,
+          "parameter": 0.0,
+          "arm_mm": [
+            0.0,
+            -31.390897508542235,
+            33.0
+          ],
+          "omega_mm2": 2336.4338551446453,
+          "sectorial_section_id": "f18b914a16a06329640659eb9476edc907d4aaa475a647af8619312006f3a5a4",
+          "origin": "QA ponto da extremidade do contorno atual; ligação física não certificada"
+        },
+        {
+          "model": "material_point",
+          "segment_index": 0,
+          "parameter": 0.0,
+          "arm_mm": [
+            0.0,
+            -31.390897508542235,
+            33.0
+          ],
+          "omega_mm2": 2336.4338551446453,
+          "sectorial_section_id": "f18b914a16a06329640659eb9476edc907d4aaa475a647af8619312006f3a5a4",
+          "origin": "QA ponto da extremidade do contorno atual; ligação física não certificada"
+        }
+      ],
+      "blue_diag_right": [
+        {
+          "model": "material_point",
+          "segment_index": 0,
+          "parameter": 0.0,
+          "arm_mm": [
+            0.0,
+            -31.390897508542235,
+            33.0
+          ],
+          "omega_mm2": 2336.4338551446453,
+          "sectorial_section_id": "f18b914a16a06329640659eb9476edc907d4aaa475a647af8619312006f3a5a4",
+          "origin": "QA ponto da extremidade do contorno atual; ligação física não certificada"
+        },
+        {
+          "model": "material_point",
+          "segment_index": 0,
+          "parameter": 0.0,
+          "arm_mm": [
+            0.0,
+            -31.390897508542235,
+            33.0
+          ],
+          "omega_mm2": 2336.4338551446453,
+          "sectorial_section_id": "f18b914a16a06329640659eb9476edc907d4aaa475a647af8619312006f3a5a4",
+          "origin": "QA ponto da extremidade do contorno atual; ligação física não certificada"
+        }
+      ],
+      "blue_vertical_left": [
+        {
+          "model": "material_point",
+          "segment_index": 0,
+          "parameter": 0.0,
+          "arm_mm": [
+            0.0,
+            -31.390897508542235,
+            33.0
+          ],
+          "omega_mm2": 2336.4338551446453,
+          "sectorial_section_id": "f18b914a16a06329640659eb9476edc907d4aaa475a647af8619312006f3a5a4",
+          "origin": "QA ponto da extremidade do contorno atual; ligação física não certificada"
+        },
+        {
+          "model": "material_point",
+          "segment_index": 0,
+          "parameter": 0.0,
+          "arm_mm": [
+            0.0,
+            -31.390897508542235,
+            33.0
+          ],
+          "omega_mm2": 2336.4338551446453,
+          "sectorial_section_id": "f18b914a16a06329640659eb9476edc907d4aaa475a647af8619312006f3a5a4",
+          "origin": "QA ponto da extremidade do contorno atual; ligação física não certificada"
+        }
+      ],
+      "blue_vertical_right": [
+        {
+          "model": "material_point",
+          "segment_index": 0,
+          "parameter": 0.0,
+          "arm_mm": [
+            0.0,
+            -31.390897508542235,
+            33.0
+          ],
+          "omega_mm2": 2336.4338551446453,
+          "sectorial_section_id": "f18b914a16a06329640659eb9476edc907d4aaa475a647af8619312006f3a5a4",
+          "origin": "QA ponto da extremidade do contorno atual; ligação física não certificada"
+        },
+        {
+          "model": "material_point",
+          "segment_index": 0,
+          "parameter": 0.0,
+          "arm_mm": [
+            0.0,
+            -31.390897508542235,
+            33.0
+          ],
+          "omega_mm2": 2336.4338551446453,
+          "sectorial_section_id": "f18b914a16a06329640659eb9476edc907d4aaa475a647af8619312006f3a5a4",
+          "origin": "QA ponto da extremidade do contorno atual; ligação física não certificada"
+        }
+      ],
+      "green_left": [
+        {
+          "model": "material_point",
+          "segment_index": 0,
+          "parameter": 0.0,
+          "arm_mm": [
+            0.0,
+            -31.390897508542235,
+            33.0
+          ],
+          "omega_mm2": 2336.4338551446453,
+          "sectorial_section_id": "f18b914a16a06329640659eb9476edc907d4aaa475a647af8619312006f3a5a4",
+          "origin": "QA ponto da extremidade do contorno atual; ligação física não certificada"
+        },
+        {
+          "model": "material_point",
+          "segment_index": 0,
+          "parameter": 0.0,
+          "arm_mm": [
+            0.0,
+            -31.390897508542235,
+            33.0
+          ],
+          "omega_mm2": 2336.4338551446453,
+          "sectorial_section_id": "f18b914a16a06329640659eb9476edc907d4aaa475a647af8619312006f3a5a4",
+          "origin": "QA ponto da extremidade do contorno atual; ligação física não certificada"
+        }
+      ],
+      "green_right": [
+        {
+          "model": "material_point",
+          "segment_index": 0,
+          "parameter": 0.0,
+          "arm_mm": [
+            0.0,
+            -31.390897508542235,
+            33.0
+          ],
+          "omega_mm2": 2336.4338551446453,
+          "sectorial_section_id": "f18b914a16a06329640659eb9476edc907d4aaa475a647af8619312006f3a5a4",
+          "origin": "QA ponto da extremidade do contorno atual; ligação física não certificada"
+        },
+        {
+          "model": "material_point",
+          "segment_index": 0,
+          "parameter": 0.0,
+          "arm_mm": [
+            0.0,
+            -31.390897508542235,
+            33.0
+          ],
+          "omega_mm2": 2336.4338551446453,
+          "sectorial_section_id": "f18b914a16a06329640659eb9476edc907d4aaa475a647af8619312006f3a5a4",
+          "origin": "QA ponto da extremidade do contorno atual; ligação física não certificada"
+        }
+      ]
+    }
+  }
+}

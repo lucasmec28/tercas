@@ -55,4 +55,6 @@ def word(result,selected=0):
     for text in result['limitations']:d.add_paragraph(text)
     from ..three_girt_axial.report import append as append_nbr
     append_nbr(d,result,selected)
+    from ..three_girt_en_normal.report import append as append_en_normal
+    append_en_normal(d,result)
     out=BytesIO();d.save(out);return out.getvalue()
