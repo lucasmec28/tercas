@@ -192,7 +192,8 @@ def test_full_completion_keeps_AISI_and_old_MV_exactly():
     d=family.load_reference(2.,4000.,0.);d['selected_types']=['ELU normal'];d[roof.FIELD]=roof.choice()
     raw=calculate_batch(d);old=finalize(attach(raw));out=complete_result(raw)
     assert out['aisi_torsion_component']==old['aisi_torsion_component'] and aisi_saved(out)
-    assert out['aisi_torsion_component']['H4_computed_cases']==0
+    assert out['aisi_torsion_component']['H4_computed_cases']==40
+    assert all(r['roof_height']['strong_capacity']['NBR_MRd_used'] is False for r in out['aisi_torsion_component']['records'])
     assert all(out[k]==v for k,v in raw.items())
     assert out[nbr.FIELD]['computed_cases']==40 and out['whole_member_approved'] is False
     nbr.validate_saved_global(out)

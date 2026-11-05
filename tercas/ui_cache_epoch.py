@@ -3,7 +3,7 @@
 This session marker is not evidence of a runtime build or of physical validity.
 It never enters input JSON, calculated snapshots, or historical Word records.
 """
-EPOCH = 'active_ui_caches_roof_NBR_resistance_20261105_r1'
+EPOCH = 'active_ui_caches_roof_AISI_H4_20261105_r1'
 KEY = 'calculation_cache_epoch'
 
 

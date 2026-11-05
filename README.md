@@ -381,3 +381,14 @@ ou qualificação física inferida.
 ### Componente NBR com carga no topo
 
 O Me com altura pode ser consumido por combinação ELU nas sete referências próprias Ue100: curva NBR §9.8.2.2 e mínimo das componentes de flexão forte pura. UI, Word e panorama distinguem essa componente de torção e aprovação global. O vão inteiro do esquema substitui somente o inventário FLT, sem usar trechos/Cb manuais. M–V, AISI e ações fracas permanecem inalterados. Não há novos inputs teóricos nem requalificação automática de históricos. Domínio, fontes e limites em `docs/ROOF_TOP_NBR_RESISTANCE_20261105.txt`.
+
+### Complemento AISI H4 com altura da carga, por ELU
+
+O esquema explícito de carga no topo agora calcula Mcre e o piso flexional
+AISI para cada combinação elegível, reutilizando G8.1 e o envelope H4 da
+mesma demanda. Não usa resistência NBR nem reclassifica suas combinações
+como LRFD AISI. O resultado continua condicional: H4 acima de 1 com um piso
+é inconclusivo, e abaixo de 1 não estabelece a aptidão física da primeira
+ordem. Giros, torque, limites de flexão fraca/t1,20 e pendências globais são
+preservados. Nenhum novo input teórico. Ver
+[escopo e rastreabilidade](docs/AISI_ROOF_HEIGHT_H4_20261105.txt).

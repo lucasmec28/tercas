@@ -1,0 +1,64 @@
+AISI H4 COM CARGA NO TOPO: COMPONENTE CONDICIONAL POR COMBINAÇÃO
+
+A alteração integra o crítico nominal AISI com altura de carga à componente
+G8.1/H4 existente. Não muda o cálculo NBR, seu M–V ou MRd; não mistura Me/MRd
+NBR com resistências AISI. Não promove aprovação global nem transforma as
+combinações atuais NBR em combinações LRFD AISI.
+
+DOMÍNIO E DADOS
+Seis contornos próprios Ue100x50x17 t1,50/2,00/2,25/2,65/3,00/3,35, L3–6m,
+flexão forte, um vão, garfos ideais com empenamento livre, sem contenção da
+telha. Os vínculos e a linha de aplicação são hipóteses do esquema escolhido,
+não comprovação de sua realização. PP atua no CG uma vez; demais forças no
+plano da alma ou meio da mesa, na superfície superior escolhida. Não são
+solicitados Me, Cb, CT, certificados ou outros parâmetros manuais adicionais.
+A fonte forte t1,20 ainda não existe nesta rota AISI: G8.1 segue disponível,
+H4 fica pendente. Flexão fraca real, cargas diretas não decompostas, fonte
+inválida ou crítico não convergido não são substituídos pelo denominador CT.
+Nenhuma inclinação real é zerada para obter um resultado.
+
+CÁLCULO
+1. Mantém o inventário atual de combinações, coeficientes, posições e forças.
+2. Em cada ELU elegível, recalcula Mcre com E=203000 e G=78000 MPa, levando
+   separadamente a altura e o sinal de cada ação ao núcleo linear existente.
+3. Aplica o piso algébrico AISI F2/F3/F4 existente com My e críticos próprios
+   local/distorcional do mesmo contorno, escalados no material AISI. Não usa
+   razão de MRd antigos, Cb adicional ou fator de rigidez na resistência.
+4. Reutiliza uma reconstrução da demanda por ELU em 0,90 das rigidezes AISI,
+   já existente na aplicação. phi_b=phi_B=0,90 entram uma vez na resistência.
+5. G8.1 usa Bn=By. H4 é o envelope concomitante contínuo de |Mx|/Max+|B|/Ba,
+   com denominador Max próprio daquela combinação. Não soma máximos de
+   seções ou combinações distintas. P mantém posições prescritas e limite
+   analítico no apoio; não declara envelope móvel.
+
+INTERPRETAÇÃO
+H4<=1 com o piso é condição algébrica suficiente, condicional às hipóteses e
+aplicabilidade. H4>1 é inconclusivo: o piso conservador não prova falha da
+resistência literal AISI. G8.1/H4 tratam a parcela longitudinal; não fecham
+cisalhamento torsional, suas interações, introdução local, ligações e serviço.
+O crítico linear inclui altura das forças, mas não geometria pré-deformada
+nem efeitos geométricos das tensões de torção primária. A adequação física da
+primeira ordem para as forças e geometria reais permanece não estabelecida.
+Os giros calculados e seus avisos continuam visíveis, inclusive nos casos
+H4<=1. O limiar diagnóstico existente não vira limite normativo. Não se
+impõe GMNIA universal ou novo autovalor M+B como requisito sem fundamento.
+Resistência e esbeltez dos tirantes não são acrescentadas ao escopo.
+
+MEMÓRIA E COMPATIBILIDADE
+Novos cálculos topo têm schema AISI v2, fonte comum protegida e capacidades
+por ELU. O leitor valida hashes, inventário, material, ações, contorno,
+pareamento, fatores, aritmética dos índices e flags sem reabrir fontes,
+resolver demanda/autovalor ou refazer curvas. Históricos v1 continuam
+legíveis com seus resultados originais, sem preenchimento retroativo.
+Campos de topo v2 não podem ser rebaixados a v1. Registros inválidos
+produzem aviso na tela e no Word, não índices ou recálculo implícito.
+A ordem existente AISI -> Me NBR -> MRd NBR -> panorama é preservada.
+O panorama NBR não usa H4 para aprovar a barra ou eliminar torção pendente.
+
+REFERÊNCIA
+AISI S100-2024, H4 pp73–74, Apêndice2 §§2.1/2.2 e ressalva §2.3;
+comentário H4 p113. Fonte oficial:
+https://sdi.org/wp-content/uploads/2025/01/ANSI-SDI-AISI-S100-2024-SDI-AISI-S100-2024-C.pdf
+Os pisos F2/F3/F4 e o campo Vlasov são as implementações já documentadas no
+repositório. A nova integração fecha o pareamento por combinação, não a
+aptidão física de primeira ordem para giros arbitrários.

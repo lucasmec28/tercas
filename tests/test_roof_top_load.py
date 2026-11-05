@@ -107,11 +107,12 @@ def test_full_own_pipeline_automatic_torsion_and_no_h4_ct_substitution():
     ev=out['torsion_evidence'];assert ev['computed_cases']==40
     assert ev['load_line_choice_source']=='automatic_selected_roof_scheme'
     assert ev['stored_manual_choice_preserved']==d[FIELD]
-    assert out['aisi_torsion_component']['H4_computed_cases']==0
+    assert out['aisi_torsion_component']['H4_computed_cases']==40
     assert out['aisi_torsion_component']['G81_computed_cases']==40
     assert out['roof_top_load_evidence']['computed_cases']==40
     assert out['global_verification']['whole_member_approved'] is False
-    assert all('altura' in ' '.join(rec['missing']) for rec in out['aisi_torsion_component']['records'])
+    assert all(rec['roof_height']['strong_capacity']['nominal_Mcre_recalculated'] for rec in out['aisi_torsion_component']['records'])
+    assert all(rec['roof_height']['strong_capacity']['NBR_MRd_used'] is False for rec in out['aisi_torsion_component']['records'])
     json.dumps(out,allow_nan=False)
 
 

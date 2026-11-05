@@ -37,7 +37,7 @@ def test_real_app_calculates_and_retains_NBR_roof_result_without_new_inputs(t,mo
     assert not a.exception
     result=copy.deepcopy(a.session_state.result)
     assert result[nbr.FIELD]['computed_cases']==40
-    assert result['aisi_torsion_component']['H4_computed_cases']==0
+    assert result['aisi_torsion_component']['H4_computed_cases']==(0 if t==1.2 else 40)
     assert a.session_state.last_input==d
     assert [w.label for w in a.number_input]==number_labels
     assert any(w.value==TITLE for w in a.subheader)

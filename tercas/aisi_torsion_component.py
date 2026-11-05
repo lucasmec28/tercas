@@ -238,8 +238,15 @@ def attach_dense(result, section):
     from .application import fingerprint
     if fingerprint(data)!=result['input_fingerprint']:raise ValueError('Entradas/resultado desatualizados.')
     capacity=g81_capacity(section,data['properties']['fy_MPa'])
-    strong,strong_missing=_strong_capacity(data,section)
-    weak,weak_missing=_weak_capacities(data,section)
+    from . import aisi_roof_height as roof_h4
+    roof_context=roof_h4.prepare(result,section)
+    if roof_context is None:
+        strong,strong_missing=_strong_capacity(data,section)
+        weak,weak_missing=_weak_capacities(data,section)
+    else:
+        strong=weak=None;strong_missing=weak_missing=[]
+        ev.update(schema=roof_h4.SCHEMA,roof_height_source=copy.deepcopy(roof_context['source']),
+            flexural_capacity_model=roof_h4.MODEL,strong_capacity_mode='per_combination_roof_height')
     ev.update(bimoment_capacity=capacity,strong_flexural_capacity=strong,
         weak_flexural_capacity=weak,material=dict(E_MPa=E_AISI,G_MPa=G_AISI,Fy_MPa=data['properties']['fy_MPa']),
         analysis_material=dict(E_MPa=STIFFNESS_FACTOR*E_AISI,G_MPa=STIFFNESS_FACTOR*G_AISI,stiffness_factor=STIFFNESS_FACTOR,
@@ -260,6 +267,11 @@ def attach_dense(result, section):
         if a['E_MPa']!=data['properties']['E_MPa'] or a['G_MPa']!=data['properties']['G_MPa'] or a['section']['content_sha256']!=section['content_sha256']:
             raise ValueError('Material ou seção da demanda difere das capacidades.')
         source=a
+        current_strong=strong;current_weak=weak
+        if roof_context is not None:
+            combo=next(c['combination'] for c in result['cases'] if c['combination']['id']==record['combination_id'])
+            r['roof_height']=roof_h4.capacity_for(roof_context,combo,source)
+            current_strong=r['roof_height']['strong_capacity'];current_weak=None
         try:a=_aisi_demand(source)
         except NumericalQualificationError as exc:
             r.update(status='pending_AISI_numerical_demand',missing=[str(exc)])
@@ -270,6 +282,11 @@ def attach_dense(result, section):
             source_combination=copy.deepcopy(next(c['combination'] for c in result['cases'] if c['combination']['id']==record['combination_id'])),
             max_abs_phi_rad=abs(a['max_abs_phi']['phi_rad']),analysis_order=1,axial_force_N=0.,
             original_NBR_demand_unchanged=True)
+        if roof_context is not None:
+            roof_h4.check_demand(r['roof_height'],a,section)
+            r['AISI_analysis']['max_abs_phi_witness']=copy.deepcopy(a['max_abs_phi'])
+            r['AISI_analysis']['point_position_scope']=copy.deepcopy(source['analysis_domain'].get('point_position_scope'))
+            r['AISI_analysis']['support_limit_states_preserved']=bool(a.get('support_limit_states'))
         states=a['critical_states'];state=max(states,key=lambda s:abs(s['B_Nmm2']))
         ratio=abs(state['B_Nmm2'])/capacity['Ba_Nmm2']
         r['G81']=dict(ratio=ratio,threshold=1.,component_condition=ratio<=1.,
@@ -279,14 +296,19 @@ def attach_dense(result, section):
         nonzero_x=any(s['Mx_physical_Nmm']!=0. for s in states)
         nonzero_y=any(s['My_physical_Nmm']!=0. for s in states)
         missing=[]
-        if nonzero_x and strong is None:missing.extend(strong_missing)
-        if nonzero_y and weak is None:missing.extend(weak_missing)
+        if roof_context is not None:
+            missing.extend(r['roof_height']['missing'])
+            if nonzero_y and not missing:missing.append('Flexão fraca real fora da qualificação de altura AISI; H4 pendente.')
+        else:
+            if nonzero_x and current_strong is None:missing.extend(strong_missing)
+            if nonzero_y and current_weak is None:missing.extend(weak_missing)
         if a['analysis_domain'].get('axial_force_in_this_model_N')!=0.:
             missing.append('N não nulo ou não declarado: H4 reduzido N=0 não aplicável.')
         if missing:r.update(status='G81_computed_H4_pending',missing=missing)
         else:
-            r['H4']=h4_envelope(a,Max_Nmm=strong['Ma_floor_Nmm'] if strong else None,
-                May_Nmm={side:r['Ma_floor_Nmm'] for side,r in weak.items()} if weak else None,Ba_Nmm2=capacity['Ba_Nmm2'])
+            r['H4']=h4_envelope(a,Max_Nmm=current_strong['Ma_floor_Nmm'] if current_strong else None,
+                May_Nmm={side:v['Ma_floor_Nmm'] for side,v in current_weak.items()} if current_weak else None,Ba_Nmm2=capacity['Ba_Nmm2'])
+            if roof_context is not None:r['H4']['interpretation']=roof_h4.INTERPRETATION
             r.update(status='G81_and_H4_computed_conditional',missing=[])
         r['first_order_small_rotation_warning']=a['small_rotation_warning']
         ev['records'].append(r)
@@ -328,8 +350,15 @@ def preserved(result):
     """Render/export only saved numbers. Never reopen or recalculate old results."""
     ev=result.get(FIELD)
     if ev is None:return None
+    if not isinstance(ev,dict) or not isinstance(ev.get('records'),list) or any(not isinstance(r,dict) for r in ev['records']):
+        raise ValueError('Registro AISI malformado.')
+    if any(ev.get(k) is not None and not isinstance(ev[k],dict) for k in ('material','analysis_material','bimoment_capacity','strong_flexural_capacity')) or any(r.get(k) is not None and not isinstance(r[k],dict) for r in ev['records'] for k in ('G81','H4')):
+        raise ValueError('Capacidade/estado AISI malformado.')
+    if ev.get('schema')==SCHEMA and ('roof_height_source' in ev or any('roof_height' in r for r in ev['records'])):
+        raise ValueError('Contrato AISI topo não pode ser rebaixado para histórico v1.')
     from .application import fingerprint
-    if (ev.get('schema')!=SCHEMA or fingerprint(result['input_data'])!=result.get('input_fingerprint')
+    from . import aisi_roof_height as roof_h4
+    if (ev.get('schema') not in (SCHEMA,roof_h4.SCHEMA) or fingerprint(result['input_data'])!=result.get('input_fingerprint')
             or ev.get('source_input_fingerprint')!=result.get('input_fingerprint')
             or ev.get('source_torsion_snapshot_sha256')!=digest(result.get('torsion_evidence'))
             or ev.get('snapshot_sha256')!=digest({k:v for k,v in ev.items() if k!='snapshot_sha256'})
@@ -354,4 +383,8 @@ def preserved(result):
     if any(r.get('whole_member_approved') is not False or (r.get('H4') and r['H4'].get('whole_member_approved') is not False)
            for r in ev.get('records',[])):
         raise ValueError('Componente AISI não pode aprovar a barra inteira.')
+    if ev.get('schema')==roof_h4.SCHEMA:
+        try:roof_h4.validate_saved(result,ev)
+        except (KeyError,TypeError,AttributeError,IndexError) as exc:
+            raise ValueError('Registro AISI topo incompleto ou malformado.') from exc
     return copy.deepcopy(ev)
