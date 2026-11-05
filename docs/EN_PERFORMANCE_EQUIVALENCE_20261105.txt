@@ -1,0 +1,57 @@
+Otimização sem mudança dos critérios EN da rede de três travessas
+
+Base de comparação: ae0d90a5660eb1cabe5fb5c02e8a4b1722bffd70.
+Este incremento reduz operações repetidas. Não muda fórmulas, propriedades,
+combinações, malha, tolerâncias, orçamento de refinamento, sinais, testemunhas,
+validações de fonte, esquemas de resultado ou condições de aprovação.
+
+1. Campo de bimomento
+O kernel escalar conserva as expressões e a ordem de operações originais.
+Uma LRU limitada a 16.384 resultados imutáveis usa os bytes de h, B0, U, V, t e
+da derivada. Zeros positivos e negativos permanecem distintos. Outros tipos
+numéricos e derivadas fora do caminho otimizado seguem a avaliação original.
+Exceções não são guardadas como sucessos. Alterar qualquer entrada muda a chave.
+
+2. Extremos e margem numérica
+Os valores invariantes do campo são capturados uma vez por avaliação de
+extremos; a sequência de busca das raízes, brentq, suas tolerâncias, candidatos
+e desempates permanece igual. Listas finitas de até dois nós têm um caminho
+curto equivalente à ordenação/conjunto original; outros casos usam o original.
+Não existe cache de raízes nesta versão.
+Os fatores invariantes das margens de arredondamento são calculados uma vez,
+com a mesma associação aritmética e o mesmo epsilon. As margens não diminuem.
+
+3. Geometria seccional
+Cada cálculo EN cria um construtor local que copia e valida integralmente a
+seção. Somente a geometria e fatores invariantes dessa cópia são preparados
+uma vez. As ações e coeficientes de cada ramo continuam sendo processados.
+Os arrays retornados são novos: modificar um resultado ou a seção original
+não contamina outra avaliação. Não se confia em identidade do objeto ou em
+um hash declarado para dispensar validação. A API stateless section_fields
+continua validando uma nova cópia a cada chamada.
+
+Equivalência
+O JSON canônico integral do caso integrado Ue t=1,20 mm ficou idêntico à base,
+incluindo índices, intervalos, limites, testemunhas e hashes encadeados:
+a4768f9fce2c5dff411700b9739b36ff262a2b6e9c8d80361ceaad6c8aeab70f.
+O caso é sintético de QA e não representa aprovação de um projeto físico.
+Os novos testes contêm os algoritmos escalares e seccionais anteriores como
+oráculos independentes do código otimizado. Cobrem bytes dos floats, sinais
+de zero, entradas inválidas, expulsão LRU e isolamento de objetos mutáveis.
+
+Desempenho observado em processos novos no ambiente de teste
+- Primeira comparação: EN 47,09 -> 41,24 s; cadeia 55,33 -> 50,46 s.
+- Comparação pareada posterior: EN 61,70 -> 52,01 s; cadeia 70,47 -> 60,48 s.
+- AppTest integrado t1,20: cálculo em 55,86 s, mantendo o limite original de
+  60 s. Leitores, sidecars e exportação sem novo solver passaram.
+Essas medições mostram redução de trabalho, mas variam com o ambiente e não
+asseguram duração inferior a 60 s em toda execução. Esse é o timeout do teste,
+não um novo limite imposto ao cálculo do aplicativo. Nenhuma tolerância ou
+exigência estrutural foi alterada para melhorar o tempo.
+
+Integração final sobre e5de64fd8607e2cb5d743aded7a14a4c0e7eabf8
+Os integrados t1,20 e t3,35 passaram em processos novos, com cálculo em 54,36
+e 32,57 s, respectivamente. Os dois JSONs completos coincidiram com os controles.
+Na suíte EN agrupada, t1,20 ainda excedeu 60 s após outros casos; repetido
+sozinho, passou sem mudança do timeout. A instabilidade de tempo nessa
+sequência permanece registrada, não é considerada corrigida por este patch.

@@ -11,6 +11,8 @@ the thickness at each corresponding midsurface station. The field is affine
 on each rectangle, so four vertices suffice. This is not an exact curved solid.
 """
 import math
+import struct
+from functools import lru_cache
 import numpy as np
 from scipy.optimize import brentq
 from ..three_girt_warping.exact_torsion import state as exact_state
@@ -45,10 +47,12 @@ def torsion_field(parameters):
     return result
 
 
-def bimoment(field,t,derivative=0):
-    """Derivative is with respect to normalized t, not x."""
-    h,B0,U,V=(field[k] for k in ('h','B0','U','V'))
-    t=float(t)
+# Binary keys preserve signed zeros and every binary64 input bit. The cache
+# stores immutable scalars only, never a source field or a mutable result.
+_BIMOMENT_KEY=struct.Struct('!5dB')
+
+
+def _bimoment_scalar(h,B0,U,V,t,derivative):
     if h==0:
         return (B0+V*t+U*t*t/2 if derivative==0 else
                 V+U*t if derivative==1 else U if derivative==2 else 0.)
@@ -61,6 +65,24 @@ def bimoment(field,t,derivative=0):
     raise ValueError('Only derivatives 0 to 3 are needed')
 
 
+@lru_cache(maxsize=16384)
+def _cached_bimoment(key):
+    return _bimoment_scalar(*_BIMOMENT_KEY.unpack(key))
+
+
+def bimoment(field,t,derivative=0):
+    """Derivative is with respect to normalized t, not x.
+
+    Only repeated binary64 scalar evaluations are memoized. Other numeric
+    types and derivative values retain the original direct evaluation path.
+    """
+    h=field['h'];B0=field['B0'];U=field['U'];V=field['V'];t=float(t)
+    if (type(h) is float and type(B0) is float and type(U) is float and
+            type(V) is float and type(derivative) is int and 0<=derivative<=3):
+        return _cached_bimoment(_BIMOMENT_KEY.pack(h,B0,U,V,t,derivative))
+    return _bimoment_scalar(h,B0,U,V,t,derivative)
+
+
 def sigma_value(polynomial,omega_over_Cw,field,t,derivative=0):
     p=polynomial
     normal=(math.fsum((p[0],p[1]*t,p[2]*t*t)) if derivative==0 else
@@ -71,6 +93,14 @@ def sigma_value(polynomial,omega_over_Cw,field,t,derivative=0):
 def _distinct(values):
     # Do not snap an interior physical root to an endpoint. Exact duplicates
     # only are removed; very close roots are harmless to the maximum.
+    if type(values) is list:
+        if not values:return []
+        if len(values)==1:return [float(values[0])]
+        if len(values)==2:
+            a,b=float(values[0]),float(values[1])
+            if math.isfinite(a) and math.isfinite(b):
+                if a==b:return [a]
+                return [a,b] if a<b else [b,a]
     return sorted(set(float(v) for v in values))
 
 
@@ -96,6 +126,15 @@ def stress_extrema(polynomial,omega_over_Cw,field,left=0.,right=1.):
     if not 0<=left<right<=1:raise ValueError('Nonempty normalized interval required')
     for k in ('h','B0','U','V'):_finite(field[k],k)
     if field['h']<0 or field['h']>10:raise ValueError('Hyperbolic domain outside [0,10]')
+    # Validation above remains per call. The repeated derivative evaluations
+    # can capture this field's scalars once instead of unpacking/type-checking
+    # the same mapping for every root-finder probe.
+    h,B0,U,V=(field[k] for k in ('h','B0','U','V'))
+    if type(h) is float and type(B0) is float and type(U) is float and type(V) is float:
+        def bm(t,derivative):
+            return _cached_bimoment(_BIMOMENT_KEY.pack(h,B0,U,V,float(t),derivative))
+    else:
+        def bm(t,derivative):return bimoment(field,t,derivative)
     if w==0 or field['h']==0:
         c=p[2]+(w*field['U']/2 if field['h']==0 else 0.)
         b=p[1]+(w*field['V'] if field['h']==0 else 0.)
@@ -105,13 +144,13 @@ def stress_extrema(polynomial,omega_over_Cw,field,left=0.,right=1.):
         # B''' is proportional to U*sinh(ht)+V*h*cosh(ht), so tanh(ht)
         # gives at most one zero. Endpoint signs locate it without division
         # by a possibly vanishing U or catastrophic Q/C cancellation.
-        third=lambda t:sigma_value(p,w,field,t,3)
-        second=lambda t:sigma_value(p,w,field,t,2)
-        first=lambda t:sigma_value(p,w,field,t,1)
+        third=lambda t:math.fsum((0.,w*bm(t,3)))
+        second=lambda t:math.fsum((2*p[2],w*bm(t,2)))
+        first=lambda t:math.fsum((p[1]+2*p[2]*t,w*bm(t,1)))
         k3=_distinct([left,right]+_monotone_roots(third,[left,right]))
         k2=_distinct([left,right]+_monotone_roots(second,k3))
         knots=_distinct([left,right]+_monotone_roots(first,k2))
-    points=[dict(t=t,sigma_MPa=sigma_value(p,w,field,t)) for t in knots]
+    points=[dict(t=t,sigma_MPa=math.fsum((math.fsum((p[0],p[1]*t,p[2]*t*t)),w*bm(t,0)))) for t in knots]
     if any(not math.isfinite(v['sigma_MPa']) for v in points):
         raise ArithmeticError('Nonfinite analytical stress')
     return dict(minimum=min(points,key=lambda v:v['sigma_MPa']),

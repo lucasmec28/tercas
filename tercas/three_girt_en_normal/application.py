@@ -436,6 +436,7 @@ def calculate(demand,config):
     if certificate['nodes_sha256']!=section['nodes_sha256']:
         raise ValueError('EN pure sections and Vlasov omega have different geometry')
     fibers=f.exterior_fibers(section);limit=certificate['normal_yield_limit_MPa'];rows=[]
+    build_fields=si.section_field_builder(section)
     from ..three_girt_warping.application import recover_exported_state
     for case in demand['cases']:
         if case['combination']['limit_state']!='ELU':continue
@@ -467,7 +468,7 @@ def calculate(demand,config):
                     for selected,coefficients in branches:
                         operator_key=tuple((axis,tuple(coefficients[axis])) for axis in sorted(coefficients))
                         if operator_key not in prepared_fields_cache:
-                            prepared_fields_cache[operator_key]=si.section_fields(section,polys,coefficients,torsion,total_torque,beam['length_mm'])
+                            prepared_fields_cache[operator_key]=build_fields(polys,coefficients,torsion,total_torque,beam['length_mm'])
                         # A single deduplicated operator is already physical
                         # throughout this interval (zero actions contribute zero).
                         # Exact signs and recovered states are still checked on

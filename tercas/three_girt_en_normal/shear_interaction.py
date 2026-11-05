@@ -10,6 +10,7 @@ Subdivision is needed only where the inequalities cannot yet be decided.
 """
 from __future__ import annotations
 import heapq
+import copy
 import math
 import numpy as np
 from . import field_envelope as f
@@ -31,52 +32,65 @@ def _bernstein(c,lo,hi):
     return np.asarray([p,p+q/2,p+q+r])
 
 
-def section_fields(section,polynomials,coefficients,torsion,total_torque,L_mm):
-    """Signed sigma/tau fields for every face, without independent action maxima.
+def section_field_builder(section):
+    """Own and validate one immutable section for a calculation-local builder.
 
-    With tangent a->b and normal n=(-dy,dx)/length, positive St Venant
-    torsion gives tau_tangent=-2 G phi' zeta. Therefore the +n face has
-    -Tsv*t/J. The old midsurface diagnostic's interchangeable +/- label
-    cannot be reused when exterior normal stresses differ between faces.
+    Geometry-only operations retain their original ordering. Each call returns
+    fresh mutable field arrays; callers cannot modify the captured geometry.
+    No trust is cached by an object's identity or by a declared source hash.
     """
-    verify_section(section)
-    if not math.isfinite(L_mm) or L_mm<=0:raise ValueError('Positive beam length required')
+    section=copy.deepcopy(section);verify_section(section)
     p=section['properties'];th=section['thickness_mm'];J=p['J_mm4'];Cw=p['Cw_mm6']
     xy=np.asarray(section['nodes_xy_mm'])-p['centroid_xy_mm']
     omega=np.asarray(section['omega_nodes_mm2'])/Cw
-    # Physical R01 identities Mx'=Vy and My'=-Vx, derivatives in x.
-    vx=-np.polynomial.polynomial.polyder(polynomials['My'])/L_mm
-    vy=np.polynomial.polynomial.polyder(polynomials['Mx'])/L_mm
-    vx=_pad(vx);vy=_pad(vy);torque=_pad(total_torque)
-    h=torsion['h']
-    tw=dict(h=h,B0=torsion['V']/L_mm,U=h*h*torsion['V']/L_mm,V=torsion['U']/L_mm)
-    rows=[]
+    geometry=[]
     for i,(a,b) in enumerate(zip(xy[:-1],xy[1:])):
         d=b-a;normal=np.array([-d[1],d[0]])/np.linalg.norm(d)
         static=np.asarray(section['segment_static_coefficients'][i])
         for face in (-1,1):
-            sigma=np.zeros((3,3));sigma_scale=0.;w=np.array([omega[i],omega[i+1]-omega[i],0.])
+            w=np.array([omega[i],omega[i+1]-omega[i],0.])
+            pos=a+face*th/2*normal
+            v=-static[2]/(Cw*th);v=v.copy();v[0]+=face*th/J
+            geometry.append((i,face,d,normal,static,w,pos,v,
+                float(np.sum(abs(static[2]))/(Cw*th)+th/J)))
+    def build(polynomials,coefficients,torsion,total_torque,L_mm):
+        if not math.isfinite(L_mm) or L_mm<=0:raise ValueError('Positive beam length required')
+        # Physical R01 identities Mx'=Vy and My'=-Vx, derivatives in x.
+        vx=-np.polynomial.polynomial.polyder(polynomials['My'])/L_mm
+        vy=np.polynomial.polynomial.polyder(polynomials['Mx'])/L_mm
+        vx=_pad(vx);vy=_pad(vy);torque=_pad(total_torque)
+        h=torsion['h']
+        tw=dict(h=h,B0=torsion['V']/L_mm,U=h*h*torsion['V']/L_mm,V=torsion['U']/L_mm)
+        rows=[]
+        for i,face,d,normal,static,w,pos,v,tw_scale in geometry:
+            sigma=np.zeros((3,3));sigma_scale=0.
             for key,action in polynomials.items():
                 if not any(action):continue
                 c=np.asarray(coefficients[key])
-                section_power=np.array([c[0]+c[1:]@(a+face*th/2*normal),c[1:]@d,0.])
+                section_power=np.array([c[0]+c[1:]@pos,c[1:]@d,0.])
                 sigma+=section_power[:,None]*_pad(action)[None,:]
-                # Retain the scale BEFORE cancellation in sectional coefficients.
-                face_pos=a+face*th/2*normal
-                section_scale=abs(c[0])+sum(abs(c[1:]*face_pos))+sum(abs(c[1:]*d))
+                section_scale=abs(c[0])+sum(abs(c[1:]*pos))+sum(abs(c[1:]*d))
                 sigma_scale+=float(section_scale*sum(abs(v) for v in action))
             tau=-(static[0,:,None]*vx[None,:]/p['Iy_weak_mm4']+
                   static[1,:,None]*vy[None,:]/p['Ix_strong_mm4'])/th
             tau_scale=float(np.sum(abs(static[0]))*sum(abs(vx))/p['Iy_weak_mm4']/th+
                 np.sum(abs(static[1]))*sum(abs(vy))/p['Ix_strong_mm4']/th+th/J*sum(abs(torque)))
             tau[0]-=face*th/J*torque
-            v=-static[2]/(Cw*th);v=v.copy();v[0]+=face*th/J
-            rows.append(dict(segment_index=i,face=face,sigma=sigma,omega=w,
-                tau=tau,tw_weight=v,normal_xy=normal.tolist(),
+            rows.append(dict(segment_index=i,face=face,sigma=sigma,omega=w.copy(),
+                tau=tau,tw_weight=v.copy(),normal_xy=normal.tolist(),
                 sigma_roundoff_scale=sigma_scale,tau_roundoff_scale=tau_scale,
-                tw_roundoff_scale=float(np.sum(abs(static[2]))/(Cw*th)+th/J),
-                xy_start=a+face*th/2*normal,xy_delta=d))
-    return rows,tw
+                tw_roundoff_scale=tw_scale,xy_start=pos.copy(),xy_delta=d.copy()))
+        return rows,tw
+    return build
+
+
+def section_fields(section,polynomials,coefficients,torsion,total_torque,L_mm):
+    """Signed full-face fields, retaining the stateless validated public path.
+
+    Saint Venant signs, exterior coordinates, arithmetic and outputs are
+    unchanged. Calculation-local callers may reuse section_field_builder.
+    """
+    return section_field_builder(section)(polynomials,coefficients,torsion,total_torque,L_mm)
 
 
 def _evaluate(row,torsion,tw,x,u):
@@ -138,12 +152,19 @@ def envelope(section,polynomials,coefficients,torsion,total_torque,L_mm,*,left=0
     def lower(key):
         return 0. if best[key] is None else best[key]['index_lower_witness']
 
-    def roundoff_pad(p,w,field,polynomial_scale,weight_scale):
+    def roundoff_padding(field):
+        # These field-only factors are identical for every rectangle/fiber.
+        # Hoist their original operations, without changing association or eps.
         h=field['h']
         c=.5 if h==0 else 2*(math.sinh(h/2)/h)**2
         d=1. if h==0 else math.sinh(h)/h
-        scale=max(sum(abs(v) for v in p),polynomial_scale)+max(abs(w),weight_scale)*(abs(field['B0'])+abs(field['U'])*c+abs(field['V'])*d)
-        return 128*np.finfo(float).eps*max(1.,scale)
+        magnitude=abs(field['B0'])+abs(field['U'])*c+abs(field['V'])*d
+        eps128=128*np.finfo(float).eps
+        def pad(p,w,polynomial_scale,weight_scale):
+            scale=max(sum(abs(v) for v in p),polynomial_scale)+max(abs(w),weight_scale)*magnitude
+            return eps128*max(1.,scale)
+        return pad
+    sigma_pad=roundoff_padding(torsion);tau_pad=roundoff_padding(tw)
 
     if bounds_only_tiny and right-left<=32*math.ulp(1.):
         # Vectorized full-face Bernstein controls. No fabricated lower state:
@@ -199,6 +220,7 @@ def envelope(section,polynomials,coefficients,torsion,total_torque,L_mm,*,left=0
     def add(row,x0,x1,u0,u1,depth):
         nonlocal counter,discarded_witnesses
         sb=_bernstein(row['sigma'],u0,u1);wb=_bernstein(row['omega'],u0,u1)
+        omega_scale=sum(abs(row['omega']))
         tb=_bernstein(row['tau'],u0,u1);vb=_bernstein(row['tw_weight'],u0,u1)
         upper={key:0. for key in limits};xs={x0,x1,(x0+x1)/2}
         for sp,ww,tp,vv in zip(sb,wb,tb,vb):
@@ -211,8 +233,8 @@ def envelope(section,polynomials,coefficients,torsion,total_torque,L_mm,*,left=0
                 s=abs(se['maximum_absolute']['sigma_MPa'])
                 t=abs(te['maximum_absolute']['sigma_MPa'])
                 xs.update((se['minimum']['t'],se['maximum']['t'],te['minimum']['t'],te['maximum']['t']))
-            s+=roundoff_pad(sp,ww,torsion,row['sigma_roundoff_scale'],sum(abs(row['omega'])))
-            t+=roundoff_pad(tp,vv,tw,row['tau_roundoff_scale'],row['tw_roundoff_scale'])
+            s+=sigma_pad(sp,ww,row['sigma_roundoff_scale'],omega_scale)
+            t+=tau_pad(tp,vv,row['tau_roundoff_scale'],row['tw_roundoff_scale'])
             if not all(math.isfinite(v) for v in (s,t)):raise ArithmeticError('Nonfinite stress bound')
             upper['normal']=max(upper['normal'],s/limits['normal'])
             upper['shear']=max(upper['shear'],t/limits['shear'])
@@ -222,9 +244,9 @@ def envelope(section,polynomials,coefficients,torsion,total_torque,L_mm,*,left=0
         # These full-face scales dominate every u in [0,1], so the witness
         # arithmetic guard is computed once per rectangle, not per candidate.
         default_error=dict(
-            sigma=roundoff_pad(np.sum(abs(row['sigma']),axis=0),0.,torsion,
-                row['sigma_roundoff_scale'],sum(abs(row['omega']))),
-            tau=roundoff_pad(np.sum(abs(row['tau']),axis=0),0.,tw,
+            sigma=sigma_pad(np.sum(abs(row['sigma']),axis=0),0.,
+                row['sigma_roundoff_scale'],omega_scale),
+            tau=tau_pad(np.sum(abs(row['tau']),axis=0),0.,
                 row['tau_roundoff_scale'],row['tw_roundoff_scale']))
         # Same left-associated products as _evaluate, cached only where their
         # arguments repeat. No candidate, root or operation order is changed.
