@@ -8,7 +8,8 @@ import math
 from . import backend as a
 
 SCHEMA='three_girt_tension_simple_detail_v1'
-MODES=('web_bolt_single_transverse_row','lower_flange_weld')
+WELD_U_MODE='lower_flange_longitudinal_u_hypothesis'
+MODES=('web_bolt_single_transverse_row','lower_flange_weld',WELD_U_MODE)
 
 
 def blank_detail(mode):
@@ -18,6 +19,10 @@ def blank_detail(mode):
               if mode==MODES[0] else
               dict(arrangement='undefined',An_mm2=None,Ct=None,length_mm=None,
                    eccentricity_mm=None,ct_origin=''))
+    if mode==WELD_U_MODE:
+        geometry=dict(length_mm=None,eccentricity_mm=None,
+            two_equal_continuous_longitudinal_welds_confirmed=False,
+            no_holes_or_losses_confirmed=False,extrapolation_accepted=False)
     return dict(schema=SCHEMA,mode=mode,geometry=geometry,origin='',
                 reference_scope_confirmed=False,outside_mode='manual',
                 outside_unperforated_confirmed=False)
@@ -40,6 +45,33 @@ def _text(value,name):
 
 def _optional(value,name):
     return None if value is None else a._number(value,name,positive=True)
+
+
+def longitudinal_u_weld_hypothesis(*,A_mm2,length_mm,eccentricity_mm):
+    """Explicit extrapolation of the welded-U expression to flange-welded Ue.
+
+    L is EACH of the two equal, continuous longitudinal weld lengths, never
+    their sum. x is perpendicular from the complete Ue centroid (including
+    lips and bends) to the actual connection plane, not a web eccentricity.
+    The lower limit rejects the arrangement; it does not increase Ct to .5.
+    """
+    A=a._number(A_mm2,'A',positive=True)
+    L=a._number(length_mm,'each longitudinal weld length',positive=True)
+    x=a._number(eccentricity_mm,'centroid to connection plane',nonnegative=True)
+    raw=1.-.36*x/L
+    if not math.isfinite(raw):raise ValueError('Weld x/L exceeds finite arithmetic domain')
+    admissible=raw>=.5
+    return dict(An_mm2=A,Ct=min(raw,.9) if admissible else None,raw_Ct=raw,
+        Ct_formula='min(1-0.36*x/L,0.9); raw Ct<0.5 is inadmissible, never clamped upward',
+        An_formula='An=A; no holes, notches or other section losses',
+        Ct_upper_limit=.9,Ct_lower_admissibility_limit=.5,Ct_admissible=admissible,
+        weld_arrangement='two_equal_continuous_longitudinal',weld_count=2,
+        length_mm=L,length_definition='longitudinal length of each weld, not the sum',
+        eccentricity_mm=x,eccentricity_definition='perpendicular distance from full Ue centroid to actual connection plane',
+        extrapolated_hypothesis=True,normative_applicability_demonstrated=False,
+        ct_origin='Explicit design hypothesis: longitudinal welded-U Ct applied to flange-welded Ue',
+        clause='NBR14762:2010 9.6.2 welded-U expression; extrapolated hypothesis for Ue connected only by one flange, not an explicit normative rule for this Ue detail',
+        connection_strength_verified=False,applied_force_eccentricity_removed=False)
 
 
 def web_bolt_row(*,A_mm2,t_mm,web_flat_mm,count,diameter_mm,pitch_mm,clearance_mm=2.):
@@ -126,6 +158,20 @@ def resolve(detail,manual,*,A_mm2,t_mm,h_mm,ri_mm):
         else:
             derived=web_bolt_row(A_mm2=A,t_mm=t,web_flat_mm=h-2*(ri+t),count=g['count'],
                 diameter_mm=g['diameter_mm'],pitch_mm=g['pitch_mm'],clearance_mm=g['clearance_mm'])
+    elif mode==WELD_U_MODE:
+        confirmations={
+            'two_equal_continuous_longitudinal_welds_confirmed':'dois cordões longitudinais contínuos de igual comprimento na mesma mesa, sem cordões transversais',
+            'no_holes_or_losses_confirmed':'ausência de furos, recortes e outras perdas na seção da ligação',
+            'extrapolation_accepted':'adoção explícita da hipótese extrapolada de Ct de U para Ue ligado pela mesa'}
+        for key,label in confirmations.items():
+            if not _boolean(g[key],key):missing.append(label)
+        length=_optional(g['length_mm'],'each longitudinal weld length')
+        x=None if g['eccentricity_mm'] is None else a._number(g['eccentricity_mm'],'centroid to connection plane',nonnegative=True)
+        if length is None or x is None:missing.append('L de cada cordão e distância perpendicular x do centróide completo do Ue ao plano da ligação')
+        else:
+            derived=longitudinal_u_weld_hypothesis(A_mm2=A,length_mm=length,eccentricity_mm=x)
+            if not derived['Ct_admissible']:
+                missing.append('Ct calculado inferior a 0,5: detalhe inadmissível nesta hipótese; não elevado artificialmente a 0,5')
     else:
         arr=g['arrangement']
         if arr not in ('undefined','transverse_only','longitudinal','mixed'):raise ValueError('Unknown weld arrangement')
@@ -142,7 +188,7 @@ def resolve(detail,manual,*,A_mm2,t_mm,h_mm,ri_mm):
             if area is None:missing.append('área bruta somente das partes efetivamente conectadas')
         else:
             if area is None or ct is None:missing.append('An e Ct auditados para solda apenas na mesa inferior')
-            if not ct_source:missing.append('método validado de Ct para a mesa inferior, sem estender a Fig.4d por hipótese')
+            if not ct_source:missing.append('método auditado de Ct para a mesa inferior; a hipótese extrapolada tem opção separada')
             if length is None or x is None:missing.append('comprimento longitudinal e excentricidade reais da solda')
         if area is not None and ct is not None and arr!='undefined':
             derived=dict(An_mm2=area,Ct=ct,weld_arrangement=arr,length_mm=length,

@@ -242,3 +242,14 @@ fatores explícitos, sem alterar a análise NBR. Não rebatiza os48PP congelados
 Veja `docs/AISI_CURRENT_INPUT_COMPONENT_20261104.txt` para escopo, sinais,
 fontes, faltas específicas e interpretação suficiente dos pisos. Sem publicação
 ou aprovação global.
+
+## Ct soldado pela mesa: hipótese explícita U para Ue — 05/11/2026
+
+Opção separada de duas soldas longitudinais iguais na mesa no detalhe de tração
+NBR das três travessas. Calcula Ct=min(1−0,36x/L;0,9), com x do centróide completo
+do Ue ao plano da ligação e L de cada cordão, nunca a soma. Ct bruto inferior a
+0,5 torna o detalhe inadmissível, sem piso artificial. An=A exige seção sem
+perdas e An0 é tratado separadamente. A interface e a memória identificam a
+extrapolação como hipótese, sem afirmar regra normativa específica para Ue
+pela mesa e sem aprovação da ligação ou do conjunto. Detalhes em
+`docs/CT_WELD_U_TO_UE_HYPOTHESIS_20261105.txt`.

@@ -1,0 +1,57 @@
+Ct de U com soldas longitudinais aplicado ao Ue ligado pela mesa
+Implementação de 05/11/2026
+
+Escolha explícita
+No estudo de três travessas Vlasov, em Dados de tração e limites da referência
+NBR, habilitar Fornecer seções líquidas e Ct de tração e selecionar:
+Duas soldas longitudinais na mesa: Ct de U para Ue (hipótese).
+A escolha manual existente, parafusos e solda transversal são preservados.
+Nenhum projeto antigo passa a adotar a hipótese automaticamente.
+
+Esta extensão foi solicitada pelo usuário como hipótese de projeto. A expressão
+da NBR 14762:2010, 9.6.2 para U com soldas longitudinais é aplicada ao Ue ligado
+apenas por uma mesa. A Figura 4d ilustra U ligado pela alma. Não se apresenta a
+extensão ao Ue pela mesa como regra normativa explícita ou validação experimental.
+
+Entradas e domínio declarado
+- Dois cordões longitudinais contínuos de mesmo comprimento na mesma mesa,
+  sem soldas transversais. Arranjos desiguais/descontínuos não são reduzidos
+  automaticamente a esse modelo; a rota manual auditada permanece disponível.
+- L, em mm, é o comprimento longitudinal de CADA cordão, nunca a soma 2L.
+- x, em mm, é a distância perpendicular do centróide da seção Ue COMPLETA,
+  com lábios e dobras, ao plano real da conexão da mesa. É uma entrada explícita
+  do detalhe, não uma excentricidade reaproveitada de ligação pela alma, nem
+  distância ao centro de cisalhamento. O app não determina o plano físico.
+- Confirmar ausência de furos, recortes ou outras perdas na seção da ligação.
+  Então An=A, sem aplicar o fator 0,9 da expressão de área para furos.
+- An0 fora das ligações continua independente. An0=A exige confirmação separada
+  de seção externa intacta e origem; alternativamente informar An0 auditado.
+- Registrar a origem do detalhe, sua aplicação à referência comum das três
+  travessas e aceitar explicitamente a hipótese extrapolada.
+
+Cálculo e rejeição
+Ct bruto = 1 - 0,36x/L.
+Se Ct bruto >= 0,5: Ct = min(Ct bruto; 0,9).
+Se Ct bruto < 0,5: detalhe INADMISSÍVEL nesta hipótese, Ct utilizável e Nt,Rd
+ficam ausentes. O valor bruto é preservado no resultado; nunca é elevado a 0,5.
+A igualdade Ct bruto=0,5 é admitida. Não há tolerância ampliando o domínio.
+Com dados válidos e todas as declarações:
+Nt,Rd=min(A fy/1,10; An0 fu/1,35; Ct An fu/1,65).
+A falta de qualquer declaração ou dimensão deixa Nt,Rd pendente.
+
+Exemplos aritméticos sintéticos, não detalhes executivos
+x=50 mm, L=100 mm por cordão: Ct=0,82, não 0,90 por somar comprimentos.
+x=50 mm, L=200 mm por cordão: bruto=0,91, Ct=0,90.
+x=50 mm, L=36 mm por cordão: Ct=0,50.
+x=50 mm, L=20 mm por cordão: bruto=0,10, inadmissível, não Ct=0,50.
+
+Rastreabilidade e limites
+Interface, JSON e memória Word conservam x, L, duas soldas, área, Ct bruto,
+Ct admitido ou sua rejeição, hipótese extrapolada, dados pendentes e origem.
+Edição invalida resultados; leitura/exportação usa o snapshot sem recalcular.
+O esquema anterior é mantido e apenas um novo modo explícito foi acrescentado.
+
+Esta é a resistência axial da seção de referência, não o dimensionamento dos
+cordões, do apoio ou da transferência de forças. Não elimina excentricidade
+física, não altera vínculos, solicitações, flexão/torção ou o modelo intacto EN,
+não encerra N+M+B, não atribui travamento por tirantes e não aprova o conjunto.
