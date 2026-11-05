@@ -263,3 +263,14 @@ somente o contato central; um contato perto da extremidade exige posição finit
 e detalhe próprios na v2. Todas as pendências dos casos físicos permanecem.
 Novos registros guardam a distinção na tela, JSON e Word, enquanto históricos
 antigos não são requalificados. Veja `docs/POINT_LIMIT_CONTACT_SCOPE_20261105.txt`.
+
+## Cisalhamento e interação EN nas travessas — 05/11/2026
+
+O complemento EN inclui agora os três limites de tensão de §6.1.6: normal,
+cisalhamento e interação sigma–tau, nos ramos de seção efetiva já elegíveis.
+Usa ações concomitantes, ambas as faces e o interior das paredes. Mostra
+separadamente a testemunha real e um limite superior de todo o intervalo;
+cobertura parcial ou decisão numérica inconclusiva não vira atendimento.
+Snapshots antigos continuam legíveis, sem recalcular nem requalificar.
+Não libera ramos efetivos ausentes, estabilidade, verificações locais/ligações
+ou aprovação global. Detalhes: `docs/THREE_GIRT_EN_SHEAR_INTERACTION_20261105.txt`.

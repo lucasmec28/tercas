@@ -1,0 +1,77 @@
+COMPLEMENTO EN: CISALHAMENTO E INTERAÇÃO COM TENSÕES NORMAIS
+Base: main 26707540e91d7a3d153f76c00ff0c742cd28b29c.
+
+OBJETIVO E FONTE
+Fecha as condições de tensão de EN1993-1-3:2006 §6.1.6(4),(5) nos intervalos
+cuja seção efetiva pura N/M já é elegível. Preserva a NBR14762 e os critérios
+anteriores; não mistura resistências NBR/AISI com os denominadores EN.
+Fonte consultada: EN1993-1-3:2006, páginas impressas 46–47, §§6.1.6(1)–(5).
+Fyb=fya=250 MPa, gammaM0=1, E da prova seccional=210000 MPa, como na rota
+normal existente. E da demanda e combinações NBR são preservados.
+
+LIMITES INDEPENDENTES
+|sigma_total| <= fya/gammaM0 = 250 MPa (critério anterior preservado).
+|tau_total| <= fya/(sqrt(3)*gammaM0) = 144,337567 MPa.
+sqrt(sigma_total²+3*tau_total²) <= 1,1*fya/gammaM0 = 275 MPa.
+A folga de 1,1 no terceiro limite não relaxa os outros dois.
+
+MODELO E SINAIS
+N/M: coeficientes das seções efetivas puras elegíveis.
+B/V/Tw/Tsv: propriedades da mesma seção bruta coerente e curva facetada.
+No sistema R01: Mx'=Vy, My'=-Vx, B'=Tw.
+q(u)=-(Vx*Qx(u)/Iy+Vy*Qy(u)/Ix+Tw*Qw(u)/Cw).
+Tau nas faces = q(u)/t - face*Tsv*t/J.
+Para tangente a->b e normal n=(-dy,dx)/comprimento, tauSV=-2G*phi'*zeta.
+Portanto face positiva recebe -Tsv*t/J. O antigo diagnóstico usava sigma
+na linha média e sinais +/- intercambiáveis; esse atalho não se aplica às
+coordenadas exteriores, onde sigma muda entre as duas faces.
+
+ENVELOPE E DECISÃO
+Em cada faceta e face, sigma é afim e tau quadrático na coordenada u.
+A representação conjunta por Bernstein de grau 2 contém o vetor (sigma,tau)
+no fecho convexo de três controles. A norma ponderada sqrt(sigma²+3tau²)
+é convexa. Cada controle tem faixas longitudinais delimitadas pelas mesmas
+raízes analíticas dos campos polinomiais/hiperbólicos já usadas na rota normal.
+Isso produz um limite superior contínuo para todo u e todo trecho longitudinal.
+O limite superior pode combinar faixas em estações distintas: é majorante
+numérico, nunca identificado como estado físico concomitante.
+
+A testemunha inferior sempre recompõe sigma e tau na MESMA estação, posição
+na parede e face, com N/M/B/V/Tw/Tsv concomitantes recuperados da demanda salva.
+Os quatro termos de tau e os quatro termos normais ficam registrados.
+O interior das paredes é incluído; apenas os vértices normais não bastam.
+
+Subdivisão adaptativa ocorre só quando testemunha e majorante não decidem o
+limite 1. O orçamento numérico é 2048 subdivisões por intervalo, com diferença
+absoluta de índice 1e-5 como critério de parada inconclusiva. Orçamento/tolerância
+não são limites estruturais nem novas exigências normativas. Se não decidir,
+o resultado é inconclusivo, nunca atendimento. Maior testemunha >1 demonstra
+excesso; limite superior <=1 com cobertura completa demonstra atendimento do
+critério no modelo. Cobertura parcial não tem majorante do membro inteiro.
+
+A margem de arredondamento escala com somas de magnitudes antes de cancelamentos
+nas parcelas normais e de cisalhamento, incluindo transformação de Bernstein e
+campos hiperbólicos. Esta é uma avaliação numérica em binary64, não um certificado
+formal de aritmética intervalar ou prova da geometria física.
+
+INTEGRAÇÃO E LIMITES
+O opt-in EN calcula normal, cisalhamento e interação; visualização/Word apenas
+leem o snapshot. Schema v2, mantendo leitura dos snapshots v1 somente normais,
+sem requalificação retroativa. O snapshot NBR permanece independente e é anexado
+depois, preservando o contrato de integridade. Modelo de seção intacta declarado
+continua obrigatório; nenhum ramo é promovido por força pequena ou troca de sinal.
+
+Ramos de redução local/distorcional não implementados e My_negativo com mesa
+mista/lábios tracionados continuam pendentes. Não se usa seção bruta como fallback.
+Este complemento não substitui resistência/flambagem por cisalhamento EN §6.1.5,
+interação N–M–V §6.1.10, estabilidade global, análise de segunda ordem quando
+necessária, forças locais/ligações, ruptura líquida ou ELS. Os critérios NBR já
+implementados continuam separados. Não há aprovação global da barra nem declaração
+de projeto integral EN ou NBR. Modelo de parede fina facetada, não sólido curvo.
+
+TESTES
+Testes de sinais, Bernstein, torção pura, amostragem densa independente, localização
+interior de pico, proporcionalidade/reversão, orçamento inconclusivo e cobertura
+parcial em tests/test_three_girt_en_shear_interaction.py.
+Regressões e testemunhas de aplicação em test_three_girt_en_normal_application.py.
+Interface e preservação dos snapshots em test_ui_three_girt_en_normal.py.

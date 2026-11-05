@@ -1,4 +1,4 @@
-"""Separate, conditional EN normal N+Mx+My+B component on current 7DOF demand.
+"""Conditional EN normal/shear/interaction section criteria on current 7DOF demand.
 
 Only pure sections demonstrated integral at ULS are admitted. The borrowed
 NBR adapter validates the immutable current demand/source contract ONLY; no
@@ -11,10 +11,12 @@ import json
 import math
 from pathlib import Path
 from . import field_envelope as f
+from . import shear_interaction as si
 from .en1993_normal_components import build_component_sections,verify_component_sections
 
 FIELD='EN_normal_N_M_B_component'
-SCHEMA='three_girt_EN_normal_N_M_B_integral_v1'
+LEGACY_SCHEMA='three_girt_EN_normal_N_M_B_integral_v1'
+SCHEMA='three_girt_EN_normal_shear_interaction_integral_v2'
 CONFIG_SCHEMA='three_girt_EN_normal_N_M_B_choice_v1'
 REQUEST='EN_normal_N_M_B_requested_configuration'
 ERROR='EN_normal_N_M_B_error'
@@ -93,6 +95,35 @@ def _witness(result,case,beam,polys,coefficients,torsion,fibers,limit):
     return witness
 
 
+def _shear_witness(witness,case,beam,section,coefficients):
+    from ..three_girt_warping.application import recover_exported_state
+    import numpy as np
+    w=copy.deepcopy(witness);x=beam['x_start_mm']+beam['length_mm']*w['t']
+    state=recover_exported_state(case['model'],beam,x)
+    pos=np.asarray(w['xy_relative_to_gross_CG_mm']);u=w['u'];i=w['segment_index']
+    props=section['properties'];th=section['thickness_mm']
+    static=np.asarray(section['segment_static_coefficients'][i])@np.array([1.,u,u*u])
+    omega=(1-u)*section['omega_nodes_mm2'][i]+u*section['omega_nodes_mm2'][i+1]
+    physical={'N':state['N_N'],'Mx':-state['My_strong_Nmm'],'My':-state['Mz_weak_Nmm']}
+    normal={axis:0. if coefficients.get(axis) is None else
+        physical[axis]*(coefficients[axis][0]+np.asarray(coefficients[axis][1:])@pos)
+        for axis in physical}
+    normal['B']=state['B_equilibrium_Nmm2']*omega/props['Cw_mm6']
+    shear=dict(Vx=-state['Vy_N']*static[0]/props['Iy_weak_mm4']/th,
+        Vy=-state['Vz_N']*static[1]/props['Ix_strong_mm4']/th,
+        warping=-state['T_w_Nmm']*static[2]/props['Cw_mm6']/th,
+        Saint_Venant=-w['thickness_face_sign']*state['T_SV_Nmm']*th/props['J_mm4'])
+    if not math.isclose(math.fsum(normal.values()),w['sigma_MPa'],rel_tol=3e-10,abs_tol=2e-7):
+        raise ArithmeticError('Concomitant exterior normal/shear witness mismatch')
+    if not math.isclose(math.fsum(shear.values()),w['tau_MPa'],rel_tol=3e-10,abs_tol=2e-7):
+        raise ArithmeticError('Concomitant shear witness mismatch')
+    w.update(x_mm=x,combination_id=case['combination']['id'],girt=beam['girt'],segment_id=beam['id'],
+        side=state['side'],concomitant_7DOF_state=state,normal_contributions_MPa=normal,
+        shear_contributions_MPa=shear,omega_mm2=omega,
+        witness_scope='Same longitudinal station, contour coordinate and signed wall face')
+    return w
+
+
 def calculate(demand,config):
     _validate_configuration(demand,config)
     # This call checks source bytes, case/bundle/model binding, action fields,
@@ -107,12 +138,16 @@ def calculate(demand,config):
     if certificate['nodes_sha256']!=section['nodes_sha256']:
         raise ValueError('EN pure sections and Vlasov omega have different geometry')
     fibers=f.exterior_fibers(section);limit=certificate['normal_yield_limit_MPa'];rows=[]
+    from ..three_girt_warping.application import recover_exported_state
     for case in demand['cases']:
         if case['combination']['limit_state']!='ELU':continue
         for beam in case['model']['beams']:
             raw=_polynomials(beam)
             polys=dict(N=raw['N_N'],Mx=[-v for v in raw['My_strong_Nmm']],My=[-v for v in raw['Mz_weak_Nmm']])
             pieces=[];torsion=f.torsion_field(beam['torsion_state_parameters'])
+            edge0=recover_exported_state(case['model'],beam,beam['x_start_mm'])
+            edge1=recover_exported_state(case['model'],beam,beam['x_end_mm'])
+            total_torque=[edge0['T_equilibrium_SC_Nmm'],edge1['T_equilibrium_SC_Nmm']-edge0['T_equilibrium_SC_Nmm']]
             for interval in f.sign_intervals(polys):
                 keys={axis:_component_key(axis,sign) for axis,sign in interval['signs'].items()}
                 required={axis:[_component_key(axis,sign) for sign in signs if sign]
@@ -120,7 +155,7 @@ def calculate(demand,config):
                 blocked={key:copy.deepcopy(certificate['components'][key]['blocking_reasons'])
                     for values in required.values() for key in values if not certificate['components'][key]['eligible']}
                 piece=dict(**interval,component_keys=keys,required_component_keys=required,blocking_components=blocked,
-                    complete=not blocked,maximum_absolute=None,normal_criterion=None)
+                    complete=not blocked,maximum_absolute=None,normal_criterion=None,shear_interaction=None)
                 if not blocked:
                     coefficients={axis:certificate['components'][key]['sigma_coefficients_c0_cx_cy']
                                   for axis,key in keys.items() if key is not None}
@@ -133,6 +168,11 @@ def calculate(demand,config):
                     env=f.envelope(polys,coefficients,fibers['xy_mm'],fibers['omega_over_Cw'],torsion,
                         interval['left'],interval['right'])
                     winner=_witness(env['maximum_absolute'],case,beam,polys,coefficients,torsion,fibers,limit)
+                    shear=si.envelope(section,polys,coefficients,torsion,total_torque,beam['length_mm'],
+                        left=interval['left'],right=interval['right'],normal_limit_MPa=limit)
+                    for key in ('shear','interaction'):
+                        shear[key]['witness']=_shear_witness(shear[key]['witness'],case,beam,section,coefficients)
+                    piece['shear_interaction']=shear
                     piece.update(maximum_absolute=winner,
                         normal_criterion='within_1_in_declared_section_model' if winner['normal_index']<=1 else 'above_1_in_declared_section_model',
                         section_fibers_checked=env['section_fibers_checked'],analytical_candidates_checked=env['analytical_candidates_checked'])
@@ -142,6 +182,7 @@ def calculate(demand,config):
             complete=all(p['complete'] for p in pieces)
             rows.append(dict(combination_id=case['combination']['id'],girt=beam['girt'],segment_id=beam['id'],
                 x_start_mm=beam['x_start_mm'],x_end_mm=beam['x_end_mm'],pieces=pieces,
+                shear_interaction=si.aggregate([p['shear_interaction'] for p in pieces],complete),
                 complete=complete,complete_envelope=winner if complete else None,
                 partial_maximum=winner if not complete else None,
                 observed_normal_exceedance=bool(winner is not None and winner['normal_index']>1),
@@ -153,6 +194,7 @@ def calculate(demand,config):
         valid=[r['complete_envelope'] or r['partial_maximum'] for r in rr]
         valid=[r for r in valid if r is not None];winner=max(valid,key=lambda v:v['normal_index']) if valid else None
         members[level]=dict(ELU_segments=len(rr),complete_segments=sum(r['complete'] for r in rr),
+            shear_interaction=si.aggregate([p['shear_interaction'] for r in rr for p in r['pieces']],complete),
             complete_sign_pieces=sum(p['complete'] for r in rr for p in r['pieces']),
             total_sign_pieces=sum(len(r['pieces']) for r in rr),complete=complete,
             complete_envelope=winner if complete else None,partial_maximum=winner if not complete else None,
@@ -160,7 +202,7 @@ def calculate(demand,config):
             observed_normal_exceedance=bool(winner is not None and winner['normal_index']>1),
             normal_criterion=('above_1_at_checked_state_full_envelope_incomplete' if winner is not None and winner['normal_index']>1 else None)
                 if not complete else ('within_1_in_declared_section_model' if winner['normal_index']<=1 else 'above_1_in_declared_section_model'))
-    result=dict(schema=SCHEMA,status='computed_conditional_EN_normal_component',
+    result=dict(schema=SCHEMA,status='computed_conditional_EN_normal_shear_interaction',
         configuration=copy.deepcopy(config),source_input_fingerprint=demand['input_fingerprint'],
         source_demand_sha256=fingerprint(mechanical_source(demand)),source_geometry=copy.deepcopy(demand['source_geometry']),
         component_sections=certificate,normal_limit_MPa=limit,section_fiber_model=fibers['scope'],
@@ -170,11 +212,11 @@ def calculate(demand,config):
         demand_material_E_MPa=demand['input_data']['properties']['E_MPa'],
         resistance_material_E_MPa=certificate['material']['E_MPa'],
         actions_basis='Existing NBR load combinations and first-order 7DOF demand retained; not renamed as EN load combinations or integral EN analysis',
-        limits=['EN1993-1-3:2006 6.1.6 normal-stress component only; same pure-section method for N and M, gross omega/Cw for B.',
+        limits=['EN1993-1-3:2006 6.1.6(3)-(5) normal, shear and interaction section criteria; same pure-section method for N/M, coherent gross B/shear properties.',
             'Only pure sections demonstrated integral at ULS. No reduced-section, opposite-sign or NBR/AISI capacity fallback.',
             'Both exterior faces of every faceted wall segment; omega constant through thickness. Not an exact curved solid stress solution.',
-            'Normal-stress criterion does not complete 6.1.6(4): shear and sigma-tau interaction remain unverified.',
-            'Global stability, second-order/small-rotation applicability, net fracture, shear lag, flange curling, local force introduction, connections and ELS remain separate.',
+            'EN6.1.6(4) shear and sigma-tau interaction use concomitant face stresses and full-interval numerical upper bounds in eligible sign intervals; incomplete section coverage never passes.',
+            'EN6.1.5 shear resistance/buckling and EN6.1.10 N-M-V interaction are not replaced. Global stability, second-order/small-rotation applicability, net fracture, shear lag, flange curling, local force introduction, connections and ELS remain separate.',
             'Fixed EN section proof E210000/nu0.3/fyb=fya250/gammaM0=1. Existing demand E and NBR combinations preserved; material and geometry are declared assumptions, not certified.',
             'Partial maxima exclude blocked sign intervals and are never promoted to a full member envelope.'],
         **{key:False for key in FALSE_FLAGS})
@@ -193,7 +235,7 @@ def attach(demand,config):
 def saved_component(demand):
     component=demand.get(FIELD)
     if component is None:return None
-    if not isinstance(component,dict) or component.get('schema')!=SCHEMA:raise ValueError('Unknown saved EN normal component')
+    if not isinstance(component,dict) or component.get('schema') not in (LEGACY_SCHEMA,SCHEMA):raise ValueError('Unknown saved EN normal component')
     if component.get('content_sha256')!=fingerprint({k:v for k,v in component.items() if k!='content_sha256'}):
         raise ValueError('Saved EN normal component content changed')
     if (component.get('source_demand_sha256')!=fingerprint(mechanical_source(demand)) or

@@ -1,6 +1,6 @@
 """Explicit opt-in and read-only saved normal-component display."""
 from .application import reference_configuration,saved_component
-LABEL='Incluir componente normal N+M+B pela EN'
+LABEL='Incluir tensões normais e cisalhamento pela EN'
 MODEL_LABEL='Declarar modelo de seção nominal intacta, sem furos ou recortes'
 LEVELS={'upper':'Superior','middle':'Central','lower':'Inferior'}
 
@@ -8,7 +8,7 @@ LEVELS={'upper':'Superior','middle':'Central','lower':'Inferior'}
 def controls(st,data,demand_fingerprint,prefix):
     if not st.checkbox(LABEL,value=False,key=prefix+'_en_normal_enabled'):return None
     config=reference_configuration(dict(input_fingerprint=demand_fingerprint))
-    st.caption('Complemento seccional EN1993-1-3:2006, separado da NBR. Soma N, duas flexões e B na mesma fibra e posição. Apenas componentes com seção integral demonstrada no ELU; trechos fora do domínio ficam pendentes. Não verifica estabilidade, cisalhamento/interação sigma–tau ou ELS.')
+    st.caption('Complemento seccional EN1993-1-3:2006, separado da NBR. Soma N, duas flexões e B na mesma fibra e posição. Apenas componentes com seção integral demonstrada no ELU; trechos fora do domínio ficam pendentes. Inclui cisalhamento e interação sigma–tau nos ramos elegíveis; não verifica estabilidade ou ELS.')
     with st.expander('Domínio do complemento normal EN'):
         st.caption('Seção própria Ue100×50×17, ri=t; fyb=fya=250 MPa, E de resistência=210000 MPa, nu=0,3 e gammaM0=1,00. Mantém E e combinações da demanda atual; não representa projeto integral EN. Espessura de cálculo/material reais precisam corresponder ao modelo declarado.')
         config['intact_section_model_declared']=st.checkbox(MODEL_LABEL,value=False,key=prefix+'_en_normal_intact')
@@ -37,10 +37,36 @@ def render_saved(st,demand):
     c=saved_component(demand)
     if c is None:return
     st.subheader('Componente normal N+M+B pelo critério EN')
-    st.warning('Resultado condicionado ao modelo de seção declarado. Não encerra EN §6.1.6: cisalhamento e interação sigma–tau continuam pendentes, assim como estabilidade da barra e aplicabilidade da análise de primeira ordem.')
+    has_shear=any('shear_interaction' in row for row in c['per_member'].values())
+    st.warning('Resultado condicionado ao modelo de seção declarado. Cobertura incompleta de seção efetiva impede conclusão integral; estabilidade da barra e aplicabilidade da primeira ordem permanecem separadas.' if has_shear else 'Resultado histórico somente normal. Cisalhamento e interação sigma–tau não foram calculados neste snapshot.')
     st.dataframe(rows(c),hide_index=True)
     st.caption('Índice = maior |sigmaN + sigmaMx + sigmaMy + sigmaB| / 250 MPa, nas duas faces de cada segmento facetado. Campos concomitantes e extremos analíticos no vão. Empenamento constante através da espessura: não é solução de sólido curvo exato.')
-    st.caption('Pendência de ramo não significa reprovação. Um máximo parcial não é envelope completo. NBR e AISI permanecem verificações separadas; seus denominadores não entram neste índice.')
+    st.caption('Pendência de ramo não significa reprovação. Um máximo parcial não é envelope completo. NBR e AISI permanecem separadas; seus denominadores não entram neste índice. O critério de tensões não substitui flambagem por cisalhamento EN §6.1.5 nem interação N–M–V §6.1.10.')
+    if has_shear:
+        st.subheader('Cisalhamento e interação normal–cisalhamento EN')
+        st.dataframe(shear_rows(c),hide_index=True)
+        st.caption('Limites: |tau| ≤ 250/√3 MPa e √(sigma² + 3tau²) ≤ 275 MPa. A testemunha usa a mesma estação e fibra; o limite superior cobre continuamente todo o intervalo e a parede, mas não é uma combinação física de máximos. Se a cobertura é parcial, os números abrangem apenas os ramos calculados.')
     with st.expander('Prova seccional e memória normal EN'):
+        if has_shear:st.caption('Limites superiores numéricos em binary64, com margem de arredondamento proporcional às magnitudes. Não são certificados formais de aritmética intervalar.')
         st.json(dict(configuration=c['configuration'],material=c['component_sections']['material'],
             component_sections=c['component_sections']['components'],per_member=c['per_member']))
+
+
+def shear_rows(component):
+    labels={'within_1_by_full_interval_upper_bound':'Dentro do limite pelo limite superior',
+        'above_1_at_concomitant_state':'Excesso em estado concomitante',
+        'above_1_at_checked_state_full_envelope_incomplete':'Excesso verificado; cobertura parcial',
+        'incomplete_section_branch_coverage':'Parcial: falta ramo de seção efetiva',
+        'unresolved_numerical_bound':'Limite numérico não decidiu'}
+    records=[]
+    for level,item in component['per_member'].items():
+        values=item.get('shear_interaction')
+        if values is None:continue
+        for key,name in (('shear','Cisalhamento'),('interaction','Interação sigma–tau')):
+            row=values[key]
+            records.append(dict(Travessa=LEVELS[level],Critério=name,
+                Índice_testemunha=None if row is None else row['index_lower_witness'],
+                Limite_superior=None if row is None else row['index_upper_bound'] if values['complete'] else row['partial_index_upper_bound'],
+                Cobertura='Completa no recorte' if values['complete'] else 'PARCIAL',
+                Resultado='Sem ramo elegível' if row is None else labels[row['criterion']]))
+    return records

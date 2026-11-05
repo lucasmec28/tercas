@@ -157,3 +157,57 @@ def test_direct_central_N_M_B_complete_and_proportional():
         assert r['whole_member_approved'] is False
     assert indices[0]<1<indices[1]
     assert indices[1]/indices[0]==pytest.approx(20.,rel=1e-12)
+
+
+def test_shear_interaction_witnesses_recompose_and_partial_never_passes(result):
+    for row in result['rows']:
+        for piece in row['pieces']:
+            shear=piece['shear_interaction']
+            if not piece['complete']:
+                assert shear is None
+                continue
+            assert shear['full_interval_covered']
+            for key in ('shear','interaction'):
+                w=shear[key]['witness']
+                assert math.fsum(w['normal_contributions_MPa'].values())==pytest.approx(w['sigma_MPa'],abs=2e-7)
+                assert math.fsum(w['shear_contributions_MPa'].values())==pytest.approx(w['tau_MPa'],abs=2e-7)
+                assert w['equivalent_MPa']==pytest.approx(math.hypot(w['sigma_MPa'],math.sqrt(3)*w['tau_MPa']))
+                assert w['concomitant_7DOF_state']['x_mm']==w['x_mm']
+                assert 0<=w['u']<=1
+                assert shear[key]['index_upper_bound']>=shear[key]['index_lower_witness']
+    for member in result['per_member'].values():
+        values=member['shear_interaction'];assert not values['complete']
+        for key in ('shear','interaction'):
+            assert values[key]['index_upper_bound'] is None
+            assert values[key]['criterion']!='within_1_by_full_interval_upper_bound'
+
+
+def test_historical_normal_only_snapshot_still_exports(demand,result,monkeypatch):
+    old=copy.deepcopy(result);old['schema']=a.LEGACY_SCHEMA
+    for row in old['rows']:
+        row.pop('shear_interaction')
+        for piece in row['pieces']:piece.pop('shear_interaction')
+    for member in old['per_member'].values():member.pop('shear_interaction')
+    old['content_sha256']=a.fingerprint({k:v for k,v in old.items() if k!='content_sha256'})
+    d=copy.deepcopy(demand);d[a.FIELD]=old
+    def forbidden(*args,**kwargs):raise AssertionError('Historical export cannot requalify')
+    monkeypatch.setattr(a,'calculate',forbidden)
+    from tercas.three_girt_en_normal import report
+    assert a.saved_component(d)==old
+    doc=Document();report.append(doc,d)
+    text='\n'.join(p.text for p in doc.paragraphs)
+    assert 'Snapshot histórico: cisalhamento' in text
+    assert not any('Limite superior' in cell.text for table in doc.tables for row in table.rows for cell in row.cells)
+
+
+def test_shear_results_are_visible_in_table_and_saved_word(demand,result):
+    from tercas.three_girt_en_normal import ui,report
+    rows=ui.shear_rows(result)
+    assert len(rows)==6 and all(r['Cobertura']=='PARCIAL' for r in rows)
+    assert all(r['Índice_testemunha'] is not None for r in rows)
+    d=copy.deepcopy(demand);d[a.FIELD]=copy.deepcopy(result);doc=Document();report.append(doc,d)
+    text='\n'.join(p.text for p in doc.paragraphs)
+    assert 'Cisalhamento e interação normal–cisalhamento EN' in text
+    assert 'tauSV = −face' in text
+    assert '§6.1.5' in text and '§6.1.10' in text
+    assert any('Limite superior' in cell.text for table in doc.tables for row in table.rows for cell in row.cells)
