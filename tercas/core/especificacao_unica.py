@@ -10,7 +10,14 @@ def qualified_scalar(x):
 def evaluate(spec):
  selected=copy.deepcopy(spec['selected_section']);f=selected['fields'];value=lambda k:f[k]['value']
  out={'schema':'NBR14762_one_span_v1','input_snapshot':copy.deepcopy(spec),'whole_member_approved':False,'sheet_restraint_credit':False,'issues':[]}
- try:out['section_checks']=section_evaluate(selected)
+ try:
+  out['section_checks']=section_evaluate(selected,L=spec.get('L_mm'))
+  # This section-only diagnostic has no separate restraint/load contract.
+  # Do not report the supplied span as missing or confuse it with the member route.
+  for key in ('elastic_Me','local_FLT_resistance'):
+   if key in out['section_checks']:
+    out['section_checks'][key]['scope']='Diagnóstico auxiliar de seção; não é a verificação de FLT da barra. Consultar FLT_segments para o resultado por trecho e os comprimentos efetivos informados.'
+    out['section_checks'][key]['member_verification_path']='FLT_segments'
  except (ValueError,TypeError,KeyError) as e:out['section_checks']={'status':'invalid_inputs','reason':str(e)}
  L=spec.get('L_mm');uls=spec.get('ULS');sls=spec.get('SLS');critical=spec.get('Ml')
  fields=['E_MPa','G_MPa','Iy_cm4','J_mm4','Cw_mm6','Wx_cm3','fy_MPa']
