@@ -53,6 +53,25 @@ def diagram(section, records):
 
 def render_choice(st,data,key):
     c=configuration(data)
+    from .roof_top_load import enabled as roof_top_enabled
+    if data.get('member_application','purlin')=='purlin' and roof_top_enabled(data):
+        st.caption('Linhas de carga definidas automaticamente pelo esquema de cobertura; PP no CG. '
+                   'Declarações manuais anteriores preservadas e inativas neste esquema.')
+        if data.get('load_mode')!='area':
+            st.warning('Torção pendente no modo direto: ações já combinadas não separam PP e cobertura; nenhuma linha é inventada para essa soma.')
+            return
+        try:
+            from .torsion_study import automatic_roof_choice
+            automatic=automatic_roof_choice(data)
+            if automatic is None:
+                st.caption('Torção pendente: não há contorno torsional próprio coerente para qualificar as linhas horizontais. Excentricidade desconhecida não é torque nulo.')
+                return
+            roles=active_roles(data)
+            st.markdown(diagram(section_for(data),{r:v for r,v in automatic['load_lines'].items() if r in roles}),unsafe_allow_html=True)
+            st.caption('Geometria e linhas do mesmo contorno próprio; diagnóstico elástico separado, sem capacidade à torção ou aprovação global.')
+        except (ValueError,TypeError,KeyError,OSError,ArithmeticError) as exc:
+            st.warning('Linhas automáticas de torção pendentes: '+str(exc))
+        return
     if data.get('member_application','purlin')=='wall_girt':
         st.caption('Torção da terça inativa na travessa isolada. Declarações armazenadas preservadas; não significam torção nula nem vínculo comprovado.')
         if c is not None:

@@ -42,7 +42,9 @@ def render_geometry(st,data,revision,load):
         ref=reference(proposed_t,proposed_L)
         st.caption('Prévia não aplicada: t='+fmt(proposed_t)+' mm, ri=t, Lx=Ly=Lz='+fmt(proposed_L)+' mm. Propriedades, PP, críticos e resistências individuais recalculados; sem escala de outra espessura.')
         keys=('Me_strong_Nmm','Me_weak_web_Nmm','Me_weak_lips_Nmm')
-        st.dataframe(display_frame([{'Derivado':k,'Valor':ref['global_criticals'][k],'Unidade':'N·mm'} for k in keys]),hide_index=True)
+        from .roof_top_load import enabled as roof_enabled,LEGACY_COMPARATOR_NOTE
+        if roof_enabled(data):st.caption(LEGACY_COMPARATOR_NOTE+' Recalcule para obter Me das combinações da cobertura.')
+        else:st.dataframe(display_frame([{'Derivado':k,'Valor':ref['global_criticals'][k],'Unidade':'N·mm'} for k in keys]),hide_index=True)
         web=ref['resistances_exterior_primary']['weak_web_compressed']
         st.caption('Piso D da alma desta seção: '+fmt(web['Mdist_lower_bound_Nmm'])+' Nmm. Mdist identificado continua nulo; nenhuma dispensa T14 forte.')
         if preview.get('member_application')=='wall_girt':
@@ -110,6 +112,8 @@ def render(st, data, revision, load, render_results, render_import):
                     value = number(f'{title} {label} [{unit}]', key, data.get(key, 0.))
                     # Do not silently append even zero-valued optional fields.
                     if key in data or value != 0:data[key] = value
+    from .roof_top_load_ui import render_choice as render_roof_top_load
+    render_roof_top_load(st, data, f'roof_top_load_{revision}')
     from .deflection_scope import render_choice
     render_choice(st, data, f'ue_family_ref_deflection_model_{revision}')
     from .torsion_study_ui import render_choice as render_torsion_choice

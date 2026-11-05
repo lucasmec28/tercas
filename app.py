@@ -57,6 +57,8 @@ def show_inclination(evidence,girt=False):
  st.caption('Valores nas seções listadas; não são envelope biaxial nem resistência. P e q são considerados juntos na mesma combinação.')
 
 def render_results(result,d):
+ from tercas.roof_top_load_ui import show_result as show_roof_top_load
+ show_roof_top_load(st,result)
  from tercas.biaxial_component_ui import show as show_biaxial_component
  from tercas.flexural_components import presentation_rows as gross_component_rows,is_girt_result
  show_biaxial_component(st,result)
@@ -309,7 +311,7 @@ b=copy.deepcopy(st.session_state.base);r=st.session_state.revision
 last=st.session_state.get('last_input',b)
 for key in ['load_mode','area_inputs','selected_types','ELS_down_denominator','ELS_up_denominator','q_uls','P_uls','x_uls','q_sls','P_sls','x_sls','actions_origin','ELS_limit_mm','ELS_origin']:
  b[key]=copy.deepcopy(last[key])
-for key in ['point_contact','torsion_model','deflection_model','member_application','wall_els','wall_tie_study','three_girt_model','weak_catalog','weak_axis','model_domain','u_panel_condition','inclination','q_parallel_uls','q_parallel_sls','P_parallel_uls','P_parallel_sls']:
+for key in ['roof_top_load','point_contact','torsion_model','deflection_model','member_application','wall_els','wall_tie_study','three_girt_model','weak_catalog','weak_axis','model_domain','u_panel_condition','inclination','q_parallel_uls','q_parallel_sls','P_parallel_uls','P_parallel_sls']:
  if key in last:b[key]=copy.deepcopy(last[key])
 d=copy.deepcopy(b)
 try:
@@ -524,6 +526,10 @@ else:
    st.dataframe(display_frame([{'ID':c['id'],'Tipo':c['type'],'Expressão':c['expression'],'q normal [kN/m]':c['q_kN_m'],'q paralelo [kN/m]':c.get('q_vector',{}).get('parallel',0),'P normal [kN]':c.get('P_N',0)/1000,'P paralelo [kN]':c.get('P_vector',{}).get('parallel',0)/1000} for c in preview['combinations']]),hide_index=True)
   except (ValueError,TypeError,KeyError) as exc:st.warning(str(exc))
 
+from tercas.roof_top_load_ui import render_choice as render_roof_top_load
+from tercas.roof_top_load import enabled as roof_top_load_enabled
+if not three_girt:render_roof_top_load(st,d,f'roof_top_load_{r}')
+
 if three_girt:
  from tercas.three_girt_ui import render_configuration as three_girt_configuration_ui
  three_girt_configuration_ui(st,d,b,r,num,txt)
@@ -543,11 +549,19 @@ else:
    st.caption('Uso atual: '+pierin_U_use_label(strong_ref)+'. Ml informado acima é preservado; valor de referência não substitui silenciosamente entrada legada/manual.')
    if strong_ref.get('reason'):st.warning(strong_ref['reason'])
   elif strong_ref['status']=='not_tabulated':st.caption(strong_ref['reason']+' A rota Tabela 12 permanece quando válida.')
-  selection=st.selectbox('Domínio da expressão de Me nesta emissão',['Não informado / outra situação','Eixo forte de simetria; cargas no CT ou estabilizantes, sem torção primária'],index=1 if b['route_domain'] else 0,key=f'domain_{r}',help='CT é o centro de torção. A NBR 14762:2010 §9.8.2.2, p.48, permite usar a expressão de Me também para carga em posição estabilizante, sem aproveitar seu efeito favorável. Posição desestabilizante exige tratamento específico. A declaração deve valer para todas as ações, combinações e trechos calculados; a inversão do sentido da carga pode mudar o efeito da altura.')
-  d['route_domain']=selection.startswith('Eixo')
-  st.caption('Ly superior/inferior é o comprimento lateral associado à menor inércia no cálculo de FLT da flexão forte. Lz é torsional, não um comprimento da maior inércia. Esses comprimentos não criam apoios no diagrama de cargas.')
-  st.caption('Sem torção primária significa sem torque aplicado por excentricidade das ações. Não exclui o giro do modo de FLT. Esta é uma hipótese do modelo, não uma verificação do caminho das forças nem resistência à torção. Ly e Lz são independentes; um tirante lateral não é automaticamente travamento torsional.')
-  st.caption('Carga estabilizante: a altura de aplicação tende a restaurar a posição da barra quando ela gira. Carga desestabilizante: tende a ampliar o giro. Não se presume a posição pela inclinação do telhado, pelo sentido de q/P ou pela ausência de travamento da telha.')
+  if roof_top_load_enabled(d):
+   # Hidden widget values are otherwise removed by Streamlit on the next run.
+   domain_value=st.session_state.get(f'domain_{r}')
+   d['route_domain']=(domain_value.startswith('Eixo') if isinstance(domain_value,str) else st.session_state.get(f'roof_legacy_domain_{r}',b['route_domain']))
+   st.session_state[f'roof_legacy_domain_{r}']=d['route_domain']
+   st.caption('Modelo de topo adotado acima: componente elástico separado, com altura da carga e PP no CG. A declaração legada de domínio CT é preservada, não ativada por esta escolha.')
+  else:
+   selection=st.selectbox('Domínio da expressão de Me nesta emissão',['Não informado / outra situação','Eixo forte de simetria; cargas no CT ou estabilizantes, sem torção primária'],index=1 if st.session_state.get(f'roof_legacy_domain_{r}',b['route_domain']) else 0,key=f'domain_{r}',help='CT é o centro de torção. A NBR 14762:2010 §9.8.2.2, p.48, permite usar a expressão de Me também para carga em posição estabilizante, sem aproveitar seu efeito favorável. Posição desestabilizante exige tratamento específico. A declaração deve valer para todas as ações, combinações e trechos calculados; a inversão do sentido da carga pode mudar o efeito da altura.')
+   d['route_domain']=selection.startswith('Eixo')
+   st.session_state[f'roof_legacy_domain_{r}']=d['route_domain']
+   st.caption('Ly superior/inferior é o comprimento lateral associado à menor inércia no cálculo de FLT da flexão forte. Lz é torsional, não um comprimento da maior inércia. Esses comprimentos não criam apoios no diagrama de cargas.')
+   st.caption('Sem torção primária significa sem torque aplicado por excentricidade das ações. Não exclui o giro do modo de FLT. Esta é uma hipótese do modelo, não uma verificação do caminho das forças nem resistência à torção. Ly e Lz são independentes; um tirante lateral não é automaticamente travamento torsional.')
+   st.caption('Carga estabilizante: a altura de aplicação tende a restaurar a posição da barra quando ela gira. Carga desestabilizante: tende a ampliar o giro. Não se presume a posição pela inclinação do telhado, pelo sentido de q/P ou pela ausência de travamento da telha.')
 
 
  with st.expander('Eixo fraco — dados existentes e críticos por sentido',expanded=False):

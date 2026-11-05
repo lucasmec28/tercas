@@ -17,6 +17,8 @@ def complete_result(result):
     out = attach(result)
     from .aisi_torsion_component import finalize
     out = finalize(out)
+    from .roof_top_load import attach as attach_roof_top_load
+    out = attach_roof_top_load(out)
     out['global_verification'] = build_global_verification(out)
     out['whole_member_approved'] = False
     out['completion_snapshot'] = dict(schema=VERSION,
@@ -54,3 +56,5 @@ def report_global(doc, result):
     if record.get('point_limit_scope_note'):doc.add_paragraph(record['point_limit_scope_note'])
     from .report_audit import report_saved_issues
     report_saved_issues(doc,result)
+    from .roof_top_load_ui import report as report_roof_top_load
+    report_roof_top_load(doc,result)

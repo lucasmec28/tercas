@@ -30,6 +30,8 @@ def evaluate(spec):
    sec={'route_domain':spec.get('route_domain'),'E':value('E_MPa'),'G':value('G_MPa'),'Iy':value('Iy_cm4')*1e4,'J':value('J_mm4'),'Cw':value('Cw_mm6'),'W':value('Wx_cm3')*1e3,'fy':value('fy_MPa'),'Ml':critical['value']}
    if not isinstance(uls,dict) or not isinstance(uls.get('origin'),str) or not uls['origin'].strip():raise ValueError('ULS action provenance missing')
    r=evaluate_segment(sec,dict(L=L,q=uls['q_Nmm'],P=uls['P_N'],a=uls['x_mm']),seg)
+   if spec.get('roof_top_load'):
+    r['reason']='Esquema de carga no topo selecionado: o Me elástico com altura aparece na componente própria de cobertura. A resistência conjunta de flexão e torção ainda não foi liberada; a expressão antiga no CT não é usada para representar esta carga.'
    r['section_property_convention_pending']=selected['source_geometry_convention_unresolved'];segments.append(r)
   except (ValueError,TypeError,KeyError) as e:segments.append({'status':'invalid_inputs','reason':str(e),'segment':seg})
  out['FLT_segments']=segments

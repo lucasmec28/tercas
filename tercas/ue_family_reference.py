@@ -22,7 +22,7 @@ REPORTING_VERSION = 'own_Ue100_six_self_contained_snapshot_v1'
 EDITABLE = {'project', 'actions_origin', 'load_mode', 'area_inputs', 'selected_types',
             'q_uls', 'q_sls', 'P_uls', 'P_sls', 'x_uls', 'x_sls',
             'q_parallel_uls', 'q_parallel_sls', 'P_parallel_uls', 'P_parallel_sls',
-            'deflection_model', 'torsion_model', 'point_contact'}
+            'deflection_model', 'torsion_model', 'point_contact', 'roof_top_load'}
 SCOPE = ('Seis referências numéricas próprias Ue100×50×17, ri=t, linha '
          'facetada R01 de 209 nós. E=200000 MPa, ν=0,3, G=E/2,6, fy=250 MPa. '
          '3000≤L≤6000 mm, Lx=Ly=Lz=L, K=Cb=Cm=1, garfos ideais e empenamento livre. '
@@ -419,10 +419,13 @@ def report(doc,result):
     if not r:return
     m=r['model'];t=m['t_mm']
     doc.add_heading(f'Família própria Ue100 — espessura {t:g} mm',1)
+    from .roof_top_load import enabled as roof_enabled,LEGACY_COMPARATOR_NOTE
+    top_active=roof_enabled(result.get('input_data',{})) and result.get('input_data',{}).get('member_application','purlin')=='purlin'
+    if top_active:doc.add_paragraph(LEGACY_COMPARATOR_NOTE)
     doc.add_paragraph(r['scope'])
     doc.add_paragraph('Identidade numérica: '+r['reference_id']+'. Pierin é somente correspondência nominal; nenhum crítico ou sentido histórico foi consumido.')
     doc.add_paragraph('O vetor próprio conserva a geometria R01 arredondada/facetada, ri=t, e módulos exteriores. Não mistura propriedades do catálogo com críticos próprios.')
-    doc.add_paragraph(f'Vão registrado: {m["L_mm"]:.15g} mm. Lx=Ly=Lz=L, K=Cb=Cm=1; garfos ideais e empenamento livre. Ne/Me/FLT recalculados neste vão.')
+    doc.add_paragraph(f'Vão registrado: {m["L_mm"]:.15g} mm. Lx=Ly=Lz=L, K=Cb=Cm=1; garfos ideais e empenamento livre. Ne/Me/FLT da referência no CT, recalculados neste vão.')
     doc.add_paragraph('Críticos globais: '+'; '.join(k+'='+format(v,'.15g') for k,v in r['global_criticals'].items())+'.')
     doc.add_paragraph('Nenhuma dispensa da Tabela 14 nesta família de seis espessuras. D forte próprio efetivamente incluído no mínimo resistente.')
     web=r['signed_scalar_capacities']['weak_web_compressed']

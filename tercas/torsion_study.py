@@ -58,6 +58,21 @@ def blank_choice():
     return dict(schema=SCHEMA, enabled=True, support_hypothesis=SUPPORTS, load_lines={})
 
 
+def automatic_roof_choice(data):
+    """Effective model choice, never a mutation of stored manual load lines."""
+    from .roof_top_load import enabled as roof_enabled,geometry
+    if not roof_enabled(data) or data.get('member_application','purlin')!='purlin':return None
+    from .ue_family_reference import claims_reference as family_claims
+    from .ue_reference import claims_reference as single_claims
+    if not (family_claims(data) or single_claims(data)):return None
+    g=geometry(data);c=blank_choice()
+    for role in ROLES:
+        c['load_lines'][role]=dict(declared=True,
+            xy_from_CG_mm=[g['x_from_CG_mm'],g['y_from_CG_mm']],
+            origin='Esquema de cobertura selecionado: '+g['load_line']+' na superfície superior. '+g['source'])
+    return c
+
+
 def section_for(data):
     """Read and validate exact source bytes on every explicit calculation."""
     from .ue_family_reference import claims_reference as family_claims, assess as family_assess
@@ -85,6 +100,8 @@ def pending_evidence(result, reason):
 def attach(result):
     """Called only after a new calculation, never while rendering old exports."""
     c = configuration(result['input_data'])
+    automatic=automatic_roof_choice(result['input_data'])
+    if automatic is not None:c=automatic
     if c is None or not c['enabled']:return copy.deepcopy(result)
     data = result['input_data']
     if data.get('member_application','purlin')=='wall_girt':
@@ -119,6 +136,9 @@ def attach(result):
     out = attach_dense(out, section)
     out['torsion_evidence'] = summarize_torsion_evidence(out['torsion_evidence'])
     out['torsion_evidence']['choice_snapshot'] = copy.deepcopy(c)
+    if automatic is not None:
+        out['torsion_evidence']['load_line_choice_source']='automatic_selected_roof_scheme'
+        out['torsion_evidence']['stored_manual_choice_preserved']=configuration(data)
     out['torsion_evidence']['scope_pt'] = SCOPE
     out['whole_member_approved'] = False
     return out

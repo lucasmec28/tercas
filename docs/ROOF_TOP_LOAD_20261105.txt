@@ -1,0 +1,87 @@
+CARGA DE COBERTURA NO TOPO — COMPONENTE ELÁSTICA, 05/11/2026
+
+Escolha física mínima
+O usuário seleciona um esquema ilustrado: topo no plano médio da alma ou no
+meio da largura externa da mesa. Nenhuma dessas linhas é presumida como a
+montagem real de todas as terças. O esquema assume um vão, garfos nas pontas,
+empenamento livre e nenhuma restrição intermediária. A telha transmite ações,
+sem rigidez lateral ou torsional. A escolha não comprova a ligação de campo.
+
+O programa calcula altura, posição relativa quando a geometria é coerente,
+combinações, PP, diagrama e Me sem pedir CT, Me, C1, C2, Cb ou K. O campo é
+opcional para preservar estudos históricos. Selecioná-lo desativa a aplicação
+da antiga expressão de Me no CT para esse cálculo, preservando a declaração
+legada armazenada. Desativá-lo restaura o caminho anterior.
+
+Ações separadas
+Modo área conserva PP/CP/SC/ventos/P e seus coeficientes. PP da terça atua no
+CG uma única vez, não no topo; demais ações no ponto do esquema. Sob gravidade
+a altura superior é desestabilizante; sucção inverte sua contribuição. O
+algoritmo usa cada força e altura, não classifica tudo pelo sinal de q líquido.
+P na posição limite junto ao apoio tem efeito limite nulo no operador global;
+a pendência local de contato/introdução de P não é removida.
+
+No modo direto, q/P já combinados não revelam a parcela PP/cobertura. O novo Me
+fica pendente, sem adicionar PP nem mover toda a carga ao topo. Não se modifica
+retroativamente o significado dos arquivos diretos. Componente paralela local
+não nula exige modelo biaxial ainda não implementado neste novo operador, mesmo
+que a soma de forças paralelas de ações diferentes cancele. Travessas não são
+convertidas em terças: sua face de carregamento e eixos requerem modelo próprio.
+
+Cálculo
+tercas/ltb_load_height.py implementa a segunda variação clássica de Vlasov:
+2Pi = integral[E*Iy*u''² + G*J*phi'² + E*Cw*phi''²]
+    + lambda * {2*integral[M*u''*phi] - integral[sum(q_i*h_i)*phi²]
+    - sum[P_i*h_i*phi(a_i)²]}.
+Convenções: eixo longitudinal s; seção x à direita/y para cima; q/P positivos
+para baixo. Usa modos seno, que atendem garfo/empenamento livre, e Gauss em
+cada trecho entre posições de cargas. Pontos de carga não viram travamentos.
+Me=lambda_cr*max|M_ref|. Refinamento 16/32/64/128, mudança relativa <1e-5 e
+resíduo <1e-12. Esses números são critérios numéricos, não limites normativos.
+A aproximação Ritz não é um limite inferior certificado de segurança.
+
+Escopo mecânico
+Elasticidade, seção rígida e simétrica no eixo forte, carga morta conservativa,
+deformação pré-flambagem desprezada. Torção primária não entra como tensão
+geométrica neste operador, nem entram modos locais/distorcionais. A abscissa
+da força não muda este autovalor linear, mas muda torque primário. Um Me
+elástico não é momento resistente nem verificação completa de flexão+torção.
+
+U/Ue do catálogo podem fornecer h/2 e escalares E/G/Iy/J/Cw para a componente
+elástica, quando disponíveis. Abscissas do CG/CT não são inventadas para
+catálogos com convenção geométrica não qualificada. Nesse caso torque fica
+não informado (None), nunca é substituído pelo número zero. Nas referências próprias
+R01, CG/CT e posição são do mesmo contorno: calcula-se automaticamente a
+solicitação Vlasov T/B/giro e a contribuição G8.1 existente. H4 AISI não usa o
+antigo denominador CT sob esse esquema nem recebe Me NBR transplantado.
+A resistência flexional conjunta permanece pendente. Comparadores CT das
+referências são identificados e não apresentados como capacidades do topo.
+
+Fontes e limites
+ABNT NBR14762:2010 §9.8.2.2 p48; CBCA2014 p59: a expressão simples é para CT;
+posição estabilizante admite seu uso conservador, desestabilizante remete à
+bibliografia. CBCA Anexo A pp84–89 trata torção/empenamento separadamente.
+Pierin2013 fornece críticos locais/distorcionais, não correção global de altura.
+
+Sahraei/Pezeshky/Mohareb CSCE2017 Eq2, energia com altura:
+https://legacy.csce.ca/elf/apps/CONFERENCEVIEWER/conferences/2017/pdfs/EMM/FinalPaper_635.pdf
+Vermeylen et al., Eurosteel2023, canais, forte simétrico e efeito de altura:
+https://orbi.uliege.be/bitstream/2268/306606/1/VermeylenMaxime-Eurosteel%202023.pdf
+O benchmark do artigo é L4000, duas cargas nos quartos, C1=1.04/C2=.42:
+esses coeficientes não são usados para as combinações do app. O programa
+resolve o operador do diagrama real. O artigo propõe ampliação de escopo de
+CEN/TR; não é tomado como texto de norma europeia atual lido integralmente.
+AISI S100 C2.2.1 documenta caso de carga no plano da alma e contraventamento,
+não faz desse plano a linha universal de todas as coberturas.
+SCI SN003 tem escopo duplamente simétrico: seus coeficientes UDL/ponto central
+não são transplantados como regra normativa para Ue.
+
+Verificação e rastreabilidade
+Kernel conferido contra solução analítica de momento constante, artigo de
+canal e código independente Hermite (14 casos, diferença máxima 3.84e-7).
+Testes cobrem sinais, alturas separadas, escala, posição de P, convergência,
+rotacional sem Mref, PP, geometria própria, demanda automática e resistência
+não liberada. UI preserva escolhas anteriores, não exige coordenadas manuais
+e identifica pendências. JSON/relatório validam hashes e fingerprint salvos;
+abrir relatório não recalcula nem requalifica histórico. Testes de software
+não substituem qualificação do produto, montagem ou validação física.

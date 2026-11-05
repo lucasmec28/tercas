@@ -124,6 +124,9 @@ of nonconcomitant maxima or a station-only sample. This is not an FE error bound
 
 def _strong_capacity(data, section):
     """AISI-only source resolver. Never reads MRd, NBR local criticals or row indices."""
+    from .roof_top_load import enabled as roof_enabled
+    if roof_enabled(data) and data.get('member_application','purlin')=='purlin':
+        return None,['Carga no topo: a capacidade flexional AISI ainda não foi qualificada com o efeito de altura deste esquema. O Me elástico separado não é transplantado para H4; nenhum denominador no CT substitui a carga adotada.']
     from .aisi_research.adapter import verify_bundle, ROOT
     from .aisi_research.aisi_candidate import flexural_floor
     verify_bundle()

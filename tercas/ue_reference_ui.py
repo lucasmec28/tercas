@@ -36,7 +36,9 @@ def render_span(st, data, revision, load):
         preview=apply_span(data,proposed)
         values=reference(preview['L_mm'])['global_criticals']
         st.caption('Prévia não aplicada: Lx=Ly=Lz='+fmt(preview['L_mm'])+' mm. Ne/Me/FLT recalculados para esta proposta.')
-        st.dataframe(display_frame([{'Derivado':k,'Valor':v,'Unidade':'N·mm' if k.startswith('Me_') else 'N'} for k,v in values.items()]),hide_index=True)
+        from .roof_top_load import enabled as roof_enabled,LEGACY_COMPARATOR_NOTE
+        if roof_enabled(data):st.caption(LEGACY_COMPARATOR_NOTE+' Recalcule para obter Me das combinações da cobertura.')
+        else:st.dataframe(display_frame([{'Derivado':k,'Valor':v,'Unidade':'N·mm' if k.startswith('Me_') else 'N'} for k,v in values.items()]),hide_index=True)
         if preview.get('member_application')=='wall_girt':
             from .member_application import normal_els_limit
             normal_limit=normal_els_limit(preview)
@@ -101,6 +103,8 @@ def render(st, data, revision, load, render_results, render_import):
                     value = number(f'{title} {label} [{unit}]', key, data.get(key, 0.))
                     # Do not silently append even zero-valued optional fields.
                     if key in data or value != 0:data[key] = value
+    from .roof_top_load_ui import render_choice as render_roof_top_load
+    render_roof_top_load(st, data, f'roof_top_load_{revision}')
     from .deflection_scope import render_choice
     render_choice(st, data, f'ue_ref_deflection_model_{revision}')
     from .deflection_scope import enabled as uniaxial_component_enabled

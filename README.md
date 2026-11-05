@@ -364,3 +364,15 @@ dados explícitos. Não infere contato de garfo ideal nem dimensiona soldas ou
 ligações. Reações da própria travessa são separadas da reação externa do nó.
 O resultado é um registro separado, com Word/JSON próprios e sem aprovação
 global. Detalhes em `docs/SUPPORT_WEB_REACTIONS_20261105.txt`.
+
+## Cobertura aplicada no topo — componente elástica, 05/11/2026
+
+Esquema ilustrado opcional de cobertura sem travamento pela telha: plano médio
+da alma ou meio da mesa, um vão com garfos/empenamento livre e sem intermediários.
+Modo área conserva PP no CG e demais ações no topo e calcula Me com altura
+automaticamente. No contorno próprio, demanda Vlasov e linhas são automáticas.
+Não exige CT/Cb/Me/K manuais, não supõe torque zero e não libera a resistência
+conjunta. Modo direto sem separação PP/cobertura e flexão biaxial ficam pendentes
+nessa componente. Histórico não é recalculado. Método, fontes, limites e testes:
+`docs/ROOF_TOP_LOAD_20261105.txt`. Candidata de componente elástica, sem publicação
+ou qualificação física inferida.

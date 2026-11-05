@@ -49,6 +49,8 @@ def finite(x):return isinstance(x,(int,float)) and not isinstance(x,bool) and ma
 
 def build_spec(data):
  if not isinstance(data,dict):raise ValueError('O arquivo deve conter um objeto de entradas JSON.')
+ from .roof_top_load import configuration as roof_configuration
+ roof=roof_configuration(data)
  from .point_contact import configuration as point_contact_configuration
  point_contact_configuration(data)
  from .member_application import validate as validate_member
@@ -125,6 +127,11 @@ def build_spec(data):
  'introduction':{'left':{'route':'web_connection' if d.get('left_web') is True else None,'origin':d.get('support_origin','')},'right':{'route':'web_connection' if d.get('right_web') is True else None,'origin':d.get('support_origin','')},'point':{'c_mm':d.get('patch_mm'),'origin':d.get('patch_origin','')}}}
  from .member_application import is_girt,normal_els_limit
  if is_girt(data):spec['ELS_limit_mm']=normal_els_limit(data)
+ if roof and roof['enabled'] and not is_girt(data):
+  # A selected physical top-load model cannot simultaneously claim the old
+  # CT/no-primary-torque applicability. Keep the stored user choice unchanged.
+  spec['route_domain']=None
+  spec['roof_top_load']=copy.deepcopy(roof)
  return spec
 
 def calculate(data):

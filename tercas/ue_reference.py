@@ -50,7 +50,7 @@ ELS_POLICY = ('Qualificação por ações locais reais de cada estado: somente q
 EDITABLE = {'project', 'actions_origin', 'load_mode', 'area_inputs', 'selected_types',
             'q_uls', 'q_sls', 'P_uls', 'P_sls', 'x_uls', 'x_sls',
             'q_parallel_uls', 'q_parallel_sls', 'P_parallel_uls', 'P_parallel_sls',
-            'deflection_model', 'torsion_model', 'point_contact'}
+            'deflection_model', 'torsion_model', 'point_contact', 'roof_top_load'}
 
 
 def number(value, name='Vão'):
@@ -353,11 +353,14 @@ def report(doc, result):
     record = result.get('ue_reference_evidence')
     if not record:return
     doc.add_heading('Referência própria Ue100 — componentes de flexão', 1)
+    from .roof_top_load import enabled as roof_enabled,LEGACY_COMPARATOR_NOTE
+    top_active=roof_enabled(result.get('input_data',{})) and result.get('input_data',{}).get('member_application','purlin')=='purlin'
+    if top_active:doc.add_paragraph(LEGACY_COMPARATOR_NOTE)
     for key in ('scope', 'frozen_scope', 'distortion_note', 'ELS_status',
                 'nominal_documentary_reference', 'active_numeric_reference'):
         doc.add_paragraph(record[key])
     L = record['model']['L_mm']
-    doc.add_paragraph(f'Vão registrado: {L:.15g} mm; Lx=Ly=Lz=L, K=Cb=Cm=1. Ne/Me/FLT recalculados neste vão.')
+    doc.add_paragraph(f'Vão registrado: {L:.15g} mm; Lx=Ly=Lz=L, K=Cb=Cm=1. Ne/Me/FLT da referência no CT, recalculados neste vão.')
     doc.add_paragraph('Críticos recalculados: ' + '; '.join(f'{key}: {value:.15g}' for key, value in record['global_criticals'].items()) + '.')
     doc.add_paragraph('Piso D da alma: ' + str(record['active_numeric_source']['web_Mdist_lower_bound_Nmm']) +
                       ' Nmm. Mdist identificado: não identificado (nulo); D não dispensado.')

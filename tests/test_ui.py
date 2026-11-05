@@ -10,7 +10,7 @@ class Tests(unittest.TestCase):
  def test_initial_render(self):
   at=self.run_app();self.assertIn('Terças',at.title[0].value)
   # Application and explicit reference selectors are intentional; preserve the nine legacy controls.
-  legacy=[x for x in at.selectbox if x.label not in ('Aplicação do elemento','Referência nominal própria','Caso sintético verificado','Exemplo sintético Ue100','Espessura da referência Ue100 [mm]','Exemplo sintético da família Ue100')]
+  legacy=[x for x in at.selectbox if x.label not in ('Aplicação do elemento','Referência nominal própria','Caso sintético verificado','Exemplo sintético Ue100','Espessura da referência Ue100 [mm]','Exemplo sintético da família Ue100','Esquema da carga da cobertura')]
   self.assertEqual(len(legacy),9)
   for label in ('Referência nominal própria','Caso sintético verificado'):
    self.assertEqual(len([x for x in at.selectbox if x.label==label]),1)
