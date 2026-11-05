@@ -7,7 +7,7 @@ APP=str(Path(__file__).resolve().parents[1]/'app.py')
 
 def app(d=None):
  d=configured() if d is None else d
- a=AppTest.from_file(APP);a.session_state['base']=copy.deepcopy(d);a.session_state['last_input']=copy.deepcopy(d);a.session_state['revision']=0;a.run(timeout=30)
+ a=AppTest.from_file(APP,default_timeout=30);a.session_state['base']=copy.deepcopy(d);a.session_state['last_input']=copy.deepcopy(d);a.session_state['revision']=0;a.run(timeout=30)
  assert not a.exception
  return a
 

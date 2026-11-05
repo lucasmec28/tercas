@@ -218,7 +218,7 @@ def test_own_family_direct_synthetic_oracle_and_all_other_results_unchanged():
     assert current['NBR_branches']['point']['index']==pytest.approx(.1865078761466027,rel=2e-15)
 
 
-def test_support_limit_keeps_pending_and_never_uses_contact_as_point_position():
+def test_support_limit_is_mathematical_and_never_uses_contact_as_point_position():
     from tercas.batch import calculate_batch,area_bundle
     d=example();d.update(load_mode='area',selected_types=['ELU normal'])
     baseline_bundle=area_bundle(d);baseline=calculate_batch(d);d[FIELD]=declared();d[FIELD]['basis']=reference_basis(d)
@@ -232,12 +232,14 @@ def test_support_limit_keeps_pending_and_never_uses_contact_as_point_position():
         assert e0==e1
         if new['combination'].get('point_position')=='support_limit':
             assert new['evidence']['NBR_branches']['point']==old['evidence']['NBR_branches']['point']
-            assert new['evidence']['NBR_branches']['point']['status']=='not_evaluated'
+            assert new['evidence']['NBR_branches']['point']['status']=='not_applicable'
+            assert new['evidence']['NBR_branches']['point']['scope']=='mathematical_limit'
     g0=build_global_verification(baseline);g1=build_global_verification(current)
     assert g1['whole_member_approved'] is False
     assert g1['maximum_available_check']['index']==g0['maximum_available_check']['index']
     assert all('CENTRO' not in key for key in g1['pending_ids'] if 'point_introduction_scope' in key)
-    assert len([key for key in g1['pending_ids'] if 'APOIO' in key and 'point_introduction_scope' in key])==4
+    assert not [key for key in g1['pending_ids'] if 'APOIO' in key and 'point_introduction_scope' in key]
+    assert len(g1['point_limit_exclusion_ids'])==4
 
 
 def test_report_and_export_transcribe_option_without_revalidating_or_calculating(monkeypatch):
@@ -251,7 +253,7 @@ def test_report_and_export_transcribe_option_without_revalidating_or_calculating
     text='\n'.join(p.text for p in Document(BytesIO(word(result))).paragraphs)
     assert 'Introdução local de P — declarações salvas' in text
     assert '40.0 mm' in text and d[FIELD]['origin'] in text
-    assert 'P no limite junto ao apoio continua fora do subconjunto' in text
+    assert 'O limite matemático junto ao apoio não verifica contato físico' in text
     assert result==before
 
 

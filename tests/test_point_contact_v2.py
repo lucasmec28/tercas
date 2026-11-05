@@ -117,7 +117,7 @@ def test_batch_support_limit_is_literal_and_center_unchanged():
         ea=copy.deepcopy(ca['evidence']);eb=copy.deepcopy(cb['evidence'])
         pa=ea['NBR_branches'].pop('point');pb=eb['NBR_branches'].pop('point')
         assert ea==eb
-        if ca['combination'].get('point_position')=='support_limit':assert pa==pb and pb['status']=='not_evaluated'
+        if ca['combination'].get('point_position')=='support_limit':assert pa==pb and pb['status']=='not_applicable' and pb['scope']=='mathematical_limit'
         elif pa.get('status')=='computed':assert pa['FRd_N']==pb['FRd_N'] and pa['force_N']==pb['force_N']
 
 

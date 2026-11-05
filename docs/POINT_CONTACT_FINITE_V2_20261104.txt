@@ -37,3 +37,8 @@ resistência/índice. Contagens globais históricas não são reescritas.
 
 QA: casos sintéticos, não projeto ou validação experimental. Relatório e hashes
 ficam fora da candidata. Não representa autorização de publicação.
+
+Atualização de escopo 05/11: em novos cálculos, P_APOIO é identificado como
+limite matemático ao qual o critério de contato finito não se aplica, sem dispensar
+a verificação física. A indicação anterior de pendência vale para registros
+históricos. Ver POINT_LIMIT_CONTACT_SCOPE_20261105.txt; a v2 física não mudou.

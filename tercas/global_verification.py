@@ -199,7 +199,7 @@ def _zero_components(ev, axis):
     return all(_finite(v) and v == 0 for v in values)
 
 
-def _case_records(result, combination, evidence, *, batch, warnings=()):
+def _case_records(result, combination, evidence, *, batch, warnings=(), case_combination=None):
     """Adapt typed raw evidence, not rounded/localized presentation rows."""
     cid, state = combination['id'], combination['limit_state']
     prefix = state+':'+cid+':'
@@ -285,11 +285,23 @@ def _case_records(result, combination, evidence, *, batch, warnings=()):
                 not all(_finite(governing.get(k)) for k in ('x_mm','Mx_Nmm','My_Nmm')) or
                 bool(ev.get('provisional_hypothesis')) or bool(ev.get('u_pierin_assumption'))))
         # Local introduction into the profile is distinct from connection design.
-        # Use the actual prescribed point, including its support-limit case.
+        # A new typed mathematical-limit record is distinct from every real
+        # finite contact. Old/malformed exclusions remain pending.
         point = b.get('point', {})
         pnormal = ev.get('P_vector', {}).get('normal')
         pparallel = ev.get('P_vector', {}).get('parallel')
-        if (_finite(pnormal) and _finite(pparallel)
+        from .point_limit import saved_exclusion, SOURCE as LIMIT_SOURCE
+        mathematical_limit=(batch and not conflict and case_combination==combination
+            and saved_exclusion(point,combination,data.get('L_mm'),ev.get('P_vector'))
+            and saved_exclusion(point,case_combination,data.get('L_mm'),ev.get('P_vector')))
+        if mathematical_limit:
+            records.append(check(prefix+'point_introduction_scope',limit_state=state,
+                source=LIMIT_SOURCE,qualified=True,not_applicable=True,reason=point['reason'],
+                trace=dict(trace,P_normal_N=pnormal,P_parallel_N=pparallel,
+                           prescribed_position='support_limit',criterion_scope='mathematical_limit',
+                           physical_contact_checked=False,physical_conditions_verified=False,
+                           connection_design_checked=False)))
+        elif (_finite(pnormal) and _finite(pparallel)
                 and pnormal == 0 and pparallel == 0):
             records.append(check(prefix+'point_introduction_scope', limit_state=state,
                 source=SCHEMA, qualified=True, not_applicable=True, trace=trace,
@@ -451,7 +463,7 @@ def build_global_verification(result):
                 continue
             case = found[0]
             records.extend(_case_records(result, combo, case.get('evidence', {}), batch=True,
-                                         warnings=case.get('warnings', [])))
+                                         warnings=case.get('warnings', []),case_combination=case.get('combination')))
         if not wanted or by_id:
             records.append(_pending('combination_inventory', 'MODEL', 'Inventário de combinações vazio ou resultados inesperados.'))
     elif schema == 'NBR14762_one_span_v1':
@@ -477,6 +489,12 @@ def build_global_verification(result):
                    combined_ELS_approved=False,
                    numerical_results_changed=False,
                    display_summary=display_summary(summary))
+    excluded=[r['id'] for r in records if r['status']=='not_applicable'
+              and r.get('trace',{}).get('criterion_scope')=='mathematical_limit']
+    if excluded:
+        from .point_limit import SCOPE as LIMIT_SCOPE
+        summary['point_limit_exclusion_ids']=excluded
+        summary['point_limit_scope_note']=LIMIT_SCOPE
     return summary
 
 

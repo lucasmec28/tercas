@@ -26,7 +26,7 @@ DECLARATIONS = {
 SCOPE = ('Somente introdução local interna de P compressiva em uma mesa não conectada, '
          'sem outra força concentrada na mesa oposta, sem enrijecedor local e com reações pelas almas. '
          'Não altera P, sua posição, vínculos, flexão, FLT, torção, AA/AISI ou o modelo 3D. '
-         'P no limite junto ao apoio e componente paralela não nula permanecem pendentes. '
+         'P no limite junto ao apoio é uma idealização matemática, não contato físico; componente paralela não nula permanece pendente nos casos físicos. '
          'Esta opção descreve um detalhe local de transmissão de P e não altera as declarações existentes sobre telha/painel. '
          'Não presume contato, ligação, distribuição de P ou travamento fornecido pela telha. '
          'Declarações não comprovam condições físicas nem dimensionam ligações.')
@@ -35,8 +35,8 @@ SCOPE = ('Somente introdução local interna de P compressiva em uma mesa não c
 SCOPE_V2 = ('Introdução local de P compressiva em posição finita explicitamente informada, '
             'com contato inteiramente dentro de 0/L. Distância livre 0 ≤ d ≤ 1,5h: extremidade; '
             'd > 1,5h: interna. Mesmas declarações físicas da opção v1. '
-            'P_APOIO do lote representa a→0+ e continua pendente: não admite contato finito '
-            'centrado nessa posição sem ultrapassar o extremo físico. '
+            'P_APOIO do lote representa o limite matemático a→0+, não um contato finito '
+            'centrado nessa posição. A verificação física em posição finita permanece separada. '
             'Não altera ações, vínculos, flexão, FLT, torção, AA/AISI ou 3D, '
             'nem aprova ligações, apoios ou elemento completo.')
 
@@ -220,17 +220,18 @@ def report(doc, result):
         doc.add_paragraph('Domínio v2: c ≥ 20 mm; h/t ≤ 200; c/t ≤ 210; c/h ≤ 2; h=H−2(ri+t). '
                           'Contato inteiramente dentro de 0/L. Para 0 ≤ d ≤ 1,5h, linha de extremidade: ri/t ≤ 5 (Ue) ou ≤ 2 (U). '
                           'Para d > 1,5h, linha interna: ri/t ≤ 5 (Ue) ou ≤ 1 (U). '
-                          'P no limite junto ao apoio continua fora do subconjunto. '
+                          'O limite matemático junto ao apoio não verifica contato físico. '
                           'Somente transcrição salva, sem resolver ou requalificar o histórico.')
     else:
         doc.add_paragraph('Domínio desta opção: c ≥ 20 mm; h/t ≤ 200; c/t ≤ 210; c/h ≤ 2; '
                       'ri/t ≤ 5 para Ue ou ≤ 1 para U. h é a parte plana da alma, '
                       'H−2(ri+t), e a borda de contato deve estar a mais de 1,5h do extremo físico. '
                       'Ausência de força na mesa oposta é declaração de configuração, não distância inventada. '
-                      'P no limite junto ao apoio continua fora do subconjunto. '
+                      'O limite matemático junto ao apoio não verifica contato físico. '
                       'Este bloco transcreve entradas salvas, sem resolver ou requalificar o histórico.')
     for item in saved_records(result):
-        label = 'Calculado — somente critério local' if item['status'] == 'computed' else 'Pendente no registro'
+        label = {'computed':'Calculado — somente critério local',
+                 'not_applicable':'Não aplicável — somente ao limite matemático'}.get(item['status'],'Pendente no registro')
         values = '; '.join(name+'='+str(item[key])+unit for key,name,unit in [('P_normal_N','P normal',' N'),('P_parallel_N','P paralelo',' N'),('c_mm','c',' mm'),('FRd_N','FRd local',' N'),('index','índice local','')] if item[key] is not None)
         doc.add_paragraph(item['combination_id']+' — '+label+'. '+values+'. '+item['reason'])
         if cfg.get('schema') == SCHEMA_V2 and item['status'] == 'computed':
@@ -326,11 +327,16 @@ def saved_records(result):
         raw = evidence.get('NBR_branches', {}).get('point', {})
         raw = raw if isinstance(raw, dict) else {}
         numeric = _saved_numeric_coherent(raw,cfg,data,combination,normal,parallel,family)
+        from .point_limit import saved_exclusion
+        excluded=(result.get('schema')=='tercas_batch_results_v1' and saved_exclusion(
+            raw,combination,data.get('L_mm'),evidence.get('inclination',{}).get('P_vector')))
         reason = raw.get('reason', '')
         if not raw:
             reason = 'Sem registro local salvo; a declaração isolada não constitui cálculo.'
         elif raw.get('status') == 'computed' and not numeric:
             reason = 'Registro local não vinculado a estas declarações ou incompleto; histórico não requalificado. O resumo global é o originalmente salvo; suas contagens não foram recompostas após a recusa deste complemento.'
+        elif raw.get('status')=='not_applicable' and not excluded:
+            reason='Exclusão de contato sem contrato matemático íntegro e vinculado; histórico não requalificado.'
         elif not reason and not numeric:
             reason = 'Introdução local pendente no registro salvo.'
         if numeric:
@@ -339,10 +345,10 @@ def saved_records(result):
         output.append(dict(combination_id=str(combination.get('id', 'não registrado')),
                            P_normal_N=normal if _finite(normal) else None,
                            P_parallel_N=parallel if _finite(parallel) else None,
-                           c_mm=cfg.get('c_mm') if _finite(cfg.get('c_mm')) else None,
+                           c_mm=cfg.get('c_mm') if not excluded and _finite(cfg.get('c_mm')) else None,
                            FRd_N=raw['FRd_N'] if numeric else None,
                            index=raw['index'] if numeric else None,
-                           status='computed' if numeric else 'pending', reason=str(reason)))
+                           status='computed' if numeric else 'not_applicable' if excluded else 'pending', reason=str(reason)))
         if numeric and cfg.get('schema') == SCHEMA_V2:
             output[-1].update({k: copy.deepcopy(raw['domain'][k]) for k in
                                ('x_mm', 'contact_edges_mm', 'end_distance_mm', 'table_location')})

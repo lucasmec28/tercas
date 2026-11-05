@@ -34,6 +34,7 @@ def show_global(st, result):
     st.caption('Estado global do modelo declarado. Índices de verificações diferentes '
                'não são somados nem representam uma utilização global. '
                'Tirantes, cantoneiras, ligações e ancoragens não são dimensionados.')
+    if record.get('point_limit_scope_note'):st.caption(record['point_limit_scope_note'])
     from .report_audit import show_saved_issues
     show_saved_issues(st,result)
 
@@ -50,5 +51,6 @@ def report_global(doc, result):
     for state in ('ELU','ELS'):
         r=record.get('by_limit_state',{}).get(state)
         if r:doc.add_paragraph(state+': '+r['status']+'. Inclui as pendências comuns do modelo.')
+    if record.get('point_limit_scope_note'):doc.add_paragraph(record['point_limit_scope_note'])
     from .report_audit import report_saved_issues
     report_saved_issues(doc,result)

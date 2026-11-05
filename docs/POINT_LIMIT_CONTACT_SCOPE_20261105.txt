@@ -1,0 +1,54 @@
+P_APOIO: limite matemático separado de contato físico
+Correção de escopo de 05/11/2026
+
+P_APOIO conserva a→0+ como limite matemático das ações, incluindo a camada
+entre apoio e P: V→qL/2+P, enquanto M e deslocamento de P tendem a zero.
+Não se substitui o limite por P aplicada exatamente em x=0, nem por a=c/2.
+Não mudam combinações, forças, reações, V, M–V, FLT, flechas ou capacidades.
+O aplicativo continua cobrindo duas posições prescritas, não o máximo contínuo.
+
+O critério de contato finito não se aplica à coordenada do limite matemático.
+Isto é distinção de domínio do modelo, não dispensa normativa de resistência
+local. Um contato de comprimento real c centrado em a, inteiramente na peça
+[0,L], exige c/2<=a<=L-c/2. Para c>=20 mm, a>=10 mm, incompatível com a→0+.
+Não se inventa contato, distância, distribuição de P pela telha ou enrijecedor.
+
+Fonte primária conferida: ABNT NBR 14762:2010, §9.5.1 (p.33), Anexo D, D.1/D.2
+(p.78), Tabela D.2 (p.79) e Figura D.1 (p.81), edição adotada pelo projeto.
+A norma trata força/reação física, extensão longitudinal de atuação e distâncias
+reais. O novo registro não usa nem cria uma resistência normativa para o limite.
+
+Verificação física separada
+P_CENTRO calculado cobre somente o contato central. Para contato real próximo
+à extremidade, informar posição finita no modo direto, selecionar explicitamente
+v2 e fornecer c, origem e as oito declarações existentes. As ações são calculadas
+nessa posição. A v2 mantém contenção, d, linha interna/extremidade e todos os
+limites da Tabela D.2. Os dados ausentes/inválidos e P paralelo não nulo continuam
+pendentes nos casos físicos. Nenhum dado/declaração foi dispensado.
+Não há certificado de todas as posições, dimensionamento das ligações, dos
+apoios ou aprovação global. A transferência local continua exigência do detalhe
+real; não deve ser confundida com a exclusão do critério na idealização limite.
+
+Novo contrato salvo
+Schema point_contact_mathematical_limit_v1, status not_applicable exclusivamente
+no scope mathematical_limit, combinação/estado/L/forças/posição vinculados.
+Sem FRd, índice, c, bordas de contato, classe da Tabela D.2 ou aprovação física.
+physical_contact_checked, physical_conditions_verified e connection_design_checked
+permanecem false. A estrutura exata é conferida contra combinação e vetor salvo;
+rótulo isolado, registro antigo, adulterado ou aplicado ao centro/direto não
+recebe exclusão. Não se recalcula ao apresentar ou exportar.
+
+O global deixa de contar os quatro limites ELU como falta de contato impossível.
+Mantém todas as pendências e não atendimentos reais dos casos finitos e demais
+critérios. Não cria nova exigência de cobertura móvel universal. A nota salva
+explica o alcance na tela e Word mesmo com o opt-in de contato desligado.
+Tabelas principais e resumos numéricos permanecem iguais; não retorna a linha
+antiga de carga concentrada à tabela principal. O complemento de contato mostra
+'Não aplicável — limite matemático', sem c/FRd/índice, para novos registros íntegros.
+
+Histórico
+Resultados antigos not_evaluated continuam pendentes; nenhuma abertura de
+histórico altera contagens ou confere resistência/exclusão nova. Esta correção
+substitui, somente para novos cálculos, as frases de 04/11 que chamavam o contato
+impossível de P_APOIO de pendente. Não muda a rota física v1 ou v2.
+Testes são sintéticos, não inspeção física, validação experimental ou projeto.

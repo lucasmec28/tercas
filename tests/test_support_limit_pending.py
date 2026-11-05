@@ -30,9 +30,11 @@ class SupportLimitPending(unittest.TestCase):
   for case in self.limits:
    with self.subTest(case=case['combination']['id']):
     p=case['evidence']['NBR_branches']['point']
-    self.assertEqual(p['status'],'not_evaluated');self.assertEqual(p['position'],'support_limit')
+    self.assertEqual(p['status'],'not_applicable');self.assertEqual(p['position'],'support_limit')
+    self.assertEqual(p['scope'],'mathematical_limit');self.assertFalse(p['physical_contact_checked'])
     self.assertEqual(p['force_N'],case['combination']['P_N'])
     self.assertNotIn('Sem força',p['reason']);self.assertIn('transferência local permanece',p['reason'])
+    self.assertNotIn('FRd_N',p);self.assertNotIn('index',p)
  def test_interior_bending_is_still_q_only(self):
   for case in self.limits:
    c=case['combination'];d=case_inputs(self.data,c);self.assertEqual(d['P_uls'],0.)
@@ -49,7 +51,7 @@ class SupportLimitPending(unittest.TestCase):
   output=json.loads(json.dumps(self.result,allow_nan=False))
   self.assertFalse(output['whole_member_approved'])
   for case in output['cases']:
-   if case['combination'].get('point_position')=='support_limit':self.assertEqual(case['evidence']['NBR_branches']['point']['status'],'not_evaluated')
+   if case['combination'].get('point_position')=='support_limit':self.assertEqual(case['evidence']['NBR_branches']['point']['status'],'not_applicable')
  def test_report_demand_and_requested_exclusions(self):
   doc=Document(BytesIO(batch_word(self.result)))
   txt='\n'.join(p.text for p in doc.paragraphs)

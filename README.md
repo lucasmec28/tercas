@@ -253,3 +253,13 @@ perdas e An0 é tratado separadamente. A interface e a memória identificam a
 extrapolação como hipótese, sem afirmar regra normativa específica para Ue
 pela mesa e sem aprovação da ligação ou do conjunto. Detalhes em
 `docs/CT_WELD_U_TO_UE_HYPOTHESIS_20261105.txt`.
+
+## P_APOIO e contato físico separados — 05/11/2026
+
+O caso a→0+ continua como limite matemático das ações, sem deslocamento de P.
+Seu critério de contato finito é agora explicitamente não aplicável à idealização,
+sem resistência ou índice. Isso não dispensa verificação física: P_CENTRO cobre
+somente o contato central; um contato perto da extremidade exige posição finita
+e detalhe próprios na v2. Todas as pendências dos casos físicos permanecem.
+Novos registros guardam a distinção na tela, JSON e Word, enquanto históricos
+antigos não são requalificados. Veja `docs/POINT_LIMIT_CONTACT_SCOPE_20261105.txt`.

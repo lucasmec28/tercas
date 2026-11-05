@@ -353,6 +353,10 @@ def batch_word(result):
   for row in display_records(historical_rows(result,gross_component_rows(result,item['rows']))):
    index='—' if row['Índice'] is None else f"{fmt(row['Índice'])}"
    doc.add_paragraph(f"{row['Verificação']}: {row['Situação']}; índice {index}; {row['Demanda / valor']}; limite/resistência {row['Resistência / limite']}. {row['Referência']}. {row['Observação']}")
+  from .point_limit import saved_exclusion
+  point=item.get('evidence',{}).get('NBR_branches',{}).get('point',{})
+  if saved_exclusion(point,c,d.get('L_mm'),item.get('evidence',{}).get('inclination',{}).get('P_vector')):
+   doc.add_paragraph('Escopo de P_APOIO: '+point['reason'])
   if c['limit_state']=='ELU':report_mv_trace(doc,item.get('evidence',{}),c['id'],c.get('P_vector',{}).get('normal',c.get('P_N')),point_position=c.get('point_position'),expected_a_mm=c.get('x_mm'))
   elif c['limit_state']=='ELS':report_els_trace(doc,result,item.get('evidence',{}),c['id'],reference='§9.8.5; componente no modelo delimitado',readable=els_trace_readable)
   for warning in item['warnings']:doc.add_paragraph('Aviso: '+warning)

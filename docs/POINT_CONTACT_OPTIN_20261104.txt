@@ -72,3 +72,7 @@ Testes focais de contrato, limites, dados ausentes, declarações, paridade,
 e AppTest são registrados fora da candidata. Não representam validação experimental,
 projeto real, suíte integral ou publicação. O contato c40mm usado em QA é sintético
 e nunca é assumido por padrão no aplicativo.
+
+Atualização de escopo 05/11: novos registros distinguem P_APOIO matemático de
+contato físico. Não aplicável ao limite não é dispensa normativa nem aprovação.
+Históricos continuam com seu estado salvo; ver POINT_LIMIT_CONTACT_SCOPE_20261105.txt.

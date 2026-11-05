@@ -4,7 +4,7 @@ from streamlit.testing.v1 import AppTest
 APP=str(Path(__file__).resolve().parents[1]/'app.py')
 class BatchUI(unittest.TestCase):
  def app(self):
-  a=AppTest.from_file(APP).run(timeout=60);self.assertFalse(a.exception);return a
+  a=AppTest.from_file(APP,default_timeout=30).run(timeout=60);self.assertFalse(a.exception);return a
  def area(self):
   a=self.app();a.button[0].click().run(timeout=60);a.radio[0].set_value('Cargas por área e combinações automáticas').run(timeout=60);self.assertFalse(a.exception);return a
  def test_material_presets(self):

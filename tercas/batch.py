@@ -77,12 +77,10 @@ def _calculate_batch(data, *, _calculate_case=None):
  for combo in bundle['combinations']:
   d=case_inputs(data,combo);result=_calculate_case(d)
   if combo.get('point_position')=='support_limit' and combo.get('P_N',0):
-   # P is zero only in the interior bending adapter. The concentrated
-   # transfer at the support has not disappeared and is not an internal
-   # isolated patch covered by that adapter's local-resistance subset.
-   result['NBR_branches']['point']={
-    'status':'not_evaluated','force_N':combo['P_N'],'position':'support_limit',
-    'reason':'Força concentrada no limite junto ao apoio: sua flexão tende a zero, mas a transferência local permanece. Fora do subconjunto interno isolado implementado; sem conclusão de resistência local ou ligação.'}
+   # The analytical action limit is not a physical finite contact. Preserve
+   # its full force and keep actual finite-contact checks on their own cases.
+   from .point_limit import contact_exclusion
+   result['NBR_branches']['point']=contact_exclusion(combo,data['L_mm'])
   from .deflection_scope import ROWS as uniaxial_component_rows
   rs=[r for r in rows(result) if (r['Verificação'] in ('Flecha — flexão','Flecha paralela à cobertura','Flecha horizontal — eixo forte','Flecha vertical — eixo fraco',*uniaxial_component_rows))==(combo['limit_state']=='ELS')]
   mobile={}

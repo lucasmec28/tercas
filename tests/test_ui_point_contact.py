@@ -213,7 +213,7 @@ def test_binding_preserved_until_explicit_geometry_reconfirmation(change):
     assert app.session_state.last_input[FIELD]['basis']!=original['basis']
 
 
-def test_saved_batch_keeps_support_and_parallel_pending_without_solver(monkeypatch):
+def test_saved_batch_separates_math_limit_and_parallel_pending_without_solver(monkeypatch):
     import tercas.point_contact as contact
     from tercas.application import calculate
     from tercas.batch import calculate_batch
@@ -239,7 +239,7 @@ def test_saved_batch_keeps_support_and_parallel_pending_without_solver(monkeypat
     app=run(AppTest.from_function(_saved_panel,args=(result,)))
     frame=app.dataframe[0].value
     assert list(frame['Combinação'])==[center['combination']['id'],support['combination']['id'],'DIRECT_ELU_PARALLEL']
-    assert list(frame['Situação local'])==['Calculado — critério local','Pendente','Pendente']
+    assert list(frame['Situação local'])==['Calculado — critério local','Não aplicável — limite matemático','Pendente']
     assert 'apoio' in frame.iloc[1]['Motivo / alcance']
     assert frame.iloc[2]['Motivo / alcance']==parallel_result['NBR_branches']['point']['reason']
     assert result==original

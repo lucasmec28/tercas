@@ -140,7 +140,8 @@ def test_batch_trace_matches_same_combination_and_retains_other_branches(batch):
         assert b['local'] == direct['NBR_branches']['local']
         assert case['evidence']['FLT_segments'] == direct['FLT_segments']
         assert case['evidence']['section_checks'] == direct['section_checks']
-        assert b['point']['status'] == 'not_evaluated'
+        assert b['point']['status'] == 'not_applicable'
+        assert b['point']['scope'] == 'mathematical_limit'
         assert b['point']['force_N'] == c['P_N']
 
 

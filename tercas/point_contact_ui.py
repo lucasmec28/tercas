@@ -18,7 +18,7 @@ def render(st, data, key, disabled=False):
     with st.expander(TITLE, expanded=False):
         st.caption('Esta opção descreve um detalhe local de transmissão de P e não altera as declarações existentes sobre telha/painel. Não presume contato, ligação, distribuição de P ou travamento fornecido pela telha.')
         st.caption('Somente introdução local de P compressiva. Não altera ações, flexão, FLT, flechas AA/AISI, torção ou vínculos; não qualifica os apoios nem aprova o elemento.')
-        st.warning('P no apoio-limite, P paralelo não nulo e sistema 3D permanecem fora da liberação. As declarações não resolvem a introdução de força nos apoios.')
+        st.warning('O limite matemático P_APOIO não verifica contato físico. P paralelo não nulo e sistema 3D permanecem fora da liberação física. As declarações não dimensionam apoios ou ligações.')
         if disabled:
             st.checkbox(LABEL, value=False, key=key+'_unavailable', disabled=True)
             st.caption('Contato local indisponível no sistema 3D. O objeto de entrada existente permanece preservado e inativo nesta rota.')
@@ -46,7 +46,7 @@ def render(st, data, key, disabled=False):
             st.session_state[key+'_section_geometry_and_material_verified'] = False
         if data.get('load_mode') == 'area':
             center = str(data['L_mm']/2)+' mm' if _finite(data.get('L_mm')) else 'não informado'
-            st.caption('Lote por área: P_CENTRO em L/2 = '+center+'. P_APOIO é a→0+, não posição finita: contato c ≥ 20 mm centrado ali ultrapassa a peça. Continua pendente, sem deslocamento automático.')
+            st.caption('Lote por área: P_CENTRO em L/2 = '+center+'. P_APOIO é a→0+, não posição finita: o critério de contato não se aplica a esse limite matemático. O contato central não cobre a extremidade; use posição finita e detalhe próprios em modo direto/v2. Sem deslocamento automático.')
         else:
             st.caption('Modo direto: posição de P ELU informada = '+str(data.get('x_uls'))+' mm; o contato será [x−c/2, x+c/2]. Nenhuma posição é inferida de c.')
         st.caption('NBR 14762:2010 §9.5.1, Anexo D, Tabela D.2/Figura D.1. Limites comuns: c ≥ 20 mm; h/t ≤ 200; c/t ≤ 210; c/h ≤ 2; h = H − 2(ri + t). Nenhuma distância até força na mesa oposta é inventada.')
@@ -85,12 +85,12 @@ def show_saved_results(st, result):
     records = saved_records(result)
     with st.expander(RESULTS_TITLE, expanded=False):
         st.caption('Somente o critério de introdução local de P registrado no cálculo salvo. Não aprova ligações, apoios ou o elemento completo. Consultar este bloco não recalcula nem requalifica o histórico.')
-        st.caption('P no apoio-limite e P paralelo não nulo permanecem pendentes. Um registro histórico sem vínculo com as declarações salvas não recebe resistência ou índice novo.')
+        st.caption('P_APOIO é limite matemático, não aprovação de contato. P_CENTRO cobre somente o contato central; outra posição física exige caso finito próprio. P paralelo não nulo permanece pendente no caso físico. Histórico sem vínculo íntegro não recebe resistência, índice ou exclusão novos.')
         if not records:
             st.caption('Não há caso ELU com força P real nos registros disponíveis para este bloco.')
             return
         statuses = {'computed': 'Calculado — critério local', 'not_evaluated': 'Pendente',
-                    'pending': 'Pendente', 'not_applicable': 'Não aplicável'}
+                    'pending': 'Pendente', 'not_applicable': 'Não aplicável — limite matemático'}
         view = [{'Combinação': row.get('combination_id'),
                  'P normal [N]': row.get('P_normal_N'),
                  'P paralelo [N]': row.get('P_parallel_N'),
