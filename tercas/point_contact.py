@@ -250,6 +250,9 @@ def _saved_numeric_coherent(raw, cfg, data, combination, normal, parallel, famil
     try:
         if (raw.get('status') != 'computed' or raw.get('source') != SOURCE
                 or raw.get('contact_contract') != cfg or cfg.get('schema') not in (SCHEMA, SCHEMA_V2)
+                or cfg.get('enabled') is not True
+                or not isinstance(cfg.get('origin'), str) or not cfg['origin'].strip()
+                or raw.get('origin') != cfg['origin']
                 or not basis_matches(data, cfg)
                 or raw.get('evidence_sha256') != _saved_digest(raw)
                 or not _finite(normal) or normal <= 0 or not _finite(parallel) or parallel != 0
@@ -300,6 +303,75 @@ def _saved_numeric_coherent(raw, cfg, data, combination, normal, parallel, famil
                 and trace.get('end_distance_mm') == min(edges[0],L-edges[1]))
     except (TypeError, ValueError, ArithmeticError, KeyError, OverflowError):
         return False
+
+
+def saved_numeric_qualified(raw, result, combination, point_vector, *, batch=False,
+                            case_combination=None):
+    """Bind an existing finite-contact result, without recalculating resistance.
+
+    Opt-in records use the same saved-value validator as the contact report.
+    The earlier core producer has no contact contract/digest: retain only its
+    exact scalar shape and explicit original contact/support inputs. Neither
+    route authenticates a coherently rewritten file or upgrades old results.
+    """
+    try:
+        if not isinstance(raw, dict) or raw.get('status') != 'computed':return False
+        data = result['input_data']
+        normal, parallel = (point_vector.get(k) for k in ('normal', 'parallel'))
+        if not _finite(normal) or normal <= 0 or not _finite(parallel) or parallel != 0:
+            return False
+        L = data.get('L_mm')
+        if not _finite(L) or L <= 0:return False
+        if batch:
+            # Same identity AND actions/position, not merely the same ID label.
+            if (json.dumps(case_combination, sort_keys=True, allow_nan=False)
+                    != json.dumps(combination, sort_keys=True, allow_nan=False)):
+                return False
+            vector = combination.get('P_vector', {})
+            if (combination.get('limit_state') != 'ELU'
+                    or combination.get('point_position') != 'center'
+                    or not _finite(combination.get('P_N')) or combination['P_N'] != normal
+                    or any(not _finite(vector.get(k)) or vector[k] != point_vector[k]
+                           for k in ('normal', 'parallel'))):return False
+            x = combination.get('x_mm')
+            if not _finite(x) or x != L/2:return False
+        else:
+            if (data.get('P_uls') != normal
+                    or not _finite(data.get('P_uls'))
+                    or not _finite(data.get('P_parallel_uls', 0.))
+                    or data.get('P_parallel_uls', 0.) != parallel):return False
+            x = data.get('x_uls')
+        if not _finite(x) or not 0 < x < L:return False
+        cfg = data.get(FIELD)
+        snapshot = result.get('common_input_snapshot', result.get('input_snapshot', {}))
+        family = snapshot.get('selected_section', {}).get('family')
+        typed = (isinstance(cfg, dict) and cfg.get('enabled') is True
+                 or any(k in raw for k in ('contact_contract', 'evidence_sha256', 'source', 'domain')))
+        if typed:
+            return isinstance(cfg, dict) and _saved_numeric_coherent(
+                raw, cfg, data, combination, normal, parallel, family)
+        # Literal pre-opt-in producer, not a fallback for malformed typed data.
+        if set(raw) != {'status','FRd_N','force_N','index','patch_mm','origin'}:
+            return False
+        c = data.get('patch_mm');origin = data.get('patch_origin')
+        if (not _finite(c) or c <= 0 or not isinstance(origin, str) or not origin.strip()
+                or raw.get('origin') != origin or raw.get('force_N') != normal
+                or not _finite(raw.get('FRd_N')) or raw['FRd_N'] <= 0
+                or not _finite(raw.get('index')) or raw['index'] != normal/raw['FRd_N']
+                or raw.get('patch_mm') != [x-c/2, x+c/2]
+                or data.get('left_web') is not True or data.get('right_web') is not True
+                or not isinstance(data.get('support_origin'), str)
+                or not data['support_origin'].strip()):return False
+        intro = {'left':{'route':'web_connection','origin':data['support_origin']},
+                 'right':{'route':'web_connection','origin':data['support_origin']},
+                 'point':{'c_mm':c,'origin':origin}}
+        return (family in ('U','Ue') and (batch or
+                snapshot.get('introduction') == intro and snapshot.get('L_mm') == L
+                and snapshot.get('ULS', {}).get('P_N') == normal
+                and snapshot.get('ULS', {}).get('x_mm') == x))
+    except (TypeError, ValueError, ArithmeticError, KeyError, AttributeError, OverflowError):
+        return False
+
 
 def saved_records(result):
     """Typed saved values for the complement only. Never rebuild a missing check."""

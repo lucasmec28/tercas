@@ -283,3 +283,84 @@ integralidade local normal em toda a rede por combinação ELS. Compara o limite
 horizontal declarado somente no modelo bruto; não altera reações/rigidez nem
 libera ELS físico, estabilidade ou aprovação global. Ver
 `docs/THREE_GIRT_HORIZONTAL_SERVICE_20261105.txt`.
+
+## Ramo de alma comprimida EN — 05/11/2026
+
+Nas referências próprias Ue100×50×17 de 2,65 / 3,00 / 3,35 mm, o ramo My
+negativo usa agora uma prova conservadora de mesa em balanço sem crédito à
+rigidez do lábio. Isso completa os seis ramos puros N/M nesses modelos e
+permite calcular o envelope normal/cisalhamento antes parcial. Não é aprovação
+global. O mesmo ramo também é integral em 2,00/2,25 mm com Eq.4.4 no estado
+puro ELU e ponto fixo sem alteração de geometria. As espessuras 1,20/1,50 mm
+continuam exigindo redução. A extensão axial descrita abaixo fecha N comprimido
+em 2,00/2,25 mm, mantendo pendência axial em 1,20/1,50 mm.
+A cobertura antiga fica preservada em snapshots históricos. Ver hipóteses,
+fontes e testes em `docs/NEGATIVE_MY_OUTSTAND_INTEGRAL_20261105.txt`.
+
+
+## Compressão EN com alma reduzida — 05/11/2026
+
+N comprimido em Ue100×50×17 de 2,00/2,25 mm passa a usar a área efetiva real,
+com remoção da faixa central da alma. Mesas/lábios permanecem integrais e
+chi_d=1. O deslocamento do centroide é transportado uma única vez aos momentos,
+e os sinais corrigidos escolhem as seções de flexão. A rede original não muda.
+A cobertura é 36/42 componentes puras, com seis ramos completos em t≥2,00 mm.
+Não é aprovação global EN/NBR. Detalhes, fontes e limites em
+`docs/AXIAL_WEB_REDUCED_EN_20261105.txt`.
+
+## Compressão EN fina local e distorcional — 05/11/2026
+
+N comprimido em 1,20/1,50 mm usa os passos 1–2 da EN para larguras locais e
+espessura efetiva reduzida somente nos dois enrijecedores físicos As. Mantém
+N/Aeff uniforme e transporte Ne uma única vez. A cobertura sobe a 38/42;
+My negativo em ambas e Mx nos dois sentidos em 1,20 mm continuam pendentes,
+inclusive quando exigidos pelos momentos corrigidos. Não é aprovação global.
+Ver `docs/AXIAL_THIN_DISTORTIONAL_EN_20261105.txt`.
+
+## My negativo EN com alma reduzida em 1,50 mm — 05/11/2026
+
+O ponto fixo da seção efetiva no ELU fecha My negativo em 1,50 mm, elevando
+a cobertura a 39/42 componentes. As mesas permanecem integrais por majorante
+triangular de 149 MPa; a alma é reduzida. Nas trocas de sinal, operadores
+diferentes são cobertos pela união de limites superiores, separados das
+testemunhas físicas. Nenhum valor inconclusivo vira atendimento por tolerância.
+Permanecem três ramos de flexão em 1,20 mm e as verificações globais separadas.
+Ver `docs/NEGATIVE_MY150_REDUCED_EN_20261105.txt`.
+
+### Ramos finais de 1,20 mm, 05/11/2026
+
+As seções efetivas dos três ramos restantes de 1,20 mm completam os 42
+ramos puros dos sete perfis no complemento EN. Mx± usa mesa localmente
+reduzida, com Ixy e operador afim completos. My negativo usa alma reduzida
+e um majorante misto da própria mesa, sem crédito ao lábio. A normalização
+é no ELU das faces. Não é aprovação global da barra nem do projeto NBR.
+Ver `docs/REMAINING_120_EN_20261105.txt`.
+
+## Alternativa uniaxial efetiva das três travessas — 05/11/2026
+
+Novo opt-in independente no painel Vlasov: cada travessa como viga isolada no
+vão inteiro, usando sua carga horizontal já distribuída e Ix efetivo variável
+MSE do §9.8.5. Permite comparar esta componente reduzida mesmo quando o crivo
+bruto da rede fica inconclusivo, sem modificar ou aprovar a rede. Não reutiliza
+reações dos tirantes nem soma a rotação bruta. Ações e resistências originais
+permanecem. Detalhes: `docs/THREE_GIRT_UNIAXIAL_ALTERNATIVE_20261105.txt`.
+
+## Panorama do Vlasov atual — 05/11/2026
+
+O botão “Montar panorama global do resultado salvo” reúne critérios EN e
+comparação horizontal, mantendo referências NBR/G8.1 e eventual alternativa
+isolada em grupos separados. Não recalcula esforços nem acrescenta uma pendência
+fixa de torção aos critérios já avaliados. Estabilidade, cortante transversal,
+introdução local e escopo ELS continuam explícitos; não há aprovação global.
+O JSON separado e o Word opcional preservam a cadeia de hashes dos componentes.
+Veja `docs/THREE_GIRT_GLOBAL_INVENTORY_20261105.txt`.
+
+### Alma nas reações de apoio (componente local opcional)
+
+O painel de resultados isolados e Vlasov permite avaliar a alma nas reações de
+apoio pela NBR 14762 §9.5.1/Anexo D, mesmo sem P externa. Reutiliza declaração
+válida de alma ligada no mesmo vão ou calcula F/FRd para contato de mesa com
+dados explícitos. Não infere contato de garfo ideal nem dimensiona soldas ou
+ligações. Reações da própria travessa são separadas da reação externa do nó.
+O resultado é um registro separado, com Word/JSON próprios e sem aprovação
+global. Detalhes em `docs/SUPPORT_WEB_REACTIONS_20261105.txt`.

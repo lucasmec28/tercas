@@ -27,7 +27,7 @@ def result_rows(result):
 
 def render_saved(st,result):
     st.subheader('Três travessas com empenamento')
-    st.warning('G8.1 é uma componente de resistência. A interação N+M+B, estabilidade, ELS, tirantes e ligações não estão aprovados.')
+    st.warning('Verificações por componente e método. G8.1 não representa aprovação global; estabilidade e ELS completo da rede não estão encerrados. Tirantes e ligações não são dimensionados.')
     if result['status']!='conditional_elastic_vlasov_demand':
         for item in result.get('missing',[]):st.warning(item)
         return
@@ -41,6 +41,10 @@ def render_saved(st,result):
     render_en_normal(st,result)
     from ..three_girt_service.ui import render_saved as render_service
     render_service(st,result)
+    from ..three_girt_uniaxial.ui import render_saved as render_uniaxial
+    render_uniaxial(st,result)
+    from ..three_girt_assessment.ui import render as render_assessment
+    assessment=render_assessment(st,result)
     i=st.selectbox('Combinação Vlasov 3D detalhada',range(len(result['cases'])),format_func=lambda i:result['cases'][i]['combination']['id'],key='three_warping_view_case')
     case=result['cases'][i];m=case['model'];rows=[]
     for name,env in m['girt_envelopes'].items():
@@ -51,7 +55,9 @@ def render_saved(st,result):
     with st.expander('Hipóteses físicas e controle do modelo 7DOF'):
         st.json(dict(configuration=result['configuration'],stress_axis_mapping=result['stress_axis_mapping'],diagnostics=m['diagnostics']))
     from .report import word
-    st.download_button('Baixar memória Vlasov 3D G8.1 e NBR (Word)',word(result,i),file_name='MC_tres_travessas_vlasov_G81_NBR.docx',mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+    st.download_button('Baixar memória Vlasov 3D G8.1 e NBR (Word)',word(result,i,assessment=assessment),file_name='MC_tres_travessas_vlasov_G81_NBR.docx',mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+    from ..support_web.ui import render as render_support_web
+    render_support_web(st,result,context='vlasov')
     st.download_button('Baixar resultado Vlasov 3D (JSON)',json.dumps(result,ensure_ascii=False,indent=2),file_name='tres_travessas_vlasov_resultado.json',mime='application/json')
 
 
@@ -97,7 +103,12 @@ def render_panel(st,data,revision,disabled=False):
             en_normal_config=en_normal_controls(st,data,fingerprint(dict(data=data,config=cfg)),prefix)
             from ..three_girt_service.ui import controls as service_controls
             service_config=service_controls(st,data,fingerprint(dict(data=data,config=cfg)),prefix)
+            from ..three_girt_uniaxial.ui import controls as uniaxial_controls
+            uniaxial_config=uniaxial_controls(st,data,fingerprint(dict(data=data,config=cfg)),prefix)
             old=st.session_state.get(RESULT_KEY)
+            if old is not None and old.get('isolated_uniaxial_service_requested_configuration')!=uniaxial_config:
+                st.session_state.pop(RESULT_KEY,None)
+                st.info('A alternativa uniaxial mudou. Calcule novamente.')
             if old is not None and old.get('horizontal_service_requested_configuration')!=service_config:
                 st.session_state.pop(RESULT_KEY,None)
                 st.info('Dados da componente horizontal mudaram. Calcule novamente.')
@@ -117,6 +128,12 @@ def render_panel(st,data,revision,disabled=False):
                 if result['status']=='conditional_elastic_vlasov_demand':
                     result=attach_g81(result)
                     result['NBR_axial_bending_requested_configuration']=copy.deepcopy(nbr_config)
+                    if uniaxial_config is not None:
+                        result['isolated_uniaxial_service_requested_configuration']=copy.deepcopy(uniaxial_config)
+                        from ..three_girt_uniaxial.application import attach as attach_uniaxial
+                        try:result=attach_uniaxial(result,uniaxial_config)
+                        except (ValueError,TypeError,KeyError,ArithmeticError,OSError) as exc:
+                            result['isolated_uniaxial_service_error']=str(exc)
                     if service_config is not None:
                         result['horizontal_service_requested_configuration']=copy.deepcopy(service_config)
                         from ..three_girt_service.application import attach as attach_service

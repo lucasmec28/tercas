@@ -1,0 +1,4674 @@
+{
+  "schema": "en1993_1_3_2006_normal_component_sections_effective_v4",
+  "method_revision": "negative_My_t150_web_reduced_Eq4_4_fixed_point_20261105",
+  "profile_id": "R01_Ue100x50x17x1.20_rounded_faceted_209_frozen",
+  "nodes_sha256": "004c9cee5033877e4cf1c619627c968c02413aea26fe67a0a5422218ec003f7d",
+  "thickness_mm": 1.2,
+  "material": {
+    "E_MPa": 210000.0,
+    "nu": 0.3,
+    "fyb_MPa": 250.0,
+    "fya_MPa": 250.0,
+    "gamma_M0": 1.0
+  },
+  "gross_properties": {
+    "A_mm2": 271.3262305980443,
+    "Ix_strong_mm4": 440779.4660700371,
+    "Iy_weak_mm4": 101233.7597915336,
+    "Ixy_mm4": -5.238689482212067e-10,
+    "centroid_xy_mm": [
+      17.27765139499963,
+      49.40000000000005
+    ]
+  },
+  "coordinate_system": "xy_R01 relative to gross centroid",
+  "stress_convention": "Positive sigma/N=tension; sigma=c0+cx*x+cy*y per SIGNED physical action. Mx multiplies +y, My multiplies -x.",
+  "frame_mapping": "Mx_R01=-My_frame; My_R01=-Mz_frame",
+  "normal_yield_limit_MPa": 250.0,
+  "components": {
+    "N_tension": {
+      "action": "N_tension",
+      "physical_action_axis": "N_N",
+      "physical_action_sign": 1,
+      "eligible": true,
+      "blocking_reasons": [],
+      "sigma_coefficients_c0_cx_cy": [
+        0.003685600164038132,
+        0.0,
+        0.0
+      ],
+      "effective_properties": {
+        "A_mm2": 271.3262305980443,
+        "Ix_strong_mm4": 440779.4660700371,
+        "Iy_weak_mm4": 101233.7597915336,
+        "Ixy_mm4": -5.238689482212067e-10,
+        "centroid_xy_mm": [
+          17.27765139499963,
+          49.40000000000005
+        ]
+      },
+      "ULS_pure_effort_signed": 67831.55764951107,
+      "ULS_pure_effort_role": "Pure-component line-stress normalization only, NOT a design resistance or exterior-fibre strength.",
+      "ULS_max_abs_line_stress_MPa": 250.0,
+      "local_panels": [],
+      "stiffeners": [],
+      "tension_assemblies": [],
+      "distortional_stage": "not_applicable_to_uniform_tension",
+      "scope": "Normal line stress of this pure component only; not complete section/member resistance.",
+      "proof": "EN1993-1-3 6.1.2 gross-area normal yielding component only; net fracture is not checked.",
+      "section_status": "integral_demonstrated_at_ULS",
+      "centroid_shift_from_gross_mm": [
+        0.0,
+        0.0
+      ],
+      "additional_Mx_per_N_mm": 0.0,
+      "additional_My_per_N_mm": 0.0,
+      "effective_centroid_relative_to_gross_mm": [
+        0.0,
+        0.0
+      ],
+      "effective_centroid_property_origin": "Original pinned polygon coordinates; stress coefficients use gross-centred coordinates.",
+      "fixed_point_statement": "Every local rho=1 and every compressed As has Eq.5.17 As_red/As=1 exactly. Thus geometry, centroid, stiffness and pure ULS stresses remain unchanged on re-evaluation; this is an integral effective-section fixed point."
+    },
+    "N_compression": {
+      "action": "N_compression",
+      "physical_action_axis": "N_N",
+      "physical_action_sign": -1,
+      "eligible": true,
+      "blocking_reasons": [],
+      "sigma_coefficients_c0_cx_cy": [
+        0.004858265715154523,
+        0.0,
+        0.0
+      ],
+      "effective_properties": {
+        "A_mm2": 205.83476874899458,
+        "Ix_strong_mm4": 398719.7714904539,
+        "Iy_weak_mm4": 77131.1271642341,
+        "Ixy_mm4": 0.0,
+        "centroid_xy_mm": [
+          19.940875123219467,
+          49.40000000000005
+        ]
+      },
+      "ULS_pure_effort_signed": -51458.69218724864,
+      "ULS_pure_effort_role": "Pure-component line-stress normalization only, NOT a design resistance or exterior-fibre strength.",
+      "ULS_max_abs_line_stress_MPa": 250.0,
+      "local_panels": [
+        {
+          "panel": "lower_lip",
+          "branch": "EN1993-1-3_Eq5.13_ULS_fyb",
+          "b_mm": 15.872792206135784,
+          "compression_stress_ends_MPa": [
+            250.0,
+            250.0
+          ],
+          "bpc_over_bp": 0.33244523868590786,
+          "k_sigma": 0.5,
+          "sigma_cr_MPa": 542.4031917771971,
+          "lambda_p": 0.6789048107219512,
+          "lambda_p_integral_limit": 0.748,
+          "rho": 1.0,
+          "slenderness_reference_stress_MPa": 250.0
+        },
+        {
+          "panel": "lower_flange",
+          "branch": "EN1993-1-5_Table4.1_ULS_fyb",
+          "b_mm": 47.74558441227157,
+          "compression_stress_ends_MPa": [
+            250.0,
+            250.0
+          ],
+          "psi": 1.0,
+          "k_sigma": 4.0,
+          "sigma_cr_MPa": 479.5704975543748,
+          "lambda_p": 0.7220109353035692,
+          "lambda_p_integral_limit": 0.6732050807568878,
+          "rho": 0.9629985360850789,
+          "flange_lip_adjacent_start_fraction": 0.5185007319574606,
+          "slenderness_reference_stress_MPa": 250.0
+        },
+        {
+          "panel": "web",
+          "branch": "EN1993-1-5_Table4.1_ULS_fyb",
+          "b_mm": 97.74558441227157,
+          "compression_stress_ends_MPa": [
+            250.0,
+            250.0
+          ],
+          "psi": 1.0,
+          "k_sigma": 4.0,
+          "sigma_cr_MPa": 114.42596667395948,
+          "lambda_p": 1.478113247372031,
+          "lambda_p_integral_limit": 0.6732050807568878,
+          "rho": 0.5758432980634358,
+          "flange_lip_adjacent_start_fraction": 0.7120783509682821,
+          "slenderness_reference_stress_MPa": 250.0
+        },
+        {
+          "panel": "upper_flange",
+          "branch": "EN1993-1-5_Table4.1_ULS_fyb",
+          "b_mm": 47.74558441227157,
+          "compression_stress_ends_MPa": [
+            250.0,
+            250.0
+          ],
+          "psi": 1.0,
+          "k_sigma": 4.0,
+          "sigma_cr_MPa": 479.5704975543748,
+          "lambda_p": 0.7220109353035692,
+          "lambda_p_integral_limit": 0.6732050807568878,
+          "rho": 0.9629985360850789,
+          "flange_lip_adjacent_start_fraction": 0.5185007319574606,
+          "slenderness_reference_stress_MPa": 250.0
+        },
+        {
+          "panel": "upper_lip",
+          "branch": "EN1993-1-3_Eq5.13_ULS_fyb",
+          "b_mm": 15.872792206135784,
+          "compression_stress_ends_MPa": [
+            250.0,
+            250.0
+          ],
+          "bpc_over_bp": 0.33244523868590786,
+          "k_sigma": 0.5,
+          "sigma_cr_MPa": 542.4031917771971,
+          "lambda_p": 0.6789048107219512,
+          "lambda_p_integral_limit": 0.748,
+          "rho": 1.0,
+          "slenderness_reference_stress_MPa": 250.0
+        }
+      ],
+      "stiffeners": [
+        {
+          "flange": "lower_flange",
+          "As_mm2": 46.97156373827463,
+          "Is_mm4": 1208.2056086426103,
+          "centroid_xy_mm": [
+            41.72981177420566,
+            3.4415181052120576
+          ],
+          "b1_mm": 41.72981177420566,
+          "line_intervals": [
+            [
+              0,
+              0.0,
+              1.0
+            ],
+            [
+              1,
+              0.0,
+              1.0
+            ],
+            [
+              2,
+              0.0,
+              1.0
+            ],
+            [
+              3,
+              0.0,
+              1.0
+            ],
+            [
+              4,
+              0.0,
+              1.0
+            ],
+            [
+              5,
+              0.0,
+              1.0
+            ],
+            [
+              6,
+              0.0,
+              1.0
+            ],
+            [
+              7,
+              0.0,
+              1.0
+            ],
+            [
+              8,
+              0.0,
+              1.0
+            ],
+            [
+              9,
+              0.0,
+              1.0
+            ],
+            [
+              10,
+              0.0,
+              1.0
+            ],
+            [
+              11,
+              0.0,
+              1.0
+            ],
+            [
+              12,
+              0.0,
+              1.0
+            ],
+            [
+              13,
+              0.0,
+              1.0
+            ],
+            [
+              14,
+              0.0,
+              1.0
+            ],
+            [
+              15,
+              0.0,
+              1.0
+            ],
+            [
+              16,
+              0.0,
+              1.0
+            ],
+            [
+              17,
+              0.0,
+              1.0
+            ],
+            [
+              18,
+              0.0,
+              1.0
+            ],
+            [
+              19,
+              0.0,
+              1.0
+            ],
+            [
+              20,
+              0.0,
+              1.0
+            ],
+            [
+              21,
+              0.0,
+              1.0
+            ],
+            [
+              22,
+              0.0,
+              1.0
+            ],
+            [
+              23,
+              0.0,
+              1.0
+            ],
+            [
+              24,
+              0.0,
+              1.0
+            ],
+            [
+              25,
+              0.0,
+              1.0
+            ],
+            [
+              26,
+              0.0,
+              1.0
+            ],
+            [
+              27,
+              0.0,
+              1.0
+            ],
+            [
+              28,
+              0.0,
+              1.0
+            ],
+            [
+              29,
+              0.0,
+              1.0
+            ],
+            [
+              30,
+              0.0,
+              1.0
+            ],
+            [
+              31,
+              0.0,
+              1.0
+            ],
+            [
+              32,
+              0.0,
+              1.0
+            ],
+            [
+              33,
+              0.0,
+              1.0
+            ],
+            [
+              34,
+              0.0,
+              1.0
+            ],
+            [
+              35,
+              0.0,
+              1.0
+            ],
+            [
+              36,
+              0.0,
+              1.0
+            ],
+            [
+              37,
+              0.0,
+              1.0
+            ],
+            [
+              38,
+              0.0,
+              1.0
+            ],
+            [
+              39,
+              0.0,
+              0.5309761454705767
+            ]
+          ],
+          "stress_domain_audit": {
+            "min_line_compression_MPa": 250.0,
+            "max_line_compression_MPa": 250.0,
+            "min_offset_face_compression_MPa": 250.0,
+            "max_offset_face_compression_MPa": 250.0
+          },
+          "sigma_com_Ed_MPa": 250.0,
+          "assembly_interpretation": "Actual complete lip and only the effective flange strip adjacent to it, including physical polygon corners; uniform fyb ULS, reduced once by chi_d.",
+          "kr_area": 0.9999999999999997,
+          "hw_mm": 98.8,
+          "K_N_mm2": 0.30142249461240034,
+          "sigma_cr_MPa": 372.3598769007099,
+          "lambda_d": 0.8193860489917857,
+          "chi_d": 0.8775838865789389,
+          "Eq5_17_As_red_over_As_at_ULS": 0.8775838865789389,
+          "Eq5_17_unclamped_As_ratio_at_ULS": 0.8775838865789389,
+          "Eq5_17_reduced_strength_minus_stress_MPa": -30.604028355265257,
+          "Eq5_17_reference": "Uniform pure compression ULS at fyb/gammaM0 on all retained physical material.",
+          "integral_fixed_point": false,
+          "t_red_mm": 1.0531006638947267,
+          "step3_optional_refinement_used": false
+        },
+        {
+          "flange": "upper_flange",
+          "As_mm2": 46.97156373827462,
+          "Is_mm4": 1208.2056086426019,
+          "centroid_xy_mm": [
+            41.72981177420566,
+            95.35848189478796
+          ],
+          "b1_mm": 41.72981177420566,
+          "line_intervals": [
+            [
+              188,
+              0.0,
+              1.0
+            ],
+            [
+              189,
+              0.0,
+              1.0
+            ],
+            [
+              190,
+              0.0,
+              1.0
+            ],
+            [
+              191,
+              0.0,
+              1.0
+            ],
+            [
+              192,
+              0.0,
+              1.0
+            ],
+            [
+              193,
+              0.0,
+              1.0
+            ],
+            [
+              194,
+              0.0,
+              1.0
+            ],
+            [
+              195,
+              0.0,
+              1.0
+            ],
+            [
+              196,
+              0.0,
+              1.0
+            ],
+            [
+              197,
+              0.0,
+              1.0
+            ],
+            [
+              198,
+              0.0,
+              1.0
+            ],
+            [
+              199,
+              0.0,
+              1.0
+            ],
+            [
+              200,
+              0.0,
+              1.0
+            ],
+            [
+              201,
+              0.0,
+              1.0
+            ],
+            [
+              202,
+              0.0,
+              1.0
+            ],
+            [
+              203,
+              0.0,
+              1.0
+            ],
+            [
+              204,
+              0.0,
+              1.0
+            ],
+            [
+              205,
+              0.0,
+              1.0
+            ],
+            [
+              206,
+              0.0,
+              1.0
+            ],
+            [
+              207,
+              0.0,
+              1.0
+            ],
+            [
+              168,
+              0.4690238545294214,
+              1.0
+            ],
+            [
+              169,
+              0.0,
+              1.0
+            ],
+            [
+              170,
+              0.0,
+              1.0
+            ],
+            [
+              171,
+              0.0,
+              1.0
+            ],
+            [
+              172,
+              0.0,
+              1.0
+            ],
+            [
+              173,
+              0.0,
+              1.0
+            ],
+            [
+              174,
+              0.0,
+              1.0
+            ],
+            [
+              175,
+              0.0,
+              1.0
+            ],
+            [
+              176,
+              0.0,
+              1.0
+            ],
+            [
+              177,
+              0.0,
+              1.0
+            ],
+            [
+              178,
+              0.0,
+              1.0
+            ],
+            [
+              179,
+              0.0,
+              1.0
+            ],
+            [
+              180,
+              0.0,
+              1.0
+            ],
+            [
+              181,
+              0.0,
+              1.0
+            ],
+            [
+              182,
+              0.0,
+              1.0
+            ],
+            [
+              183,
+              0.0,
+              1.0
+            ],
+            [
+              184,
+              0.0,
+              1.0
+            ],
+            [
+              185,
+              0.0,
+              1.0
+            ],
+            [
+              186,
+              0.0,
+              1.0
+            ],
+            [
+              187,
+              0.0,
+              1.0
+            ]
+          ],
+          "stress_domain_audit": {
+            "min_line_compression_MPa": 250.0,
+            "max_line_compression_MPa": 250.0,
+            "min_offset_face_compression_MPa": 250.0,
+            "max_offset_face_compression_MPa": 250.0
+          },
+          "sigma_com_Ed_MPa": 250.0,
+          "assembly_interpretation": "Actual complete lip and only the effective flange strip adjacent to it, including physical polygon corners; uniform fyb ULS, reduced once by chi_d.",
+          "kr_area": 1.0000000000000002,
+          "hw_mm": 98.8,
+          "K_N_mm2": 0.3014224946124003,
+          "sigma_cr_MPa": 372.3598769007087,
+          "lambda_d": 0.8193860489917869,
+          "chi_d": 0.877583886578938,
+          "Eq5_17_As_red_over_As_at_ULS": 0.877583886578938,
+          "Eq5_17_unclamped_As_ratio_at_ULS": 0.877583886578938,
+          "Eq5_17_reduced_strength_minus_stress_MPa": -30.604028355265484,
+          "Eq5_17_reference": "Uniform pure compression ULS at fyb/gammaM0 on all retained physical material.",
+          "integral_fixed_point": false,
+          "t_red_mm": 1.0531006638947256,
+          "step3_optional_refinement_used": false
+        }
+      ],
+      "tension_assemblies": [],
+      "distortional_stage": "uniform_ULS_steps1_2_physical_As_thickness_reduction",
+      "scope": "Normal line stress of this pure component only; not complete section/member resistance.",
+      "section_status": "effective_local_distortional_reduced_uniform_compression_ULS",
+      "centroid_shift_from_gross_mm": [
+        2.6632237282198368,
+        0.0
+      ],
+      "effective_centroid_relative_to_gross_mm": [
+        2.6632237282198368,
+        0.0
+      ],
+      "additional_Mx_per_N_mm": 0.0,
+      "additional_My_per_N_mm": 2.6632237282198368,
+      "moment_transport_required": true,
+      "moment_transport": "Mx_corr=Mx-N*ey; My_corr=My+N*ex; select flexural branches by corrected signs",
+      "sigma_N_contract": "sigma_N=N/Aeff,N; no eccentricity or flexural gradient included; external moment transport is mandatory",
+      "effective_centroid_property_origin": "Original pinned polygon coordinates; sigma_N is uniform in every coordinate origin.",
+      "retained_bands": [
+        {
+          "panel": "lower_lip",
+          "projected_axis": "y",
+          "projected_width_mm": 15.872792206135784,
+          "retained_fraction_bands": [
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "retained_absolute_coordinate_bands_mm": [
+            [
+              0.5272077938642146,
+              16.4
+            ]
+          ],
+          "physical_line_intervals": [
+            [
+              0,
+              0.0,
+              1.0
+            ],
+            [
+              1,
+              0.0,
+              1.0
+            ],
+            [
+              2,
+              0.0,
+              1.0
+            ],
+            [
+              3,
+              0.0,
+              1.0
+            ],
+            [
+              4,
+              0.0,
+              1.0
+            ],
+            [
+              5,
+              0.0,
+              1.0
+            ],
+            [
+              6,
+              0.0,
+              1.0
+            ],
+            [
+              7,
+              0.0,
+              1.0
+            ],
+            [
+              8,
+              0.0,
+              1.0
+            ],
+            [
+              9,
+              0.0,
+              1.0
+            ],
+            [
+              10,
+              0.0,
+              1.0
+            ],
+            [
+              11,
+              0.0,
+              1.0
+            ],
+            [
+              12,
+              0.0,
+              1.0
+            ],
+            [
+              13,
+              0.0,
+              1.0
+            ],
+            [
+              14,
+              0.0,
+              1.0
+            ],
+            [
+              15,
+              0.0,
+              1.0
+            ],
+            [
+              16,
+              0.0,
+              1.0
+            ],
+            [
+              17,
+              0.0,
+              1.0
+            ],
+            [
+              18,
+              0.0,
+              1.0
+            ],
+            [
+              19,
+              0.0,
+              1.0
+            ]
+          ]
+        },
+        {
+          "panel": "lower_flange",
+          "projected_axis": "x",
+          "projected_width_mm": 47.74558441227157,
+          "retained_fraction_bands": [
+            [
+              0.0,
+              0.48149926804253945
+            ],
+            [
+              0.5185007319574606,
+              1.0
+            ]
+          ],
+          "retained_absolute_coordinate_bands_mm": [
+            [
+              0.5272077938642146,
+              23.516671740636255
+            ],
+            [
+              25.283328259363746,
+              48.27279220613578
+            ]
+          ],
+          "physical_line_intervals": [
+            [
+              20,
+              0.0,
+              1.0
+            ],
+            [
+              21,
+              0.0,
+              1.0
+            ],
+            [
+              22,
+              0.0,
+              1.0
+            ],
+            [
+              23,
+              0.0,
+              1.0
+            ],
+            [
+              24,
+              0.0,
+              1.0
+            ],
+            [
+              25,
+              0.0,
+              1.0
+            ],
+            [
+              26,
+              0.0,
+              1.0
+            ],
+            [
+              27,
+              0.0,
+              1.0
+            ],
+            [
+              28,
+              0.0,
+              1.0
+            ],
+            [
+              29,
+              0.0,
+              1.0
+            ],
+            [
+              30,
+              0.0,
+              1.0
+            ],
+            [
+              31,
+              0.0,
+              1.0
+            ],
+            [
+              32,
+              0.0,
+              1.0
+            ],
+            [
+              33,
+              0.0,
+              1.0
+            ],
+            [
+              34,
+              0.0,
+              1.0
+            ],
+            [
+              35,
+              0.0,
+              1.0
+            ],
+            [
+              36,
+              0.0,
+              1.0
+            ],
+            [
+              37,
+              0.0,
+              1.0
+            ],
+            [
+              38,
+              0.0,
+              1.0
+            ],
+            [
+              39,
+              0.0,
+              0.5309761454705779
+            ],
+            [
+              40,
+              0.46902385452942136,
+              1.0
+            ],
+            [
+              41,
+              0.0,
+              1.0
+            ],
+            [
+              42,
+              0.0,
+              1.0
+            ],
+            [
+              43,
+              0.0,
+              1.0
+            ],
+            [
+              44,
+              0.0,
+              1.0
+            ],
+            [
+              45,
+              0.0,
+              1.0
+            ],
+            [
+              46,
+              0.0,
+              1.0
+            ],
+            [
+              47,
+              0.0,
+              1.0
+            ],
+            [
+              48,
+              0.0,
+              1.0
+            ],
+            [
+              49,
+              0.0,
+              1.0
+            ],
+            [
+              50,
+              0.0,
+              1.0
+            ],
+            [
+              51,
+              0.0,
+              1.0
+            ],
+            [
+              52,
+              0.0,
+              1.0
+            ],
+            [
+              53,
+              0.0,
+              1.0
+            ],
+            [
+              54,
+              0.0,
+              1.0
+            ],
+            [
+              55,
+              0.0,
+              1.0
+            ],
+            [
+              56,
+              0.0,
+              1.0
+            ],
+            [
+              57,
+              0.0,
+              1.0
+            ],
+            [
+              58,
+              0.0,
+              1.0
+            ],
+            [
+              59,
+              0.0,
+              1.0
+            ]
+          ]
+        },
+        {
+          "panel": "web",
+          "projected_axis": "y",
+          "projected_width_mm": 97.74558441227157,
+          "retained_fraction_bands": [
+            [
+              0.0,
+              0.2879216490317179
+            ],
+            [
+              0.7120783509682821,
+              1.0
+            ]
+          ],
+          "retained_absolute_coordinate_bands_mm": [
+            [
+              0.5272077938642143,
+              28.670277643414426
+            ],
+            [
+              70.12972235658557,
+              98.27279220613579
+            ]
+          ],
+          "physical_line_intervals": [
+            [
+              60,
+              0.0,
+              1.0
+            ],
+            [
+              61,
+              0.0,
+              1.0
+            ],
+            [
+              62,
+              0.0,
+              1.0
+            ],
+            [
+              63,
+              0.0,
+              1.0
+            ],
+            [
+              64,
+              0.0,
+              1.0
+            ],
+            [
+              65,
+              0.0,
+              1.0
+            ],
+            [
+              66,
+              0.0,
+              1.0
+            ],
+            [
+              67,
+              0.0,
+              1.0
+            ],
+            [
+              68,
+              0.0,
+              1.0
+            ],
+            [
+              69,
+              0.0,
+              1.0
+            ],
+            [
+              70,
+              0.0,
+              1.0
+            ],
+            [
+              71,
+              0.0,
+              1.0
+            ],
+            [
+              72,
+              0.0,
+              1.0
+            ],
+            [
+              73,
+              0.0,
+              1.0
+            ],
+            [
+              74,
+              0.0,
+              1.0
+            ],
+            [
+              75,
+              0.0,
+              1.0
+            ],
+            [
+              76,
+              0.0,
+              1.0
+            ],
+            [
+              77,
+              0.0,
+              1.0
+            ],
+            [
+              78,
+              0.0,
+              1.0
+            ],
+            [
+              79,
+              0.0,
+              1.0
+            ],
+            [
+              80,
+              0.0,
+              1.0
+            ],
+            [
+              81,
+              0.0,
+              1.0
+            ],
+            [
+              82,
+              0.0,
+              1.0
+            ],
+            [
+              83,
+              0.0,
+              1.0
+            ],
+            [
+              84,
+              0.0,
+              1.0
+            ],
+            [
+              85,
+              0.0,
+              1.0
+            ],
+            [
+              86,
+              0.0,
+              1.0
+            ],
+            [
+              87,
+              0.0,
+              1.0
+            ],
+            [
+              88,
+              0.0,
+              0.3220587219100669
+            ],
+            [
+              119,
+              0.6779412780899331,
+              1.0
+            ],
+            [
+              120,
+              0.0,
+              1.0
+            ],
+            [
+              121,
+              0.0,
+              1.0
+            ],
+            [
+              122,
+              0.0,
+              1.0
+            ],
+            [
+              123,
+              0.0,
+              1.0
+            ],
+            [
+              124,
+              0.0,
+              1.0
+            ],
+            [
+              125,
+              0.0,
+              1.0
+            ],
+            [
+              126,
+              0.0,
+              1.0
+            ],
+            [
+              127,
+              0.0,
+              1.0
+            ],
+            [
+              128,
+              0.0,
+              1.0
+            ],
+            [
+              129,
+              0.0,
+              1.0
+            ],
+            [
+              130,
+              0.0,
+              1.0
+            ],
+            [
+              131,
+              0.0,
+              1.0
+            ],
+            [
+              132,
+              0.0,
+              1.0
+            ],
+            [
+              133,
+              0.0,
+              1.0
+            ],
+            [
+              134,
+              0.0,
+              1.0
+            ],
+            [
+              135,
+              0.0,
+              1.0
+            ],
+            [
+              136,
+              0.0,
+              1.0
+            ],
+            [
+              137,
+              0.0,
+              1.0
+            ],
+            [
+              138,
+              0.0,
+              1.0
+            ],
+            [
+              139,
+              0.0,
+              1.0
+            ],
+            [
+              140,
+              0.0,
+              1.0
+            ],
+            [
+              141,
+              0.0,
+              1.0
+            ],
+            [
+              142,
+              0.0,
+              1.0
+            ],
+            [
+              143,
+              0.0,
+              1.0
+            ],
+            [
+              144,
+              0.0,
+              1.0
+            ],
+            [
+              145,
+              0.0,
+              1.0
+            ],
+            [
+              146,
+              0.0,
+              1.0
+            ],
+            [
+              147,
+              0.0,
+              1.0
+            ]
+          ]
+        },
+        {
+          "panel": "upper_flange",
+          "projected_axis": "x",
+          "projected_width_mm": 47.74558441227157,
+          "retained_fraction_bands": [
+            [
+              0.0,
+              0.48149926804253945
+            ],
+            [
+              0.5185007319574606,
+              1.0
+            ]
+          ],
+          "retained_absolute_coordinate_bands_mm": [
+            [
+              0.5272077938642146,
+              23.516671740636255
+            ],
+            [
+              25.283328259363746,
+              48.27279220613578
+            ]
+          ],
+          "physical_line_intervals": [
+            [
+              148,
+              0.0,
+              1.0
+            ],
+            [
+              149,
+              0.0,
+              1.0
+            ],
+            [
+              150,
+              0.0,
+              1.0
+            ],
+            [
+              151,
+              0.0,
+              1.0
+            ],
+            [
+              152,
+              0.0,
+              1.0
+            ],
+            [
+              153,
+              0.0,
+              1.0
+            ],
+            [
+              154,
+              0.0,
+              1.0
+            ],
+            [
+              155,
+              0.0,
+              1.0
+            ],
+            [
+              156,
+              0.0,
+              1.0
+            ],
+            [
+              157,
+              0.0,
+              1.0
+            ],
+            [
+              158,
+              0.0,
+              1.0
+            ],
+            [
+              159,
+              0.0,
+              1.0
+            ],
+            [
+              160,
+              0.0,
+              1.0
+            ],
+            [
+              161,
+              0.0,
+              1.0
+            ],
+            [
+              162,
+              0.0,
+              1.0
+            ],
+            [
+              163,
+              0.0,
+              1.0
+            ],
+            [
+              164,
+              0.0,
+              1.0
+            ],
+            [
+              165,
+              0.0,
+              1.0
+            ],
+            [
+              166,
+              0.0,
+              1.0
+            ],
+            [
+              167,
+              0.0,
+              0.5309761454705765
+            ],
+            [
+              168,
+              0.46902385452942064,
+              1.0
+            ],
+            [
+              169,
+              0.0,
+              1.0
+            ],
+            [
+              170,
+              0.0,
+              1.0
+            ],
+            [
+              171,
+              0.0,
+              1.0
+            ],
+            [
+              172,
+              0.0,
+              1.0
+            ],
+            [
+              173,
+              0.0,
+              1.0
+            ],
+            [
+              174,
+              0.0,
+              1.0
+            ],
+            [
+              175,
+              0.0,
+              1.0
+            ],
+            [
+              176,
+              0.0,
+              1.0
+            ],
+            [
+              177,
+              0.0,
+              1.0
+            ],
+            [
+              178,
+              0.0,
+              1.0
+            ],
+            [
+              179,
+              0.0,
+              1.0
+            ],
+            [
+              180,
+              0.0,
+              1.0
+            ],
+            [
+              181,
+              0.0,
+              1.0
+            ],
+            [
+              182,
+              0.0,
+              1.0
+            ],
+            [
+              183,
+              0.0,
+              1.0
+            ],
+            [
+              184,
+              0.0,
+              1.0
+            ],
+            [
+              185,
+              0.0,
+              1.0
+            ],
+            [
+              186,
+              0.0,
+              1.0
+            ],
+            [
+              187,
+              0.0,
+              1.0
+            ]
+          ]
+        },
+        {
+          "panel": "upper_lip",
+          "projected_axis": "y",
+          "projected_width_mm": 15.872792206135784,
+          "retained_fraction_bands": [
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "retained_absolute_coordinate_bands_mm": [
+            [
+              82.4,
+              98.27279220613579
+            ]
+          ],
+          "physical_line_intervals": [
+            [
+              188,
+              0.0,
+              1.0
+            ],
+            [
+              189,
+              0.0,
+              1.0
+            ],
+            [
+              190,
+              0.0,
+              1.0
+            ],
+            [
+              191,
+              0.0,
+              1.0
+            ],
+            [
+              192,
+              0.0,
+              1.0
+            ],
+            [
+              193,
+              0.0,
+              1.0
+            ],
+            [
+              194,
+              0.0,
+              1.0
+            ],
+            [
+              195,
+              0.0,
+              1.0
+            ],
+            [
+              196,
+              0.0,
+              1.0
+            ],
+            [
+              197,
+              0.0,
+              1.0
+            ],
+            [
+              198,
+              0.0,
+              1.0
+            ],
+            [
+              199,
+              0.0,
+              1.0
+            ],
+            [
+              200,
+              0.0,
+              1.0
+            ],
+            [
+              201,
+              0.0,
+              1.0
+            ],
+            [
+              202,
+              0.0,
+              1.0
+            ],
+            [
+              203,
+              0.0,
+              1.0
+            ],
+            [
+              204,
+              0.0,
+              1.0
+            ],
+            [
+              205,
+              0.0,
+              1.0
+            ],
+            [
+              206,
+              0.0,
+              1.0
+            ],
+            [
+              207,
+              0.0,
+              1.0
+            ]
+          ]
+        }
+      ],
+      "effective_line_intervals": [
+        [
+          0,
+          0.0,
+          1.0
+        ],
+        [
+          1,
+          0.0,
+          1.0
+        ],
+        [
+          2,
+          0.0,
+          1.0
+        ],
+        [
+          3,
+          0.0,
+          1.0
+        ],
+        [
+          4,
+          0.0,
+          1.0
+        ],
+        [
+          5,
+          0.0,
+          1.0
+        ],
+        [
+          6,
+          0.0,
+          1.0
+        ],
+        [
+          7,
+          0.0,
+          1.0
+        ],
+        [
+          8,
+          0.0,
+          1.0
+        ],
+        [
+          9,
+          0.0,
+          1.0
+        ],
+        [
+          10,
+          0.0,
+          1.0
+        ],
+        [
+          11,
+          0.0,
+          1.0
+        ],
+        [
+          12,
+          0.0,
+          1.0
+        ],
+        [
+          13,
+          0.0,
+          1.0
+        ],
+        [
+          14,
+          0.0,
+          1.0
+        ],
+        [
+          15,
+          0.0,
+          1.0
+        ],
+        [
+          16,
+          0.0,
+          1.0
+        ],
+        [
+          17,
+          0.0,
+          1.0
+        ],
+        [
+          18,
+          0.0,
+          1.0
+        ],
+        [
+          19,
+          0.0,
+          1.0
+        ],
+        [
+          20,
+          0.0,
+          1.0
+        ],
+        [
+          21,
+          0.0,
+          1.0
+        ],
+        [
+          22,
+          0.0,
+          1.0
+        ],
+        [
+          23,
+          0.0,
+          1.0
+        ],
+        [
+          24,
+          0.0,
+          1.0
+        ],
+        [
+          25,
+          0.0,
+          1.0
+        ],
+        [
+          26,
+          0.0,
+          1.0
+        ],
+        [
+          27,
+          0.0,
+          1.0
+        ],
+        [
+          28,
+          0.0,
+          1.0
+        ],
+        [
+          29,
+          0.0,
+          1.0
+        ],
+        [
+          30,
+          0.0,
+          1.0
+        ],
+        [
+          31,
+          0.0,
+          1.0
+        ],
+        [
+          32,
+          0.0,
+          1.0
+        ],
+        [
+          33,
+          0.0,
+          1.0
+        ],
+        [
+          34,
+          0.0,
+          1.0
+        ],
+        [
+          35,
+          0.0,
+          1.0
+        ],
+        [
+          36,
+          0.0,
+          1.0
+        ],
+        [
+          37,
+          0.0,
+          1.0
+        ],
+        [
+          38,
+          0.0,
+          1.0
+        ],
+        [
+          39,
+          0.0,
+          0.5309761454705779
+        ],
+        [
+          40,
+          0.46902385452942136,
+          1.0
+        ],
+        [
+          41,
+          0.0,
+          1.0
+        ],
+        [
+          42,
+          0.0,
+          1.0
+        ],
+        [
+          43,
+          0.0,
+          1.0
+        ],
+        [
+          44,
+          0.0,
+          1.0
+        ],
+        [
+          45,
+          0.0,
+          1.0
+        ],
+        [
+          46,
+          0.0,
+          1.0
+        ],
+        [
+          47,
+          0.0,
+          1.0
+        ],
+        [
+          48,
+          0.0,
+          1.0
+        ],
+        [
+          49,
+          0.0,
+          1.0
+        ],
+        [
+          50,
+          0.0,
+          1.0
+        ],
+        [
+          51,
+          0.0,
+          1.0
+        ],
+        [
+          52,
+          0.0,
+          1.0
+        ],
+        [
+          53,
+          0.0,
+          1.0
+        ],
+        [
+          54,
+          0.0,
+          1.0
+        ],
+        [
+          55,
+          0.0,
+          1.0
+        ],
+        [
+          56,
+          0.0,
+          1.0
+        ],
+        [
+          57,
+          0.0,
+          1.0
+        ],
+        [
+          58,
+          0.0,
+          1.0
+        ],
+        [
+          59,
+          0.0,
+          1.0
+        ],
+        [
+          60,
+          0.0,
+          1.0
+        ],
+        [
+          61,
+          0.0,
+          1.0
+        ],
+        [
+          62,
+          0.0,
+          1.0
+        ],
+        [
+          63,
+          0.0,
+          1.0
+        ],
+        [
+          64,
+          0.0,
+          1.0
+        ],
+        [
+          65,
+          0.0,
+          1.0
+        ],
+        [
+          66,
+          0.0,
+          1.0
+        ],
+        [
+          67,
+          0.0,
+          1.0
+        ],
+        [
+          68,
+          0.0,
+          1.0
+        ],
+        [
+          69,
+          0.0,
+          1.0
+        ],
+        [
+          70,
+          0.0,
+          1.0
+        ],
+        [
+          71,
+          0.0,
+          1.0
+        ],
+        [
+          72,
+          0.0,
+          1.0
+        ],
+        [
+          73,
+          0.0,
+          1.0
+        ],
+        [
+          74,
+          0.0,
+          1.0
+        ],
+        [
+          75,
+          0.0,
+          1.0
+        ],
+        [
+          76,
+          0.0,
+          1.0
+        ],
+        [
+          77,
+          0.0,
+          1.0
+        ],
+        [
+          78,
+          0.0,
+          1.0
+        ],
+        [
+          79,
+          0.0,
+          1.0
+        ],
+        [
+          80,
+          0.0,
+          1.0
+        ],
+        [
+          81,
+          0.0,
+          1.0
+        ],
+        [
+          82,
+          0.0,
+          1.0
+        ],
+        [
+          83,
+          0.0,
+          1.0
+        ],
+        [
+          84,
+          0.0,
+          1.0
+        ],
+        [
+          85,
+          0.0,
+          1.0
+        ],
+        [
+          86,
+          0.0,
+          1.0
+        ],
+        [
+          87,
+          0.0,
+          1.0
+        ],
+        [
+          88,
+          0.0,
+          0.3220587219100669
+        ],
+        [
+          119,
+          0.6779412780899331,
+          1.0
+        ],
+        [
+          120,
+          0.0,
+          1.0
+        ],
+        [
+          121,
+          0.0,
+          1.0
+        ],
+        [
+          122,
+          0.0,
+          1.0
+        ],
+        [
+          123,
+          0.0,
+          1.0
+        ],
+        [
+          124,
+          0.0,
+          1.0
+        ],
+        [
+          125,
+          0.0,
+          1.0
+        ],
+        [
+          126,
+          0.0,
+          1.0
+        ],
+        [
+          127,
+          0.0,
+          1.0
+        ],
+        [
+          128,
+          0.0,
+          1.0
+        ],
+        [
+          129,
+          0.0,
+          1.0
+        ],
+        [
+          130,
+          0.0,
+          1.0
+        ],
+        [
+          131,
+          0.0,
+          1.0
+        ],
+        [
+          132,
+          0.0,
+          1.0
+        ],
+        [
+          133,
+          0.0,
+          1.0
+        ],
+        [
+          134,
+          0.0,
+          1.0
+        ],
+        [
+          135,
+          0.0,
+          1.0
+        ],
+        [
+          136,
+          0.0,
+          1.0
+        ],
+        [
+          137,
+          0.0,
+          1.0
+        ],
+        [
+          138,
+          0.0,
+          1.0
+        ],
+        [
+          139,
+          0.0,
+          1.0
+        ],
+        [
+          140,
+          0.0,
+          1.0
+        ],
+        [
+          141,
+          0.0,
+          1.0
+        ],
+        [
+          142,
+          0.0,
+          1.0
+        ],
+        [
+          143,
+          0.0,
+          1.0
+        ],
+        [
+          144,
+          0.0,
+          1.0
+        ],
+        [
+          145,
+          0.0,
+          1.0
+        ],
+        [
+          146,
+          0.0,
+          1.0
+        ],
+        [
+          147,
+          0.0,
+          1.0
+        ],
+        [
+          148,
+          0.0,
+          1.0
+        ],
+        [
+          149,
+          0.0,
+          1.0
+        ],
+        [
+          150,
+          0.0,
+          1.0
+        ],
+        [
+          151,
+          0.0,
+          1.0
+        ],
+        [
+          152,
+          0.0,
+          1.0
+        ],
+        [
+          153,
+          0.0,
+          1.0
+        ],
+        [
+          154,
+          0.0,
+          1.0
+        ],
+        [
+          155,
+          0.0,
+          1.0
+        ],
+        [
+          156,
+          0.0,
+          1.0
+        ],
+        [
+          157,
+          0.0,
+          1.0
+        ],
+        [
+          158,
+          0.0,
+          1.0
+        ],
+        [
+          159,
+          0.0,
+          1.0
+        ],
+        [
+          160,
+          0.0,
+          1.0
+        ],
+        [
+          161,
+          0.0,
+          1.0
+        ],
+        [
+          162,
+          0.0,
+          1.0
+        ],
+        [
+          163,
+          0.0,
+          1.0
+        ],
+        [
+          164,
+          0.0,
+          1.0
+        ],
+        [
+          165,
+          0.0,
+          1.0
+        ],
+        [
+          166,
+          0.0,
+          1.0
+        ],
+        [
+          167,
+          0.0,
+          0.5309761454705765
+        ],
+        [
+          168,
+          0.46902385452942064,
+          1.0
+        ],
+        [
+          169,
+          0.0,
+          1.0
+        ],
+        [
+          170,
+          0.0,
+          1.0
+        ],
+        [
+          171,
+          0.0,
+          1.0
+        ],
+        [
+          172,
+          0.0,
+          1.0
+        ],
+        [
+          173,
+          0.0,
+          1.0
+        ],
+        [
+          174,
+          0.0,
+          1.0
+        ],
+        [
+          175,
+          0.0,
+          1.0
+        ],
+        [
+          176,
+          0.0,
+          1.0
+        ],
+        [
+          177,
+          0.0,
+          1.0
+        ],
+        [
+          178,
+          0.0,
+          1.0
+        ],
+        [
+          179,
+          0.0,
+          1.0
+        ],
+        [
+          180,
+          0.0,
+          1.0
+        ],
+        [
+          181,
+          0.0,
+          1.0
+        ],
+        [
+          182,
+          0.0,
+          1.0
+        ],
+        [
+          183,
+          0.0,
+          1.0
+        ],
+        [
+          184,
+          0.0,
+          1.0
+        ],
+        [
+          185,
+          0.0,
+          1.0
+        ],
+        [
+          186,
+          0.0,
+          1.0
+        ],
+        [
+          187,
+          0.0,
+          1.0
+        ],
+        [
+          188,
+          0.0,
+          1.0
+        ],
+        [
+          189,
+          0.0,
+          1.0
+        ],
+        [
+          190,
+          0.0,
+          1.0
+        ],
+        [
+          191,
+          0.0,
+          1.0
+        ],
+        [
+          192,
+          0.0,
+          1.0
+        ],
+        [
+          193,
+          0.0,
+          1.0
+        ],
+        [
+          194,
+          0.0,
+          1.0
+        ],
+        [
+          195,
+          0.0,
+          1.0
+        ],
+        [
+          196,
+          0.0,
+          1.0
+        ],
+        [
+          197,
+          0.0,
+          1.0
+        ],
+        [
+          198,
+          0.0,
+          1.0
+        ],
+        [
+          199,
+          0.0,
+          1.0
+        ],
+        [
+          200,
+          0.0,
+          1.0
+        ],
+        [
+          201,
+          0.0,
+          1.0
+        ],
+        [
+          202,
+          0.0,
+          1.0
+        ],
+        [
+          203,
+          0.0,
+          1.0
+        ],
+        [
+          204,
+          0.0,
+          1.0
+        ],
+        [
+          205,
+          0.0,
+          1.0
+        ],
+        [
+          206,
+          0.0,
+          1.0
+        ],
+        [
+          207,
+          0.0,
+          1.0
+        ]
+      ],
+      "effective_weighted_line_intervals": [
+        [
+          0,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          1,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          2,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          3,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          4,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          5,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          6,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          7,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          8,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          9,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          10,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          11,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          12,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          13,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          14,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          15,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          16,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          17,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          18,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          19,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          20,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          21,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          22,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          23,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          24,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          25,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          26,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          27,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          28,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          29,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          30,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          31,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          32,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          33,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          34,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          35,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          36,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          37,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          38,
+          0.0,
+          1.0,
+          1.0531006638947267
+        ],
+        [
+          39,
+          0.0,
+          0.5309761454705767,
+          1.0531006638947267
+        ],
+        [
+          39,
+          0.5309761454705767,
+          0.5309761454705779,
+          1.2
+        ],
+        [
+          40,
+          0.46902385452942136,
+          1.0,
+          1.2
+        ],
+        [
+          41,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          42,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          43,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          44,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          45,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          46,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          47,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          48,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          49,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          50,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          51,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          52,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          53,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          54,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          55,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          56,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          57,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          58,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          59,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          60,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          61,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          62,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          63,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          64,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          65,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          66,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          67,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          68,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          69,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          70,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          71,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          72,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          73,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          74,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          75,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          76,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          77,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          78,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          79,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          80,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          81,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          82,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          83,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          84,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          85,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          86,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          87,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          88,
+          0.0,
+          0.3220587219100669,
+          1.2
+        ],
+        [
+          119,
+          0.6779412780899331,
+          1.0,
+          1.2
+        ],
+        [
+          120,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          121,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          122,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          123,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          124,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          125,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          126,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          127,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          128,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          129,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          130,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          131,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          132,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          133,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          134,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          135,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          136,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          137,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          138,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          139,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          140,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          141,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          142,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          143,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          144,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          145,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          146,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          147,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          148,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          149,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          150,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          151,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          152,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          153,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          154,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          155,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          156,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          157,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          158,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          159,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          160,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          161,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          162,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          163,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          164,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          165,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          166,
+          0.0,
+          1.0,
+          1.2
+        ],
+        [
+          167,
+          0.0,
+          0.5309761454705765,
+          1.2
+        ],
+        [
+          168,
+          0.46902385452942064,
+          0.4690238545294214,
+          1.2
+        ],
+        [
+          168,
+          0.4690238545294214,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          169,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          170,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          171,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          172,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          173,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          174,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          175,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          176,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          177,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          178,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          179,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          180,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          181,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          182,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          183,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          184,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          185,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          186,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          187,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          188,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          189,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          190,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          191,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          192,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          193,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          194,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          195,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          196,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          197,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          198,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          199,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          200,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          201,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          202,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          203,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          204,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          205,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          206,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ],
+        [
+          207,
+          0.0,
+          1.0,
+          1.0531006638947256
+        ]
+      ],
+      "effective_weighted_line_interval_columns": [
+        "segment_index",
+        "lo_fraction",
+        "hi_fraction",
+        "thickness_mm"
+      ],
+      "local_only_properties": {
+        "A_mm2": 217.33492129729308,
+        "Ix_strong_mm4": 423305.99503772636,
+        "Iy_weak_mm4": 83000.85502039152,
+        "Ixy_mm4": -2.0372681319713593e-10,
+        "centroid_xy_mm": [
+          21.093824193050686,
+          49.4
+        ]
+      },
+      "distortional_reduction_audit": {
+        "physical_As_subset_of_local_retained": true,
+        "physical_As_disjoint": true,
+        "thickness_reduction_applied_once": true,
+        "step3_optional_refinement_used": false,
+        "subtraction_vs_weighted_max_residual": 1.4551915228366852e-10
+      },
+      "symmetry_audit": {
+        "gross_mirror_max_error_mm": 1.1368683772161603e-13,
+        "retained_mirror_max_error": 2.1649348980190553e-15,
+        "retained_thickness_mirror_max_error_mm": 1.1102230246251565e-15,
+        "raw_effective_centroid_xy_mm": [
+          19.940875123219467,
+          49.400000000000006
+        ],
+        "raw_ey_mm": -4.263256414560601e-14,
+        "raw_Ixy_mm4": -1.4551915228366852e-10,
+        "identity": "Pinned contour, retained intervals and their thicknesses mirror about y=Cg_y; hence ey=Ixy=0 exactly, without erasing ex"
+      },
+      "uniform_unit_N_resultants_about_gross": [
+        1.0,
+        0.0,
+        -2.6632237282198368
+      ],
+      "effective_stress_domain_audit": {
+        "min_line_compression_MPa": 250.0,
+        "max_line_compression_MPa": 250.0,
+        "min_offset_face_compression_MPa": 250.0,
+        "max_offset_face_compression_MPa": 250.0
+      },
+      "proof": "EN1993-1-3 6.1.3 uniform ULS compression; EN1993-1-5 Table4.1 psi=1 effective web/flange strips; EN1993-1-3 5.5.3.2 steps1-2, Eq5.17 and (12): t_red=t*chi_d only on disjoint physical As retained in local section. Optional step3 omitted. No service-stress reduction.",
+      "fixed_point_statement": "Uniform ULS compression determines local widths and As reduction independently of N magnitude or centroid. Steps1-2 are used without optional step3 refinement; this is not an integral effective section."
+    },
+    "Mx_positive": {
+      "action": "Mx_positive",
+      "physical_action_axis": "Mx_Nmm",
+      "physical_action_sign": 1,
+      "eligible": false,
+      "blocking_reasons": [
+        {
+          "code": "ULS_LOCAL_REDUCTION_NOT_IMPLEMENTED",
+          "panel": "lower_flange",
+          "rho": 0.9629985360850789,
+          "detail": "ULS fyb proof requires a reduced local section; gross coefficients are withheld."
+        }
+      ],
+      "sigma_coefficients_c0_cx_cy": null,
+      "effective_properties": null,
+      "ULS_pure_effort_signed": 2230665.314119619,
+      "ULS_pure_effort_role": "Pure-component line-stress normalization only, NOT a design resistance or exterior-fibre strength.",
+      "ULS_max_abs_line_stress_MPa": 250.00000000000003,
+      "local_panels": [
+        {
+          "panel": "lower_lip",
+          "branch": "EN1993-1-3_Eq5.13_ULS_fyb",
+          "b_mm": 15.872792206135784,
+          "compression_stress_ends_MPa": [
+            247.33194436303538,
+            167.00404858299606
+          ],
+          "bpc_over_bp": 0.33244523868590786,
+          "k_sigma": 0.5,
+          "sigma_cr_MPa": 542.4031917771971,
+          "lambda_p": 0.6789048107219512,
+          "lambda_p_integral_limit": 0.748,
+          "rho": 1.0,
+          "slenderness_reference_stress_MPa": 250.0
+        },
+        {
+          "panel": "lower_flange",
+          "branch": "EN1993-1-5_Table4.1_ULS_fyb",
+          "b_mm": 47.74558441227157,
+          "compression_stress_ends_MPa": [
+            250.00000000000003,
+            250.00000000000003
+          ],
+          "psi": 1.0,
+          "k_sigma": 4.0,
+          "sigma_cr_MPa": 479.5704975543748,
+          "lambda_p": 0.7220109353035692,
+          "lambda_p_integral_limit": 0.6732050807568878,
+          "rho": 0.9629985360850789,
+          "flange_lip_adjacent_start_fraction": 0.5185007319574606,
+          "slenderness_reference_stress_MPa": 250.0
+        },
+        {
+          "panel": "web",
+          "branch": "EN1993-1-5_Table4.1_ULS_fyb",
+          "b_mm": 97.74558441227157,
+          "compression_stress_ends_MPa": [
+            247.33194436303538,
+            -247.33194436303492
+          ],
+          "psi": -0.9999999999999981,
+          "k_sigma": 23.9,
+          "sigma_cr_MPa": 683.6951508769079,
+          "lambda_p": 0.6046983095168206,
+          "lambda_p_integral_limit": 0.874165738677394,
+          "rho": 1.0,
+          "flange_lip_adjacent_start_fraction": 0.6999999999999997,
+          "slenderness_reference_stress_MPa": 250.0
+        },
+        {
+          "panel": "upper_flange",
+          "branch": "tension",
+          "rho": 1.0,
+          "b_mm": 47.74558441227157,
+          "compression_stress_ends_MPa": [
+            -249.99999999999952,
+            -249.99999999999952
+          ]
+        },
+        {
+          "panel": "upper_lip",
+          "branch": "tension",
+          "rho": 1.0,
+          "b_mm": 15.872792206135784,
+          "compression_stress_ends_MPa": [
+            -167.00404858299558,
+            -247.33194436303492
+          ]
+        }
+      ],
+      "stiffeners": [],
+      "tension_assemblies": [
+        {
+          "flange": "upper_flange",
+          "lip": "upper_lip",
+          "audited_region": "entire flange and lip",
+          "min_line_compression_MPa": -249.99999999999952,
+          "max_line_compression_MPa": -167.00404858299558,
+          "min_offset_face_compression_MPa": -253.03643724696306,
+          "max_offset_face_compression_MPa": -167.00404858299558
+        }
+      ],
+      "distortional_stage": "not_attempted_because_local_or_topology_guard_failed",
+      "scope": "Normal line stress of this pure component only; not complete section/member resistance.",
+      "proof": "EN1993-1-3 5.5.1(3),5.5.2,5.5.3 and 6.1.3/6.1.4; local slenderness at fyb; integral local widths and exact Eq.5.17 As_red/As=1 required at the pure-component ULS field; chi_d may be below 1 only with this unchanged-section fixed-point witness. No actual-service-stress reduction law and no optional plastic/strength enhancement.",
+      "section_status": "blocked_no_effective_coefficients"
+    },
+    "Mx_negative": {
+      "action": "Mx_negative",
+      "physical_action_axis": "Mx_Nmm",
+      "physical_action_sign": -1,
+      "eligible": false,
+      "blocking_reasons": [
+        {
+          "code": "ULS_LOCAL_REDUCTION_NOT_IMPLEMENTED",
+          "panel": "upper_flange",
+          "rho": 0.9629985360850789,
+          "detail": "ULS fyb proof requires a reduced local section; gross coefficients are withheld."
+        }
+      ],
+      "sigma_coefficients_c0_cx_cy": null,
+      "effective_properties": null,
+      "ULS_pure_effort_signed": -2230665.314119619,
+      "ULS_pure_effort_role": "Pure-component line-stress normalization only, NOT a design resistance or exterior-fibre strength.",
+      "ULS_max_abs_line_stress_MPa": 250.00000000000003,
+      "local_panels": [
+        {
+          "panel": "lower_lip",
+          "branch": "tension",
+          "rho": 1.0,
+          "b_mm": 15.872792206135784,
+          "compression_stress_ends_MPa": [
+            -247.33194436303538,
+            -167.00404858299606
+          ]
+        },
+        {
+          "panel": "lower_flange",
+          "branch": "tension",
+          "rho": 1.0,
+          "b_mm": 47.74558441227157,
+          "compression_stress_ends_MPa": [
+            -250.00000000000003,
+            -250.00000000000003
+          ]
+        },
+        {
+          "panel": "web",
+          "branch": "EN1993-1-5_Table4.1_ULS_fyb",
+          "b_mm": 97.74558441227157,
+          "compression_stress_ends_MPa": [
+            -247.33194436303538,
+            247.33194436303492
+          ],
+          "psi": -1.0000000000000018,
+          "k_sigma": 23.9,
+          "sigma_cr_MPa": 683.6951508769079,
+          "lambda_p": 0.6046983095168206,
+          "lambda_p_integral_limit": 0.8741657386773942,
+          "rho": 1.0,
+          "flange_lip_adjacent_start_fraction": 0.8000000000000002,
+          "slenderness_reference_stress_MPa": 250.0
+        },
+        {
+          "panel": "upper_flange",
+          "branch": "EN1993-1-5_Table4.1_ULS_fyb",
+          "b_mm": 47.74558441227157,
+          "compression_stress_ends_MPa": [
+            249.99999999999952,
+            249.99999999999952
+          ],
+          "psi": 1.0,
+          "k_sigma": 4.0,
+          "sigma_cr_MPa": 479.5704975543748,
+          "lambda_p": 0.7220109353035692,
+          "lambda_p_integral_limit": 0.6732050807568878,
+          "rho": 0.9629985360850789,
+          "flange_lip_adjacent_start_fraction": 0.5185007319574606,
+          "slenderness_reference_stress_MPa": 250.0
+        },
+        {
+          "panel": "upper_lip",
+          "branch": "EN1993-1-3_Eq5.13_ULS_fyb",
+          "b_mm": 15.872792206135784,
+          "compression_stress_ends_MPa": [
+            167.00404858299558,
+            247.33194436303492
+          ],
+          "bpc_over_bp": 0.33244523868590786,
+          "k_sigma": 0.5,
+          "sigma_cr_MPa": 542.4031917771971,
+          "lambda_p": 0.6789048107219512,
+          "lambda_p_integral_limit": 0.748,
+          "rho": 1.0,
+          "slenderness_reference_stress_MPa": 250.0
+        }
+      ],
+      "stiffeners": [],
+      "tension_assemblies": [
+        {
+          "flange": "lower_flange",
+          "lip": "lower_lip",
+          "audited_region": "entire flange and lip",
+          "min_line_compression_MPa": -250.00000000000003,
+          "max_line_compression_MPa": -167.00404858299606,
+          "min_offset_face_compression_MPa": -253.0364372469636,
+          "max_offset_face_compression_MPa": -167.00404858299606
+        }
+      ],
+      "distortional_stage": "not_attempted_because_local_or_topology_guard_failed",
+      "scope": "Normal line stress of this pure component only; not complete section/member resistance.",
+      "proof": "EN1993-1-3 5.5.1(3),5.5.2,5.5.3 and 6.1.3/6.1.4; local slenderness at fyb; integral local widths and exact Eq.5.17 As_red/As=1 required at the pure-component ULS field; chi_d may be below 1 only with this unchanged-section fixed-point witness. No actual-service-stress reduction law and no optional plastic/strength enhancement.",
+      "section_status": "blocked_no_effective_coefficients"
+    },
+    "My_positive": {
+      "action": "My_positive",
+      "physical_action_axis": "My_Nmm",
+      "physical_action_sign": 1,
+      "eligible": true,
+      "blocking_reasons": [],
+      "sigma_coefficients_c0_cx_cy": [
+        0.0,
+        -9.878127633106365e-06,
+        0.0
+      ],
+      "effective_properties": {
+        "A_mm2": 271.3262305980443,
+        "Ix_strong_mm4": 440779.4660700371,
+        "Iy_weak_mm4": 101233.7597915336,
+        "Ixy_mm4": -5.238689482212067e-10,
+        "centroid_xy_mm": [
+          17.27765139499963,
+          49.40000000000005
+        ]
+      },
+      "ULS_pure_effort_signed": 802872.9161338168,
+      "ULS_pure_effort_role": "Pure-component line-stress normalization only, NOT a design resistance or exterior-fibre strength.",
+      "ULS_max_abs_line_stress_MPa": 250.0,
+      "local_panels": [
+        {
+          "panel": "lower_lip",
+          "branch": "EN1993-1-3_Eq5.13_ULS_fyb",
+          "b_mm": 15.872792206135784,
+          "compression_stress_ends_MPa": [
+            250.00000000000003,
+            250.00000000000003
+          ],
+          "bpc_over_bp": 0.33244523868590786,
+          "k_sigma": 0.5,
+          "sigma_cr_MPa": 542.4031917771971,
+          "lambda_p": 0.6789048107219512,
+          "lambda_p_integral_limit": 0.748,
+          "rho": 1.0,
+          "slenderness_reference_stress_MPa": 250.0
+        },
+        {
+          "panel": "lower_flange",
+          "branch": "EN1993-1-5_Table4.1_ULS_fyb",
+          "b_mm": 47.74558441227157,
+          "compression_stress_ends_MPa": [
+            -132.84577722167492,
+            245.8187776514487
+          ],
+          "psi": -0.5404216003792826,
+          "k_sigma": 14.065554716596305,
+          "sigma_cr_MPa": 1686.3562684540934,
+          "lambda_p": 0.3850306820908281,
+          "lambda_p_integral_limit": 0.8387081162606833,
+          "rho": 1.0,
+          "flange_lip_adjacent_start_fraction": 0.7403308289746703,
+          "slenderness_reference_stress_MPa": 250.0
+        },
+        {
+          "panel": "web",
+          "branch": "tension",
+          "rho": 1.0,
+          "b_mm": 97.74558441227157,
+          "compression_stress_ends_MPa": [
+            -137.02699957022625,
+            -137.02699957022625
+          ]
+        },
+        {
+          "panel": "upper_flange",
+          "branch": "EN1993-1-5_Table4.1_ULS_fyb",
+          "b_mm": 47.74558441227157,
+          "compression_stress_ends_MPa": [
+            -132.84577722167492,
+            245.8187776514487
+          ],
+          "psi": -0.5404216003792826,
+          "k_sigma": 14.065554716596305,
+          "sigma_cr_MPa": 1686.3562684540934,
+          "lambda_p": 0.3850306820908281,
+          "lambda_p_integral_limit": 0.8387081162606833,
+          "rho": 1.0,
+          "flange_lip_adjacent_start_fraction": 0.7403308289746703,
+          "slenderness_reference_stress_MPa": 250.0
+        },
+        {
+          "panel": "upper_lip",
+          "branch": "EN1993-1-3_Eq5.13_ULS_fyb",
+          "b_mm": 15.872792206135784,
+          "compression_stress_ends_MPa": [
+            250.00000000000003,
+            250.00000000000003
+          ],
+          "bpc_over_bp": 0.33244523868590786,
+          "k_sigma": 0.5,
+          "sigma_cr_MPa": 542.4031917771971,
+          "lambda_p": 0.6789048107219512,
+          "lambda_p_integral_limit": 0.748,
+          "rho": 1.0,
+          "slenderness_reference_stress_MPa": 250.0
+        }
+      ],
+      "stiffeners": [
+        {
+          "flange": "lower_flange",
+          "As_mm2": 34.26187459149355,
+          "Is_mm4": 1001.8297260962311,
+          "centroid_xy_mm": [
+            45.86627381744816,
+            4.718174033464275
+          ],
+          "b1_mm": 45.86627381744816,
+          "line_intervals": [
+            [
+              0,
+              0.0,
+              1.0
+            ],
+            [
+              1,
+              0.0,
+              1.0
+            ],
+            [
+              2,
+              0.0,
+              1.0
+            ],
+            [
+              3,
+              0.0,
+              1.0
+            ],
+            [
+              4,
+              0.0,
+              1.0
+            ],
+            [
+              5,
+              0.0,
+              1.0
+            ],
+            [
+              6,
+              0.0,
+              1.0
+            ],
+            [
+              7,
+              0.0,
+              1.0
+            ],
+            [
+              8,
+              0.0,
+              1.0
+            ],
+            [
+              9,
+              0.0,
+              1.0
+            ],
+            [
+              10,
+              0.0,
+              1.0
+            ],
+            [
+              11,
+              0.0,
+              1.0
+            ],
+            [
+              12,
+              0.0,
+              1.0
+            ],
+            [
+              13,
+              0.0,
+              1.0
+            ],
+            [
+              14,
+              0.0,
+              1.0
+            ],
+            [
+              15,
+              0.0,
+              1.0
+            ],
+            [
+              16,
+              0.0,
+              1.0
+            ],
+            [
+              17,
+              0.0,
+              1.0
+            ],
+            [
+              18,
+              0.0,
+              1.0
+            ],
+            [
+              19,
+              0.0,
+              1.0
+            ],
+            [
+              20,
+              0.0,
+              1.0
+            ],
+            [
+              21,
+              0.0,
+              1.0
+            ],
+            [
+              22,
+              0.0,
+              1.0
+            ],
+            [
+              23,
+              0.0,
+              1.0
+            ],
+            [
+              24,
+              0.0,
+              1.0
+            ],
+            [
+              25,
+              0.0,
+              1.0
+            ],
+            [
+              26,
+              0.0,
+              1.0
+            ],
+            [
+              27,
+              0.0,
+              1.0
+            ],
+            [
+              28,
+              0.0,
+              1.0
+            ],
+            [
+              29,
+              0.0,
+              1.0
+            ],
+            [
+              30,
+              0.0,
+              1.0
+            ],
+            [
+              31,
+              0.0,
+              1.0
+            ],
+            [
+              32,
+              0.0,
+              1.0
+            ],
+            [
+              33,
+              0.0,
+              0.9072198858329299
+            ]
+          ],
+          "stress_domain_audit": {
+            "min_line_compression_MPa": 147.49126659086917,
+            "max_line_compression_MPa": 250.00000000000003,
+            "min_offset_face_compression_MPa": 147.49126659086917,
+            "max_offset_face_compression_MPa": 254.75852868324054
+          },
+          "sigma_com_Ed_MPa": 226.7329663525891,
+          "assembly_interpretation": "For a mixed flange with a compressed lip, Eq.5.10b is applied to the wholly compressed physical As with kr=As2/As1; bounded interpretation, not an exact coupled distortion solution.",
+          "kr_area": 0.9999999999999993,
+          "hw_mm": 98.8,
+          "K_N_mm2": 0.24418819415837625,
+          "sigma_cr_MPa": 418.39627604721284,
+          "lambda_d": 0.7729939576377359,
+          "chi_d": 0.9111253686279169,
+          "Eq5_17_As_red_over_As_at_ULS": 1.0,
+          "Eq5_17_unclamped_As_ratio_at_ULS": 1.004623834907006,
+          "Eq5_17_reduced_strength_minus_stress_MPa": 1.0483758043901332,
+          "Eq5_17_reference": "Pure-component ULS field, max absolute line stress=fyb/gammaM0; stress at physical As centroid.",
+          "integral_fixed_point": true
+        },
+        {
+          "flange": "upper_flange",
+          "As_mm2": 34.26187459149353,
+          "Is_mm4": 1001.8297260960098,
+          "centroid_xy_mm": [
+            45.866273817448175,
+            94.08182596653579
+          ],
+          "b1_mm": 45.866273817448175,
+          "line_intervals": [
+            [
+              188,
+              0.0,
+              1.0
+            ],
+            [
+              189,
+              0.0,
+              1.0
+            ],
+            [
+              190,
+              0.0,
+              1.0
+            ],
+            [
+              191,
+              0.0,
+              1.0
+            ],
+            [
+              192,
+              0.0,
+              1.0
+            ],
+            [
+              193,
+              0.0,
+              1.0
+            ],
+            [
+              194,
+              0.0,
+              1.0
+            ],
+            [
+              195,
+              0.0,
+              1.0
+            ],
+            [
+              196,
+              0.0,
+              1.0
+            ],
+            [
+              197,
+              0.0,
+              1.0
+            ],
+            [
+              198,
+              0.0,
+              1.0
+            ],
+            [
+              199,
+              0.0,
+              1.0
+            ],
+            [
+              200,
+              0.0,
+              1.0
+            ],
+            [
+              201,
+              0.0,
+              1.0
+            ],
+            [
+              202,
+              0.0,
+              1.0
+            ],
+            [
+              203,
+              0.0,
+              1.0
+            ],
+            [
+              204,
+              0.0,
+              1.0
+            ],
+            [
+              205,
+              0.0,
+              1.0
+            ],
+            [
+              206,
+              0.0,
+              1.0
+            ],
+            [
+              207,
+              0.0,
+              1.0
+            ],
+            [
+              174,
+              0.09278011416707013,
+              1.0
+            ],
+            [
+              175,
+              0.0,
+              1.0
+            ],
+            [
+              176,
+              0.0,
+              1.0
+            ],
+            [
+              177,
+              0.0,
+              1.0
+            ],
+            [
+              178,
+              0.0,
+              1.0
+            ],
+            [
+              179,
+              0.0,
+              1.0
+            ],
+            [
+              180,
+              0.0,
+              1.0
+            ],
+            [
+              181,
+              0.0,
+              1.0
+            ],
+            [
+              182,
+              0.0,
+              1.0
+            ],
+            [
+              183,
+              0.0,
+              1.0
+            ],
+            [
+              184,
+              0.0,
+              1.0
+            ],
+            [
+              185,
+              0.0,
+              1.0
+            ],
+            [
+              186,
+              0.0,
+              1.0
+            ],
+            [
+              187,
+              0.0,
+              1.0
+            ]
+          ],
+          "stress_domain_audit": {
+            "min_line_compression_MPa": 147.49126659086917,
+            "max_line_compression_MPa": 250.00000000000003,
+            "min_offset_face_compression_MPa": 147.49126659086917,
+            "max_offset_face_compression_MPa": 254.75852868324054
+          },
+          "sigma_com_Ed_MPa": 226.73296635258922,
+          "assembly_interpretation": "For a mixed flange with a compressed lip, Eq.5.10b is applied to the wholly compressed physical As with kr=As2/As1; bounded interpretation, not an exact coupled distortion solution.",
+          "kr_area": 1.0000000000000007,
+          "hw_mm": 98.8,
+          "K_N_mm2": 0.24418819415837603,
+          "sigma_cr_MPa": 418.3962760471667,
+          "lambda_d": 0.7729939576377786,
+          "chi_d": 0.9111253686278861,
+          "Eq5_17_As_red_over_As_at_ULS": 1.0,
+          "Eq5_17_unclamped_As_ratio_at_ULS": 1.0046238349069714,
+          "Eq5_17_reduced_strength_minus_stress_MPa": 1.0483758043822888,
+          "Eq5_17_reference": "Pure-component ULS field, max absolute line stress=fyb/gammaM0; stress at physical As centroid.",
+          "integral_fixed_point": true
+        }
+      ],
+      "tension_assemblies": [],
+      "distortional_stage": "evaluated_in_restricted_assembly_domain",
+      "scope": "Normal line stress of this pure component only; not complete section/member resistance.",
+      "proof": "EN1993-1-3 5.5.1(3),5.5.2,5.5.3 and 6.1.3/6.1.4; local slenderness at fyb; integral local widths and exact Eq.5.17 As_red/As=1 required at the pure-component ULS field; chi_d may be below 1 only with this unchanged-section fixed-point witness. No actual-service-stress reduction law and no optional plastic/strength enhancement.",
+      "section_status": "integral_demonstrated_at_ULS",
+      "centroid_shift_from_gross_mm": [
+        0.0,
+        0.0
+      ],
+      "additional_Mx_per_N_mm": 0.0,
+      "additional_My_per_N_mm": 0.0,
+      "effective_centroid_relative_to_gross_mm": [
+        0.0,
+        0.0
+      ],
+      "effective_centroid_property_origin": "Original pinned polygon coordinates; stress coefficients use gross-centred coordinates.",
+      "fixed_point_statement": "Every local rho=1 and every compressed As has Eq.5.17 As_red/As=1 exactly. Thus geometry, centroid, stiffness and pure ULS stresses remain unchanged on re-evaluation; this is an integral effective-section fixed point."
+    },
+    "My_negative": {
+      "action": "My_negative",
+      "physical_action_axis": "My_Nmm",
+      "physical_action_sign": -1,
+      "eligible": false,
+      "blocking_reasons": [
+        {
+          "code": "TENSION_LIP_OUTSTAND_INTEGRAL_BOUND_NOT_DEMONSTRATED",
+          "flange": "lower_flange",
+          "rho": 0.7496522146654919,
+          "detail": "The free-outstand triangular ULS bound or noncompressive-lip proof failed; no effective coefficients are supplied."
+        },
+        {
+          "code": "TENSION_LIP_OUTSTAND_INTEGRAL_BOUND_NOT_DEMONSTRATED",
+          "flange": "upper_flange",
+          "rho": 0.7496522146654919,
+          "detail": "The free-outstand triangular ULS bound or noncompressive-lip proof failed; no effective coefficients are supplied."
+        },
+        {
+          "code": "ULS_LOCAL_REDUCTION_NOT_IMPLEMENTED",
+          "panel": "web",
+          "rho": 0.5758432980634358,
+          "detail": "ULS fyb proof requires a reduced local section; gross coefficients are withheld."
+        }
+      ],
+      "sigma_coefficients_c0_cx_cy": null,
+      "effective_properties": null,
+      "ULS_pure_effort_signed": -802872.9161338168,
+      "ULS_pure_effort_role": "Pure-component line-stress normalization only, NOT a design resistance or exterior-fibre strength.",
+      "ULS_max_abs_line_stress_MPa": 250.0,
+      "local_panels": [
+        {
+          "panel": "lower_lip",
+          "branch": "tension",
+          "rho": 1.0,
+          "b_mm": 15.872792206135784,
+          "compression_stress_ends_MPa": [
+            -250.00000000000003,
+            -250.00000000000003
+          ]
+        },
+        {
+          "panel": "lower_flange",
+          "branch": "EN1993-1-5_Table4.1_ULS_fyb",
+          "b_mm": 47.74558441227157,
+          "compression_stress_ends_MPa": [
+            132.84577722167492,
+            -245.8187776514487
+          ],
+          "psi": -1.850407162293611,
+          "k_sigma": 48.58642952531121,
+          "sigma_cr_MPa": 5825.154545461017,
+          "lambda_p": 0.20716494944542255,
+          "lambda_p_integral_limit": 0.9321717181007436,
+          "rho": 1.0,
+          "flange_lip_adjacent_start_fraction": 0.7895037565379945,
+          "slenderness_reference_stress_MPa": 250.0
+        },
+        {
+          "panel": "web",
+          "branch": "EN1993-1-5_Table4.1_ULS_fyb",
+          "b_mm": 97.74558441227157,
+          "compression_stress_ends_MPa": [
+            137.02699957022625,
+            137.02699957022625
+          ],
+          "psi": 1.0,
+          "k_sigma": 4.0,
+          "sigma_cr_MPa": 114.42596667395948,
+          "lambda_p": 1.478113247372031,
+          "lambda_p_integral_limit": 0.6732050807568878,
+          "rho": 0.5758432980634358,
+          "flange_lip_adjacent_start_fraction": 0.7120783509682821,
+          "slenderness_reference_stress_MPa": 250.0,
+          "Eq4_4_ULS_integral_trial": {
+            "lambda_p_at_fyb": 1.478113247372031,
+            "rho_at_fyb": 0.5758432980634358,
+            "sigma_com_Ed_MPa": 141.78552825346674,
+            "lambda_p_reduced": 1.113149915751061,
+            "rho_reduced_trial": 0.7208037643438534,
+            "stress_domain_audit": {
+              "min_line_compression_MPa": 132.84577722167492,
+              "max_line_compression_MPa": 137.02699957022625,
+              "min_offset_face_compression_MPa": 129.3199400387939,
+              "max_offset_face_compression_MPa": 141.78552825346674
+            },
+            "integral_trial": false,
+            "reference": "EN1993-1-5 4.4(4)/Eq4.4; EN1993-1-3 6.1.4.1(4): pure moment state with max absolute line stress fyb/gammaM0",
+            "condition": "Accepted only if ALL section panels/bounds remain integral, so geometry, stresses and this evaluation remain unchanged; never a reduced-section or service-stress fallback"
+          }
+        },
+        {
+          "panel": "upper_flange",
+          "branch": "EN1993-1-5_Table4.1_ULS_fyb",
+          "b_mm": 47.74558441227157,
+          "compression_stress_ends_MPa": [
+            132.84577722167492,
+            -245.8187776514487
+          ],
+          "psi": -1.850407162293611,
+          "k_sigma": 48.58642952531121,
+          "sigma_cr_MPa": 5825.154545461017,
+          "lambda_p": 0.20716494944542255,
+          "lambda_p_integral_limit": 0.9321717181007436,
+          "rho": 1.0,
+          "flange_lip_adjacent_start_fraction": 0.7895037565379945,
+          "slenderness_reference_stress_MPa": 250.0
+        },
+        {
+          "panel": "upper_lip",
+          "branch": "tension",
+          "rho": 1.0,
+          "b_mm": 15.872792206135784,
+          "compression_stress_ends_MPa": [
+            -250.00000000000003,
+            -250.00000000000003
+          ]
+        }
+      ],
+      "stiffeners": [],
+      "tension_assemblies": [
+        {
+          "flange": "lower_flange",
+          "lip": "lower_lip",
+          "audited_region": "entire flange and lip",
+          "min_line_compression_MPa": -250.00000000000003,
+          "max_line_compression_MPa": 132.84577722167492,
+          "min_offset_face_compression_MPa": -254.75852868324054,
+          "max_offset_face_compression_MPa": 136.04140977080147
+        },
+        {
+          "flange": "upper_flange",
+          "lip": "upper_lip",
+          "audited_region": "entire flange and lip",
+          "min_line_compression_MPa": -250.00000000000003,
+          "max_line_compression_MPa": 132.84577722167492,
+          "min_offset_face_compression_MPa": -254.75852868324054,
+          "max_offset_face_compression_MPa": 136.0414097708015
+        }
+      ],
+      "distortional_stage": "not_attempted_because_local_or_topology_guard_failed",
+      "scope": "Normal line stress of this pure component only; not complete section/member resistance.",
+      "outstand_flange_bounds": [
+        {
+          "panel": "lower_flange",
+          "branch": "EN1993-1-5_Table4.2_unstiffened_outstand_bound",
+          "b_mm": 47.74558441227157,
+          "supported_edge": "web_flange_junction",
+          "free_edge": "lip_side_no_restraint_credit",
+          "bound_stress_ends_MPa": [
+            250.0,
+            0.0
+          ],
+          "bound_psi": 0.0,
+          "k_sigma": 1.7,
+          "sigma_cr_MPa": 203.81746146060925,
+          "lambda_p": 1.107514217885563,
+          "lambda_p_integral_limit": 0.748,
+          "rho": 0.7496522146654919,
+          "slenderness_reference_stress_MPa": 250.0,
+          "actual_min_compression_MPa": -249.01441020057527,
+          "actual_max_compression_MPa": 136.04140977080147,
+          "maximum_actual_minus_bound_MPa": -116.06839461146853,
+          "pointwise_dominance_demonstrated": true,
+          "lip_stress_domain_audit": {
+            "min_line_compression_MPa": -250.00000000000003,
+            "max_line_compression_MPa": -245.8187776514487,
+            "min_offset_face_compression_MPa": -254.75852868324054,
+            "max_offset_face_compression_MPa": -242.29294046856782
+          },
+          "lip_is_noncompressive": true,
+          "integral_bound": false,
+          "physical_As_assumed_wholly_tensile": false,
+          "Eq5_17_used": false,
+          "junction_model": "Supported transverse translation at panel junction; free flange rotation; no rotational spring from web or lip credited",
+          "scope": "Conservative panel/flange-rotation proof only; translating-junction coupled modes and member stability are outside this certificate"
+        },
+        {
+          "panel": "upper_flange",
+          "branch": "EN1993-1-5_Table4.2_unstiffened_outstand_bound",
+          "b_mm": 47.74558441227157,
+          "supported_edge": "web_flange_junction",
+          "free_edge": "lip_side_no_restraint_credit",
+          "bound_stress_ends_MPa": [
+            250.0,
+            0.0
+          ],
+          "bound_psi": 0.0,
+          "k_sigma": 1.7,
+          "sigma_cr_MPa": 203.81746146060925,
+          "lambda_p": 1.107514217885563,
+          "lambda_p_integral_limit": 0.748,
+          "rho": 0.7496522146654919,
+          "slenderness_reference_stress_MPa": 250.0,
+          "actual_min_compression_MPa": -249.0144102005751,
+          "actual_max_compression_MPa": 136.0414097708015,
+          "maximum_actual_minus_bound_MPa": -116.06839461146856,
+          "pointwise_dominance_demonstrated": true,
+          "lip_stress_domain_audit": {
+            "min_line_compression_MPa": -250.00000000000003,
+            "max_line_compression_MPa": -245.8187776514487,
+            "min_offset_face_compression_MPa": -254.75852868324054,
+            "max_offset_face_compression_MPa": -242.2929404685677
+          },
+          "lip_is_noncompressive": true,
+          "integral_bound": false,
+          "physical_As_assumed_wholly_tensile": false,
+          "Eq5_17_used": false,
+          "junction_model": "Supported transverse translation at panel junction; free flange rotation; no rotational spring from web or lip credited",
+          "scope": "Conservative panel/flange-rotation proof only; translating-junction coupled modes and member stability are outside this certificate"
+        }
+      ],
+      "proof": "EN1993-1-3 5.5.1/5.5.2 and EN1993-1-5 4.4/Table4.1/4.2: web checked at fyb or by Eq4.4 at its maximum pure-ULS compression with an unchanged-section fixed point; each mixed flange additionally bounded by an unstiffened outstand under triangular compression [fyb,0], psi=0/k=1.70. The bound dominates every line/face vertex and requires rho=1; lips are everywhere noncompressive. No elastic or tensile-stabilization credit to lips, no Eq.5.17 at negative stress and no claim As is wholly tensile. Standard panel junction translations retained, rotation free; translating-junction coupled modes and global stability remain separate.",
+      "section_status": "blocked_no_effective_coefficients"
+    }
+  },
+  "all_normal_components_eligible": false,
+  "physical_geometry_verified": false,
+  "whole_member_approved": false,
+  "source_basis": [
+    "EN1993-1-3:2006 3.2.1(5),5.1,5.2,5.5,6.1.2,6.1.3,6.1.4,6.1.6(3)",
+    "EN1993-1-5:2006 4.4/Table4.1/Table4.2; EN1993-1-1:2005 3.2.6"
+  ],
+  "not_checked": [
+    "net-section fracture/fasteners/connections",
+    "shear and shear-normal interaction",
+    "global member stability and second-order effects",
+    "coupled modes with translation of panel junctions outside the stated panel/stiffener models",
+    "shear lag and flange curling applicability",
+    "solid/exterior-fibre stress",
+    "material certification/coating/core-thickness tolerance",
+    "warping B component (must use the SAME pinned gross omega/Cw externally)"
+  ],
+  "content_sha256": "25d73ca7d8f4bf9497fdad0315eb3ef5815b3e1e0be42be2fda2639e46b0821b"
+}

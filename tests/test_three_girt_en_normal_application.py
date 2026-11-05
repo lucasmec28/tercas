@@ -14,7 +14,15 @@ FIXTURE=Path(__file__).parent/'data'/'three_girt_normal_QA_input.json'
 
 
 def demand_for(t=2.65):
-    source=json.loads(FIXTURE.read_text());data=apply_geometry(source['input_data'],t,4000.)
+    source=json.loads(FIXTURE.read_text())
+    if t==1.2:
+        from tercas import ue_reference
+        from tercas.ue_member_application import apply,editable
+        data=apply(ue_reference.load_reference(angle=source['input_data']['inclination']['value'],L_mm=4000.),'wall_girt')
+        for key in ue_reference.EDITABLE | editable(data):
+            if key in source['input_data']:data[key]=copy.deepcopy(source['input_data'][key])
+    else:
+        data=apply_geometry(source['input_data'],t,4000.)
     data['project']=f'Synthetic EN normal QA t={t}; not a physical design'
     return attach_g81(solve(data,current_configuration(data,source['configuration']['three_girt'])))
 
@@ -31,17 +39,17 @@ def demand():return demand_for()
 def result(demand):return a.calculate(demand,config(demand))
 
 
-def test_current_case_retains_all_coverage_and_partial_scope(demand,result):
+def test_current_case_closes_all_signed_integral_sections_without_global_approval(demand,result):
     assert len(result['rows'])==108
     assert result['ELU_combinations']==12 and result['ELS_combinations_excluded']==7
     assert result['section_fibers_checked']==832
     assert all(result[k] is False for k in a.FALSE_FLAGS)
     assert result['resistance_material_E_MPa']==210000 and result['demand_material_E_MPa']==200000
     for item in result['per_member'].values():
-        assert item['complete'] is False and item['complete_envelope'] is None
-        assert item['partial_maximum'] is not None
-        assert item['blocking_components']==['My_negative']
-    assert result['per_member']['middle']['partial_maximum']['concomitant_7DOF_state']['N_N']!=0
+        assert item['complete'] is True and item['complete_envelope'] is not None
+        assert item['partial_maximum'] is None
+        assert item['blocking_components']==[]
+    assert result['per_member']['middle']['complete_envelope']['concomitant_7DOF_state']['N_N']!=0
 
 
 def test_witness_recomposition_at_same_exterior_fiber(result):
@@ -51,7 +59,13 @@ def test_witness_recomposition_at_same_exterior_fiber(result):
             if not piece['complete']:
                 assert piece['maximum_absolute'] is None
                 continue
-            w=piece['maximum_absolute'];s=w['concomitant_7DOF_state'];x,y=w['section_fiber']['fiber_xy_relative_to_gross_CG_mm']
+            w=piece['maximum_absolute']
+            if w is None:
+                assert piece['normal']['index_lower_witness'] is None
+                assert piece['normal']['index_upper_bound'] is not None
+                assert piece['normal']['criterion']!='above_1_at_concomitant_state'
+                continue
+            s=w['concomitant_7DOF_state'];x,y=w['section_fiber']['fiber_xy_relative_to_gross_CG_mm']
             physical=s['N_N']/props['A_mm2']-s['My_strong_Nmm']*y/props['Ix_strong_mm4']+s['Mz_weak_Nmm']*x/props['Iy_weak_mm4']+w['stress_contributions_MPa']['B']
             assert physical==pytest.approx(w['sigma_MPa'],abs=2e-7)
             assert sum(w['stress_contributions_MPa'].values())==pytest.approx(w['sigma_MPa'],abs=2e-7)
@@ -68,17 +82,62 @@ def test_no_network_or_NBR_capacity_calculation(demand,monkeypatch):
     assert a.calculate(demand,config(demand))['schema']==a.SCHEMA
 
 
-def test_15mm_retains_reduced_compression_block_without_gross_fallback():
-    d=demand_for(1.5);r=a.calculate(d,config(d))
+@pytest.mark.parametrize('t',[1.2,1.5])
+def test_thin_effective_sections_and_complete_bending_coverage(t):
+    d=demand_for(t);r=a.calculate(d,config(d))
     certificate=r['component_sections']['components']
-    assert certificate['N_compression']['eligible'] is False
-    assert certificate['N_compression']['sigma_coefficients_c0_cx_cy'] is None
-    assert certificate['Mx_positive']['eligible'] is True
-    assert r['per_member']['upper']['partial_maximum'] is not None
-    assert 'N_compression' in r['per_member']['middle']['blocking_components']
-    assert r['per_member']['middle']['observed_normal_exceedance'] is True
-    assert r['per_member']['middle']['normal_criterion']=='above_1_at_checked_state_full_envelope_incomplete'
-    assert all(p['complete_envelope'] is None for p in r['per_member'].values())
+    assert certificate['N_compression']['eligible'] is True
+    assert certificate['N_compression']['moment_transport_required']
+    assert certificate['N_compression']['sigma_coefficients_c0_cx_cy'][1:]==[0.,0.]
+    assert 'N_compression' not in r['per_member']['middle']['blocking_components']
+    assert all(record['eligible'] for record in certificate.values())
+    assert certificate['My_negative']['section_status']=='effective_web_reduced_negative_My_ULS'
+    assert all(item['complete'] and not item['blocking_components'] for item in r['per_member'].values())
+    for item in r['per_member'].values():
+        normal=item['normal'];lo=normal['index_lower_witness'];up=normal['index_upper_bound']
+        assert up is not None and (lo is None or up>=lo)
+        assert normal['criterion'] in ('within_1_by_full_interval_upper_bound','above_1_at_concomitant_state','unresolved_numerical_bound')
+    if t==1.2:
+        for name in ('Mx_positive','Mx_negative'):
+            record=certificate[name]
+            assert record['section_status']=='effective_local_flange_reduced_pure_Mx_ULS'
+            assert record['effective_properties']['Ixy_mm4']!=0.
+            assert record['sigma_coefficients_c0_cx_cy'][0]!=0.
+            assert record['sigma_coefficients_c0_cx_cy'][1]!=0.
+            assert not record['moment_transport_required']
+    # Recompose every physical normal witness from its actual corrected signs,
+    # including both c0 and Ixy-induced cx in the newly qualified Mx branches.
+    checked=0
+    for row in r['rows']:
+        for piece in row['pieces']:
+            w=piece['normal']['witness']
+            if w is None:continue
+            actions=w['normal_action_reference']['corrected_actions_R01']
+            x,y=w['section_fiber']['fiber_xy_relative_to_gross_CG_mm']
+            total=w['stress_contributions_MPa']['B']
+            for axis,value in actions.items():
+                if value==0.:
+                    assert w['stress_contributions_MPa'][axis]==0.
+                    continue
+                record=certificate[a._component_key(axis,1 if value>0 else -1)]
+                c0,cx,cy=record['sigma_coefficients_c0_cx_cy']
+                contribution=value*(c0+cx*x+cy*y)
+                assert contribution==pytest.approx(w['stress_contributions_MPa'][axis],abs=2e-7)
+                total+=contribution
+            assert total==pytest.approx(w['sigma_MPa'],abs=2e-7)
+            checked+=1
+    assert checked>0
+    assert all(r[k] is False for k in a.FALSE_FLAGS)
+    d[a.FIELD]=r;assert a.saved_component(d)==r
+    from tercas.three_girt_en_normal import report
+    doc=Document();report.append(doc,d);text='\n'.join(p.text for p in doc.paragraphs)
+    assert 'redução distorcional exclusivamente' in text
+    assert 'a testemunha é um estado físico concomitante' in text.lower()
+    if t==1.5:assert 'majorante triangular 149' in text
+    else:
+        assert 'majorante misto 172→−43' in text
+        assert 'Flexão forte com mesa localmente reduzida' in text
+        assert 'Ixy =' in text
 
 
 @pytest.mark.parametrize('change',[
@@ -115,6 +174,8 @@ def test_saved_EN_and_NBR_hashes_coexist_without_recalculation(demand,result,mon
     text='\n'.join(p.text for p in doc.paragraphs)
     assert 'Componente normal N Mx My B pela EN' in text
     assert 'sigma–tau' in text
+    assert 'Campo majorante triangular' in text
+    assert 'Não cobre modos acoplados com translação das junções' in text
     assert 'inventário de tração' not in text.lower()
     d[a.FIELD]['whole_member_approved']=True
     d[a.FIELD]['content_sha256']=a.fingerprint({k:v for k,v in d[a.FIELD].items() if k!='content_sha256'})
@@ -159,16 +220,24 @@ def test_direct_central_N_M_B_complete_and_proportional():
     assert indices[1]/indices[0]==pytest.approx(20.,rel=1e-12)
 
 
-def test_shear_interaction_witnesses_recompose_and_partial_never_passes(result):
+def test_shear_interaction_witnesses_recompose_with_complete_section_coverage(result):
     for row in result['rows']:
         for piece in row['pieces']:
             shear=piece['shear_interaction']
             if not piece['complete']:
                 assert shear is None
                 continue
-            assert shear['full_interval_covered']
+            assert shear['complete'] is True
+            assert shear['checked_intervals']==piece['branch_count']==len(piece['branches'])>=1
+            for key in ('normal','shear','interaction'):
+                assert shear[key]['index_upper_bound']==max(branch['index_upper_bounds'][key] for branch in piece['branches'])
             for key in ('shear','interaction'):
                 w=shear[key]['witness']
+                if w is None:
+                    assert shear[key]['index_lower_witness'] is None
+                    assert shear[key]['index_upper_bound'] is not None
+                    assert shear[key]['criterion']!='above_1_at_concomitant_state'
+                    continue
                 assert math.fsum(w['normal_contributions_MPa'].values())==pytest.approx(w['sigma_MPa'],abs=2e-7)
                 assert math.fsum(w['shear_contributions_MPa'].values())==pytest.approx(w['tau_MPa'],abs=2e-7)
                 assert w['equivalent_MPa']==pytest.approx(math.hypot(w['sigma_MPa'],math.sqrt(3)*w['tau_MPa']))
@@ -176,18 +245,21 @@ def test_shear_interaction_witnesses_recompose_and_partial_never_passes(result):
                 assert 0<=w['u']<=1
                 assert shear[key]['index_upper_bound']>=shear[key]['index_lower_witness']
     for member in result['per_member'].values():
-        values=member['shear_interaction'];assert not values['complete']
+        values=member['shear_interaction'];assert values['complete']
         for key in ('shear','interaction'):
-            assert values[key]['index_upper_bound'] is None
-            assert values[key]['criterion']!='within_1_by_full_interval_upper_bound'
+            assert values[key]['index_upper_bound'] is not None
+            assert values[key]['partial_index_upper_bound'] is None
+            assert values[key]['criterion'] in ('within_1_by_full_interval_upper_bound','above_1_at_concomitant_state','unresolved_numerical_bound')
 
 
 def test_historical_normal_only_snapshot_still_exports(demand,result,monkeypatch):
     old=copy.deepcopy(result);old['schema']=a.LEGACY_SCHEMA
     for row in old['rows']:
-        row.pop('shear_interaction')
-        for piece in row['pieces']:piece.pop('shear_interaction')
-    for member in old['per_member'].values():member.pop('shear_interaction')
+        row.pop('shear_interaction');row.pop('normal',None)
+        for piece in row['pieces']:
+            piece.pop('shear_interaction');piece.pop('normal',None)
+    for member in old['per_member'].values():
+        member.pop('shear_interaction');member.pop('normal',None)
     old['content_sha256']=a.fingerprint({k:v for k,v in old.items() if k!='content_sha256'})
     d=copy.deepcopy(demand);d[a.FIELD]=old
     def forbidden(*args,**kwargs):raise AssertionError('Historical export cannot requalify')
@@ -203,7 +275,7 @@ def test_historical_normal_only_snapshot_still_exports(demand,result,monkeypatch
 def test_shear_results_are_visible_in_table_and_saved_word(demand,result):
     from tercas.three_girt_en_normal import ui,report
     rows=ui.shear_rows(result)
-    assert len(rows)==6 and all(r['Cobertura']=='PARCIAL' for r in rows)
+    assert len(rows)==6 and all(r['Cobertura']=='Completa no recorte' for r in rows)
     assert all(r['Índice_testemunha'] is not None for r in rows)
     d=copy.deepcopy(demand);d[a.FIELD]=copy.deepcopy(result);doc=Document();report.append(doc,d)
     text='\n'.join(p.text for p in doc.paragraphs)
@@ -211,3 +283,61 @@ def test_shear_results_are_visible_in_table_and_saved_word(demand,result):
     assert 'tauSV = −face' in text
     assert '§6.1.5' in text and '§6.1.10' in text
     assert any('Limite superior' in cell.text for table in doc.tables for row in table.rows for cell in row.cells)
+
+
+@pytest.mark.parametrize('t',[2.,2.25])
+def test_web_reduced_N_and_negative_My_close_signed_envelope_with_explicit_transport(t):
+    d=demand_for(t);r=a.calculate(d,config(d))
+    cert=r['component_sections']['components']
+    assert cert['My_negative']['eligible']
+    assert cert['N_compression']['eligible']
+    assert cert['N_compression']['moment_transport_required']
+    assert all(item['complete'] for item in r['per_member'].values())
+    assert all(not item['blocking_components'] for item in r['per_member'].values())
+    compressed=0
+    for row in r['rows']:
+        reference=row['normal_action_reference']
+        n=reference['original_polynomials_R01']['N'][0]
+        if n<0:
+            compressed+=1
+            ex=cert['N_compression']['centroid_shift_from_gross_mm'][0]
+            assert reference['additional_My_Nmm']==pytest.approx(n*ex)
+            assert reference['additional_Mx_Nmm']==0.
+        for piece in row['pieces']:
+            assert piece['complete']
+            w=piece['maximum_absolute']
+            if w is None:
+                assert piece['normal']['index_lower_witness'] is None
+                assert piece['normal']['index_upper_bound'] is not None
+                assert piece['normal']['criterion']!='above_1_at_concomitant_state'
+                continue
+            v=w['normal_action_reference'];actions=v['corrected_actions_R01']
+            x,y=w['section_fiber']['fiber_xy_relative_to_gross_CG_mm']
+            axial=cert['N_compression'] if actions['N']<0 else cert['N_tension']
+            area=axial['effective_properties']['A_mm2'];g=r['component_sections']['gross_properties']
+            sigma=actions['N']/area+actions['Mx']*y/g['Ix_strong_mm4']-actions['My']*x/g['Iy_weak_mm4']+w['stress_contributions_MPa']['B']
+            assert sigma==pytest.approx(w['sigma_MPa'],abs=2e-7)
+            assert v['original_actions_R01']['My']==-w['concomitant_7DOF_state']['Mz_weak_Nmm']
+    assert compressed>0
+    assert all(r[key] is False for key in a.FALSE_FLAGS)
+    saved=copy.deepcopy(d);saved[a.FIELD]=copy.deepcopy(r)
+    assert a.saved_component(saved)==r
+    # Arithmetic contradictions are rejected even after recomputing the hash.
+    saved[a.FIELD]['rows'][0]['normal_action_reference']['additional_My_Nmm']+=1.
+    saved[a.FIELD]['content_sha256']=a.fingerprint({key:value for key,value in saved[a.FIELD].items() if key!='content_sha256'})
+    with pytest.raises(ValueError,match='transport'):a.saved_component(saved)
+
+
+@pytest.mark.parametrize('aggregate',['complete_envelope','partial_maximum','shear','interaction'])
+def test_saved_row_aggregate_transport_is_verified_independently(demand,result,aggregate):
+    saved=copy.deepcopy(demand);saved[a.FIELD]=copy.deepcopy(result)
+    row=saved[a.FIELD]['rows'][0]
+    if aggregate in ('complete_envelope','partial_maximum'):
+        witness=copy.deepcopy(row['complete_envelope'] or row['partial_maximum'])
+        row[aggregate]=witness
+    else:
+        witness=copy.deepcopy(row['shear_interaction'][aggregate]['witness'])
+        row['shear_interaction'][aggregate]['witness']=witness
+    witness['normal_action_reference']['additional_moments_R01']['My']+=1.
+    saved[a.FIELD]['content_sha256']=a.fingerprint({key:value for key,value in saved[a.FIELD].items() if key!='content_sha256'})
+    with pytest.raises(ValueError,match='transport'):a.saved_component(saved)

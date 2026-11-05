@@ -1,0 +1,88 @@
+MARCO HISTÓRICO 36/42: a extensão posterior de N fino está descrita em
+AXIAL_THIN_DISTORTIONAL_EN_20261105.txt, com cobertura 38/42 e quatro ramos
+de flexão ainda pendentes. Este documento preserva a prova da alma isolada.
+
+COMPRESSÃO UNIFORME EN COM ALMA EFETIVA REDUZIDA
+Implementação restrita para Ue100x50x17, ri=t, t=2,00 e 2,25 mm.
+
+RESULTADO
+Dois ramos N_compression foram acrescentados ao marco My− de 34/42, totalizando
+36/42 componentes puras. Os seis ramos N±/Mx±/My± estão disponíveis em t=2,00,
+2,25, 2,65, 3,00 e 3,35 mm. As espessuras 1,20/1,50 mantêm os bloqueios reais
+restantes. Disponibilidade da seção não é aprovação da resistência do caso,
+da estabilidade global, da geometria/material reais ou do projeto NBR/EN.
+
+SEÇÃO EFETIVA, NÃO SEÇÃO BRUTA DE SUBSTITUIÇÃO
+A referência é compressão uniforme no ELU, fyb/gammaM0=250 MPa. Mantêm-se
+E=210000 MPa, nu=0,3, fyb=fya=250 MPa e gammaM0=1 para a prova seccional.
+A alma usa EN1993-1-5 Tabela4.1, psi=1/k=4. A faixa central não efetiva é
+realmente removida do contorno facetado pinado. Suas duas faixas extremas
+permanecem com largura projetada rho*b/2 cada. O rho não é promovido a1.
+
+- t=2,00: rho_alma=0,8566597568; Aeff,N=414,093086846 mm²;
+  ex=Ceff,x−Cg,x=+1,121207552 mm; lambda_d=0,631180296.
+- t=2,25: rho_alma=0,9258979705; Aeff,N=477,225593556 mm²;
+  ex=Ceff,x−Cg,x=+0,558330161 mm; lambda_d=0,593360516.
+
+Mesas e lábios continuam integralmente efetivos. Os dois As físicos são
+recortados somente nas regiões adjacentes a cada lábio, sem misturar faixas.
+K, Is e sigma_cr,s são conferidos pela EN1993-1-3 §5.5.3.2. Ambos chi_d=1,
+sem tolerância que promova um valor inferior a1. Não é necessário transportar
+um solver de tensão de serviço ou inventar uma redução distorcional ausente.
+
+Integrais exatas dos intervalos retidos produzem Aeff, centroide e inércias.
+A simetria y é demonstrada nos209 nós e nos intervalos retidos antes de adotar
+ey=0 e Ixy=0; resíduos numéricos brutos ficam preservados na auditoria.
+A carga pura de normalização é −Aeff,N*250 N, com sigma_N/N=1/Aeff,N uniforme.
+
+TRANSPORTE DE MOMENTOS OBRIGATÓRIO
+As ações da rede original estão referidas ao centroide bruto. Na convenção
+R01, N positivo é tração e sigma=N/A + Mx*y/Ix − My*x/Iy. Com e=Ceff,N−Cg:
+
+    sigma_N = N/Aeff,N
+    Mx,corr = Mx − N*ey
+    My,corr = My + N*ex
+
+Os momentos corrigidos, e não os momentos originais, escolhem os ramos de
+flexão e entram no envelope normal e na interação sigma–tau. Não se embute
+Ne no coeficiente uniforme de N e depois soma Ne novamente. Essa contagem
+dupla foi explicitamente testada por equilíbrio de força e momentos.
+
+O JSON conserva ações originais, coeficientes polinomiais corrigidos, e,
+momentos adicionais e ações corrigidas de cada testemunha. Snapshots novos
+revalidam essa aritmética ao ler, sem resolver rede, reconstruir seção ou
+recalcular envelopes. Se N estiver bloqueado, não se fabrica um centroide.
+
+CISALHAMENTO E EMPENAMENTO
+N é constante em cada trecho do modelo atual. Portanto a correção Ne é
+constante e não altera a derivada dos momentos: os esforços cortantes
+originais continuam coerentes. A API rejeita N variável, em vez de assumir
+isso fora do domínio. B, omega, Cw e cisalhamento permanecem na mesma seção
+bruta pinada de EN §6.1.6. O transporte altera a tensão normal concomitante,
+não o torque, as reações ou as rigidezes da rede original.
+
+A presente rota só libera redução da alma em compressão uniforme nas duas
+espessuras indicadas. Não libera flange/lábio reduzido, outra geometria,
+material variável, efeito de furos, instabilidade global ou um método de
+rigidez de serviço. O envelope continua nas faces da parede fina facetada,
+não num sólido curvo exato. Os limites da prova My−, incluindo apoio
+translacional convencional das junções, permanecem explícitos e inalterados.
+
+HISTÓRICO E FONTE
+Certificado: en1993_1_3_2006_normal_component_sections_effective_v2.
+Aplicação: three_girt_EN_normal_shear_effective_sections_v3.
+Certificados integral_v1 e resultados normal_v1/shear_integral_v2 continuam
+legíveis, com sua própria prova e cobertura, sem requalificação automática.
+
+Fontes: EN1993-1-3:2006 §§5.5.3.2,6.1.3(1),(3),6.1.9(2),6.1.6(3);
+EN1993-1-5:2006 §4.4/Tabela4.1. Nenhuma resistência ou lei de serviço NBR/AISI
+é importada. As combinações NBR e E da demanda original não são renomeados
+como uma análise integral EN. PDFs normativos não são distribuídos aqui.
+
+CONTROLES
+Quadratura independente e diferença geométrica da faixa central removida;
+As/K/chi e ausência de sobreposição; outros40 componentes preservados;
+simetria física; força/momentos em Cg e Ceff; inversão do sinal de My pelo
+transporte; N positivo/zero/negativo; derivadas cortantes idênticas;
+recomposição das416 faces; snapshots e exportação sem recálculo; casos
+completos, casos com excesso e persistência dos bloqueios restantes.

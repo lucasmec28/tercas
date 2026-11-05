@@ -1,0 +1,63 @@
+Alternativa uniaxial com inércia efetiva para as três travessas
+
+Escopo
+Escolha explícita e independente no painel Vlasov. Compara cada travessa como
+viga isolada simplesmente apoiada no vão físico completo, no eixo horizontal.
+Não altera o resultado Vlasov nem converte um crivo local bruto inconclusivo em
+aprovação da rede. As ações paralelas e os demais esforços permanecem nas entradas
+originais e nas outras verificações. A rota existente da terça permanece no eixo
+vertical local normal à cobertura, não no eixo vertical global.
+
+Método e fonte
+ABNT NBR 14762:2010 §9.8.5, páginas impressas 51–52/PDF 57–58 da cópia fornecida,
+SHA256 c2a01615a3ce9e2b93aeb7fee757f7bf9dd932adaefbc242e848ce813dc82407.
+MSE: lambda=sqrt(abs(M)/Ml), Ief=Ig até 0,673; acima,
+Ief=Ig*(1-0,22/lambda)/lambda. Preserva-se o clamp divulgado Ief<=Ig devido aos
+coeficientes arredondados. Ml forte é o crítico próprio rastreado da mesma seção
+(§9.8.2/Tabela 12(b)), não um crítico transplantado por nome de Pierin.
+
+Reutiliza core/protocolo_ief.py: integração de M(x)m(x)/(E*Ief(x)) com painéis
+separados nas transições e busca contínua do máximo. Cada qZ vem diretamente do
+registro distribuído da combinação e travessa. Os fatores externos 0,5/1/0,5 já
+foram aplicados ali e não são repetidos. Como Ief depende de M, cada travessa é
+calculada separadamente: metade da carga não implica metade da flecha.
+
+Nenhuma reação, força de barra ou ação nodal da rede é usada no modelo isolado.
+Não se divide L nos tirantes. Não se soma rotação torsional bruta à flecha efetiva.
+A alternativa não é limite conservador superior ou inferior da solução acoplada.
+O limite horizontal e a sua referência são preservados da entrada atual.
+
+Domínio
+Mesma referência própria Ue100x50x17 ri=t das sete espessuras atuais
+1,20/1,50/2,00/2,25/2,65/3,00/3,35 mm e vãos 3–6 m, com fonte própria validada.
+Estes limites pertencem à qualificação numérica existente, não à norma universal.
+Cargas distribuídas uniformes apenas, conforme o contrato de entrada Vlasov.
+Ações concentradas ativas continuam recusadas pelo adaptador, não ignoradas.
+
+Guarda de validade elástica
+Registra sigma_g,max=abs(qZ)*L^2/(8*Wg). Se a própria tensão elástica bruta excede
+fy, conserva o deslocamento matemático como diagnóstico e retira o índice
+conclusivo. Trata-se de guarda adotada pelo aplicativo, não novo limite de M,
+fator gamma ou comparação ELS/ELU atribuída ao §9.8.5. O inverso não comprova
+elasticidade da seção efetiva. Não se inventa Wef=Ief/c nem se certificam tensões
+com a inércia escalar. Avisos de integração também retiram a conclusão.
+
+Persistência e interface
+Opt-in desligado por padrão, declaração das vigas isoladas e origem obrigatórias.
+Mudanças de escolha/hipótese retiram o resultado anterior. Um erro da alternativa
+não remove a demanda Vlasov nem as componentes resistentes já calculáveis.
+Anexação: uniaxial isolada, depois serviço Vlasov, depois EN, depois NBR.
+Os hashes preservam essa cadeia. JSON/Word/UI leem snapshots sem integrar,
+resolver a rede ou reler fontes. Históricos sem a alternativa não são alterados.
+
+Verificação
+Casos integrais e reduzidos contra quadratura Gauss independente; q positivo,
+negativo e nulo; invariância frente a mudanças da rede/cargas verticais; não
+linearidade entre carga e flecha; combinação com serviço/EN/NBR e exportação sem
+recálculo; guardas de fonte, adulteração, escolha e aviso numérico. Resultados
+sintéticos não constituem validação experimental ou aprovação de projeto.
+
+Limites permanentes
+Componente de flexão uniaxial isolada, não ELS físico completo. N, flexão fraca,
+B, interação de tensões na rigidez, torção efetiva, estabilidade, segunda ordem,
+ligação, tirantes e ancoragem continuam separados. Nenhuma aprovação global.

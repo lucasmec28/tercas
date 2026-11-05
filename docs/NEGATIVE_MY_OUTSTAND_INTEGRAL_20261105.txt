@@ -1,0 +1,109 @@
+EVOLUÇÃO POSTERIOR DO MARCO DESCRITO ABAIXO
+A extensão AXIAL_WEB_REDUCED_EN_20261105.txt acrescenta N comprimido em
+2,00/2,25 mm com alma efetiva reduzida e transporte Ne, elevando a cobertura
+a 36/42. O texto abaixo registra o marco My− 34/42 anterior, sem reescrever
+seus resultados históricos.
+
+RAMO MY NEGATIVO: PROVA INTEGRAL POR MESA EM BALANÇO
+Base de desenvolvimento: b84c59be47f0a151da05c0d707919304ebb31fcb.
+
+RESULTADO
+A componente pura My_R01 negativa (alma comprimida, lábios tracionados) passa
+a ter seção integral demonstrada, no modelo de painéis indicado abaixo, para
+Ue100x50x17, ri=t, nas espessuras 2,00 / 2,25 / 2,65 / 3,00 / 3,35 mm. Isso completa os seis
+ramos puros N±/Mx±/My± nas três seções próprias pinadas de t >= 2,65 mm. N comprimido em t = 2,00/2,25
+continua pendente, portanto não se promove o seu envelope combinado a completo.
+
+Os outros 35 casos espessura/componente permanecem iguais. As duas seções
+mais finas continuam sem coeficientes My−, pois a alma exige redução local;
+não há uso da seção bruta como substituição de uma seção efetiva ausente.
+A cobertura total passou de 29/42 para 34/42 componentes puras.
+
+POR QUE NÃO BASTAVA O SINAL DO LÁBIO
+O conjunto conectado As da mesa mista, formado segundo EN1993-1-5 Tabela 4.1,
+inclui a faixa comprimida 0,6 bc próxima à linha neutra e a porção tracionada.
+Ele não é inteiro tracionado. Não se toma uma faixa arbitrária da mesa para
+fabricar As tracionado, nem se introduz tensão negativa na Eq. 5.17.
+
+PROVA ALTERNATIVA CONSERVADORA
+1. A alma mantém a verificação local existente, como painel interno com
+   kσ=4 e referência fyb=250 MPa. Exige rho=1. Quando essa prova não passa,
+   admite apenas a tentativa integral da Eq.4.4 descrita abaixo; nunca devolve
+   uma geometria reduzida ou coeficientes brutos quando a tentativa falha.
+2. Cada mesa é adicionalmente tratada como placa em balanço, apoiada na
+   junção com a alma e livre no lado do lábio. Nenhuma rigidez elástica do
+   lábio ou estabilização por sua tração é creditada.
+3. O campo real de compressão, que muda de sinal ao longo da mesa, é majorado
+   ponto a ponto por um campo triangular de compressão 250→0 MPa. A comparação
+   é feita em todos os extremos de facetas e nas duas faces, usando as suas
+   coordenadas físicas. Como ambos os campos são afins, os extremos cobrem a
+   faceta inteira e a espessura da idealização.
+4. A orientação é a do último bloco da Tabela 4.2 da EN1993-1-5: borda apoiada
+   comprimida e borda livre descarregada, psi=0, kσ=1,70. Não há extrapolação
+   para o psi real menor que −1, nem crédito à tração da borda livre.
+5. Exige lambda_p <= 0,748, portanto rho=1 pela Eq. 4.3. Os lábios são
+   conferidos como não comprimidos em toda a linha e em ambas as faces.
+
+Valores da prova da mesa:
+- t=2,65 mm: lambda_p=0,472902292;
+- t=3,00 mm: lambda_p=0,411629416;
+- t=3,35 mm: lambda_p=0,363159828.
+
+Todos os painéis e os dois majorantes permanecem integrais. A seção, seu
+centroide e suas propriedades não mudam; por isso a reavaliação conserva o
+mesmo campo puro ELU. Os coeficientes My− são iguais aos My+ já demonstrados,
+multiplicados pelo ESFORÇO ASSINADO, e não pelo módulo do momento.
+
+REFINAMENTO DA ALMA SOMENTE NO ESTADO PURO ELU
+EN1993-1-5 §4.4(4)/Eq.4.4 permite lambda_red=lambda_p sqrt[sigma_com,Ed/(fy/gammaM0)].
+EN1993-1-3 §6.1.4.1(4) exige momento puro com sigma_max=fyb/gammaM0; não exige
+que cada painel atinja fyb. A prova usa o máximo de compressão da alma em todas
+as facetas e faces como campo uniforme conservador, no campo puro já normalizado.
+Em t = 2,00 mm: sigma=142,973958 MPa, lambda_red=0,660370718.
+Em t = 2,25 mm: sigma=143,344571 MPa, lambda_red=0,584888212.
+O limite é 0,673205081. As mesas em balanço continuam conferidas a fyb, sem relaxamento.
+A tentativa só é admitida se TODOS os painéis/majorantes permanecem integrais:
+então seção, centroide, tensões e reavaliação são invariáveis, um ponto fixo exato.
+Se rho_red<1, não se congela a tensão grossa favorável e não se libera coeficiente.
+A prova não usa tensão de serviço ou da combinação solicitante. As condições
+adicionais de EN15 §4.4(5) para estabilidade de barras não são declaradas atendidas.
+
+DOMÍNIO E LIMITES
+Esta é uma prova suficiente dentro do modelo convencional de painéis EN:
+a rotação da mesa na junção é livre, sem mola rotacional fornecida pela alma
+ou pelo lábio, mas a linha de junção conserva apoio translacional.
+O modelo mais livre e com campo de compressão majorante é desfavorável ao
+modelo de mesa considerado. A demonstração não é um certificado universal
+de modos acoplados com translação das junções ou da estabilidade de membro.
+Essas classes não foram promovidas a aprovação física/global.
+
+O E=210000 MPa, nu=0,3, fyb=fya=250 MPa e gammaM0=1 da prova seccional EN
+permanecem fixos. As combinações e o E da demanda NBR não foram alterados.
+As condições de cisalhamento/interação EN, NBR, estabilidade, forças locais,
+ruptura líquida, ligações e ELS conservam suas verificações e limitações próprias.
+Não é declaração de atendimento integral de projeto à EN ou à NBR.
+
+ENVELOPE E DESEMPENHO
+A cobertura exata dos sinais continua calculada. Só quando TODOS os ramos
+realmente necessários são elegíveis e possuem coeficientes exatamente iguais,
+os intervalos são reunidos para avaliar o mesmo campo suave uma única vez.
+A lista de sinais exigidos fica preservada no JSON. Se houver ramo bloqueado
+ou coeficientes diferentes, os intervalos originais são mantidos. Isso não
+prepara uma substituição silenciosa para futuras seções reduzidas.
+
+HISTÓRICO
+O método recebe revisão própria no certificado. Snapshots anteriores continuam
+com sua prova e sua cobertura antigas, sem recálculo durante visualização ou
+Word. Uma fixture do certificado anterior t2,65 mantém esse contrato nos testes.
+
+FONTES
+EN1993-1-3:2006 §§5.5.1–5.5.3 e 6.1.4/6.1.6; EN1993-1-5:2006 §4.4,
+Eq.4.3 e Tabelas4.1/4.2. A orientação da Tabela4.2 foi conferida visualmente
+na página impressa17/PDF19. PDFs normativos não são distribuídos no repositório.
+
+TESTES
+Formulação da placa em balanço recalculada independentemente; integração
+geométrica; domínio dos lábios/faces; comparação ponto a ponto; rejeição de
+lábio comprimido e de campo não majorado; preservação dos demais componentes;
+leitura histórica; exigência de coeficientes idênticos para reunir intervalos;
+testemunhas, cobertura e interface no aplicativo.

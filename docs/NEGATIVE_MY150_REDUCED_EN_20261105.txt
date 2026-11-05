@@ -1,0 +1,85 @@
+MY NEGATIVO 1,50 MM COM ALMA EFETIVA E TROCAS DE SINAL
+Revisão 05/11/2026. Complemento seccional EN, não aprovação global EN/NBR.
+
+INCREMENTO SECCIONAL
+Somente My negativo da Ue100x50x17 t1,50 mm muda: a alma fica comprimida e
+os lábios tracionados. As outras 41 componentes permanecem idênticas à
+revisão anterior. A cobertura seccional sobe de 38/42 para 39/42, com seis
+ramos puros nas espessuras t≥1,50 mm. Em 1,20 mm continuam faltando My
+negativo e Mx nos dois sentidos. Não se extrapola a prova entre espessuras.
+
+PONTO FIXO ELU
+EN1993-1-5:2006 §4.4(4), Eq.4.4 e Nota1 permitem determinar a tensão sobre
+a seção efetiva de forma iterativa. O procedimento aqui mantém mesas e
+lábios integrais e reavalia somente as duas faixas efetivas extremas da alma.
+A cada passo, as propriedades vêm das facetas físicas retidas. O campo de
+momento puro tem N=0 e é normalizado para maior tensão absoluta nas faces
+igual a 250 MPa. A compressão majorante da alma define a próxima redução.
+O cálculo só aceita a solução se convergir, se o resíduo final for pequeno e
+se todas as provas independentes de mesas/lábios continuarem válidas.
+
+Resultado de controle: rho_alma=0,819248154443; Aeff=309,848501809949 mm²;
+Iy=115047,131122369 mm4; My_ELU≈−937293,848035 Nmm. Quatro partidas distintas
+convergiram ao mesmo ponto; isso é verificação numérica limitada, não prova
+formal de unicidade. Resíduos e histórico de iteração são salvos.
+
+MESAS EM BALANÇO
+Não há crédito à rigidez do lábio. Mantém-se o apoio translacional convencional
+na junção com a alma, com rotação livre da mesa. Um campo triangular 149→0 MPa,
+psi=0 e k=1,70, domina a compressão real em todos os vértices e nas duas faces
+de cada faceta da mesa. A menor folga encontrada é 0,61431 MPa. Com Eq.4.4 no
+estado puro ELU, lambda_reduzida=0,675935694<0,748 e rho_mesa=1.
+Os lábios ficam inteiramente tracionados. Não se afirma que o conjunto As
+inteiro é tracionado nem se aplica Eq.5.17 com tensão negativa.
+A mesma tentativa em t1,20 exige redução das mesas e é rejeitada.
+
+OPERADOR E REFERÊNCIA
+Para My assinado, o operador afim relativo ao centroide bruto é
+[c0,cx,cy]=[(Ceff_x−Cg_x)/Iy_eff,−1/Iy_eff,0]. A quadratura independente
+confirma [N,Mx,My]=[0,0,1] por unidade de My. O termo constante é a referência
+da flexão pura na seção efetiva, não uma correção Ne adicional.
+O transporte de N comprimido por seu próprio centroide efetivo continua
+aplicado uma única vez aos momentos antes de selecionar os ramos de flexão.
+B, omega/Cw e cisalhamento continuam usando a mesma seção bruta coerente;
+as reações e rigidezes da rede original não são alteradas.
+
+TROCAS DE SINAL E DECISÃO NUMÉRICA
+My positivo e negativo agora podem ter operadores diferentes. As raízes dos
+polinômios originais continuam sendo examinadas sem apagar intervalos de
+sinal sub-ulp. Em cada intervalo, o produto cartesiano dos operadores
+requeridos forma uma união de campos. Seu maior limite superior cobre todos
+os ramos fisicamente possíveis; não é um estado concomitante.
+As testemunhas físicas são recuperadas separadamente, com o sinal real de
+cada ação. Um máximo de ramo artificial nunca vira testemunha de excesso.
+Normal, cisalhamento e interação guardam limite inferior L associado à
+melhor testemunha física e limite superior U para o intervalo inteiro:
+- cobertura completa e U≤1 demonstram atendimento no recorte;
+- L>1 demonstra excesso físico;
+- U>1 com L≤1, ou sem testemunha válida de excesso, permanece
+  inconclusivo; U≤1 basta para atendimento com cobertura completa;
+- componente efetiva faltante conserva cobertura parcial e não passa.
+Não se decide por tolerância ao redor de 1. Os limites são numéricos binary64
+com margem proporcional às magnitudes, não certificados formais intervalares.
+Os campos históricos maximum_absolute/complete_envelope são aliases da
+melhor testemunha inferior, explicitamente rotulados, não máximo exato.
+Os candidatos analíticos normais continuam incluídos nos vértices da parede.
+Em brackets microscópicos, um majorante de centro mais raio vezes limite
+da derivada pode fornecer apenas U, sem testemunha. Isso não elimina o
+intervalo nem permite excesso fictício: U>1 sem L>1 segue inconclusivo.
+Caches usam argumentos exatos e dados imutáveis, sem arredondar coordenadas
+ou fundir operadores distintos. A recuperação física final permanece obrigatória.
+
+COMPATIBILIDADE E LIMITES
+Snapshots v1/v2/v3 permanecem legíveis, sem recalcular nem promover suas
+antigas elegibilidades. O novo certificado e o resultado registram suas
+versões próprias. Nenhum indicador de aprovação global é liberado.
+A prova não cobre modos acoplados com translação das junções, estabilidade
+global, segunda ordem, ligações, ruptura líquida, introdução local de forças,
+validade física dos giros ou ELS. EN §6.1.6 não substitui §6.1.5 ou §6.1.10.
+Materiais/geometria reais devem corresponder às hipóteses declaradas.
+
+FONTES
+EN1993-1-5:2006 §4.4(4), Eq.4.4, Nota1 e Tabelas 4.1/4.2.
+EN1993-1-3:2006 §6.1.6 e método de propriedades efetivas por componente.
+A exigência global de §4.4(5) não é dispensada por esta prova seccional.
+Sem redistribuição de PDFs normativos nem mistura de resistências NBR/AISI.

@@ -1,0 +1,61 @@
+TRÊS RAMOS FINAIS DA Ue100x50x17 t1,20 MM
+Complemento seccional EN condicional. Não é aprovação global EN/NBR da barra.
+
+MX POSITIVO E NEGATIVO
+A mesa comprimida usa larguras efetivas em compressão uniforme fyb, um campo
+conservador que domina as tensões finais. rho=0,962998536085. A alma e os
+lábios são rechecados no campo da seção efetiva. A flange oposta é tracionada,
+portanto kr=0 na rigidez do apoio elástico do enrijecedor, EN1993-1-3 Eq5.10b.
+O As é a região física do lábio e da faixa efetiva de mesa adjacente, não uma
+área fictícia. No ELU normalizado nas faces, sigmaAs=229,842594 MPa, menor
+que chi_d·fyb=230,139867 MPa. Eq5.17 limita As_red/As exatamente a 1: não há
+redução distorcional adicional nem necessidade de refinamento opcional.
+A seção continua localmente reduzida, não bruta: Aeff=269,206242775571 mm².
+Ixy=±751,779010886 mm4 exige inversão completa da matriz de inércia. O termo
+constante c0 e a parcela em x preservam N=0 e My=0 na componente pura Mx.
+Não se adiciona Ne por momento puro. Mx normalizador=±2151532,071541 Nmm.
+A normalização nas faces é explícita e compatível com os consumidores que
+verificam ambas as faces; não se transfere uma prova de linha para exterior.
+
+MY NEGATIVO
+O ponto fixo EN1993-1-5 §4.4(4), Eq4.4 e Nota1 mantém mesas/lábios e reduz a
+alma: rho=0,658798214889; Aeff=231,305069 mm²; Iy=87219,642971 mm4.
+A mesa usa o último bloco da Tabela4.2: bordo apoiado comprimido e bordo
+livre tracionado. O majorante assinado [172;−43] MPa tem psi=−0,25 e
+k=1,70−5psi+17,1psi²=4,01875. Ele domina a compressão real em todas as
+faces e facetas, inclusive na região tracionada, com folga mínima 0,961694 MPa.
+A tração estabilizante da própria mesa é menor que a tração real demonstrada.
+Não se atribui apoio, mola ou rigidez ao lábio; ele permanece todo tracionado.
+Eq4.4 no puro ELU dá lambda_reduzida=0,597479<0,748, mantendo mesa integral.
+Assim, não é preciso recortar a mesa nem resolver artificialmente sua
+conectividade efetiva com o lábio. O majorante psi0 era apenas mais severo,
+não uma prova de impossibilidade do ramo.
+My normalizador=−748463,120026 Nmm. Quadratura confirma N=0 e Mx=0.
+Quatro partidas convergem; isso é evidência numérica, não prova formal de
+unicidade. As guardas de convergência, domínio e dominância permanecem.
+
+INTEGRAÇÃO E HISTÓRICO
+Os outros 39 registros seccionais permanecem idênticos. O certificado recebe
+nova versão; históricos não são recalculados nem requalificados ao abrir.
+As trocas de sinal usam os operadores afins efetivos, com limites superiores
+para todo domínio e testemunhas físicas concomitantes separadas. Cobertura
+completa e U≤1 demonstram atendimento apenas no recorte. L>1 demonstra
+excesso. Demais casos são inconclusivos; não existe promoção por tolerância.
+N comprimido mantém seu transporte Ne obrigatório, aplicado uma única vez.
+B, omega/Cw e cisalhamento mantêm a seção bruta coerente; rede e reações
+originais não são substituídas. Limites binary64 não são certificados formais.
+
+ESCOPO
+Domínio fixo dos sete perfis geométricos pinados, fyb=fya=250 MPa,
+E de resistência 210000 MPa, nu 0,3 e gammaM0=1. Materiais, espessura de núcleo,
+furos e recortes reais precisam corresponder ao modelo declarado.
+As 42 componentes não representam 42 aprovações globais: permanecem
+estabilidade, segunda ordem, modos acoplados com translação das junções,
+ligação/ruptura líquida, introdução local de forças e demais requisitos.
+EN §6.1.6 não substitui §6.1.5 ou§6.1.10. NBR e EN não são misturadas.
+
+FONTES
+EN1993-1-3:2006 §5.5.2(3); §5.5.3.1, Eq5.10b/5.12; §5.5.3.2, Eq5.17;
+e §6.1.4.1(4).
+EN1993-1-5:2006 §4.4(4), Eq4.4, Nota1 e Tabelas4.1/4.2.
+Sem redistribuição de PDFs normativos.

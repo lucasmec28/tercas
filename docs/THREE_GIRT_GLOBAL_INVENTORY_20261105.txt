@@ -1,0 +1,104 @@
+PANORAMA GLOBAL DO MODELO VLASOV ATUAL — 05/11/2026
+
+OBJETIVO E ESCOPO
+Integra o inventário de resultados salvos do esquema
+three_girt_current_vlasov_demand_v1 (7DOF). O adaptador legado só conhecia
+tercas_three_girt_results_v1 (6DOF) e acrescentava sempre uma pendência genérica
+de torção. O Vlasov atual passa a ter inventário próprio: σ(N,M,B), τ(V,Tsv,Tw)
+e interação σ–τ podem receber seus estados já calculados, sem aquele bloqueio
+fixo. Isso não apaga instabilidade, resistência local ou ELS ainda não tratados.
+Não existe liberação global manual ou por campo importado.
+
+Não cria equações resistentes, solver, hipóteses de apoio, rigidez da telha,
+contato, comprimentos de flambagem, limites arbitrários de giro ou exigência de
+certificação de campo. Hipóteses declaradas são hipóteses do modelo, não uma
+pendência por falta de inspeção. Soldas, parafusos, tirantes, cantoneiras e
+ancoragens continuam fora do dimensionamento; isso não exclui resistência local
+do próprio perfil quando uma força realmente entra nele.
+
+GRUPOS SEPARADOS
+1. EN1993-1-3:2006 §6.1.6, tensões normais, cisalhamento e interação: os índices
+   pertencem exclusivamente ao modelo seccional EN e às suas ações/hipóteses.
+   Limite superior <=1 com cobertura completa pode atender. Testemunha inferior
+   concomitante >1 pode reprovar o critério, mesmo havendo outras pendências.
+   Limite superior >1 sozinho não prova falha. Máximo parcial <=1 não aprova.
+2. Referência NBR N+M com comprimentos de vão inteiro: grupo auxiliar. Não substitui
+   a estabilidade da rede nem fornece denominador para a seção efetiva EN.
+3. AISI G8.1: comparação auxiliar de B, não critério adicional somado à EN.
+4. Serviço horizontal: comparação registrada no modelo linear e no crivo local
+   normal MLE suficiente. Crivo inconclusivo não é falha nem rigidez reduzida
+   demonstrada. Não se requalifica a componente como ELS físico completo.
+5. Se existir módulo/resultado de alternativa uniaxial, é lido somente pelo seu
+   próprio leitor e exibido como grupo auxiliar; nunca aprova/reprova a rede.
+
+Não se escolhe o menor índice de normas distintas, não se somam máximos e não
+se considera o maior índice disponível uma utilização global. O status de cada
+grupo é de seus critérios listados, não de toda a barra. Todos os campos de
+aprovação global continuam falsos. Falhas qualificadas e pendências coexistem.
+
+CRITÉRIOS AINDA NÃO ENCERRADOS
+- NBR14762 §§8.1–8.2: estabilidade e aplicabilidade da análise de primeira ordem
+  da rede. Matriz linear não singular e equilíbrio não são carga crítica nem
+  validação de grandes deslocamentos. Não há corte universal de 0,05 rad.
+- EN §6.1.5: resistência/flambagem ao cortante transversal, distinta da tensão
+  τ elástica de §6.1.6. Campo V exatamente zero em todos os polinômios ELU dá
+  não aplicável para o mecanismo transversal, sem dispensar Tsv/Tw/B.
+- EN §6.1.10(1): a redução por V é dispensável se VEd<=0,5Vw,Rd, com denominador
+  qualificado. Não há esse Vw,Rd salvo para a rede atual; não inventar uma
+  interação adicional obrigatória para todo V não nulo. V exatamente zero
+  exclui somente essa redução.
+- NBR §9.5.1 e Anexo D.1: reação no apoio também pode introduzir compressão
+  transversal na alma. P externa nula não elimina esse mecanismo. Primeiro é
+  preciso classificar a direção e o caminho da força, o contato ou a exceção de
+  alma ligada. Não aplicar Anexo D automaticamente a toda força axial soldada.
+  Resíduos nos graus livres não são tratados como reações de apoio.
+- Sem barras, estações ou ações nodais interiores, com topologia declarada vazia,
+  a introdução interior é não aplicável. Os apoios extremos permanecem separados.
+- Tração: Nt/An/Ct só são pertinentes quando N>0. N=0 exato não exige denominador
+  axial. Hipótese U→Ue previamente aprovada não é comprovação experimental nem
+  dimensionamento dos cordões. A componente axial NBR fica identificada sem
+  transferir An/A ou Ct para a seção efetiva EN.
+- Serviço: a comparação salva mantém o escopo original de §9.8.5. A integração
+  não fabrica um ELS completo a partir de flags que o produtor mantém falsas.
+  Não há um segundo gate permanente de aplicabilidade de serviço: o critério
+  comum de análise cobre ELU e ELS. A norma EN §6.1.6(2)–(3) usa propriedades brutas para efeitos de torção; a
+  ausência de um suposto certificado GJef/Cwef não é exigência normativa criada.
+
+INTEGRIDADE E EXPORTAÇÃO
+O panorama é um objeto separado, vinculado ao SHA256 do resultado completo.
+Não é anexado ao dicionário mecânico: isso quebraria a cadeia serviço→EN→NBR.
+A função build_global_verification despacha para o adaptador 7DOF; a função
+attach_global_verification recusa esse esquema e orienta o uso separado.
+Validam-se hashes, inventário de combinações/trechos/nós/apoios, contagem e
+contratos dos leitores. Hash é verificação de integridade, não assinatura.
+Nenhum coeficiente normativo, resistência ou solução é reobtido nesta leitura.
+
+A interface tem botão explícito para montar o panorama. Apenas visualizar,
+selecionar combinação e exportar não o recalcula; cache é separado e retirado
+se a origem muda. O Word inclui o panorama somente se já montado e coerente,
+com fonte identificada. JSON separado preserva todos os resultados originais.
+Snapshots históricos não são migrados, certificados ou recalculados em silêncio.
+
+FONTES
+NBR14762:2010, PDF fornecido, SHA256
+c2a01615a3ce9e2b93aeb7fee757f7bf9dd932adaefbc242e848ce813dc82407:
+§§8.1–8.2 p24 impressa/PDF30; §9.5.1 p33/PDF39;
+§9.6.2 p34–36/PDF40–42; §9.8.5 p51–52/PDF57–58;
+Anexo D.1 p78/PDF84.
+EN1993-1-3:2006: §6.1.5 p45–46/PDF47–48; §6.1.6 p46/PDF48;
+§6.1.10(1) p55/PDF57. Escopo original das componentes nos documentos
+THREE_GIRT_EN_SHEAR_INTERACTION_20261105.txt e
+THREE_GIRT_HORIZONTAL_SERVICE_20261105.txt.
+
+As candidatas de ampliação dos ramos EN e alternativa uniaxial são separadas.
+Este pacote de integração não as importa nem as publica por consequência.
+
+ENDURECIMENTO DO CONTATO FINITO LEGADO
+O adaptador do vão isolado também passa a consumir saved_numeric_qualified do
+contato já salvo antes de aceitar seu índice. O opt-in v1/v2 usa o validador
+existente de ações, posição, contrato, origem e digest; o produtor anterior,
+sem contrato tipado, conserva sua forma literal e seus vínculos escalares e de
+snapshot, sem exigir um formato novo. Falha de coerência mantém o índice apenas
+como diagnóstico e não dispara cálculo de FRd. P_APOIO e os resultados mecânicos
+não são alterados. Declarações antigas de apoio da rota isolada não são
+transferidas automaticamente aos seis apoios Vlasov.

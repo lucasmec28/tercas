@@ -1,7 +1,8 @@
 """Explicit, fail-closed aggregation of checks, without structural calculations.
 
 The generic aggregator can approve a *declared complete checklist*. The current
-app adapter cannot approve a member: its torsion/warping check remains pending.
+legacy adapter cannot approve a member: its torsion/warping check remains pending.
+The current Vlasov adapter inventories its own criteria without that fixed gate.
 This module never adds component maxima, invents a resistance, or designs ties.
 All input objects and the app's existing numerical results remain unchanged.
 """
@@ -307,11 +308,17 @@ def _case_records(result, combination, evidence, *, batch, warnings=(), case_com
                 source=SCHEMA, qualified=True, not_applicable=True, trace=trace,
                 reason='Nenhuma força concentrada P nas duas componentes locais desta combinação.'))
         else:
-            records.append(_record(prefix+'point_introduction_scope', state, point,
+            from .point_contact import saved_numeric_qualified
+            bound = saved_numeric_qualified(point, result, combination, ev.get('P_vector'),
+                batch=batch, case_combination=case_combination)
+            record = _record(prefix+'point_introduction_scope', state, point,
                 source='NBR14762:2010, introdução localizada no perfil, domínio implementado',
                 trace=dict(trace, P_normal_N=pnormal, P_parallel_N=pparallel,
                            prescribed_position=combination.get('point_position')),
-                disqualify=conflict or not (_finite(pparallel) and pparallel == 0)))
+                disqualify=conflict or not bound)
+            if isinstance(point, dict) and point.get('status') == 'computed' and not bound:
+                record['reason'] = 'Contato finito salvo não vinculado às ações, posição, declarações ou origem atuais; resistência não recalculada.'
+            records.append(record)
         # Internal coverage only. These are not new table/UI rows.
         records.append(check(prefix+'axial_scope', limit_state=state, source=SCHEMA,
             qualified=True, not_applicable=True, trace=trace,
@@ -429,13 +436,17 @@ def axial_interaction_record(segment, *, expected_combination_id,
 
 
 def build_global_verification(result):
-    """Build an honest current-app status; no way to override pending torsion.
+    """Read explicit criteria without changing the mechanical result.
 
-    Call after reference-specific ELS annotations and prescribed-P corrections.
-    Historical exports are not recalculated. No check list is added to the UI.
+    The current 7DOF schema yields a separate inventory. Legacy routes retain
+    their own pending checks, after reference ELS and prescribed-P corrections.
+    Historical exports never call this builder implicitly.
     """
     if not isinstance(result, dict):
         raise ValueError('Resultado deve ser um objeto.')
+    if result.get('schema') == 'three_girt_current_vlasov_demand_v1':
+        from .three_girt_assessment.application import assess
+        return assess(result)
     records = []
     schema = result.get('schema')
     model_domain = result.get('model_domain_evidence', {})
@@ -563,6 +574,8 @@ def display_summary(summary):
 
 def attach_global_verification(result):
     """Convenience boundary for a caller that explicitly wants a copied result."""
+    if result.get('schema') == 'three_girt_current_vlasov_demand_v1':
+        raise ValueError('Use build_global_verification para o panorama separado do Vlasov; anexar altera a cadeia de hashes dos componentes.')
     out = deepcopy(result)
     out['global_verification'] = build_global_verification(result)
     out['whole_member_approved'] = False

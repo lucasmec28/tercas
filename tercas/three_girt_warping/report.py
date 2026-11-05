@@ -7,7 +7,10 @@ from ..three_girt_report import _table
 from .ui import result_rows,LABELS
 
 
-def word(result,selected=0):
+def word(result,selected=0,assessment=None):
+    if assessment is not None:
+        from ..three_girt_assessment.application import saved_assessment
+        saved_assessment(result,assessment)
     d=Document();sec=d.sections[0];sec.page_width=Inches(8.5);sec.page_height=Inches(11)
     sec.top_margin=sec.bottom_margin=Inches(.65);sec.left_margin=sec.right_margin=Inches(.7)
     for name in ('Normal','Title','Heading 1','Heading 2'):
@@ -59,4 +62,8 @@ def word(result,selected=0):
     append_en_normal(d,result)
     from ..three_girt_service.report import append as append_service
     append_service(d,result)
+    from ..three_girt_uniaxial.report import append as append_uniaxial
+    append_uniaxial(d,result)
+    from ..three_girt_assessment.report import append as append_assessment
+    append_assessment(d,result,assessment)
     out=BytesIO();d.save(out);return out.getvalue()

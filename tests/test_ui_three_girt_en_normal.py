@@ -1,4 +1,5 @@
 import copy
+import pytest
 from test_ui_own_girt_application import imported,widget,run
 from tercas.ue_family_reference import load_reference
 from tercas.ue_member_application import apply
@@ -19,6 +20,9 @@ def test_EN_opt_in_coexists_and_changes_invalidate(monkeypatch):
     run(app);widget(app,'button','Calcular três travessas Vlasov e G8.1').click();run(app)
     original=copy.deepcopy(app.session_state[RESULT_KEY])
     assert FIELD in original and saved_component(original) is not None and saved_nbr(original) is not None
+    assert original[FIELD]['component_sections']['components']['My_negative']['eligible']
+    assert all(item['complete'] for item in original[FIELD]['per_member'].values())
+    assert original[FIELD]['whole_member_approved'] is False
     def forbidden(*args,**kwargs):raise AssertionError('Read-only display/export cannot solve')
     monkeypatch.setattr(network,'solve',forbidden)
     run(app);assert app.session_state[RESULT_KEY]==original
@@ -38,3 +42,39 @@ def test_EN_missing_declaration_preserves_demand_and_NBR(monkeypatch):
     assert FIELD not in result and 'Declare' in result['EN_normal_N_M_B_error']
     assert saved_nbr(result) is not None
     assert result['status']=='conditional_elastic_vlasov_demand'
+
+
+@pytest.mark.parametrize('t',[1.2,1.5,2.])
+def test_reduced_axial_coexists_with_service_and_saved_exports(monkeypatch,t):
+    from tercas.three_girt_service.ui import LABEL as SERVICE, INTACT
+    from tercas.three_girt_service import application as service
+    from tercas.three_girt_en_normal import application as en
+    from tercas.three_girt_warping.report import word
+    if t==1.2:
+        from tercas import ue_reference
+        d=apply(ue_reference.load_reference(angle=5.,L_mm=4000.),'wall_girt')
+    else:d=apply(load_reference(t,4000.,5.),'wall_girt')
+    app=imported(monkeypatch,d);widget(app,'checkbox',WARPING).check();run(app)
+    widget(app,'checkbox',SERVICE).check();widget(app,'checkbox',LABEL).check();run(app)
+    widget(app,'checkbox',INTACT).check();widget(app,'checkbox',MODEL_LABEL).check()
+    widget(app,'text_input','Origem ou hipótese do modelo de serviço').set_value('Synthetic service / reduced axial QA')
+    widget(app,'text_input','Origem ou hipótese da seção nominal EN').set_value('Synthetic service / reduced axial QA')
+    run(app);widget(app,'button','Calcular três travessas Vlasov e G8.1').click();run(app)
+    original=copy.deepcopy(app.session_state[RESULT_KEY])
+    saved=en.saved_component(original)
+    assert saved and saved_nbr(original) and service.saved_component(original)
+    assert saved['component_sections']['components']['N_compression']['moment_transport_required']
+    assert all(item['complete'] for item in saved['per_member'].values())
+    assert saved['component_sections']['components']['My_negative']['eligible']
+    for item in saved['per_member'].values():
+        normal=item['normal']
+        assert normal['index_upper_bound'] is not None
+        assert normal['index_lower_witness'] is None or normal['index_upper_bound']>=normal['index_lower_witness']
+    assert all(saved[name] is False for name in en.FALSE_FLAGS)
+    def forbidden(*args,**kwargs):raise AssertionError('Saved reduced axial UI/export cannot solve')
+    monkeypatch.setattr(network,'solve',forbidden)
+    monkeypatch.setattr(en,'calculate',forbidden)
+    monkeypatch.setattr(service,'calculate',forbidden)
+    run(app);widget(app,'selectbox','Combinação Vlasov 3D detalhada').select(2);run(app)
+    assert app.session_state[RESULT_KEY]==original
+    assert word(original)[:2]==b'PK'

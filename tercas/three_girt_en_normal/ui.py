@@ -8,27 +8,41 @@ LEVELS={'upper':'Superior','middle':'Central','lower':'Inferior'}
 def controls(st,data,demand_fingerprint,prefix):
     if not st.checkbox(LABEL,value=False,key=prefix+'_en_normal_enabled'):return None
     config=reference_configuration(dict(input_fingerprint=demand_fingerprint))
-    st.caption('Complemento seccional EN1993-1-3:2006, separado da NBR. Soma N, duas flexões e B na mesma fibra e posição. Apenas componentes com seção integral demonstrada no ELU; trechos fora do domínio ficam pendentes. Inclui cisalhamento e interação sigma–tau nos ramos elegíveis; não verifica estabilidade ou ELS.')
+    st.caption('Complemento seccional EN1993-1-3:2006, separado da NBR. Soma N, duas flexões e B na mesma fibra e posição. Apenas componentes com seção efetiva demonstrada no ELU; trechos fora do domínio ficam pendentes. Inclui cisalhamento e interação sigma–tau nos ramos elegíveis; não verifica estabilidade ou ELS.')
     with st.expander('Domínio do complemento normal EN'):
         st.caption('Seção própria Ue100×50×17, ri=t; fyb=fya=250 MPa, E de resistência=210000 MPa, nu=0,3 e gammaM0=1,00. Mantém E e combinações da demanda atual; não representa projeto integral EN. Espessura de cálculo/material reais precisam corresponder ao modelo declarado.')
         config['intact_section_model_declared']=st.checkbox(MODEL_LABEL,value=False,key=prefix+'_en_normal_intact')
         config['section_model_origin']=st.text_input('Origem ou hipótese da seção nominal EN',value='',key=prefix+'_en_normal_origin')
-        st.caption('Declaração do modelo da barra, sem inventário nem dimensionamento de ligações. Não substitui ruptura líquida. Flexão fraca com lábios tracionados e mesa mista permanece fora do recorte; não vira aprovação por troca de sinal.')
+        st.caption('Declaração do modelo da barra, sem inventário nem dimensionamento de ligações. Não substitui ruptura líquida. Ramo com alma comprimida: 2,00/2,25/2,65/3,00/3,35 mm usam prova conservadora de mesa em balanço, sem crédito à rigidez do lábio. Mantém apoio translacional na junção; modos acoplados com translação das junções não estão cobertos. Em 2,00/2,25 mm a alma integral usa Eq.4.4 no estado puro ELU, não tensão de serviço. Em 1,20/1,50 mm usa a alma reduzida descrita abaixo; o sentido real do momento sempre seleciona seu próprio operador.')
+        st.caption('N comprimido em 2,00/2,25 mm usa seção efetiva com a faixa central da alma removida, mantendo mesas/lábios integrais. sigmaN=N/Aeff,N; o deslocamento do centroide gera Mx,corr=Mx−Ney e My,corr=My+Nex antes de escolher os ramos de flexão. A rede original e suas reações/rigidezes não são recalculadas.')
+        st.caption('N comprimido em 1,20/1,50 mm usa larguras locais e redução distorcional dos dois enrijecedores físicos pelo procedimento EN passos 1–2. A espessura efetiva reduz somente os As retidos, nunca a alma inteira. O transporte N·e continua obrigatório e ocorre uma única vez; os momentos corrigidos escolhem seus próprios ramos efetivos.')
+        st.caption('My negativo em 1,50 mm usa alma efetiva reduzida por ponto fixo no ELU e mesas integrais com majorante triangular 149→0 MPa. Em 1,20 mm usa majorante misto 172→−43 MPa da própria mesa, sem crédito ao lábio. Mx± em 1,20 mm usa mesa comprimida localmente reduzida, Ixy e operador afim completos; o As físico permanece integral pela Eq5.17 no ELU normalizado nas faces. Os 42 ramos puros dos sete perfis estão disponíveis neste domínio, sem aprovação global.')
+        st.caption('Nas trocas de sinal, coeficientes distintos são cobertos pela união de limites superiores; a testemunha física não é o máximo exato. Limite superior acima de 1 sem testemunha de excesso permanece inconclusivo.')
     return config
 
 
 def rows(component):
     records=[]
+    labels={'within_1_by_full_interval_upper_bound':'Dentro do limite pelo limite superior',
+        'above_1_at_concomitant_state':'Excesso normal em estado concomitante',
+        'above_1_at_checked_state_full_envelope_incomplete':'Excesso normal em estado verificado; envelope parcial',
+        'incomplete_section_branch_coverage':'Parcial: falta ramo de seção efetiva',
+        'unresolved_numerical_bound':'Limite numérico não decidiu',
+        'within_1_in_declared_section_model':'Dentro do limite normal no modelo',
+        'above_1_in_declared_section_model':'Acima do limite normal no modelo'}
     for level,item in component['per_member'].items():
-        witness=item['complete_envelope'] or item['partial_maximum']
-        records.append(dict(Travessa=LEVELS[level],Cobertura=f"{item['complete_segments']}/{item['ELU_segments']} trechos ELU",
-            Índice_normal=None if witness is None else witness['normal_index'],
+        normal=item.get('normal')
+        witness=(normal.get('witness') if normal else item['complete_envelope'] or item['partial_maximum'])
+        record=dict(Travessa=LEVELS[level],Cobertura=f"{item['complete_segments']}/{item['ELU_segments']} trechos ELU",
             Envelope='Completo no recorte' if item['complete'] else 'PARCIAL, não é envelope completo',
             Combinação=None if witness is None else witness['combination_id'],
-            Resultado={'within_1_in_declared_section_model':'Dentro do limite normal no modelo',
-                       'above_1_in_declared_section_model':'Acima do limite normal no modelo',
-                       'above_1_at_checked_state_full_envelope_incomplete':'Excesso normal em estado verificado; envelope parcial'}.get(item['normal_criterion'],'Não concluído'),
-            Ramos_pendentes=', '.join(item['blocking_components']) or 'Nenhum ramo seccional faltante'))
+            Resultado=labels.get(item['normal_criterion'],'Não concluído'),
+            Ramos_pendentes=', '.join(item['blocking_components']) or 'Nenhum ramo seccional faltante')
+        if normal:
+            record['Índice_testemunha']=normal['index_lower_witness']
+            record['Limite_superior']=normal['index_upper_bound'] if item['complete'] else normal['partial_index_upper_bound']
+        else:record['Índice_normal']=None if witness is None else witness['normal_index']
+        records.append(record)
     return records
 
 
@@ -40,7 +54,13 @@ def render_saved(st,demand):
     has_shear=any('shear_interaction' in row for row in c['per_member'].values())
     st.warning('Resultado condicionado ao modelo de seção declarado. Cobertura incompleta de seção efetiva impede conclusão integral; estabilidade da barra e aplicabilidade da primeira ordem permanecem separadas.' if has_shear else 'Resultado histórico somente normal. Cisalhamento e interação sigma–tau não foram calculados neste snapshot.')
     st.dataframe(rows(c),hide_index=True)
-    st.caption('Índice = maior |sigmaN + sigmaMx + sigmaMy + sigmaB| / 250 MPa, nas duas faces de cada segmento facetado. Campos concomitantes e extremos analíticos no vão. Empenamento constante através da espessura: não é solução de sólido curvo exato.')
+    axial=c['component_sections']['components']['N_compression']
+    if axial.get('moment_transport_required'):
+        st.caption(f"Compressão uniforme com seção efetiva reduzida: Aeff,N={axial['effective_properties']['A_mm2']:.6f} mm²; ex={axial['centroid_shift_from_gross_mm'][0]:.6f} mm. Momentos adicionais por N·e incluídos uma única vez nos momentos corrigidos; sinais e testemunhas usam esses valores.")
+    if any('normal' in row for row in c['per_member'].values()):
+        st.caption('Normal: testemunha física |sigmaN + sigmaMx + sigmaMy + sigmaB| /250 e limite superior são separados. Só cobertura completa com limite superior ≤1 demonstra atendimento. Limite inferior da testemunha >1 comprova excesso; os demais casos permanecem inconclusivos. Os limites são numéricos em binary64, não certificados formais intervalares.')
+    else:
+        st.caption('Índice = maior |sigmaN + sigmaMx + sigmaMy + sigmaB| / 250 MPa, nas duas faces de cada segmento facetado. Campos concomitantes e extremos analíticos no vão. Empenamento constante através da espessura: não é solução de sólido curvo exato.')
     st.caption('Pendência de ramo não significa reprovação. Um máximo parcial não é envelope completo. NBR e AISI permanecem separadas; seus denominadores não entram neste índice. O critério de tensões não substitui flambagem por cisalhamento EN §6.1.5 nem interação N–M–V §6.1.10.')
     if has_shear:
         st.subheader('Cisalhamento e interação normal–cisalhamento EN')

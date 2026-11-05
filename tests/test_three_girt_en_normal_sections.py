@@ -42,10 +42,10 @@ class ENComponentsTest(unittest.TestCase):
 
     def test_declared_coverage_for_all_42_component_cases(self):
         for t,c in self.cert.items():
-            expected={"N_tension":True,"N_compression":t>=2.65,"Mx_positive":t>=1.5,
-                      "Mx_negative":t>=1.5,"My_positive":True,"My_negative":False}
+            expected={"N_tension":True,"N_compression":True,"Mx_positive":True,
+                      "Mx_negative":True,"My_positive":True,"My_negative":True}
             self.assertEqual({k:v["eligible"] for k,v in c["components"].items()},expected)
-            self.assertFalse(c["all_normal_components_eligible"])
+            self.assertTrue(c["all_normal_components_eligible"])
 
     def test_no_gross_fallback_or_effective_centroid_when_blocked(self):
         for c in self.cert.values():
@@ -62,6 +62,7 @@ class ENComponentsTest(unittest.TestCase):
             p=self.profiles[t]; nodes=np.array(p["nodes_xy_mm"]); center=np.array(c["gross_properties"]["centroid_xy_mm"])
             for name,v in c["components"].items():
                 if not v["eligible"]: continue
+                if v.get("moment_transport_required") or v.get("effective_line_intervals"): continue  # Tested on retained strips separately.
                 coeff=np.array(v["sigma_coefficients_c0_cx_cy"])
                 axis,sign=PURE_ACTIONS[name]
                 actual=quadrature(nodes,t,lambda pt: sign*(coeff[0]+coeff[1:]@(pt-center)),center)
@@ -73,17 +74,32 @@ class ENComponentsTest(unittest.TestCase):
                 self.assertEqual(v["additional_My_per_N_mm"],0.)
         self.assertLess(max_error,2e-12)
 
-    def test_ULS_reference_is_fyb_not_service_or_panel_stress(self):
+    def test_ULS_pure_state_is_fyb_with_explicit_Eq4_4_integral_web_trial(self):
         for c in self.cert.values():
             for v in c["components"].values():
+                if v.get("section_status") in ("effective_web_reduced_negative_My_ULS", "effective_local_flange_reduced_pure_Mx_ULS"):
+                    self.assertAlmostEqual(v["ULS_max_abs_line_or_face_stress_MPa"],250.)
+                    self.assertLess(v["ULS_max_abs_line_stress_MPa"],250.)
+                    continue  # Independent dedicated fixed-point/face certificate tests.
                 self.assertAlmostEqual(v["ULS_max_abs_line_stress_MPa"],250.)
                 for panel in v["local_panels"]:
                     if panel["branch"] == "tension":continue
-                    self.assertEqual(panel["slenderness_reference_stress_MPa"],250.)
-                    self.assertAlmostEqual(panel["lambda_p"],math.sqrt(250./panel["sigma_cr_MPa"]),places=14)
+                    ref=panel["slenderness_reference_stress_MPa"]
+                    if ref!=250.:
+                        self.assertEqual(v['action'],'My_negative')
+                        self.assertEqual(panel['panel'],'web')
+                        trial=panel['Eq4_4_ULS_integral_trial']
+                        self.assertTrue(trial['integral_trial'])
+                        self.assertEqual(ref,trial['sigma_com_Ed_MPa'])
+                        self.assertGreater(trial['lambda_p_at_fyb'],panel['lambda_p_integral_limit'])
+                    self.assertAlmostEqual(panel["lambda_p"],math.sqrt(ref/panel["sigma_cr_MPa"]),places=14)
                 for st in v["stiffeners"]:
                     self.assertAlmostEqual(st["lambda_d"],math.sqrt(250./st["sigma_cr_MPa"]),places=14)
-                    if v["eligible"]:
+                    if v["eligible"] and v.get("section_status") == "effective_local_distortional_reduced_uniform_compression_ULS":
+                        self.assertAlmostEqual(st["Eq5_17_As_red_over_As_at_ULS"],st["chi_d"],places=15)
+                        self.assertLess(st["chi_d"],1.)
+                        self.assertFalse(st["integral_fixed_point"])
+                    elif v["eligible"]:
                         self.assertGreater(st["chi_d"],0.)
                         self.assertLessEqual(st["chi_d"],1.)
                         self.assertEqual(st["Eq5_17_As_red_over_As_at_ULS"],1.)
@@ -137,9 +153,15 @@ class ENComponentsTest(unittest.TestCase):
     def test_My_inverse_tension_lip_does_not_waive_mixed_flange(self):
         for c in self.cert.values():
             v=c["components"]["My_negative"]
-            self.assertFalse(v["eligible"])
-            codes={b["code"] for b in v["blocking_reasons"]}
-            self.assertIn("TENSION_LIP_MIXED_FLANGE_TOPOLOGY_NOT_QUALIFIED",codes)
+            self.assertTrue(v["eligible"])
+            self.assertEqual(len(v["outstand_flange_bounds"]),2)
+            for bound in v["outstand_flange_bounds"]:
+                self.assertFalse(bound["physical_As_assumed_wholly_tensile"])
+                self.assertFalse(bound["Eq5_17_used"])
+                self.assertTrue(bound["lip_is_noncompressive"])
+                self.assertTrue(bound["pointwise_dominance_demonstrated"])
+            if not v["eligible"]:
+                self.assertIn("ULS_LOCAL_REDUCTION_NOT_IMPLEMENTED",{b["code"] for b in v["blocking_reasons"]})
             for audit in v["tension_assemblies"]:
                 self.assertGreater(audit["max_line_compression_MPa"],0.)
                 self.assertLess(audit["min_line_compression_MPa"],0.)
@@ -178,7 +200,7 @@ class ENComponentsTest(unittest.TestCase):
         for chi,stress in ((.9,0.),(.9,-1.),(0.,225.),(1.01,225.)):
             with self.assertRaises(ValueError):_distortional_area_witness(chi,stress)
 
-    def test_revision_changes_only_four_certified_components(self):
+    def test_revision_changes_only_four_prior_and_five_outstand_components(self):
         # Portable historical expectation, not a path to the research tree.
         prior={(t,key) for t in self.cert for key in PURE_ACTIONS
                if key=="N_tension" or (key=="N_compression" and t>=2.65)
@@ -186,7 +208,8 @@ class ENComponentsTest(unittest.TestCase):
         current={(t,key) for t,c in self.cert.items() for key,v in c["components"].items() if v["eligible"]}
         self.assertEqual(len(prior),25)
         self.assertFalse(prior-current)
-        self.assertEqual(current-prior,{(1.2,"My_positive"),(1.5,"Mx_positive"),(1.5,"Mx_negative"),(1.5,"My_positive")})
+        self.assertEqual(current-prior,{(1.2,"Mx_positive"),(1.2,"Mx_negative"),(1.2,"My_negative"),(1.5,"My_negative"),(1.2,"My_positive"),(1.5,"Mx_positive"),(1.5,"Mx_negative"),(1.5,"My_positive"),(2.,"My_negative"),(2.25,"My_negative"),(2.65,"My_negative"),(3.,"My_negative"),(3.35,"My_negative"),(2.,"N_compression"),(2.25,"N_compression"),(1.2,"N_compression"),(1.5,"N_compression")})
+        self.assertEqual(len(current),42)
         # Previously admitted branches still have the same pure gross stress
         # coefficients, checked against the independent frozen source values.
         for t,key in prior:
@@ -202,7 +225,8 @@ class ENComponentsTest(unittest.TestCase):
         self.assertEqual(require_component(c,"N",-1.)["action"],"N_compression")
         self.assertEqual(require_component(c,"Mx",-1.)["action"],"Mx_negative")
         self.assertEqual(require_component(c,"My",1.)["action"],"My_positive")
-        with self.assertRaises(ValueError):require_component(c,"My",-1.)
+        self.assertEqual(require_component(c,"My",-1.)["action"],"My_negative")
+        self.assertEqual(require_component(self.cert[1.2],"My",-1.)["action"],"My_negative")
         self.assertIsNone(require_component(c,"My",0.))
         with self.assertRaises(ValueError):require_component(c,"Mz",1.)
         with self.assertRaises(ValueError):require_component(c,"N",float("nan"))
@@ -226,7 +250,7 @@ class ENComponentsTest(unittest.TestCase):
     def test_mutation_and_no_input_mutation(self):
         p=copy.deepcopy(self.profiles[2.65]);before=copy.deepcopy(p)
         c=build_component_sections(p);self.assertEqual(p,before);verify_component_sections(c)
-        c["components"]["My_negative"]["eligible"]=True
+        c["components"]["My_negative"]["eligible"]=False
         with self.assertRaises(ValueError):verify_component_sections(c)
         with self.assertRaises(ValueError):require_component(c,"N",1.)
 
