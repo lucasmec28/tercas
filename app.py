@@ -543,10 +543,11 @@ else:
    st.caption('Uso atual: '+pierin_U_use_label(strong_ref)+'. Ml informado acima é preservado; valor de referência não substitui silenciosamente entrada legada/manual.')
    if strong_ref.get('reason'):st.warning(strong_ref['reason'])
   elif strong_ref['status']=='not_tabulated':st.caption(strong_ref['reason']+' A rota Tabela 12 permanece quando válida.')
-  selection=st.selectbox('Domínio da expressão de Me nesta emissão',['Não informado / outra situação','Eixo forte de simetria; sem torção primária ou efeito de altura neste modelo'],index=1 if b['route_domain'] else 0,key=f'domain_{r}')
+  selection=st.selectbox('Domínio da expressão de Me nesta emissão',['Não informado / outra situação','Eixo forte de simetria; cargas no CT ou estabilizantes, sem torção primária'],index=1 if b['route_domain'] else 0,key=f'domain_{r}',help='CT é o centro de torção. A NBR 14762:2010 §9.8.2.2, p.48, permite usar a expressão de Me também para carga em posição estabilizante, sem aproveitar seu efeito favorável. Posição desestabilizante exige tratamento específico. A declaração deve valer para todas as ações, combinações e trechos calculados; a inversão do sentido da carga pode mudar o efeito da altura.')
   d['route_domain']=selection.startswith('Eixo')
   st.caption('Ly superior/inferior é o comprimento lateral associado à menor inércia no cálculo de FLT da flexão forte. Lz é torsional, não um comprimento da maior inércia. Esses comprimentos não criam apoios no diagrama de cargas.')
-  st.caption('Esta seleção é uma hipótese do modelo, não uma verificação do caminho da torção. Ly e Lz são independentes; um tirante lateral não é automaticamente travamento torsional.')
+  st.caption('Sem torção primária significa sem torque aplicado por excentricidade das ações. Não exclui o giro do modo de FLT. Esta é uma hipótese do modelo, não uma verificação do caminho das forças nem resistência à torção. Ly e Lz são independentes; um tirante lateral não é automaticamente travamento torsional.')
+  st.caption('Carga estabilizante: a altura de aplicação tende a restaurar a posição da barra quando ela gira. Carga desestabilizante: tende a ampliar o giro. Não se presume a posição pela inclinação do telhado, pelo sentido de q/P ou pela ausência de travamento da telha.')
 
 
  with st.expander('Eixo fraco — dados existentes e críticos por sentido',expanded=False):

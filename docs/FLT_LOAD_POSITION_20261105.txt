@@ -1,0 +1,37 @@
+DOMÍNIO DA EXPRESSÃO DE Me: CT OU POSIÇÃO ESTABILIZANTE
+
+Referência conferida: ABNT NBR 14762:2010, 9.8.2.2, p.48 impressa
+(p.54 do exemplar PDF). A expressão foi deduzida para carregamento no centro
+de torção. A norma permite usá-la a favor da segurança em posição estabilizante,
+sem quantificar/aproveitar esse efeito favorável. Posição desestabilizante
+requer bibliografia especializada. Logo, a frase anterior de interface
+"sem efeito de altura" era excessivamente restritiva.
+
+A declaração existente agora descreve CT ou posição estabilizante. Não se
+acrescenta uma altura numérica obrigatória: a mesma expressão conservadora
+não usa esse valor. A classificação deve representar as ações e combinações
+efetivamente calculadas. Não basta olhar o sinal de q/P ou a inclinação:
+é necessário conhecer a posição de aplicação e o sentido das forças em
+relação ao CT. Inversão de carga pode inverter o efeito da altura. Se houver
+caso desestabilizante ou posição desconhecida, a opção continua não informada /
+outra situação; não há substituição automática por carga aplicada no CT.
+
+Torção primária é o torque aplicado por excentricidade das ações. A FLT é
+um modo de instabilidade que acopla deslocamento lateral e giro. O giro de
+FLT existe no modelo sem torque primário e não contradiz essa hipótese.
+O limite de torção primária é do escopo desta rota de flexão, não uma frase
+da norma que proíba estudar torção. Me é crítico elástico; MRd,FLT é obtido
+depois por chi_FLT, Wc,ef, fy e gamma (9.8.2.2, pp.47-48). Nenhum dos dois
+é por si só resistência completa ao estado combinado com torção primária.
+
+Compatibilidade: o booleano route_domain e o token interno legado permanecem
+inalterados. True mantém declaração de domínio; False mantém pendência.
+Nenhuma propriedade, carga, comprimento, fórmula, índice ou estado calculado
+foi alterado. O nome interno legado contém CT mas também representa a
+aplicação conservadora expressamente permitida para posição estabilizante.
+Projetos existentes não são reclassificados; a interface apenas esclarece
+o alcance da declaração. Não há aprovação global ou validação de ligação.
+
+O contrato auxiliar de seção em core/contrato.py permanece especializado em
+carga no CT e garfos ideais. Não é a rota FLT_segments da barra e não foi
+ampliado. Não recebe declaração de posição estabilizante nem publica Me.

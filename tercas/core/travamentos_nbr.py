@@ -64,7 +64,7 @@ def evaluate_segment(section,actions,segment):
  if missing:
   reason='Faltam dados ou enquadramento para uma das mesas comprimidas neste trecho.'
   if all(r.get('status')=='route_domain_not_declared' for r in missing):
-   reason='Domínio da expressão de Me não informado. Revise o campo de mesmo nome em Estabilidade, críticos e trechos: a rota exige eixo forte de simetria, sem torção primária nem efeito de altura da carga no modelo. Comprimentos efetivos, por si só, não definem esse domínio; não altere a hipótese apenas para liberar o cálculo.'
+   reason='Domínio da expressão de Me não informado. Em Estabilidade, críticos e trechos, a rota admite eixo forte de simetria e carga no CT ou estabilizante, sem torção primária. Carga desestabilizante exige tratamento específico (NBR 14762 §9.8.2.2, p.48). A declaração deve valer para todas as ações, combinações e trechos calculados. Comprimentos efetivos, por si só, não definem esse domínio; não altere a hipótese apenas para liberar o cálculo.'
   return {'status':'FLT_not_evaluated','moments':moments,'flange_results':branches,'reason':reason,'missing_flange_details':[{'mesa':r['compressed_flange'],'missing':r.get('missing',r.get('reason',''))} for r in missing],'whole_member_approved':False}
  winner=max(branches,key=lambda r:r['index'])
  return {**winner,'flange_results':branches,'full_segment_moments':moments,'flange_selection':'Momento positivo: superior; negativo: inferior. Sem travamento fictício na inversão de sinal.'}
