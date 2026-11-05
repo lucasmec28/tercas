@@ -200,7 +200,7 @@ def _zero_components(ev, axis):
     return all(_finite(v) and v == 0 for v in values)
 
 
-def _case_records(result, combination, evidence, *, batch, warnings=(), case_combination=None):
+def _case_records(result, combination, evidence, *, batch, warnings=(), case_combination=None,roof_component=None):
     """Adapt typed raw evidence, not rounded/localized presentation rows."""
     cid, state = combination['id'], combination['limit_state']
     prefix = state+':'+cid+':'
@@ -229,33 +229,50 @@ def _case_records(result, combination, evidence, *, batch, warnings=(), case_com
             else:
                 records.append(_record(prefix+key, state, raw,
                     source='NBR14762:2010 '+clause, trace=trace, disqualify=conflict))
-        segments = evidence.get('FLT_segments', [])
-        expected = data.get('segments', [])
-        n = len(expected) if isinstance(expected, list) else 0
-        if n == 0:
-            records.append(_pending(prefix+'FLT_inventory', state, 'Nenhum trecho de estabilidade declarado.', trace))
-        for i in range(max(n, len(segments))):
-            raw = segments[i] if i < len(segments) else {}
-            expected_segment = expected[i] if i < n else None
-            snapshot = result.get('input_snapshot', {})
-            snapshot_segments = snapshot.get('segments')
-            explicit = raw.get('segment')
-            binding_ok = (len(segments) == n and i < n and
-                          (explicit is None or explicit == expected_segment) and
-                          ('segment_id' not in raw or raw['segment_id'] == expected_segment.get('segment_id')) and
-                          (snapshot_segments is None or snapshot_segments == expected))
-            records.append(_record(prefix+'FLT:'+str(i+1), state, raw,
-                source='NBR14762:2010 9.8.2.2', trace=dict(trace, segment=i+1,
-                    segment_input=deepcopy(expected_segment),
-                    binding_basis='producer_order_v1',
-                    binding_is_independent_identity=False,
-                    source_input_fingerprint=result.get('input_fingerprint')),
-                disqualify=conflict or not binding_ok))
-        coverage = _segment_coverage(data)
-        records.append(check(prefix+'FLT_coverage', limit_state=state, source=SCHEMA,
-            qualified=coverage, verdict='meets' if coverage else None,
-            reason='Trechos cobrem o vão sem lacuna nem sobreposição.' if coverage else
-                   'Cobertura dos trechos de estabilidade ausente ou inconsistente.', trace=trace))
+        if roof_component is not None:
+            from .roof_top_nbr import COMPUTED as ROOF_COMPUTED, SOURCE as ROOF_SOURCE
+            r=next((r for r in roof_component.get('records',[]) if r.get('combination_id')==cid),{})
+            roof_trace=dict(trace,roof_top_nbr_snapshot_sha256=roof_component.get('snapshot_sha256'),
+                source_me_record_sha256=r.get('source_me_record_sha256'),
+                source_combination_sha256=r.get('source_combination_sha256'),
+                stability_domain=deepcopy(roof_component.get('domain')),
+                source_input_fingerprint=result.get('input_fingerprint'))
+            valid=not roof_component.get('error') and not conflict
+            records.append(check(prefix+'FLT_height',limit_state=state,source=ROOF_SOURCE,
+                qualified=valid and r.get('status')==ROOF_COMPUTED,index=r.get('index'),trace=roof_trace,
+                reason=roof_component.get('error') or r.get('reason') or 'Componente FLT no topo ausente.'))
+            records.append(check(prefix+'FLT_coverage',limit_state=state,source=ROOF_SOURCE,
+                qualified=valid,verdict='meets' if valid else None,trace=roof_trace,
+                reason='Vão inteiro [0,L] do esquema de topo; trechos/Cb legados não são vínculos deste modelo.' if valid else
+                       roof_component.get('error') or 'Domínio da componente FLT no topo inconsistente.'))
+        else:
+            segments = evidence.get('FLT_segments', [])
+            expected = data.get('segments', [])
+            n = len(expected) if isinstance(expected, list) else 0
+            if n == 0:
+                records.append(_pending(prefix+'FLT_inventory', state, 'Nenhum trecho de estabilidade declarado.', trace))
+            for i in range(max(n, len(segments))):
+                raw = segments[i] if i < len(segments) else {}
+                expected_segment = expected[i] if i < n else None
+                snapshot = result.get('input_snapshot', {})
+                snapshot_segments = snapshot.get('segments')
+                explicit = raw.get('segment')
+                binding_ok = (len(segments) == n and i < n and
+                              (explicit is None or explicit == expected_segment) and
+                              ('segment_id' not in raw or raw['segment_id'] == expected_segment.get('segment_id')) and
+                              (snapshot_segments is None or snapshot_segments == expected))
+                records.append(_record(prefix+'FLT:'+str(i+1), state, raw,
+                    source='NBR14762:2010 9.8.2.2', trace=dict(trace, segment=i+1,
+                        segment_input=deepcopy(expected_segment),
+                        binding_basis='producer_order_v1',
+                        binding_is_independent_identity=False,
+                        source_input_fingerprint=result.get('input_fingerprint')),
+                    disqualify=conflict or not binding_ok))
+            coverage = _segment_coverage(data)
+            records.append(check(prefix+'FLT_coverage', limit_state=state, source=SCHEMA,
+                qualified=coverage, verdict='meets' if coverage else None,
+                reason='Trechos cobrem o vão sem lacuna nem sobreposição.' if coverage else
+                       'Cobertura dos trechos de estabilidade ausente ou inconsistente.', trace=trace))
         shear = evidence.get('section_checks', {}).get('shear', {})
         vr = shear.get('VRd_N')
         states = ev.get('states', [])
@@ -448,6 +465,9 @@ def build_global_verification(result):
         from .three_girt_assessment.application import assess
         return assess(result)
     records = []
+    from .roof_top_nbr import preserved as saved_roof_nbr
+    try:roof_component=saved_roof_nbr(result)
+    except (ValueError,TypeError,KeyError) as exc:roof_component={'error':str(exc)}
     schema = result.get('schema')
     model_domain = result.get('model_domain_evidence', {})
     records.append(check('model_domain', limit_state='MODEL', source=SCHEMA,
@@ -474,7 +494,7 @@ def build_global_verification(result):
                 continue
             case = found[0]
             records.extend(_case_records(result, combo, case.get('evidence', {}), batch=True,
-                                         warnings=case.get('warnings', []),case_combination=case.get('combination')))
+                                         warnings=case.get('warnings', []),case_combination=case.get('combination'),roof_component=roof_component))
         if not wanted or by_id:
             records.append(_pending('combination_inventory', 'MODEL', 'Inventário de combinações vazio ou resultados inesperados.'))
     elif schema == 'NBR14762_one_span_v1':
@@ -500,12 +520,17 @@ def build_global_verification(result):
                    combined_ELS_approved=False,
                    numerical_results_changed=False,
                    display_summary=display_summary(summary))
+    if roof_component is not None:
+        summary['roof_top_nbr_binding']={k:roof_component.get(k) for k in ('snapshot_sha256','source_roof_snapshot_sha256')}
     excluded=[r['id'] for r in records if r['status']=='not_applicable'
               and r.get('trace',{}).get('criterion_scope')=='mathematical_limit']
     if excluded:
         from .point_limit import SCOPE as LIMIT_SCOPE
         summary['point_limit_exclusion_ids']=excluded
         summary['point_limit_scope_note']=LIMIT_SCOPE
+    if roof_component is not None:
+        from .roof_top_load import digest as roof_digest
+        summary['roof_top_nbr_binding']['global_snapshot_sha256']=roof_digest(summary)
     return summary
 
 

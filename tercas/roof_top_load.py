@@ -20,7 +20,7 @@ SCOPE=('Me elástico do esquema de cobertura: um vão inteiro, garfos ideais nas
        'torção, deformação pré-flambagem, modos locais/distorcionais ou aprovação global.')
 REFERENCE='Vlasov: Sahraei et al. CSCE2017 Eq2; canal: Vermeylen et al. Eurosteel2023; NBR14762 §9.8.2.2 p48.'
 
-LEGACY_COMPARATOR_NOTE=('Comparador da referência no CT, com Cb=1: os Me e MRd/FLT deste bloco não são a resistência da carga no topo. O Me com altura está na componente própria da cobertura; não é convertido automaticamente em resistência.')
+LEGACY_COMPARATOR_NOTE=('Comparador da referência no CT, com Cb=1: os Me e MRd/FLT deste bloco não são a resistência da carga no topo. O Me com altura está na componente própria da cobertura; MRd com altura, quando calculado, consta no bloco NBR próprio e não é substituído por estes comparadores no CT.')
 
 
 def choice(load_line='web_midplane'):

@@ -1,0 +1,53 @@
+NBR FLT COM CARGA NO TOPO — CONSUMO POR COMBINAÇÃO ELU
+
+Implementação: tercas/roof_top_nbr.py, anexa após Me e antes do panorama.
+Escopo: sete referências próprias Ue100, flexão forte uniaxial, vão inteiro,
+garfos extremos/empenamento livre, sem contenções intermediárias nem rigidez da
+telha. Inclinação com componente fraca, modo direto sem separação PP/cobertura e
+fontes ainda não integradas continuam identificados; não se apagam ações reais.
+
+NBR14762:2010 §9.8.2.2 p48 permite bibliografia especializada para Me sob carga
+desestabilizante. Usa-se Me salvo de cada ELU com o motor flt_mse existente:
+lambda0=sqrt(Wc*fy/Me), chi_FLT, lambdap=sqrt(chi_FLT*Wc*fy/Ml), Wc,ef e
+MRd,FLT=chi_FLT*Wc,ef*fy/1,10. Não se aplica Cb novamente: M(s) já está no
+operador elástico. Não se escala MRd pela razão de Me.
+
+O mínimo seção efetiva–FLT–D é apenas componente de flexão pura. D é dispensado
+pela Tabela14 somente no eixo forte da referência 1,20 mm; as outras seis
+espessuras mantêm seus próprios críticos. Isso não dispensa torção/bimomento.
+Os valores são próprios R01; Pierin é correspondência nominal, não nova autoria.
+
+M–V de §9.8.4 conserva exatamente o denominador de §9.8.2.1. AISI/H4 não é
+alterada, não recebe MRd NBR e não recupera capacidade no CT para carga no topo.
+PP conserva sua linha no CG; ações da cobertura conservam suas linhas e sinais.
+
+O panorama consome uma verificação FLT por ELU, com domínio [0,L] salvo. Não
+repete a capacidade por trechos manuais nem exige a cobertura desses trechos,
+pois eles não definem este esquema. Torção/empenamento e demais limites
+permanecem separados; não existe aprovação global por este incremento.
+
+A componente guarda o hash de Me, de cada registro Me e combinação, evidência
+resistente própria, documentos, os dois IDs quando distintos, contorno, material
+e capacidades. A emissão confere fontes protegidas; UI e Word apenas conferem
+identidades/vínculos dos dados salvos. Não executam fonte, autovalor ou curva.
+O panorama recebe vínculo/hash próprio: remover/adulterar o sidecar não mantém
+uma promoção antiga visível. Históricos sem componente não são requalificados.
+A atualização do marcador de cache remove resultados ativos antigos, preserva
+entradas e solicita cálculo explícito; não reescreve documentos históricos.
+
+Me linear não inclui deformação pré-flambagem ou tensões geométricas da torção
+primária. Convergência numérica não é limite inferior rigoroso de autovalor nem
+validade sob giros arbitrários. Estes são limites do método declarado; não há
+nova exigência universal de GMNIA/certificação. Tirantes não são dimensionados.
+
+Não se adicionam inputs de Me, Cb, C1/C2, centro de torção ou fatores técnicos.
+Perfil/aço, vão, cargas, orientação e o esquema físico existente determinam os
+parâmetros disponíveis. A escolha do esquema deve corresponder à obra.
+
+Referências:
+NBR14762:2010 §§9.8.2.1/.2/.3, 9.8.4, Tabela14, pp47–51.
+Sahraei/Pezeshky/Mohareb2017, Eq2, pp2–3:
+https://legacy.csce.ca/elf/apps/CONFERENCEVIEWER/conferences/2017/pdfs/EMM/FinalPaper_635.pdf
+Vermeylen et al.2023, pp3–4 e6:
+https://orbi.uliege.be/bitstream/2268/306606/1/VermeylenMaxime-Eurosteel%202023.pdf
+Ver também docs/ROOF_TOP_LOAD_20261105.txt para o núcleo elástico e seus controles.

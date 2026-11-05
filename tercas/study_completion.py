@@ -19,6 +19,8 @@ def complete_result(result):
     out = finalize(out)
     from .roof_top_load import attach as attach_roof_top_load
     out = attach_roof_top_load(out)
+    from .roof_top_nbr import attach as attach_roof_nbr
+    out = attach_roof_nbr(out)
     out['global_verification'] = build_global_verification(out)
     out['whole_member_approved'] = False
     out['completion_snapshot'] = dict(schema=VERSION,
@@ -30,6 +32,10 @@ def complete_result(result):
 def show_global(st, result):
     record = result.get('global_verification')
     if not isinstance(record,dict):return
+    from .roof_top_nbr import validate_saved_global
+    try:validate_saved_global(result)
+    except (ValueError,TypeError,KeyError) as exc:
+        st.warning('Panorama não exibido: '+str(exc));return
     message = record['display_summary']
     if record['status'] == 'reprovado':st.error(message)
     else:st.warning(message)
@@ -44,6 +50,10 @@ def show_global(st, result):
 def report_global(doc, result):
     record = result.get('global_verification')
     if not isinstance(record,dict):return
+    from .roof_top_nbr import validate_saved_global
+    try:validate_saved_global(result)
+    except (ValueError,TypeError,KeyError) as exc:
+        doc.add_paragraph('Panorama não exibido: '+str(exc));return
     doc.add_heading('Estado conjunto das verificações',1)
     doc.add_paragraph(record['display_summary'])
     doc.add_paragraph('O resumo mantém faltas e não atendimentos de cada combinação. '

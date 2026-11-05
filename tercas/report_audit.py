@@ -41,7 +41,7 @@ def report_fingerprint(doc,value):
 
 
 _MECHANISMS={'local':'Flexão local','distortional':'Distorcional','FLT':'FLT',
-    'FLT_coverage':'Cobertura dos trechos FLT','shear':'Cortante',
+    'FLT_height':'FLT com carga no topo — vão inteiro','FLT_coverage':'Cobertura do domínio FLT','shear':'Cortante',
     'MV':'Flexão e cortante concomitantes','biaxial':'Flexão biaxial',
     'point_introduction_scope':'Introdução da força concentrada',
     'axial_scope':'Escopo axial','secondary_shear_scope':'Cortante secundário',

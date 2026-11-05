@@ -376,3 +376,8 @@ conjunta. Modo direto sem separação PP/cobertura e flexão biaxial ficam pende
 nessa componente. Histórico não é recalculado. Método, fontes, limites e testes:
 `docs/ROOF_TOP_LOAD_20261105.txt`. Candidata de componente elástica, sem publicação
 ou qualificação física inferida.
+
+
+### Componente NBR com carga no topo
+
+O Me com altura pode ser consumido por combinação ELU nas sete referências próprias Ue100: curva NBR §9.8.2.2 e mínimo das componentes de flexão forte pura. UI, Word e panorama distinguem essa componente de torção e aprovação global. O vão inteiro do esquema substitui somente o inventário FLT, sem usar trechos/Cb manuais. M–V, AISI e ações fracas permanecem inalterados. Não há novos inputs teóricos nem requalificação automática de históricos. Domínio, fontes e limites em `docs/ROOF_TOP_NBR_RESISTANCE_20261105.txt`.

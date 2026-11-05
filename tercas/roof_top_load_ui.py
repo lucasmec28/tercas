@@ -136,7 +136,9 @@ def show_result(st, result):
     if rows:st.dataframe(display_frame(rows), hide_index=True, width='stretch')
     with st.expander('Modelo de topo: escolha e geometria salvas', expanded=False):
         st.json({k: evidence.get(k) for k in ('choice_snapshot','geometry','scope','source_input_fingerprint')})
-    st.caption('Resultados legados permanecem separados; este Me não requalifica automaticamente FLT, torção ou a aprovação global.')
+    st.caption('Me isolado não é resistência. O consumo NBR, quando salvo, aparece abaixo; torção e aprovação global permanecem separados.')
+    from .roof_top_nbr_ui import show as show_nbr
+    show_nbr(st,result)
 
 
 def report(doc, result):
@@ -158,3 +160,5 @@ def report(doc, result):
         doc.add_paragraph(' | '.join(k+': '+(fmt(v) if _finite(v) else str(v)) for k,v in row.items()))
     doc.add_paragraph('Rastreabilidade das entradas: '+str(evidence.get('source_input_fingerprint', 'não informada')))
     doc.add_paragraph('Resultados legados separados. Nenhuma resistência à torção ou aprovação global é demonstrada por este componente.')
+    from .roof_top_nbr_ui import report as report_nbr
+    report_nbr(doc,result)

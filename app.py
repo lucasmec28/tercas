@@ -57,6 +57,7 @@ def show_inclination(evidence,girt=False):
  st.caption('Valores nas seções listadas; não são envelope biaxial nem resistência. P e q são considerados juntos na mesma combinação.')
 
 def render_results(result,d):
+ from tercas.roof_top_nbr_ui import presentation_rows as roof_nbr_rows
  from tercas.roof_top_load_ui import show_result as show_roof_top_load
  show_roof_top_load(st,result)
  from tercas.biaxial_component_ui import show as show_biaxial_component
@@ -96,13 +97,13 @@ def render_results(result,d):
   batch=result.get('schema')=='tercas_batch_results_v1'
   if batch:
    for warning in dict.fromkeys(w for case in result['cases'] for w in case['warnings']):st.warning(warning)
-   st.dataframe(display_frame(domain_historical_rows(result,gross_component_rows(result,result['summary']))),hide_index=True,width='stretch')
+   st.dataframe(display_frame(domain_historical_rows(result,roof_nbr_rows(result,gross_component_rows(result,result['summary'])))),hide_index=True,width='stretch')
    st.caption('Máximos por verificação entre os casos calculados. Pendências em outras combinações permanecem visíveis; não há combinação global aprovada.')
    with st.expander('Resultados de cada combinação'):
     names=[f"{c['combination']['id']} — {c['combination']['type']}" for c in result['cases']]
     selected=st.selectbox('Combinação para consultar',range(len(names)),format_func=lambda i:names[i])
     item=result['cases'][selected];st.caption(measurement_text(item['combination']['expression'])+f"; q normal={fmt(item['combination']['q_kN_m'])} kN/m; P normal={fmt(item['combination'].get('P_N',0)/1000)} kN")
-    st.dataframe(display_frame(domain_historical_rows(result,gross_component_rows(result,item['rows']))),hide_index=True,width='stretch')
+    st.dataframe(display_frame(domain_historical_rows(result,roof_nbr_rows(result,gross_component_rows(result,item['rows']),item['combination']['id']))),hide_index=True,width='stretch')
     if item.get('evidence',{}).get('inclination'):show_inclination(domain_historical_inclination(result,item['evidence']['inclination']),girt=girt)
     if girt and not is_girt_result(result):show_elastic_wall(item.get('evidence',{}))
   else:
