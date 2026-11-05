@@ -24,7 +24,7 @@ def finite(value):
 
 
 def _expected(result):
-    return [(c['id'],c['limit_state']) for c in result.get('load_bundle',{}).get('combinations',[])
+    return [(c['id'],c['limit_state']) for c in roof.combination_inventory(result)
             if c.get('limit_state')=='ELU']
 
 
@@ -86,14 +86,14 @@ def attach(result):
         domain=dict(start_mm=0.,end_mm=data['L_mm'],end_restraint='fork_free_warping',
                     intermediate_restraints='none',manual_effective_lengths_used=False),
         source_section=None,records=[],computed_cases=0,pending_cases=0,
-        ignored_ELS_cases=sum(c.get('limit_state')=='ELS' for c in result.get('load_bundle',{}).get('combinations',[])),
+        ignored_ELS_cases=sum(c.get('limit_state')=='ELS' for c in roof.combination_inventory(result)),
         NBR_pure_bending_component=True,primary_torsion_assessed=False,AISI_capacities_changed=False,
         M_V_denominators_changed=False,legacy_mechanics_changed=False,
         physical_conditions_verified=False,whole_member_approved=False)
     try:section=_source(data,result)
     except (ValueError,TypeError,KeyError,OSError) as exc:section=None;source_reason=str(exc)
     else:source_reason=None;evidence['source_section']=section
-    combos={(c['id'],c['limit_state']):c for c in result.get('load_bundle',{}).get('combinations',[])}
+    combos={(c['id'],c['limit_state']):c for c in roof.combination_inventory(result)}
     if result.get('schema')=='tercas_batch_results_v1' and [c.get('combination') for c in result.get('cases',[])]!=result.get('load_bundle',{}).get('combinations',[]):
         raise ValueError('Casos resistentes não correspondem às combinações esperadas.')
     by_id={}
@@ -101,7 +101,7 @@ def attach(result):
         key=(r.get('combination_id'),r.get('limit_state'))
         if key in by_id:raise ValueError('Componente Me possui identidade duplicada.')
         by_id[key]=r
-    if by_id and set(by_id)!={(c['id'],c['limit_state']) for c in result.get('load_bundle',{}).get('combinations',[])}:
+    if by_id and set(by_id)!={(c['id'],c['limit_state']) for c in roof.combination_inventory(result)}:
         raise ValueError('Componente Me não corresponde ao inventário de combinações.')
     for cid,state in expected:
         r=by_id.get((cid,state));base=dict(combination_id=cid,limit_state=state,
@@ -117,21 +117,30 @@ def attach(result):
             evidence['records'].append(dict(base,status='pending',reason=reason,index=None));continue
         M=r.get('maximum_reference_moment_Nmm')
         if not finite(M) or M<=0:raise ValueError('Momento de referência inválido para consumir Me.')
-        cap=flt_mse(section['Wc_mm3'],section['fy_MPa'],section['Ml_Nmm'],r['Me_Nmm'])
+        envelope=r.get('direct_envelope') is True
+        if envelope:
+            from .direct_roof_envelope import nbr_resistance_floor
+            cap=nbr_resistance_floor(section['Wc_mm3'],section['fy_MPa'],section['Ml_Nmm'],r['Me_Nmm'])
+        else:cap=flt_mse(section['Wc_mm3'],section['fy_MPa'],section['Ml_Nmm'],r['Me_Nmm'])
         parts=dict(section_effective=section['MRd_section_effective_Nmm'],FLT_height=cap['MRd_flt_Nmm'])
         if section['MRd_distortional_Nmm'] is not None:parts['distortional']=section['MRd_distortional_Nmm']
         minimum=min(parts.values());index=M/cap['MRd_flt_Nmm']
         evidence['records'].append(dict(base,status=COMPUTED,reason=SCOPE,
             Me_Nmm=r['Me_Nmm'],Msd_max_abs_Nmm=M,FLT=cap,index=index,
-            criterion_status='fails' if index>1 else 'meets',
+            criterion_status=('inconclusive' if envelope else 'fails') if index>1 else 'meets',
             MRd_section_effective_Nmm=section['MRd_section_effective_Nmm'],
             MRd_distortional_Nmm=section['MRd_distortional_Nmm'],
             MRd_bending_component_Nmm=minimum,bending_component_index=M/minimum,
             governing_bending_components=[k for k,v in parts.items() if v==minimum],
             Cb_applied_after_Me=False,primary_torque_by_action=copy.deepcopy(r['primary_torque_by_action']),
             M_V_denominator_source='NBR14762 §9.8.4 usa seção efetiva (§9.8.2.1); não alterado por esta componente.'))
+        if envelope:
+            evidence['records'][-1].update(resistance_is_lower_envelope=True,
+                reason=SCOPE+' Altura direta envolvida por hipótese conservadora; índice acima de 1 com piso resistente é inconclusivo, não reprovação da resistência real. Torção e parcelas paralelas ocultas permanecem fora desta garantia.')
     evidence['computed_cases']=sum(r['status']==COMPUTED for r in evidence['records'])
     evidence['pending_cases']=len(expected)-evidence['computed_cases']
+    if ev.get('load_basis')=='direct_total_top_envelope':
+        evidence['inconclusive_envelope_cases']=sum(r.get('criterion_status')=='inconclusive' for r in evidence['records'])
     if evidence['computed_cases']:
         evidence['status']='components_computed' if not evidence['pending_cases'] else 'partial_components'
     else:
@@ -162,8 +171,8 @@ def preserved(result):
         own=result.get(section.get('source_reference_field'))
         if (not isinstance(own,dict) or section.get('source_reference_sha256')!=roof.digest(own)
             or own.get('reference_id')!=section.get('reference_id')
-            or section.get('nodes_sha256')!=ev.get('geometry',{}).get('nodes_sha256')
-            or section.get('section_profile_id')!=ev.get('geometry',{}).get('section_profile_id')):
+            or section.get('nodes_sha256')!=(ev.get('geometry') or {}).get('nodes_sha256')
+            or section.get('section_profile_id')!=(ev.get('geometry') or {}).get('section_profile_id')):
             raise ValueError('Fonte resistente ou contorno da componente salvo divergente.')
         caps=own.get('signed_scalar_capacities',{});model=own.get('model',{})
         if not isinstance(caps,dict) or not isinstance(model,dict):raise ValueError('Evidência resistente salva malformada.')
@@ -178,7 +187,7 @@ def preserved(result):
         if section.get('source_documents')!=own.get('source_documents'):
             raise ValueError('Documentos resistentes diferem da fonte própria salva.')
     rows=saved.get('records');expected=_expected(result)
-    combos={(c['id'],c['limit_state']):c for c in result.get('load_bundle',{}).get('combinations',[])}
+    combos={(c['id'],c['limit_state']):c for c in roof.combination_inventory(result)}
     me_records={(r.get('combination_id'),r.get('limit_state')):r for r in ev.get('records',[])}
     if result.get('schema')=='tercas_batch_results_v1' and [c.get('combination') for c in result.get('cases',[])]!=result.get('load_bundle',{}).get('combinations',[]):
         raise ValueError('Inventário independente de casos/combinações alterado.')
@@ -186,6 +195,8 @@ def preserved(result):
         or saved.get('computed_cases')!=sum(r.get('status')==COMPUTED for r in rows)
         or saved.get('pending_cases')!=sum(r.get('status')=='pending' for r in rows)):
         raise ValueError('Inventário resistente NBR no topo incompleto ou inconsistente.')
+    if 'inconclusive_envelope_cases' in saved and saved['inconclusive_envelope_cases']!=sum(r.get('criterion_status')=='inconclusive' for r in rows):
+        raise ValueError('Contagem de envoltórias inconclusivas alterada.')
     for r in rows:
         key=(r.get('combination_id'),r.get('limit_state'));me_record=me_records.get(key)
         if (r.get('source_combination_sha256')!=roof.digest(combos[key])
@@ -203,13 +214,23 @@ def preserved(result):
                 or r.get('Me_Nmm')!=me_record.get('Me_Nmm')
                 or r.get('Msd_max_abs_Nmm')!=me_record.get('maximum_reference_moment_Nmm')
                 or r.get('primary_torque_by_action')!=me_record.get('primary_torque_by_action')
-                or not finite(r.get('index')) or r['index']<0 or r.get('criterion_status')!=('fails' if r['index']>1 else 'meets')
+                or not finite(r.get('index')) or r['index']<0 or r.get('criterion_status')!=((('inconclusive' if me_record.get('direct_envelope') is True else 'fails')) if r['index']>1 else 'meets')
                 or r.get('Cb_applied_after_Me') is not False or r.get('FLT',{}).get('gamma')!=1.1
                 or not finite(r.get('FLT',{}).get('MRd_flt_Nmm')) or r['FLT']['MRd_flt_Nmm']<=0):
                 raise ValueError('Resultado FLT salvo não utilizável.')
             if (any(not finite(r['FLT'].get(k)) or r['FLT'][k]<=0 for k in ('lambda0','chi_flt','lambda_p_reduced_stress','Wceff_mm3'))
                 or r['FLT']['chi_flt']>1 or r['FLT']['Wceff_mm3']>section['Wc_mm3']):
                 raise ValueError('Parâmetros da curva FLT salva inválidos.')
+            if me_record.get('direct_envelope') is True:
+                lower=r['FLT'].get('lower_envelope',{})
+                if (r.get('resistance_is_lower_envelope') is not True or not isinstance(lower,dict)
+                    or lower.get('applied') is not True or lower.get('original_formula_unchanged') is not True
+                    or lower.get('arithmetic_floor_only') is not True or lower.get('physical_resistance_bound') is not False
+                    or lower.get('lambda_transition')!=1.336 or lower.get('chi_intermediate_limit')!=1.11*(1-.278*1.336**2)
+                    or not isinstance(lower.get('original_formula'),dict)):
+                    raise ValueError('Envoltória resistente direta salva alterada.')
+            elif r.get('resistance_is_lower_envelope') or 'lower_envelope' in r['FLT']:
+                raise ValueError('Envoltória direta não pertence ao caso por área.')
             # Serialized arithmetic identities only, not another resistance solve.
             if (r['index']!=r['Msd_max_abs_Nmm']/r['FLT']['MRd_flt_Nmm']
                 or r.get('MRd_section_effective_Nmm')!=section['MRd_section_effective_Nmm']

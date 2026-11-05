@@ -1,0 +1,113 @@
+CARGA DIRETA TOTAL — ENVOLTÓRIA DE ALTURA, 05/11/2026
+
+Objetivo e entrada mínima
+O modo direto já recebe q/P locais e combinados e exige PP incluído. Ao
+selecionar o esquema de carga no topo, o novo ramo considera uma envoltória
+escalar de altura sem pedir outro número, fator de PP, CT, Cb ou K. Não estima,
+não soma e não subtrai uma quantidade fictícia de PP. P conserva a estação
+longitudinal informada. A inclinação não gira novamente entradas já locais.
+
+Contrato adotado, não verificação física
+- A parcela normal de PP, no CG, é descendente ou nula na combinação.
+- Demais forças normais estão na linha superior selecionada.
+- Idealização de flexão forte uniaxial, sem parcelas paralelas individuais
+  ocultas/canceladas ou outros efeitos omitidos de sua compensação.
+- Mesmo vão e mesmos garfos/empenamento livre da componente já publicada.
+  Nenhum travamento da telha ou intermediário é acrescentado.
+
+A UI torna essas premissas explícitas na seleção do esquema. O programa não
+verifica sua ocorrência no campo. Força paralela total não nula fica pendente,
+sem apagá-la. Inclinação não nula, sozinha, não veta cargas já locais. Contudo,
+PP gravitacional em uma terça inclinada normalmente tem parcela paralela;
+se esta é compensada por outra ação/apoio, sua influência física precisa de
+modelo próprio. Um total paralelo zero não demonstra esse caminho de forças.
+
+Prova do efeito de altura
+Adote q/P positivos para baixo, h>0 no topo, CG e CT na meia-altura da seção
+simétrica no eixo forte. q=q_topo+q_PP, sem determinar q_PP. A energia clássica
+é K(v)-lambda*D(v), com K positiva e v=(u,phi). Para o mesmo diagrama M(x),
+
+D_envoltoria(v)-D_modelo_separado(v)
+ = h*integral[q_PP(x)*phi(x)^2 dx] + h*sum[P_PP,i*phi(a_i)^2] >= 0.
+
+A condição q_PP(x)>=0, P_PP,i>=0 é suficiente. O primeiro fator positivo é
+lambda_cr=1/sup[D(v)/K(v)] (infinito se não houver direção positiva). Portanto
+lambda_env<=lambda_separado, e, com max|M|>0, Me_env<=Me_separado.
+A comparação usa a mesma família proporcional e o primeiro autovalor POSITIVO,
+não o de menor módulo. Uma integral positiva de q_PP não basta se houver
+parcelas locais negativas. Alterar a posição longitudinal invalida a prova.
+
+A prova independe do sinal da resultante. Sob sucção líquida, o carregamento
+real no topo seria ainda mais negativo: deslocar o total ao topo retira parte
+da estabilização, mantendo a ordenação conservadora de altura. Sinais mistos
+de q/P também são permitidos, conservando suas posições e o diagrama completo.
+Se q/P se anulam e Mref=0, não se emite Me ou capacidade zero fictícia.
+
+Se o fator de PP puder ser negativo, a garantia deixa de valer. No exemplo
+modal K=I e D=[[0,1],[1,z]], q_total=1, q_PP=-1, h=1: z_env=1, z_real=2;
+lambda_env=0,618 > lambda_real=0,414. Não usar o ramo para essa condição.
+
+Escopo numérico e físico
+A prova ordena os modelos clássicos contínuos e também uma mesma discretização
+Ritz. O algoritmo publicado continua tendo refinamento numérico, não um limite
+inferior certificado do autovalor contínuo. Não se transforma essa ordenação de
+altura em certificado numérico/experimental ou resistência física global.
+Nenhuma tolerância, base modal, critério ou fórmula do kernel foi modificada.
+
+Torção não é envolvida
+T_real=-e_topo*q_topo-e_CG*q_PP, enquanto T_substituto=-e_topo*q_total.
+A diferença pode aumentar ou reduzir |T|. Mesmo q_total=0 pode deixar torque
+real não nulo. Por isso todas as ações substitutas conservam torque=None,
+nunca zero. No direto, Vlasov T/B e H4 AISI seguem pendentes sem decomposição.
+A alternativa para esse fechamento é informar o fator efetivo de PP em cada
+combinação ou usar ações por área, preservando as linhas reais. Não é um campo
+obrigatório para a componente escalar de FLT agora calculável.
+
+Consumo NBR: piso resistente, não mudança da fórmula publicada
+O novo ramo usa a fonte própria já qualificada para o consumo NBR, com a mesma
+seção, material, Ml e distorção. Catálogo genérico mantém suas pendências de
+fonte; a prova não elimina incoerências seccionais.
+A curva arredondada atualmente publicada NÃO é globalmente monótona em Me:
+em lambda0=1,336, chi_intermediário_limite=0,55921679232, enquanto o ramo
+elástico dá 0,5602567320448921. Ao aumentar Me através da fronteira ocorre uma
+pequena queda de chi (~0,186%). Assim não basta consumir Me_env como se a
+fórmula fosse rigorosamente crescente.
+
+Somente no novo ramo direto, usa-se:
+- chi_piso=chi(Me_env), se lambda0<1,336;
+- chi_piso=min[chi(Me_env), 1,11*(1-0,278*1,336^2)], se lambda0>=1,336.
+
+A função resistente posterior g(chi) é crescente: no ramo bruto é chi*W*fy/
+gamma; no efetivo é Ml*(sqrt(chi*W*fy/Ml)-0,22)/gamma. O salto em lambda_p=
+0,673 é para cima. Portanto g(chi_piso) é piso aritmético para a curva futura.
+Pode ser estritamente menor que o ínfimo alcançável numa coincidência de
+transições; não se afirma igualdade exata com o ínfimo.
+
+A expressão arredondada de largura efetiva pode dar rho>1 para
+0,673<lambda_p<0,6732050807569. Neste piso novo apenas, Wef é limitado ao W
+bruto. Isso reduz ou conserva a resistência, mantém um piso e evita saída que
+o próprio leitor rejeitaria. flt_mse, os cálculos por área, os críticos locais,
+o denominador M–V e a rota AISI NÃO são alterados. O snapshot conserva a
+avaliação original e informa quais correções de envoltória foram aplicadas.
+
+Se Msd/MRd_piso<=1, atende à componente escalar declarada. Se for maior que 1,
+o resultado é inconclusivo, não prova de reprovação da resistência real.
+O panorama mantém esse índice como diagnóstico pendente. Outras verificações
+podem reprovar por seus próprios resultados; não são apagadas. Nunca há
+promoção automática da aprovação global.
+
+Histórico e testes
+Evidência direta nova: roof_top_load_evidence_v2. A configuração de entrada
+não exige campo novo. Snapshots v1 continuam legíveis sem recalcular ou ganhar
+inventário novo. A evidência NBR liga cada DIRECT_ELU ao Me e à mesma entrada;
+DIRECT_ELS não recebe resistência ELU. Leitores e relatórios não abrem solver.
+Testes cobrem gravidade, sucção, sinais mistos, PP>=0, contraexemplo PP<0,
+compensação torsional, transições arredondadas, posições, paralelos, sete
+referências próprias, não duplicação de PP, snapshots e índice inconclusivo.
+
+Fontes mecânicas continuam as da componente de topo: NBR14762:2010 §9.8.2.2,
+energia de Sahraei/Pezeshky/Mohareb (CSCE2017 Eq2) e canal de Vermeylen et al.
+(Eurosteel2023). A ordenação acima é uma demonstração adicional do modelo,
+não uma nova cláusula normativa ou extensão de validade física demonstrada.
+https://legacy.csce.ca/elf/apps/CONFERENCEVIEWER/conferences/2017/pdfs/EMM/FinalPaper_635.pdf
+https://orbi.uliege.be/bitstream/2268/306606/1/VermeylenMaxime-Eurosteel%202023.pdf

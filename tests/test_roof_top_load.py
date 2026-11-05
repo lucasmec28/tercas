@@ -84,11 +84,12 @@ def test_unknown_horizontal_eccentricity_is_not_zero_torque():
     assert result['Me_Nmm']>0 and result['primary_torque_by_action'][0]['value'] is None
 
 
-def test_direct_pending_does_not_decompose_or_add_self_weight():
+def test_direct_envelope_does_not_decompose_or_add_self_weight():
     d=generic();d['load_mode']='direct';raw=calculate(d);out=roof.attach(raw)
     assert all(out[k]==v for k,v in raw.items())
-    ev=roof.preserved(out);assert ev['records']==[] and ev['computed_cases']==0
-    assert 'nenhum PP foi acrescentado' in ev['reason']
+    ev=roof.preserved(out);assert ev['computed_cases']==2
+    assert ev['self_weight_added'] is False and ev['self_weight_quantity_assumed'] is False
+    assert all(t['value'] is None for rec in ev['records'] for t in rec['primary_torque_by_action'])
 
 
 def test_biaxial_is_explicit_pending_and_preserves_actions():

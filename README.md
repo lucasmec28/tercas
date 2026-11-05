@@ -392,3 +392,14 @@ como LRFD AISI. O resultado continua condicional: H4 acima de 1 com um piso
 ordem. Giros, torque, limites de flexão fraca/t1,20 e pendências globais são
 preservados. Nenhum novo input teórico. Ver
 [escopo e rastreabilidade](docs/AISI_ROOF_HEIGHT_H4_20261105.txt).
+
+## Carga direta total no topo — 05/11/2026
+
+O esquema de topo passa a oferecer uma envoltória escalar de Me para q/P
+locais já combinados, com PP incluído, sem exigir fator ou quantidade de PP.
+Adota PP normal descendente/nulo e demais ações no topo; não cobre parcelas
+paralelas ocultas/canceladas. O consumo NBR usa piso resistente explícito,
+sem mudar a curva publicada. Índice acima de 1 é inconclusivo nesse piso,
+não reprovação. Torção/H4 continuam dependentes da decomposição. Nenhuma
+aprovação global. Prova, contraexemplos e limites:
+`docs/DIRECT_ROOF_ENVELOPE_20261105.txt`.

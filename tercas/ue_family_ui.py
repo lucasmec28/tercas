@@ -103,7 +103,7 @@ def render(st, data, revision, load, render_results, render_import):
         data['selected_types'] = st.multiselect('Famílias de combinações', source(data['properties']['t'],data['L_mm'])['selected_types'],
                                               default=data['selected_types'], key=f'ue_family_ref_types_{revision}')
     else:
-        st.caption('Ações já locais e combinadas: não são giradas novamente, sem PP automático. P na posição informada; limites junto ao apoio permanecem no modo por área. O contrato legado também exige entradas de área armazenadas válidas: se necessário, volte ao modo área para corrigi-las; nada é substituído automaticamente.')
+        st.caption('Ações já locais e combinadas: inclua o PP no total informado. Não são giradas novamente; nenhum PP é adicionado automaticamente. P na posição informada; limites junto ao apoio permanecem no modo por área. O contrato legado também exige entradas de área armazenadas válidas: se necessário, volte ao modo área para corrigi-las; nada é substituído automaticamente.')
         for suffix, label in (('uls','ELU'), ('sls','ELS')):
             with st.expander(label + ' — ações locais', expanded=True):
                 for prefix, title, unit in (('q','q normal','N/mm'), ('q_parallel','q paralelo','N/mm'),

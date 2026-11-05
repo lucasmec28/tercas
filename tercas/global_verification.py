@@ -239,7 +239,7 @@ def _case_records(result, combination, evidence, *, batch, warnings=(), case_com
                 source_input_fingerprint=result.get('input_fingerprint'))
             valid=not roof_component.get('error') and not conflict
             records.append(check(prefix+'FLT_height',limit_state=state,source=ROOF_SOURCE,
-                qualified=valid and r.get('status')==ROOF_COMPUTED,index=r.get('index'),trace=roof_trace,
+                qualified=valid and r.get('status')==ROOF_COMPUTED and r.get('criterion_status')!='inconclusive',index=r.get('index'),trace=roof_trace,
                 reason=roof_component.get('error') or r.get('reason') or 'Componente FLT no topo ausente.'))
             records.append(check(prefix+'FLT_coverage',limit_state=state,source=ROOF_SOURCE,
                 qualified=valid,verdict='meets' if valid else None,trace=roof_trace,
@@ -500,7 +500,7 @@ def build_global_verification(result):
     elif schema == 'NBR14762_one_span_v1':
         for state in ('ELU', 'ELS'):
             records.extend(_case_records(result, {'id': 'DIRECT_'+state, 'limit_state': state},
-                                         result, batch=False))
+                                         result, batch=False,roof_component=roof_component))
     elif schema == 'tercas_three_girt_results_v1':
         records.extend(_frame_records(result))
     else:

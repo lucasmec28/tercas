@@ -55,11 +55,13 @@ def render_choice(st,data,key):
     c=configuration(data)
     from .roof_top_load import enabled as roof_top_enabled
     if data.get('member_application','purlin')=='purlin' and roof_top_enabled(data):
-        st.caption('Linhas de carga definidas automaticamente pelo esquema de cobertura; PP no CG. '
-                   'Declarações manuais anteriores preservadas e inativas neste esquema.')
+        st.caption('Declarações manuais anteriores preservadas e inativas neste esquema de cobertura.')
         if data.get('load_mode')!='area':
-            st.warning('Torção pendente no modo direto: ações já combinadas não separam PP e cobertura; nenhuma linha é inventada para essa soma.')
+            st.warning('A envoltória conservadora de Me está disponível no esquema de topo, sob suas hipóteses uniaxiais. '
+                       'Torção, torque, bimomento e H4 permanecem pendentes no modo direto: ações já combinadas '
+                       'não separam PP e cobertura; a força substituta no topo não representa o torque real.')
             return
+        st.caption('Linhas de carga definidas automaticamente pelo esquema de cobertura; PP no CG.')
         try:
             from .torsion_study import automatic_roof_choice
             automatic=automatic_roof_choice(data)

@@ -13,6 +13,8 @@ NOTE=('O índice refere-se somente à componente FLT do modelo declarado. '
 
 def _status(r):
     if r.get('status')!=COMPUTED:return 'Pendente'
+    if r.get('resistance_is_lower_envelope'):
+        return 'Envoltória inconclusiva — não é reprovação' if r['index']>1 else 'Atende à envoltória da componente FLT'
     return 'Não atende à componente FLT' if r['index']>1 else 'Atende à componente FLT'
 
 
@@ -24,7 +26,7 @@ def summary_rows(evidence):
             'Msd [kN·m]':r['Msd_max_abs_Nmm']/1e6 if ok else None,
             'Me com altura [kN·m]':r['Me_Nmm']/1e6 if ok else None,
             'MRd,FLT [kN·m]':r['FLT']['MRd_flt_Nmm']/1e6 if ok else None,
-            'Índice':r.get('index'),'Pendência / escopo':NOTE if ok else r['reason']})
+            'Índice':r.get('index'),'Pendência / escopo':r['reason'] if not ok or r.get('resistance_is_lower_envelope') else NOTE})
     return out
 
 
@@ -35,6 +37,7 @@ def show(st,result):
     if ev is None:return
     st.subheader(TITLE);st.caption(SOURCE);st.warning(SCOPE)
     st.caption(f"{ev['computed_cases']} combinações ELU com componente calculada; {ev['pending_cases']} pendentes. "+NOTE)
+    if ev.get('inconclusive_envelope_cases'):st.info(str(ev['inconclusive_envelope_cases'])+' resultado(s) direto(s) com piso insuficiente: decisão inconclusiva, não reprovação.')
     if ev.get('reason'):st.info(ev['reason'])
     rows=summary_rows(ev)
     if rows:st.dataframe(display_frame(rows),hide_index=True,width='stretch')
@@ -64,6 +67,8 @@ def report(doc,result):
     for r in ev['records']:
         p=doc.add_paragraph(r['combination_id']+' — '+_status(r)+'.');p.paragraph_format.keep_with_next=True
         if r['status']!=COMPUTED:doc.add_paragraph(r['reason']);continue
+        if r.get('resistance_is_lower_envelope'):
+            doc.add_paragraph('Carga direta: piso resistente do modelo escalar. Índice acima de 1 é inconclusivo; não demonstra reprovação. As transições arredondadas são tratadas pelo piso resistente, incluindo Wef limitado ao W bruto neste ramo, sem modificar a fórmula publicada.')
         f=r['FLT'];parts=[
             'Msd='+technical_number(r['Msd_max_abs_Nmm']/1e6)+' kN·m',
             'Me='+technical_number(r['Me_Nmm']/1e6)+' kN·m',
@@ -89,7 +94,7 @@ def presentation_rows(result,rows,combination_id=None):
     records=[] if ev is None else [r for r in ev['records'] if combination_id is None or r['combination_id']==combination_id]
     computed=[r for r in records if r['status']==COMPUTED];pending=[r for r in records if r['status']!=COMPUTED]
     chosen=max(computed,key=lambda r:r['index']) if computed else None
-    note=NOTE
+    note=chosen['reason'] if chosen and chosen.get('resistance_is_lower_envelope') else NOTE
     if pending:note+=f' Há {len(pending)} combinação(ões) pendente(s); consulte a componente NBR no topo.'
     if error:note=error
     if not chosen and records:note=records[0]['reason']
@@ -99,7 +104,8 @@ def presentation_rows(result,rows,combination_id=None):
         'Resistência / limite':str(chosen['FLT']['MRd_flt_Nmm']/1e6)+' kN·m' if chosen else '—',
         'Referência':'NBR14762 §9.8.2.2; Me com altura por combinação','Observação':note}
     if combination_id is None:
-        combos={c['id']:c for c in result.get('load_bundle',{}).get('combinations',[])}
+        from .roof_top_load import combination_inventory
+        combos={c['id']:c for c in combination_inventory(result)}
         cid=chosen['combination_id'] if chosen else records[0]['combination_id'] if records else None
         new['Combinação']=(cid+' — '+combos[cid]['type']) if cid in combos else 'Não disponível'
     out=[];inserted=False

@@ -67,7 +67,8 @@ def test_direct_and_inclined_scope_are_precise():
     app.session_state.data = data
     select(app, LABEL).set_value('web_midplane').run()
     assert not app.exception
-    assert any('q/P já combinados não separam PP' in widget.value for widget in app.warning)
+    assert not any('Pendente no modo direto' in widget.value for widget in app.warning)
+    assert any('PP' in widget.value and 'não negativa' in widget.value for widget in app.caption)
     assert any('acoplamento de flexão nos dois eixos' in widget.value for widget in app.info)
     assert any('não comprova a ligação' in widget.value for widget in app.caption)
 
