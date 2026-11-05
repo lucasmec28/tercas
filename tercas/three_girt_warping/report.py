@@ -57,4 +57,6 @@ def word(result,selected=0):
     append_nbr(d,result,selected)
     from ..three_girt_en_normal.report import append as append_en_normal
     append_en_normal(d,result)
+    from ..three_girt_service.report import append as append_service
+    append_service(d,result)
     out=BytesIO();d.save(out);return out.getvalue()

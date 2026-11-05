@@ -39,6 +39,8 @@ def render_saved(st,result):
     render_nbr(st,result)
     from ..three_girt_en_normal.ui import render_saved as render_en_normal
     render_en_normal(st,result)
+    from ..three_girt_service.ui import render_saved as render_service
+    render_service(st,result)
     i=st.selectbox('Combinação Vlasov 3D detalhada',range(len(result['cases'])),format_func=lambda i:result['cases'][i]['combination']['id'],key='three_warping_view_case')
     case=result['cases'][i];m=case['model'];rows=[]
     for name,env in m['girt_envelopes'].items():
@@ -93,7 +95,12 @@ def render_panel(st,data,revision,disabled=False):
             nbr_config=nbr_controls(st,data,fingerprint(dict(data=data,config=cfg)),prefix)
             from ..three_girt_en_normal.ui import controls as en_normal_controls
             en_normal_config=en_normal_controls(st,data,fingerprint(dict(data=data,config=cfg)),prefix)
+            from ..three_girt_service.ui import controls as service_controls
+            service_config=service_controls(st,data,fingerprint(dict(data=data,config=cfg)),prefix)
             old=st.session_state.get(RESULT_KEY)
+            if old is not None and old.get('horizontal_service_requested_configuration')!=service_config:
+                st.session_state.pop(RESULT_KEY,None)
+                st.info('Dados da componente horizontal mudaram. Calcule novamente.')
             if old is not None and old.get('EN_normal_N_M_B_requested_configuration')!=en_normal_config:
                 st.session_state.pop(RESULT_KEY,None)
                 st.info('Dados da componente normal EN mudaram. Calcule novamente para atualizar a memória.')
@@ -110,6 +117,12 @@ def render_panel(st,data,revision,disabled=False):
                 if result['status']=='conditional_elastic_vlasov_demand':
                     result=attach_g81(result)
                     result['NBR_axial_bending_requested_configuration']=copy.deepcopy(nbr_config)
+                    if service_config is not None:
+                        result['horizontal_service_requested_configuration']=copy.deepcopy(service_config)
+                        from ..three_girt_service.application import attach as attach_service
+                        try:result=attach_service(result,service_config)
+                        except (ValueError,TypeError,KeyError,ArithmeticError,OSError) as exc:
+                            result['horizontal_service_error']=str(exc)
                     if en_normal_config is not None:
                         result['EN_normal_N_M_B_requested_configuration']=copy.deepcopy(en_normal_config)
                         from ..three_girt_en_normal.application import attach as attach_en_normal

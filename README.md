@@ -274,3 +274,12 @@ cobertura parcial ou decisão numérica inconclusiva não vira atendimento.
 Snapshots antigos continuam legíveis, sem recalcular nem requalificar.
 Não libera ramos efetivos ausentes, estabilidade, verificações locais/ligações
 ou aprovação global. Detalhes: `docs/THREE_GIRT_EN_SHEAR_INTERACTION_20261105.txt`.
+
+## Componente horizontal de serviço da rede — 05/11/2026
+
+Opção explícita nas três travessas Vlasov: deslocamento horizontal no centroide
+com flexão e giro concomitantes, extremos contínuos e crivo suficiente de
+integralidade local normal em toda a rede por combinação ELS. Compara o limite
+horizontal declarado somente no modelo bruto; não altera reações/rigidez nem
+libera ELS físico, estabilidade ou aprovação global. Ver
+`docs/THREE_GIRT_HORIZONTAL_SERVICE_20261105.txt`.

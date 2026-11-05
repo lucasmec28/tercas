@@ -1,0 +1,77 @@
+COMPONENTE HORIZONTAL DE SERVIÇO DAS TRÊS TRAVESSAS
+05/11/2026. Integração sobre main 5f50ac1 em cópia; publicação separada.
+
+UTILIDADE
+Recupera o deslocamento horizontal no centroide por combinação de serviço,
+com flexão e rotação torsional concomitantes. Quando o comparador local normal
+demonstra integralidade em todas as três travessas, informa se esse deslocamento
+atende ao limite horizontal já declarado no modelo. Não é ELS físico completo.
+
+ESCOLHA
+No painel Vlasov: Incluir deslocamento horizontal Vlasov e crivo local de serviço.
+Começa desligado. Declarar seção nominal intacta e origem do modelo. Nenhuma
+entrada antiga é migrada e nenhuma hipótese de tirante rígido é acrescentada.
+O botão existente calcula demanda e componentes; exibir ou exportar usa apenas
+o snapshot. Alterações da escolha/origem/ações/critério retiram o resultado.
+
+FONTES E SEPARAÇÃO
+NBR 14762:2010 fornecida pelo usuário, §§9.8.5 e 9.2.2.1–9.2.2.2, Tabelas 5 e 6.
+SHA256 c2a01615a3ce9e2b93aeb7fee757f7bf9dd932adaefbc242e848ce813dc82407.
+§9.8.5 nas páginas impressas 51–52 (PDF 57–58); leis MLE e tabelas nas
+páginas impressas 26–29 (PDF 32–35). A norma dá
+as leis de chapas e a alternativa MLE para deslocamentos. A comparação por
+compressão uniforme dominante é uma condição mecânica suficiente documentada,
+não texto literal de uma fórmula normativa geral para N+M+B de serviço.
+Não usa denominadores EN/AISI ou seção EN calculada em E=210000 MPa.
+
+Cinco paredes planas: alma AA com k=4; mesas e lábios AL com k=0,43, sem
+crédito estabilizante do enrijecedor. Limiar de integralidade:
+sigma0=(0,673*0,95)^2*k*E*(t/b)^2. b=100-4t, 50-4t ou 17-2t, ri=t.
+E=200000 MPa da própria demanda. O campo normal tração positiva é:
+sigma=N/A-My_frame*y/Istrong+Mz_frame*x/Iweak+B*omega/Cw.
+Compressão é max(0,-sigma_min). Verificam-se os quatro vértices externos de
+cada parede plana e todo o comprimento de cada trecho. Incluem-se dobras no
+guardião normal elástico max|sigma|<=fy; as dobras ficam integrais pela convenção
+MLE de parede fina declarada. O modelo setorial usa omega constante na espessura.
+Não é uma solução de sólido curvo ou prova de distorção/cisalhamento.
+
+Uma inconclusão em QUALQUER parede de qualquer travessa deixa a combinação
+inteira inconclusiva. Uma redução real alteraria a distribuição na rede:
+não se reduz apenas I mantendo reações antigas, não se multiplica a flecha
+bruta por fator e não se extrapola o resultado de uma seção para outra.
+Inconclusão do crivo suficiente NÃO demonstra falha nem redução necessária.
+
+DESLOCAMENTO E ENVELOPE
+Os graus nodais salvos estão no CG. Recupera-se w_SC a partir de uz_CG+sc_y*phi,
+com slopes básicos -ry, sem aplicar sc*psi a essas rotações. A solução quártica
+inclui a carga uniforme atual e as condições nodais. Soma no mesmo ponto:
+uZ_CG=w_SC-sc_y*phi. Os extremos são obtidos por partições monotônicas das
+derivadas quinta até primeira; a quinta é par hiperbólico com no máximo uma
+raiz. No limite kL=0 a solução é quártica. Não se usa grade para certificar
+um extremo nem soma dos máximos separados de flexão e torção.
+
+No modelo atual, translações e giro de torção nos extremos são zero. Logo o
+deslocamento absoluto no CG equivale ao relativo à corda dos extremos. Não é
+corda entre tirantes móveis. O limite é normal_reference_mm/normal_denominator
+da configuração wall_els; referência vazia usa o vão físico. Origem do limite
+permanece salva. Nenhuma linha ou critério de deslocamento vertical foi criada.
+
+DOMÍNIO E LIMITES
+Sete contornos próprios Ue100x50x17 de 1,20 a 3,35 mm, ri=t, 3 a 6 m, mesmas
+fontes, material, vínculos e barras bilaterais do Vlasov atual. A correspondência
+com Pierin é nominal; não se usa uma geometria comercial só por seu nome.
+São preservadas as combinações atuais, sem inventar novas famílias de ELS.
+Todas as combinações ELS selecionadas são tratadas, ELU não entra neste critério.
+
+O resultado pode dizer: limite horizontal atendido NO MODELO LINEAR BRUTO
+DECLARADO, com condição suficiente de integralidade LOCAL NORMAL demonstrada.
+Não equivale a provar GJ/Cw efetivos sob distorção/cisalhamento, estabilidade,
+validade de grandes rotações ou resistência. Não há corte normativo inventado
+de 0,05 rad. ELS_qualified, physical_ELS_approved e whole_member_approved ficam
+False. A função principal global não foi alterada.
+
+INTEGRIDADE
+Anexar componente de serviço antes da EN e NBR para preservar vínculos salvos.
+Leitura valida hashes, cobertura, identidades e coerência das comparações salvas,
+sem reconsultar fonte ou recalcular. Hash é integridade, não assinatura.
+O módulo não altera as reações, a malha, os esforços ou qualquer rigidez.
