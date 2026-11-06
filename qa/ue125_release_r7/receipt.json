@@ -1,0 +1,46 @@
+{
+  "schema": "Ue125_partial_release_test_receipt_v1",
+  "release": "cobertura-Ue125-parcial-20261106-r7",
+  "tested_code_commit": "ec307f236549ebdff5b01b6fe570904f8ebfc011",
+  "published_base": "83beaa8159e10ceb68889127156f425b8859e383",
+  "final_integration": {
+    "passed": 206,
+    "seconds": 73.01,
+    "exit_code": 0,
+    "scope": "Focused affected backend, saved readers, synthetic AppTest, JSON/Word, no-solver rerender and release/cache. Not the entire repository suite."
+  },
+  "commands": [
+    "PYTHONPATH=.:/workspace/shared/tercas_test_dependencies_20261106 OPENBLAS_CORETYPE=Haswell OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 python -m pytest -q tests/test_ue125_release_composition.py tests/test_ue_catalog_nbr_bending.py tests/test_roof_catalog_nbr.py tests/test_torsion_applicability.py tests/test_roof_release_composition.py tests/test_global_verification.py tests/test_ui_cache_epoch.py tests/test_release_info.py tests/test_roof_biaxial_geometry.py tests/test_roof_top_load.py -k \"not full_word_technical and not invalid_aa_ui\" --maxfail=1"
+  ],
+  "initial_attempts": [
+    {
+      "name": "attempt1_synthetic_material_label",
+      "outcome": "Failed synthetic test fixture: default A36 label contradicted fy=300. UI correctly restored the selected preset; fixture label corrected, no production change."
+    },
+    {
+      "name": "attempt2_editor_documentary_normalization",
+      "outcome": "Failed assertion conflated editor provenance/default normalization with physical inputs. Physical numeric inputs and contour marker remain exactly asserted; result snapshot and no-solver rerender preserved."
+    }
+  ],
+  "independent_review": [
+    "Local bending source, Table 14 non-exemption, scoped readers, missing-distortional propagation and conditional high-twist presentation reviewed independently. Domain and malformed combination reader findings fixed before final run."
+  ],
+  "scope": [
+    "Exact own nominal Ue125x50x17x2 contour and declared material only.",
+    "NBR local resistance and height-aware FLT component; no released distortional capacity or total strong-axis minimum.",
+    "Weak signed bending, general biaxial interaction, full torsion/warping resistance and combined serviceability remain pending as applicable.",
+    "Read-only first-order applicability notice; existing rotation warning is not a normative failure threshold.",
+    "No actual project input or calculation result is included in this repository receipt."
+  ],
+  "files": {
+    "attempt1_synthetic_material_label.exit": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "attempt1_synthetic_material_label.log": "36cc8fe1deb563f8dd38ef05ce3587e5062e33b7b9e4638d72bdf150b7b61efe",
+    "attempt1_synthetic_material_label.xml": "76b0e342b45f144bc81c4c7ff35b4a2d9e35bbbd21bcb324fa29a69f0f9392fb",
+    "attempt2_editor_documentary_normalization.exit": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "attempt2_editor_documentary_normalization.log": "c250d77d4a818ed3d7145b0b9ef213d4c4fb1c50df10050ac745d12a9bf90870",
+    "attempt2_editor_documentary_normalization.xml": "171d75dbcca6c22957fd8cce9b67a8df7850fa59b5820af731a1218e7c533999",
+    "final_integration.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "final_integration.log": "e2711c4dce3f74be52cdfa21a697b39198b560f382834803de966efe25a61abb",
+    "final_integration.xml": "a624b7cef77f00725214708d7f3df01b79f32587ec0356e0a2d2e85ddf25c527"
+  }
+}

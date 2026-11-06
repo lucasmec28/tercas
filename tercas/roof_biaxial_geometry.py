@@ -1,8 +1,9 @@
-"""Read-only coordinate anchors for the seven already pinned R01 contours.
+"""Read-only coordinate anchors for qualified, explicitly adopted contours.
 
-Values are copied from own_properties in data/torsion_profiles, with the
-complete source-file hashes already enforced by torsion_study.section_for.
-A report reader neither opens those files nor rebuilds a section. The numeric
+R01 values come from own_properties in data/torsion_profiles, whose hashes
+are enforced by torsion_study.section_for. The Ue125 anchor is independently
+computed from the explicitly adopted catalogue contour and nominal-identity
+hash. A report reader neither opens source files nor rebuilds a section. The numeric
 comparison tolerance is the existing source-coordinate consistency tolerance
 of torsion_vlasov.section.from_frozen_profile, not a design acceptance limit.
 """
@@ -46,26 +47,56 @@ ANCHORS = {1.2: {'profile_id': 'R01_Ue100x50x17x1.20_rounded_faceted_209_frozen'
         'SC_xy_mm': [-24.005669538520483, 48.32500000000011]}}
 
 
+# A different height/contour is never selected through a thickness-only key.
+# Nominal catalogue geometry, 32 facets per quarter-circle, ri=2 mm.
+CATALOG_UE125 = {
+    'profile_id': 'OWN_PIERIN_NOMINAL_planilha_v03_r31_980dc2f8d7fbf830',
+    'nodes_sha256': '3814f4cd9fcfa474b6e3fcbd21eedb3fdee38818eca0440abb4408fd506143e2',
+    'nominal_identity_sha256': '980dc2f8d7fbf830fcdae22160f06a103c576fccccde62525824795dfe18c716',
+    'catalog_index': 26, 'catalog_id': 'planilha_v03_r31',
+    'CG_xy_mm': [15.116450045292856, 61.5],
+    'SC_xy_mm': [-23.516981965583753, 61.49999999999999],
+    'dimensions_mm': {'h': 125., 'bf': 50., 'lip': 17., 't': 2., 'ri_mm': 2.},
+}
+
+
+def _catalog_anchor(geometry):
+    a=CATALOG_UE125;b=geometry.get('ue_catalog_source_binding')
+    return a if (isinstance(b,dict) and geometry.get('section_profile_id')==a['profile_id']
+        and geometry.get('nodes_sha256')==a['nodes_sha256']
+        and all(b.get(k)==a[k] for k in ('catalog_index','catalog_id','nominal_identity_sha256','nodes_sha256'))
+        and b.get('section_profile_id')==a['profile_id']) else None
+
+
 def supported_geometry(geometry):
     anchor=ANCHORS.get(geometry.get('t_mm'))
-    return bool(anchor and geometry.get('section_profile_id')==anchor['profile_id']
-        and geometry.get('nodes_sha256')==anchor['nodes_sha256'])
+    return bool(_catalog_anchor(geometry) or (anchor and geometry.get('section_profile_id')==anchor['profile_id']
+        and geometry.get('nodes_sha256')==anchor['nodes_sha256']))
 
 
 def validate_geometry(geometry, data):
     from .torsion_study import PINS
-    t=data['properties']['t'];anchor=ANCHORS.get(t)
-    if (anchor is None or PINS.get(t)!=anchor['source_file_sha256']
+    t=data['properties']['t'];catalog=_catalog_anchor(geometry);anchor=catalog or ANCHORS.get(t)
+    if (anchor is None or (catalog is None and PINS.get(t)!=anchor['source_file_sha256'])
         or geometry.get('coherent_torsion_section') is not True
         or geometry.get('section_profile_id')!=anchor['profile_id']
         or geometry.get('nodes_sha256')!=anchor['nodes_sha256']):
-        raise ValueError('Geometria por eixo não vinculada ao contorno R01 pinado.')
+        raise ValueError('Geometria por eixo não vinculada ao contorno pinado.')
+    if catalog:
+        from .ue_catalog_reference import FIELD,_binding,digest
+        marker=data.get(FIELD)
+        if (not isinstance(marker,dict) or geometry['ue_catalog_source_binding']!=_binding(marker)
+            or marker.get('catalog_index')!=data.get('catalog_index')
+            or marker.get('material_sha256')!=digest(marker.get('material'))
+            or any(data['properties'].get(k)!=v for k,v in marker.get('material',{}).items())
+            or any(data['properties'].get(k)!=v for k,v in catalog['dimensions_mm'].items())):
+            raise ValueError('Vínculo do contorno nominal Ue125 ou material divergente.')
     def same(a,b):return math.isclose(finite(a,'coordenada salva'),b,rel_tol=2e-12,abs_tol=1e-10)
     for key in ('CG_xy_mm','SC_xy_mm'):
         value=geometry.get(key)
         if not isinstance(value,list) or len(value)!=2 or not all(same(a,b) for a,b in zip(value,anchor[key])):
             raise ValueError('CG/CT salvo diverge das coordenadas do contorno pinado.')
-    h,b=100.,50.;line=data['roof_top_load']['load_line']
+    h,b=(125.,50.) if catalog else (100.,50.);line=data['roof_top_load']['load_line']
     if not all(same(data['properties'].get(k),v) for k,v in [('h',h),('bf',b),('t',t)]):
         raise ValueError('Dimensões de entrada divergem do contorno pinado.')
     x=0. if line=='web_midplane' else (b-t)/2

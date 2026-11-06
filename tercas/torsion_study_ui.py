@@ -141,6 +141,8 @@ def show_result(st,result):
     evidence=result.get('torsion_evidence')
     if not isinstance(evidence,dict):return
     st.subheader('Torção de Vlasov — diagnóstico separado')
+    from .torsion_applicability import show as show_applicability
+    show_applicability(st,result)
     st.warning(evidence.get('scope_pt',SCOPE))
     if evidence.get('reason'):st.warning(evidence['reason'])
     st.caption(str(evidence.get('computed_cases',0))+' combinações calculadas; '+str(evidence.get('pending_model_cases',0))+' pendentes de dados. '+
@@ -150,8 +152,6 @@ def show_result(st,result):
     records=evidence.get('records',[])
     if records:
         st.dataframe(display_frame(summary_rows(evidence)),hide_index=True,width='stretch')
-        warnings=sum(bool(r.get('analysis',{}).get('small_rotation_warning')) for r in records if isinstance(r.get('analysis'),dict))
-        if warnings:st.error(f'{warnings} combinações excedem o aviso de pequeno giro do estudo. A solução linear não é validação física para giros elevados. 0,05 rad é triagem numérica, não limite normativo.')
     with st.expander('Premissas, reações e estados de torção preservados',expanded=False):
         if result.get('schema')=='tercas_three_girt_results_v1' or result.get('input_data',{}).get('member_application','purlin')!='purlin':st.json(evidence)
         elif result.get('schema')=='NBR14762_one_span_v1':st.caption('Consulte os dados salvos em “Exibir memória numérica salva do caso direto” ou no arquivo JSON, sem novo cálculo.')
@@ -166,7 +166,8 @@ def summary_rows(evidence):
         if isinstance(a,dict):
             maximum=a['max_abs_phi']
             row.update({'|giro| [rad]':abs(maximum['phi_rad']),'x do giro [mm]':maximum['x_mm'],
-                        'Giro elevado (triagem)':a['small_rotation_warning']})
+                        'Giro elevado (triagem)':a['small_rotation_warning'],
+                        'Interpretação física':('Indisponível nesta primeira ordem: aviso de giro' if a['small_rotation_warning'] else 'Adequação da primeira ordem não estabelecida')})
             envelopes=a.get('field_envelopes',{})
             for field,label,scale in [('Tsv_Nmm','|Tsv| [kN·m]',1e6),('Tw_Nmm','|Tw| [kN·m]',1e6),('B_Nmm2','|B| [kN·m²]',1e9)]:
                 if envelopes.get(field):row[label]=abs(envelopes[field]['maximum_absolute']['value'])/scale
@@ -179,6 +180,8 @@ def report(doc,result):
     evidence=result.get('torsion_evidence')
     if not isinstance(evidence,dict):return
     doc.add_heading('Torção de Vlasov — demanda elástica separada',1)
+    from .torsion_applicability import report as report_applicability
+    report_applicability(doc,result)
     doc.add_paragraph(evidence.get('scope_pt',SCOPE))
     if evidence.get('reason'):doc.add_paragraph(evidence['reason'])
     doc.add_paragraph('Combinações calculadas: '+str(evidence.get('computed_cases',0))+'. Pendentes de dados: '+str(evidence.get('pending_model_cases',0))+'. '+

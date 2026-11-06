@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="3" time="12.880" timestamp="2026-11-06T17:55:54.991736-03:00" hostname="795272940146"><testcase classname="tests.test_ue125_release_composition" name="test_same_profile_keeps_local_ELS_and_torsion_scope_separate[0.0]" time="0.913" /><testcase classname="tests.test_ue125_release_composition" name="test_same_profile_keeps_local_ELS_and_torsion_scope_separate[0.03]" time="0.967" /><testcase classname="tests.test_ue125_release_composition" name="test_real_UI_qualifies_only_available_Ue125_components_and_exports" time="10.328"><failure message="AssertionError: assert {'schema': 't...ication', ...} == {'schema': 't...ication', ...}&#10;  &#10;  Omitting 39 identical items, use -vv to show&#10;  Differing items:&#10;[+4 more lines; full report in element text]">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f1004c33230&gt;
+
+    def test_real_UI_qualifies_only_available_Ue125_components_and_exports(monkeypatch):
+        import streamlit as st
+        from streamlit.testing.v1 import AppTest
+        data=declared_inputs();payload=json.dumps(data).encode()
+        monkeypatch.setattr(st,'file_uploader',lambda *a,**k:SimpleNamespace(size=len(payload),getvalue=lambda:payload))
+        downloads={};original=st.download_button
+        def capture(label,value,*a,**k):
+            if label in ('Baixar estudo e resultados (JSON)','Baixar memória parcial (Word)'):
+                downloads[label]=value
+            return original(label,value,*a,**k)
+        monkeypatch.setattr(st,'download_button',capture)
+        app=AppTest.from_file(str(Path(__file__).resolve().parents[1]/'app.py')).run(timeout=30)
+        button=lambda label:next(x for x in app.button if x.label==label)
+        button('Aplicar entradas do arquivo').click().run(timeout=30)
+        button('Calcular verificações disponíveis').click().run(timeout=60)
+        assert not app.exception
+        assert not any('Não foi possível calcular' in item.value for item in app.error)
+        assert app.session_state.last_input['properties']['fy_MPa']==300.
+        result=copy.deepcopy(app.session_state.result);assert_partial(result)
+        assert json.loads(downloads['Baixar estudo e resultados (JSON)'])==result
+        document=Document(io.BytesIO(downloads['Baixar memória parcial (Word)']))
+        text='\n'.join(p.text for p in document.paragraphs)
+        assert 'Distorção forte pendente, sem dispensa' in text
+        assert 'não é limite normativo' in text
+        assert 'não previsão do giro físico' in text
+        def forbidden(*a,**k):raise AssertionError('Rerender reopened source or ran solver')
+        monkeypatch.setattr('tercas.roof_top_load.refined',forbidden)
+        monkeypatch.setattr('tercas.ue_catalog_nbr_bending.qualify',forbidden)
+        monkeypatch.setattr('tercas.direct_torsion.solve_member',forbidden)
+        app.run(timeout=60)
+        assert not app.exception and app.session_state.result==result
+&gt;       assert app.session_state.last_input==data
+E       AssertionError: assert {'schema': 't...ication', ...} == {'schema': 't...ication', ...}
+E         
+E         Omitting 39 identical items, use -vv to show
+E         Differing items:
+E         {'property_origin': 'Aço USI-CIVIL 300: https://pt.slideshare.net/slideshow/catalogo-geral-usiminas-01/87514983; ABNT ...; G=77000 MPa; Contorno próprio nominal Ue; propriedades geométricas calculadas juntas; material original preservado.'} != {'property_origin': 'Contorno próprio nominal Ue; propriedades geométricas calculadas juntas; material original preservado.'}
+E         {'weak_catalog': {'Lx_mm': 5000.0, 'geometry_mode': 'catalog', 'mean_line': {'am_mm': 123.0, 'bm_mm': 48.0, 'cm_mm': 1...2014 Ex08 p69: am=h−t, bm=...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests/test_ue125_release_composition.py:88: AssertionError</failure></testcase></testsuite></testsuites>

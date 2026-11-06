@@ -142,12 +142,28 @@ def preserved(result):
         if rows and [(r.get('combination_id'),r.get('limit_state')) for r in rows]!=[(c['id'],c['limit_state']) for c in separated.combinations(result['input_data'])]:
             raise ValueError('Inventário direto separado incompleto.')
     for r in ev.get('records',[]):
+        catalog_axis=('ue_catalog_reference' in result['input_data']
+            and ev['schema'] in ('roof_top_load_evidence_v1',separated.SCHEMA))
+        if catalog_axis or 'separate_axis_capacity_scope' in r:
+            matches=[c for c in combination_inventory(result)
+                if (c.get('id'),c.get('limit_state'))==(r.get('combination_id'),r.get('limit_state'))]
+            if len(matches)!=1:
+                raise ValueError('Registro Me por eixo sem combinação única correspondente.')
+            combo=matches[0]
+        # An omitted classification cannot erase an individual parallel action
+        # from a newly qualified catalogue snapshot, even after all hashes are
+        # recomputed. Build actions from the saved source, not from row labels.
+        if catalog_axis:
+            required_actions=(separated.actions(combo,ev['geometry'],include_parallel=True)[0]
+                if ev['schema']==separated.SCHEMA else _actions(result['load_bundle'],combo,ev['geometry'],include_parallel=True)[0])
+            if (any(a.get('q_parallel_N_mm',a.get('P_parallel_N',0.))!=0 for a in required_actions)
+                and 'separate_axis_capacity_scope' not in r):
+                raise ValueError('Classificação individual por eixo ausente no contorno de catálogo.')
         if 'separate_axis_capacity_scope' in r:
             from .roof_biaxial_geometry import supported_geometry,validate_geometry
             if supported_geometry(ev.get('geometry') or {}):
                 validate_geometry(ev['geometry'],result['input_data'])
             from .roof_biaxial import classify_for_roof as classify,torque_records
-            combo=next(c for c in combination_inventory(result) if c['id']==r['combination_id'])
             expected_actions=separated.actions(combo,ev['geometry'],include_parallel=True)[0] if ev['schema']==separated.SCHEMA else _actions(result['load_bundle'],combo,ev['geometry'],include_parallel=True)[0]
             if r['actions']!=expected_actions:
                 raise ValueError('Ações por eixo não correspondem às parcelas salvas.')

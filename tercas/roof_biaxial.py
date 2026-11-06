@@ -44,13 +44,13 @@ def classify(actions, geometry):
 
 
 def classify_for_roof(actions, geometry):
-    """The numerical reader contract is qualified for seven exact contours only."""
+    """The reader uses exact geometry anchors; resistance qualification is separate."""
     out=classify(actions,geometry)
     if geometry.get('coherent_torsion_section'):
         from .roof_biaxial_geometry import supported_geometry
         if not supported_geometry(geometry):
             out.update(applicable=False,reason='Consumo por eixo ainda não integrado para este contorno; '
-                'rota atual restrita às sete referências próprias Ue100. Não é proibição normativa da seção.')
+                'rota atual restrita às sete referências próprias Ue100 e ao contorno nominal Ue125×50×17×2 adotado. Não é proibição normativa da seção.')
     return out
 
 

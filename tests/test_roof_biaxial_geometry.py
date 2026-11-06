@@ -98,3 +98,25 @@ def test_geometry_reader_never_reopens_sources_or_calls_solver(monkeypatch):
     monkeypatch.setattr(Path,'read_bytes',fail);monkeypatch.setattr(Path,'read_text',fail)
     assert roof.preserved(r)
     assert r==before
+
+
+@pytest.mark.parametrize('catalog',[False,True])
+@pytest.mark.parametrize('identity',['unknown_id','wrong_limit_state','duplicate'])
+def test_rehashed_axis_record_identity_is_controlled_reader_error(catalog,identity,monkeypatch):
+    """Read-only malformed area snapshots, using a public synthetic fixture."""
+    from tercas.application import fingerprint
+    r=saved_negative();ev=r['roof_top_load_evidence']
+    combos=copy.deepcopy(roof.combination_inventory(r))
+    r['schema']='tercas_batch_results_v1';r['input_data']['load_mode']='area'
+    if catalog:r['input_data']['ue_catalog_reference']={}
+    r['load_bundle']={'combinations':combos};r['cases']=[{'combination':c} for c in combos]
+    ev['schema']='roof_top_load_evidence_v1'
+    if identity=='unknown_id':ev['records'][0]['combination_id']='UNKNOWN'
+    elif identity=='wrong_limit_state':ev['records'][0]['limit_state']='UNKNOWN'
+    else:combos.append(copy.deepcopy(combos[0]));r['cases'].append({'combination':combos[-1]})
+    r['input_fingerprint']=fingerprint(r['input_data']);ev['source_input_fingerprint']=r['input_fingerprint']
+    ev['source_load_snapshot_sha256']=roof._source_snapshot(r,ev['schema'])
+    ev['snapshot_sha256']=roof.digest({k:v for k,v in ev.items() if k!='snapshot_sha256'})
+    def fail(*a,**k):raise AssertionError('Reader must not invoke solver/source')
+    monkeypatch.setattr(roof,'refined',fail);monkeypatch.setattr(roof,'geometry',fail)
+    with pytest.raises(ValueError,match='combinação única'):roof.preserved(r)

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="3" time="12.206" timestamp="2026-11-06T17:54:30.823071-03:00" hostname="795272940146"><testcase classname="tests.test_ue125_release_composition" name="test_same_profile_keeps_local_ELS_and_torsion_scope_separate[0.0]" time="0.877" /><testcase classname="tests.test_ue125_release_composition" name="test_same_profile_keeps_local_ELS_and_torsion_scope_separate[0.03]" time="0.883" /><testcase classname="tests.test_ue125_release_composition" name="test_real_UI_qualifies_only_available_Ue125_components_and_exports" time="8.601"><failure message="AttributeError: result not found in session_state.">self = SessionState(_old_state={'$$STREAMLIT_INTERNAL_KEY_TESTING': {'$$ID-fd0dacfb4412193ed195f31aa5178d2d-None': False, '$$...ams={}), _persist_tracker=PersistedWidgetTracker(_scopes={}, _widget_pages={}, _value_pages={}, _pending_resets=set()))
+key = 'result'
+
+    def __getitem__(self, key: str) -&gt; Any:
+        wid_key_map = self._key_id_mapper.id_key_mapping
+        widget_id = self._get_widget_id(key)
+    
+        if widget_id in wid_key_map and widget_id == key:
+            # the "key" is a raw widget id, so get its associated user key for lookup
+            key = wid_key_map[widget_id]
+        try:
+&gt;           base_value = self._getitem(widget_id, key)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../tercas_test_dependencies_20261106/streamlit/runtime/state/session_state.py:790: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = SessionState(_old_state={'$$STREAMLIT_INTERNAL_KEY_TESTING': {'$$ID-fd0dacfb4412193ed195f31aa5178d2d-None': False, '$$...ams={}), _persist_tracker=PersistedWidgetTracker(_scopes={}, _widget_pages={}, _value_pages={}, _pending_resets=set()))
+widget_id = 'result', user_key = 'result'
+
+    def _getitem(self, widget_id: str | None, user_key: str | None) -&gt; Any:
+        """Get the value of an entry in Session State, using either the
+        user-provided key or a widget id as appropriate for the internal dict
+        being accessed.
+    
+        At least one of the arguments must have a value.
+        """
+        if user_key is None and widget_id is None:  # pragma: no cover - defensive
+            raise ValueError(
+                "user_key and widget_id cannot both be None. This should never happen."
+            )
+    
+        if user_key is not None:
+            try:
+                return self._new_session_state[user_key]
+            except KeyError:
+                pass
+    
+        if widget_id is not None:
+            try:
+                return self._new_widget_state[widget_id]
+            except KeyError:
+                pass
+    
+        # Typically, there won't be both a widget id and an associated state key in
+        # old state at the same time, so the order we check is arbitrary.
+        # The exception is if session state is set and then a later run has
+        # a widget created, so the widget id entry should be newer.
+        # The opposite case shouldn't happen, because setting the value of a widget
+        # through session state will result in the next widget state reflecting that
+        # value.
+        if widget_id is not None:
+            try:
+                return self._old_state[widget_id]
+            except KeyError:
+                pass
+    
+        if user_key is not None:
+            try:
+                return self._old_state[user_key]
+            except KeyError:
+                pass
+    
+        # We'll never get here
+&gt;       raise KeyError
+E       KeyError
+
+../tercas_test_dependencies_20261106/streamlit/runtime/state/session_state.py:843: KeyError
+
+During handling of the above exception, another exception occurred:
+
+self = {'ref_loader_1': 'U100', 'project_1': 'Synthetic catalogue height qualification', 'last_input': {'schema': 'tercas_inp...uladas juntas; material original preservado.', 'segments_1': {'edited_rows': {}, 'added_rows': [], 'deleted_rows': []}}
+key = 'result'
+
+    def __getattr__(self, key: str) -&gt; Any:
+        try:
+&gt;           return self[key]
+                   ^^^^^^^^^
+
+../tercas_test_dependencies_20261106/streamlit/testing/v1/app_test.py:202: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../tercas_test_dependencies_20261106/streamlit/testing/v1/app_test.py:187: in __getitem__
+    return self._state[key]
+           ^^^^^^^^^^^^^^^^
+../tercas_test_dependencies_20261106/streamlit/runtime/state/safe_session_state.py:123: in __getitem__
+    return self._state[key]
+           ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = SessionState(_old_state={'$$STREAMLIT_INTERNAL_KEY_TESTING': {'$$ID-fd0dacfb4412193ed195f31aa5178d2d-None': False, '$$...ams={}), _persist_tracker=PersistedWidgetTracker(_scopes={}, _widget_pages={}, _value_pages={}, _pending_resets=set()))
+key = 'result'
+
+    def __getitem__(self, key: str) -&gt; Any:
+        wid_key_map = self._key_id_mapper.id_key_mapping
+        widget_id = self._get_widget_id(key)
+    
+        if widget_id in wid_key_map and widget_id == key:
+            # the "key" is a raw widget id, so get its associated user key for lookup
+            key = wid_key_map[widget_id]
+        try:
+            base_value = self._getitem(widget_id, key)
+            return (
+                apply_presenter(self, widget_id, base_value)
+                if widget_id is not None
+                else base_value
+            )
+        except KeyError:
+&gt;           raise KeyError(_missing_key_error_message(key))
+E           KeyError: 'st.session_state has no key "result". Did you forget to initialize it? More info: https://docs.streamlit.io/develop/concepts/architecture/session-state#initialization'
+
+../tercas_test_dependencies_20261106/streamlit/runtime/state/session_state.py:797: KeyError
+
+During handling of the above exception, another exception occurred:
+
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f177cfafd70&gt;
+
+    def test_real_UI_qualifies_only_available_Ue125_components_and_exports(monkeypatch):
+        import streamlit as st
+        from streamlit.testing.v1 import AppTest
+        data=declared_inputs();payload=json.dumps(data).encode()
+        monkeypatch.setattr(st,'file_uploader',lambda *a,**k:SimpleNamespace(size=len(payload),getvalue=lambda:payload))
+        downloads={};original=st.download_button
+        def capture(label,value,*a,**k):
+            if label in ('Baixar estudo e resultados (JSON)','Baixar memória parcial (Word)'):
+                downloads[label]=value
+            return original(label,value,*a,**k)
+        monkeypatch.setattr(st,'download_button',capture)
+        app=AppTest.from_file(str(Path(__file__).resolve().parents[1]/'app.py')).run(timeout=30)
+        button=lambda label:next(x for x in app.button if x.label==label)
+        button('Aplicar entradas do arquivo').click().run(timeout=30)
+        button('Calcular verificações disponíveis').click().run(timeout=60)
+        assert not app.exception
+&gt;       result=copy.deepcopy(app.session_state.result);assert_partial(result)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_ue125_release_composition.py:70: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = {'ref_loader_1': 'U100', 'project_1': 'Synthetic catalogue height qualification', 'last_input': {'schema': 'tercas_inp...uladas juntas; material original preservado.', 'segments_1': {'edited_rows': {}, 'added_rows': [], 'deleted_rows': []}}
+key = 'result'
+
+    def __getattr__(self, key: str) -&gt; Any:
+        try:
+            return self[key]
+        except KeyError:
+&gt;           raise AttributeError(f"{key} not found in session_state.")
+E           AttributeError: result not found in session_state.
+
+../tercas_test_dependencies_20261106/streamlit/testing/v1/app_test.py:204: AttributeError</failure></testcase></testsuite></testsuites>

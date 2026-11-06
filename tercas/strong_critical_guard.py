@@ -128,6 +128,20 @@ def qualify_strong_criticals(data):
         reason='Contorno próprio Ue: críticos de outro modelo não são herdados; capacidades próprias ainda pendentes.'
         effective={k:dict(value=None,origin=data.get('critical_origin',''),reason=reason) for k in ('Ml','Mdist')}
         evidence=dict(source='ue_catalog_own_contour',pierin_U_reference=dict(status='outside_U_scope',reason=reason,axial_calculation_implemented=False),fields={k:dict(status='not_evaluated_own_contour',input_value_Nmm=data.get(k+'_Nmm'),reason=reason) for k in ('Ml','Mdist')},warnings=[reason])
+        from .ue_catalog_nbr_bending import qualify, FIELD
+        certificate = qualify(data)
+        if certificate is not None:
+            local = certificate['strong']['local']
+            dist = certificate['strong']['distortional']
+            effective['Ml'] = dict(value=local['Ml_Nmm'], origin=local['origin'])
+            effective['Mdist']['reason'] = dist['reason']
+            evidence[FIELD] = certificate
+            evidence['fields']['Ml'] = dict(status='computed_own_contour_Table12b',
+                input_value_Nmm=data.get('Ml_Nmm'), computed_value_Nmm=local['Ml_Nmm'],
+                inherited_tabulated=False, reference_id=certificate['reference_id'],
+                formula_nu=local['formula_nu'], source_binding=certificate['source_binding'])
+            evidence['fields']['Mdist']['reason'] = dist['reason']
+            evidence['warnings'] = [dist['reason']]
         return effective,evidence
     effective, evidence = qualify_legacy_strong_criticals(data)
     # New U table overlay is distinct from legacy workbook/Table12 provenance.

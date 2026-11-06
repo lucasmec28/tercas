@@ -7,7 +7,7 @@ from .report_audit import technical_number
 TITLE='FLT — resistência NBR com carga no topo'
 ROW='FLT — carga no topo (vão inteiro)'
 NOTE=('O índice refere-se somente à componente FLT do modelo declarado. '
-      'O mínimo local–FLT–D é uma componente de flexão pura; não verifica B/T. '
+      'O mínimo local–FLT–D exige todas as capacidades ou dispensa qualificada; não verifica B/T. '
       'M–V mantém o denominador de seção efetiva e a rota AISI não é alterada.')
 
 
@@ -26,7 +26,7 @@ def summary_rows(evidence):
             'Msd [kN·m]':r['Msd_max_abs_Nmm']/1e6 if ok else None,
             'Me com altura [kN·m]':r['Me_Nmm']/1e6 if ok else None,
             'MRd,FLT [kN·m]':r['FLT']['MRd_flt_Nmm']/1e6 if ok else None,
-            'Índice':r.get('index'),'Pendência / escopo':r['reason'] if not ok or r.get('resistance_is_lower_envelope') else NOTE})
+            'Índice':r.get('index'),'Pendência / escopo':r['reason'] if not ok or r.get('resistance_is_lower_envelope') or r.get('bending_component_status')=='pending_distortional' else NOTE})
     return out
 
 
@@ -83,10 +83,14 @@ def report(doc,result):
             'MRd,FLT='+technical_number(f['MRd_flt_Nmm']/1e6)+' kN·m',
             'índice FLT='+technical_number(r['index'],limit=1.)]
         doc.add_paragraph('; '.join(parts)+'.')
-        doc.add_paragraph('MRd seção efetiva='+technical_number(r['MRd_section_effective_Nmm']/1e6)+
-            ' kN·m; MRd D='+('dispensa forte específica' if r['MRd_distortional_Nmm'] is None else
-            technical_number(r['MRd_distortional_Nmm']/1e6)+' kN·m')+
-            '; mínimo das componentes de flexão pura='+technical_number(r['MRd_bending_component_Nmm']/1e6)+' kN·m. Sem interação com torção.')
+        if r.get('bending_component_status')=='pending_distortional':
+            doc.add_paragraph('MRd seção efetiva='+technical_number(r['MRd_section_effective_Nmm']/1e6)+
+                ' kN·m. Distorção forte pendente, sem dispensa. Mínimo local–FLT–D e interação §9.9 não calculados. Sem interação com torção.')
+        else:
+            doc.add_paragraph('MRd seção efetiva='+technical_number(r['MRd_section_effective_Nmm']/1e6)+
+                ' kN·m; MRd D='+('dispensa forte específica' if r['MRd_distortional_Nmm'] is None else
+                technical_number(r['MRd_distortional_Nmm']/1e6)+' kN·m')+
+                '; mínimo das componentes de flexão pura='+technical_number(r['MRd_bending_component_Nmm']/1e6)+' kN·m. Sem interação com torção.')
         if 'biaxial' in r:
             b=r['biaxial'];g=b['governing']
             doc.add_paragraph(b['scope'])
@@ -107,7 +111,7 @@ def presentation_rows(result,rows,combination_id=None):
     records=[] if ev is None else [r for r in ev['records'] if combination_id is None or r['combination_id']==combination_id]
     computed=[r for r in records if r['status']==COMPUTED];pending=[r for r in records if r['status']!=COMPUTED]
     chosen=max(computed,key=lambda r:r['index']) if computed else None
-    note=chosen['reason'] if chosen and chosen.get('resistance_is_lower_envelope') else NOTE
+    note=chosen['reason'] if chosen and (chosen.get('resistance_is_lower_envelope') or chosen.get('bending_component_status')=='pending_distortional') else NOTE
     if pending:note+=f' Há {len(pending)} combinação(ões) pendente(s); consulte a componente NBR no topo.'
     if error:note=error
     if not chosen and records:note=records[0]['reason']

@@ -58,6 +58,8 @@ def show_inclination(evidence,girt=False):
  st.caption('Valores nas seções listadas; não são envelope biaxial nem resistência. P e q são considerados juntos na mesma combinação.')
 
 def render_results(result,d):
+ from tercas.study_completion import show_global
+ show_global(st,result)
  from tercas.roof_top_nbr_ui import presentation_rows as roof_nbr_rows, presentation_inclination as roof_nbr_inclination
  from tercas.roof_top_load_ui import show_result as show_roof_top_load
  show_roof_top_load(st,result)
@@ -66,8 +68,6 @@ def render_results(result,d):
  show_biaxial_component(st,result)
  from tercas.aa_component_ui import show as show_aa_component
  show_aa_component(st,result)
- from tercas.study_completion import show_global
- show_global(st,result)
  from tercas.ue_catalog_ui import show as show_ue_catalog
  show_ue_catalog(st,result)
  from tercas.torsion_study_ui import show_result as show_torsion

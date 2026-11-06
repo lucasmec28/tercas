@@ -1,0 +1,57 @@
+Ue125×50×17×2: componente FLT/altura e limite da interação NBR
+
+Domínio novo, distinto das sete referências Ue100:
+- Adoção explícita do contorno nominal Ue do catálogo, índice 26,
+  planilha_v03_r31, ri=2 mm, 32 segmentos por quarto de círculo.
+- Contorno SHA256 3814f4cd9fcfa474b6e3fcbd21eedb3fdee38818eca0440abb4408fd506143e2.
+- Identidade nominal SHA256 980dc2f8d7fbf830fcdae22160f06a103c576fccccde62525824795dfe18c716.
+- Certificado resistente exato: E=200000 MPa, G=77000 MPa,
+  fy=300 MPa, fu=400 MPa. Outros materiais/perfis não recebem este
+  certificado por coincidência de espessura, escala ou interpolação.
+- Terça isolada de um vão positivo e finito, prismática, garfos ideais,
+  empenamento livre, sem contenção intermediária nem rigidez da telha.
+  O vão informado é o comprimento do operador: comprimentos efetivos
+  manuais não criam travamentos. A qualificação de comprimento é a do
+  modelo elástico, não uma faixa experimental certificada.
+- Ações de área decompostas ou diretas com PP separado. PP no CG, ações
+  externas na cota superior, sobre o plano médio da alma ou no meio da
+  largura da mesa. Não herda a envoltória de totais diretos sem PP separado.
+
+O operador forte existente conserva a projeção normal e a altura de cada
+parcela. A posição paralela é classificada individualmente pelo produto
+Fparalelo*(xação-xCT). Qualquer parcela desestabilizante mantém a rota
+pendente, mesmo quando a soma é estabilizante. Não se aproveita crédito
+favorável, não se cancela uma ação com outra e não se declara autovalor
+biaxial. O torque físico inclui ambas as componentes e segue separado.
+
+O certificado local usa a Tabela 12(b), dimensões nominais e módulo externo
+Ix/(h/2) do mesmo contorno. Não afirma que o crítico aproximado normativo
+seja autovalor modal do contorno facetado. Esse Ml qualificado permite a
+curva de FLT NBR §9.8.2.2 com o Me de altura salvo de cada combinação ELU.
+Não reaplica Cb depois de Me. ELS não recebe resistência de ELU.
+
+Limite resistente deliberado:
+- A Tabela 14 não dispensa a distorção forte desta seção.
+- Mdist e resistências fracas próprias por sentido permanecem ausentes.
+- Calcula-se somente a componente FLT e a seção efetiva forte disponíveis.
+- MRd do mínimo local–FLT–D e seu índice ficam nulos, com pendência
+  distorcional explícita. None nunca significa automaticamente dispensa.
+- A classificação de posição permite a rota por eixos, mas a interação
+  NBR §9.9 fica pendente enquanto faltarem os denominadores completos.
+  Não se fabrica índice, piso distorcional ou certificado de máximo para
+  capacidades inexistentes. O certificado contínuo existente de quatro
+  quadráticas continua ativo nas sete referências antigas qualificadas.
+
+Rastreabilidade e leitura:
+O snapshot FLT vincula entrada, combinação, registro Me, identidade de
+contorno, material e novo certificado local. O leitor exige o tipo exato
+correspondente à adoção explícita, confere coordenadas fixas e certificado,
+e verifica independentemente a aritmética da curva FLT. Refazer hashes não
+permite trocar CT, material, capacidade, tipo de origem ou promover uma
+pendência. Leitura e relatório não abrem arquivos-fonte, não remalham e não
+executam solver. Resultados históricos não são recalculados por leitura.
+
+Nada nesta extensão verifica a interação com torção/bimomento, estado
+pré-flambagem, grandes giros, ELS completo ou condições físicas de campo.
+whole_member_approved permanece false. Testes são sintéticos e não incluem
+entradas, cargas, nome do projeto ou resultados particulares do usuário.

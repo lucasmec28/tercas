@@ -1,0 +1,93 @@
+..F
+=================================== FAILURES ===================================
+______ test_real_UI_qualifies_only_available_Ue125_components_and_exports ______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f1004c33230>
+
+    def test_real_UI_qualifies_only_available_Ue125_components_and_exports(monkeypatch):
+        import streamlit as st
+        from streamlit.testing.v1 import AppTest
+        data=declared_inputs();payload=json.dumps(data).encode()
+        monkeypatch.setattr(st,'file_uploader',lambda *a,**k:SimpleNamespace(size=len(payload),getvalue=lambda:payload))
+        downloads={};original=st.download_button
+        def capture(label,value,*a,**k):
+            if label in ('Baixar estudo e resultados (JSON)','Baixar memória parcial (Word)'):
+                downloads[label]=value
+            return original(label,value,*a,**k)
+        monkeypatch.setattr(st,'download_button',capture)
+        app=AppTest.from_file(str(Path(__file__).resolve().parents[1]/'app.py')).run(timeout=30)
+        button=lambda label:next(x for x in app.button if x.label==label)
+        button('Aplicar entradas do arquivo').click().run(timeout=30)
+        button('Calcular verificações disponíveis').click().run(timeout=60)
+        assert not app.exception
+        assert not any('Não foi possível calcular' in item.value for item in app.error)
+        assert app.session_state.last_input['properties']['fy_MPa']==300.
+        result=copy.deepcopy(app.session_state.result);assert_partial(result)
+        assert json.loads(downloads['Baixar estudo e resultados (JSON)'])==result
+        document=Document(io.BytesIO(downloads['Baixar memória parcial (Word)']))
+        text='\n'.join(p.text for p in document.paragraphs)
+        assert 'Distorção forte pendente, sem dispensa' in text
+        assert 'não é limite normativo' in text
+        assert 'não previsão do giro físico' in text
+        def forbidden(*a,**k):raise AssertionError('Rerender reopened source or ran solver')
+        monkeypatch.setattr('tercas.roof_top_load.refined',forbidden)
+        monkeypatch.setattr('tercas.ue_catalog_nbr_bending.qualify',forbidden)
+        monkeypatch.setattr('tercas.direct_torsion.solve_member',forbidden)
+        app.run(timeout=60)
+        assert not app.exception and app.session_state.result==result
+>       assert app.session_state.last_input==data
+E       AssertionError: assert {'schema': 't...ication', ...} == {'schema': 't...ication', ...}
+E         
+E         Omitting 39 identical items, use -vv to show
+E         Differing items:
+E         {'property_origin': 'Aço USI-CIVIL 300: https://pt.slideshare.net/slideshow/catalogo-geral-usiminas-01/87514983; ABNT ...; G=77000 MPa; Contorno próprio nominal Ue; propriedades geométricas calculadas juntas; material original preservado.'} != {'property_origin': 'Contorno próprio nominal Ue; propriedades geométricas calculadas juntas; material original preservado.'}
+E         {'weak_catalog': {'Lx_mm': 5000.0, 'geometry_mode': 'catalog', 'mean_line': {'am_mm': 123.0, 'bm_mm': 48.0, 'cm_mm': 1...2014 Ex08 p69: am=h−t, bm=...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests/test_ue125_release_composition.py:88: AssertionError
+----------------------------- Captured stderr call -----------------------------
+2026-11-06 17:55:58.026 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-06 17:55:58.433 DEBUG   streamlit.runtime.scriptrunner.script_runner: Running script
+2026-11-06 17:55:58.433 DEBUG   streamlit.runtime.media_file_manager: Disconnecting files for session with ID test session id
+2026-11-06 17:55:58.433 DEBUG   streamlit.runtime.media_file_manager: Sessions still active: dict_keys([])
+2026-11-06 17:55:58.433 DEBUG   streamlit.runtime.media_file_manager: Files: 0; Sessions with files: 0
+2026-11-06 17:56:01.529 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned files...
+2026-11-06 17:56:01.530 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned deferred callables...
+2026-11-06 17:56:01.545 DEBUG   streamlit.runtime.scriptrunner.script_runner: Beginning script thread
+2026-11-06 17:56:01.545 DEBUG   streamlit.runtime.scriptrunner.script_runner: Running script
+2026-11-06 17:56:01.545 DEBUG   streamlit.runtime.media_file_manager: Disconnecting files for session with ID test session id
+2026-11-06 17:56:01.546 DEBUG   streamlit.runtime.media_file_manager: Sessions still active: dict_keys([])
+2026-11-06 17:56:01.547 DEBUG   streamlit.runtime.media_file_manager: Files: 0; Sessions with files: 0
+2026-11-06 17:56:02.838 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned files...
+2026-11-06 17:56:02.838 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned deferred callables...
+2026-11-06 17:56:02.838 DEBUG   streamlit.runtime.scriptrunner.script_runner: Running script
+2026-11-06 17:56:02.839 DEBUG   streamlit.runtime.media_file_manager: Disconnecting files for session with ID test session id
+2026-11-06 17:56:02.839 DEBUG   streamlit.runtime.media_file_manager: Sessions still active: dict_keys([])
+2026-11-06 17:56:02.839 DEBUG   streamlit.runtime.media_file_manager: Files: 0; Sessions with files: 0
+2026-11-06 17:56:03.970 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned files...
+2026-11-06 17:56:03.970 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned deferred callables...
+2026-11-06 17:56:03.982 DEBUG   streamlit.runtime.scriptrunner.script_runner: Beginning script thread
+2026-11-06 17:56:03.982 DEBUG   streamlit.runtime.scriptrunner.script_runner: Running script
+2026-11-06 17:56:03.982 DEBUG   streamlit.runtime.media_file_manager: Disconnecting files for session with ID test session id
+2026-11-06 17:56:03.982 DEBUG   streamlit.runtime.media_file_manager: Sessions still active: dict_keys([])
+2026-11-06 17:56:03.982 DEBUG   streamlit.runtime.media_file_manager: Files: 0; Sessions with files: 0
+2026-11-06 17:56:06.282 DEBUG   streamlit.runtime.memory_media_file_storage: Adding media file a430e21baa8bc59576dd47043a29b667
+2026-11-06 17:56:06.299 DEBUG   streamlit.runtime.memory_media_file_storage: Adding media file 6f84f6e74b713c53a13082af3535bb9d
+2026-11-06 17:56:06.300 DEBUG   streamlit.runtime.memory_media_file_storage: Adding media file ec4151d6efd3b9cc4b730e9e301a2fcb
+2026-11-06 17:56:06.307 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned files...
+2026-11-06 17:56:06.307 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned deferred callables...
+2026-11-06 17:56:06.356 DEBUG   streamlit.runtime.scriptrunner.script_runner: Beginning script thread
+2026-11-06 17:56:06.356 DEBUG   streamlit.runtime.scriptrunner.script_runner: Running script
+2026-11-06 17:56:06.356 DEBUG   streamlit.runtime.media_file_manager: Disconnecting files for session with ID test session id
+2026-11-06 17:56:06.356 DEBUG   streamlit.runtime.media_file_manager: Sessions still active: dict_keys([])
+2026-11-06 17:56:06.356 DEBUG   streamlit.runtime.media_file_manager: Files: 0; Sessions with files: 0
+2026-11-06 17:56:07.812 DEBUG   streamlit.runtime.memory_media_file_storage: Adding media file 1de2fc990d671267f23afc7a465688f8
+2026-11-06 17:56:07.820 DEBUG   streamlit.runtime.memory_media_file_storage: Adding media file 6f84f6e74b713c53a13082af3535bb9d
+2026-11-06 17:56:07.821 DEBUG   streamlit.runtime.memory_media_file_storage: Adding media file ec4151d6efd3b9cc4b730e9e301a2fcb
+2026-11-06 17:56:07.827 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned files...
+2026-11-06 17:56:07.827 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned deferred callables...
+=========================== short test summary info ============================
+FAILED tests/test_ue125_release_composition.py::test_real_UI_qualifies_only_available_Ue125_components_and_exports
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 2 passed in 12.87s

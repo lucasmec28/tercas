@@ -13,6 +13,9 @@ def rows(evidence):
             'Parcela longitudinal':('Condição algébrica H4 satisfeita, sob hipóteses declaradas' if h['ratio']<=1 else 'Piso não demonstra H4; resultado inconclusivo') if h else 'H4 pendente',
             'x H4 [mm]':h['witness']['x_mm'] if h else None,
             'Dados ausentes':'; '.join(record['missing'])})
+        if g:
+            out[-1]['Interpretação física G8.1/H4']=('Indisponível nesta primeira ordem: aviso de giro'
+                if record.get('first_order_small_rotation_warning') is True else 'Adequação da primeira ordem não estabelecida')
         if evidence.get('roof_height_source'):
             roof=record.get('roof_height') or {};cap=roof.get('strong_capacity');m=roof.get('Mcre')
             out[-1].update({'Mcre AISI [kN·m]':m['Me_Nmm']/1e6 if m and m.get('Me_Nmm') is not None else None,
@@ -25,6 +28,8 @@ def rows(evidence):
 
 def text_lines(ev):
     lines=[SCOPE,LIMITS,ev['load_basis'],ev['resistance_basis'],ev['implemented_domain']]
+    from .torsion_applicability import aisi_lines
+    lines[1:1]=aisi_lines(ev)
     if ev.get('reason'):lines.append(ev['reason'])
     if ev.get('capacity_missing'):lines.append('Capacidade G8.1 ausente: '+ev['capacity_missing'])
     cap=ev.get('bimoment_capacity')
@@ -66,7 +71,11 @@ def text_lines(ev):
 def _saved(result):
     if result.get(FIELD) is not None and not isinstance(result[FIELD],dict):
         raise ValueError('Registro do complemento deve ser um objeto de memória.')
-    return preserved(result)
+    ev=preserved(result)
+    if ev is not None:
+        from .torsion_applicability import aisi_lines
+        aisi_lines(ev)
+    return ev
 
 
 def show(st,result):
@@ -78,7 +87,9 @@ def show(st,result):
     st.subheader('Verificação complementar de flexão e empenamento — critério AISI 2024')
     lines=text_lines(ev)
     st.warning(lines[0])
-    for line in lines[1:]:st.caption(line)
+    from .torsion_applicability import aisi_lines
+    notices=aisi_lines(ev)
+    for line in lines[1:]:(st.warning if line in notices else st.caption)(line)
     if ev['records']:st.dataframe(display_frame(rows(ev)),hide_index=True,width='stretch')
     with st.expander('Memória G8.1/H4, capacidades e estados concomitantes',expanded=False):
         if result.get('schema')=='tercas_three_girt_results_v1' or result.get('input_data',{}).get('member_application','purlin')!='purlin':st.json(ev)

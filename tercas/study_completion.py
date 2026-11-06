@@ -33,6 +33,8 @@ def complete_result(result):
 
 
 def show_global(st, result):
+    from .torsion_applicability import show as show_applicability
+    show_applicability(st, result)
     record = result.get('global_verification')
     if not isinstance(record,dict):return
     from .roof_top_nbr import validate_saved_global
@@ -54,6 +56,8 @@ def show_global(st, result):
 
 
 def report_global(doc, result):
+    from .torsion_applicability import report as report_applicability
+    report_applicability(doc, result)
     record = result.get('global_verification')
     if not isinstance(record,dict):return
     from .roof_top_nbr import validate_saved_global

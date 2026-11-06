@@ -1,0 +1,213 @@
+..F
+=================================== FAILURES ===================================
+______ test_real_UI_qualifies_only_available_Ue125_components_and_exports ______
+
+self = SessionState(_old_state={'$$STREAMLIT_INTERNAL_KEY_TESTING': {'$$ID-fd0dacfb4412193ed195f31aa5178d2d-None': False, '$$...ams={}), _persist_tracker=PersistedWidgetTracker(_scopes={}, _widget_pages={}, _value_pages={}, _pending_resets=set()))
+key = 'result'
+
+    def __getitem__(self, key: str) -> Any:
+        wid_key_map = self._key_id_mapper.id_key_mapping
+        widget_id = self._get_widget_id(key)
+    
+        if widget_id in wid_key_map and widget_id == key:
+            # the "key" is a raw widget id, so get its associated user key for lookup
+            key = wid_key_map[widget_id]
+        try:
+>           base_value = self._getitem(widget_id, key)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../tercas_test_dependencies_20261106/streamlit/runtime/state/session_state.py:790: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = SessionState(_old_state={'$$STREAMLIT_INTERNAL_KEY_TESTING': {'$$ID-fd0dacfb4412193ed195f31aa5178d2d-None': False, '$$...ams={}), _persist_tracker=PersistedWidgetTracker(_scopes={}, _widget_pages={}, _value_pages={}, _pending_resets=set()))
+widget_id = 'result', user_key = 'result'
+
+    def _getitem(self, widget_id: str | None, user_key: str | None) -> Any:
+        """Get the value of an entry in Session State, using either the
+        user-provided key or a widget id as appropriate for the internal dict
+        being accessed.
+    
+        At least one of the arguments must have a value.
+        """
+        if user_key is None and widget_id is None:  # pragma: no cover - defensive
+            raise ValueError(
+                "user_key and widget_id cannot both be None. This should never happen."
+            )
+    
+        if user_key is not None:
+            try:
+                return self._new_session_state[user_key]
+            except KeyError:
+                pass
+    
+        if widget_id is not None:
+            try:
+                return self._new_widget_state[widget_id]
+            except KeyError:
+                pass
+    
+        # Typically, there won't be both a widget id and an associated state key in
+        # old state at the same time, so the order we check is arbitrary.
+        # The exception is if session state is set and then a later run has
+        # a widget created, so the widget id entry should be newer.
+        # The opposite case shouldn't happen, because setting the value of a widget
+        # through session state will result in the next widget state reflecting that
+        # value.
+        if widget_id is not None:
+            try:
+                return self._old_state[widget_id]
+            except KeyError:
+                pass
+    
+        if user_key is not None:
+            try:
+                return self._old_state[user_key]
+            except KeyError:
+                pass
+    
+        # We'll never get here
+>       raise KeyError
+E       KeyError
+
+../tercas_test_dependencies_20261106/streamlit/runtime/state/session_state.py:843: KeyError
+
+During handling of the above exception, another exception occurred:
+
+self = {'ref_loader_1': 'U100', 'project_1': 'Synthetic catalogue height qualification', 'last_input': {'schema': 'tercas_inp...uladas juntas; material original preservado.', 'segments_1': {'edited_rows': {}, 'added_rows': [], 'deleted_rows': []}}
+key = 'result'
+
+    def __getattr__(self, key: str) -> Any:
+        try:
+>           return self[key]
+                   ^^^^^^^^^
+
+../tercas_test_dependencies_20261106/streamlit/testing/v1/app_test.py:202: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../tercas_test_dependencies_20261106/streamlit/testing/v1/app_test.py:187: in __getitem__
+    return self._state[key]
+           ^^^^^^^^^^^^^^^^
+../tercas_test_dependencies_20261106/streamlit/runtime/state/safe_session_state.py:123: in __getitem__
+    return self._state[key]
+           ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = SessionState(_old_state={'$$STREAMLIT_INTERNAL_KEY_TESTING': {'$$ID-fd0dacfb4412193ed195f31aa5178d2d-None': False, '$$...ams={}), _persist_tracker=PersistedWidgetTracker(_scopes={}, _widget_pages={}, _value_pages={}, _pending_resets=set()))
+key = 'result'
+
+    def __getitem__(self, key: str) -> Any:
+        wid_key_map = self._key_id_mapper.id_key_mapping
+        widget_id = self._get_widget_id(key)
+    
+        if widget_id in wid_key_map and widget_id == key:
+            # the "key" is a raw widget id, so get its associated user key for lookup
+            key = wid_key_map[widget_id]
+        try:
+            base_value = self._getitem(widget_id, key)
+            return (
+                apply_presenter(self, widget_id, base_value)
+                if widget_id is not None
+                else base_value
+            )
+        except KeyError:
+>           raise KeyError(_missing_key_error_message(key))
+E           KeyError: 'st.session_state has no key "result". Did you forget to initialize it? More info: https://docs.streamlit.io/develop/concepts/architecture/session-state#initialization'
+
+../tercas_test_dependencies_20261106/streamlit/runtime/state/session_state.py:797: KeyError
+
+During handling of the above exception, another exception occurred:
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f177cfafd70>
+
+    def test_real_UI_qualifies_only_available_Ue125_components_and_exports(monkeypatch):
+        import streamlit as st
+        from streamlit.testing.v1 import AppTest
+        data=declared_inputs();payload=json.dumps(data).encode()
+        monkeypatch.setattr(st,'file_uploader',lambda *a,**k:SimpleNamespace(size=len(payload),getvalue=lambda:payload))
+        downloads={};original=st.download_button
+        def capture(label,value,*a,**k):
+            if label in ('Baixar estudo e resultados (JSON)','Baixar memória parcial (Word)'):
+                downloads[label]=value
+            return original(label,value,*a,**k)
+        monkeypatch.setattr(st,'download_button',capture)
+        app=AppTest.from_file(str(Path(__file__).resolve().parents[1]/'app.py')).run(timeout=30)
+        button=lambda label:next(x for x in app.button if x.label==label)
+        button('Aplicar entradas do arquivo').click().run(timeout=30)
+        button('Calcular verificações disponíveis').click().run(timeout=60)
+        assert not app.exception
+>       result=copy.deepcopy(app.session_state.result);assert_partial(result)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_ue125_release_composition.py:70: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = {'ref_loader_1': 'U100', 'project_1': 'Synthetic catalogue height qualification', 'last_input': {'schema': 'tercas_inp...uladas juntas; material original preservado.', 'segments_1': {'edited_rows': {}, 'added_rows': [], 'deleted_rows': []}}
+key = 'result'
+
+    def __getattr__(self, key: str) -> Any:
+        try:
+            return self[key]
+        except KeyError:
+>           raise AttributeError(f"{key} not found in session_state.")
+E           AttributeError: result not found in session_state.
+
+../tercas_test_dependencies_20261106/streamlit/testing/v1/app_test.py:204: AttributeError
+----------------------------- Captured stderr call -----------------------------
+2026-11-06 17:54:34.433 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-06 17:54:34.744 DEBUG   streamlit.runtime.scriptrunner.script_runner: Running script
+2026-11-06 17:54:34.745 DEBUG   streamlit.runtime.media_file_manager: Disconnecting files for session with ID test session id
+2026-11-06 17:54:34.745 DEBUG   streamlit.runtime.media_file_manager: Sessions still active: dict_keys([])
+2026-11-06 17:54:34.745 DEBUG   streamlit.runtime.media_file_manager: Files: 0; Sessions with files: 0
+2026-11-06 17:54:39.089 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned files...
+2026-11-06 17:54:39.089 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned deferred callables...
+2026-11-06 17:54:39.103 DEBUG   streamlit.runtime.scriptrunner.script_runner: Beginning script thread
+2026-11-06 17:54:39.104 DEBUG   streamlit.runtime.scriptrunner.script_runner: Running script
+2026-11-06 17:54:39.104 DEBUG   streamlit.runtime.media_file_manager: Disconnecting files for session with ID test session id
+2026-11-06 17:54:39.105 DEBUG   streamlit.runtime.media_file_manager: Sessions still active: dict_keys([])
+2026-11-06 17:54:39.105 DEBUG   streamlit.runtime.media_file_manager: Files: 0; Sessions with files: 0
+2026-11-06 17:54:40.490 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned files...
+2026-11-06 17:54:40.490 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned deferred callables...
+2026-11-06 17:54:40.490 DEBUG   streamlit.runtime.scriptrunner.script_runner: Running script
+2026-11-06 17:54:40.491 DEBUG   streamlit.runtime.media_file_manager: Disconnecting files for session with ID test session id
+2026-11-06 17:54:40.491 DEBUG   streamlit.runtime.media_file_manager: Sessions still active: dict_keys([])
+2026-11-06 17:54:40.491 DEBUG   streamlit.runtime.media_file_manager: Files: 0; Sessions with files: 0
+2026-11-06 17:54:41.674 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned files...
+2026-11-06 17:54:41.675 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned deferred callables...
+2026-11-06 17:54:41.687 DEBUG   streamlit.runtime.scriptrunner.script_runner: Beginning script thread
+2026-11-06 17:54:41.687 DEBUG   streamlit.runtime.scriptrunner.script_runner: Running script
+2026-11-06 17:54:41.687 DEBUG   streamlit.runtime.media_file_manager: Disconnecting files for session with ID test session id
+2026-11-06 17:54:41.687 DEBUG   streamlit.runtime.media_file_manager: Sessions still active: dict_keys([])
+2026-11-06 17:54:41.687 DEBUG   streamlit.runtime.media_file_manager: Files: 0; Sessions with files: 0
+2026-11-06 17:54:42.973 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned files...
+2026-11-06 17:54:42.973 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned deferred callables...
+------------------------------ Captured log call -------------------------------
+WARNING  streamlit.runtime.scriptrunner_utils.script_run_context:script_run_context.py:508 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+DEBUG    streamlit.runtime.scriptrunner.script_runner:script_runner.py:620 Running script
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:211 Disconnecting files for session with ID test session id
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:221 Sessions still active: dict_keys([])
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:225 Files: 0; Sessions with files: 0
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:150 Removing orphaned files...
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:171 Removing orphaned deferred callables...
+DEBUG    streamlit.runtime.scriptrunner.script_runner:script_runner.py:406 Beginning script thread
+DEBUG    streamlit.runtime.scriptrunner.script_runner:script_runner.py:620 Running script
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:211 Disconnecting files for session with ID test session id
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:221 Sessions still active: dict_keys([])
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:225 Files: 0; Sessions with files: 0
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:150 Removing orphaned files...
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:171 Removing orphaned deferred callables...
+DEBUG    streamlit.runtime.scriptrunner.script_runner:script_runner.py:620 Running script
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:211 Disconnecting files for session with ID test session id
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:221 Sessions still active: dict_keys([])
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:225 Files: 0; Sessions with files: 0
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:150 Removing orphaned files...
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:171 Removing orphaned deferred callables...
+DEBUG    streamlit.runtime.scriptrunner.script_runner:script_runner.py:406 Beginning script thread
+DEBUG    streamlit.runtime.scriptrunner.script_runner:script_runner.py:620 Running script
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:211 Disconnecting files for session with ID test session id
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:221 Sessions still active: dict_keys([])
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:225 Files: 0; Sessions with files: 0
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:150 Removing orphaned files...
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:171 Removing orphaned deferred callables...
+=========================== short test summary info ============================
+FAILED tests/test_ue125_release_composition.py::test_real_UI_qualifies_only_available_Ue125_components_and_exports
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 2 passed in 12.20s

@@ -30,6 +30,10 @@ def _expected(result):
 
 def _source(data,result):
     from . import ue_reference as single,ue_family_reference as family
+    from .ue_catalog_reference import claims_reference as catalog_claims
+    if catalog_claims(data):
+        from .roof_catalog_nbr import fresh_section
+        return fresh_section(data,result)
     if family.claims_reference(data):
         state=family.assess(data)
         if not state['calculable']:raise ValueError('Fonte própria não calculável: '+str(state['reasons']+state['action_errors']))
@@ -79,6 +83,10 @@ def attach(result):
     ev=roof.preserved(result)
     if ev is None or result['input_data'].get('member_application','purlin')!='purlin':return result
     data=result['input_data'];expected=_expected(result)
+    from .ue_catalog_reference import claims_reference as catalog_claims
+    if catalog_claims(data):
+        from .ue_catalog_nbr_bending import FIELD as CATALOG_FIELD,qualify
+        result=copy.deepcopy(result);result[CATALOG_FIELD]=qualify(data)
     if len(set(expected))!=len(expected):raise ValueError('Inventário ELU de cobertura duplicado.')
     evidence=dict(schema=SCHEMA,source_input_fingerprint=result['input_fingerprint'],
         source_roof_snapshot_sha256=ev['snapshot_sha256'],source=SOURCE,scope=SCOPE,
@@ -124,17 +132,23 @@ def attach(result):
         else:cap=flt_mse(section['Wc_mm3'],section['fy_MPa'],section['Ml_Nmm'],r['Me_Nmm'])
         parts=dict(section_effective=section['MRd_section_effective_Nmm'],FLT_height=cap['MRd_flt_Nmm'])
         if section['MRd_distortional_Nmm'] is not None:parts['distortional']=section['MRd_distortional_Nmm']
-        minimum=min(parts.values());index=M/cap['MRd_flt_Nmm']
+        complete=section.get('strong_bending_complete',True)
+        minimum=min(parts.values()) if complete else None;index=M/cap['MRd_flt_Nmm']
         evidence['records'].append(dict(base,status=COMPUTED,reason=SCOPE,
             Me_Nmm=r['Me_Nmm'],Msd_max_abs_Nmm=M,FLT=cap,index=index,
             criterion_status=('inconclusive' if envelope else 'fails') if index>1 else 'meets',
             MRd_section_effective_Nmm=section['MRd_section_effective_Nmm'],
             MRd_distortional_Nmm=section['MRd_distortional_Nmm'],
-            MRd_bending_component_Nmm=minimum,bending_component_index=M/minimum,
-            governing_bending_components=[k for k,v in parts.items() if v==minimum],
+            MRd_bending_component_Nmm=minimum,bending_component_index=M/minimum if complete else None,
+            governing_bending_components=[k for k,v in parts.items() if v==minimum] if complete else [],
             Cb_applied_after_Me=False,primary_torque_by_action=copy.deepcopy(r['primary_torque_by_action']),
             M_V_denominator_source='NBR14762 §9.8.4 usa seção efetiva (§9.8.2.1); não alterado por esta componente.'))
-        if r.get('separate_axis_capacity_scope',{}).get('applicable'):
+        separate_axis=r.get('separate_axis_capacity_scope',{}).get('applicable') is True
+        if not complete:
+            from .roof_catalog_nbr import partial_fields
+            evidence['records'][-1].update(partial_fields(separate_axis))
+            evidence['records'][-1]['reason']=SCOPE+' '+section['distortion_scope']
+        if separate_axis and complete:
             from .roof_biaxial import interaction
             own=result[section['source_reference_field']]
             evidence['records'][-1]['biaxial']=interaction(combos[(cid,state)],data['L_mm'],minimum,own)
@@ -172,24 +186,33 @@ def preserved(result):
     section=saved.get('source_section')
     if section is not None:
         if not isinstance(section,dict):raise ValueError('Fonte resistente salva deve ser um objeto.')
-        own=result.get(section.get('source_reference_field'))
-        if (not isinstance(own,dict) or section.get('source_reference_sha256')!=roof.digest(own)
-            or own.get('reference_id')!=section.get('reference_id')
-            or section.get('nodes_sha256')!=(ev.get('geometry') or {}).get('nodes_sha256')
-            or section.get('section_profile_id')!=(ev.get('geometry') or {}).get('section_profile_id')):
-            raise ValueError('Fonte resistente ou contorno da componente salvo divergente.')
-        caps=own.get('signed_scalar_capacities',{});model=own.get('model',{})
-        if not isinstance(caps,dict) or not isinstance(model,dict):raise ValueError('Evidência resistente salva malformada.')
-        for side in ('strong_positive','strong_negative'):
-            c=caps.get(side,{})
-            if not isinstance(c,dict):raise ValueError('Capacidade resistente salva malformada.')
-            for target,origin in (('W_mm3','W_mm3'),('Wc_mm3','Wc_mm3'),('Ml_Nmm','Ml_Nmm'),
-                                  ('MRd_section_effective_Nmm','MRd_local_Nmm'),('MRd_distortional_Nmm','MRd_dist_Nmm')):
-                if section.get(target)!=c.get(origin):raise ValueError('Valor resistente difere da fonte própria salva: '+target)
-        if any(section.get(k)!=model.get(k) for k in ('E_MPa','G_MPa','fy_MPa')):
-            raise ValueError('Material resistente difere da fonte própria salva.')
-        if section.get('source_documents')!=own.get('source_documents'):
-            raise ValueError('Documentos resistentes diferem da fonte própria salva.')
+        from .roof_catalog_nbr import KIND,validate_section
+        from .ue_catalog_reference import claims_reference as catalog_claims
+        if catalog_claims(result['input_data'])!=(section.get('kind')==KIND):
+            raise ValueError('Fonte resistente incompatível com a adoção explícita do contorno de entrada.')
+        if section.get('kind')==KIND:
+            validate_section(section,result['input_data'],result,ev.get('geometry') or {})
+        else:
+            from .roof_biaxial_geometry import validate_geometry
+            validate_geometry(ev.get('geometry') or {},result['input_data'])
+            own=result.get(section.get('source_reference_field'))
+            if (not isinstance(own,dict) or section.get('source_reference_sha256')!=roof.digest(own)
+                or own.get('reference_id')!=section.get('reference_id')
+                or section.get('nodes_sha256')!=(ev.get('geometry') or {}).get('nodes_sha256')
+                or section.get('section_profile_id')!=(ev.get('geometry') or {}).get('section_profile_id')):
+                raise ValueError('Fonte resistente ou contorno da componente salvo divergente.')
+            caps=own.get('signed_scalar_capacities',{});model=own.get('model',{})
+            if not isinstance(caps,dict) or not isinstance(model,dict):raise ValueError('Evidência resistente salva malformada.')
+            for side in ('strong_positive','strong_negative'):
+                c=caps.get(side,{})
+                if not isinstance(c,dict):raise ValueError('Capacidade resistente salva malformada.')
+                for target,origin in (('W_mm3','W_mm3'),('Wc_mm3','Wc_mm3'),('Ml_Nmm','Ml_Nmm'),
+                                      ('MRd_section_effective_Nmm','MRd_local_Nmm'),('MRd_distortional_Nmm','MRd_dist_Nmm')):
+                    if section.get(target)!=c.get(origin):raise ValueError('Valor resistente difere da fonte própria salva: '+target)
+            if any(section.get(k)!=model.get(k) for k in ('E_MPa','G_MPa','fy_MPa')):
+                raise ValueError('Material resistente difere da fonte própria salva.')
+            if section.get('source_documents')!=own.get('source_documents'):
+                raise ValueError('Documentos resistentes diferem da fonte própria salva.')
     rows=saved.get('records');expected=_expected(result)
     combos={(c['id'],c['limit_state']):c for c in roof.combination_inventory(result)}
     me_records={(r.get('combination_id'),r.get('limit_state')):r for r in ev.get('records',[])}
@@ -242,17 +265,26 @@ def preserved(result):
                 raise ValueError('Índice ou componentes inconsistentes com os valores salvos.')
             parts=dict(section_effective=section['MRd_section_effective_Nmm'],FLT_height=r['FLT']['MRd_flt_Nmm'])
             if section['MRd_distortional_Nmm'] is not None:parts['distortional']=section['MRd_distortional_Nmm']
-            minimum=min(parts.values())
-            if (r.get('MRd_bending_component_Nmm')!=minimum or r.get('bending_component_index')!=r['Msd_max_abs_Nmm']/minimum
-                or r.get('governing_bending_components')!=[k for k,v in parts.items() if v==minimum]):
-                raise ValueError('Mínimo de componentes ou índice salvo inconsistente.')
+            complete=section.get('strong_bending_complete',True)
+            minimum=min(parts.values()) if complete else None
+            if complete:
+                if (r.get('MRd_bending_component_Nmm')!=minimum or r.get('bending_component_index')!=r['Msd_max_abs_Nmm']/minimum
+                    or r.get('governing_bending_components')!=[k for k,v in parts.items() if v==minimum]):
+                    raise ValueError('Mínimo de componentes ou índice salvo inconsistente.')
+            else:
+                from .roof_catalog_nbr import partial_fields,validate_curve
+                expected_partial=partial_fields(me_record.get('separate_axis_capacity_scope',{}).get('applicable') is True)
+                if (any(r.get(k)!=v for k,v in expected_partial.items()) or 'biaxial' in r
+                    or ('biaxial_pending' in r)!=('biaxial_pending' in expected_partial)):
+                    raise ValueError('Pendência resistente do catálogo removida ou promovida.')
+                validate_curve(r['FLT'],section,r['Me_Nmm'])
             if 'biaxial' in r:
                 from .roof_biaxial import validate_saved
                 if not me_record.get('separate_axis_capacity_scope',{}).get('applicable'):
                     raise ValueError('Interação NBR no topo sem posição fraca qualificada.')
                 validate_saved(r['biaxial'],dict(combos[key],span_mm=result['input_data']['L_mm']),
                     minimum,result[section['source_reference_field']])
-            elif me_record.get('separate_axis_capacity_scope',{}).get('applicable'):
+            elif complete and me_record.get('separate_axis_capacity_scope',{}).get('applicable'):
                 raise ValueError('Resistência por eixo salva sem interação concomitante.')
         elif r.get('index') is not None or not r.get('reason') or 'biaxial' in r:
             raise ValueError('Pendência FLT salva não pode conter índice ou interação ativa.')
