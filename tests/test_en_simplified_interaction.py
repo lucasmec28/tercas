@@ -4,7 +4,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 from tercas import en_simplified_interaction as c
-from tercas.en_interaction_capacity_reference import REFERENCES
+from tercas.en_interaction_capacity_reference import REFERENCES, qualified_reference
 
 def with_originals(fields):
     fields=copy.deepcopy(fields)
@@ -16,7 +16,8 @@ def test_capacity_floor_uses_effective_operators_not_normalization_effort(t):
     from tercas.three_girt_en_normal.en1993_normal_components import build_component_sections
     p=json.loads((Path(__file__).parents[1]/f'tercas/data/torsion_profiles/ue100x50x17_t{t:.2f}.json').read_text())
     cert=build_component_sections(p);cap=c.capacities(p,cert)
-    assert cap==REFERENCES[t]
+    assert cap==qualified_reference(t,cert['content_sha256'])
+    assert cap['signed_capacity_floor']==REFERENCES[t]['signed_capacity_floor']
     nodes=np.array(p['nodes_xy_mm']);cg=np.array(cert['gross_properties']['centroid_xy_mm']);d=np.diff(nodes,axis=0)
     normal=np.column_stack([-d[:,1],d[:,0]])/np.linalg.norm(d,axis=1)[:,None]
     points=np.concatenate([nodes[:-1],nodes[1:],nodes[:-1]+t/2*normal,nodes[1:]+t/2*normal,

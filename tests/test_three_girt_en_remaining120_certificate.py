@@ -57,7 +57,15 @@ class Remaining120CertificateTest(unittest.TestCase):
         records={str(t):{k:v for k,v in c['components'].items() if not(t==1.2 and k in NEW)}
                  for t,c in self.certs.items()}
         self.assertEqual(sum(map(len,records.values())),39)
-        self.assertEqual(en._canonical_sha(records),'32f6a817f880e882cbb0f1956f198a1be938b438adc656ba495ec2355729a3e1')
+        # Same 39 branches; exact audited t3.00 OpenBLAS outputs select their
+        # exact aggregate. No numeric tolerance or unqualified hash admission.
+        unchanged_sha = {
+            '06ab706c093469f2b915532c91f3101f6d0a4a83134a2fcb1888682c295e1e9c':
+                '32f6a817f880e882cbb0f1956f198a1be938b438adc656ba495ec2355729a3e1',
+            '5d6993c2c82dd7cb5b03e18cb90cc87e5c4f22acdb1fed27f8eef03df555d06a':
+                '9e797d62b37d09aaf7572a828f83a5447d12b7a534ba3d98ab707aff9ba108d1',
+        }[self.certs[3.0]['content_sha256']]
+        self.assertEqual(en._canonical_sha(records),unchanged_sha)
         for c in self.certs.values():
             self.assertEqual(c['schema'],en.SCHEMA)
             self.assertTrue(c['schema'].endswith('_v5'))

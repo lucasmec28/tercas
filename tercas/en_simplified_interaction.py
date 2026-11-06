@@ -38,9 +38,9 @@ def capacities(profile,certificate):
     another geometry/material or changed pure-section implementation.
     """
     from .three_girt_en_normal.en1993_normal_components import verify_component_sections
-    from .en_interaction_capacity_reference import REFERENCES
+    from .en_interaction_capacity_reference import qualified_reference
     verify_component_sections(certificate)
-    t=profile['thickness_mm'];ref=REFERENCES[t]
+    t=profile['thickness_mm'];ref=qualified_reference(t,certificate['content_sha256'])
     if (certificate['content_sha256']!=ref['component_sections_sha256']
         or certificate['nodes_sha256']!=profile['geometry_identity']['nodes_canonical_sha256']):
         raise ValueError('Seções efetivas EN fora da referência resistente M–V qualificada.')

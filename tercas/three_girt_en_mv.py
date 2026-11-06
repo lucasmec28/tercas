@@ -35,8 +35,8 @@ def calculate_row(demand,case,beam,en_row,capacity,web_capacity):
 
 
 def validate_internal(out):
-    from .en_interaction_capacity_reference import REFERENCES
-    cap=out['capacity_reference'];ref=REFERENCES[cap['thickness_mm']]
+    from .en_interaction_capacity_reference import qualified_reference
+    cap=out['capacity_reference'];ref=qualified_reference(cap['thickness_mm'],cap['component_sections_sha256'])
     if (out.get('schema')!=SCHEMA or out.get('algorithm_schema')!=core.SCHEMA or out.get('source')!=core.SOURCE or out.get('scope')!=core.SCOPE
         or core._sha(cap)!=core._sha(ref) or out.get('content_sha256')!=core._sha({k:v for k,v in out.items() if k!='content_sha256'})
         or any(out.get(k) is not False for k in core.FLAGS)):

@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 from types import SimpleNamespace
 import streamlit as st
+import pytest
 from streamlit.testing.v1 import AppTest
 from docx import Document
 from tercas import isolated_en_application as en, isolated_en_ui as ui
@@ -14,21 +15,22 @@ APP=str(Path(__file__).resolve().parents[1]/'app.py')
 def button(app,label):return next(w for w in app.button if w.label==label)
 
 
-def prepared(monkeypatch):
-    d=inputs(P=20.);payload=json.dumps(d).encode()
+def prepared(monkeypatch, thickness=2.):
+    d=inputs(t=thickness,P=20.);payload=json.dumps(d).encode()
     monkeypatch.setattr(st,'file_uploader',lambda *a,**kw:SimpleNamespace(size=len(payload),getvalue=lambda:payload))
     app=AppTest.from_file(APP).run(timeout=30)
     button(app,'Aplicar entradas do arquivo').click().run(timeout=30)
     return app,d
 
 
-def test_explicit_en_flow_exports_and_read_only_rerender(monkeypatch):
+@pytest.mark.parametrize('thickness', [1.2, 2.])
+def test_explicit_en_flow_exports_and_read_only_rerender(monkeypatch, thickness):
     downloads={};orig=st.download_button
     def capture(label,data,*args,**kwargs):
         if label in ('Baixar estudo e resultados (JSON)','Baixar memória parcial (Word)'):downloads[label]=data
         return orig(label,data,*args,**kwargs)
     monkeypatch.setattr(st,'download_button',capture)
-    app,d=prepared(monkeypatch)
+    app,d=prepared(monkeypatch,thickness)
     assert en.CHOICE not in app.session_state.last_input
     next(w for w in app.checkbox if w.label==ui.LABEL).check().run(timeout=30)
     assert not app.session_state.last_input[en.CHOICE]['intact_section_model_declared']

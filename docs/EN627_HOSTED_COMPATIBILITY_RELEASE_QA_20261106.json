@@ -1,0 +1,88 @@
+{
+  "schema": "EN627_qualified_BLAS_release_QA_v1",
+  "date": "2026-11-06",
+  "base_published_commit": "f0eff704a1b0232e5fb528aa3feb9cb36776d393",
+  "tested_commit": "70a96f6a31b7274e715fd5523c0ecd62e36d0562",
+  "tested_production_tree": "adffe1f9f5c4ab1762c3fac0694501064fb2513b",
+  "cause": "The unchanged pinned EN certificate builder produces two additional complete byte outputs under the Haswell OpenBLAS kernel. The t1.20 output exactly reproduces the certificate hash observed in the hosted calculation.",
+  "repair": "Exactly two audited hashes added, tied to their original thickness. Original REFERENCES, all six integer resistance floors, geometry/material, demand binding, numerical criteria and global false flags remain unchanged. Unknown hashes, including rehashed one-ULP alterations that preserve floors, remain rejected.",
+  "independent_review": "Integrator reviewed producer and both saved-reader changes: exact full-reference comparisons and actual certificate/source binding remain in place; no tolerance or automatic qualification of unknown outputs.",
+  "phases": [
+    {
+      "phase": "backend",
+      "exit_code": 0,
+      "seconds": 75.13148086699948,
+      "tests": 108,
+      "failures": 0,
+      "errors": 0,
+      "targets": [
+        "tests/test_en_capacity_runtime_variants.py",
+        "tests/test_en_simplified_interaction.py",
+        "tests/test_isolated_en_pending_presentation.py",
+        "tests/test_ui_cache_epoch.py",
+        "tests/test_three_girt_en_mv.py",
+        "tests/test_isolated_en_mv.py"
+      ]
+    },
+    {
+      "phase": "UI",
+      "exit_code": 0,
+      "seconds": 100.14083779700013,
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "targets": [
+        "tests/test_ui_isolated_en.py::test_explicit_en_flow_exports_and_read_only_rerender"
+      ]
+    }
+  ],
+  "worker_qualification": {
+    "native_certificate_tests": 69,
+    "Haswell_certificate_tests": 69,
+    "Haswell_three_girt_unit_tests": 6,
+    "Haswell_isolated_section_tests": 7,
+    "note": "Counts overlap with the final integration targets."
+  },
+  "hosted_input_reproduction": {
+    "source_commit": "70a96f6a31b7274e715fd5523c0ecd62e36d0562",
+    "kernel": "Haswell",
+    "seconds": 4.314616329000273,
+    "input_identical_to_failed_hosted_sample": true,
+    "certificate_sha256": "5b6bfa95bc26d22b35ebec2e96fd9cb26aaf2a46672bffa3df5fe0ba22029ea8",
+    "new_interaction_schema": "isolated_EN_6_27_component_v1",
+    "new_interaction_present": true,
+    "new_interaction_qualified": true,
+    "whole_member_approved": false,
+    "EN_rows": [
+      {
+        "Combinação": "DIRECT_ELU",
+        "Teto normal EN": 0.05742548602120348,
+        "Teto cisalhamento EN": 0.03345914624951189,
+        "Teto interação σ–τ EN": 0.05221124575592698,
+        "Componente de tensões": "Suficiente no campo declarado",
+        "Teto cortante transversal da alma EN": 0.0036075706088594195,
+        "Componente da alma": "Suficiente para Vy transversal pelo piso de Vw,Rd",
+        "Redução adicional por V EN": "Dispensada nos dois eixos",
+        "Teto dos dois cortantes EN": 0.0036075706088594243,
+        "Teto M–V adicional EN6.27": 0.024270253507106123,
+        "M–V adicional EN6.27": "Suficiente no domínio salvo",
+        "Motivo": "Torção e empenamento são mantidos na verificação complementar EN6.1.6, não convertidos em cortante transversal."
+      }
+    ]
+  },
+  "historical_pending_snapshots": "Actual failed hosted JSON remains byte-unchanged and pending when read. New UI labels its calculation failure explicitly instead of misclassifying it as a historical record. No retroactive EN6.27 calculation.",
+  "cache": "Only active calculation caches invalidated by epoch r4; inputs and saved historical data preserved.",
+  "full_suite_run_for_this_patch": false,
+  "scope": "Unchanged seven own Ue100x50x17 nominal EN section models and fixed material. This is compatibility of two audited outputs, not acceptance of other profiles, arbitrary geometries or unknown numerical variants. No structural homologation or whole-member/global approval.",
+  "publication_status_at_receipt": "Local integrated QA complete. Remote publication and patched hosted runtime are not claimed by this receipt.",
+  "evidence_sha256": {
+    "backend.log": "0648faf14911b68af82cebe1442040399967533f1127a4fbe4e6313abb4a959c",
+    "backend.xml": "3e626d4c77d60a338189a86504f09ca4c54359727c0ae24d335e960be394be78",
+    "UI.log": "34c8ce809885ce3c7767c290b166aeaf8feed77eec3f377c6c8d529fcb607c3e",
+    "UI.xml": "487bf950ff1b96c1cb8f65065eb92a6c3b7c396416f4f5cfdab7513f461f4549",
+    "runtime_after_fix.json": "0dd14f1a3fa704bf5ce65149d3a3412ba87e0b120b4525d4ed50408bb66ae069",
+    "runtime_after_fix_summary.json": "431212fe8ec2e6a327ce5c664069193ea6ee7bd9cd67e54e486f9d51bc21baec",
+    "control.py": "686241d608e97a1c3e7d2a31e3ab867636a2221b649660f3491d9aa5117dc71e",
+    "run.py": "9b35051513e8d52c639e7e2ab6bed26aefd5ffa7457d9aadd8d0b250225dc329"
+  }
+}

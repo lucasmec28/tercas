@@ -49,6 +49,7 @@ def rows(ev):
         check=row['check'];criteria=check['criteria'] if check else {}
         web=row.get('web_shear_component')
         mv=web.get('bending_shear_component') if web else None
+        mv_error=web.get('bending_shear_error') if web else None
         out.append({'Combinação':row['combination_id'],
             'Teto normal EN':criteria.get('normal',{}).get('index_upper_bound'),
             'Teto cisalhamento EN':criteria.get('shear',{}).get('index_upper_bound'),
@@ -59,11 +60,11 @@ def rows(ev):
             'Componente da alma':('Suficiente para Vy transversal pelo piso de Vw,Rd' if web['web_shear']['status']=='meets'
                 else 'Inconclusivo pelo piso; não é reprovação') if web else 'Sem cálculo salvo',
             'Redução adicional por V EN':('Dispensada nos dois eixos' if mv['shear_reduction_waived']
-                else 'Incluída na equação 6.27') if mv else ('Dispensada no domínio sem B/torção/flexão fraca'
+                else 'Incluída na equação 6.27') if mv else 'Pendente: cálculo EN6.27 indisponível' if mv_error else ('Dispensada no domínio sem B/torção/flexão fraca'
                 if web['no_web_shear_reduction']['status']=='meets' else 'Registro histórico restrito; sem requalificação') if web else 'Pendente',
             'Teto dos dois cortantes EN':mv['shear_ratio_upper'] if mv else None,
             'Teto M–V adicional EN6.27':mv['index_upper'] if mv else None,
-            'M–V adicional EN6.27':('Suficiente no domínio salvo' if mv['component_qualified'] else 'Inconclusivo pelo teto') if mv else 'Sem registro adicional',
+            'M–V adicional EN6.27':('Suficiente no domínio salvo' if mv['component_qualified'] else 'Inconclusivo pelo teto') if mv else 'Pendente no cálculo salvo' if mv_error else 'Sem registro adicional',
             'Motivo':row.get('reason') or row.get('web_shear_error') or (mv['reason'] if mv else web.get('bending_shear_error','') if web else '')})
     return out
 
@@ -83,13 +84,16 @@ def text_lines(ev):
     webs=[r['web_shear_component'] for r in ev['records'] if 'web_shear_component' in r]
     if webs:
         mvs=[w['bending_shear_component'] for w in webs if 'bending_shear_component' in w]
+        errors=[w['bending_shear_error'] for w in webs if 'bending_shear_error' in w]
+        historical=sum('bending_shear_component' not in w and 'bending_shear_error' not in w for w in webs)
         lines += ['EN6.1.5: sw≤hw=H−t produz piso conservador da alma forte. '
-            'Na direção fraca, as duas mesas originais fornecem duas almas com hw=b−t; '
-            'não se reutiliza a capacidade forte. Sem crédito de enrijecedores. '
+            'Sem crédito de enrijecedores. '
             'Cada trecho e ambos os lados de P, inclusive before-P quando declarado, são preservados.']
         if mvs:
             from .en_simplified_interaction import SCOPE as MV_SCOPE, capacity_text
-            lines += [MV_SCOPE,capacity_text(mvs[0]['capacity_reference'],include_axial=False),
+            lines += ['Na componente EN6.27 calculada, as duas mesas originais fornecem duas almas com hw=b−t '
+                'para o cortante fraco; não se reutiliza a capacidade forte.',
+                MV_SCOPE,capacity_text(mvs[0]['capacity_reference'],include_axial=False),
                 'Componente adicional EN6.27: soma dos módulos N/NRd, Mx/MxRd e My/MyRd, mais a maior penalidade '
                 'max(0,2|V|/VbRd−1)² dos dois eixos, junto de |V|≤VbRd em ambos. '
                 'Mf=0 não usa reserva de mesas/plasticidade. Os pisos de flexão vêm dos operadores puros efetivos EN '
@@ -100,7 +104,13 @@ def text_lines(ev):
                 'A aplicação de 6.1.10 por dois cortantes transversais e 6.1.6 para torção segue a interpretação documentada '
                 'no manual oficial SCIA Engineer 17.0, pp. 80–86. O registro antigo de limiar da alma é preservado, não reclassificado.',
                 'Fonte de implementação: https://help.scia.net/download/17.0/en/SteelCodeCheck_Theory_enu.pdf']
-        else:
+        if errors:
+            cases='caso' if len(errors)==1 else 'casos'
+            lines += [f'EN6.27 pendente em {len(errors)} {cases} do cálculo salvo: '+ '; '.join(sorted(set(errors))) + '.',
+                'A componente adicional não foi concluída neste cálculo salvo. '
+                'O resultado da alma forte permanece separado e não demonstra dispensa da interação nos dois eixos. '
+                'Nenhuma aprovação global é emitida; a visualização preserva os resultados sem recalcular.']
+        if historical:
             from .isolated_en_shear import SCOPE
             lines += [SCOPE, 'Registro histórico restrito à alma. VEd inclui cortante de torque na definição de EN1993-1-5 §1.4; '
                 'esta implementação antiga não demonstra dispensa para a seção. Não se recalcula nem reclassifica o histórico.']

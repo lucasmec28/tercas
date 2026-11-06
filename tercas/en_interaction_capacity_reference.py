@@ -190,3 +190,30 @@ REFERENCES = {1.2: {'component_sections_sha256': '160fc2f2d8cb3d490ddccb996d023b
                                              'sw_upper_mm': 46.65,
                                              'lambda_upper': 0.16624297293714932,
                                              'fbv_lower_MPa': 145.0}}}}
+
+
+# Exact additional outputs reproduced with the SAME pinned source, NumPy 2.3.5
+# and OpenBLAS 0.3.30 using its Haswell kernel. See the qualification record.
+# Unknown hashes remain rejected even if their integer floors happen to agree.
+QUALIFIED_CERTIFICATE_VARIANTS = {
+    1.2: ('5b6bfa95bc26d22b35ebec2e96fd9cb26aaf2a46672bffa3df5fe0ba22029ea8',),
+    3.0: ('5d6993c2c82dd7cb5b03e18cb90cc87e5c4f22acdb1fed27f8eef03df555d06a',),
+}
+
+
+def qualified_reference(thickness_mm, component_sections_sha256):
+    """Select an exactly qualified certificate, without rebuilding saved data.
+
+    REFERENCES stays unchanged so historical records retain their original
+    identity. Every returned reference remains bound to its ACTUAL complete
+    certificate hash; only explicitly audited additional byte outputs qualify.
+    No rounding, tolerance, floor-only substitution or runtime auto-enrollment.
+    """
+    import copy
+    ref = REFERENCES[thickness_mm]
+    allowed = (ref['component_sections_sha256'],) + QUALIFIED_CERTIFICATE_VARIANTS.get(thickness_mm, ())
+    if type(component_sections_sha256) is not str or component_sections_sha256 not in allowed:
+        raise ValueError('Seções efetivas EN fora da referência resistente M–V qualificada.')
+    result = copy.deepcopy(ref)
+    result['component_sections_sha256'] = component_sections_sha256
+    return result

@@ -80,9 +80,9 @@ def _saved_source_controls(summary, source):
 
 
 def validate_saved(out,web,row,summary,ev):
-    from .en_interaction_capacity_reference import REFERENCES
+    from .en_interaction_capacity_reference import qualified_reference
     from .isolated_en_shear import _weak_zero,_waiver_domain
-    ref=REFERENCES[ev['source_profile']['thickness_mm']]
+    ref=qualified_reference(ev['source_profile']['thickness_mm'],row['check']['component_sections_sha256'])
     if (not isinstance(out,dict) or out.get('schema')!=SCHEMA or out.get('algorithm_schema')!=core.SCHEMA or out.get('source')!=core.SOURCE
         or out.get('scope')!=core.SCOPE or core._sha(out.get('capacity_reference'))!=core._sha(ref)
         or out.get('content_sha256')!=core._sha({k:v for k,v in out.items() if k!='content_sha256'})
