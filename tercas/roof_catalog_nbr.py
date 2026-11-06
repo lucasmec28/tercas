@@ -8,7 +8,8 @@ import math
 
 KIND='own_catalog_Ue125_bending_components_v1'
 KIND_V2='own_catalog_Ue125_bending_components_v2'
-KINDS=(KIND,KIND_V2)
+from .roof_catalog_positive import KIND as KIND_V3
+KINDS=(KIND,KIND_V2,KIND_V3)
 WEAK_PENDING='Resistências fracas próprias por sentido ausentes; interação §9.9 pendente, sem índice biaxial.'
 PENDING='Distorção forte não qualificada; mínimo local–FLT–D e interação §9.9 pendentes. Não é dispensa.'
 
@@ -69,7 +70,8 @@ def fresh_section(data,result):
     if result.get('roof_top_load_evidence',{}).get('load_basis')=='direct_total_top_envelope':
         raise ValueError('Contorno próprio exige PP e ações externas separados; envoltória direta total não integrada nesta qualificação.')
     if fresh!=result.get(FIELD):raise ValueError('Evidência NBR do contorno próprio salva diverge da fonte qualificada.')
-    return section(data,fresh,geometry(data))
+    from .roof_catalog_positive import decorate_section
+    return decorate_section(section(data,fresh,geometry(data)),data)
 
 
 def validate_section(saved,data,result,geometry):
@@ -79,6 +81,10 @@ def validate_section(saved,data,result,geometry):
     evidence=result.get(FIELD)
     validate_saved(evidence,data)
     validate_geometry(geometry,data)
+    if saved.get('kind')==KIND_V3:
+        from .roof_catalog_positive import validate_section as validate_positive
+        validate_positive(saved,section(data,evidence,geometry),data)
+        return
     if saved!=section(data,evidence,geometry):
         raise ValueError('Componente FLT de catálogo diverge do certificado de contorno/material.')
 

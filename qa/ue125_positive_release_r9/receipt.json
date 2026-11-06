@@ -1,0 +1,35 @@
+{
+  "schema": "Ue125_positive_weak_biaxial_release_QA_v1",
+  "release": "cobertura-Ue125-My-positivo-20261106-r9",
+  "tested_commit": "832de7b4553c360b9207f70b102402a3bfce2b77",
+  "base_commit": "21616f6c4e72a762793cc13df616b329fe2983c9",
+  "focused_integration": {
+    "passed": 468,
+    "seconds": 197.97,
+    "exit_code": 0,
+    "not_full_repository_suite": true,
+    "includes": [
+      "Positive weak local MLE/Annex E/reference applicability",
+      "Continuous signed demand and interaction maximum proof",
+      "Own source v3 and preserved v1/v2 readers",
+      "Rehashed mutations, numeric types and complete inventories",
+      "Synthetic direct/area, point positions, ELU and ELS-only",
+      "UI calculation, JSON/Word export and no-solver rerender",
+      "Legacy roof, material, geometry and global-scope tests"
+    ]
+  },
+  "independent_review": "Source equations, first-fiber resistance, effective web, Annex E, positive reference D applicability, continuous demand proof and consumer/readers/presentation reviewed independently. No remaining blocking finding.",
+  "scope": [
+    "Exact own Ue125x50x17x2 ri2 and fy300/fu400/E200000/G77000 only.",
+    "Strong reference is the preserved local/height-aware FLT/approximate D minimum for each combination. Positive weak reference is the local/Annex E minimum at physical span.",
+    "Conventional flange/lip D nonapplicability applies only to the pure positive weak reference. Strong D is included separately. No additional combined distortional requirement is invented.",
+    "NBR9.9 N0 is evaluated only with the individual action-position classifier and My_app nonnegative continuously. Negative weak capacity remains unavailable. My identically zero does not require a fabricated weak capacity.",
+    "No change to actions, structural rigidity, torsion, first-order applicability or ELS. No global approval.",
+    "All public fixtures and receipts are synthetic; no private project input or result is included."
+  ],
+  "files": {
+    "integration.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "integration.log": "c7fc717ed47b7ea9d407de8effaf825c71753c6bf1f57db7720e68699c29eddf",
+    "integration.xml": "6f01c6f8c252aab0c990655bfa3d1d56996de9811b8c4027d95db1985dd2dc53"
+  }
+}

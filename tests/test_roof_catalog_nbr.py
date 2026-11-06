@@ -141,8 +141,13 @@ def test_partial_report_never_calls_missing_D_exemption(result):
 
 
 @pytest.fixture(scope='module')
-def result_v2():
-    return nbr.attach(roof.attach(calculate(inputs())))
+def result_v2(result):
+    # Explicit historical producer: keep v2 coverage after the fresh v3 route.
+    # Reuse the already certified synthetic Me; no new member solve is needed.
+    from tercas import roof_catalog_positive
+    with pytest.MonkeyPatch.context() as patch:
+        patch.setattr(roof_catalog_positive,'decorate_section',lambda source,data:source)
+        return nbr.attach(copy.deepcopy(result))
 
 
 def test_v2_strong_minimum_does_not_qualify_biaxial(result_v2,result):

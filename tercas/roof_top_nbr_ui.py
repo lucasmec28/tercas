@@ -44,7 +44,7 @@ def show(st,result):
     biaxial=[r for r in ev['records'] if 'biaxial' in r]
     if biaxial:
         from .roof_biaxial import SCOPE as BIAXIAL_SCOPE
-        st.caption(BIAXIAL_SCOPE)
+        for scope in dict.fromkeys(r['biaxial']['scope'] for r in biaxial):st.caption(scope)
         st.dataframe(display_frame([biaxial_row(r) for r in biaxial]),hide_index=True,width='stretch')
     with st.expander('Memória NBR do topo: curva, fontes e componentes salvas',expanded=False):
         st.json({k:ev[k] for k in ('domain','source_section','source_roof_snapshot_sha256')})
@@ -96,12 +96,14 @@ def report(doc,result):
                 (r.get('biaxial_pending') or {}).get('reason','Este mínimo é somente a componente forte de flexão pura.'))
         if 'biaxial' in r:
             b=r['biaxial'];g=b['governing']
-            doc.add_paragraph(b['scope'])
+            doc.add_paragraph(b['source']);doc.add_paragraph(b['scope'])
             doc.add_paragraph('Interação §9.9: x='+technical_number(g['x_mm'])+' mm; Mx='+
                 technical_number(g['Mx_Nmm']/1e6)+' kN·m; My='+technical_number(g['My_Nmm']/1e6)+
                 ' kN·m; MxRd='+technical_number(b['strong_capacity_Nmm']/1e6)+' kN·m; MyRd='+
-                technical_number(b['weak_axis_capacities']['positive' if g['My_Nmm']>=0 else 'negative']['MRd_Nmm']/1e6)+
-                ' kN·m; índice='+technical_number(g['index'],limit=1.)+'. '+biaxial_row(r)['Situação'])
+                (technical_number(b['weak_axis_capacities']['positive' if g['My_Nmm']>=0 else 'negative']['MRd_Nmm']/1e6)+' kN·m'
+                 if b['weak_axis_capacities']['positive' if g['My_Nmm']>=0 else 'negative']['MRd_Nmm'] is not None
+                 else 'não exigido: My identicamente zero, redução ao ramo forte')+
+                '; índice='+technical_number(g['index'],limit=1.)+'. '+biaxial_row(r)['Situação'])
     doc.add_paragraph('Rastreabilidade Me salvo SHA256: '+ev['source_roof_snapshot_sha256'])
 
 
@@ -154,7 +156,7 @@ def replace_biaxial_rows(rows,records,combination_id):
     if combination_id is not None:new.pop('Combinação')
     # Uniaxial records need no weak interaction. Pending strong-axis cases remain
     # explicitly uncovered, rather than being hidden by another case's index.
-    if any(r['status']!=COMPUTED for r in records):
+    if any(r['status']!=COMPUTED or r.get('biaxial_pending') for r in records):
         new['Situação']='Parcial — '+new['Situação']
         new['Observação']+=' Há combinações pendentes; o índice não cobre essas combinações.'
     if not any(r.get('Verificação')=='Flexão biaxial' for r in rows):return rows+[new]
@@ -176,7 +178,7 @@ def presentation_inclination(result,evidence,combination_id=None):
     target['biaxial']={k:copy.deepcopy(b[k]) for k in ('status','governing','missing','candidate_count')}
     target['strong_capacity_Nmm']=b['strong_capacity_Nmm']
     target['weak_axis_capacities']={sign:dict(copy.deepcopy(c),
-        annex_e=dict(Me_Nmm=c['Me_Nmm']),
+        annex_e=dict(Me_Nmm=c['Me_Nmm']) if 'Me_Nmm' in c else {},
         provenance='Fonte própria salva '+saved['source_section']['reference_id']+'; '+b['scope'])
         for sign,c in b['weak_axis_capacities'].items()}
     return out

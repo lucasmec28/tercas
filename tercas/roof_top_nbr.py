@@ -148,7 +148,12 @@ def attach(result):
         from .roof_catalog_nbr import KINDS
         if section.get('kind') in KINDS:
             from .roof_catalog_nbr import partial_fields
-            evidence['records'][-1].update(partial_fields(separate_axis,strong_complete=complete))
+            from .roof_catalog_positive import KIND as POSITIVE_KIND,fields as positive_fields
+            if section.get('kind')==POSITIVE_KIND:
+                evidence['records'][-1].update(partial_fields(False,strong_complete=complete))
+                evidence['records'][-1].update(positive_fields(combos[(cid,state)],data['L_mm'],minimum,section,r.get('separate_axis_capacity_scope',{})))
+            else:
+                evidence['records'][-1].update(partial_fields(separate_axis,strong_complete=complete))
             evidence['records'][-1]['reason']=SCOPE+' '+section['distortion_scope']
         if separate_axis and complete and biaxial_qualified:
             from .roof_biaxial import interaction
@@ -277,13 +282,19 @@ def preserved(result):
             from .roof_catalog_nbr import KINDS
             if section.get('kind') in KINDS:
                 from .roof_catalog_nbr import partial_fields,validate_curve
-                expected_partial=partial_fields(me_record.get('separate_axis_capacity_scope',{}).get('applicable') is True,
+                from .roof_catalog_positive import KIND as POSITIVE_KIND,validate_fields as validate_positive_fields
+                positive_route=section.get('kind')==POSITIVE_KIND
+                expected_partial=partial_fields(False if positive_route else me_record.get('separate_axis_capacity_scope',{}).get('applicable') is True,
                     strong_complete=complete)
-                if (any(r.get(k)!=v for k,v in expected_partial.items()) or 'biaxial' in r
-                    or ('biaxial_pending' in r)!=('biaxial_pending' in expected_partial)):
+                if any(r.get(k)!=v for k,v in expected_partial.items()):
+                    raise ValueError('Pendência resistente do catálogo removida ou promovida.')
+                if positive_route:
+                    validate_positive_fields(r,combos[key],result['input_data']['L_mm'],minimum,section,me_record.get('separate_axis_capacity_scope',{}))
+                elif 'biaxial' in r or ('biaxial_pending' in r)!=('biaxial_pending' in expected_partial):
                     raise ValueError('Pendência resistente do catálogo removida ou promovida.')
                 validate_curve(r['FLT'],section,r['Me_Nmm'])
-            if 'biaxial' in r:
+            from .roof_catalog_positive import KIND as POSITIVE_KIND
+            if 'biaxial' in r and section.get('kind')!=POSITIVE_KIND:
                 from .roof_biaxial import validate_saved
                 if not biaxial_qualified or not me_record.get('separate_axis_capacity_scope',{}).get('applicable'):
                     raise ValueError('Interação NBR no topo sem posição fraca qualificada.')

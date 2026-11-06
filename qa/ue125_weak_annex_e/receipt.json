@@ -1,0 +1,23 @@
+{
+  "scope": "Isolated Ue125 weak Annex E reference components; no production integration",
+  "base_commit": "d7e387fec7eb1e443605e1e75e1d28b4bc7b54a8",
+  "command": "PYTHONPATH=.:tests:/workspace/shared/tercas_test_dependencies_20261106 OPENBLAS_CORETYPE=Haswell OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 python -m pytest tests/test_ue_catalog_nbr_weak_mle.py tests/test_ue_catalog_nbr_weak_annex_e.py -q",
+  "result": {
+    "passed": 65,
+    "elapsed_seconds": 0.47,
+    "exit_code": 0
+  },
+  "independent_review": "Annex E derivation, signs, moments, SC, Cw, j and rationalized roots independently reproduced. Final static code/test/documentation review found no blocker; reviewer ran no solver.",
+  "reference_domain": "Physical single span; fork ends, free warping, no intermediate restraints; Cm1; pure weak bending; N0; shear-center reference",
+  "data": "Synthetic pinned marker and synthetic spans only, no user project",
+  "actual_load_Me_qualified": false,
+  "distortional_qualified": false,
+  "complete_bending_capacity_qualified": false,
+  "interaction_9_9_qualified": false,
+  "global_properties_modified": false,
+  "whole_member_approved": false,
+  "member_solver_run": false,
+  "UI_test_run": false,
+  "full_regression_run": false,
+  "published": false
+}

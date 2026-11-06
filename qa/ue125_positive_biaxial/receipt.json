@@ -1,0 +1,36 @@
+{
+  "base_commit": "9a55de7abf8603baadf0d8209210cbd27cb5cd3a",
+  "provider_original_commits": [
+    "d7e387fec7eb1e443605e1e75e1d28b4bc7b54a8",
+    "8c636a77334e43df5165c5244921088da4489d58",
+    "71d284ef30a492819fd8c85ec86b566c8ebc2b96"
+  ],
+  "test_mode": "Synthetic only; no real project access; single-thread BLAS; serial commands",
+  "runs": [
+    {
+      "selection": "test_roof_biaxial_positive.py, test_roof_catalog_positive.py, test_roof_catalog_nbr.py, three weak provider files; exclude fresh_synthetic_solver/area_inventory/analytical_uniform/short_physical",
+      "passed": 178,
+      "deselected": 7,
+      "seconds": 2.45
+    },
+    {
+      "selection": "test_roof_catalog_positive.py -k fresh_synthetic_solver",
+      "passed": 3,
+      "seconds": 3.07
+    },
+    {
+      "selection": "test_roof_catalog_positive.py -k area_inventory",
+      "passed": 2,
+      "seconds": 8.09
+    },
+    {
+      "selection": "test_ui_roof_catalog_positive.py",
+      "passed": 1,
+      "seconds": 18.66
+    }
+  ],
+  "full_regression_run": false,
+  "published": false,
+  "whole_member_approved": false,
+  "independent_static_review": "Accepted after numeric governing-station guard and clarified separate-axis scope; reviewer ran no solver/tests."
+}

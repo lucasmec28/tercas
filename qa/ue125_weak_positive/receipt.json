@@ -1,0 +1,20 @@
+{
+  "scope": "Positive pure weak reference only; typed conventional D nonapplicability, no production consumers",
+  "base_commit": "8c636a77334e43df5165c5244921088da4489d58",
+  "command": "PYTHONPATH=.:tests:/workspace/shared/tercas_test_dependencies_20261106 OPENBLAS_CORETYPE=Haswell OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 python -m pytest tests/test_ue_catalog_nbr_weak_mle.py tests/test_ue_catalog_nbr_weak_annex_e.py tests/test_ue_catalog_nbr_weak_positive.py -q",
+  "result": {
+    "passed": 88,
+    "elapsed_seconds": 0.73,
+    "exit_code": 0
+  },
+  "initial_test_findings": "Two test setup errors fixed: authoritative material field is fy_MPa; canonical JSON already rejects Infinity before rehash. Dedicated Infinity rejection test added.",
+  "independent_review": "Final independent static review accepted after renaming candidate list to considered_components; no remaining blocker. Reviewer ran no solver.",
+  "data": "Synthetic pinned marker and span only",
+  "actual_load_capacity_qualified": false,
+  "combined_state_distortion_assessed": false,
+  "interaction_9_9_qualified": false,
+  "global_properties_modified": false,
+  "member_solver_run": false,
+  "UI_test_run": false,
+  "published": false
+}

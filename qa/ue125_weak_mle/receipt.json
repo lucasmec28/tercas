@@ -1,0 +1,21 @@
+{
+  "scope": "Isolated Ue125 weak local MLE module; no production integration",
+  "base_commit": "4f8f4b3",
+  "source_files": ["tercas/ue_catalog_nbr_weak_mle.py", "tests/test_ue_catalog_nbr_weak_mle.py", "docs/UE125_WEAK_MLE_20261106.md"],
+  "command": "PYTHONPATH=.:/workspace/shared/tercas_test_dependencies_20261106 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_CORETYPE=Haswell python -m pytest tests/test_ue_catalog_nbr_weak_mle.py -q",
+  "result": {"passed": 36, "elapsed_seconds": 0.62, "exit_code": 0},
+  "initial_attempt": "Default Python lacked pytest; no tests executed. Reused existing shared dependencies, no installation.",
+  "independent_review": "Scalar method reproduced independently; final static module/test/documentation review found no blocker. Reviewer ran no member solver.",
+  "data": "Synthetic pinned section marker only; no user project or load fixture",
+  "global_properties_modified": false,
+  "Me_qualified": false,
+  "distortional_qualified": false,
+  "complete_bending_capacity_qualified": false,
+  "interaction_9_9_qualified": false,
+  "ELS_qualified": false,
+  "whole_member_approved": false,
+  "member_solver_run": false,
+  "UI_test_run": false,
+  "full_regression_run": false,
+  "published": false
+}
