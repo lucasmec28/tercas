@@ -26,7 +26,7 @@ def summary_rows(evidence):
             'Msd [kN·m]':r['Msd_max_abs_Nmm']/1e6 if ok else None,
             'Me com altura [kN·m]':r['Me_Nmm']/1e6 if ok else None,
             'MRd,FLT [kN·m]':r['FLT']['MRd_flt_Nmm']/1e6 if ok else None,
-            'Índice':r.get('index'),'Pendência / escopo':r['reason'] if not ok or r.get('resistance_is_lower_envelope') or r.get('bending_component_status')=='pending_distortional' else NOTE})
+            'Índice':r.get('index'),'Pendência / escopo':r['reason'] if not ok or r.get('resistance_is_lower_envelope') or r.get('bending_component_status')=='pending_distortional' or r.get('biaxial_pending') else NOTE})
     return out
 
 
@@ -91,6 +91,9 @@ def report(doc,result):
                 ' kN·m; MRd D='+('dispensa forte específica' if r['MRd_distortional_Nmm'] is None else
                 technical_number(r['MRd_distortional_Nmm']/1e6)+' kN·m')+
                 '; mínimo das componentes de flexão pura='+technical_number(r['MRd_bending_component_Nmm']/1e6)+' kN·m. Sem interação com torção.')
+        if r.get('bending_component_status')=='computed_strong_pure_bending':
+            doc.add_paragraph('Distorção forte por aproximação elástica qualificada, sem dispensa. '+
+                (r.get('biaxial_pending') or {}).get('reason','Este mínimo é somente a componente forte de flexão pura.'))
         if 'biaxial' in r:
             b=r['biaxial'];g=b['governing']
             doc.add_paragraph(b['scope'])
@@ -111,7 +114,7 @@ def presentation_rows(result,rows,combination_id=None):
     records=[] if ev is None else [r for r in ev['records'] if combination_id is None or r['combination_id']==combination_id]
     computed=[r for r in records if r['status']==COMPUTED];pending=[r for r in records if r['status']!=COMPUTED]
     chosen=max(computed,key=lambda r:r['index']) if computed else None
-    note=chosen['reason'] if chosen and (chosen.get('resistance_is_lower_envelope') or chosen.get('bending_component_status')=='pending_distortional') else NOTE
+    note=chosen['reason'] if chosen and (chosen.get('resistance_is_lower_envelope') or chosen.get('bending_component_status')=='pending_distortional' or chosen.get('biaxial_pending')) else NOTE
     if pending:note+=f' Há {len(pending)} combinação(ões) pendente(s); consulte a componente NBR no topo.'
     if error:note=error
     if not chosen and records:note=records[0]['reason']

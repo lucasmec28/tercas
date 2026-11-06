@@ -59,25 +59,28 @@ def test_table14_independent_interpolation_is_not_exemption(section_input):
     assert dist['table14']['D_bw'] == pytest.approx(.136)
     assert dist['table14']['required_D_mm'] == pytest.approx(27.1875)
     assert dist['table14']['exempt'] is False and dist['exemption'] is False
-    assert dist['Mdist_Nmm'] is None and dist['MRd_Nmm'] is None
+    assert dist['Mdist_Nmm'] == pytest.approx(13999871.753852382)
+    assert dist['MRd_Nmm'] == pytest.approx(5154709.919603469)
+    assert cert['strong_bending_complete'] is True
+    assert cert['biaxial_qualified'] is False
     assert cert['complete_bending_capacity_qualified'] is False
     assert all(x['MRd_Nmm'] is None for x in cert['weak'].values())
     assert cert['whole_member_approved'] is False
 
 
-def test_new_Ml_only_ignores_even_changed_legacy_criticals(section_input):
+def test_new_Ml_and_approximate_D_ignore_changed_legacy_criticals(section_input):
     data = copy.deepcopy(section_input)
     data.update(Ml_Nmm=1e12, Mdist_Nmm=2e12, critical_origin='independent claimed text')
     effective, audit = qualify_strong_criticals(data)
     assert effective['Ml']['value'] == pytest.approx(22424085.04996672)
-    assert effective['Mdist']['value'] is None
+    assert effective['Mdist']['value'] == pytest.approx(13999871.753852382)
     assert audit['fields']['Ml']['inherited_tabulated'] is False
     assert audit['fields']['Ml']['input_value_Nmm'] == 1e12
     assert audit['fields']['Mdist']['input_value_Nmm'] == 2e12
     assert audit[nbr.FIELD]['inherited_criticals_used'] is False
     spec = build_spec(data)
     assert spec['Ml']['value'] == effective['Ml']['value']
-    assert spec['Mdist']['value'] is None
+    assert spec['Mdist']['value'] == effective['Mdist']['value']
 
 
 def test_nu_is_explicit_and_original_G_not_changed(section_input):

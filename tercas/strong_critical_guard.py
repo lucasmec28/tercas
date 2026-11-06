@@ -142,6 +142,13 @@ def qualify_strong_criticals(data):
                 formula_nu=local['formula_nu'], source_binding=certificate['source_binding'])
             evidence['fields']['Mdist']['reason'] = dist['reason']
             evidence['warnings'] = [dist['reason']]
+            if dist.get('status') == 'computed_approximate':
+                effective['Mdist'] = dict(value=dist['Mdist_Nmm'], origin=dist['origin'])
+                evidence['fields']['Mdist'] = dict(status='computed_own_contour_approximate_elastic',
+                    input_value_Nmm=data.get('Mdist_Nmm'), computed_value_Nmm=dist['Mdist_Nmm'],
+                    inherited_tabulated=False, elastic_approximation=True,
+                    reference_id=certificate['reference_id'], source_binding=certificate['source_binding'],
+                    reason=dist['reason'])
         return effective,evidence
     effective, evidence = qualify_legacy_strong_criticals(data)
     # New U table overlay is distinct from legacy workbook/Table12 provenance.

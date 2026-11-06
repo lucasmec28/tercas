@@ -1,0 +1,844 @@
+{
+  "input_data": {
+    "ELS_down_denominator": 180.0,
+    "ELS_limit_mm": null,
+    "ELS_origin": "",
+    "ELS_up_denominator": 120.0,
+    "L_mm": 5000.0,
+    "Mdist_Nmm": null,
+    "Ml_Nmm": null,
+    "P_parallel_sls": 1.0,
+    "P_parallel_uls": 3.0,
+    "P_sls": 10.0,
+    "P_uls": 20.0,
+    "actions_origin": "Ações de uma combinação informada pelo usuário; fatores já aplicados quando ELU",
+    "area_inputs": {
+      "live_kgf_m2": 0.0,
+      "permanent_kgf_m2": 0.0,
+      "spacing_m": 1.5,
+      "wind_down_kgf_m2": 0.0,
+      "wind_up_kgf_m2": 0.0
+    },
+    "catalog_index": 26,
+    "critical_origin": "Críticos próprios pendentes para este contorno; tabelados anteriores preservados somente para auditoria.",
+    "direct_load_basis": "external_without_profile_self_weight_v1",
+    "left_web": false,
+    "load_mode": "direct",
+    "model_domain": "cladding_actions_only_20261103_r1",
+    "patch_mm": null,
+    "patch_origin": "",
+    "project": "Synthetic catalogue height qualification",
+    "properties": {
+      "A_cm2": 4.916953270111933,
+      "Cw_mm6": 569368182.448454,
+      "E_MPa": 200000.0,
+      "G_MPa": 77000.0,
+      "Ix_cm4": 118.12876899091285,
+      "Iy_cm4": 17.044494310055477,
+      "J_mm4": 655.5937693482578,
+      "Wx_cm3": 18.900603038546056,
+      "bf": 50,
+      "fu_MPa": 400.0,
+      "fy_MPa": 300.0,
+      "h": 125,
+      "lip": 17,
+      "mass_kg_m": 3.859808317037867,
+      "ri_mm": 2,
+      "t": 2
+    },
+    "property_origin": "Contorno próprio nominal Ue; propriedades geométricas calculadas juntas; material original preservado.",
+    "q_parallel_sls": 0.015,
+    "q_parallel_uls": 0.03,
+    "q_sls": 0.1,
+    "q_uls": 0.2,
+    "right_web": false,
+    "roof_top_load": {
+      "enabled": true,
+      "end_restraint": "fork_free_warping",
+      "intermediate_restraints": "none",
+      "load_line": "web_midplane",
+      "schema": "roof_top_load_v1"
+    },
+    "route_domain": false,
+    "schema": "tercas_input_v2",
+    "segments": [
+      {
+        "Cb_mode": "one",
+        "Ly_effective_mm": null,
+        "Lz_effective_mm": null,
+        "end_mm": 3000.0,
+        "restraint_provenance": "",
+        "start_mm": 0.0
+      }
+    ],
+    "selected_types": [
+      "ELU normal",
+      "ELS rara",
+      "ELS frequente"
+    ],
+    "steel_name": "ASTM A36",
+    "support_origin": "",
+    "synthetic": false,
+    "ue_catalog_reference": {
+      "catalog_id": "planilha_v03_r31",
+      "catalog_index": 26,
+      "density_kg_m3": 7850.0,
+      "geometric_properties": {
+        "A_cm2": 4.916953270111933,
+        "Cw_mm6": 569368182.448454,
+        "Ix_cm4": 118.12876899091285,
+        "Iy_cm4": 17.044494310055477,
+        "J_mm4": 655.5937693482578,
+        "Wx_cm3": 18.900603038546056,
+        "bf": 50,
+        "h": 125,
+        "lip": 17,
+        "mass_kg_m": 3.859808317037867,
+        "ri_mm": 2,
+        "t": 2
+      },
+      "geometry_schema": "pierin_nominal_torsion_geometry_v1",
+      "material": {
+        "E_MPa": 200000.0,
+        "G_MPa": 77000.0,
+        "fu_MPa": 400.0,
+        "fy_MPa": 300.0
+      },
+      "material_sha256": "6dd10ebc19ece54e2c8c99d65d2d5a49e91ef8bc267515d695379746b27c02d5",
+      "nodes_sha256": "3814f4cd9fcfa474b6e3fcbd21eedb3fdee38818eca0440abb4408fd506143e2",
+      "nominal_identity_sha256": "980dc2f8d7fbf830fcdae22160f06a103c576fccccde62525824795dfe18c716",
+      "old_criticals_inactive": true,
+      "properties_sha256": "7576f160b8cf970eb46e0ea4e01d8bbe752e70e4f1999059d481b770fca02f4d",
+      "schema": "ue_catalog_reference_v1",
+      "section_profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r31_980dc2f8d7fbf830",
+      "superseded_section_inputs": {
+        "Mdist_Nmm": 15980000.0,
+        "Ml_Nmm": 25120000.0,
+        "critical_origin": "https://www.researchgate.net/publication/265207005_Forcas_Normais_e_Momentos_Fletores_Criticos_de_Perfis_Formados_a_Frio — planilha V03, 03_Perfis, linha 31; valores tabulados, não validação independente",
+        "properties": {
+          "A_cm2": 4.92,
+          "Cw_mm6": 594420000.0,
+          "E_MPa": 200000.0,
+          "G_MPa": 77000.0,
+          "Ix_cm4": 118.35,
+          "Iy_cm4": 17.04,
+          "J_mm4": 650.0,
+          "Wx_cm3": 18.94,
+          "bf": 50,
+          "fu_MPa": 400.0,
+          "fy_MPa": 300.0,
+          "h": 125,
+          "lip": 17,
+          "mass_kg_m": 3.86,
+          "ri_mm": 2,
+          "t": 2
+        },
+        "property_origin": "ASTM A36: https://gsn.gerdau.com/sites/gsn_gerdau/files/downloadable_files/Catalogo-Chapa-Grossa.pdf; ABNT NBR 14762:2010 §4.6 — E=200000 MPa; G=77000 MPa"
+      },
+      "whole_member_approved": false
+    },
+    "weak_axis": {},
+    "weak_catalog": {},
+    "x_sls": 2200.0,
+    "x_uls": 1800.0
+  },
+  "input_fingerprint": "00c1523a4ba3763b9303a75fadac2d72de8ae9b7327ad2b22f9d99c4e0693b68",
+  "roof_top_load_evidence": {
+    "choice_snapshot": {
+      "enabled": true,
+      "end_restraint": "fork_free_warping",
+      "intermediate_restraints": "none",
+      "load_line": "web_midplane",
+      "schema": "roof_top_load_v1"
+    },
+    "computed_cases": 2,
+    "direct_self_weight": {
+      "PP_application": "centroid",
+      "external_application": "selected_top_load_line",
+      "gravity_m_s2": 9.80665,
+      "mass_kg_m": 3.859808317037867,
+      "profile_characteristic_weight_N_mm": 0.0378517892322794,
+      "schema": "external_without_profile_self_weight_v1",
+      "scope": "Valores digitados sem o peso próprio do perfil. O programa soma PP no CG pela massa da seção: 1,25 no ELU e 1,0 no ELS. Demais cargas no topo selecionado; ações digitadas já locais, sem nova rotação.",
+      "states": {
+        "sls": {
+          "external_q_N_mm": {
+            "normal": 0.1,
+            "parallel": 0.015
+          },
+          "factor": 1.0,
+          "profile_PP_q_N_mm": {
+            "normal": 0.0378517892322794,
+            "parallel": 0.0
+          },
+          "total_q_N_mm": {
+            "normal": 0.13785178923227942,
+            "parallel": 0.015
+          }
+        },
+        "uls": {
+          "external_q_N_mm": {
+            "normal": 0.2,
+            "parallel": 0.03
+          },
+          "factor": 1.25,
+          "profile_PP_q_N_mm": {
+            "normal": 0.04731473654034925,
+            "parallel": 0.0
+          },
+          "total_q_N_mm": {
+            "normal": 0.24731473654034924,
+            "parallel": 0.03
+          }
+        }
+      },
+      "user_actions_rotated": false
+    },
+    "geometry": {
+      "CG_xy_mm": [
+        15.116450045292856,
+        61.5
+      ],
+      "SC_xy_mm": [
+        -23.516981965583753,
+        61.49999999999999
+      ],
+      "bf_mm": 50.0,
+      "coherent_torsion_section": true,
+      "h_mm": 125.0,
+      "height_above_SC_mm": 62.50000000000001,
+      "load_line": "web_midplane",
+      "load_x_from_web_midplane_mm": 0.0,
+      "nodes_sha256": "3814f4cd9fcfa474b6e3fcbd21eedb3fdee38818eca0440abb4408fd506143e2",
+      "physical_load_line_verified": false,
+      "scheme_is_assumed_model": true,
+      "section_profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r31_980dc2f8d7fbf830",
+      "source": "Contorno próprio Ue nominal: CG/CT e linha de topo do mesmo contorno.",
+      "t_mm": 2.0,
+      "ue_catalog_source_binding": {
+        "catalog_id": "planilha_v03_r31",
+        "catalog_index": 26,
+        "density_kg_m3": 7850.0,
+        "geometry_schema": "pierin_nominal_torsion_geometry_v1",
+        "material": {
+          "E_MPa": 200000.0,
+          "G_MPa": 77000.0,
+          "fu_MPa": 400.0,
+          "fy_MPa": 300.0
+        },
+        "material_sha256": "6dd10ebc19ece54e2c8c99d65d2d5a49e91ef8bc267515d695379746b27c02d5",
+        "nodes_sha256": "3814f4cd9fcfa474b6e3fcbd21eedb3fdee38818eca0440abb4408fd506143e2",
+        "nominal_identity_sha256": "980dc2f8d7fbf830fcdae22160f06a103c576fccccde62525824795dfe18c716",
+        "properties_sha256": "7576f160b8cf970eb46e0ea4e01d8bbe752e70e4f1999059d481b770fca02f4d",
+        "schema": "ue_catalog_reference_v1",
+        "section_profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r31_980dc2f8d7fbf830"
+      },
+      "web_midplane_to_flange_midwidth_mm": 24.0,
+      "x_from_CG_mm": -15.116450045292856,
+      "x_from_SC_mm": 23.516981965583753,
+      "y_from_CG_mm": 62.5
+    },
+    "legacy_bending_denominators_unchanged": true,
+    "length_scope": "Vão inteiro do esquema; comprimentos efetivos manuais não entram nesta componente.",
+    "load_basis": "direct_external_top_profile_PP_CG",
+    "manual_effective_lengths_used": false,
+    "pending_cases": 0,
+    "primary_torque_enveloped": false,
+    "reason": "",
+    "records": [
+      {
+        "Me_Nmm": 974804.9705209044,
+        "actions": [
+          {
+            "height_above_SC_mm": 62.50000000000001,
+            "kind": "uniform",
+            "load_line_source": "Contorno próprio Ue nominal: CG/CT e linha de topo do mesmo contorno.",
+            "name": "EXTERNAL",
+            "q_down_N_mm": 0.2,
+            "q_parallel_N_mm": 0.03,
+            "x_from_SC_mm": 23.516981965583753
+          },
+          {
+            "height_above_SC_mm": 0.0,
+            "kind": "uniform",
+            "load_line_source": "PP no CG, calculado uma única vez pela massa do perfil",
+            "name": "PP",
+            "q_down_N_mm": 0.04731473654034925,
+            "q_parallel_N_mm": 0.0,
+            "x_from_SC_mm": 38.63343201087661
+          },
+          {
+            "P_down_N": 20.0,
+            "P_parallel_N": 3.0,
+            "height_above_SC_mm": 62.50000000000001,
+            "kind": "point",
+            "load_line_source": "Contorno próprio Ue nominal: CG/CT e linha de topo do mesmo contorno.",
+            "name": "P",
+            "position": "fixed",
+            "s_mm": 1800.0,
+            "x_from_SC_mm": 23.516981965583753
+          }
+        ],
+        "boundary_conditions": "fork ends; free warping; no intermediate restraints",
+        "combination_id": "DIRECT_ELU",
+        "convergence_is_error_bound": false,
+        "convergence_tolerance": 1e-05,
+        "direct_envelope": false,
+        "geometry_hypotheses_verified": false,
+        "height_tangent_by_action": [
+          {
+            "name": "EXTERNAL",
+            "value": 12.500000000000002
+          },
+          {
+            "name": "PP",
+            "value": 0.0
+          },
+          {
+            "name": "P",
+            "value": 1250.0000000000002
+          }
+        ],
+        "lambda_cr": 1.2324274713683228,
+        "limit_state": "ELU",
+        "local_distortional_modes_included": false,
+        "maximum_reference_moment_Nmm": 790963.3574125147,
+        "method": "classical_Vlasov_sine_Ritz_LBA_research_v1",
+        "modes": 32,
+        "normal_projection_primary_torque_by_action": [
+          {
+            "kind": "uniform",
+            "name": "EXTERNAL",
+            "units": "N",
+            "value": -4.70339639311675
+          },
+          {
+            "kind": "uniform",
+            "name": "PP",
+            "units": "N",
+            "value": -1.8279306572441218
+          },
+          {
+            "kind": "point",
+            "name": "P",
+            "units": "Nmm",
+            "value": -470.33963931167506
+          }
+        ],
+        "numerically_converged": true,
+        "physical_applicability_verified": false,
+        "primary_torque_by_action": [
+          {
+            "kind": "uniform",
+            "name": "EXTERNAL",
+            "units": "N",
+            "value": -6.57839639311675
+          },
+          {
+            "kind": "uniform",
+            "name": "PP",
+            "units": "N",
+            "value": -1.8279306572441218
+          },
+          {
+            "kind": "point",
+            "name": "P",
+            "units": "Nmm",
+            "value": -657.8396393116751
+          }
+        ],
+        "primary_torque_report_includes_parallel_actions": true,
+        "primary_torsion_predeformation_included": false,
+        "primary_torsion_resistance_included": false,
+        "production_resistance_authorized": false,
+        "refinement_history": [
+          {
+            "Me_Nmm": 974805.3864319916,
+            "lambda_cr": 1.232427997196837,
+            "modes": 16,
+            "relative_change": null
+          },
+          {
+            "Me_Nmm": 974804.9705209044,
+            "lambda_cr": 1.2324274713683228,
+            "modes": 32,
+            "relative_change": 4.2666063693186373e-07
+          }
+        ],
+        "ritz_eigenvalue_is_safe_lower_bound": false,
+        "scaled_eigen_residual": 2.7648693820711474e-17,
+        "separate_axis_capacity_scope": {
+          "Me_eigenoperator_uses_normal_projection_only": true,
+          "actions": [
+            {
+              "kind": "uniform",
+              "name": "EXTERNAL",
+              "parallel_force": 0.03,
+              "position_classification": "stabilizing",
+              "rotational_stiffness_term": 0.7055094589675126,
+              "x_from_SC_mm": 23.516981965583753
+            },
+            {
+              "kind": "point",
+              "name": "P",
+              "parallel_force": 3.0,
+              "position_classification": "stabilizing",
+              "rotational_stiffness_term": 70.55094589675126,
+              "x_from_SC_mm": 23.516981965583753
+            }
+          ],
+          "applicable": true,
+          "combined_buckling_eigenvalue": false,
+          "primary_torsion_assessed": false,
+          "reason": "",
+          "schema": "NBR_9_9_separate_axis_roof_scope_v1",
+          "scope": "Interação flexional NBR §9.9, N=0, com resistências por eixo: forte com altura e fraco pelo Anexo E/Cm=1, sem aproveitar a posição estabilizante das ações paralelas. Momentos concomitantes na mesma seção. Não é autovalor biaxial, interação com torção/bimomento ou aprovação global.",
+          "source": "NBR14762:2010 §§9.8.2.2 (p48), 9.9 (p53), Anexo E (p82).",
+          "strong_axis_projection_only": true,
+          "weak_favorable_height_used": false,
+          "whole_member_approved": false
+        },
+        "sources": [
+          "https://legacy.csce.ca/elf/apps/CONFERENCEVIEWER/conferences/2017/pdfs/EMM/FinalPaper_635.pdf",
+          "https://orbi.uliege.be/bitstream/2268/306606/1/VermeylenMaxime-Eurosteel%202023.pdf"
+        ],
+        "status": "research_elastic_critical_computed",
+        "whole_member_approved": false
+      },
+      {
+        "Me_Nmm": 1003050.2814487454,
+        "actions": [
+          {
+            "height_above_SC_mm": 62.50000000000001,
+            "kind": "uniform",
+            "load_line_source": "Contorno próprio Ue nominal: CG/CT e linha de topo do mesmo contorno.",
+            "name": "EXTERNAL",
+            "q_down_N_mm": 0.1,
+            "q_parallel_N_mm": 0.015,
+            "x_from_SC_mm": 23.516981965583753
+          },
+          {
+            "height_above_SC_mm": 0.0,
+            "kind": "uniform",
+            "load_line_source": "PP no CG, calculado uma única vez pela massa do perfil",
+            "name": "PP",
+            "q_down_N_mm": 0.0378517892322794,
+            "q_parallel_N_mm": 0.0,
+            "x_from_SC_mm": 38.63343201087661
+          },
+          {
+            "P_down_N": 10.0,
+            "P_parallel_N": 1.0,
+            "height_above_SC_mm": 62.50000000000001,
+            "kind": "point",
+            "load_line_source": "Contorno próprio Ue nominal: CG/CT e linha de topo do mesmo contorno.",
+            "name": "P",
+            "position": "fixed",
+            "s_mm": 2200.0,
+            "x_from_SC_mm": 23.516981965583753
+          }
+        ],
+        "boundary_conditions": "fork ends; free warping; no intermediate restraints",
+        "combination_id": "DIRECT_ELS",
+        "convergence_is_error_bound": false,
+        "convergence_tolerance": 1e-05,
+        "direct_envelope": false,
+        "geometry_hypotheses_verified": false,
+        "height_tangent_by_action": [
+          {
+            "name": "EXTERNAL",
+            "value": 6.250000000000001
+          },
+          {
+            "name": "PP",
+            "value": 0.0
+          },
+          {
+            "name": "P",
+            "value": 625.0000000000001
+          }
+        ],
+        "lambda_cr": 2.2700786485164524,
+        "limit_state": "ELS",
+        "local_distortional_modes_included": false,
+        "maximum_reference_moment_Nmm": 441857.06169443135,
+        "method": "classical_Vlasov_sine_Ritz_LBA_research_v1",
+        "modes": 32,
+        "normal_projection_primary_torque_by_action": [
+          {
+            "kind": "uniform",
+            "name": "EXTERNAL",
+            "units": "N",
+            "value": -2.351698196558375
+          },
+          {
+            "kind": "uniform",
+            "name": "PP",
+            "units": "N",
+            "value": -1.4623445257952976
+          },
+          {
+            "kind": "point",
+            "name": "P",
+            "units": "Nmm",
+            "value": -235.16981965583753
+          }
+        ],
+        "numerically_converged": true,
+        "physical_applicability_verified": false,
+        "primary_torque_by_action": [
+          {
+            "kind": "uniform",
+            "name": "EXTERNAL",
+            "units": "N",
+            "value": -3.289198196558375
+          },
+          {
+            "kind": "uniform",
+            "name": "PP",
+            "units": "N",
+            "value": -1.4623445257952976
+          },
+          {
+            "kind": "point",
+            "name": "P",
+            "units": "Nmm",
+            "value": -297.66981965583756
+          }
+        ],
+        "primary_torque_report_includes_parallel_actions": true,
+        "primary_torsion_predeformation_included": false,
+        "primary_torsion_resistance_included": false,
+        "production_resistance_authorized": false,
+        "refinement_history": [
+          {
+            "Me_Nmm": 1003050.780777058,
+            "lambda_cr": 2.2700797785839693,
+            "modes": 16,
+            "relative_change": null
+          },
+          {
+            "Me_Nmm": 1003050.2814487454,
+            "lambda_cr": 2.2700786485164524,
+            "modes": 32,
+            "relative_change": 4.978096045382685e-07
+          }
+        ],
+        "ritz_eigenvalue_is_safe_lower_bound": false,
+        "scaled_eigen_residual": 2.8850710378504185e-16,
+        "separate_axis_capacity_scope": {
+          "Me_eigenoperator_uses_normal_projection_only": true,
+          "actions": [
+            {
+              "kind": "uniform",
+              "name": "EXTERNAL",
+              "parallel_force": 0.015,
+              "position_classification": "stabilizing",
+              "rotational_stiffness_term": 0.3527547294837563,
+              "x_from_SC_mm": 23.516981965583753
+            },
+            {
+              "kind": "point",
+              "name": "P",
+              "parallel_force": 1.0,
+              "position_classification": "stabilizing",
+              "rotational_stiffness_term": 23.516981965583753,
+              "x_from_SC_mm": 23.516981965583753
+            }
+          ],
+          "applicable": true,
+          "combined_buckling_eigenvalue": false,
+          "primary_torsion_assessed": false,
+          "reason": "",
+          "schema": "NBR_9_9_separate_axis_roof_scope_v1",
+          "scope": "Interação flexional NBR §9.9, N=0, com resistências por eixo: forte com altura e fraco pelo Anexo E/Cm=1, sem aproveitar a posição estabilizante das ações paralelas. Momentos concomitantes na mesma seção. Não é autovalor biaxial, interação com torção/bimomento ou aprovação global.",
+          "source": "NBR14762:2010 §§9.8.2.2 (p48), 9.9 (p53), Anexo E (p82).",
+          "strong_axis_projection_only": true,
+          "weak_favorable_height_used": false,
+          "whole_member_approved": false
+        },
+        "sources": [
+          "https://legacy.csce.ca/elf/apps/CONFERENCEVIEWER/conferences/2017/pdfs/EMM/FinalPaper_635.pdf",
+          "https://orbi.uliege.be/bitstream/2268/306606/1/VermeylenMaxime-Eurosteel%202023.pdf"
+        ],
+        "status": "research_elastic_critical_computed",
+        "whole_member_approved": false
+      }
+    ],
+    "resistance_qualified": false,
+    "schema": "roof_top_load_evidence_v3",
+    "scope": "Me elástico do esquema de cobertura: um vão inteiro, garfos ideais nas extremidades e empenamento livre, sem travamento intermediário ou rigidez da telha. PP no CG e demais ações na cota superior da seção. A posição de cada ação entra separadamente. Não calcula resistência conjunta com torção, deformação pré-flambagem, modos locais/distorcionais ou aprovação global.",
+    "self_weight_added": true,
+    "snapshot_sha256": "ee54d9177e2eea6054a581c2c87d57ce322c112d9b5929d63663192e1684a9d3",
+    "source": "Vlasov: Sahraei et al. CSCE2017 Eq2; canal: Vermeylen et al. Eurosteel2023; NBR14762 §9.8.2.2 p48.",
+    "source_input_fingerprint": "00c1523a4ba3763b9303a75fadac2d72de8ae9b7327ad2b22f9d99c4e0693b68",
+    "source_load_snapshot_sha256": "2afda9c3351fb4fc1b839ab6e42601207b1dafe55dd47927db7d746d435378f2",
+    "status": "elastic_critical_component",
+    "torsion_assessment_separate": true,
+    "whole_member_approved": false
+  },
+  "roof_top_nbr_component": {
+    "AISI_capacities_changed": false,
+    "M_V_denominators_changed": false,
+    "NBR_pure_bending_component": true,
+    "computed_cases": 1,
+    "domain": {
+      "end_mm": 5000.0,
+      "end_restraint": "fork_free_warping",
+      "intermediate_restraints": "none",
+      "manual_effective_lengths_used": false,
+      "start_mm": 0.0
+    },
+    "ignored_ELS_cases": 1,
+    "legacy_mechanics_changed": false,
+    "pending_cases": 0,
+    "physical_conditions_verified": false,
+    "primary_torsion_assessed": false,
+    "records": [
+      {
+        "Cb_applied_after_Me": false,
+        "FLT": {
+          "MRd_flt_Nmm": 886186.3368371858,
+          "Wceff_mm3": 18900.603038546054,
+          "chi_flt": 0.17191778987737033,
+          "flt_branch": "elastic",
+          "gamma": 1.1,
+          "lambda0": 2.4117905564772637,
+          "lambda_p_reduced_stress": 0.20849781186585456,
+          "local_branch": "gross",
+          "scope": "MSE 9.8.2.2 only; Me/Ml supplied and qualified externally; not total capacity"
+        },
+        "MRd_bending_component_Nmm": null,
+        "MRd_distortional_Nmm": null,
+        "MRd_section_effective_Nmm": 5154709.919603469,
+        "M_V_denominator_source": "NBR14762 §9.8.4 usa seção efetiva (§9.8.2.1); não alterado por esta componente.",
+        "Me_Nmm": 974804.9705209044,
+        "Msd_max_abs_Nmm": 790963.3574125147,
+        "bending_component_index": null,
+        "bending_component_status": "pending_distortional",
+        "biaxial_pending": {
+          "index": null,
+          "missing": [
+            "strong_distortional",
+            "weak_positive",
+            "weak_negative"
+          ],
+          "reason": "Distorção forte não qualificada; mínimo local–FLT–D e interação §9.9 pendentes. Não é dispensa. Resistências fracas próprias por sentido ausentes.",
+          "status": "not_evaluated",
+          "whole_member_approved": false
+        },
+        "combination_id": "DIRECT_ELU",
+        "criterion_status": "meets",
+        "governing_bending_components": [],
+        "index": 0.8925474525317966,
+        "limit_state": "ELU",
+        "missing_bending_components": [
+          "distortional"
+        ],
+        "primary_torque_by_action": [
+          {
+            "kind": "uniform",
+            "name": "EXTERNAL",
+            "units": "N",
+            "value": -6.57839639311675
+          },
+          {
+            "kind": "uniform",
+            "name": "PP",
+            "units": "N",
+            "value": -1.8279306572441218
+          },
+          {
+            "kind": "point",
+            "name": "P",
+            "units": "Nmm",
+            "value": -657.8396393116751
+          }
+        ],
+        "primary_torsion_assessed": false,
+        "reason": "Componentes NBR de flexão forte pura, por combinação ELU: seção efetiva, FLT com altura e distorção aplicável. Um vão com garfos nas extremidades e empenamento livre, sem travamento da telha ou contenções intermediárias. Não verifica interação com torção/bimomento, deformação pré-flambagem ou estabilidade sob grandes giros. Atender à componente não aprova a terça. Distorção forte não qualificada; mínimo local–FLT–D e interação §9.9 pendentes. Não é dispensa.",
+        "source_combination_sha256": "851f03b89fb6ba599df175c04ef084fe86ed00d8ca8f6f3a98fc38d05eb6e8ad",
+        "source_me_record_sha256": "3f877ee1d7368e7c41d141c4dab1083bbe1645b18108ac791224dee48b933ae2",
+        "source_roof_snapshot_sha256": "ee54d9177e2eea6054a581c2c87d57ce322c112d9b5929d63663192e1684a9d3",
+        "status": "computed_NBR_FLT_height",
+        "whole_member_approved": false
+      }
+    ],
+    "schema": "roof_top_nbr_component_v1",
+    "scope": "Componentes NBR de flexão forte pura, por combinação ELU: seção efetiva, FLT com altura e distorção aplicável. Um vão com garfos nas extremidades e empenamento livre, sem travamento da telha ou contenções intermediárias. Não verifica interação com torção/bimomento, deformação pré-flambagem ou estabilidade sob grandes giros. Atender à componente não aprova a terça.",
+    "snapshot_sha256": "fffaea07a137407885488334bc6db32ae556fbbd1da0c412549d7d840315640c",
+    "source": "NBR14762:2010 §§9.8.2.1/.2/.3; Me com altura: Sahraei2017 Eq2 / Vermeylen2023.",
+    "source_input_fingerprint": "00c1523a4ba3763b9303a75fadac2d72de8ae9b7327ad2b22f9d99c4e0693b68",
+    "source_reason": "",
+    "source_roof_snapshot_sha256": "ee54d9177e2eea6054a581c2c87d57ce322c112d9b5929d63663192e1684a9d3",
+    "source_section": {
+      "E_MPa": 200000.0,
+      "G_MPa": 77000.0,
+      "MRd_distortional_Nmm": null,
+      "MRd_section_effective_Nmm": 5154709.919603469,
+      "Ml_Nmm": 22424085.04996672,
+      "W_mm3": 18900.603038546054,
+      "Wc_mm3": 18900.603038546054,
+      "critical_source": "Ml NBR Tabela12(b), com módulo externo do mesmo contorno nominal; sem críticos herdados de Ue100 ou Pierin.",
+      "distortion_scope": "Distorção forte não qualificada; mínimo local–FLT–D e interação §9.9 pendentes. Não é dispensa.",
+      "fy_MPa": 300.0,
+      "kind": "own_catalog_Ue125_bending_components_v1",
+      "nodes_sha256": "3814f4cd9fcfa474b6e3fcbd21eedb3fdee38818eca0440abb4408fd506143e2",
+      "reference_id": "OWN_PIERIN_NOMINAL_planilha_v03_r31_980dc2f8d7fbf830_6dd10ebc19ece54e2c8c99d65d2d5a49e91ef8bc267515d695379746b27c02d5",
+      "section_profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r31_980dc2f8d7fbf830",
+      "source_binding": {
+        "catalog_id": "planilha_v03_r31",
+        "catalog_index": 26,
+        "density_kg_m3": 7850.0,
+        "geometry_schema": "pierin_nominal_torsion_geometry_v1",
+        "material": {
+          "E_MPa": 200000.0,
+          "G_MPa": 77000.0,
+          "fu_MPa": 400.0,
+          "fy_MPa": 300.0
+        },
+        "material_sha256": "6dd10ebc19ece54e2c8c99d65d2d5a49e91ef8bc267515d695379746b27c02d5",
+        "nodes_sha256": "3814f4cd9fcfa474b6e3fcbd21eedb3fdee38818eca0440abb4408fd506143e2",
+        "nominal_identity_sha256": "980dc2f8d7fbf830fcdae22160f06a103c576fccccde62525824795dfe18c716",
+        "properties_sha256": "7576f160b8cf970eb46e0ea4e01d8bbe752e70e4f1999059d481b770fca02f4d",
+        "schema": "ue_catalog_reference_v1",
+        "section_profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r31_980dc2f8d7fbf830"
+      },
+      "source_documents": [
+        {
+          "role": "Normative calculation; existing reviewed Table 12/14 implementations",
+          "title": "ABNT NBR 14762:2010 §§9.3, 9.8.2.1(b), 9.8.2.3; Tabelas 12(b) e 14"
+        },
+        {
+          "role": "Independent explanation of MSE, elastic criticals and Table 14 scope",
+          "title": "CBCA, Steel Framing: Engenharia, 2ª edição, 2016, pp.73–77",
+          "url": "https://www.skylightestruturas.com.br/downloads/101497_manual_lsf_engenharia_2016.pdf"
+        }
+      ],
+      "source_reference_field": "ue_catalog_nbr_bending_evidence",
+      "source_reference_sha256": "ec2d37cb5fa61ad6b9451d6f38c8bf520252a58114ade1e8c1e90acef8079cbe",
+      "strong_bending_complete": false,
+      "strong_distortional_exempt": false,
+      "thickness_mm": 2
+    },
+    "source_status": "elastic_critical_component",
+    "status": "components_computed",
+    "whole_member_approved": false
+  },
+  "schema": "NBR14762_one_span_v1",
+  "ue_catalog_nbr_bending_evidence": {
+    "combined_stress_qualified": false,
+    "complete_bending_capacity_qualified": false,
+    "inherited_criticals_used": false,
+    "model": {
+      "E_MPa": 200000.0,
+      "G_MPa": 77000.0,
+      "formula_nu": 0.3,
+      "fu_MPa": 400.0,
+      "fy_MPa": 300.0
+    },
+    "reference_id": "OWN_PIERIN_NOMINAL_planilha_v03_r31_980dc2f8d7fbf830_NBR_MSE_fy300_v1",
+    "schema": "ue_catalog_nbr_bending_v1",
+    "snapshot_sha256": "bd873b88ea1a203f4ba1bff26450a9f4ece128c7983c482424541202c3df3ab2",
+    "source": "ABNT NBR 14762:2010 §§9.3, 9.8.2.1(b), 9.8.2.3; Tabelas 12(b) e 14",
+    "source_binding": {
+      "catalog_id": "planilha_v03_r31",
+      "catalog_index": 26,
+      "density_kg_m3": 7850.0,
+      "geometry_schema": "pierin_nominal_torsion_geometry_v1",
+      "material": {
+        "E_MPa": 200000.0,
+        "G_MPa": 77000.0,
+        "fu_MPa": 400.0,
+        "fy_MPa": 300.0
+      },
+      "material_sha256": "6dd10ebc19ece54e2c8c99d65d2d5a49e91ef8bc267515d695379746b27c02d5",
+      "nodes_sha256": "3814f4cd9fcfa474b6e3fcbd21eedb3fdee38818eca0440abb4408fd506143e2",
+      "nominal_identity_sha256": "980dc2f8d7fbf830fcdae22160f06a103c576fccccde62525824795dfe18c716",
+      "properties_sha256": "7576f160b8cf970eb46e0ea4e01d8bbe752e70e4f1999059d481b770fca02f4d",
+      "schema": "ue_catalog_reference_v1",
+      "section_profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r31_980dc2f8d7fbf830"
+    },
+    "source_documents": [
+      {
+        "role": "Normative calculation; existing reviewed Table 12/14 implementations",
+        "title": "ABNT NBR 14762:2010 §§9.3, 9.8.2.1(b), 9.8.2.3; Tabelas 12(b) e 14"
+      },
+      {
+        "role": "Independent explanation of MSE, elastic criticals and Table 14 scope",
+        "title": "CBCA, Steel Framing: Engenharia, 2ª edição, 2016, pp.73–77",
+        "url": "https://www.skylightestruturas.com.br/downloads/101497_manual_lsf_engenharia_2016.pdf"
+      }
+    ],
+    "status": "partial_strong_local_only",
+    "strong": {
+      "distortional": {
+        "MRd_Nmm": null,
+        "MRd_dist_Nmm": null,
+        "Mdist_Nmm": null,
+        "exemption": false,
+        "reason": "Tabela 14 não dispensa: D/bw=0,136 < 0,2175 para bf/bw=0,4 e bw/t=62,5. Mdist compatível ainda não qualificado. §9.3 admite análise de estabilidade elástica ou formulação direta aproximada com correlação adequada; não exige especificamente FEM. Ml, crítico de outra seção e resistência EN/AISI não substituem Mdist. Ausência de dispensa não significa reprovação.",
+        "status": "not_evaluated",
+        "table14": {
+          "D_bw": 0.136,
+          "bf_bw": 0.4,
+          "bw_t": 62.5,
+          "exempt": false,
+          "required_D_bw": 0.2175,
+          "required_D_mm": 27.1875,
+          "source": "NBR14762 Table14 nominal dimensions linear interpolation",
+          "status": "in_table"
+        }
+      },
+      "local": {
+        "MRd_Nmm": 5154709.919603469,
+        "MRd_local_Nmm": 5154709.919603469,
+        "Ml_Nmm": 22424085.04996672,
+        "W_mm3": 18900.603038546054,
+        "Wc_mm3": 18900.603038546054,
+        "Wef_mm3": 18900.603038546054,
+        "case": "b",
+        "eta": 0.4,
+        "exterior_fibre_distance_mm": 62.5,
+        "formula_E_MPa": 200000.0,
+        "formula_nu": 0.3,
+        "formula_nu_origin": "Parâmetro explícito da fórmula NBR; não deduzido do G arredondado.",
+        "gamma": 1.1,
+        "geometry_basis": "Mesmo Ix do contorno próprio; dimensões nominais na Tabela 12(b).",
+        "kl": 25.638464,
+        "lambda_local": 0.5028530537042412,
+        "method": "MSE_Table12b_nominal_dimensions",
+        "modal_critical_computed": false,
+        "mu": 0.136,
+        "nominal_dimensions_mm": {
+          "bf": 50,
+          "h": 125,
+          "lip": 17,
+          "t": 2
+        },
+        "origin": "ABNT NBR 14762:2010 §9.8.2.1(b), Tabela 12; pp.45–46 (PDF51–52)",
+        "rho_local": 1.0,
+        "signs": [
+          "positive",
+          "negative"
+        ],
+        "status": "computed",
+        "symmetric_strong_axis": true,
+        "whole_member_approved": false
+      }
+    },
+    "weak": {
+      "lips": {
+        "MRd_Nmm": null,
+        "reason": "Tabela 12(b) e dispensa da Tabela 14 são limitadas à flexão forte. Não se transferem ao eixo fraco nem aos dois lados comprimidos.",
+        "status": "not_evaluated"
+      },
+      "web": {
+        "MRd_Nmm": null,
+        "reason": "Tabela 12(b) e dispensa da Tabela 14 são limitadas à flexão forte. Não se transferem ao eixo fraco nem aos dois lados comprimidos.",
+        "status": "not_evaluated"
+      }
+    },
+    "whole_member_approved": false
+  }
+}

@@ -1,0 +1,51 @@
+Consumo de D forte qualificado: adapter de altura Ue125, versão 2
+
+Este delta consome o certificado ue_catalog_nbr_bending_v2. Não amplia seu
+domínio geométrico/material, não altera entradas, carregamentos, G, vão,
+vínculos, operador de Me, posição individual das ações ou qualquer fonte
+Ue100. O Mdist analítico aproximado tem sua memória e guardas na origem
+ue_catalog_nbr_distortional_v1. Não é uma dispensa da Tabela 14, autovalor
+biaxial nem prova de aprovação global.
+
+O ramo D v2 completo exige L físico pelo menos igual à semionda natural
+qualificada (377,7364353270835 mm). Ly/Lz manuais não substituem esse vão.
+Para membros menores, v2 continua calculando Ml e FLT disponíveis, mas D,
+mínimo e índice forte permanecem nulos, com razão de domínio explícita.
+Não se extrapola D nem se converte automaticamente o membro curto em v1.
+
+Somente no domínio exato admitido pela origem, o adapter agora calcula:
+  MRd forte = min(MRd seção efetiva, MRd FLT com altura, MRd D forte).
+  Índice forte = máximo |Mx| / MRd forte.
+As parcelas e o mínimo continuam vinculados a cada combinação ELU e ao
+Me salvo daquela combinação. O coeficiente Cb não é aplicado novamente.
+O certificado e o leitor conservam a curva FLT e verificam sua aritmética
+independentemente do campo de índice. A qualificação D não altera Me.
+
+Bifurcação obrigatória:
+- strong_bending_complete=true descreve as parcelas da flexão forte pura.
+- biaxial_qualified=false permanece explícito. Resistências fracas próprias
+  por sentido não estão disponíveis. A interação §9.9 continua pendente,
+  sem índice, sem prova de máximo fictícia e sem herança de denominadores.
+- A possibilidade geométrica de usar resistências por eixos não preenche
+  capacidades ausentes. Torção/bimomento, ELS combinado e aprovação global
+  continuam separados e não são liberados por este mínimo forte.
+
+O tipo source_section é own_catalog_Ue125_bending_components_v2. A origem D
+é ligada por hash ao analytical_evidence do certificado, além dos vínculos
+existentes de contorno, material, entrada, combinação e Me.
+
+Compatibilidade histórica:
+O tipo v1 e seu mapeamento exato continuam reconhecidos. Seus campos D,
+mínimo e índice forte permanecem ausentes e suas pendências não migram só
+porque o programa passou a qualificar D em cálculos novos. O leitor não
+chama qualify(), solver, remalhamento ou reabertura de fontes. Um snapshot
+sintético v1 gerado no código 4f8f4b3 é congelado para comprovar esse contrato:
+  tests/fixtures/ue125_roof_nbr_v1_reader.json
+  SHA256 b5b645e15cdf5cde42226ccd601ccd2cb10b7fcc52ae720dce380e9ffb36cb7c
+Foi produzido exclusivamente por inputs() de test_roof_catalog_nbr.py;
+não contém projeto, ações ou resultado particulares do usuário.
+
+Tentativas de refazer hashes não podem remover D do mínimo, adulterar sua
+origem, alterar a curva, promover a interação ou apagar as resistências
+fracas faltantes. O relatório distingue D aproximado de dispensa e mostra
+a pendência §9.9, mesmo com a componente forte calculada.

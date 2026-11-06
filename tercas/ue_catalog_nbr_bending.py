@@ -1,9 +1,9 @@
 """Own Ue strong-axis MSE certificate, separate from inherited criticals.
 
-This first scalar qualification is deliberately limited to one public nominal
-contour and one declared material. Table 12 is a normative approximation using
-nominal dimensions; it is not a modal calculation of the faceted contour.
-Table 14 does NOT exempt this section. No D or weak-axis capacity is fabricated.
+Qualification is deliberately limited to one public nominal contour/material.
+Table 12 uses nominal dimensions. The v2 certificate adds a separately reviewed
+approximate elastic Mdist, not a Table 14 exemption or a weak-axis resistance.
+Historical v1 partial snapshots remain readable without migration.
 """
 import copy
 import math
@@ -13,7 +13,8 @@ from .core.local_table12 import local_critical
 from .core.ue_nbr import table14
 
 FIELD = 'ue_catalog_nbr_bending_evidence'
-SCHEMA = 'ue_catalog_nbr_bending_v1'
+SCHEMA_V1 = 'ue_catalog_nbr_bending_v1'
+SCHEMA = 'ue_catalog_nbr_bending_v2'
 SOURCE = 'ABNT NBR 14762:2010 §§9.3, 9.8.2.1(b), 9.8.2.3; Tabelas 12(b) e 14'
 FORMULA_NU = .3
 GAMMA = 1.1
@@ -81,8 +82,8 @@ def _saved_binding(data):
     return binding
 
 
-def _certificate(binding):
-    """Pure scalar replay, shared by fresh and saved-evidence validation."""
+def _certificate_v1(binding):
+    """Immutable historical partial replay. Never promote a saved v1 result."""
     p = GEOMETRY
     # Exterior fibre, not the more favourable midsurface extreme h/2-t/2.
     W = p['Ix_cm4'] * 1e4 / (p['h'] / 2.)
@@ -107,7 +108,7 @@ def _certificate(binding):
     # A future scope expansion must supply a new, reviewed D decision.
     if t14['exempt'] is not False:
         raise ValueError('Decisão distorcional do certificado NBR mudou.')
-    out = dict(schema=SCHEMA, status='partial_strong_local_only',
+    out = dict(schema=SCHEMA_V1, status='partial_strong_local_only',
         reference_id=PIN['section_profile_id']+'_NBR_MSE_fy300_v1',
         source=SOURCE, source_documents=copy.deepcopy(SOURCE_DOCUMENTS),
         source_binding=copy.deepcopy(binding), model=dict(MATERIAL, formula_nu=FORMULA_NU),
@@ -118,6 +119,37 @@ def _certificate(binding):
               for side in ('web', 'lips')},
         inherited_criticals_used=False, complete_bending_capacity_qualified=False,
         combined_stress_qualified=False, whole_member_approved=False)
+    out['snapshot_sha256'] = own.digest(out)
+    return out
+
+
+def _certificate(binding, data):
+    """New calculation uses v2; weak/biaxial capacities remain unqualified."""
+    from . import ue_catalog_nbr_distortional as dist
+    out = _certificate_v1(binding)
+    supported = dist.supports_member_length(data)
+    out.update(schema=SCHEMA, status='strong_local_distortional_qualified',
+        reference_id=PIN['section_profile_id']+'_NBR_MSE_approxD_fy300_v2',
+        strong_bending_complete=supported, biaxial_qualified=False)
+    out['source_documents'] += copy.deepcopy(dist.SOURCE_DOCUMENTS)
+    if not supported:
+        out['status'] = 'partial_strong_local_only'
+        out['strong']['distortional'].update(status='not_evaluated',
+            reason=dist.SHORT_MEMBER_REASON, length_scope='member_shorter_than_qualified_halfwave',
+            required_minimum_member_length_mm=dist._elastic()['Lcrd_mm'])
+        out.pop('snapshot_sha256')
+        out['snapshot_sha256'] = own.digest(out)
+        return out
+    d = dist._certificate(binding)
+    out['strong']['distortional'].update(status='computed_approximate',
+        Mdist_Nmm=d['elastic']['Mdist_Nmm'], MRd_Nmm=d['resistance']['MRd_dist_Nmm'],
+        MRd_dist_Nmm=d['resistance']['MRd_dist_Nmm'],
+        origin=dist.SOURCE, elastic_approximation=True, analytical_evidence=d,
+        reason=('Sem dispensa Tabela 14. Mdist aproximado pelo método elástico geral AISI2024, '
+                'correlacionado e adotado conforme NBR §9.3; resistência pela curva NBR §9.8.2.3. '
+                'Flexão forte pura, seção ideal sem furos e pequenos giros. '
+                'Não qualifica eixo fraco, §9.9, torção/bimomento nem adequação física do modelo.'))
+    out.pop('snapshot_sha256')
     out['snapshot_sha256'] = own.digest(out)
     return out
 
@@ -137,12 +169,17 @@ def qualify(data):
     saved = _saved_binding(data)
     if binding != saved:
         raise ValueError('Fonte atual e marcador NBR próprio divergentes.')
-    return _certificate(binding)
+    return _certificate(binding, data)
 
 
 def validate_saved(evidence, data):
     """Reject rehashed capacity promotion without a catalogue, mesh or solve."""
     binding = _saved_binding(data)
-    if not isinstance(evidence, dict) or evidence != _certificate(binding):
+    if not isinstance(evidence, dict):
+        raise ValueError('Evidência NBR própria malformada.')
+    schema = evidence.get('schema')
+    expected = (_certificate_v1(binding) if schema == SCHEMA_V1
+                else _certificate(binding, data) if schema == SCHEMA else None)
+    if expected is None or evidence != expected:
         raise ValueError('Evidência NBR própria alterada ou incompatível; recalcule explicitamente.')
     return copy.deepcopy(evidence)

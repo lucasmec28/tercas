@@ -7,6 +7,9 @@ import copy
 import math
 
 KIND='own_catalog_Ue125_bending_components_v1'
+KIND_V2='own_catalog_Ue125_bending_components_v2'
+KINDS=(KIND,KIND_V2)
+WEAK_PENDING='Resistências fracas próprias por sentido ausentes; interação §9.9 pendente, sem índice biaxial.'
 PENDING='Distorção forte não qualificada; mínimo local–FLT–D e interação §9.9 pendentes. Não é dispensa.'
 
 
@@ -17,12 +20,26 @@ def section(data,evidence,geometry):
     local=evidence['strong']['local'];dist=evidence['strong']['distortional']
     if local.get('status')!='computed':
         raise ValueError('Ml e seção efetiva próprios não qualificados para este contorno/material.')
-    # This first catalogue contract has no qualified D or weak resistance.
-    # Any future extension needs an explicit schema/reader change, not a label.
-    if dist.get('MRd_Nmm') is not None or dist.get('Mdist_Nmm') is not None:
+    version=evidence.get('schema')
+    if version not in ('ue_catalog_nbr_bending_v1','ue_catalog_nbr_bending_v2'):
+        raise ValueError('Versão do certificado NBR de catálogo não reconhecida.')
+    v2=version=='ue_catalog_nbr_bending_v2'
+    if v2 and (type(evidence.get('strong_bending_complete')) is not bool
+        or evidence.get('biaxial_qualified') is not False):
+        raise ValueError('Qualificação forte/biaxial ausente ou inválida no certificado v2.')
+    complete=v2 and evidence['strong_bending_complete']
+    if not complete and any(dist.get(k) is not None for k in ('MRd_Nmm','MRd_dist_Nmm','Mdist_Nmm')):
         raise ValueError('Capacidade distorcional fora do contrato parcial do catálogo.')
+    if v2 and not complete and (dist.get('status')!='not_evaluated' or dist.get('exemption') is not False):
+        raise ValueError('Pendência distorcional v2 incompatível com seu domínio.')
+    if complete and (dist.get('status')!='computed_approximate' or dist.get('exemption') is not False
+        or dist.get('elastic_approximation') is not True
+        or any(isinstance(dist.get(k),bool) or not isinstance(dist.get(k),(int,float))
+            or not math.isfinite(dist[k]) or dist[k]<=0 for k in ('Mdist_Nmm','MRd_Nmm','MRd_dist_Nmm'))
+        or dist.get('MRd_Nmm')!=dist.get('MRd_dist_Nmm')):
+        raise ValueError('Capacidade distorcional aproximada incompleta ou fora do contrato v2.')
     marker=data['ue_catalog_reference'];mat=marker['material']
-    return dict(kind=KIND,reference_id=marker['section_profile_id']+'_'+marker['material_sha256'],
+    out=dict(kind=KIND,reference_id=marker['section_profile_id']+'_'+marker['material_sha256'],
         thickness_mm=data['properties']['t'],source_reference_field=FIELD,
         source_reference_sha256=digest(evidence),
         source_documents=copy.deepcopy(evidence.get('source_documents',[])),
@@ -34,6 +51,14 @@ def section(data,evidence,geometry):
         strong_distortional_exempt=False,strong_bending_complete=False,
         distortion_scope=PENDING,
         critical_source='Ml NBR Tabela12(b), com módulo externo do mesmo contorno nominal; sem críticos herdados de Ue100 ou Pierin.')
+    if v2:
+        out.update(kind=KIND_V2,strong_bending_complete=complete,biaxial_qualified=False,
+            MRd_distortional_Nmm=dist['MRd_dist_Nmm'],Mdist_Nmm=dist['Mdist_Nmm'],
+            distortional_source_sha256=digest(dist['analytical_evidence']) if dist.get('analytical_evidence') is not None else None,
+            distortion_scope=dist['reason']+' '+WEAK_PENDING,
+            critical_source=('Ml NBR Tabela12(b) e Mdist analítico aproximado qualificado no mesmo contorno/material; sem críticos herdados de Ue100 ou Pierin.' if complete else
+                'Ml NBR Tabela12(b) do mesmo contorno/material; distorção pendente no domínio declarado, sem críticos herdados.'))
+    return out
 
 
 def fresh_section(data,result):
@@ -71,7 +96,13 @@ def validate_curve(curve,source,me):
         raise ValueError('Curva FLT de catálogo não corresponde ao certificado/Me salvo.')
 
 
-def partial_fields(separate_axis):
+def partial_fields(separate_axis,*,strong_complete=False):
+    if strong_complete:
+        out=dict(bending_component_status='computed_strong_pure_bending',missing_bending_components=[])
+        if separate_axis:
+            out['biaxial_pending']=dict(status='not_evaluated',index=None,
+                missing=['weak_positive','weak_negative'],reason=WEAK_PENDING,whole_member_approved=False)
+        return out
     out=dict(bending_component_status='pending_distortional',missing_bending_components=['distortional'],
         MRd_bending_component_Nmm=None,bending_component_index=None,governing_bending_components=[])
     if separate_axis:

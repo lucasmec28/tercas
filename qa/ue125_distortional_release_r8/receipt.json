@@ -1,0 +1,32 @@
+{
+  "schema": "Ue125_strong_distortional_release_QA_v1",
+  "release": "cobertura-Ue125-D-forte-20261106-r8",
+  "tested_commit": "da87654656a3a7276008e9d9ea2934b19be06b49",
+  "base_commit": "99f1a5eb80cc7f41d0425f16c42d7a66d1c84a16",
+  "focused_integration": {
+    "passed": 253,
+    "seconds": 68.95,
+    "exit_code": 0,
+    "includes": [
+      "Current v2 qualification and v1 saved readers",
+      "Short-span guard in producer and reader",
+      "Rehashed corruption rejection",
+      "Synthetic UI, JSON/Word exports and no-solver rerender",
+      "Legacy purlin geometry, roof and global scope"
+    ],
+    "not_full_repository_suite": true
+  },
+  "independent_review": "Source equations, curve separation, versioned readers, weak-axis exclusion and physical span guard reviewed independently. No remaining blocking findings.",
+  "scope": [
+    "Exact own nominal Ue125x50x17x2, inner radius2, fy300/fu400/E200000/G77000 only.",
+    "Approximate elastic strong-axis Mdist from general AISI2024 equations, admitted as correlated approximation under NBR9.3; resistance curve only NBR9.8.2.3.",
+    "Fixed unrestricted half-wave requires physical span>=Lcr. Shorter inputs preserve local/FLT but leave D and total strong minimum pending. Effective Ly/Lz are not distortional restraints.",
+    "Strong local/FLT/D minimum is not biaxial qualification, torsional interaction, physical first-order applicability or global approval.",
+    "No physical project data is present in the test fixtures or this receipt."
+  ],
+  "files": {
+    "integration.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "integration.log": "1d052aee0db6274143150c016cc3b665afca18b309619f846502b3bd539ffcf6",
+    "integration.xml": "bd8fc0d861362753a9a55004c662f1ef35021d3b55a7aca8f76ae56311e1dadf"
+  }
+}

@@ -1,5 +1,6 @@
-"""Synthetic Ue125 certificate tests. No user project, actions or fixtures."""
+"""Synthetic Ue125 certificates, including a frozen v1 read-only snapshot."""
 import copy
+import hashlib
 import json
 import math
 from pathlib import Path
@@ -65,7 +66,11 @@ def test_catalogue_height_contour_analytical_uniform_moment():
 
 @pytest.fixture(scope='module')
 def result():
-    return nbr.attach(roof.attach(calculate(inputs())))
+    # Produced by base 4f8f4b3 from inputs() above, before the D extension.
+    # It is not upgraded just because current qualify() can produce v2.
+    raw=(Path(__file__).parent/'fixtures/ue125_roof_nbr_v1_reader.json').read_bytes()
+    assert hashlib.sha256(raw).hexdigest()=='b5b645e15cdf5cde42226ccd601ccd2cb10b7fcc52ae720dce380e9ffb36cb7c'
+    return json.loads(raw)
 
 
 def test_FLT_is_computed_but_distortion_and_biaxial_stay_pending(result):
@@ -133,3 +138,98 @@ def test_partial_report_never_calls_missing_D_exemption(result):
     doc=Document();report(doc,result);text='\n'.join(p.text for p in doc.paragraphs)
     assert 'MRd,FLT=' in text and 'Distorção forte pendente, sem dispensa' in text
     assert 'dispensa forte específica' not in text
+
+
+@pytest.fixture(scope='module')
+def result_v2():
+    return nbr.attach(roof.attach(calculate(inputs())))
+
+
+def test_v2_strong_minimum_does_not_qualify_biaxial(result_v2,result):
+    from tercas.ue_catalog_nbr_bending import FIELD
+    e=nbr.preserved(result_v2);s=e['source_section'];r=e['records'][0]
+    assert s['kind']=='own_catalog_Ue125_bending_components_v2'
+    assert s['strong_bending_complete'] is True and s['biaxial_qualified'] is False
+    assert s['strong_distortional_exempt'] is False
+    assert r['MRd_distortional_Nmm']==result_v2[FIELD]['strong']['distortional']['MRd_dist_Nmm']
+    parts=[r['MRd_section_effective_Nmm'],r['FLT']['MRd_flt_Nmm'],r['MRd_distortional_Nmm']]
+    assert r['MRd_bending_component_Nmm']==min(parts)
+    assert r['bending_component_index']==r['Msd_max_abs_Nmm']/min(parts)
+    assert r['bending_component_status']=='computed_strong_pure_bending'
+    assert r['missing_bending_components']==[]
+    assert r['biaxial_pending']['missing']==['weak_positive','weak_negative']
+    assert r['biaxial_pending']['index'] is None and 'biaxial' not in r
+    assert result_v2['input_data']==result['input_data']
+    assert result_v2['roof_top_load_evidence']==result['roof_top_load_evidence']
+    assert r['FLT']==result[nbr.FIELD]['records'][0]['FLT']
+    assert e['whole_member_approved'] is False
+    assert nbr.preserved(json.loads(json.dumps(result_v2,allow_nan=False)))==e
+
+
+@pytest.mark.parametrize('mutation',['minimum','D','D_source','complete','biaxial_qualified','biaxial',
+    'weak_pending','weak_missing','curve','version','computed_label'])
+def test_v2_rehash_cannot_promote_or_drop_a_component(result_v2,mutation):
+    from tercas.ue_catalog_nbr_bending import FIELD
+    r=copy.deepcopy(result_v2);e=r[nbr.FIELD];row=e['records'][0];s=e['source_section']
+    if mutation=='minimum':row['MRd_bending_component_Nmm']*=2;row['bending_component_index']/=2
+    elif mutation=='D':s['MRd_distortional_Nmm']*=2;row['MRd_distortional_Nmm']*=2
+    elif mutation=='D_source':
+        q=r[FIELD];q['strong']['distortional']['Mdist_Nmm']*=2
+        q['snapshot_sha256']=roof.digest({k:v for k,v in q.items() if k!='snapshot_sha256'})
+    elif mutation=='complete':s['strong_bending_complete']=False
+    elif mutation=='biaxial_qualified':s['biaxial_qualified']=True
+    elif mutation=='biaxial':row['biaxial']={'status':'computed_fixed_position','governing':{'index':0.}}
+    elif mutation=='weak_pending':row.pop('biaxial_pending')
+    elif mutation=='weak_missing':row['biaxial_pending']['missing']=[]
+    elif mutation=='curve':
+        row['FLT']['MRd_flt_Nmm']*=2;row['index']/=2
+        row['criterion_status']='meets' if row['index']<=1 else 'fails'
+        parts=dict(section_effective=row['MRd_section_effective_Nmm'],FLT_height=row['FLT']['MRd_flt_Nmm'],distortional=row['MRd_distortional_Nmm'])
+        row['MRd_bending_component_Nmm']=min(parts.values());row['bending_component_index']=row['Msd_max_abs_Nmm']/min(parts.values())
+        row['governing_bending_components']=[k for k,v in parts.items() if v==min(parts.values())]
+    elif mutation=='version':s['kind']='own_catalog_Ue125_bending_components_v1'
+    else:row['bending_component_status']='pending_distortional'
+    rehash(r)
+    with pytest.raises(ValueError):nbr.preserved(r)
+
+
+def test_v1_and_v2_readers_and_reports_never_upgrade_or_recalculate(result,result_v2,monkeypatch):
+    from tercas import ue_catalog_nbr_bending as qualification,torsion_study
+    from tercas.roof_top_nbr_ui import report,summary_rows
+    from docx import Document
+    before=[copy.deepcopy(result),copy.deepcopy(result_v2)]
+    def fail(*a,**k):raise AssertionError('Historical source/solver reopened')
+    monkeypatch.setattr(qualification,'qualify',fail);monkeypatch.setattr(own,'_source',fail)
+    monkeypatch.setattr(roof,'refined',fail);monkeypatch.setattr(nbr,'flt_mse',fail)
+    monkeypatch.setattr(torsion_study,'section_for',fail)
+    for saved in (result,result_v2):
+        assert nbr.preserved(saved)==saved[nbr.FIELD]
+        doc=Document();report(doc,saved);text='\n'.join(p.text for p in doc.paragraphs)
+        if saved is result:
+            assert 'Distorção forte pendente, sem dispensa' in text
+        else:
+            assert 'Distorção forte por aproximação elástica qualificada, sem dispensa.' in text
+            assert 'interação §9.9 pendente, sem índice biaxial' in text
+            assert 'Resistências fracas' in summary_rows(saved[nbr.FIELD])[0]['Pendência / escopo']
+    assert [result,result_v2]==before
+
+
+def test_v2_short_physical_span_keeps_FLT_without_D_or_minimum():
+    from tercas.ue_catalog_nbr_bending import FIELD
+    d=inputs(span=300.)
+    d.update(P_uls=0.,P_sls=0.,P_parallel_uls=0.,P_parallel_sls=0.,x_uls=150.,x_sls=150.)
+    # Deliberately longer manual lengths must not qualify the physical member.
+    d['segments']=[dict(start_mm=0.,end_mm=300.,Ly_top_effective_mm=2000.,
+        Ly_bottom_effective_mm=2000.,Lz_effective_mm=2000.,Cb_mode='one',restraint_provenance='Synthetic manual lengths; not physical span')]
+    r=nbr.attach(roof.attach(calculate(d)));e=nbr.preserved(r);s=e['source_section'];row=e['records'][0]
+    assert r[FIELD]['schema']=='ue_catalog_nbr_bending_v2'
+    assert s['kind']=='own_catalog_Ue125_bending_components_v2'
+    assert s['strong_bending_complete'] is False and s['biaxial_qualified'] is False
+    assert r[FIELD]['strong']['distortional']['length_scope']=='member_shorter_than_qualified_halfwave'
+    assert row['status']==nbr.COMPUTED and row['FLT']['MRd_flt_Nmm']>0
+    assert row['MRd_distortional_Nmm'] is None and row['MRd_bending_component_Nmm'] is None
+    assert row['bending_component_index'] is None and row['bending_component_status']=='pending_distortional'
+    assert row['biaxial_pending']['missing']==['strong_distortional','weak_positive','weak_negative']
+    assert r['input_data']==d and e['domain']['end_mm']==300.
+    assert e['domain']['manual_effective_lengths_used'] is False
+    assert nbr.preserved(json.loads(json.dumps(r,allow_nan=False)))==e

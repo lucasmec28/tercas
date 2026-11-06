@@ -1,0 +1,25 @@
+{
+  "schema": "ue125_distortional_provider_qa_v1",
+  "base_commit": "4f8f4b3",
+  "date": "2026-11-06",
+  "scope": "Exact own nominal Ue125 strong local/distortional scalar qualification; no private project inputs.",
+  "command": "OPENBLAS_CORETYPE=Haswell OPENBLAS_NUM_THREADS=1 PYTHONPATH=.:/workspace/shared/tercas_test_dependencies_20261106 python -m pytest -q tests/test_ue_catalog_nbr_bending.py tests/test_ue_catalog_nbr_distortional.py tests/test_local_table12.py",
+  "result": {
+    "passed": 71,
+    "subtests_passed": 126,
+    "elapsed_seconds": 3.28
+  },
+  "new_eigensolves_run": 0,
+  "runtime_imports_research_module": false,
+  "historical_v1_preserved": true,
+  "short_physical_member_guard_in_producer_and_reader": true,
+  "strong_and_biaxial_qualification_separated": true,
+  "file_sha256": {
+    "tercas/ue_catalog_nbr_distortional.py": "b5a35851eb5bd374202b76554f8b670c4442bfce1136382f5555391d3d1f756b",
+    "tercas/ue_catalog_nbr_bending.py": "3e2e2c0110fbc5e5c3743432dce3980d5bdfb3ef378d6fc8b21700a1df41cd45",
+    "tercas/strong_critical_guard.py": "6fb754b9bea65d7d64eabb537c97b07d54188be8b75a9ff9cbb9aa2d5246fb89",
+    "tests/test_ue_catalog_nbr_bending.py": "4fdc0b9b013e76bdd82011de1de9a5c0d7714a4b6ce02e8a4cb3ab2da5e42a5b",
+    "tests/test_ue_catalog_nbr_distortional.py": "1adf973570e82fd2d100a497c4724a467d8c7acc594df2e534e26acb4f6eef54",
+    "qa/UE125_DISTORTIONAL_CORRELATION_20261106.json": "d7f44c8bb37569511b264f8e7d03faa699b2e62e21f44e145e309c9e658eafbf"
+  }
+}

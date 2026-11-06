@@ -32,13 +32,17 @@ def declared_inputs(parallel=.03):
     return data
 
 
-def assert_partial(result):
+def assert_strong_complete_biaxial_pending(result):
     row=nbr.preserved(result)['records'][0]
     assert row['FLT']['MRd_flt_Nmm']>0
-    assert row['MRd_bending_component_Nmm'] is None
-    assert row['bending_component_index'] is None and 'biaxial' not in row
+    parts=[row['MRd_section_effective_Nmm'],row['FLT']['MRd_flt_Nmm'],row['MRd_distortional_Nmm']]
+    assert row['MRd_bending_component_Nmm']==min(parts)
+    assert row['bending_component_index']==row['Msd_max_abs_Nmm']/min(parts) and 'biaxial' not in row
+    assert row['bending_component_status']=='computed_strong_pure_bending'
     assert result[qualification.FIELD]['strong']['local']['MRd_Nmm']==pytest.approx(5154709.919603469)
-    assert result[qualification.FIELD]['strong']['distortional']['Mdist_Nmm'] is None
+    assert result[qualification.FIELD]['strong']['distortional']['Mdist_Nmm']==pytest.approx(13999871.753852382)
+    assert result[qualification.FIELD]['strong_bending_complete'] is True
+    assert result[qualification.FIELD]['biaxial_qualified'] is False
     assert result['whole_member_approved'] is False
     assert result['combined_ELS_approved'] is False
     global_ev=result['global_verification']
@@ -46,7 +50,7 @@ def assert_partial(result):
     assert global_ev['approved_within_declared_checklist'] is False
     assert global_ev['status']=='inconclusivo'
     assert any('torsion_warping'==c['id'] and c['status']=='pending' for c in global_ev['checks'])
-    assert any('distor' in c['id'].lower() and c['status']=='pending' for c in global_ev['checks'])
+    assert any('distor' in c['id'].lower() and c['status']=='meets' for c in global_ev['checks'])
     notice=saved_notice(result)
     assert notice is not None and 'não é limite normativo' in ' '.join(notice['lines'])
     return row
@@ -55,9 +59,9 @@ def assert_partial(result):
 @pytest.mark.parametrize('parallel',[0.,.03])
 def test_same_profile_keeps_local_ELS_and_torsion_scope_separate(parallel):
     data=declared_inputs(parallel);before=copy.deepcopy(data)
-    result=complete_result(calculate(data)); assert_partial(result)
+    result=complete_result(calculate(data)); assert_strong_complete_biaxial_pending(result)
     assert data==before and result['input_data']==before
-    assert_partial(json.loads(json.dumps(result,allow_nan=False)))
+    assert_strong_complete_biaxial_pending(json.loads(json.dumps(result,allow_nan=False)))
 
 
 def test_real_UI_qualifies_only_available_Ue125_components_and_exports(monkeypatch):
@@ -85,12 +89,13 @@ def test_real_UI_qualifies_only_available_Ue125_components_and_exports(monkeypat
     assert not app.exception
     assert not any('Não foi possível calcular' in item.value for item in app.error)
     assert app.session_state.last_input['properties']['fy_MPa']==300.
-    result=copy.deepcopy(app.session_state.result);assert_partial(result)
+    result=copy.deepcopy(app.session_state.result);assert_strong_complete_biaxial_pending(result)
     assert result['input_data']==editor_input
     assert json.loads(downloads['Baixar estudo e resultados (JSON)'])==result
     document=Document(io.BytesIO(downloads['Baixar memória parcial (Word)']))
     text='\n'.join(p.text for p in document.paragraphs)
-    assert 'Distorção forte pendente, sem dispensa' in text
+    assert 'Distorção forte por aproximação elástica qualificada, sem dispensa.' in text
+    assert 'interação §9.9 pendente, sem índice biaxial' in text
     assert 'não é limite normativo' in text
     assert 'não previsão do giro físico' in text
     def forbidden(*a,**k):raise AssertionError('Rerender reopened source or ran solver')

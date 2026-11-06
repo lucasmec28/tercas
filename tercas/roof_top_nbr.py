@@ -144,11 +144,13 @@ def attach(result):
             Cb_applied_after_Me=False,primary_torque_by_action=copy.deepcopy(r['primary_torque_by_action']),
             M_V_denominator_source='NBR14762 §9.8.4 usa seção efetiva (§9.8.2.1); não alterado por esta componente.'))
         separate_axis=r.get('separate_axis_capacity_scope',{}).get('applicable') is True
-        if not complete:
+        biaxial_qualified=section.get('biaxial_qualified',complete)
+        from .roof_catalog_nbr import KINDS
+        if section.get('kind') in KINDS:
             from .roof_catalog_nbr import partial_fields
-            evidence['records'][-1].update(partial_fields(separate_axis))
+            evidence['records'][-1].update(partial_fields(separate_axis,strong_complete=complete))
             evidence['records'][-1]['reason']=SCOPE+' '+section['distortion_scope']
-        if separate_axis and complete:
+        if separate_axis and complete and biaxial_qualified:
             from .roof_biaxial import interaction
             own=result[section['source_reference_field']]
             evidence['records'][-1]['biaxial']=interaction(combos[(cid,state)],data['L_mm'],minimum,own)
@@ -186,11 +188,11 @@ def preserved(result):
     section=saved.get('source_section')
     if section is not None:
         if not isinstance(section,dict):raise ValueError('Fonte resistente salva deve ser um objeto.')
-        from .roof_catalog_nbr import KIND,validate_section
+        from .roof_catalog_nbr import KINDS,validate_section
         from .ue_catalog_reference import claims_reference as catalog_claims
-        if catalog_claims(result['input_data'])!=(section.get('kind')==KIND):
+        if catalog_claims(result['input_data'])!=(section.get('kind') in KINDS):
             raise ValueError('Fonte resistente incompatível com a adoção explícita do contorno de entrada.')
-        if section.get('kind')==KIND:
+        if section.get('kind') in KINDS:
             validate_section(section,result['input_data'],result,ev.get('geometry') or {})
         else:
             from .roof_biaxial_geometry import validate_geometry
@@ -271,20 +273,23 @@ def preserved(result):
                 if (r.get('MRd_bending_component_Nmm')!=minimum or r.get('bending_component_index')!=r['Msd_max_abs_Nmm']/minimum
                     or r.get('governing_bending_components')!=[k for k,v in parts.items() if v==minimum]):
                     raise ValueError('Mínimo de componentes ou índice salvo inconsistente.')
-            else:
+            biaxial_qualified=section.get('biaxial_qualified',complete)
+            from .roof_catalog_nbr import KINDS
+            if section.get('kind') in KINDS:
                 from .roof_catalog_nbr import partial_fields,validate_curve
-                expected_partial=partial_fields(me_record.get('separate_axis_capacity_scope',{}).get('applicable') is True)
+                expected_partial=partial_fields(me_record.get('separate_axis_capacity_scope',{}).get('applicable') is True,
+                    strong_complete=complete)
                 if (any(r.get(k)!=v for k,v in expected_partial.items()) or 'biaxial' in r
                     or ('biaxial_pending' in r)!=('biaxial_pending' in expected_partial)):
                     raise ValueError('Pendência resistente do catálogo removida ou promovida.')
                 validate_curve(r['FLT'],section,r['Me_Nmm'])
             if 'biaxial' in r:
                 from .roof_biaxial import validate_saved
-                if not me_record.get('separate_axis_capacity_scope',{}).get('applicable'):
+                if not biaxial_qualified or not me_record.get('separate_axis_capacity_scope',{}).get('applicable'):
                     raise ValueError('Interação NBR no topo sem posição fraca qualificada.')
                 validate_saved(r['biaxial'],dict(combos[key],span_mm=result['input_data']['L_mm']),
                     minimum,result[section['source_reference_field']])
-            elif complete and me_record.get('separate_axis_capacity_scope',{}).get('applicable'):
+            elif complete and biaxial_qualified and me_record.get('separate_axis_capacity_scope',{}).get('applicable'):
                 raise ValueError('Resistência por eixo salva sem interação concomitante.')
         elif r.get('index') is not None or not r.get('reason') or 'biaxial' in r:
             raise ValueError('Pendência FLT salva não pode conter índice ou interação ativa.')
