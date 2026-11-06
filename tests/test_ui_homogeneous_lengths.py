@@ -7,6 +7,7 @@ import pytest
 import streamlit as st
 from streamlit.testing.v1 import AppTest
 from tercas.homogeneous_reference import load_reference, assess, calculate_reference, evidence
+from tercas.new_study_policy import for_new_study
 from tercas.homogeneous_lengths import apply_lengths, FIELD, REPORTING_VERSION
 APP=str(Path(__file__).resolve().parents[1]/'app.py')
 
@@ -185,7 +186,7 @@ def test_explicit_fixed_reload_and_exit_preserve_clear_identity(monkeypatch):
     assert app.session_state.last_input==data
     select(app,'Referência nominal própria').set_value('U100').run(timeout=30)
     button(app,'Carregar referência de cálculo').click().run(timeout=30)
-    assert app.session_state.last_input==load_reference('U100',0)
+    assert app.session_state.last_input==for_new_study(load_reference('U100',0))
     assert FIELD not in app.session_state.last_input
 
 

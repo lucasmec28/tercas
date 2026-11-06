@@ -117,8 +117,9 @@ def readiness(data,c):
  if not c['origin'].strip():missing.append('Informar origem/hipótese do modelo físico.')
  if c['sc_y_mm'] is None or c['sc_z_mm'] is None or not c['sc_origin'].strip():missing.append('Informar vetor CG→centro de cisalhamento e sua origem; x0 do catálogo não recebe sinal automático.')
  if data.get('load_mode')=='direct':
+  from .direct_self_weight import active as pp_active
   for state in ('uls','sls'):
-   if c['direct_pp_'+state+'_N_mm'] is None:missing.append('Declarar parcela de PP já combinada da travessa em '+state.upper()+' (zero somente se PP realmente ausente).')
+   if not pp_active(data) and c['direct_pp_'+state+'_N_mm'] is None:missing.append('Declarar parcela de PP já combinada da travessa em '+state.upper()+' (zero somente se PP realmente ausente).')
    if c['brace_self_weight'] and c['direct_brace_factor_'+state] is None:missing.append('Declarar fator do PP das barras em '+state.upper()+'.')
  return missing
 
@@ -144,12 +145,14 @@ def load_cases(data,c):
    rows.append(dict(combination=copy.deepcopy(combo),loads=loads,combined_girt_PP_N_mm=pp,brace_weight_factor=coef.get('PP',0.)))
   return rows,bundle
  if data.get('load_mode')!='direct':raise ValueError('Modo de cargas desconhecido.')
+ from .direct_self_weight import evidence as pp_evidence,calculation_inputs
+ pp_trace=pp_evidence(data);data=calculation_inputs(data)
  rows=[]
  for state,label in [('uls','ELU'),('sls','ELS')]:
   for key in ('P_'+state,'P_parallel_'+state):
    if _number(data.get(key,0.),key)!=0:raise ValueError('Sistema 3D: ação concentrada ativa ('+key+') não implementada; não foi descartada.')
   normal=_number(data.get('q_'+state),'q '+label);parallel=_number(data.get('q_parallel_'+state,0.),'q vertical '+label)
-  pp=_number(c['direct_pp_'+state+'_N_mm'],'PP combinado '+label,nonnegative=True)
+  pp=pp_trace['states'][state]['profile_PP_q_N_mm']['parallel'] if pp_trace else _number(c['direct_pp_'+state+'_N_mm'],'PP combinado '+label,nonnegative=True)
   factor=c['direct_brace_factor_'+state] if c['brace_self_weight'] else 0.
   if c['brace_self_weight']:_number(factor,'Fator PP barras '+label,nonnegative=True)
   loads=vectors(normal,parallel,pp)

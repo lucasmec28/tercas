@@ -14,6 +14,7 @@ from .torsion_vlasov.section import finite
 SOURCE_PINS={'cd50bf66f299d1c072b5a45016cf2ffca777b390332d3386175c34d53c234931': 'b264cc83c0b3b4ab004218033830b26622fb8b547c65008392d9d6c45993636f', '13c8bf700cce34d8fb2bc607e9ae06c305cc59cd7e0e67234a38fb0218704638': '50224020267eac08c95a25178cd5cbd0fe568b3aca952c14f6be4bad5db57207', 'e30a0bd327deb1523b527a5737a9f14ac8f8fd189c884588c0339ef7c0b80e47': 'f70cb18ffe3fe1cb29dea23b82c13e40ae2094bb2c98b89566ce94105691c62e', '243974742f83ef47937ec56c938718a37b3e037248c4016eddae0d42af062746': 'a215d9e6188c847596f158319e0af2ad197335da34e33dcbce60db53f93b7dfa', 'c3d1e69d48f6ad2980e6779eb2509e42e07a2b957ce71c158095fda6b71a4e00': '27fef63931e61b393bccc285485ce10842f06ddcdfa99e0b7ecb9fae319b0047', '90bf516ec9761304d22aba266bdf9c2f06bf6f73bc6989b46194bbd5d218eab3': '4ee7aede9cc5e255269e3028170890993e2cabc7cdf5d6d1872ff36d274b4f76'}
 
 SCHEMA='aisi2024_current_input_roof_height_g81_h4_v2'
+DIRECT_SCHEMA='aisi2024_current_input_direct_roof_g81_h4_v3'
 MODEL=('Mcre nominal AISI por combinação, com altura de cada força conservativa; '
        'um vão, garfos ideais e empenamento livre, sem contenção da telha. '
        'Crítico linear de flexão forte; não inclui geometria pré-deformada nem '
@@ -32,6 +33,27 @@ def enabled(data):
     return roof.enabled(data) and data.get('member_application','purlin')=='purlin'
 
 
+
+def combinations(result):
+    from . import direct_roof_separated as direct, direct_torsion
+    if result.get('schema') == 'NBR14762_one_span_v1' and direct_torsion.active(result['input_data']):
+        return direct.combinations(result['input_data'])
+    return [c['combination'] for c in result.get('cases', [])]
+
+
+def _source_snapshot(result):
+    from . import direct_roof_separated as direct, direct_torsion
+    schema = direct.SCHEMA if direct_torsion.active(result['input_data']) else 'roof_top_load_evidence_v1'
+    return roof._source_snapshot(result, schema)
+
+
+def _actions(result, combo, geometry):
+    from . import direct_roof_separated as direct, direct_torsion
+    if direct_torsion.active(result['input_data']):
+        return direct.actions(combo, geometry)
+    return roof._actions(result['load_bundle'], combo, geometry)
+
+
 def prepare(result,section):
     """Verify fresh inputs/source once; no eigensolve or demand solve here."""
     from .batch import area_bundle
@@ -39,12 +61,20 @@ def prepare(result,section):
     from .aisi_research.adapter import verify_bundle,ROOT
     data=result['input_data']
     if not enabled(data):return None
-    if data.get('load_mode')!='area' or result.get('schema')!='tercas_batch_results_v1':
-        raise ValueError('AISI topo requer ações por área separadas.')
-    bundle=area_bundle(data)
-    if bundle!=result.get('load_bundle') or bundle['combinations']!=[c['combination'] for c in result['cases']]:
-        raise ValueError('Ações/combinações atuais divergentes da fonte AISI topo.')
-    ids=[c['id'] for c in bundle['combinations']]
+    from . import direct_torsion
+    is_direct = direct_torsion.active(data)
+    if is_direct:
+        from .direct_self_weight import evidence as pp_evidence
+        if result.get('schema') != 'NBR14762_one_span_v1' or result.get('direct_self_weight_evidence') != pp_evidence(data):
+            raise ValueError('AISI topo requer resultado direto com PP separado e preservado.')
+        bundle = None
+    else:
+        if data.get('load_mode')!='area' or result.get('schema')!='tercas_batch_results_v1':
+            raise ValueError('AISI topo requer ações por área ou entrada direta explicitamente sem PP.')
+        bundle=area_bundle(data)
+        if bundle!=result.get('load_bundle') or bundle['combinations']!=combinations(result):
+            raise ValueError('Ações/combinações atuais divergentes da fonte AISI topo.')
+    ids=[c['id'] for c in combinations(result)]
     if len(set(ids))!=len(ids):raise ValueError('Combinações duplicadas.')
     geometry=roof.geometry(data)
     if (not geometry['coherent_torsion_section'] or geometry['nodes_sha256']!=section['nodes_sha256']
@@ -61,7 +91,7 @@ def prepare(result,section):
     source=dict(choice_snapshot=roof.configuration(data),geometry=geometry,
         section={k:copy.deepcopy(section[k]) for k in ('profile_id','nodes_sha256','content_sha256','properties','thickness_mm')},
         strong_source=copy.deepcopy(strong),strong_source_sha256=digest(strong),
-        source_load_snapshot_sha256=roof._source_snapshot(result),length_mm=data['L_mm'],
+        source_load_snapshot_sha256=_source_snapshot(result),length_mm=data['L_mm'],
         material=dict(E_MPa=E_AISI,G_MPa=G_AISI,Fy_MPa=data['properties']['fy_MPa']),
         model=MODEL,first_order_model_adequacy='not_established',adequacy_note=ADEQUACY,
         interpretation=INTERPRETATION,weak_load_height_qualified=False,
@@ -69,7 +99,11 @@ def prepare(result,section):
         primary_torsion_geometric_stress_included=False,predeformed_geometry_included=False,
         actual_load_line_verified=False,actual_supports_verified=False,
         no_additional_user_inputs=True,global_promotion=False,missing=reasons)
-    return dict(source=source,bundle=bundle,section=section,data=data)
+    if is_direct:
+        from . import direct_roof_separated as direct
+        source.update(direct_load_basis=direct.BASIS, direct_self_weight=copy.deepcopy(result['direct_self_weight_evidence']))
+    return dict(source=source,bundle=bundle,section=section,data=data,result=result,
+                schema=DIRECT_SCHEMA if is_direct else SCHEMA)
 
 
 def match_actions(elastic,demand,section):
@@ -94,7 +128,7 @@ def capacity_for(context,combo,demand_source):
     """One nominal AISI eigensolve, same ELU/actions as the existing demand."""
     from .aisi_research.aisi_candidate import flexural_floor
     src=context['source'];section=context['section'];p=section['properties']
-    actions,parallel=roof._actions(context['bundle'],combo,src['geometry'])
+    actions,parallel=_actions(context['result'],combo,src['geometry'])
     record=dict(combination_id=combo['id'],combination_sha256=digest(combo),
         source_combination=copy.deepcopy(combo),source_load_snapshot_sha256=src['source_load_snapshot_sha256'],
         actions=actions,actions_sha256=digest(actions),Mcre=None,strong_capacity=None,
@@ -161,6 +195,22 @@ def validate_saved(result,ev):
     """Only saved identities and scalar consistency, no source/solver/curve call."""
     src=ev.get('roof_height_source')
     if not isinstance(src,dict):raise ValueError('Fonte AISI topo ausente.')
+    from . import direct_torsion, direct_roof_separated as direct
+    from .direct_self_weight import evidence as pp_evidence
+    is_direct = direct_torsion.active(result['input_data'])
+    if ev.get('schema') != (DIRECT_SCHEMA if is_direct else SCHEMA):
+        raise ValueError('Contrato AISI direto não pode ser rebaixado ou aplicado a um histórico por área.')
+    if is_direct:
+        if (result.get('schema') != 'NBR14762_one_span_v1'
+                or src.get('direct_load_basis') != direct.BASIS
+                or src.get('direct_self_weight') != pp_evidence(result['input_data'])
+                or src['direct_self_weight'] != result.get('direct_self_weight_evidence')
+                or result['torsion_evidence'].get('direct_load_basis') != direct.BASIS
+                or result['torsion_evidence'].get('direct_self_weight') != src['direct_self_weight']
+                or result['torsion_evidence'].get('source_combinations') != combinations(result)):
+            raise ValueError('Decomposição de PP direto AISI alterada.')
+    elif 'direct_load_basis' in src or 'direct_self_weight' in src:
+        raise ValueError('Fonte direta incompatível com histórico AISI por área.')
     expected=dict(model=MODEL,first_order_model_adequacy='not_established',adequacy_note=ADEQUACY,
         interpretation=INTERPRETATION,weak_load_height_qualified=False,
         geometric_load_height_included_in_nominal_Mcre=True,primary_torsion_geometric_stress_included=False,
@@ -168,7 +218,7 @@ def validate_saved(result,ev):
         no_additional_user_inputs=True,global_promotion=False)
     if any(src.get(k)!=v for k,v in expected.items()):raise ValueError('Escopo AISI topo alterado.')
     if (src['choice_snapshot']!=roof.configuration(result['input_data']) or not enabled(result['input_data'])
-            or src['source_load_snapshot_sha256']!=roof._source_snapshot(result)
+            or src['source_load_snapshot_sha256']!=_source_snapshot(result)
             or src['strong_source_sha256']!=digest(src['strong_source'])
             or src['length_mm']!=result['input_data']['L_mm'] or src['material']!=ev['material']
             or ev.get('strong_flexural_capacity') is not None or ev.get('weak_flexural_capacity') is not None
@@ -194,7 +244,7 @@ def validate_saved(result,ev):
             or g['Fy_MPa']!=src['material']['Fy_MPa'] or g['Cw_mm6']!=src['section']['properties']['Cw_mm6']
             or g['section_content_sha256']!=src['section']['content_sha256']):
         raise ValueError('Capacidade G8.1 salva alterada.')
-    combos=[c['combination'] for c in result['cases'] if c['combination']['limit_state']=='ELU']
+    combos=[c for c in combinations(result) if c['limit_state']=='ELU']
     if [r['combination_id'] for r in ev['records']]!=[c['id'] for c in combos]:raise ValueError('Inventário ELU AISI topo divergente.')
     torsion={r['combination_id']:r for r in result['torsion_evidence']['records']}
     for r,c in zip(ev['records'],combos):
@@ -208,7 +258,7 @@ def validate_saved(result,ev):
                 or h['actions_sha256']!=digest(h['actions']) or h['first_order_model_adequacy']!='not_established'
                 or any(h.get(k) is not False for k in ('whole_member_approved','physical_design_approved','NBR_capacities_used'))):
             raise ValueError('Pareamento/escopo AISI topo alterado.')
-        expected_actions,parallel=roof._actions(result['load_bundle'],c,src['geometry'])
+        expected_actions,parallel=_actions(result,c,src['geometry'])
         if h['actions']!=expected_actions:raise ValueError('Ações preservadas do crítico AISI divergentes das combinações.')
         if parallel and r.get('H4') is not None:raise ValueError('H4 biaxial fora do domínio de altura AISI.')
         original=torsion[c['id']]['analysis']
@@ -218,6 +268,18 @@ def validate_saved(result,ev):
                 or a['analysis_order']!=1 or a['axial_force_N']!=0.
                 or original['section']['nodes_sha256']!=src['section']['nodes_sha256']):
             raise ValueError('Demanda/fonte AISI topo alterada.')
+        if is_direct:
+            if (a.get('support_limit_states_preserved') is not False
+                    or original.get('support_limit_states')
+                    or a.get('point_position_scope') != direct_torsion.POINT_SCOPE
+                    or original['analysis_domain'].get('point_position_scope') != direct_torsion.POINT_SCOPE):
+                raise ValueError('Posição direta exata não pode se tornar limite no apoio.')
+            expected_demand = direct_torsion.actions(c, src['geometry'])
+            actual = a['actions']
+            if len(actual) != len(expected_demand) or any(
+                    any(saved.get(k) != value for k, value in wanted.items() if k != 'origin')
+                    for saved, wanted in zip(actual, expected_demand)):
+                raise ValueError('Forças/linhas diretas AISI alteradas.')
         giro=finite(a['max_abs_phi_rad'],'giro máximo AISI')
         witness=a['max_abs_phi_witness'];warn=a['numerics']['rotation_warning_rad']
         if (giro<0 or abs(witness['phi_rad'])!=giro or witness['combination_id']!=c['id']

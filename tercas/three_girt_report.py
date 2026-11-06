@@ -83,7 +83,12 @@ def word(result,selected=0):
   _table(d,['Ação','Área\nkgf/m²','qY central\nkN/m','qZ central\nkN/m','qY extrema\nkN/m','qZ extrema\nkN/m'],rows,[1.8,1.,1.075,1.075,1.075,1.075])
   d.add_paragraph('Extrema significa cada travessa superior ou inferior, não a soma das duas. Combinações abaixo ponderam PP e CP pelos coeficientes da matriz do usuário; PP das barras é adicional, sem duplicar o perfil ou a telha.')
  elif data['load_mode']=='direct':
-  d.add_paragraph('PP da travessa já contido no q vertical central declarado: ELU='+fmt(c['direct_pp_uls_N_mm'])+' kN/m; ELS='+fmt(c['direct_pp_sls_N_mm'])+' kN/m. A parcela restante inclui telha/revestimento e demais ações verticais externas da combinação; só essa parcela é reduzida à metade nas extremas.')
+  from .direct_self_weight import active as pp_active,evidence as pp_evidence
+  if pp_active(data):
+   pe=pp_evidence(data);d.add_paragraph(pe['scope'])
+   d.add_paragraph('PP integral por perfil: ELU='+fmt(pe['states']['uls']['profile_PP_q_N_mm']['parallel'])+' N/mm; ELS='+fmt(pe['states']['sls']['profile_PP_q_N_mm']['parallel'])+' N/mm. Externos recebem 0,5/1/0,5 e o PP não é reduzido.')
+  else:
+   d.add_paragraph('PP da travessa já contido no q vertical central declarado: ELU='+fmt(c['direct_pp_uls_N_mm'])+' kN/m; ELS='+fmt(c['direct_pp_sls_N_mm'])+' kN/m. A parcela restante inclui telha/revestimento e demais ações verticais externas da combinação; só essa parcela é reduzida à metade nas extremas.')
  if not result['cases']:
   d.add_heading('Pendências que impediram o cálculo',1)
   for text in result.get('missing',[]):d.add_paragraph(text)

@@ -10,7 +10,8 @@ from .deflection_scope import activate, enabled
 def for_new_study(data):
     """Only fresh inputs from a named UI creation action may call this helper."""
     enabled(data)  # Reject an unknown pre-existing value instead of overwriting it.
-    return copy.deepcopy(data)  # No automatic fallback or biaxial adoption for new studies.
+    from .direct_self_weight import activate as activate_direct_PP
+    return activate_direct_PP(data)  # No automatic ELS fallback or biaxial adoption.
 
 
 def initialize_session(state, factory):

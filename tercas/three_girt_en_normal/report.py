@@ -1,4 +1,5 @@
 """Append the saved EN normal snapshot. No geometry or solver recalculation."""
+from ..three_girt_scope import view, central, NOTICE
 from .application import saved_component,SCHEMA
 from .ui import LEVELS
 from ..three_girt_report import _table
@@ -12,7 +13,7 @@ CRITERIA={
 
 
 def append(document,demand):
-    c=saved_component(demand)
+    c=view(saved_component(demand),demand)
     if c is None:
         if demand.get('EN_normal_N_M_B_error'):
             document.add_paragraph('Componente normal EN não calculada: '+demand['EN_normal_N_M_B_error'])

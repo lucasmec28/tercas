@@ -245,7 +245,7 @@ def attach_dense(result, section):
         weak,weak_missing=_weak_capacities(data,section)
     else:
         strong=weak=None;strong_missing=weak_missing=[]
-        ev.update(schema=roof_h4.SCHEMA,roof_height_source=copy.deepcopy(roof_context['source']),
+        ev.update(schema=roof_context['schema'],roof_height_source=copy.deepcopy(roof_context['source']),
             flexural_capacity_model=roof_h4.MODEL,strong_capacity_mode='per_combination_roof_height')
     ev.update(bimoment_capacity=capacity,strong_flexural_capacity=strong,
         weak_flexural_capacity=weak,material=dict(E_MPa=E_AISI,G_MPa=G_AISI,Fy_MPa=data['properties']['fy_MPa']),
@@ -269,7 +269,7 @@ def attach_dense(result, section):
         source=a
         current_strong=strong;current_weak=weak
         if roof_context is not None:
-            combo=next(c['combination'] for c in result['cases'] if c['combination']['id']==record['combination_id'])
+            combo=next(c for c in roof_h4.combinations(result) if c['id']==record['combination_id'])
             r['roof_height']=roof_h4.capacity_for(roof_context,combo,source)
             current_strong=r['roof_height']['strong_capacity'];current_weak=None
         try:a=_aisi_demand(source)
@@ -279,7 +279,7 @@ def attach_dense(result, section):
         r['AISI_analysis']=dict(E_MPa=a['E_MPa'],G_MPa=a['G_MPa'],
             actions=copy.deepcopy(a['loads']),support_hypotheses=copy.deepcopy(a['support_hypotheses']),
             source_actions_sha256=digest(source['loads']),numerics=copy.deepcopy(a['numerics']),
-            source_combination=copy.deepcopy(next(c['combination'] for c in result['cases'] if c['combination']['id']==record['combination_id'])),
+            source_combination=copy.deepcopy(next(c for c in roof_h4.combinations(result) if c['id']==record['combination_id'])),
             max_abs_phi_rad=abs(a['max_abs_phi']['phi_rad']),analysis_order=1,axial_force_N=0.,
             original_NBR_demand_unchanged=True)
         if roof_context is not None:
@@ -358,7 +358,7 @@ def preserved(result):
         raise ValueError('Contrato AISI topo não pode ser rebaixado para histórico v1.')
     from .application import fingerprint
     from . import aisi_roof_height as roof_h4
-    if (ev.get('schema') not in (SCHEMA,roof_h4.SCHEMA) or fingerprint(result['input_data'])!=result.get('input_fingerprint')
+    if (ev.get('schema') not in (SCHEMA,roof_h4.SCHEMA,roof_h4.DIRECT_SCHEMA) or fingerprint(result['input_data'])!=result.get('input_fingerprint')
             or ev.get('source_input_fingerprint')!=result.get('input_fingerprint')
             or ev.get('source_torsion_snapshot_sha256')!=digest(result.get('torsion_evidence'))
             or ev.get('snapshot_sha256')!=digest({k:v for k,v in ev.items() if k!='snapshot_sha256'})
@@ -383,7 +383,7 @@ def preserved(result):
     if any(r.get('whole_member_approved') is not False or (r.get('H4') and r['H4'].get('whole_member_approved') is not False)
            for r in ev.get('records',[])):
         raise ValueError('Componente AISI não pode aprovar a barra inteira.')
-    if ev.get('schema')==roof_h4.SCHEMA:
+    if ev.get('schema') in (roof_h4.SCHEMA,roof_h4.DIRECT_SCHEMA):
         try:roof_h4.validate_saved(result,ev)
         except (KeyError,TypeError,AttributeError,IndexError) as exc:
             raise ValueError('Registro AISI topo incompleto ou malformado.') from exc

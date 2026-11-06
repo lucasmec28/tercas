@@ -7,6 +7,7 @@ import pytest
 import streamlit as st
 from streamlit.testing.v1 import AppTest
 from tercas.homogeneous_reference import source, load_reference, assess, FIELD
+from tercas.new_study_policy import for_new_study
 from tercas.application import fingerprint
 APP=str(Path(__file__).resolve().parents[1]/'app.py')
 
@@ -28,14 +29,14 @@ def test_explicit_loader_keeps_own_physics_and_all_58_cases(ref):
     select(app,'Caso sintético verificado').set_value(-5).run(timeout=30)
     button(app,'Carregar referência de cálculo').click().run(timeout=30)
     assert not app.exception
-    assert app.session_state.last_input==load_reference(ref,-5)
+    assert app.session_state.last_input==for_new_study(load_reference(ref,-5))
     assert button(app,'Calcular todas as seções do catálogo').disabled
     assert not any(n.label.startswith(('Vão entre','fy personalizado','Ly ','Lz ')) for n in app.number_input)
     button(app,'Calcular verificações disponíveis').click().run(timeout=120)
     assert not app.exception
     result=app.session_state.result
     assert len(result['cases'])==58 and result['whole_member_approved'] is False
-    assert result['input_data']==load_reference(ref,-5)
+    assert result['input_data']==for_new_study(load_reference(ref,-5))
     assert result['homogeneous_reference_evidence']['reference_id']==ref
     app.run(timeout=30)
     assert app.session_state.result==result

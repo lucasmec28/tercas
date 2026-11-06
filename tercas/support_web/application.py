@@ -166,8 +166,9 @@ def saved_assessment(result, assessment):
         required={(sid,c['combination']['id']) for c in result['cases']
                   if c['combination']['limit_state']=='ELU' for sid in ('left','right')}
     elif isinstance(result.get('cases'),list) and result.get('status')=='conditional_elastic_vlasov_demand':
+        from ..three_girt_scope import members
         required={(level+'_'+side,c['combination']['id']) for c in result['cases']
-                  if c['combination']['limit_state']=='ELU' for level in ('upper','middle','lower') for side in ('left','right')}
+                  if c['combination']['limit_state']=='ELU' for level in members(result) for side in ('left','right')}
     else:required=None
     if required is not None and identities!=required:
         raise ValueError('Cobertura de apoios/combinações salva não corresponde à fonte.')

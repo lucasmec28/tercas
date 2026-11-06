@@ -1,3 +1,4 @@
+from .new_study_policy import for_new_study
 """Restricted action editor: never enters the catalogue/material widgets."""
 import copy
 import json
@@ -18,7 +19,7 @@ def loader(st, revision, load):
                             format_func=lambda v: f'{v:+g}° · 58 combinações', key=f'ref_angle_loader_{revision}')
         st.caption('A carga explícita abaixo abre a referência sintética completa no modo fixo de 3 m. Não modifica nem qualifica o catálogo; a extensão de comprimentos tem ativação separada.')
         if st.button('Carregar referência de cálculo', key=f'ref_load_{revision}'):
-            try:new = load_reference(ref, angle)
+            try:new = for_new_study(load_reference(ref, angle))
             except (ValueError, OSError, KeyError) as exc:st.error('Referência não carregada: ' + str(exc))
             else:load(new);st.rerun()
 
@@ -57,7 +58,10 @@ def render(st, data, revision, load, render_results, render_import):
         data['selected_types'] = st.multiselect('Famílias de combinações', source(state['reference_id'])['selected_types'],
                                               default=data['selected_types'], key=f'ref_types_{revision}')
     else:
-        st.caption('Ações já locais e combinadas: não são giradas novamente, sem PP automático. P na posição informada; limites junto ao apoio permanecem no modo por área. O contrato legado também exige entradas de área armazenadas válidas: se necessário, volte ao modo área para corrigi-las; nada é substituído automaticamente.')
+        from .direct_self_weight import render as direct_PP_render,active as direct_PP_active
+        direct_PP_render(st,data,f'direct_PP_{revision}')
+        if not direct_PP_active(data):
+         st.caption('Ações já locais e combinadas: não são giradas novamente, sem PP automático. P na posição informada; limites junto ao apoio permanecem no modo por área. O contrato legado também exige entradas de área armazenadas válidas: se necessário, volte ao modo área para corrigi-las; nada é substituído automaticamente.')
         for suffix, label in (('uls','ELU'), ('sls','ELS')):
             with st.expander(label + ' — ações locais', expanded=True):
                 for prefix, title, unit in (('q','q normal','N/mm'), ('q_parallel','q paralelo','N/mm'),

@@ -82,7 +82,10 @@ def apply(data,kind):
         if key in data:out[key]=copy.deepcopy(data[key])
         else:out.pop(key,None)
     if 'wall_els' in data:out['wall_els']=copy.deepcopy(data['wall_els'])
-    return module.activate(out)
+    out=module.activate(out)
+    from .isolated_en_application import reset_changed_declaration
+    reset_changed_declaration(out)
+    return out
 
 
 def annotate_evidence(record,data):

@@ -47,10 +47,10 @@ UNAXIAL_ELS_STATUS = ('Componente forte uniaxial: q e P paralelos locais reais i
 ELS_POLICY = ('Qualificação por ações locais reais de cada estado: somente q_parallel=P_parallel=0 '
               'permite o critério parcial forte uniaxial. Outros estados ficam pendentes por rigidez '
               'combinada; os 34 estados MLE de 4 m não são transferidos automaticamente.')
-EDITABLE = {'project', 'actions_origin', 'load_mode', 'area_inputs', 'selected_types',
+EDITABLE = {'direct_load_basis', 'project', 'actions_origin', 'load_mode', 'area_inputs', 'selected_types',
             'q_uls', 'q_sls', 'P_uls', 'P_sls', 'x_uls', 'x_sls',
             'q_parallel_uls', 'q_parallel_sls', 'P_parallel_uls', 'P_parallel_sls',
-            'deflection_model', 'torsion_model', 'point_contact', 'roof_top_load'}
+            'deflection_model', 'torsion_model', 'point_contact', 'roof_top_load', 'isolated_en_stress_model'}
 
 
 def number(value, name='Vão'):
@@ -290,7 +290,8 @@ def _pending_els(result):
         from .batch import governing
         result['summary'] = governing(result['cases'])
     else:
-        d=result['input_data']
+        from .direct_self_weight import calculation_inputs
+        d=calculation_inputs(result['input_data'])
         qualified=uniaxial(d.get('q_parallel_sls',0.),d.get('P_parallel_sls',0.))
         mark(result['ELS'],qualified)
         result['inclination_evidence']['ELS']['resistance_status'] = UNAXIAL_ELS_STATUS if qualified else ELS_STATUS

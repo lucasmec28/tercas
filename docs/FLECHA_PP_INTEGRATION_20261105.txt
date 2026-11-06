@@ -1,0 +1,26 @@
+Complemento de QA: flecha uniaxial com PP direto automático
+
+Base da cópia: f5768bd (integração de PP), acrescida do conteúdo do commit
+f3ef6fc (guarda elástica da flecha), resultando em f1c6fdd nesta cópia.
+Não altera os cálculos: acrescenta 23 regressões de integração.
+
+Execução:
+python -m pytest -q tests/test_uniaxial_direct_self_weight.py \
+  tests/test_uniaxial_elastic_guard.py tests/test_direct_self_weight.py
+Resultado: 73 passaram, 0 falharam, 24,80 s.
+Log: FLECHA_PP_INTEGRATION_TEST_RUN_20261105.txt.
+
+Prova específica: sete espessuras próprias, inclinação -30/0/+30 graus,
+com q externo abaixo da tensão bruta fy e q total, após PP, acima de fy.
+A guarda usa o total do input_snapshot SLS e retira o índice conclusivo,
+preservando as entradas externas. Não omite PP nem o acrescenta duas vezes.
+Na travessa, PP vertical não altera a flecha/guarda horizontal isolada,
+mas permanece na componente paralela. No modo área, o marcador de PP direto
+não duplica o peso nem muda os casos calculados.
+
+Mesmas dependências do recibo FLECHA_QA_RECEIPT_20261105.json, incluindo
+as diferenças explícitas de NumPy e Streamlit em relação aos pins do repo.
+Esse teste encerra a pendência específica de integração flecha/PP daquela
+rodada. Não é a suíte completa, QA de navegador, publicação ou aprovação
+física/estrutural. A regressão agregada e o cache da candidata integrada
+continuam sendo responsabilidade da rodada final de integração.

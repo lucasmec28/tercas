@@ -23,7 +23,7 @@ def wall_input_report(doc,data):
  cfg=wall_els_config(data)
  doc.add_heading('Travessa lateral — eixos, ações e critérios declarados',2)
  doc.add_paragraph(wall_convention())
- doc.add_paragraph('Sem SC usual e sem P de manutenção de cobertura automáticos no modo por área. Isso é premissa deste cenário, não dispensa universal de ações. Cargas especiais exigem avaliação e componentes combinadas informadas; no modo direto nenhum PP é acrescentado.')
+ doc.add_paragraph('Sem SC usual e sem P de manutenção de cobertura automáticos no modo por área. Isso é premissa deste cenário, não dispensa universal de ações. Cargas especiais exigem avaliação e componentes combinadas informadas; a convenção de PP direto consta no registro das ações.')
  doc.add_paragraph('Vão do modelo: '+fmt(data['L_mm'])+' mm. Lref horizontal: '+fmt(cfg['normal_reference_mm'])+' mm / '+fmt(cfg['normal_denominator'])+'; Lref vertical: '+fmt(cfg['vertical_reference_mm'])+' mm / '+fmt(cfg['vertical_denominator'])+'. Origem: '+cfg['origin'])
  doc.add_paragraph('Esses Lref definem apenas critérios declarados de deslocamento; não encurtam o vão do modelo nem comprimentos de FLT. Referências L/180 e L/120 da literatura histórica não comprovam condições físicas dos tirantes ou prescrição normativa atual para qualquer caso.')
  doc.add_paragraph('Inclinação de cobertura armazenada, inativa nesta aplicação: '+display(data.get('inclination',{}))+'.')
@@ -172,6 +172,8 @@ def word(result):
  torsion_report(doc,result)
  from .aisi_torsion_ui import report as aisi_torsion_report
  aisi_torsion_report(doc,result)
+ from .isolated_en_ui import report as isolated_EN_report
+ isolated_EN_report(doc,result)
  doc.add_paragraph('Projeto: '+result['project']);doc.add_paragraph('Versão: '+result['version']);doc.add_paragraph('Gerado em UTC: '+datetime.now(timezone.utc).isoformat())
  doc.add_heading('Premissas e limites',1)
  for text in ['Um vão isostático. Flexão forte e rota restrita de flexão fraca/Anexo E; interação biaxial §9.9 para N=0 quando há resistências rastreadas por eixo e sentido. Para posição fixa de P, o máximo concomitante é calculado ao longo do vão. Sem dimensionamento de torção primária, axial, continuidade ou balanços nesta emissão.', 'Ações ELU e ELS já combinadas, informadas separadamente. Não há geração automática de todas as combinações.', 'Ly e Lz são comprimentos efetivos informados; coordenada de tirante não comprova vínculo torsional.', 'A flecha é componente Euler–Bernoulli com Ief por seção. Limite de flecha é informado com origem; não equivale a aprovação do sistema.', 'Propriedades e críticos fornecidos não são certificados pelo aplicativo. A convenção geométrica das propriedades do catálogo precisa ser conferida para o caso.', 'Ligações e apoios não são dimensionados ou aprovados pelo aplicativo.']:
@@ -224,6 +226,13 @@ def word(result):
   row=prop.add_row();row._tr.get_or_add_trPr().append(OxmlElement('w:cantSplit'));cells=row.cells
   for c,t in zip(cells,[k,technical_value(v['value']) if v['value'] is not None else 'Não informado',str(sources.index(v['origin'])+1)]):c.text=t
  d=result['input_data']
+ pp=result.get('direct_self_weight_evidence')
+ if pp:
+  doc.add_heading('Peso próprio no modo direto',2)
+  doc.add_paragraph(pp['scope'])
+  doc.add_paragraph('Massa linear adotada [kg/m]: '+technical_value(pp['mass_kg_m']))
+  for state,trace in pp['states'].items():
+   doc.add_paragraph(state.upper()+': fator PP='+technical_value(trace['factor'])+'; q externo='+display(trace['external_q_N_mm'])+'; PP acrescentado='+display(trace['profile_PP_q_N_mm'])+'; q total calculado='+display(trace['total_q_N_mm'])+' N/mm.')
  labels={'L_mm':'Vão [mm]','q_uls':'q ELU [N/mm]','P_uls':'P ELU [N]','x_uls':'Posição P ELU [mm]','q_sls':'q ELS [N/mm]','P_sls':'P ELS [N]','x_sls':'Posição P ELS [mm]','actions_origin':'Origem das combinações','Ml_Nmm':'Ml [N·mm]','Mdist_Nmm':'Mdist [N·mm]','critical_origin':'Origem dos críticos','ELS_limit_mm':'Limite de flecha [mm]','ELS_origin':'Origem do limite de flecha'}
  for k,label in labels.items():
   if is_girt(d) and k in ('ELS_limit_mm','ELS_origin'):continue
@@ -309,6 +318,8 @@ def batch_word(result):
  torsion_report(doc,result)
  from .aisi_torsion_ui import report as aisi_torsion_report
  aisi_torsion_report(doc,result)
+ from .isolated_en_ui import report as isolated_EN_report
+ isolated_EN_report(doc,result)
  doc.add_paragraph('Projeto: '+result['project']+' | versão: '+result['version'])
  if result['synthetic']:doc.add_paragraph('EXEMPLO DIDÁTICO — DADOS SINTÉTICOS.')
  doc.add_heading('Entradas e premissas',1)

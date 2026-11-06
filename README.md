@@ -23,7 +23,7 @@ No Streamlit Community Cloud: repositório `lucasmec28/tercas`, branch escolhida
 
 ## Não incluído
 
-Projeto de ligações, torção primária, interação axial, balanços/continuidade, análise física automática de travamentos, geração automática de Mdist e geração normativa genérica de combinações. Flecha paralela à cobertura foi retirada da lista e fica fora do escopo desta emissão. Os limites são da implementação, não novas exigências da norma.
+Projeto de ligações, resistência completa à torção e à interação geral, balanços/continuidade fora dos modelos explícitos, análise física automática de travamentos, geração automática genérica de Mdist e geração normativa genérica de combinações. As componentes opcionais de torção e N–M descritas abaixo não concluem essas verificações globais. Flecha paralela à cobertura foi retirada da lista e fica fora do escopo desta emissão. Os limites são da implementação, não novas exigências da norma.
 
 ## Testes
 
@@ -403,3 +403,47 @@ sem mudar a curva publicada. Índice acima de 1 é inconclusivo nesse piso,
 não reprovação. Torção/H4 continuam dependentes da decomposição. Nenhuma
 aprovação global. Prova, contraexemplos e limites:
 `docs/DIRECT_ROOF_ENVELOPE_20261105.txt`.
+
+## Entrada direta sem PP — atualização de 05/11/2026
+
+Novos estudos adotam ações externas já combinadas **sem PP do perfil**. O app soma
+PP pela massa selecionada: 1,25 no ELU e 1,0 no ELS, aplicado no CG. Demais ações
+usam o topo quando esse esquema é selecionado. JSON/sessões antigos permanecem
+com a convenção anterior (PP já contido); conversão exige escolha explícita.
+Veja `docs/DIRECT_PROFILE_SELF_WEIGHT_20261105.txt`. Não amplia aprovação global.
+
+## Torção com entrada direta sem PP — 06/11/2026
+
+A entrada direta explicitamente sem PP pode usar a mesma análise Vlasov e o
+complemento longitudinal AISI G8.1/H4 antes disponíveis por área: PP automático
+no CG, demais ações na linha superior escolhida e posições P preservadas. Não
+se duplicam PP ou fatores. Seis fontes próprias Ue100, vão 3–6 m e ações fortes
+uniaxiais permitem H4; Ue1,20 e ações paralelas mantêm suas pendências específicas.
+JSONs legados não são convertidos. Cisalhamento torsional/interações, ELS completo
+e aprovação global continuam pendentes. Ver `docs/DIRECT_TORSION_H4_20261106.txt`.
+
+## Integração das componentes simplificadas — 06/11/2026
+
+PP direto, torção/H4, cortante da alma e flecha uniaxial mantêm suas fontes,
+domínios e resultados separados. O complemento das três travessas inclui
+VRd e M–V concomitante NBR, com capacidade EN separada quando aplicável.
+A guarda de tensão bruta retira índices uniaxiais indevidos acima de fy.
+Não se infere travamento da telha/tirantes nem aprovação da estabilidade da
+rede, cortante fraco, interação geral ou ELS físico completo. Entradas e
+históricos legados são preservados. Escopo:
+`docs/INTEGRATION_SIMPLIFIED_COMPONENTS_20261106.txt`.
+
+### Complemento EN isolado e verificação da central
+
+O opt-in EN do vão isolado verifica as três desigualdades de tensão de §6.1.6,
+inclusive cisalhamento torsional, com declaração de seção intacta e material
+fixo. Limites contínuos conservadores acima de 1 permanecem inconclusivos.
+UI, Word e panorama usam snapshots salvos; não recalculam históricos.
+Ver `docs/ISOLATED_EN_INTEGRATION_20261106.txt`.
+
+Nos novos cálculos das três travessas, somente a CENTRAL recebe critérios e
+conclusões resistentes/ELS apresentados. Superior e inferior continuam na
+análise física completa como entorno elástico. Não se removem cargas ou
+rigidez nem se inventam apoios. Históricos continuam com o escopo registrado.
+Ver `docs/CENTRAL_VERIFICATION_SCOPE_20261106.md`. Estabilidade relevante à
+central, ELS físico completo e aprovação global continuam separados.

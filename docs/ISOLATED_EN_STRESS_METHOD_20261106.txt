@@ -1,0 +1,120 @@
+CISALHAMENTO TORSIONAL E INTERAÇÃO DE TENSÕES: ROTA PRÁTICA
+Data de referência: 06/11/2026. Base: 5871f95.
+Candidata local, não publicada. A integração posterior com opt-in/UI/Word e
+schema v2 está documentada em ISOLATED_EN_INTEGRATION_20261106.txt.
+
+CONCLUSÃO APLICÁVEL
+Não precisa criar uma nova resistência torsional NBR nem outro solver.
+A rede de três travessas já possui normal/cisalhamento/interação EN §6.1.6.
+A lacuna no vão isolado pode ser reduzida reaproveitando o seu campo Vlasov
+com as seções efetivas EN já existentes. Esta candidata faz exatamente isso.
+Não se usa MRd NBR nem Ba AISI dentro de uma equação EN. AISI H4 permanece
+uma componente independente, não uma conclusão de cisalhamento torsional.
+
+FONTES CONFERIDAS
+1. EN1993-1-3:2006, exemplar PN-EN1993-1-3:2008 fornecido, §§6.1.6(1)-(5),
+   pp.46-47 impressas, páginas 48-49 do PDF. Fórmulas e convenções foram
+   verificadas nas imagens das páginas, não somente em texto extraído.
+   SHA256: 0f2752ce6b630b94168339914bdd79e43be8f6b98fe02b9cb6f1072a3efbf0d6.
+   A expressão (6.11) impõe três condições independentes. A expressão
+   (6.12) combina N/My/Mz/B e Vy/Vz/Tsv/Tw no mesmo campo de tensões.
+2. ANSI/SDI AISI S100-2024: G8.2 permanece reservado. PDF oficial do SDI,
+   p.68 impressa, página 113 do PDF. Não existe ali uma fórmula pronta de
+   resistência ao cisalhamento torsional para simplesmente completar H4.
+   https://sdi.org/wp-content/uploads/2025/01/ANSI-SDI-AISI-S100-2024-SDI-AISI-S100-2024-C.pdf
+   Página oficial: https://sdi.org/publications/publications/sdi-standards/aisi-standards/ansi-sdi-aisi-s100-24/
+3. ABNT NBR14762:2010 fornecida, §9.9, p.53 impressa, página 59 do PDF,
+   imagem conferida: a interação é N/NRd + Mx/MxRd + My/MyRd; não inclui B/T.
+   SHA256: c2a01615a3ce9e2b93aeb7fee757f7bf9dd932adaefbc242e848ce813dc82407.
+
+MÉTODO IMPLEMENTADO
+Arquivo: tercas/isolated_en_stress.py, API check_member(demand, profile,
+intact_section_model_declared=True, model_origin='origem explícita').
+Recebe o campo COMPLETO do solver isolado, antes de compactar o snapshot.
+Não executa solve_member. Não recalcula cargas, PP, combinações ou rigidezes.
+Somente ELU, N=0 da análise isolada, contornos Ue100x50x17 ri=t, sete espessuras
+pinadas 1,20/1,50/2,00/2,25/2,65/3,00/3,35 mm. Furos/recortes não são presumidos
+intactos. Demanda e seções resistentes devem coincidir no contorno completo.
+O material da componente continua fixo: fyb=fya=250 MPa, E=210000 MPa,
+nu=0,3, gammaM0=1. Material/rigidez da análise é salvo separadamente.
+Não reivindica combinações EN nem conformidade integral de projeto EN/NBR.
+
+Normal: sigma=Mx*c_Mx(x,y)+My*c_My(x,y)+B*omega/Cw.
+As funções c são as seções EFETIVAS puras EN já qualificadas por sentido.
+Os pontos x/y pertencem às faces exteriores das facetas. Omega é a função
+da linha média, constante através da espessura no modelo de parede fina.
+Cisalhamento: tau=-(Vx*Qx/Iy+Vy*Qy/Ix+Tw*Qw/Cw)/t-face*Tsv*t/J.
+V/Tsv/Tw e B usam a mesma seção bruta, conforme §6.1.6(3).
+face=-1 ou +1 refere-se à normal (-dy,dx)/comprimento da faceta.
+
+Condições independentes:
+- max|sigma| <= 250 MPa;
+- max|tau| <= 250/sqrt(3) = 144,337567 MPa;
+- max sqrt(sigma²+3*tau²) <= 275 MPa.
+A folga 1,1 da terceira condição nunca relaxa as duas primeiras.
+O critério de cisalhamento inclui ambas as componentes transversais e ambas
+as componentes de torção, não apenas o cortante forte da alma.
+
+SIMPLIFICAÇÃO NUMÉRICA VERIFICÁVEL
+O campo salvo por elemento é polinomial. Sigma e tau são convertidos para
+Bernstein no mesmo grau longitudinal/transversal. O vetor (sigma,tau) fica
+no fecho convexo dos controles. As três funções de verificação são convexas;
+portanto o maior valor dos controles é um majorante em TODO elemento/faceta.
+A aritmética das operações do envelope tem arredondamento para fora.
+O envelope diz respeito ao campo polinomial e às propriedades numéricas
+fornecidas, não ao erro de discretização FE nem a uma geometria física exata.
+
+Para não precisar dividir raízes/sentidos de momentos, são incluídas as duas
+seções efetivas por eixo em cada elemento. Essa união pode majorar mais,
+mas não elimina nenhum ramo necessário e não fabrica uma testemunha física.
+Não somamos máximos independentes como se fossem um estado concomitante.
+Cada controle limitante é explicitamente marcado como NÃO físico.
+
+Teto <=1: prova suficiente daquela condição no campo/modelo declarado.
+Teto >1: inconclusivo. NÃO é excesso demonstrado nem reprovação da barra.
+Se esse conservadorismo pesar num caso, o próximo passo é dividir os trechos
+por sinal ou refinar o envelope existente; não buscar um coeficiente arbitrário.
+
+O QUE ESTA CANDIDATA FECHA E NÃO FECHA
+Fecha, por condição suficiente, as três desigualdades de tensão §6.1.6(4)
+para o campo completo do vão isolado elegível, inclusive τ torsional.
+Não conclui resistência/flambagem por cisalhamento §6.1.5, redução adicional
+N-M-V §6.1.10, estabilidade do membro/rede, adequação da primeira ordem,
+forças localizadas, ligações, ruptura líquida ou ELS completo.
+A rede já tem o equivalente com N não nulo: não substituir esse ramo pelo
+adaptador isolado e não transformar tirantes em apoios ideais.
+
+Lacuna de integração concreta: chamar o backend na geração explícita antes
+de summarize_torsion_evidence; guardar declaração/modelo e hashes; expor
+os três índices EN separadamente na interface/Word; validar leitores sem
+novo cálculo. Nenhuma dessas mudanças foi simulada como já implementada.
+A aprovação global continua falsa. É backend candidato, não entrega de UI.
+
+QA REPRODUZÍVEL
+20 testes novos aprovados em 9,84 s, comparando amostras independentes
+concomitantes em ambos os lados e interior das paredes com o teto contínuo.
+Inclui sete espessuras, sinais/inversões, mudança de sinal no vão, escala,
+torção sem cortante transversal, fonte inválida/incompleta, declaração
+intacta, não promoção global e ausência de falsa reprovação por teto >1.
+
+Regressão direcionada FINAL: 141 testes aprovados em 47,34 s:
+ tests/test_isolated_en_stress.py
+ tests/test_torsion_vlasov.py
+ tests/test_torsion_nominal_envelope.py
+ tests/test_three_girt_en_normal_sections.py
+ tests/test_three_girt_en_shear_interaction.py
+ tests/test_direct_torsion.py
+Comando: PYTHONPATH=/tmp/tercas_en_qa_deps:. python -m pytest -q <arquivos>
+Pytest9.2 instalado em diretório temporário; não alterou requirements.
+Um aviso de depreciação anyio/pytest, sem falha. Não é a suíte completa.
+
+Sete casos do adaptador direto: qa/run_isolated_en_stress.py.
+Saída: docs/ISOLATED_EN_STRESS_QA_20261106.json.
+L=4000 mm; q externo ELU=0,1 N/mm; P=20 N em x=1700 mm; inclinação=0;
+PP automático no CG com fator1,25; demais ações no topo da alma; 32 elementos
+por intervalo físico. Todos passam nas três condições de tensão.
+Exemplos de tetos [normal, cisalhamento, interação]:
+ t1,20: [0,240225; 0,121277; 0,218454]
+ t2,00: [0,140293; 0,100120; 0,127670]
+ t3,35: [0,083497; 0,068867; 0,076010]
+São testes sintéticos de implementação, não verificação de um projeto real.

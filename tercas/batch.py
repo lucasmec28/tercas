@@ -40,6 +40,9 @@ def area_bundle(data):
 
 def case_inputs(data,combo):
  d=copy.deepcopy(data);q=combo['q_N_mm'];L=d['L_mm']
+ # Area combinations already contain PP; never apply direct addition twice.
+ from .direct_self_weight import FIELD as PP_FIELD
+ d.pop(PP_FIELD,None)
  # Internal adapter evaluates q in both states; only the requested state below
  # is retained, reported and exported. There is no fictitious zero combination.
  d.update(q_parallel_uls=combo.get('q_vector',{}).get('parallel',0.),q_parallel_sls=combo.get('q_vector',{}).get('parallel',0.),P_parallel_uls=combo.get('P_vector',{}).get('parallel',0.),P_parallel_sls=combo.get('P_vector',{}).get('parallel',0.))

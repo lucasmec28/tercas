@@ -13,7 +13,7 @@ def append(doc,result,assessment):
         count=group['counts'];doc.add_heading(group['title'],2)
         doc.add_paragraph(group['scope'])
         doc.add_paragraph(f"Critérios atendidos: {count['meets']}; não atendidos: {count['fails']}; pendentes: {count['pending']}; não aplicáveis: {count['not_applicable']}.")
-    doc.add_heading('Critérios não atendidos e pendências da rede',2)
+    doc.add_heading('Critérios não atendidos e pendências no escopo selecionado',2)
     for r in a['checks']:
         if r['status'] not in ('fails','pending'):continue
         index='' if r['index'] is None else ' | índice '+format(r['index'],'.6g')

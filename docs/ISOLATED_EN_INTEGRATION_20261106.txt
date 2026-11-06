@@ -1,0 +1,96 @@
+INTEGRAÇÃO EXPLÍCITA EN DO VÃO ISOLADO — 06/11/2026
+Complemento de e4c9fb6 sobre a base5871f95. Candidata local, sem publicação.
+
+O QUE FOI INTEGRADO
+- Opção inicialmente desligada na referência própria Ue100, tanto área como
+  direto elegível com PP separado. A referência1,20mm também mantém a opção.
+- Declaração explícita de seção nominal intacta, sem furos/recortes, com origem.
+- A escolha fica vinculada à seção, material e aplicação. Trocar apenas ações,
+  inclinação ou vão conserva a declaração. Trocar seção/aplicação conserva a
+  intenção enabled, mas limpa declaração/origem e exige nova manifestação.
+  O identificador da seção também integra as chaves dos widgets: um checkbox
+  antigo não pode redeclarar automaticamente uma seção diferente.
+- fy da entrada deve ser250MPa; outro aço e referência incompatível ficam
+  pendentes. Não existe conversão automática de fy nem capacidade EN de outro
+  material. E210000/nu0,3/gammaM0=1 pertencem somente à componente EN.
+- Registros de catálogo, travessa isolada e rede não herdam o cálculo. A rede
+  conserva sua própria rotaEN; o modelo de três barras não foi alterado.
+
+ORDEM E HASHES
+1. O adaptador existente gera o campo Vlasov denso.
+2. O complemento AISI existente captura sua fonte separada.
+3. isolated_en_application.attach_dense verifica o inventário e calcula EN
+   antes de summarize_torsion_evidence, para área e direto.
+4. A compactação Vlasov existente permanece sem alteração de formato.
+5. complete_result finaliza AISI e depois sela EN contra o snapshot torsional
+   compacto final, sem modificar qualquer número AISI/NBR/Vlasov.
+6. Roof/FLT e panorama são produzidos como antes. O panorama continua pendente
+   e globalmente não aprovado, mas identifica as tensões EN já avaliadas e
+   distingue as verificações ainda ausentes, sem somar índices entre normas.
+
+O snapshot EN guarda escolha, entrada, identidade da seção/material, inventário
+completo, casos ELU e ELS excluídos, fonte geométrica pinada, hash do campo denso,
+hash do resumo torsional completo e hash de cada registro compacto.
+O hash interno de isolated_en_stress usa JSON ensure_ascii=True; o hash do
+snapshot de aplicação usa ensure_ascii=False. Cada leitor usa a função correta.
+
+LEITURA, INTERFACE E WORD
+isolated_en_application.preserved não executa solver, não abre fonte geométrica,
+não gera cargas e não calcula seções efetivas. Confere integridade, inventário,
+material, seção, escolha, contagens, critérios, flags e escopo. O resultado
+interno guarda os intervalos sigma/tau do controle limitante; a leitura confere
+a aritmética simples do índice, sem reconstruir o campo ou interpretar esse
+controle como testemunha física. Teto>1 nunca é convertido em reprovação.
+A interface e a memóriaWord exibem três colunas separadas, motivos pendentes,
+limites, origem, contagem e fonte. Exportar/reabrir não gera novo cálculo.
+Históricos sem o campo permanecem sem EN. Opção ausente/desligada não acrescenta
+snapshot nem migra entradas. Uma edição invalida o resultado pelo fingerprint
+já existente. A integração não concede aprovação global.
+
+GUARDAS ADICIONAIS DO BACKEND v2
+- Campos exatamente nulos: a soma intervalar dos quadrados é intersectada com
+  [0,+infinito] antes da raiz. Evita falso erro por subnormal negativo de
+  arredondamento para fora; não relaxa a norma ou o limite superior.
+- Limite a->0+ exige convenção explícita e estado before-P completo e coerente.
+  Remoção da camada ou alteração deTw é rejeitada. Uma carga exatamente no
+  apoio, explicitamente fixa, não é transformada em limite. Endpoint sem
+  semântica explícita é rejeitado pelo complemento.
+- A ordem legada da recuperação before-P é respeitada: o adaptador acrescenta
+  point_position_scope depois de recuperar o estado. Somente essa nota textual
+  tardia é desconsiderada na comparação, nunca os números ou demais hipóteses.
+
+LIMITES MANTIDOS
+N=0 nesta rota isolada. As tensões normais de flexão usam as seções efetivas
+EN; B/V/Tsv/Tw usam propriedades brutas do mesmo contorno. As seções próprias
+são Ue100x50x17, ri=t, sete espessuras pinadas. Não se aplica ao catálogo geral.
+A união dos dois sentidos das seções pode ser conservadora: teto>1 é
+inconclusivo. Não é falha demonstrada nem dispensa de verificação mais precisa.
+EN6.1.5 (flambagem por cisalhamento), EN6.1.10 (reduçãoN-M-V), estabilidade,
+adequação da primeira ordem, forças locais, ligações e ELS permanecem separados.
+A aprovação global continua falsa mesmo quando as três desigualdades atendem.
+
+QA
+Primeira rodada integrada:43 testes passaram em84,08s.
+Regressão ampliada:225 testes passaram em111,35s, cobrindo backendEN,
+aplicação/opt-in, AppTest, diretoPP/AISI, família própria e panorama.
+Rodada final dos novos arquivos:45 testes passaram em76,49s, após os ajustes
+de leitura/fonte; inclui vínculo de panorama e remoção de before-P no resumo
+com todos os hashes refeitos. Depois,4 testes da guarda de three_girt_model
+malformado passaram em2,63s. None/string/bool/lista geram pendência controlada
+sem normalizar o dado original. Total de49 testes novos/integrados exercitados.
+Comando padrão:
+ OPENBLAS_NUM_THREADS=1 PYTHONPATH=<dependências de teste>:. python -m pytest -q
+Arquivos novos: test_isolated_en_stress.py, test_isolated_en_application.py,
+ test_ui_isolated_en.py.
+Outros arquivos da regressão ampliada: test_direct_torsion.py,
+ test_ui_direct_torsion.py, test_ue_family_reference.py,
+ test_global_verification.py.
+Compileall e git diff --check são exigidos antes do commit.
+
+Os sete exemplos do backend foram regenerados com schema v2. Os índices
+continuam iguais aos da entrega anterior. Eles são sintéticos, não projetos.
+Tempo observado: aproximadamente 1 s adicional para um ELU direto e dezenas
+de segundos para 40 ELU por área neste executor. Não são limites de desempenho.
+Esta regressão direcionada não é a suíte completa do aplicativo; o integrador
+deve rodá-la novamente junto às demais frentes. Atualizar a época de cache
+ativo na integração conjunta, sem requalificar arquivos históricos.

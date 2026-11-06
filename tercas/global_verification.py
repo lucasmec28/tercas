@@ -510,9 +510,14 @@ def build_global_verification(result):
         if state not in present:
             records.append(_pending('missing_limit_state:'+state, state,
                 'Nenhuma combinação '+state+' avaliada; filtro não é dispensa desse estado limite.'))
-    records.append(_pending('torsion_warping', 'MODEL',
-        'Torção/empenamento pendentes: demanda Tsv/Tw/B e sua verificação devem ser qualificadas no mesmo modelo. '
-        'N=0, telha sem contato, rotação torsional fixa ou índice de flexão baixo não demonstram torção nula.'))
+    torsion_reason=('Torção/empenamento pendentes: demanda Tsv/Tw/B e sua verificação devem ser qualificadas no mesmo modelo. '
+        'N=0, telha sem contato, rotação torsional fixa ou índice de flexão baixo não demonstram torção nula.')
+    from .isolated_en_application import global_context
+    try:en_context=global_context(result)
+    except (ValueError,TypeError,KeyError) as exc:
+        en_context=None;torsion_reason='Registro EN isolado inválido; tensões não aproveitadas no panorama: '+str(exc)
+    if en_context is not None:torsion_reason=en_context['reason']
+    records.append(_pending('torsion_warping', 'MODEL',torsion_reason))
     summary = aggregate([r['id'] for r in records], records, inventory_qualified=True)
     summary.update(whole_member_approved=False, torsion_warping_qualified=False,
                    current_adapter_can_approve=False, source_result_schema=schema,
@@ -520,6 +525,7 @@ def build_global_verification(result):
                    combined_ELS_approved=False,
                    numerical_results_changed=False,
                    display_summary=display_summary(summary))
+    if en_context is not None:summary['isolated_EN_binding']=en_context['binding']
     if roof_component is not None:
         summary['roof_top_nbr_binding']={k:roof_component.get(k) for k in ('snapshot_sha256','source_roof_snapshot_sha256')}
     excluded=[r['id'] for r in records if r['status']=='not_applicable'

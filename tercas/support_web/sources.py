@@ -128,6 +128,8 @@ def _isolated(result):
                for c in cases if c['combination']['limit_state']=='ELU']
     else:
         spec=result['input_snapshot']
+        from ..direct_self_weight import calculation_inputs
+        d=calculation_inputs(d)
         expected=dict(q_Nmm=d['q_uls'],P_N=d['P_uls'],x_mm=d['x_uls'],origin=d['actions_origin'])
         if d.get('load_mode')!='direct' or spec.get('L_mm')!=L or spec.get('ULS')!=expected:
             raise ValueError('Ações ou vão do resultado direto diferem da entrada salva')
@@ -259,11 +261,18 @@ def extract(result):
     """
     if not isinstance(result,dict):raise ValueError('Resultado salvo requerido')
     schema=result.get('schema')
-    if schema=='three_girt_current_vlasov_demand_v1':out=_network(result)
+    if schema=='three_girt_current_vlasov_demand_v1':
+        out=_network(result)  # Validate the ENTIRE mechanical network before selecting criteria.
+        from ..three_girt_scope import central, NOTICE
+        if central(result):
+            out['supports']=[r for r in out['supports'] if r['member']=='middle']
+            out['verification_scope']=copy.deepcopy(result['verification_scope'])
+            out['verification_scope_notice']=NOTICE
     elif schema in ('NBR14762_one_span_v1','tercas_batch_results_v1'):out=_isolated(result)
     else:raise ValueError('Fonte de reações não suportada; sem conversão automática')
     out.update(schema=SCHEMA,source_input_fingerprint=result['input_fingerprint'],
                no_network_solve=True,physical_conditions_verified=False,connection_design_checked=False,
                scope='Demanda local normal nos apoios ELU, com sinal e ações concomitantes; sem inferir contato, transmitir declaração isolada ao 3D ou aprovar ligações. Estações intermediárias são rastreio separado, não apoios externos.')
+    if out.get('verification_scope_notice'):out['scope']+=' '+out['verification_scope_notice']
     out['source_fingerprint']=fingerprint(out)
     return out

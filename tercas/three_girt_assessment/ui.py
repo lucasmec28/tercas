@@ -18,8 +18,10 @@ def render(st,result):
     old=st.session_state.get(KEY)
     if old is not None and old.get('source_result_sha256')!=digest:
         st.session_state.pop(KEY,None);old=None
+    from ..three_girt_scope import central, NOTICE
+    if central(result):st.caption(NOTICE)
     st.caption('O panorama reúne somente resultados salvos. Não resolve o modelo e não altera a cadeia de hashes.')
-    if st.button(LABEL,key=KEY+'_build'):
+    if st.button('Montar panorama da travessa central' if central(result) else LABEL,key=KEY+'_build'):
         old=assess(result);st.session_state[KEY]=old
     if old is None:return None
     try:old=saved_assessment(result,old)
@@ -32,7 +34,7 @@ def render(st,result):
     st.dataframe([dict(Grupo=g['title'],Situação=STATUS[g['status']],Escopo=g['scope'],
         Atendidos=g['counts']['meets'],Não_atendidos=g['counts']['fails'],Pendentes=g['counts']['pending'])
         for g in old['groups']],hide_index=True)
-    with st.expander('Critérios não atendidos e pendências da rede',expanded=True):
+    with st.expander('Critérios não atendidos e pendências no escopo selecionado',expanded=True):
         for r in old['checks']:
             if r['status'] not in ('fails','pending'):continue
             index='' if r['index'] is None else ' | índice '+format(r['index'],'.6g')

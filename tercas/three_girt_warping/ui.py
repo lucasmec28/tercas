@@ -1,3 +1,5 @@
+from ..three_girt_scope import members as verification_members, central, NOTICE
+from ..direct_self_weight import active as direct_PP_active, TEXT as DIRECT_PP_TEXT
 """Saved-result UI. Solver runs only on its explicit calculation button."""
 import copy,json
 from .application import calculate,current_configuration,material_point,attach_g81,fingerprint
@@ -22,10 +24,11 @@ def result_rows(result):
         B_Nmm2=a['B_Nmm2'],x_mm=a['x_mm'],G81=a['ratio'],
         Componente='Bsd/Ba <= 1' if a['component_condition'] else 'Bsd/Ba > 1',
         N_max_abs_N=a['max_abs_N_N'],Interação_N_M_B='Não encerrada')
-        for row in result['cases'] for a in row.get('G81_component',{}).get('records',[])]
+        for row in result['cases'] for a in row.get('G81_component',{}).get('records',[]) if a['member'] in verification_members(result)]
 
 
 def render_saved(st,result):
+    if central(result):st.caption(NOTICE)
     st.subheader('Três travessas com empenamento')
     st.warning('Verificações por componente e método. G8.1 não representa aprovação global; estabilidade e ELS completo da rede não estão encerrados. Tirantes e ligações não são dimensionados.')
     if result['status']!='conditional_elastic_vlasov_demand':
@@ -46,6 +49,7 @@ def render_saved(st,result):
     from ..three_girt_assessment.ui import render as render_assessment
     assessment=render_assessment(st,result)
     i=st.selectbox('Combinação Vlasov 3D detalhada',range(len(result['cases'])),format_func=lambda i:result['cases'][i]['combination']['id'],key='three_warping_view_case')
+    if central(result):st.caption('Contexto mecânico completo abaixo: superior/inferior não recebem conclusão resistente.')
     case=result['cases'][i];m=case['model'];rows=[]
     for name,env in m['girt_envelopes'].items():
         a=env['B_equilibrium_Nmm2']['max_abs']
@@ -82,7 +86,8 @@ def render_panel(st,data,revision,disabled=False):
         c['brace_self_weight']=st.checkbox('Incluir peso próprio dos tirantes e cantoneiras Vlasov',value=c['brace_self_weight'],key=prefix+'_weight')
         if data.get('load_mode')=='direct':
             for state in ('uls','sls'):
-                c['direct_pp_'+state+'_N_mm']=st.number_input('PP da travessa já contido em q '+state.upper()+' [N/mm]',value=c['direct_pp_'+state+'_N_mm'],key=prefix+'_pp_'+state)
+                if not direct_PP_active(data):
+                 c['direct_pp_'+state+'_N_mm']=st.number_input('PP da travessa já contido em q '+state.upper()+' [N/mm]',value=c['direct_pp_'+state+'_N_mm'],key=prefix+'_pp_'+state)
                 if c['brace_self_weight']:c['direct_brace_factor_'+state]=st.number_input('Fator PP das barras '+state.upper(),value=c['direct_brace_factor_'+state],key=prefix+'_factor_'+state)
         mode=st.selectbox('Ligação setorial das barras Vlasov',('Braços atuais com ponto material ou resultante Qpsi zero','Ponto material comum no contorno atual'),key=prefix+'_point_mode')
         warping=st.selectbox('Empenamento nos seis extremos Vlasov',('free_assumed','restrained_assumed'),format_func=lambda v:'Livre, hipótese explícita sem restrição adicional' if v=='free_assumed' else 'Impedido, hipótese explícita adicional',key=prefix+'_warping')
@@ -122,9 +127,11 @@ def render_panel(st,data,revision,disabled=False):
             st.caption('Boca para baixo: Y=−x_R01, Z=−y_R01; omega preservado. Braços fora da parede são resultantes com transmissão Qpsi=0 declarada, não omega fictício no CG.')
             with st.expander('Configuração setorial registrada antes do cálculo'):st.json(cfg)
             st.download_button('Baixar entradas e hipóteses Vlasov 3D (JSON)',json.dumps(dict(input_data=data,configuration=cfg),ensure_ascii=False,indent=2),file_name='tres_travessas_vlasov_entradas.json',mime='application/json')
+            st.caption(NOTICE+' O novo cálculo registra este escopo; resultados históricos não são convertidos.')
             if st.button('Calcular três travessas Vlasov e G8.1',disabled=disabled,key=prefix+'_calculate'):
                 st.session_state.pop(RESULT_KEY,None)
-                result=calculate(data,cfg)
+                from ..three_girt_scope import SCHEMA as SCOPE_SCHEMA
+                result=calculate(data,cfg,verification_scope=SCOPE_SCHEMA)
                 if result['status']=='conditional_elastic_vlasov_demand':
                     result=attach_g81(result)
                     result['NBR_axial_bending_requested_configuration']=copy.deepcopy(nbr_config)

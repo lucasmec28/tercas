@@ -71,6 +71,8 @@ def render_results(result,d):
  show_torsion(st,result)
  from tercas.aisi_torsion_ui import show as show_aisi_torsion
  show_aisi_torsion(st,result)
+ from tercas.isolated_en_ui import show as show_isolated_EN
+ show_isolated_EN(st,result)
  from tercas.torsion_material_ui import render as show_nominal_material
  result=show_nominal_material(st,result)
  if result.get('deflection_scope_evidence'):
@@ -275,7 +277,7 @@ with left:
  if index!=st.session_state.base['catalog_index']:
   prior=st.session_state.get('last_input',st.session_state.base)
   if (claims_ue_family(prior) and not assess_ue_family(prior)['eligible']) or (claims_ue_reference(prior) and not assess_ue_reference(prior)['eligible']) or (REFERENCE_FIELD in prior and not assess_reference(prior)['eligible']):
-   load(defaults(index));st.rerun()
+   load(for_new_study(defaults(index)));st.rerun()
   changed=copy.deepcopy(st.session_state.get('last_input',st.session_state.base));fresh=defaults(index)
   for key in ['schema','catalog_index','properties','Ml_Nmm','Mdist_Nmm','critical_origin','property_origin']:changed[key]=fresh[key]
   changed.pop('weak_axis',None)
@@ -312,7 +314,7 @@ b=copy.deepcopy(st.session_state.base);r=st.session_state.revision
 last=st.session_state.get('last_input',b)
 for key in ['load_mode','area_inputs','selected_types','ELS_down_denominator','ELS_up_denominator','q_uls','P_uls','x_uls','q_sls','P_sls','x_sls','actions_origin','ELS_limit_mm','ELS_origin']:
  b[key]=copy.deepcopy(last[key])
-for key in ['roof_top_load','point_contact','torsion_model','deflection_model','member_application','wall_els','wall_tie_study','three_girt_model','weak_catalog','weak_axis','model_domain','u_panel_condition','inclination','q_parallel_uls','q_parallel_sls','P_parallel_uls','P_parallel_sls']:
+for key in ['direct_load_basis','roof_top_load','point_contact','isolated_en_stress_model','torsion_model','deflection_model','member_application','wall_els','wall_tie_study','three_girt_model','weak_catalog','weak_axis','model_domain','u_panel_condition','inclination','q_parallel_uls','q_parallel_sls','P_parallel_uls','P_parallel_sls']:
  if key in last:b[key]=copy.deepcopy(last[key])
 d=copy.deepcopy(b)
 try:
@@ -491,7 +493,12 @@ mode=st.radio('Forma de entrada',['Ações já combinadas (ELU e ELS)','Cargas p
 d['load_mode']='area' if mode.startswith('Cargas') else 'direct'
 if d['load_mode']=='direct':
  st.subheader('Ações de uma combinação')
- st.caption('Travessa, modo direto: q/P normais são horizontais (eixo forte, positivo para a esquerda na vista A→B); paralelos são verticais (eixo fraco, positivo para baixo). Ações já locais e combinadas: não há rotação adicional nem PP automático. Inclua PP e cargas especiais na combinação declarada. kN/m equivale a N/mm; P em kN.' if girt else 'Ações já nos eixos locais: q e P principais são normais à cobertura; componentes paralelas são informadas abaixo. A inclinação não gira novamente estes valores. q positivo e P positivo atuam no mesmo sentido do esquema. q em kN/m equivale numericamente a N/mm. P é informado em kN. Inclua peso próprio nas ações; o app não o soma silenciosamente.')
+ from tercas.direct_self_weight import render as direct_PP_render,active as direct_PP_active
+ direct_PP_render(st,d,f'direct_PP_{r}')
+ if direct_PP_active(d):
+  st.caption('Travessa: q/P normais são horizontais, eixo forte, positivos para a esquerda na vista A→B; paralelos são verticais, eixo fraco, positivos para baixo. q em kN/m equivale a N/mm; P em kN. Ações externas já locais e combinadas, sem nova rotação.' if girt else 'Terça: q/P principais são normais à cobertura, positivos no sentido do esquema; componentes paralelas são positivas para a boca do perfil na vista A→B. q em kN/m equivale a N/mm; P em kN. Ações externas já locais e combinadas, sem nova rotação.')
+ if not direct_PP_active(d):
+  st.caption('Travessa, modo direto: q/P normais são horizontais (eixo forte, positivo para a esquerda na vista A→B); paralelos são verticais (eixo fraco, positivo para baixo). Ações já locais e combinadas: não há rotação adicional nem PP automático. Inclua PP e cargas especiais na combinação declarada. kN/m equivale a N/mm; P em kN.' if girt else 'Ações já nos eixos locais: q e P principais são normais à cobertura; componentes paralelas são informadas abaixo. A inclinação não gira novamente estes valores. q positivo e P positivo atuam no mesmo sentido do esquema. q em kN/m equivale numericamente a N/mm. P é informado em kN. Inclua peso próprio nas ações; o app não o soma silenciosamente.')
  a,bcol=st.columns(2)
  with a:
   st.markdown('**ELU — valores já ponderados**')
@@ -529,7 +536,10 @@ else:
 
 from tercas.roof_top_load_ui import render_choice as render_roof_top_load
 from tercas.roof_top_load import enabled as roof_top_load_enabled
-if not three_girt:render_roof_top_load(st,d,f'roof_top_load_{r}')
+if not three_girt:
+ render_roof_top_load(st,d,f'roof_top_load_{r}')
+ from tercas.isolated_en_ui import render_choice as render_EN_choice
+ render_EN_choice(st,d,f'isolated_EN_{r}')
 
 if three_girt:
  from tercas.three_girt_ui import render_configuration as three_girt_configuration_ui
@@ -762,7 +772,7 @@ def catalog_comparison():
  view=[{'Perfil':v['profile'],'Peso linear [kg/m]':v['mass_kg_m'],'Utilização máxima [%]':v['utilization_percent'],'Situação':v['status'],'Critério governante':v['governing_check'],'Combinação':v['governing_combination'],'Critérios calculados':v['evaluated_checks'],'Pendências':v['pending_checks']} for v in rows_sorted]
  if view:st.dataframe(display_frame(view),hide_index=True,width='stretch')
  with st.expander('Pendências e rastreabilidade da comparação'):
-  st.caption('Ações diretas são mantidas como informadas: eventual peso próprio já incluído não é substituído. Críticos manuais de outra seção não são transferidos. Nenhum resultado significa aprovação global.')
+  st.caption('Ações externas diretas são mantidas; no novo contrato, o PP é recalculado para cada perfil. Entradas legadas preservam seus totais, sem PP adicional. Críticos manuais de outra seção não são transferidos. Nenhum resultado significa aprovação global.')
   for v in rows_sorted:
    if v['pending']:st.write(v['profile']+': '+'; '.join(v['pending']))
  st.download_button('Baixar comparação (JSON)',json.dumps(dict(schema='tercas_catalog_comparison_ui_v1',model_domain_version=state.get('model_domain_version'),input_fingerprint=state['fingerprint'],completed_count=done,requested_count=total,complete=done==total,cancelled=state['cancelled'],rows=rows_sorted,whole_member_approved=False),ensure_ascii=False,indent=2),file_name='comparacao_tercas.json',mime='application/json')

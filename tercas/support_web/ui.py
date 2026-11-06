@@ -21,6 +21,8 @@ def render(st,result,context='isolated'):
     if old is not None and old.get('source_fingerprint')!=identity:
         st.session_state.pop(base+'_saved',None)
     with st.expander('Alma nas reações de apoio: NBR §9.5.1 / Anexo D',expanded=False):
+        from ..three_girt_scope import central, NOTICE
+        if central(result):st.caption(NOTICE)
         st.caption('As reações de apoio exigem avaliação própria mesmo quando não existe carga P externa. Este componente não dimensiona soldas nem ligações.')
         if not st.checkbox(LABEL,value=False,key=base+'_'+identity[:16]+'_enabled'):
             return

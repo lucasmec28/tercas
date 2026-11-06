@@ -1,6 +1,7 @@
 """No timed fallback default; creation and all existing choices are preserved."""
 import copy
 import pytest
+from tercas.direct_self_weight import activate as activate_PP
 from tercas.new_study_policy import for_new_study, initialize_session
 from tercas.deflection_scope import FIELD, MODE, activate
 from tercas.application import defaults, example
@@ -10,7 +11,7 @@ from tercas import ue_reference as ue, ue_family_reference as family, homogeneou
 def test_explicit_new_study_is_only_a_nonmutating_scope_choice():
     seed=ue.load_reference();before=copy.deepcopy(seed)
     result=for_new_study(seed)
-    assert seed==before and result==seed and FIELD not in result
+    assert seed==before and result==activate_PP(seed) and FIELD not in result
     assert result is not seed and result['properties'] is not seed['properties']
     assert for_new_study(result)==result
 
@@ -31,7 +32,7 @@ def test_backend_factories_and_source_contracts_stay_unmarked():
 def test_only_empty_session_is_new():
     state={};seed=defaults()
     assert initialize_session(state,lambda:seed)
-    assert state=={'base':seed} and FIELD not in seed
+    assert state=={'base':activate_PP(seed)} and FIELD not in seed
     before=copy.deepcopy(state)
     assert not initialize_session(state,lambda:pytest.fail('Existing base must not call factory'))
     assert state==before

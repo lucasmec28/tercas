@@ -1,4 +1,5 @@
 """Controls and saved arithmetic only. No calculation during display/export."""
+from ..three_girt_scope import view, central, NOTICE, axial_demand
 import copy
 from .application import reference_configuration, saved_component
 LABEL='Incluir referência NBR de compressão e flexão'
@@ -43,17 +44,20 @@ def rows(component):
 def render_saved(st,demand):
     component=saved_component(demand)
     if component is None:return
+    from ..three_girt_shear import render_saved as render_web_shear
+    render_web_shear(st,component,demand=demand)
+    component=view(component,demand)
     st.subheader('Compressão e flexão das travessas pela NBR')
     st.warning('Índices da referência de vão inteiro, não aprovação do conjunto. A central conserva N das diagonais; G8.1 e H4 não encerram N+M+B.')
     st.dataframe(rows(component),hide_index=True)
     comp=component['capacities']['compression'];slender=comp['elastic']['compression_slenderness'];t=component['capacities']['tension']
     n=comp['capacity']['Nc_Rd_N']
     st.caption('Nc,Rd de referência: '+('pendente' if n is None else f'{n/1000:.4f} kN')+f". KL/r máximo = {max(slender['symmetry_axis'],slender['orthogonal_axis']):.4f}; limite de compressão §9.7.4 = 200. A área efetiva compressiva é conferida em chi·fy.")
-    if not slender['satisfied']:st.warning('A referência de vão inteiro excede KL/r=200 na compressão. Um nó de tirante não foi usado como apoio fictício de flambagem.')
+    if not slender['satisfied'] and (not central(demand) or axial_demand(demand,-1)):st.warning('A referência de vão inteiro excede KL/r=200 na compressão. Um nó de tirante não foi usado como apoio fictício de flambagem.')
     from .tension_detail_ui import render_saved as render_tension_detail
     render_tension_detail(st,t)
-    if t['Nt_Rd_N'] is None:st.info('Tração pendente: An0 fora da ligação, An nos caminhos da ligação e Ct aplicável com origem. Fy e Fu já estão disponíveis; Ag não substituiu áreas líquidas.')
-    st.caption(f"Maior |giro| nas estações exportadas: {component['maximum_observed_abs_twist_at_exported_stations_rad']:.6f} rad. A aplicabilidade física da análise linear/pequenas rotações não está qualificada.")
+    if t['Nt_Rd_N'] is None and (not central(demand) or axial_demand(demand,1)):st.info('Tração pendente: An0 fora da ligação, An nos caminhos da ligação e Ct aplicável com origem. Fy e Fu já estão disponíveis; Ag não substituiu áreas líquidas.')
+    st.caption(f"Contexto da rede completa, maior |giro| nas estações exportadas: {component['maximum_observed_abs_twist_at_exported_stations_rad']:.6f} rad. A aplicabilidade física da análise linear/pequenas rotações não está qualificada.")
     st.caption('A soma é maximizada dentro de cada trecho e combinação. O ramo fraco positivo comprime a alma; o negativo comprime os lábios. B/T/V são recuperados no mesmo ponto, sem soma de máximos distintos.')
     with st.expander('Memória numérica da referência NBR'):
         st.json(dict(configuration=component['configuration'],compression=comp,tension=t,sign_mapping=component['sign_mapping']))

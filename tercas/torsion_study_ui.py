@@ -56,7 +56,9 @@ def render_choice(st,data,key):
     from .roof_top_load import enabled as roof_top_enabled
     if data.get('member_application','purlin')=='purlin' and roof_top_enabled(data):
         st.caption('Declarações manuais anteriores preservadas e inativas neste esquema de cobertura.')
-        if data.get('load_mode')!='area':
+        from .direct_torsion import active as direct_active
+        is_direct = direct_active(data)
+        if data.get('load_mode')!='area' and not is_direct:
             st.warning('A envoltória conservadora de Me está disponível no esquema de topo, sob suas hipóteses uniaxiais. '
                        'Torção, torque, bimomento e H4 permanecem pendentes no modo direto: ações já combinadas '
                        'não separam PP e cobertura; a força substituta no topo não representa o torque real.')
@@ -68,8 +70,14 @@ def render_choice(st,data,key):
             if automatic is None:
                 st.caption('Torção pendente: não há contorno torsional próprio coerente para qualificar as linhas horizontais. Excentricidade desconhecida não é torque nulo.')
                 return
-            roles=active_roles(data)
-            st.markdown(diagram(section_for(data),{r:v for r,v in automatic['load_lines'].items() if r in roles}),unsafe_allow_html=True)
+            if is_direct:
+                records = {'EXTERNAL': automatic['load_lines']['CP'], 'P': automatic['load_lines']['P']}
+                st.caption('Modo direto separado: PP no CG com 1,25 ELU/1,0 ELS; q e P externos no topo. '
+                           'Vlasov preserva todas as componentes; H4 exige o domínio forte uniaxial e fontes AISI disponíveis.')
+            else:
+                roles=active_roles(data)
+                records={r:v for r,v in automatic['load_lines'].items() if r in roles}
+            st.markdown(diagram(section_for(data),records),unsafe_allow_html=True)
             st.caption('Geometria e linhas do mesmo contorno próprio; diagnóstico elástico separado, sem capacidade à torção ou aprovação global.')
         except (ValueError,TypeError,KeyError,OSError,ArithmeticError) as exc:
             st.warning('Linhas automáticas de torção pendentes: '+str(exc))
@@ -138,6 +146,7 @@ def show_result(st,result):
         if warnings:st.error(f'{warnings} combinações excedem o aviso de pequeno giro do estudo. A solução linear não é validação física para giros elevados. 0,05 rad é triagem numérica, não limite normativo.')
     with st.expander('Premissas, reações e estados de torção preservados',expanded=False):
         if result.get('schema')=='tercas_three_girt_results_v1' or result.get('input_data',{}).get('member_application','purlin')!='purlin':st.json(evidence)
+        elif result.get('schema')=='NBR14762_one_span_v1':st.caption('Consulte os dados salvos em “Exibir memória numérica salva do caso direto” ou no arquivo JSON, sem novo cálculo.')
         else:st.caption('A memória completa está preservada no arquivo JSON. Em “Memória numérica e rastreabilidade”, selecione explicitamente uma combinação para consultar seus dados salvos de torção, sem novo cálculo.')
 
 
@@ -169,6 +178,9 @@ def report(doc,result):
     if evidence.get('pending_numerical_cases'):
         doc.add_paragraph('Qualificação numérica pendente em '+str(evidence['pending_numerical_cases'])+' combinações. Nenhuma resposta inválida foi promovida a demanda qualificada.')
     choice=evidence.get('choice_snapshot',{}).get('load_lines',{})
+    if evidence.get('direct_load_basis'):
+        doc.add_paragraph(evidence['direct_self_weight']['scope'])
+        choice={'EXTERNAL':choice['CP'],'P':choice['P']}
     for role,record in choice.items():
         doc.add_paragraph(role+': '+('linha declarada' if record['declared'] else 'não informada')+
             '; [x,y] a partir do CG [mm]=['+', '.join('não informado' if v is None else fmt(v) for v in record['xy_from_CG_mm'])+']; origem: '+record['origin'])

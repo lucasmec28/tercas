@@ -235,7 +235,7 @@ def _export(run,combination,source_fingerprint):
     return record
 
 
-def calculate(data,config):
+def calculate(data,config,*,verification_scope=None):
     """Run on current eligible own-Ue wall inputs and a SEPARATE explicit opt-in."""
     from ..torsion_study import section_for
     if not isinstance(config,dict) or set(config)!=set(defaults()):raise ValueError('Exact 3D warping configuration fields required')
@@ -253,6 +253,10 @@ def calculate(data,config):
         'Sem contato, rigidez ou travamento da telha; sem 2D/casca, não linearidade ou novos críticos.',
         'G8.1 pode consumir o bimomento por combinação; não representa sozinho verificação global NBR, instabilidade ou ELS.',
         'Pontos de conexão e empenamento são declarações físicas/idealizações, não certificados.'])
+    if verification_scope is not None:
+        from ..three_girt_scope import SCHEMA as SCOPE_SCHEMA, record
+        if verification_scope!=SCOPE_SCHEMA:raise ValueError('Unknown verification scope')
+        out['verification_scope']=record(digest)
     missing=out['missing']
     if config['section_orientation']!=ORIENTATION:missing.append('Declarar orientação boca para baixo: Y=-x_R01, Z=-y_R01, omega preservado.')
     if config['warping_end_condition'] not in ('free_assumed','restrained_assumed'):missing.append('Declarar empenamento livre ou impedido nos seis extremos; rx fixo não define psi.')

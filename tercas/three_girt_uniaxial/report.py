@@ -1,11 +1,12 @@
 """Serialize the independent uniaxial snapshot without solving or source reads."""
+from ..three_girt_scope import view, central, NOTICE
 from .application import saved_component,ERROR,SCOPE
 from .ui import LEVELS,COMPARISONS
 from ..three_girt_report import _table
 
 
 def append(doc,demand):
-    c=saved_component(demand)
+    c=view(saved_component(demand),demand)
     if c is None:
         if demand.get(ERROR):doc.add_paragraph('Alternativa uniaxial não calculada: '+demand[ERROR])
         return

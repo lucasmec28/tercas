@@ -235,7 +235,9 @@ def _entries(result):
             if case['point_position']=='finite_interior':case['a_mm']=c['x_mm']
             yield c['id'],case,d,entry['evidence'],entry
     elif result.get('schema')=='NBR14762_one_span_v1':
-        case=dict(id='DIRECT_ELS',q_N_mm=[data['q_sls'],data.get('q_parallel_sls',0.)],
+        from .direct_self_weight import calculation_inputs
+        effective=calculation_inputs(data)
+        case=dict(id='DIRECT_ELS',q_N_mm=[effective['q_sls'],effective.get('q_parallel_sls',0.)],
             P_N=[data['P_sls'],data.get('P_parallel_sls',0.)],
             point_position='finite_interior',a_mm=data['x_sls'])
         yield 'DIRECT_ELS',case,data,result,None

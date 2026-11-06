@@ -10,7 +10,7 @@ from tercas.three_girt_warping.ui import LABEL as WARPING,RESULT_KEY
 from tercas.three_girt_service.ui import LABEL as SERVICE,INTACT
 from tercas.three_girt_en_normal.ui import LABEL as EN,MODEL_LABEL
 from tercas.three_girt_uniaxial.ui import LABEL as UNI,DECLARE
-from tercas.three_girt_assessment.ui import LABEL as INVENTORY,KEY as INVENTORY_KEY
+from tercas.three_girt_assessment.ui import KEY as INVENTORY_KEY
 from tercas.support_web.ui import LABEL as SUPPORT,BUTTON as SUPPORT_BUTTON
 from tercas.three_girt_uniaxial import application as uni
 from tercas.three_girt_service import application as service
@@ -20,6 +20,7 @@ from tercas.three_girt_assessment import application as inventory
 from tercas.support_web import application as support,mechanics as bearing,report as support_report
 from tercas.three_girt_warping import network
 from tercas.three_girt_warping.report import word
+from tercas import three_girt_scope as scope
 
 
 @pytest.mark.parametrize('t',[3.35,1.2])
@@ -40,6 +41,9 @@ def test_all_components_coexist_without_mutating_or_resolving_saved_model(monkey
     widget(app,'button','Calcular três travessas Vlasov e G8.1').click();run(app)
     calculation_seconds=time.perf_counter()-start
     result=copy.deepcopy(app.session_state[RESULT_KEY])
+    assert scope.members(result)==('middle',)
+    assert result[scope.FIELD]['model_members']==list(scope.LEVELS)
+    assert all({b['girt'] for b in c['model']['beams']}==set(scope.LEVELS) for c in result['cases'])
     u,s,e,n=uni.saved_component(result),service.saved_component(result),en.saved_component(result),nbr.saved_component(result)
     assert u and s and e and n
     assert e['schema']==en.SCHEMA and all(v['complete'] for v in e['per_member'].values())
@@ -48,8 +52,10 @@ def test_all_components_coexist_without_mutating_or_resolving_saved_model(monkey
     def forbidden(*args,**kwargs):raise AssertionError('Saved display/sidecars/export must not resolve the member or capacities')
     monkeypatch.setattr(network,'solve',forbidden);monkeypatch.setattr(uni,'calculate',forbidden)
     monkeypatch.setattr(uni.scalar,'peak',forbidden);monkeypatch.setattr(service,'calculate',forbidden);monkeypatch.setattr(en,'calculate',forbidden)
-    widget(app,'button',INVENTORY).click();run(app)
+    widget(app,'button','Montar panorama da travessa central').click();run(app)
     assessment=copy.deepcopy(app.session_state[INVENTORY_KEY]);assert inventory.saved_assessment(result,assessment)==assessment
+    assert assessment['assessment_schema']==inventory.CENTRAL_SCHEMA
+    assert assessment[scope.FIELD]==result[scope.FIELD]
     assert assessment['whole_member_approved'] is False and assessment['current_adapter_can_approve'] is False
     widget(app,'checkbox',SUPPORT).check();run(app)
     for item in list(app.selectbox):
@@ -59,7 +65,9 @@ def test_all_components_coexist_without_mutating_or_resolving_saved_model(monkey
     run(app);widget(app,'button',SUPPORT_BUTTON).click();run(app)
     local=copy.deepcopy(app.session_state['support_web_vlasov_saved'])
     assert support.saved_assessment(result,local)==local
-    assert local['summary']['records']==6*sum(c['combination']['limit_state']=='ELU' for c in result['cases'])
+    assert set(local['configuration']['details'])=={'middle_left','middle_right'}
+    assert {r['source_record']['support_id'] for r in local['rows']}=={'middle_left','middle_right'}
+    assert local['summary']['records']==2*sum(c['combination']['limit_state']=='ELU' for c in result['cases'])
     assert local['summary']['exempt']==local['summary']['records'] and local['whole_member_approved'] is False
     assert app.session_state[RESULT_KEY]==result and app.session_state[INVENTORY_KEY]==assessment
     monkeypatch.setattr(bearing,'evaluate_reaction',forbidden)
@@ -72,7 +80,9 @@ def test_all_components_coexist_without_mutating_or_resolving_saved_model(monkey
     text='\n'.join(p.text for p in Document(BytesIO(doc)).paragraphs)
     for title in ('Panorama do modelo e critérios salvos','Componente horizontal de serviço','Alternativa uniaxial'):
         assert title.lower() in text.lower()
-    assert 'Alma nas reações de apoio' in '\n'.join(p.text for p in Document(BytesIO(local_doc)).paragraphs)
+    local_text='\n'.join(p.text for p in Document(BytesIO(local_doc)).paragraphs)
+    assert 'Alma nas reações de apoio' in local_text
+    assert scope.NOTICE in text and scope.NOTICE in local_text
     receipt=dict(t_mm=t,calculation_seconds=calculation_seconds,rerender_seconds=rerender_seconds,export_seconds=export_seconds,
         AppTest_timeout_seconds=60,all_four_mechanical_readers_passed=True,two_sidecars_passed=True,
         source_unchanged=True,no_solver_on_saved_operations=True,whole_member_approved=False)
@@ -81,7 +91,7 @@ def test_all_components_coexist_without_mutating_or_resolving_saved_model(monkey
     for name,value in [('snapshot',result),('inventory',assessment),('support',local),('receipt',receipt)]:
         (out/(stem+'_'+name+'.json')).write_text(json.dumps(value,ensure_ascii=False,indent=2))
     (out/(stem+'.docx')).write_bytes(doc);(out/(stem+'_support.docx')).write_bytes(local_doc)
-    widget(app,'text_input','Origem do detalhe: upper_left').set_value('Changed support detail');run(app)
+    widget(app,'text_input','Origem do detalhe: middle_left').set_value('Changed support detail');run(app)
     assert 'support_web_vlasov_saved' not in app.session_state
     assert app.session_state[RESULT_KEY]==result and app.session_state[INVENTORY_KEY]==assessment
     widget(app,'text_input','Origem ou hipótese da alternativa uniaxial').set_value('Changed uniaxial model');run(app)

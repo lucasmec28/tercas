@@ -1,0 +1,13 @@
+................                                                         [100%]
+============================= slowest 10 durations =============================
+93.62s call     tests/test_ui_integrated_release_components.py::test_all_components_coexist_without_mutating_or_resolving_saved_model[1.2]
+67.78s call     tests/test_ui_integrated_release_components.py::test_all_components_coexist_without_mutating_or_resolving_saved_model[3.35]
+23.83s setup    tests/test_three_girt_middle_scope.py::test_new_inventory_has_only_central_criteria_and_full_integrity
+4.75s setup    tests/test_three_girt_middle_scope.py::test_scope_does_not_change_any_mechanical_field
+2.51s setup    tests/test_ui_three_girt_assessment.py::test_inventory_explicit_readonly_button_and_cache
+2.41s call     tests/test_three_girt_middle_scope.py::test_display_and_word_select_only_central_resistance
+1.42s call     tests/test_three_girt_middle_scope.py::test_new_inventory_has_only_central_criteria_and_full_integrity
+1.18s call     tests/test_three_girt_middle_scope.py::test_support_details_only_central_but_full_balance_retained
+0.78s call     tests/test_ui_three_girt_assessment.py::test_inventory_explicit_readonly_button_and_cache
+0.62s call     tests/test_ui_three_girt_assessment.py::test_changed_sidecar_is_removed
+16 passed in 201.71s (0:03:21)

@@ -1,4 +1,5 @@
 """Explicit isolated choice and saved-only results, separate from Vlasov ELS."""
+from ..three_girt_scope import view, central, NOTICE
 from .application import configuration,saved_component,ERROR,SCOPE
 LABEL='Alternativa de flecha uniaxial isolada com Ix efetivo'
 DECLARE='Adotar três vigas isoladas para esta comparação de flecha'
@@ -29,7 +30,7 @@ def rows(c):
 
 def render_saved(st,demand):
     if demand.get(ERROR):st.warning('Alternativa uniaxial não calculada: '+demand[ERROR])
-    c=saved_component(demand)
+    c=view(saved_component(demand),demand)
     if c is None:return
     st.subheader('Alternativa uniaxial com Ix efetivo variável')
     st.caption(SCOPE);st.dataframe(rows(c),hide_index=True)

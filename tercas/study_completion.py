@@ -17,6 +17,8 @@ def complete_result(result):
     out = attach(result)
     from .aisi_torsion_component import finalize
     out = finalize(out)
+    from .isolated_en_application import finalize as finalize_EN
+    out = finalize_EN(out)
     from .roof_top_load import attach as attach_roof_top_load
     out = attach_roof_top_load(out)
     from .roof_top_nbr import attach as attach_roof_nbr
@@ -33,7 +35,10 @@ def show_global(st, result):
     record = result.get('global_verification')
     if not isinstance(record,dict):return
     from .roof_top_nbr import validate_saved_global
-    try:validate_saved_global(result)
+    try:
+        validate_saved_global(result)
+        from .isolated_en_application import validate_saved_global as validate_EN_global
+        validate_EN_global(result)
     except (ValueError,TypeError,KeyError) as exc:
         st.warning('Panorama não exibido: '+str(exc));return
     message = record['display_summary']
@@ -51,7 +56,10 @@ def report_global(doc, result):
     record = result.get('global_verification')
     if not isinstance(record,dict):return
     from .roof_top_nbr import validate_saved_global
-    try:validate_saved_global(result)
+    try:
+        validate_saved_global(result)
+        from .isolated_en_application import validate_saved_global as validate_EN_global
+        validate_EN_global(result)
     except (ValueError,TypeError,KeyError) as exc:
         doc.add_paragraph('Panorama não exibido: '+str(exc));return
     doc.add_heading('Estado conjunto das verificações',1)

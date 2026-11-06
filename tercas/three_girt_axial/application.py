@@ -281,6 +281,9 @@ def calculate(demand,config):
             'Scalar §9.8.2 denominators are reused as explicit full-span reference values, not physical 3D stability approval.',
             'An index within 1 is arithmetic of the declared reference, not acceptance with T/B, second-order effects or actual connections.',
             'G8.1 and H4 remain separate. H4 alone is not used to certify N+M+B.'])
+    from ..three_girt_shear import calculate_validated as calculate_web_shear
+    try:out['web_shear_component']=calculate_web_shear(demand,ref)
+    except (ValueError,TypeError,KeyError,ArithmeticError) as exc:out['web_shear_error']=str(exc)
     out['content_sha256']=fingerprint(out)
     if fingerprint(demand)!=source_hash:raise AssertionError('Input demand was mutated')
     return out

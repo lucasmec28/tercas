@@ -1,0 +1,99 @@
+INTEGRAÇÃO DAS COMPONENTES SIMPLIFICADAS — 06/11/2026
+
+Base: f2aac5e63e24cf44f8091b830242db084b53dafd. Cópia de revisão integrada,
+sem declaração de publicação, homologação normativa ou aprovação de projeto.
+A integração preserva o aplicativo e suas fontes próprias; não substitui todos
+os modelos por uma fórmula única e não mistura resistências NBR, AISI e EN.
+
+1. AÇÕES E PESO PRÓPRIO
+Novos estudos diretos usam ações externas já combinadas, sem PP do perfil.
+O PP vem da massa selecionada, no CG: 1,25 no ELU, 1,0 no ELS. Somente PP é
+projetado com a inclinação; ações externas digitadas já são locais. Na travessa
+PP é vertical. Nas três travessas ele é integral em cada perfil, enquanto as
+ações externas mantêm as parcelas 0,5/1/0,5 do modelo. Modo área não duplica PP.
+Dados antigos sem marcador mantêm a convenção antiga; adoção exige retirar
+manualmente o PP antes de marcar a opção. Histórico não é recalculado ao abrir.
+Ver DIRECT_PROFILE_SELF_WEIGHT_20261105.txt.
+
+2. TORÇÃO E FLEXÃO/EMPENAMENTO
+A rota Vlasov e AISI G8.1/H4 existente também recebe direto com PP separado e
+esquema de topo escolhido. PP no CG não significa torque nulo em relação ao
+centro de cisalhamento. As demais forças mantêm suas posições no topo. O H4
+é componente longitudinal condicional, não resistência completa à torção.
+Permanece limitado às fontes, materiais, vãos e ações cobertos. Componentes
+paralelas individuais não desaparecem por cancelamento no vetor total.
+Ver DIRECT_TORSION_H4_20261106.txt.
+
+O opt-in EN isolado acrescenta as três condições independentes de tensão
+normal, cisalhamento V/Tsv/Tw e interação sigma–tau de §6.1.6. Seção intacta
+é declaração explícita, ligada à seção/material. O campo integral é avaliado
+antes da compactação; limites contínuos conservadores <=1 são suficientes
+somente para essas condições. Teto >1 é inconclusivo. N=0, sete fontes próprias
+e material fixo EN permanecem no contrato. Não fecha EN6.1.5/6.1.10, estabilidade,
+primeira ordem, introdução local nem ELS. Ver ISOLATED_EN_INTEGRATION_20261106.txt.
+A revisão corrigiu campo nulo intervalar e exigiu camada before-P coerente
+quando a fonte declara limite a->0+, sem reinterpretar ponto fixo no apoio.
+
+3. FLECHA SIMPLIFICADA
+A opção uniaxial explícita mantém MSE e Ief variável no vão físico inteiro.
+Guarda adicional retira o índice quando M/W bruto excede fy ou faltam dados.
+É condição necessária, não prova de tensão elástica na seção efetiva. Ações
+totais após PP alimentam a guarda. A alternativa isolada de três travessas
+não altera as reações ou rigidez da rede e não soma giro bruto à flecha efetiva.
+Ver FLECHA_UNIAXIAL_FECHAMENTO_20261105.txt e FLECHA_PP_INTEGRATION_20261105.txt.
+
+4. CORTANTE E INTERAÇÃO DA ALMA
+O complemento NBR das três travessas inclui VRd de §9.8.3 e envelope M–V
+concomitante de §9.8.4 no mesmo trecho/seção, com MRd local de §9.8.2.1.
+O complemento EN conserva capacidade própria e piso conservador separado.
+O quadro informa a alma calculada e mantém pendências de cortante fraco,
+interação geral e estabilidade. N/B/T não são apagados para liberar M–V.
+Ver SIMPLIFIED_SHEAR_STABILITY_20261106.txt.
+
+5. SOMENTE A TRAVESSA CENTRAL
+Novos cálculos pelo botão Vlasov registram o alvo middle para critérios
+resistentes, ELS, panorama, relatórios e detalhes dos dois apoios centrais.
+As três travessas continuam no solver com todas as cargas, PP, rigidez,
+conexões, deslocamentos, forças e reações. Igualdade mecânica exata foi testada.
+Superior/inferior permanecem contexto elástico, sem impor sua aprovação
+resistente ao resultado da central. Hipóteses de rigidez do entorno e
+estabilidade relevante à central não são transformadas em vínculos ideais.
+Resultados antigos sem marcador conservam a seleção e os números originais.
+Ver CENTRAL_VERIFICATION_SCOPE_20261106.md.
+
+6. LIMITES QUE A INTEGRAÇÃO NÃO REMOVE
+- A telha não fornece contato, apoio, rigidez ou travamento ao perfil.
+- Posições de tirantes não provam comprimento efetivo, impedimento de torção,
+  estabilidade da rede ou adequação de análise de primeira ordem.
+- Não são dimensionados tirantes, ligações ou ancoragens.
+- H4 não conclui cisalhamento torsional/interações; verificações da alma não
+  podem usar sua resistência como resistência ao cortante fraco.
+- Componentes de ELS não constituem deslocamento físico completo com rigidez
+  efetiva biaxial e torção nem aprovação global da barra.
+- Fontes próprias restritas não são generalizadas a todas as seções do catálogo.
+
+7. PRESERVAÇÃO E REGRESSÃO
+A revisão confere parcelas de carga, eixos, fatores, simultaneidade, estados
+pendentes, fontes protegidas e evidência salva. O cache ativo recebe nova época
+para exigir cálculo novo após atualização; entradas e documentos históricos
+não são migrados. Nenhum solver é invocado pela emissão de histórico.
+O pytest.ini limita a descoberta padrão à suíte do aplicativo em tests/.
+Scripts históricos dentro de pacotes de proveniência permanecem intactos;
+suas fontes e hashes continuam cobertos pelos testes do aplicativo.
+
+Validação consolidada: 3.589 casos distintos e 917 subtestes com aprovação.
+A rodada completa em d7cf548 aprovou 3.587 casos e apontou somente duas
+expectativas antigas do teste conjunto de UI. A correção 4a3ff77 altera apenas
+o teste para exigir o escopo central e preservar as três barras físicas.
+A rodada posterior aprovou os 16 casos selecionados, incluindo os dois
+corrigidos, o escopo central e a leitura legada. Nenhum arquivo de produção
+mudou entre essas execuções. Compileall e git diff --check passaram.
+
+Resultados, comandos, grupos completos, logs e limitações estão registrados
+em INTEGRATION_QA_20261106.json. A execução local usa versões diferentes das
+fixadas em produção para Streamlit, NumPy e pandas. O ambiente implantado e
+a navegação online ainda precisam ser conferidos após publicação autorizada.
+Não houve push nem declaração de deploy nesta integração.
+
+Testes não equivalem à revisão de projeto pela pessoa responsável e não
+demonstram a condição física dos vínculos.

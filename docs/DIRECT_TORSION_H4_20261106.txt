@@ -1,0 +1,81 @@
+TORÇÃO E FLEXÃO/EMPENAMENTO NO MODO DIRETO COM PP SEPARADO
+
+Esta extensão reaproveita a rota Vlasov + AISI G8.1/H4 já existente. Não cria
+outro método resistente, não altera as equações NBR nem transforma H4 em
+resistência completa à torção ou aprovação da barra.
+
+CONTRATO DE ENTRADA
+Somente direct_load_basis=external_without_profile_self_weight_v1, modo direto,
+terça, esquema de carga no topo explicitamente selecionado e referência própria
+Ue100 íntegra. O adaptador direct_self_weight é a única origem do PP: massa da
+seção x 9,80665/1000, fator 1,25 ELU e 1,0 ELS, aplicado no CG. q e P digitados
+já são componentes locais combinadas, sem PP do perfil e sem nova rotação.
+EXTERNAL e P atuam na linha superior escolhida; PP permanece no CG. Na seção
+local, a força física é [paralela, -normal]; cada torque é (r-CC) x F.
+
+Os vetores individuais são preservados, inclusive quando componentes paralelas
+externas e PP se cancelam no total. Nesse caso a demanda Vlasov pode ser
+calculada, mas não se libera o crítico forte uniaxial nem H4 por cancelamento.
+Nenhuma separação é inferida nos JSONs legados sem o token. Históricos não são
+recalculados ao abrir/exportar e as entradas salvas continuam valores do usuário.
+
+MÉTODO REUTILIZADO
+- Vlasov linear, um vão prismático, GJ + ECw do mesmo contorno próprio; garfos
+  extremos e empenamento livre. A telha não fornece apoio ou rigidez.
+- Uma demanda ELU e uma ELS por posições diretas fixas; H4 usa somente ELU.
+- AISI nominal E=203000 MPa, G=78000 MPa para capacidades; demanda independente
+  com 0,90 E e 0,90 G, como na rota por área existente. Não se reduz a resistência
+  novamente pelo fator de rigidez.
+- G8.1: Bn=By=Fy Cw/max|omega| e Ba=0,90 By. Sem exigir Bp ou Bcr.
+- Mcre nominal AISI com alturas separadas por ação e sinais conservados; piso
+  F2/F3/F4 existente do mesmo contorno. Nenhum Me/MRd NBR vira denominador AISI.
+- H4 N=0: envoltória concomitante contínua de |Mx|/Max+|My|/May+|B|/Ba.
+  Na integração de topo elegível My é zero. Não se somam máximos desconexos.
+  H4<=1 satisfaz apenas a condição algébrica suficiente no domínio; H4>1 não
+  demonstra a condição pelo piso e não prova falha da resistência literal.
+
+DOMÍNIO E PENDÊNCIAS
+H4: seis fontes Ue100x50x17, ri=t, t=1,50/2,00/2,25/2,65/3,00/3,35 mm,
+L=3000 a 6000 mm, fontes e material íntegros. Ue1,20 conserva demanda/G8.1 e a
+pendência específica dos críticos fortes AISI. Catálogo livre não ganha fonte
+setorial por coincidência dimensional. Ações paralelas reais permanecem em
+Vlasov/G8.1, mas deixam H4 topo pendente.
+
+P não nulo exatamente no apoio continua rejeitado pela entrada direta existente.
+P não é movido ou interpretado como limite a->0+. O solver existente exige
+intervalos finitos >= L/100; abaixo disso a torção fica pendente numericamente,
+com a posição e demais resultados preservados. Não é limite normativo de P.
+
+Ainda NÃO fechados: cisalhamento torsional e suas interações; ELS com torção e
+rigidez efetiva completa; introdução local/contato; ligações e realização dos
+vínculos; adequação física da primeira ordem sob giros elevados; efeitos das
+tensões geométricas da torção primária e configuração pré-deformada. H4 não
+promove o panorama global. Testes computacionais não validam um projeto físico.
+
+PERSISTÊNCIA E INTERFACE
+Novo schema AISI v3 exclusivo do direto separado. Leitura verifica decomposição
+PP, inventário DIRECT_ELU/ELS, forças, linhas, fatores, posições, torque, índices,
+hashes, fonte e ausência de promoção global. Recusar rebaixamento para schema
+por área. UI e Word consomem o snapshot; sem fonte, solver ou curva ao renderizar.
+Não há nova entrada de Me, CC, Cb, Bp ou fator técnico. A memória numérica do caso
+direto e JSON incluem os registros completos salvos.
+
+CONTROLES
+Testes específicos cobrem seis espessuras, gravidade/sucção e P de sinais opostos,
+torque independente (r-CC)xF em +/-12 graus e duas linhas superiores, PP sem
+repetição, cancelamento paralelo, Ue1,20 pendente, endpoints rejeitados,
+P finito próximo do apoio pendente, corrupção com hashes refeitos, leitores
+sem recálculo, aplicação Streamlit, JSON e Word.
+
+Para q torsional uniforme m, o controle analítico independente usa
+B(L/2) = m/k² [1 - 1/cosh(kL/2)], k²=GJ/ECw, com B(0)=B(L)=0.
+O erro relativo tolerado 2e-5 verifica esse caso do campo FE recuperado, não é
+limite de erro geral nem certificação de pequenas rotações.
+
+FONTES (mesmas da implementação por área)
+AISI S100-2024 G8.1/H4, F2/F3/F4 e App.2; referência oficial:
+https://sdi.org/wp-content/uploads/2025/01/ANSI-SDI-AISI-S100-2024-SDI-AISI-S100-2024-C.pdf
+Mecânica Vlasov e altura: docs/AISI_CURRENT_INPUT_COMPONENT_20261104.txt,
+docs/AISI_ROOF_HEIGHT_H4_20261105.txt, docs/ROOF_TOP_LOAD_20261105.txt.
+NBR14762 permanece base principal das verificações próprias separadas; não se
+atribui a ela uma fórmula torsional por divisão de von Mises por 1,10.

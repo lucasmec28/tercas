@@ -132,7 +132,8 @@ def interaction_envelope(L,qx,px,qy,py,a,mrx,caps):
  return dict(status='not_evaluated' if missing else 'computed_fixed_position',missing=sorted(missing),governing=best,candidate_count=len(pts),whole_member_approved=False)
 
 def integrate(result):
- d=result['input_data'];ev=result['inclination_evidence']['ELU']
+ from .direct_self_weight import calculation_inputs
+ d=calculation_inputs(result['input_data']);ev=result['inclination_evidence']['ELU']
  if not ev['parallel_demand']:return
  fam=result['input_snapshot']['selected_section']['family'];caps=capacities(d,fam);rx=strong_capacity(result)
  z=interaction_envelope(d['L_mm'],d['q_uls'],d['P_uls'],d.get('q_parallel_uls',0),d.get('P_parallel_uls',0),d['x_uls'],rx,caps)

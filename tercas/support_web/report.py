@@ -32,6 +32,8 @@ def _support_label(sid):
 def append(doc,result,assessment):
     saved=saved_assessment(result,assessment)
     doc.add_heading('Alma nas reações de apoio',1)
+    from ..three_girt_scope import central, NOTICE
+    if central(result):doc.add_paragraph(NOTICE)
     doc.add_paragraph('NBR 14762:2010 §9.5.1 e Anexo D. Critério local separado, inclusive quando P externa é zero. '
                       'Não dimensiona soldas, ligações ou apoios completos e não aprova a barra.')
     doc.add_paragraph('Fonte de demanda: '+str(saved['source_schema'])+'. Resultado vinculado: '+saved['source_fingerprint']+'.')

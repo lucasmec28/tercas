@@ -1,0 +1,56 @@
+Modo direto: ações externas e PP do perfil separado — candidata local 05/11/2026
+
+Solicitação de Lucas, 05/11 20:28 UTC:
+“Então, o que for colocado escrito de carga lá, não inclui peso próprio da terça.
+O app precisa incluir emultiplicar por 1,25 no caso de ELu e 1 pra ELS”.
+Às 19:42 definiu PP no centro e demais ações no topo. Não são fatores gerais
+inferidos da norma; são a regra fixa de entrada direta solicitada neste app.
+
+Contrato: direct_load_basis = external_without_profile_self_weight_v1.
+Novos estudos da interface recebem o contrato. Dados importados e sessões antigas
+sem marcador permanecem totais com PP incluído. Adoção explícita no editor legado
+avisa para o usuário retirar PP de q antes de optar. Nenhuma conversão numérica
+silenciosa ou alteração de JSON histórico. Marcador desconhecido causa erro.
+Backend factories/canonical sources continuam legados para preservar fixtures.
+
+PP característico [N/mm] = massa do perfil [kg/m] × 9,80665 / 1000.
+ELU: 1,25 PP. ELS: 1,0 PP. A massa acompanha a seção selecionada.
+Terça: somente PP é decomposto em normal=PP cos(theta), paralelo=PP sin(theta).
+Travessa boca para baixo: PP estritamente paralelo vertical; normal exatamente 0.
+q e P externos já são locais/combinados e não são girados nem ponderados novamente.
+P não recebe peso concentrado adicional. Área usa matriz existente, sem alteração;
+o adaptador interno remove o marcador direto para não duplicar PP.
+
+input_data/fingerprint guardam números digitados, não totais artificiais.
+direct_self_weight_evidence registra massa, gravidade, fatores e parcelas por ELU/ELS.
+O núcleo, cortante/interação, flexão fraca, ELS, diagnóstico vertical, apoios e
+componente biaxial recebem os totais. Desenho mostra q total calculado. Word registra
+entradas e parcelas em separado. Nova seção recalcula somente PP, mantendo externos.
+Três travessas (6/7DOF): externos recebem 0,5/1/0,5, PP integral em cada CG; dados
+legados de direct_pp ficam inativos no contrato novo. PP das barras mantém fator
+próprio declarado e não foi alterado por esta solicitação sobre PP do perfil.
+
+Topo: roof_top_load_evidence_v3, base direct_external_top_profile_PP_CG,
+separa PP CG e externos/P no topo selecionado para o solver Vlasov existente.
+Torna desnecessária a envoltória substitutiva para entradas novas. As versões
+v1/v2 históricas e seu piso resistente conservador permanecem sem reinterpretação.
+Ações paralelas individuais não nulas, ainda que se cancelem no total, impedem
+Me uniaxial. Não são apagadas para liberar cálculo. Domínio físico e geométrico
+é o mesmo do solver anterior; nenhuma ampliação para perfis fora dele.
+
+Limites: esta mudança não conclui interação torcional, estabilidade com tirantes,
+ELS da rede, homologação normativa ou aprovação global. Não modifica a seleção
+explícita de esquema no topo nem transforma hipóteses físicas em verificações.
+Implementação local, publicação e conferência online não realizadas nesta frente.
+
+QA local da candidata:
+- 304 testes focados existentes passaram; 3 expectativas antigas de criação
+  falharam porque o novo marcador é intencional. As três foram atualizadas e
+  repetidas com sucesso, sem alterar tolerâncias/respostas numéricas legadas.
+- Rodada final de novos testes, política e UI PP: 55 passaram em 20,46 s.
+- Rodada final de UI criação/importação/PP: 12 passaram em 38,01 s.
+- Revisão independente executou solver 7DOF real com PP puro e cargas externas:
+  PP vertical CG integral, externos 0,5/1/0,5, binding salvo válido; purlin recusado.
+- compileall e git diff --check passaram.
+- Word novo foi gerado e lido pelo teste de PP; inspeção visual online não executada.
+- Suíte integral e versão consolidada com outros itens ainda não executadas aqui.

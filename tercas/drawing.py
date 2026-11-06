@@ -5,6 +5,8 @@ from .catalogs import catalog_entry
 from .inclination_adapter import configuration
 
 def svg(data):
+ from .direct_self_weight import calculation_inputs
+ data=calculation_inputs(data)
  from .member_application import is_girt
  if is_girt(data):return wall_girt_svg(data)
  p=data['properties'];h,b,t,lip=[float(p[k]) for k in ['h','bf','t','lip']];scale=min(120/h,100/b);x,y=90,100;H=h*scale;B=b*scale;T=max(2,t*scale);D=lip*scale
@@ -61,7 +63,7 @@ def wall_girt_svg(data):
  if P:
   d=f'M{px} 95 v45 m-5 -8 l5 8 l5 -8' if P>0 else f'M{px} 140 v-45 m-5 8 l5 -8 l5 8'
   point=f'<path id="point-load-arrow" data-direction="{"left-physical" if P>0 else "right-physical"}" d="{d}" fill="none" stroke="#e87722" stroke-width="3"/>'
- mode='Direto: ações locais já combinadas; sem PP automático nem nova rotação.' if data.get('load_mode')!='area' else 'Área: PP/permanente verticais, vento horizontal; sem SC/P de cobertura automáticos.'
+ mode='Direto: ações locais totais calculadas; PP conforme convenção das entradas.' if data.get('load_mode')!='area' else 'Área: PP/permanente verticais, vento horizontal; sem SC/P de cobertura automáticos.'
  return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 440" role="img" aria-label="Travessa lateral U ou Ue boca para baixo, vento horizontal e gravidade vertical">
  <rect width="940" height="440" fill="#fafbfc" rx="14"/>
  <g font-family="Arial" fill="#25334a" font-size="13">

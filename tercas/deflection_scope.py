@@ -5,6 +5,7 @@ The existing scalar MSE calculation and all its guards are left unchanged.
 No action, result, source or historical output is silently converted.
 """
 import copy
+import math
 
 FIELD = 'deflection_model'
 MODE = 'local_uniaxial_component_v1'
@@ -19,7 +20,51 @@ TEXT = ('Flecha uniaxial isolada no eixo local solicitado: vertical local da ter
         'As ações paralelas permanecem nas entradas, combinações e verificações resistentes. '
         'O efeito delas na rigidez efetiva desta componente, a outra flecha e a parcela '
         'de torção/empenamento ficam fora deste modelo reduzido. O índice confronta somente '
-        'a componente isolada com o limite declarado; não aprova ELS completo ou o elemento.')
+        'a componente isolada com o limite declarado; não aprova ELS completo ou o elemento. '
+        'Se a própria tensão elástica bruta excede fy, a flecha fica apenas diagnóstica. '
+        'Essa guarda do aplicativo não verifica as tensões da seção efetiva.')
+
+ELASTIC_GUARD_SCOPE = (
+    'Guarda de consistência adotada pelo aplicativo, não nova prescrição da NBR: '
+    'max(abs(Mx))/Wx bruto <= fy. Considera apenas a flexão forte isolada. '
+    'O atendimento desta condição não prova elasticidade da seção efetiva, '
+    'da solicitação biaxial ou da resposta com torção; não se infere Wef de Ief.')
+
+
+def _elastic_guard(result):
+    """Record a necessary gross-elastic check; never qualify effective stress.
+
+    Use the *consumed* SLS snapshot, not editable input loads. This also keeps
+    area/support-limit and separately prepared direct-load adapters consistent.
+    A new calculation only may call this helper; rendering never calls it.
+    """
+    spec = result['input_snapshot']
+    fields = spec['selected_section']['fields']
+    W = fields['Wx_cm3']['value']
+    fy = fields['fy_MPa']['value']
+    positive = lambda x: type(x) in (int, float) and math.isfinite(x) and x > 0
+    record = dict(schema='isolated_uniaxial_gross_elastic_guard_v1',
+        scope=ELASTIC_GUARD_SCOPE, Wg_mm3=W*1000 if positive(W) else None,
+        fy_MPa=fy if positive(fy) else None, max_abs_M_Nmm=None,
+        sigma_gross_max_MPa=None, passed=None,
+        effective_section_stress_qualified=False,
+        source='Equilíbrio da viga biapoiada q/P; tensão elástica bruta M/Wg. '
+               'Propriedades, material e ações do snapshot consumido.')
+    if not positive(W) or not positive(fy):
+        record.update(status='missing_gross_elastic_inputs',
+            reason='Guarda elástica uniaxial pendente: Wx bruto e fy positivos com as propriedades do caso são necessários. Flecha apenas diagnóstica.')
+        return record
+    from .core.protocolo_ief import max_moment
+    actions = spec['SLS']
+    # max_moment is analytical equilibrium only; E, Ig and Ml are unused there.
+    m = max_moment((spec['L_mm'], 1., 1., 1., actions['q_Nmm'], actions['P_N'], actions['x_mm']))
+    sigma = m/record['Wg_mm3']
+    passed = sigma <= fy
+    record.update(max_abs_M_Nmm=m, sigma_gross_max_MPa=sigma, passed=passed,
+        status='gross_elastic_guard_passed' if passed else 'gross_elastic_model_exceeded',
+        reason=('Guarda bruta atendida; tensões da seção efetiva não qualificadas.' if passed else
+                f'Tensão elástica bruta uniaxial {sigma:.9g} MPa > fy={fy:.9g} MPa. Flecha apenas diagnóstica, sem índice conclusivo.'))
+    return record
 
 
 def enabled(data):
@@ -51,7 +96,11 @@ def _description(data, q, p, original_q=None, original_p=None):
         displacement_axis='local_normal_horizontal' if girt else 'local_normal_roof_vertical',
         displacement_label='Horizontal da travessa' if girt else 'Vertical local da terça, normal à cobertura',
         bending_axis='local_X_strong', inertia='Ix_effective',
-        formula_source='ABNT NBR14762:2010 §9.8.5, MSE escalar; fonte fornecida',
+        formula_source='ABNT NBR14762:2010 §9.8.5, MSE escalar; pp.51–52 (PDF57–58) da fonte fornecida',
+        formula_source_sha256='c2a01615a3ce9e2b93aeb7fee757f7bf9dd932adaefbc242e848ce813dc82407',
+        effective_inertia_law='lambda=sqrt(abs(Mx)/Ml); Ief=Ig for lambda<=0.673; otherwise min(Ig, Ig*(1-0.22/lambda)/lambda)',
+        implementation_convention='Clamp Ief<=Ig disclosed for rounded coefficients; not a new normative formula.',
+        displacement_method='Integral Mx(x)*unit_load_moment(x)/(E*Ief(x)), full simply supported physical span; same-sign q/P only.',
         model_scope='isolated_uniaxial_flexural_component',
         q_vector_N_mm=copy.deepcopy(q), P_vector_N=copy.deepcopy(p),
         original_q_vector_N_mm=copy.deepcopy(original_q if original_q is not None else q),
@@ -72,11 +121,17 @@ def annotate_direct(result):
     if not enabled(data):return
     ev = result['inclination_evidence']['ELS']
     record = _description(data, ev['q_vector'], ev['P_vector'])
+    guard = _elastic_guard(result)
+    record['gross_elastic_guard'] = copy.deepcopy(guard)
     result['deflection_scope_evidence'] = record
     result['ELS']['local_uniaxial_component'] = copy.deepcopy(record)
     result['ELS']['criterion_scope'] = record['criterion_scope']
-    # Do not add/recover index or change numerical failures, status, deflection,
-    # criticals or missing-property outcomes. Only the calculation scope changes.
+    # Only withdraw an existing conclusion. Numerical/missing-data failures
+    # retain precedence, and no displacement or resistance is changed.
+    if guard['passed'] is not True and result['ELS'].get('index') is not None:
+        result['ELS'].pop('index')
+        result['ELS'].update(criterion_status=guard['status'],
+            diagnostic_only=True, reason=guard['reason'])
     ev['deflection_scope'] = copy.deepcopy(record)
     ev['resistance_status'] = TEXT
     result['combined_ELS_approved'] = False
@@ -97,6 +152,7 @@ def annotate_batch(result):
         previous = case['evidence']['ELS']['local_uniaxial_component']
         record = _description(data, previous['q_vector_N_mm'], previous['P_vector_N'],
                               combo['q_vector'], combo['P_vector'])
+        record['gross_elastic_guard'] = copy.deepcopy(previous['gross_elastic_guard'])
         record['case_id'] = combo['id']
         record['point_position'] = combo.get('point_position')
         case['evidence']['ELS']['local_uniaxial_component'] = record
@@ -123,7 +179,9 @@ def presentation_rows(result, rows):
             row['Verificação'] = GIRT_ROW if girt else PURLIN_ROW
             if row.get('Índice') is not None:
                 row['Situação'] = ('Não atende' if row['Índice'] > 1 else 'Atende') + ' ao critério uniaxial isolado'
-            row['Observação'] = (row['Observação'] + ' ' + TEXT).strip()
+            elif result['ELS'].get('criterion_status') in ('gross_elastic_model_exceeded', 'missing_gross_elastic_inputs'):
+                row['Situação'] = 'Pendente — guarda elástica uniaxial'
+            row['Observação'] = (row['Observação'] + ' ' + record['text']).strip()
         out.append(row)
     return out
 
@@ -137,6 +195,21 @@ def report(doc, result):
     doc.add_paragraph('Não foram removidas as componentes paralelas das combinações de ações. '
                       'A flexão biaxial resistente é independente desta escolha de flecha. '
                       'Limites, fontes, sinais, posição de P e avisos numéricos da rota escalar são preservados.')
+    # Stored evidence only. Older records remain exactly historical, with no
+    # new calculation, read of live properties or retroactive pass/fail.
+    containers = [(c['combination']['id'], c['evidence']['ELS']) for c in result.get('cases', [])
+                  if c['combination']['limit_state'] == 'ELS'] if 'cases' in result else [('Direto', result['ELS'])]
+    guards = [(name, block.get('local_uniaxial_component', {}).get('gross_elastic_guard'))
+              for name, block in containers]
+    if any(isinstance(g, dict) for _, g in guards):
+        doc.add_paragraph(ELASTIC_GUARD_SCOPE)
+        for name, guard in guards:
+            if not isinstance(guard, dict):continue
+            doc.add_paragraph(str(name)+': '+guard['reason']+
+                (f" Mx máximo absoluto={guard['max_abs_M_Nmm']:.12g} Nmm; "
+                 f"Wx bruto={guard['Wg_mm3']:.12g} mm³; "
+                 f"σg,max={guard['sigma_gross_max_MPa']:.12g} MPa; fy={guard['fy_MPa']:.12g} MPa."
+                 if guard['sigma_gross_max_MPa'] is not None else ''))
 
 
 def render_choice(st, data, key):

@@ -1,4 +1,5 @@
 """Append saved NBR reference arithmetic to the existing calculation memory."""
+from ..three_girt_scope import view, central, NOTICE, axial_demand
 from .application import saved_component
 from .ui import LEVELS
 from ..three_girt_report import _table
@@ -11,6 +12,9 @@ def append(doc,demand,selected=0):
             doc.add_heading('Compressão e flexão NBR pendentes',1)
             doc.add_paragraph('A demanda Vlasov está preservada, mas a referência NBR não foi calculada: '+demand['NBR_axial_bending_error'])
         return
+    from ..three_girt_shear import append_report as append_web_shear
+    append_web_shear(doc,component,demand=demand)
+    component=view(component,demand)
     doc.add_page_break();doc.add_heading('Compressão e flexão das travessas pela NBR',1)
     doc.add_paragraph('Componente aritmética NBR 14762:2010 §9.9 com esforço normal da rede e momentos da mesma seção. Os denominadores são referências escalares de vão inteiro, com K = Cb = Cm = 1. Não constituem aprovação da estabilidade do conjunto tridimensional, interação N+M+B ou ELS.')
     doc.add_paragraph('O envelope da soma é procurado por zeros e pontos estacionários em cada trecho. Combinações e lados das juntas ficam separados. N positivo seleciona tração; N negativo seleciona compressão, sem reduzir a soma. Mz do frame positivo comprime a alma; o negativo comprime os lábios.')
@@ -33,9 +37,9 @@ def append(doc,demand,selected=0):
     sl=e['compression_slenderness'];maxsl=max(sl['symmetry_axis'],sl['orthogonal_axis'])
     ll=component['configuration']['effective_lengths_mm']
     doc.add_paragraph(f"Comprimentos efetivos da referência: eixo de simetria {ll['symmetry']:.2f} mm, eixo ortogonal {ll['orthogonal']:.2f} mm e torção {ll['torsion']:.2f} mm. KL/r máximo = {maxsl:.6f}; limite compressivo de §9.7.4 = 200. "+('LIMITE EXCEDIDO na referência de vão inteiro.' if not sl['satisfied'] else 'Limite escalar atendido nesta referência.')+' Cada nó de tirante permanece região de introdução de força, não novo apoio de flambagem. A regra de tração L/r <= 300 é uma recomendação distinta.')
-    if t['Nt_Rd_N'] is None:
+    if t['Nt_Rd_N'] is None and (not central(demand) or axial_demand(demand,1)):
         doc.add_paragraph('Tração incompleta: faltam An0 fora da ligação, An dos caminhos pertinentes na ligação e Ct aplicável com origem. Fy e Fu já vêm das entradas. Ag não foi adotada como área líquida implícita; os trechos tracionados ficam sem índice completo.')
-    doc.add_paragraph(f"Maior magnitude de giro nas estações exportadas: {component['maximum_observed_abs_twist_at_exported_stations_rad']:.6f} rad. A aplicabilidade da análise linear em pequenas rotações não está qualificada. Os resultados são referência computacional condicionada, especialmente quando os giros são grandes.")
+    doc.add_paragraph(f"Contexto da rede completa, maior magnitude de giro nas estações exportadas: {component['maximum_observed_abs_twist_at_exported_stations_rad']:.6f} rad. A aplicabilidade da análise linear em pequenas rotações não está qualificada. Os resultados são referência computacional condicionada, especialmente quando os giros são grandes.")
     doc.add_page_break();doc.add_heading('Estado governante da referência por travessa',1)
     for level,p in component['per_member'].items():
         w=p['complete_reference_envelope'] or p['partial_reference_maximum']

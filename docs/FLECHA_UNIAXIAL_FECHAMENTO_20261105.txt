@@ -1,0 +1,95 @@
+Flecha uniaxial com inércia efetiva - fechamento de 05/11/2026
+
+Base examinada: f2aac5e, lucasmec28/tercas. Candidata em cópia, sem publicação.
+
+1. Solução disponível
+
+Terça/travessa isolada: escolha explícita "Flecha somente uniaxial local".
+Calcula a componente normal à cobertura da terça ou horizontal da travessa,
+em viga biapoiada no vão físico inteiro, com q uniforme e P em posição fixa.
+q/P devem ter o mesmo sentido; q=0, P=0 e sinais negativos são admitidos.
+Na terça inclinada essa componente não é a vertical global. A escolha não
+exclui ações paralelas das combinações ou das verificações resistentes.
+
+Três travessas: alternativa explícita e separada no painel Vlasov. Calcula
+três vigas isoladas, cada uma com seu q horizontal distribuído e mesmo vão
+físico completo. As parcelas 0,5/1/0,5 já presentes nos registros não são
+aplicadas outra vez. A alternativa não é a flecha da rede com tirantes nem
+limite superior ou inferior dela. Não reaproveita reações da rede.
+Ver THREE_GIRT_UNIAXIAL_ALTERNATIVE_20261105.txt.
+
+2. Fonte e equações verificadas
+
+ABNT NBR 14762:2010, §9.8.5, páginas impressas 51-52 / PDF57-58.
+PDF fornecido "NBR14762 Dim. perfis formados a frio.pdf", SHA256:
+c2a01615a3ce9e2b93aeb7fee757f7bf9dd932adaefbc242e848ce813dc82407.
+Nesta revisão, o hash foi recalculado e as duas páginas foram inspecionadas
+visualmente. Não é afirmação de vigência normativa para obra específica.
+
+MSE da fonte: lambda_pd = sqrt(Mn/Ml); Ief=Ig para lambda_pd<=0,673;
+Ief=Ig*(1-0,22/lambda_pd)/lambda_pd para lambda_pd>0,673.
+Mn é o momento das combinações ELS; Ml é o crítico local elástico conforme
+9.8.2; Ig é a inércia bruta. O app usa abs(Mx) para a convenção de sinais.
+Ml deve pertencer à mesma seção e ter origem, sem transferir crítico por nome.
+
+Convenção de implementação já existente, divulgada e mantida: Ief<=Ig,
+limitando o pequeno excesso da fórmula com coeficientes arredondados. A
+transição efetiva desse clamp ocorre em
+lambda=(1+sqrt(1-4*0,22))/2. Não se atribui o clamp à redação da norma.
+
+Equilíbrio: M(x)=q*x*(L-x)/2 + P*(L-a)*x/L para x<=a;
+o termo de P é P*a*(L-x)/L para x>a. A flecha no ponto z é a integral
+de M(x)*m_z(x)/(E*Ief(x)). Aqui m_z=(L-z)*x/L à esquerda de z e
+m_z=z*(L-x)/L à direita. São trabalho virtual e teoria de Euler-Bernoulli,
+não nova fórmula normativa de rigidez biaxial.
+
+A integração é dividida em P, z e transições de Ief. A busca do máximo usa
+a raiz contínua da derivada, não malha de posições. No domínio q/P de mesmo
+sentido o momento e a curvatura mantêm sinal, permitindo esse máximo único.
+q/P opostos continuam fora deste protocolo; aviso numérico retira o índice.
+No modo área, cada combinação tem cálculo próprio; P no limite do apoio
+tem contribuição nula de flexão interior, mantendo a força original no
+registro e nas verificações pertinentes. Não se somam flechas de Ief distintos.
+
+3. Correção desta revisão
+
+A rota local explícita agora aplica a guarda de consistência elástica que
+já existia na alternativa das três travessas: sigma_g,max=max(abs(Mx))/Wg
+deve ser <=fy para conservar um índice conclusivo da componente.
+Se excede fy ou faltam Wg/fy, mantém a flecha matemática como diagnóstico,
+sem atendimento/reprovação conclusivos. Falhas numéricas anteriores conservam
+precedência. O máximo de momento inclui P, fronteiras e raízes de V=0.
+
+Essa é uma guarda adotada pelo aplicativo, NÃO nova exigência atribuída ao
+§9.8.5, resistência ELU ou garantia de segurança. Ela não certifica tensões
+da seção efetiva: não se infere Wef=Ief/c. A guarda só considera flexão forte
+isolada. Passar nela não prova elasticidade da resposta biaxial/torsional.
+As propriedades, material e ações usados são os do snapshot consumido;
+campos editáveis externos não substituem as ações totais já calculadas.
+
+Não foram alterados o núcleo MSE, as combinações, os cálculos resistentes,
+as fontes próprias, o modelo físico, os apoios, a geometria nem a política
+de ativação. Sem telha como apoio, contato, rigidez ou travamento do perfil.
+Word/JSON guardam evidência e valores. A emissão de histórico não recalcula
+essa guarda nem requalifica resultados antigos. O texto salvo é preservado.
+
+4. Verificação e limites
+
+Os testes existentes comparam os dois usos contra integração independente
+de Gauss, incluindo inércia bruta/reduzida, q positivo/negativo/nulo e P.
+Os novos testes cobrem tensão bruta acima de fy nas próprias 1,20/1,50/3,35 mm,
+limite declarado permissivo sem falso atendimento, igualdade sigma_g=fy,
+máximo com P, falta de dados, precedência de avisos, limite P no apoio,
+snapshot consumido e emissão sem recálculo. Regressão AppTest cobre opt-in,
+recálculo e importação incompatível. O recibo de QA registra contagens reais.
+
+Limitações permanentes: componente isolada, primeira ordem, pequenas
+deformações, flexão forte somente. Sem rigidez efetiva biaxial, parcela de
+torção/empenamento, tensões efetivas combinadas, redistribuição da rede,
+deformação de cisalhamento/ligações, qualificação física dos tirantes ou
+aprovação global. Não é validação experimental nem liberação de projeto.
+
+Integração necessária: aplicar o commit sobre a candidata com peso próprio,
+retestar a guarda contra as ações totais do snapshot e atualizar a época do
+cache. Publicação, revisão estrutural responsável e QA do runtime final são
+etapas distintas; nenhuma é inferida destes testes locais.

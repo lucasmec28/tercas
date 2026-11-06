@@ -94,7 +94,10 @@ def render(st, data, revision, load, render_results, render_import):
         data['selected_types'] = st.multiselect('Famílias de combinações', source(state['reference_id'])['selected_types'],
                                               default=data['selected_types'], key=f'ue_ref_types_{revision}')
     else:
-        st.caption('Ações já locais e combinadas: inclua o PP no total informado. Não são giradas novamente; nenhum PP é adicionado automaticamente. P na posição informada; limites junto ao apoio permanecem no modo por área. O contrato legado também exige entradas de área armazenadas válidas: se necessário, volte ao modo área para corrigi-las; nada é substituído automaticamente.')
+        from .direct_self_weight import render as direct_PP_render,active as direct_PP_active
+        direct_PP_render(st,data,f'direct_PP_{revision}')
+        if not direct_PP_active(data):
+         st.caption('Ações já locais e combinadas: inclua o PP no total informado. Não são giradas novamente; nenhum PP é adicionado automaticamente. P na posição informada; limites junto ao apoio permanecem no modo por área. O contrato legado também exige entradas de área armazenadas válidas: se necessário, volte ao modo área para corrigi-las; nada é substituído automaticamente.')
         for suffix, label in (('uls','ELU'), ('sls','ELS')):
             with st.expander(label + ' — ações locais', expanded=True):
                 for prefix, title, unit in (('q','q normal','N/mm'), ('q_parallel','q paralelo','N/mm'),
@@ -112,6 +115,8 @@ def render(st, data, revision, load, render_results, render_import):
     st.caption(TRACE_NOTE.split(' A evidência MLE')[0] if uniaxial_component_enabled(data) or gross_component_selected(data) else TRACE_NOTE)
     from .torsion_study_ui import render_choice as render_torsion_choice
     render_torsion_choice(st, data, f'torsion_choice_{revision}')
+    from .isolated_en_ui import render_choice as render_EN_choice
+    render_EN_choice(st, data, f'isolated_EN_{revision}')
     # Read action widgets before an explicit length commit, so the same event
     # cannot overwrite newly entered actions or absolute P positions.
     from .ue_member_application_ui import render_choice as render_application_choice,render_horizontal_limit

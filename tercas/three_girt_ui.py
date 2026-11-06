@@ -1,3 +1,4 @@
+from .direct_self_weight import active as direct_PP_active, TEXT as DIRECT_PP_TEXT
 """UI for an explicitly separate 3D diagnostic; never renders legacy pass rows."""
 import copy
 import html
@@ -74,9 +75,11 @@ def render_configuration(st,d,b,revision,num,txt):
  st.caption('PP nodal é uma idealização: não representa flexão local da barra pelo próprio peso. Nas três travessas, 0.5/1/0.5 incide sobre vento e CP por área, incluindo peso da telha/revestimento; PP próprio do perfil de cada travessa fica integral.')
  if not c['brace_self_weight']:st.warning('PP das barras/cantoneiras foi excluído deste diagnóstico; ausência não significa dispensa normativa.')
  if d['load_mode']=='direct':
-  st.caption('A carga central já combinada deve incluir seu PP. Informe abaixo a parcela PP já contida nela; não é uma segunda soma. Nos extremos usa-se 0.5×(q central−PP)+PP. PP das barras é adicional, com fator próprio explicitamente declarado.')
+  if direct_PP_active(d):st.caption(DIRECT_PP_TEXT)
+  else:st.caption('A carga central já combinada deve incluir seu PP. Informe abaixo a parcela PP já contida nela; não é uma segunda soma. Nos extremos usa-se 0.5×(q central−PP)+PP. PP das barras é adicional, com fator próprio explicitamente declarado.')
   for state,label in [('uls','ELU'),('sls','ELS')]:
-   c['direct_pp_'+state+'_N_mm']=num('Parcela PP da travessa já contida no q vertical '+label,'three_pp_'+state,c['direct_pp_'+state+'_N_mm'],'kN/m')
+   if not direct_PP_active(d):
+    c['direct_pp_'+state+'_N_mm']=num('Parcela PP da travessa já contida no q vertical '+label,'three_pp_'+state,c['direct_pp_'+state+'_N_mm'],'kN/m')
    if c['brace_self_weight']:c['direct_brace_factor_'+state]=num('Fator do PP das barras — '+label,'three_bar_factor_'+state,c['direct_brace_factor_'+state])
  else:st.caption('Modo área: PP das travessas e das barras usa o coeficiente PP de cada linha da matriz do usuário. A matriz selecionada não é um gerador normativo universal.')
  c['origin']=txt('Origem / hipóteses do sistema de três travessas','three_origin',c['origin'])

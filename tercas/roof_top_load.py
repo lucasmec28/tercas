@@ -85,6 +85,9 @@ def digest(value):
 
 def _source_snapshot(result, schema='roof_top_load_evidence_v1'):
     from . import direct_roof_envelope as direct
+    from . import direct_roof_separated as separated
+    if schema==separated.SCHEMA:
+        return digest(dict(schema=result.get('schema'),direct_separated_inputs=separated.combinations(result['input_data'])))
     if schema==direct.SCHEMA:
         return digest(dict(schema=result.get('schema'),direct_combined_inputs=direct.combinations(result['input_data'])))
     return digest(dict(schema=result.get('schema'),load_bundle=result.get('load_bundle'),
@@ -104,8 +107,8 @@ def preserved(result):
     ev=result.get('roof_top_load_evidence')
     if ev is None:return None
     from .application import fingerprint
-    from . import direct_roof_envelope as direct
-    if (not isinstance(ev,dict) or ev.get('schema') not in ('roof_top_load_evidence_v1',direct.SCHEMA)
+    from . import direct_roof_envelope as direct,direct_roof_separated as separated
+    if (not isinstance(ev,dict) or ev.get('schema') not in ('roof_top_load_evidence_v1',direct.SCHEMA,separated.SCHEMA)
         or fingerprint(result['input_data'])!=result.get('input_fingerprint')
         or ev.get('source_input_fingerprint')!=result.get('input_fingerprint')
         or ev.get('choice_snapshot')!=configuration(result['input_data'])
@@ -126,6 +129,14 @@ def preserved(result):
         if any(r.get('direct_envelope') is not True or
             any(t.get('value') is not None for t in r.get('primary_torque_by_action',[])) for r in rows):
             raise ValueError('Envoltória de altura não pode declarar torque real.')
+    if ev['schema']==separated.SCHEMA:
+        from .direct_self_weight import evidence as pp_evidence
+        if (ev.get('load_basis')!=separated.BASIS or ev.get('direct_self_weight')!=pp_evidence(result['input_data'])
+            or ev.get('self_weight_added') is not True or ev.get('primary_torque_enveloped') is not False):
+            raise ValueError('Contrato de PP separado alterado.')
+        rows=ev.get('records',[])
+        if rows and [(r.get('combination_id'),r.get('limit_state')) for r in rows]!=[(c['id'],c['limit_state']) for c in separated.combinations(result['input_data'])]:
+            raise ValueError('Inventário direto separado incompleto.')
     return copy.deepcopy(ev)
 
 
@@ -133,6 +144,9 @@ def combination_inventory(result):
     """Saved-model identity, no solver and no retroactive v1 direct promotion."""
     from . import direct_roof_envelope as direct
     ev=result.get('roof_top_load_evidence',{})
+    from . import direct_roof_separated as separated
+    if ev.get('schema')==separated.SCHEMA and ev.get('load_basis')==separated.BASIS:
+        return separated.combinations(result['input_data'])
     if ev.get('schema')==direct.SCHEMA and ev.get('load_basis')==direct.BASIS:
         return direct.combinations(result['input_data'])
     return copy.deepcopy(result.get('load_bundle',{}).get('combinations',[]))
@@ -180,7 +194,8 @@ def attach(result):
             'Esquema de cobertura armazenado, inativo na travessa. A fachada exige orientação e ações próprias; o programa não interpreta sua face carregada como topo da terça.')
         return _save(out,ev)
     if data.get('load_mode')=='direct' and result.get('schema')=='NBR14762_one_span_v1':
-        return _attach_direct(result,c)
+        from .direct_self_weight import active as pp_active
+        return _attach_direct_separated(result,c) if pp_active(data) else _attach_direct(result,c)
     if data.get('load_mode')!='area' or result.get('schema')!='tercas_batch_results_v1':
         ev=_pending(result,c,
             'Me com altura requer separar PP e cargas da cobertura. No modo direto, q já combinado não revela essa divisão: nenhum PP foi acrescentado nem toda a carga foi deslocada ao topo. Use ações por área para este esquema.')
@@ -261,6 +276,45 @@ def _attach_direct(result,c):
     count=sum(r.get('numerically_converged') is True and r.get('Me_Nmm') is not None for r in rows)
     ev.update(status='elastic_critical_component' if count else 'pending_model_scope',reason='',
         records=rows,computed_cases=count,pending_cases=len(rows)-count,
+        torsion_assessment_separate=True,
+        length_scope='Vão inteiro do esquema; comprimentos efetivos manuais não entram nesta componente.')
+    return _save(out,ev)
+
+
+def _attach_direct_separated(result,c):
+    from . import direct_roof_separated as direct
+    from .direct_self_weight import evidence as pp_evidence
+    from .model_domain import evidence
+    data=result['input_data'];out=copy.deepcopy(result)
+    ev=_pending(result,c,'')
+    ev.update(schema=direct.SCHEMA,load_basis=direct.BASIS,
+        direct_self_weight=pp_evidence(data),self_weight_added=True,
+        primary_torque_enveloped=False,manual_effective_lengths_used=False,
+        legacy_bending_denominators_unchanged=True)
+    if evidence(data)['conflict']:
+        ev['reason']=evidence(data)['conflict'];return _save(out,ev)
+    try:
+        geo=geometry(data);ev['geometry']=geo;p=data['properties']
+        params=dict(L_mm=finite(data['L_mm'],'L',True),E_MPa=finite(p['E_MPa'],'E',True),
+            G_MPa=finite(p['G_MPa'],'G',True),Iweak_mm4=finite(p['Iy_cm4'],'Iy',True)*1e4,
+            J_mm4=finite(p['J_mm4'],'J',True),Cw_mm6=finite(p['Cw_mm6'],'Cw',True))
+    except (ValueError,TypeError,KeyError,OSError) as exc:
+        ev['reason']='Dados do modelo direto não qualificados: '+str(exc);return _save(out,ev)
+    records=[]
+    for combo in direct.combinations(data):
+        acts,parallel=direct.actions(combo,geo)
+        base=dict(combination_id=combo['id'],limit_state=combo['limit_state'],
+                  direct_envelope=False,physical_applicability_verified=False,actions=acts)
+        if parallel:
+            records.append(dict(base,status='pending_biaxial_model',Me_Nmm=None,lambda_cr=None,
+                reason='Componentes paralelas individuais em '+', '.join(parallel)+'. Não são apagadas nem canceladas para liberar Me uniaxial.'));continue
+        try:calc=refined(**params,actions=acts)
+        except (ValueError,ArithmeticError) as exc:
+            records.append(dict(base,status='pending_numerical_qualification',Me_Nmm=None,lambda_cr=None,reason=str(exc)));continue
+        records.append(dict(base,**calc))
+    count=sum(r.get('numerically_converged') is True and r.get('Me_Nmm') is not None for r in records)
+    ev.update(status='elastic_critical_component' if count else 'pending_model_scope',reason='',
+        records=records,computed_cases=count,pending_cases=len(records)-count,
         torsion_assessment_separate=True,
         length_scope='Vão inteiro do esquema; comprimentos efetivos manuais não entram nesta componente.')
     return _save(out,ev)

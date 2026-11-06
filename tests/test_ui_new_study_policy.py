@@ -6,6 +6,7 @@ from types import SimpleNamespace
 import pytest
 import streamlit as st
 from streamlit.testing.v1 import AppTest
+from tercas.direct_self_weight import activate as activate_PP
 from tercas.deflection_scope import FIELD,MODE,LABEL,activate
 from tercas.application import example,calculate
 from tercas import ue_reference as ue,ue_family_reference as family,homogeneous_reference as homogeneous
@@ -37,7 +38,7 @@ def test_fresh_session_and_explicit_example_default_only_new_inputs():
     checkbox(a).uncheck().run(timeout=30)
     assert FIELD not in a.session_state.last_input and not checkbox(a).value
     button(a,'Carregar exemplo didático').click().run(timeout=30)
-    assert a.session_state.base==example() and not checkbox(a).value
+    assert a.session_state.base==activate_PP(example()) and not checkbox(a).value
 
 
 @pytest.mark.parametrize('kind',['generic','ue','family'])
@@ -90,5 +91,5 @@ def test_own_plain_U_loader_is_outside_new_default_scope():
     a=new_app()
     button(a,'Carregar referência de cálculo').click().run(timeout=30)
     assert not a.exception
-    assert a.session_state.last_input==homogeneous.load_reference('U100')
+    assert a.session_state.last_input==activate_PP(homogeneous.load_reference('U100'))
     assert FIELD not in a.session_state.last_input

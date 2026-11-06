@@ -35,14 +35,20 @@ def text_lines(ev):
         lines.append('Complemento independente: capacidades com E='+fmt(mat['E_MPa'])+' MPa, G='+fmt(mat['G_MPa'])+' MPa e Fy='+fmt(mat['Fy_MPa'])+' MPa. '+
             'Análise com 0,90 das rigidezes: Ea='+fmt(analysis['E_MPa'])+' MPa e Ga='+fmt(analysis['G_MPa'])+' MPa. '+
             'O fator de rigidez não é aplicado novamente à resistência. φb=φB=0,90, uma única vez.')
-        lines.append('Análise NBR preservada: E='+fmt(old['E_MPa'])+' MPa e G='+fmt(old['G_MPa'])+' MPa. Mesmas ações, posições, geometria e vínculos declarados; nenhum PP acrescentado.')
+        lines.append('Análise NBR preservada: E='+fmt(old['E_MPa'])+' MPa e G='+fmt(old['G_MPa'])+' MPa. Mesmas ações, posições, geometria e vínculos declarados; nenhum PP duplicado pelo complemento.')
         lines.append('H4: envelope longitudinal concomitante no campo existente, com pisos algébricos AISI F2/F3/F4 como denominadores. My físico positivo comprime lábios; negativo comprime alma. '+
             'F4 não aplicável na alma refere-se somente à capacidade de flexão fraca pura; não é dispensa para o campo misto.')
         if ev.get('roof_height_source'):
             source=ev['roof_height_source']
             lines.extend([source['model'],source['adequacy_note'],source['interpretation']])
+            if source.get('direct_load_basis'):
+                lines.append(source['direct_self_weight']['scope'])
+                lines.append('P direto conserva a posição interior informada; P não nulo exatamente no apoio permanece fora da entrada direta. '
+                             'Não é reinterpretado como limite a→0+ nem como força móvel.')
             lines.append('Mcre e Ma,piso calculados para cada ELU, em material nominal AISI, sem usar Me/MRd NBR e sem novo Cb. PP permanece no CG; forças externas no topo. Torque primário e avisos preservados. Flexão fraca real mantém H4 pendente; não se transfere o denominador fraco no CT.')
-            lines.append('Geometria, linha de aplicação e garfos são hipóteses explícitas do esquema, não comprovação das ligações/forças reais. P conserva posições prescritas e limite analítico no apoio; não se declara envelope móvel. A escolha física do esquema existente basta; nenhum Me ou Cb é solicitado.')
+            lines.append('Geometria, linha de aplicação e garfos são hipóteses explícitas do esquema, não comprovação das ligações/forças reais. '
+                + ('P conserva sua posição direta exata.' if source.get('direct_load_basis') else 'P conserva posições prescritas e limite analítico no apoio; não se declara envelope móvel.')
+                + ' A escolha física do esquema existente basta; nenhum Me ou Cb é solicitado.')
         else:
             lines.append('As excentricidades declaradas geram torque em relação ao centro de cisalhamento na configuração inicial. As forças mantêm direção fixa. Mcre dos denominadores é de flexão pura Cb=1, não um crítico do campo misto com altura de carga; efeitos geométricos de altura/Wagner não estão incluídos.')
         lines.append('Primeira ordem racional, membro isolado N=0: não há efeitos P–δ/P–Δ de força axial. Não declara certificação estrutural C1.2/C1.3. '+
@@ -70,6 +76,7 @@ def show(st,result):
     if ev['records']:st.dataframe(display_frame(rows(ev)),hide_index=True,width='stretch')
     with st.expander('Memória G8.1/H4, capacidades e estados concomitantes',expanded=False):
         if result.get('schema')=='tercas_three_girt_results_v1' or result.get('input_data',{}).get('member_application','purlin')!='purlin':st.json(ev)
+        elif result.get('schema')=='NBR14762_one_span_v1':st.caption('Consulte as capacidades e os estados salvos em “Exibir memória numérica salva do caso direto” ou no arquivo JSON, sem novo cálculo.')
         else:st.caption('As capacidades e todos os estados estão preservados no arquivo JSON. Em “Memória numérica e rastreabilidade”, selecione explicitamente uma combinação para consultar o registro AISI salvo, sem novo cálculo.')
 
 

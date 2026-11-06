@@ -1,0 +1,27 @@
+........................................................................ [  8%]
+............................................................................... [ 17%]
+........................................................................ [ 25%]
+.......................................... [ 30%]
+............................................................................... [ 39%]
+........................................................................ [ 48%]
+.................................................................... [ 55%]
+.................................................................... [ 63%]
+........................................................................ [ 72%]
+........................................................................ [ 80%]
+........................................................................ [ 88%]
+........................................................................ [ 97%]
+.........................                                                [100%]
+============================= slowest 12 durations =============================
+64.14s setup    tests/test_aa_report_premises.py::test_girt_batch_premise_retains_concurrent_axes_and_horizontal_criterion[aa_web_family_bound_component_v1]
+30.76s setup    tests/test_three_girt_assessment.py::test_current_dispatch_inventory_and_hash_chain
+23.39s call     tests/test_three_girt_tension_detail.py::test_EN_computation_and_intact_source_are_not_modified_by_detail
+23.39s call     tests/test_ui_three_girt_tension_detail.py::test_simple_row_save_invalidate_and_manual_switch
+20.08s call     tests/test_ui_torsion_nominal.py::test_explicit_detail_no_rerun_solve_and_input_invalidation
+19.91s call     tests/test_ui_three_girt_tension_detail.py::test_weld_selection_alone_is_pending_and_branch_switch_clears
+18.36s call     tests/test_ui_torsion_nominal.py::test_failed_detail_keeps_base_and_recovery_is_atomic
+17.84s call     tests/test_ui_homogeneous_lengths.py::test_declared_lengths_origin_and_draft_mode_switch_preserve_values
+16.67s call     tests/test_ui_own_girt_application.py::test_application_requires_explicit_apply_and_preserves_round_trip[1.5]
+15.39s call     tests/test_ui_aisi_roof_height.py::test_actual_app_roof_H4_and_read_only_rerender
+14.99s call     tests/test_ui_homogeneous_lengths.py::test_fixed_is_separate_opt_in_and_preview_never_commits_or_keeps_stale_result
+14.45s call     tests/test_ui_own_girt_application.py::test_application_requires_explicit_apply_and_preserves_round_trip[1.2]
+865 passed, 456 subtests passed in 899.32s (0:14:59)

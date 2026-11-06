@@ -109,6 +109,9 @@ def attach(result):
         out['torsion_evidence']=pending_evidence(result,
             'Declarações de torção preservadas, mas inativas na travessa isolada: o adaptador Vlasov publicado nesta candidata é exclusivo da terça. Nenhuma linha, giro ou torção nula foi inferida para o fechamento.')
         return out
+    from . import direct_torsion
+    if automatic is not None and direct_torsion.active(data):
+        return direct_torsion.attach(result, automatic)
     if result.get('schema') != 'tercas_batch_results_v1' or data.get('load_mode') != 'area':
         out = copy.deepcopy(result)
         out['torsion_evidence'] = pending_evidence(result,
@@ -134,6 +137,8 @@ def attach(result):
     out = attach_torsion_evidence(result, section=section, load_lines=lines, supports=supports)
     from .aisi_torsion_component import attach_dense
     out = attach_dense(out, section)
+    from .isolated_en_application import attach_dense as attach_EN_dense
+    out = attach_EN_dense(out, section)
     out['torsion_evidence'] = summarize_torsion_evidence(out['torsion_evidence'])
     out['torsion_evidence']['choice_snapshot'] = copy.deepcopy(c)
     if automatic is not None:

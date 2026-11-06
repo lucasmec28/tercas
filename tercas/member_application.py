@@ -100,7 +100,8 @@ def adapt_wall_bundle(data,bundle):
 
 def add_vertical_studies(result):
  """Gross elastic diagnostic only; never infer Ief or replace strength demands."""
- d=result['input_data'];cfg=wall_els_config(d);ties=tie_config(d)
+ from .direct_self_weight import calculation_inputs
+ d=calculation_inputs(result['input_data']);cfg=wall_els_config(d);ties=tie_config(d)
  q=d.get('q_parallel_sls',0.);P=d.get('P_parallel_sls',0.);fields=result['input_snapshot']['selected_section']['fields']
  scope='Componente vertical elástica com Iy bruto, não Ief qualificado nem aprovação ELS. Não altera esforços resistentes, FLT ou Lref.'
  common={'scope':scope,'uses_effective_inertia':False,'usable_for_design_approval':False,

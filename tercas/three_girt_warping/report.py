@@ -1,4 +1,5 @@
 """Word memory consumes the saved snapshot only; never calls a solver."""
+from ..three_girt_scope import members as verification_members, central, NOTICE
 from io import BytesIO
 from docx import Document
 from docx.shared import Inches,Pt,RGBColor
@@ -17,6 +18,7 @@ def word(result,selected=0,assessment=None):
         style=d.styles[name];style.font.name='Calibri';style.font.color.rgb=RGBColor(0,0,0)
     d.styles['Normal'].font.size=Pt(10);d.styles['Normal'].paragraph_format.space_after=Pt(5)
     for node in list(d.styles.element.iter(qn('w:pBdr'))):node.getparent().remove(node)
+    if central(result):d.add_paragraph(NOTICE)
     d.add_heading('Três travessas com empenamento G81 e referência NBR',0)
     d.add_paragraph('Memória parcial de demanda Vlasov, componente G8.1 de bimomento e referência NBR de compressão e flexão para Lucas. N, My, Mz, B e T são concomitantes por combinação e lado. G8.1 não encerra a interação N+M+B, estabilidade, ELS, tirantes ou ligações; não há aprovação global.')
     d.add_paragraph('As combinações da matriz atual são preservadas, sem recombinação LRFD AISI. G8.1 é comparação complementar condicionada; a compatibilidade global das ações e resistências não é declarada por este índice isolado.')
@@ -45,6 +47,7 @@ def word(result,selected=0,assessment=None):
     d.add_page_break()
     d.add_heading('Combinação detalhada com esforços concomitantes',1)
     row=result['cases'][selected];d.add_paragraph(row['combination']['id']+' — '+row['combination']['limit_state']+'. Estado de maior |B| de cada travessa; não soma de máximos distintos.')
+    if central(result):d.add_paragraph('Contexto mecânico completo: superior/inferior não recebem conclusão resistente.')
     values=[]
     for member,env in row['model']['girt_envelopes'].items():
         a=env['B_equilibrium_Nmm2']['max_abs'];values.append([LABELS[member],f"{a['x_mm']:.2f}",f"{a['N_N']:.2f}",f"{a['My_strong_Nmm']/1e6:.4f}",f"{a['Mz_weak_Nmm']/1e6:.4f}",f"{a['B_equilibrium_Nmm2']:.2f}",f"{a['T_equilibrium_SC_Nmm']/1e6:.4g}"])

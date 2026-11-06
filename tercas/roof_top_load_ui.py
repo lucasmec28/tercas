@@ -42,7 +42,8 @@ def _finite(value):
 
 def diagram(g, data):
     """Schematic only: do not fabricate a centroid or shear-centre location."""
-    direct = data.get('load_mode') == 'direct'
+    from .direct_self_weight import active as pp_active
+    direct = data.get('load_mode') == 'direct' and not pp_active(data)
     h, bf = g.get('h_mm'), g.get('bf_mm')
     if not all(_finite(v) and v > 0 for v in (h, bf)):
         raise ValueError('Dimensões da seção não disponíveis para desenho.')
@@ -104,7 +105,8 @@ def render_choice(st, data, key):
         if value != selected:data[FIELD] = choice(value)
         st.caption(ASSUMPTIONS)
         st.warning(SCOPE)
-        if data.get('load_mode') == 'direct':
+        from .direct_self_weight import active as pp_active
+        if data.get('load_mode') == 'direct' and not pp_active(data):
             st.caption(DIRECT_ASSUMPTIONS)
             st.caption(DIRECT_SCOPE)
             st.info('As entradas diretas já estão nos eixos locais e não são giradas novamente. '

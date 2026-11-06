@@ -1,0 +1,1259 @@
+{
+  "synthetic_examples": true,
+  "not_physical_design_approval": true,
+  "examples": [
+    {
+      "thickness_mm": 1.2,
+      "length_mm": 4000.0,
+      "direct_combination": {
+        "id": "DIRECT_ELU",
+        "limit_state": "ELU",
+        "type": "ELU direto — ações externas + PP automático",
+        "q_N_mm": 0.12610911353432544,
+        "P_N": 20.0,
+        "x_mm": 1700.0,
+        "q_vector": {
+          "normal": 0.12610911353432544,
+          "parallel": 0.0
+        },
+        "P_vector": {
+          "normal": 20.0,
+          "parallel": 0.0
+        },
+        "external_q_vector": {
+          "normal": 0.1,
+          "parallel": 0.0
+        },
+        "profile_PP_q_vector": {
+          "normal": 0.026109113534325445,
+          "parallel": 0.0
+        },
+        "profile_PP_factor": 1.25,
+        "load_basis": "direct_external_top_profile_PP_CG",
+        "source": "Valores digitados sem o peso próprio do perfil. O programa soma PP no CG pela massa da seção: 1,25 no ELU e 1,0 no ELS. Demais cargas no topo selecionado; ações digitadas já locais, sem nova rotação."
+      },
+      "load_roles": [
+        "EXTERNAL",
+        "PP",
+        "P"
+      ],
+      "stress_checks": {
+        "schema": "isolated_EN_6_1_6_sufficient_stress_bounds_v2",
+        "status": "computed_sufficient_EN_section_stress_bounds",
+        "combination_id": "DIRECT_ELU",
+        "member_id": "PURLIN",
+        "source_demand_sha256": "cf0f83d78df2ad92090e390fd69b5003a054b1600486081790d886de012e1c37",
+        "source_geometry_sha256": "004c9cee5033877e4cf1c619627c968c02413aea26fe67a0a5422218ec003f7d",
+        "component_sections_sha256": "160fc2f2d8cb3d490ddccb996d023ba04459d25f54d287eb0a1bb495f539638b",
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "model_origin": "QA intact nominal Ue model",
+        "intact_section_model_declared": true,
+        "criteria": {
+          "normal": {
+            "index_upper_bound": 0.240224814936717,
+            "criterion": "within_limit",
+            "bound_control": {
+              "source_piece": {
+                "kind": "element",
+                "element_index": 35,
+                "element_id": "PURLIN:e36",
+                "a_mm": 1915.625,
+                "b_mm": 1987.5
+              },
+              "wall_segment": 58,
+              "face": 1,
+              "longitudinal_control": 1,
+              "wall_control": 2,
+              "signed_operator_superset": {
+                "Mx": "Mx_positive",
+                "My": "My_negative"
+              },
+              "sigma_interval_MPa": [
+                60.05620373417895,
+                60.05620373417924
+              ],
+              "tau_interval_MPa": [
+                0.5964141401424926,
+                0.5964141401424984
+              ],
+              "is_physical_state": false,
+              "semantics": "Bernstein bound control, not a stress witness"
+            },
+            "observed_exceedance": false
+          },
+          "shear": {
+            "index_upper_bound": 0.12127748688645353,
+            "criterion": "within_limit",
+            "bound_control": {
+              "source_piece": {
+                "kind": "element",
+                "element_index": 0,
+                "element_id": "PURLIN:e1",
+                "a_mm": 0.0,
+                "b_mm": 53.125
+              },
+              "wall_segment": 103,
+              "face": -1,
+              "longitudinal_control": 0,
+              "wall_control": 1,
+              "signed_operator_superset": {
+                "Mx": "Mx_negative",
+                "My": "My_negative"
+              },
+              "sigma_interval_MPa": [
+                4.101464797189792e-16,
+                4.1014647971898286e-16
+              ],
+              "tau_interval_MPa": [
+                -17.504897425133805,
+                -17.504897425133727
+              ],
+              "is_physical_state": false,
+              "semantics": "Bernstein bound control, not a stress witness"
+            },
+            "observed_exceedance": false
+          },
+          "interaction": {
+            "index_upper_bound": 0.21845403168938957,
+            "criterion": "within_limit",
+            "bound_control": {
+              "source_piece": {
+                "kind": "element",
+                "element_index": 34,
+                "element_id": "PURLIN:e35",
+                "a_mm": 1843.75,
+                "b_mm": 1915.625
+              },
+              "wall_segment": 58,
+              "face": 1,
+              "longitudinal_control": 2,
+              "wall_control": 2,
+              "signed_operator_superset": {
+                "Mx": "Mx_positive",
+                "My": "My_negative"
+              },
+              "sigma_interval_MPa": [
+                60.044704107596196,
+                60.04470410759649
+              ],
+              "tau_interval_MPa": [
+                1.098811207348889,
+                1.098811207348899
+              ],
+              "is_physical_state": false,
+              "semantics": "Bernstein bound control, not a stress witness"
+            },
+            "observed_exceedance": false
+          }
+        },
+        "full_member_field_covered": true,
+        "section_stress_criteria_sufficiently_satisfied": true,
+        "normal_limit_MPa": 250.0,
+        "shear_limit_MPa": 144.33756729740645,
+        "interaction_limit_MPa": 275.0,
+        "polynomial_patches_checked": 106496,
+        "source_analysis_material": {
+          "E_MPa": 200000.0,
+          "G_MPa": 76923.07692307692
+        },
+        "method": "EN1993-1-3:2006 6.1.6(3)-(5); tensor Bernstein sufficient bounds; signed-section union",
+        "demand_basis": "Original first-order isolated ELU demand retained, not recalculated as EN action combinations",
+        "stress_scope": "Effective pure-section bending normal stresses at both exterior faces; gross B/V/Tsv/Tw; N=0",
+        "numerical_scope": "Outward-rounded bounds of the recovered polynomial field only, not an FE-error certificate",
+        "NBR_capacities_used": false,
+        "AISI_capacities_used": false,
+        "whole_member_approved": false,
+        "complete_EN_design_qualified": false,
+        "global_stability_qualified": false,
+        "excluded": [
+          "EN6.1.5 shear buckling resistance and EN6.1.10 N-M-V interaction",
+          "Global/member stability and applicability of first-order/small-rotation analysis",
+          "Local force introduction, connections, holes/net-section rupture and actual restraint details",
+          "Full serviceability and physical geometry/material verification"
+        ],
+        "integration_status": "Separate EN section component; explicit caller opt-in; no global approval",
+        "content_sha256": "f0dfb92b39d9867913088b592f7cd6b494324f7777fabb2c48e74465d9a61773"
+      }
+    },
+    {
+      "thickness_mm": 1.5,
+      "length_mm": 4000.0,
+      "direct_combination": {
+        "id": "DIRECT_ELU",
+        "limit_state": "ELU",
+        "type": "ELU direto — ações externas + PP automático",
+        "q_N_mm": 0.13235150456066477,
+        "P_N": 20.0,
+        "x_mm": 1700.0,
+        "q_vector": {
+          "normal": 0.13235150456066477,
+          "parallel": 0.0
+        },
+        "P_vector": {
+          "normal": 20.0,
+          "parallel": 0.0
+        },
+        "external_q_vector": {
+          "normal": 0.1,
+          "parallel": 0.0
+        },
+        "profile_PP_q_vector": {
+          "normal": 0.03235150456066476,
+          "parallel": 0.0
+        },
+        "profile_PP_factor": 1.25,
+        "load_basis": "direct_external_top_profile_PP_CG",
+        "source": "Valores digitados sem o peso próprio do perfil. O programa soma PP no CG pela massa da seção: 1,25 no ELU e 1,0 no ELS. Demais cargas no topo selecionado; ações digitadas já locais, sem nova rotação."
+      },
+      "load_roles": [
+        "EXTERNAL",
+        "PP",
+        "P"
+      ],
+      "stress_checks": {
+        "schema": "isolated_EN_6_1_6_sufficient_stress_bounds_v2",
+        "status": "computed_sufficient_EN_section_stress_bounds",
+        "combination_id": "DIRECT_ELU",
+        "member_id": "PURLIN",
+        "source_demand_sha256": "a43ca3b81b7fd2ce3f363d6859e3a5ad03f2323a6406b88013e7b02149de660c",
+        "source_geometry_sha256": "cd50bf66f299d1c072b5a45016cf2ffca777b390332d3386175c34d53c234931",
+        "component_sections_sha256": "12ca2e26887413f4186d5da4cbf9b8f89baa9148345b590f112666dcc1e74005",
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "model_origin": "QA intact nominal Ue model",
+        "intact_section_model_declared": true,
+        "criteria": {
+          "normal": {
+            "index_upper_bound": 0.18987002800288266,
+            "criterion": "within_limit",
+            "bound_control": {
+              "source_piece": {
+                "kind": "element",
+                "element_index": 35,
+                "element_id": "PURLIN:e36",
+                "a_mm": 1915.625,
+                "b_mm": 1987.5
+              },
+              "wall_segment": 58,
+              "face": 1,
+              "longitudinal_control": 1,
+              "wall_control": 2,
+              "signed_operator_superset": {
+                "Mx": "Mx_negative",
+                "My": "My_negative"
+              },
+              "sigma_interval_MPa": [
+                47.46750700072039,
+                47.46750700072066
+              ],
+              "tau_interval_MPa": [
+                0.5591723905231443,
+                0.5591723905231496
+              ],
+              "is_physical_state": false,
+              "semantics": "Bernstein bound control, not a stress witness"
+            },
+            "observed_exceedance": false
+          },
+          "shear": {
+            "index_upper_bound": 0.11366702064812181,
+            "criterion": "within_limit",
+            "bound_control": {
+              "source_piece": {
+                "kind": "element",
+                "element_index": 0,
+                "element_id": "PURLIN:e1",
+                "a_mm": 0.0,
+                "b_mm": 53.125
+              },
+              "wall_segment": 103,
+              "face": -1,
+              "longitudinal_control": 0,
+              "wall_control": 2,
+              "signed_operator_superset": {
+                "Mx": "Mx_negative",
+                "My": "My_negative"
+              },
+              "sigma_interval_MPa": [
+                -4.7173882132216515e-28,
+                -4.07052227094042e-28
+              ],
+              "tau_interval_MPa": [
+                -16.406421242293963,
+                -16.40642124229388
+              ],
+              "is_physical_state": false,
+              "semantics": "Bernstein bound control, not a stress witness"
+            },
+            "observed_exceedance": false
+          },
+          "interaction": {
+            "index_upper_bound": 0.17270657187630423,
+            "criterion": "within_limit",
+            "bound_control": {
+              "source_piece": {
+                "kind": "element",
+                "element_index": 34,
+                "element_id": "PURLIN:e35",
+                "a_mm": 1843.75,
+                "b_mm": 1915.625
+              },
+              "wall_segment": 58,
+              "face": 1,
+              "longitudinal_control": 2,
+              "wall_control": 2,
+              "signed_operator_superset": {
+                "Mx": "Mx_negative",
+                "My": "My_negative"
+              },
+              "sigma_interval_MPa": [
+                47.46033353630899,
+                47.46033353630924
+              ],
+              "tau_interval_MPa": [
+                1.0369769039448802,
+                1.0369769039448902
+              ],
+              "is_physical_state": false,
+              "semantics": "Bernstein bound control, not a stress witness"
+            },
+            "observed_exceedance": false
+          }
+        },
+        "full_member_field_covered": true,
+        "section_stress_criteria_sufficiently_satisfied": true,
+        "normal_limit_MPa": 250.0,
+        "shear_limit_MPa": 144.33756729740645,
+        "interaction_limit_MPa": 275.0,
+        "polynomial_patches_checked": 106496,
+        "source_analysis_material": {
+          "E_MPa": 200000.0,
+          "G_MPa": 76923.07692307692
+        },
+        "method": "EN1993-1-3:2006 6.1.6(3)-(5); tensor Bernstein sufficient bounds; signed-section union",
+        "demand_basis": "Original first-order isolated ELU demand retained, not recalculated as EN action combinations",
+        "stress_scope": "Effective pure-section bending normal stresses at both exterior faces; gross B/V/Tsv/Tw; N=0",
+        "numerical_scope": "Outward-rounded bounds of the recovered polynomial field only, not an FE-error certificate",
+        "NBR_capacities_used": false,
+        "AISI_capacities_used": false,
+        "whole_member_approved": false,
+        "complete_EN_design_qualified": false,
+        "global_stability_qualified": false,
+        "excluded": [
+          "EN6.1.5 shear buckling resistance and EN6.1.10 N-M-V interaction",
+          "Global/member stability and applicability of first-order/small-rotation analysis",
+          "Local force introduction, connections, holes/net-section rupture and actual restraint details",
+          "Full serviceability and physical geometry/material verification"
+        ],
+        "integration_status": "Separate EN section component; explicit caller opt-in; no global approval",
+        "content_sha256": "bac4c02128c6d32b3bec2cd7aeb26d16be62e3067279d86dcafd68e18f39e00c"
+      }
+    },
+    {
+      "thickness_mm": 2.0,
+      "length_mm": 4000.0,
+      "direct_combination": {
+        "id": "DIRECT_ELU",
+        "limit_state": "ELU",
+        "type": "ELU direto — ações externas + PP automático",
+        "q_N_mm": 0.14250225639812625,
+        "P_N": 20.0,
+        "x_mm": 1700.0,
+        "q_vector": {
+          "normal": 0.14250225639812625,
+          "parallel": 0.0
+        },
+        "P_vector": {
+          "normal": 20.0,
+          "parallel": 0.0
+        },
+        "external_q_vector": {
+          "normal": 0.1,
+          "parallel": 0.0
+        },
+        "profile_PP_q_vector": {
+          "normal": 0.04250225639812624,
+          "parallel": 0.0
+        },
+        "profile_PP_factor": 1.25,
+        "load_basis": "direct_external_top_profile_PP_CG",
+        "source": "Valores digitados sem o peso próprio do perfil. O programa soma PP no CG pela massa da seção: 1,25 no ELU e 1,0 no ELS. Demais cargas no topo selecionado; ações digitadas já locais, sem nova rotação."
+      },
+      "load_roles": [
+        "EXTERNAL",
+        "PP",
+        "P"
+      ],
+      "stress_checks": {
+        "schema": "isolated_EN_6_1_6_sufficient_stress_bounds_v2",
+        "status": "computed_sufficient_EN_section_stress_bounds",
+        "combination_id": "DIRECT_ELU",
+        "member_id": "PURLIN",
+        "source_demand_sha256": "34fef2f45ca4d27c32bd4425cc7c76cbf693aa315b32f8d10c892f170697c718",
+        "source_geometry_sha256": "13c8bf700cce34d8fb2bc607e9ae06c305cc59cd7e0e67234a38fb0218704638",
+        "component_sections_sha256": "cba2fcc1b72dad90e500aaeaf07132ef570b031bf88acc9e902ebfc912b191d9",
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "model_origin": "QA intact nominal Ue model",
+        "intact_section_model_declared": true,
+        "criteria": {
+          "normal": {
+            "index_upper_bound": 0.14029320782848534,
+            "criterion": "within_limit",
+            "bound_control": {
+              "source_piece": {
+                "kind": "element",
+                "element_index": 35,
+                "element_id": "PURLIN:e36",
+                "a_mm": 1915.625,
+                "b_mm": 1987.5
+              },
+              "wall_segment": 57,
+              "face": 1,
+              "longitudinal_control": 1,
+              "wall_control": 2,
+              "signed_operator_superset": {
+                "Mx": "Mx_negative",
+                "My": "My_negative"
+              },
+              "sigma_interval_MPa": [
+                35.073301957121096,
+                35.07330195712133
+              ],
+              "tau_interval_MPa": [
+                0.48140289249010104,
+                0.48140289249010576
+              ],
+              "is_physical_state": false,
+              "semantics": "Bernstein bound control, not a stress witness"
+            },
+            "observed_exceedance": false
+          },
+          "shear": {
+            "index_upper_bound": 0.10012047951495354,
+            "criterion": "within_limit",
+            "bound_control": {
+              "source_piece": {
+                "kind": "element",
+                "element_index": 0,
+                "element_id": "PURLIN:e1",
+                "a_mm": 0.0,
+                "b_mm": 53.125
+              },
+              "wall_segment": 103,
+              "face": -1,
+              "longitudinal_control": 0,
+              "wall_control": 2,
+              "signed_operator_superset": {
+                "Mx": "Mx_negative",
+                "My": "My_negative"
+              },
+              "sigma_interval_MPa": [
+                -1.9721522630525297e-28,
+                -1.7986028639039067e-28
+              ],
+              "tau_interval_MPa": [
+                -14.451146449838202,
+                -14.451146449838149
+              ],
+              "is_physical_state": false,
+              "semantics": "Bernstein bound control, not a stress witness"
+            },
+            "observed_exceedance": false
+          },
+          "interaction": {
+            "index_upper_bound": 0.1276698240815713,
+            "criterion": "within_limit",
+            "bound_control": {
+              "source_piece": {
+                "kind": "element",
+                "element_index": 34,
+                "element_id": "PURLIN:e35",
+                "a_mm": 1843.75,
+                "b_mm": 1915.625
+              },
+              "wall_segment": 57,
+              "face": 1,
+              "longitudinal_control": 1,
+              "wall_control": 2,
+              "signed_operator_superset": {
+                "Mx": "Mx_negative",
+                "My": "My_negative"
+              },
+              "sigma_interval_MPa": [
+                35.056368926576596,
+                35.05636892657683
+              ],
+              "tau_interval_MPa": [
+                1.1116108804081517,
+                1.1116108804081606
+              ],
+              "is_physical_state": false,
+              "semantics": "Bernstein bound control, not a stress witness"
+            },
+            "observed_exceedance": false
+          }
+        },
+        "full_member_field_covered": true,
+        "section_stress_criteria_sufficiently_satisfied": true,
+        "normal_limit_MPa": 250.0,
+        "shear_limit_MPa": 144.33756729740645,
+        "interaction_limit_MPa": 275.0,
+        "polynomial_patches_checked": 106496,
+        "source_analysis_material": {
+          "E_MPa": 200000.0,
+          "G_MPa": 76923.07692307692
+        },
+        "method": "EN1993-1-3:2006 6.1.6(3)-(5); tensor Bernstein sufficient bounds; signed-section union",
+        "demand_basis": "Original first-order isolated ELU demand retained, not recalculated as EN action combinations",
+        "stress_scope": "Effective pure-section bending normal stresses at both exterior faces; gross B/V/Tsv/Tw; N=0",
+        "numerical_scope": "Outward-rounded bounds of the recovered polynomial field only, not an FE-error certificate",
+        "NBR_capacities_used": false,
+        "AISI_capacities_used": false,
+        "whole_member_approved": false,
+        "complete_EN_design_qualified": false,
+        "global_stability_qualified": false,
+        "excluded": [
+          "EN6.1.5 shear buckling resistance and EN6.1.10 N-M-V interaction",
+          "Global/member stability and applicability of first-order/small-rotation analysis",
+          "Local force introduction, connections, holes/net-section rupture and actual restraint details",
+          "Full serviceability and physical geometry/material verification"
+        ],
+        "integration_status": "Separate EN section component; explicit caller opt-in; no global approval",
+        "content_sha256": "e8fc85224a0c51a31fdb480cb3d751a6d18a8244f8f41752cb4d4e9cffc120f4"
+      }
+    },
+    {
+      "thickness_mm": 2.25,
+      "length_mm": 4000.0,
+      "direct_combination": {
+        "id": "DIRECT_ELU",
+        "limit_state": "ELU",
+        "type": "ELU direto — ações externas + PP automático",
+        "q_N_mm": 0.14745892925133947,
+        "P_N": 20.0,
+        "x_mm": 1700.0,
+        "q_vector": {
+          "normal": 0.14745892925133947,
+          "parallel": 0.0
+        },
+        "P_vector": {
+          "normal": 20.0,
+          "parallel": 0.0
+        },
+        "external_q_vector": {
+          "normal": 0.1,
+          "parallel": 0.0
+        },
+        "profile_PP_q_vector": {
+          "normal": 0.04745892925133946,
+          "parallel": 0.0
+        },
+        "profile_PP_factor": 1.25,
+        "load_basis": "direct_external_top_profile_PP_CG",
+        "source": "Valores digitados sem o peso próprio do perfil. O programa soma PP no CG pela massa da seção: 1,25 no ELU e 1,0 no ELS. Demais cargas no topo selecionado; ações digitadas já locais, sem nova rotação."
+      },
+      "load_roles": [
+        "EXTERNAL",
+        "PP",
+        "P"
+      ],
+      "stress_checks": {
+        "schema": "isolated_EN_6_1_6_sufficient_stress_bounds_v2",
+        "status": "computed_sufficient_EN_section_stress_bounds",
+        "combination_id": "DIRECT_ELU",
+        "member_id": "PURLIN",
+        "source_demand_sha256": "5ae848a9d84f4d273a2aef616b739c8b662ced009fabc684851bbc36faa76dd9",
+        "source_geometry_sha256": "e30a0bd327deb1523b527a5737a9f14ac8f8fd189c884588c0339ef7c0b80e47",
+        "component_sections_sha256": "70b0f20f27ad4a04ee9b6bdd3c8541902945de7f242f5d86e509a44fec4f398a",
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "model_origin": "QA intact nominal Ue model",
+        "intact_section_model_declared": true,
+        "criteria": {
+          "normal": {
+            "index_upper_bound": 0.12383481269924328,
+            "criterion": "within_limit",
+            "bound_control": {
+              "source_piece": {
+                "kind": "element",
+                "element_index": 35,
+                "element_id": "PURLIN:e36",
+                "a_mm": 1915.625,
+                "b_mm": 1987.5
+              },
+              "wall_segment": 57,
+              "face": 1,
+              "longitudinal_control": 1,
+              "wall_control": 2,
+              "signed_operator_superset": {
+                "Mx": "Mx_negative",
+                "My": "My_negative"
+              },
+              "sigma_interval_MPa": [
+                30.958703174810633,
+                30.958703174810815
+              ],
+              "tau_interval_MPa": [
+                0.44132750842084645,
+                0.44132750842085106
+              ],
+              "is_physical_state": false,
+              "semantics": "Bernstein bound control, not a stress witness"
+            },
+            "observed_exceedance": false
+          },
+          "shear": {
+            "index_upper_bound": 0.09346466163042579,
+            "criterion": "within_limit",
+            "bound_control": {
+              "source_piece": {
+                "kind": "element",
+                "element_index": 0,
+                "element_id": "PURLIN:e1",
+                "a_mm": 0.0,
+                "b_mm": 53.125
+              },
+              "wall_segment": 103,
+              "face": -1,
+              "longitudinal_control": 0,
+              "wall_control": 2,
+              "signed_operator_superset": {
+                "Mx": "Mx_negative",
+                "My": "My_negative"
+              },
+              "sigma_interval_MPa": [
+                -4.851494567109223e-29,
+                -3.313215801928249e-29
+              ],
+              "tau_interval_MPa": [
+                -13.490461888010897,
+                -13.490461888010842
+              ],
+              "is_physical_state": false,
+              "semantics": "Bernstein bound control, not a stress witness"
+            },
+            "observed_exceedance": false
+          },
+          "interaction": {
+            "index_upper_bound": 0.11271369459153766,
+            "criterion": "within_limit",
+            "bound_control": {
+              "source_piece": {
+                "kind": "element",
+                "element_index": 33,
+                "element_id": "PURLIN:e34",
+                "a_mm": 1771.875,
+                "b_mm": 1843.75
+              },
+              "wall_segment": 57,
+              "face": 1,
+              "longitudinal_control": 2,
+              "wall_control": 2,
+              "signed_operator_superset": {
+                "Mx": "Mx_negative",
+                "My": "My_negative"
+              },
+              "sigma_interval_MPa": [
+                30.8993489108498,
+                30.899348910849977
+              ],
+              "tau_interval_MPa": [
+                1.4140654881029686,
+                1.4140654881029795
+              ],
+              "is_physical_state": false,
+              "semantics": "Bernstein bound control, not a stress witness"
+            },
+            "observed_exceedance": false
+          }
+        },
+        "full_member_field_covered": true,
+        "section_stress_criteria_sufficiently_satisfied": true,
+        "normal_limit_MPa": 250.0,
+        "shear_limit_MPa": 144.33756729740645,
+        "interaction_limit_MPa": 275.0,
+        "polynomial_patches_checked": 106496,
+        "source_analysis_material": {
+          "E_MPa": 200000.0,
+          "G_MPa": 76923.07692307692
+        },
+        "method": "EN1993-1-3:2006 6.1.6(3)-(5); tensor Bernstein sufficient bounds; signed-section union",
+        "demand_basis": "Original first-order isolated ELU demand retained, not recalculated as EN action combinations",
+        "stress_scope": "Effective pure-section bending normal stresses at both exterior faces; gross B/V/Tsv/Tw; N=0",
+        "numerical_scope": "Outward-rounded bounds of the recovered polynomial field only, not an FE-error certificate",
+        "NBR_capacities_used": false,
+        "AISI_capacities_used": false,
+        "whole_member_approved": false,
+        "complete_EN_design_qualified": false,
+        "global_stability_qualified": false,
+        "excluded": [
+          "EN6.1.5 shear buckling resistance and EN6.1.10 N-M-V interaction",
+          "Global/member stability and applicability of first-order/small-rotation analysis",
+          "Local force introduction, connections, holes/net-section rupture and actual restraint details",
+          "Full serviceability and physical geometry/material verification"
+        ],
+        "integration_status": "Separate EN section component; explicit caller opt-in; no global approval",
+        "content_sha256": "7e481fb4c4d7c4ef5f243be7fe5b687c80aef67f314bb5fd24ffd72379425f8a"
+      }
+    },
+    {
+      "thickness_mm": 2.65,
+      "length_mm": 4000.0,
+      "direct_combination": {
+        "id": "DIRECT_ELU",
+        "limit_state": "ELU",
+        "type": "ELU direto — ações externas + PP automático",
+        "q_N_mm": 0.15522500423229632,
+        "P_N": 20.0,
+        "x_mm": 1700.0,
+        "q_vector": {
+          "normal": 0.15522500423229632,
+          "parallel": 0.0
+        },
+        "P_vector": {
+          "normal": 20.0,
+          "parallel": 0.0
+        },
+        "external_q_vector": {
+          "normal": 0.1,
+          "parallel": 0.0
+        },
+        "profile_PP_q_vector": {
+          "normal": 0.055225004232296315,
+          "parallel": 0.0
+        },
+        "profile_PP_factor": 1.25,
+        "load_basis": "direct_external_top_profile_PP_CG",
+        "source": "Valores digitados sem o peso próprio do perfil. O programa soma PP no CG pela massa da seção: 1,25 no ELU e 1,0 no ELS. Demais cargas no topo selecionado; ações digitadas já locais, sem nova rotação."
+      },
+      "load_roles": [
+        "EXTERNAL",
+        "PP",
+        "P"
+      ],
+      "stress_checks": {
+        "schema": "isolated_EN_6_1_6_sufficient_stress_bounds_v2",
+        "status": "computed_sufficient_EN_section_stress_bounds",
+        "combination_id": "DIRECT_ELU",
+        "member_id": "PURLIN",
+        "source_demand_sha256": "5259a4fb5328c432e2ff67f959ac6252e6fa8b5f668d469ec47be69897df12c8",
+        "source_geometry_sha256": "243974742f83ef47937ec56c938718a37b3e037248c4016eddae0d42af062746",
+        "component_sections_sha256": "c20a639eb393fd6e4bb4a2ce42619d9ee5874915d1b59790be6c0e04290ffcc9",
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "model_origin": "QA intact nominal Ue model",
+        "intact_section_model_declared": true,
+        "criteria": {
+          "normal": {
+            "index_upper_bound": 0.10452950513684026,
+            "criterion": "within_limit",
+            "bound_control": {
+              "source_piece": {
+                "kind": "element",
+                "element_index": 35,
+                "element_id": "PURLIN:e36",
+                "a_mm": 1915.625,
+                "b_mm": 1987.5
+              },
+              "wall_segment": 56,
+              "face": 1,
+              "longitudinal_control": 1,
+              "wall_control": 2,
+              "signed_operator_superset": {
+                "Mx": "Mx_negative",
+                "My": "My_negative"
+              },
+              "sigma_interval_MPa": [
+                26.132376284209894,
+                26.13237628421006
+              ],
+              "tau_interval_MPa": [
+                0.3807345531228623,
+                0.38073455312286686
+              ],
+              "is_physical_state": false,
+              "semantics": "Bernstein bound control, not a stress witness"
+            },
+            "observed_exceedance": false
+          },
+          "shear": {
+            "index_upper_bound": 0.08352423884688596,
+            "criterion": "within_limit",
+            "bound_control": {
+              "source_piece": {
+                "kind": "element",
+                "element_index": 0,
+                "element_id": "PURLIN:e1",
+                "a_mm": 0.0,
+                "b_mm": 53.125
+              },
+              "wall_segment": 103,
+              "face": -1,
+              "longitudinal_control": 0,
+              "wall_control": 1,
+              "signed_operator_superset": {
+                "Mx": "Mx_negative",
+                "My": "My_negative"
+              },
+              "sigma_interval_MPa": [
+                4.431132597065523e-15,
+                4.431132597065573e-15
+              ],
+              "tau_interval_MPa": [
+                -12.055685445527047,
+                -12.055685445527
+              ],
+              "is_physical_state": false,
+              "semantics": "Bernstein bound control, not a stress witness"
+            },
+            "observed_exceedance": false
+          },
+          "interaction": {
+            "index_upper_bound": 0.09517211575834934,
+            "criterion": "within_limit",
+            "bound_control": {
+              "source_piece": {
+                "kind": "element",
+                "element_index": 33,
+                "element_id": "PURLIN:e34",
+                "a_mm": 1771.875,
+                "b_mm": 1843.75
+              },
+              "wall_segment": 56,
+              "face": 1,
+              "longitudinal_control": 2,
+              "wall_control": 2,
+              "signed_operator_superset": {
+                "Mx": "Mx_negative",
+                "My": "My_negative"
+              },
+              "sigma_interval_MPa": [
+                26.08486816787235,
+                26.084868167872514
+              ],
+              "tau_interval_MPa": [
+                1.2343157713161286,
+                1.2343157713161388
+              ],
+              "is_physical_state": false,
+              "semantics": "Bernstein bound control, not a stress witness"
+            },
+            "observed_exceedance": false
+          }
+        },
+        "full_member_field_covered": true,
+        "section_stress_criteria_sufficiently_satisfied": true,
+        "normal_limit_MPa": 250.0,
+        "shear_limit_MPa": 144.33756729740645,
+        "interaction_limit_MPa": 275.0,
+        "polynomial_patches_checked": 106496,
+        "source_analysis_material": {
+          "E_MPa": 200000.0,
+          "G_MPa": 76923.07692307692
+        },
+        "method": "EN1993-1-3:2006 6.1.6(3)-(5); tensor Bernstein sufficient bounds; signed-section union",
+        "demand_basis": "Original first-order isolated ELU demand retained, not recalculated as EN action combinations",
+        "stress_scope": "Effective pure-section bending normal stresses at both exterior faces; gross B/V/Tsv/Tw; N=0",
+        "numerical_scope": "Outward-rounded bounds of the recovered polynomial field only, not an FE-error certificate",
+        "NBR_capacities_used": false,
+        "AISI_capacities_used": false,
+        "whole_member_approved": false,
+        "complete_EN_design_qualified": false,
+        "global_stability_qualified": false,
+        "excluded": [
+          "EN6.1.5 shear buckling resistance and EN6.1.10 N-M-V interaction",
+          "Global/member stability and applicability of first-order/small-rotation analysis",
+          "Local force introduction, connections, holes/net-section rupture and actual restraint details",
+          "Full serviceability and physical geometry/material verification"
+        ],
+        "integration_status": "Separate EN section component; explicit caller opt-in; no global approval",
+        "content_sha256": "0e08a9705dfa0a257b4e3a9d8eb2f06b2416409eb03fa8124ced73b1d16b82d9"
+      }
+    },
+    {
+      "thickness_mm": 3.0,
+      "length_mm": 4000.0,
+      "direct_combination": {
+        "id": "DIRECT_ELU",
+        "limit_state": "ELU",
+        "type": "ELU direto — ações externas + PP automático",
+        "q_N_mm": 0.16185413554890907,
+        "P_N": 20.0,
+        "x_mm": 1700.0,
+        "q_vector": {
+          "normal": 0.16185413554890907,
+          "parallel": 0.0
+        },
+        "P_vector": {
+          "normal": 20.0,
+          "parallel": 0.0
+        },
+        "external_q_vector": {
+          "normal": 0.1,
+          "parallel": 0.0
+        },
+        "profile_PP_q_vector": {
+          "normal": 0.061854135548909055,
+          "parallel": 0.0
+        },
+        "profile_PP_factor": 1.25,
+        "load_basis": "direct_external_top_profile_PP_CG",
+        "source": "Valores digitados sem o peso próprio do perfil. O programa soma PP no CG pela massa da seção: 1,25 no ELU e 1,0 no ELS. Demais cargas no topo selecionado; ações digitadas já locais, sem nova rotação."
+      },
+      "load_roles": [
+        "EXTERNAL",
+        "PP",
+        "P"
+      ],
+      "stress_checks": {
+        "schema": "isolated_EN_6_1_6_sufficient_stress_bounds_v2",
+        "status": "computed_sufficient_EN_section_stress_bounds",
+        "combination_id": "DIRECT_ELU",
+        "member_id": "PURLIN",
+        "source_demand_sha256": "1b1fcc5fbe356ed1b15473e9fc130bc29badf6358919b3fc3f7083787682c64d",
+        "source_geometry_sha256": "c3d1e69d48f6ad2980e6779eb2509e42e07a2b957ce71c158095fda6b71a4e00",
+        "component_sections_sha256": "06ab706c093469f2b915532c91f3101f6d0a4a83134a2fcb1888682c295e1e9c",
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "model_origin": "QA intact nominal Ue model",
+        "intact_section_model_declared": true,
+        "criteria": {
+          "normal": {
+            "index_upper_bound": 0.09246737240576151,
+            "criterion": "within_limit",
+            "bound_control": {
+              "source_piece": {
+                "kind": "element",
+                "element_index": 35,
+                "element_id": "PURLIN:e36",
+                "a_mm": 1915.625,
+                "b_mm": 1987.5
+              },
+              "wall_segment": 55,
+              "face": 1,
+              "longitudinal_control": 1,
+              "wall_control": 2,
+              "signed_operator_superset": {
+                "Mx": "Mx_negative",
+                "My": "My_negative"
+              },
+              "sigma_interval_MPa": [
+                23.11684310144022,
+                23.116843101440374
+              ],
+              "tau_interval_MPa": [
+                0.3333569449604603,
+                0.3333569449604638
+              ],
+              "is_physical_state": false,
+              "semantics": "Bernstein bound control, not a stress witness"
+            },
+            "observed_exceedance": false
+          },
+          "shear": {
+            "index_upper_bound": 0.07574567539137358,
+            "criterion": "within_limit",
+            "bound_control": {
+              "source_piece": {
+                "kind": "element",
+                "element_index": 0,
+                "element_id": "PURLIN:e1",
+                "a_mm": 0.0,
+                "b_mm": 53.125
+              },
+              "wall_segment": 103,
+              "face": -1,
+              "longitudinal_control": 0,
+              "wall_control": 2,
+              "signed_operator_superset": {
+                "Mx": "Mx_negative",
+                "My": "My_negative"
+              },
+              "sigma_interval_MPa": [
+                -3.786532345060857e-29,
+                -2.090481398835681e-29
+              ],
+              "tau_interval_MPa": [
+                -10.932946519289882,
+                -10.932946519289834
+              ],
+              "is_physical_state": false,
+              "semantics": "Bernstein bound control, not a stress witness"
+            },
+            "observed_exceedance": false
+          },
+          "interaction": {
+            "index_upper_bound": 0.08419057138643804,
+            "criterion": "within_limit",
+            "bound_control": {
+              "source_piece": {
+                "kind": "element",
+                "element_index": 33,
+                "element_id": "PURLIN:e34",
+                "a_mm": 1771.875,
+                "b_mm": 1843.75
+              },
+              "wall_segment": 55,
+              "face": 1,
+              "longitudinal_control": 2,
+              "wall_control": 2,
+              "signed_operator_superset": {
+                "Mx": "Mx_negative",
+                "My": "My_negative"
+              },
+              "sigma_interval_MPa": [
+                23.074998816519415,
+                23.074998816519564
+              ],
+              "tau_interval_MPa": [
+                1.0921516362549608,
+                1.0921516362549695
+              ],
+              "is_physical_state": false,
+              "semantics": "Bernstein bound control, not a stress witness"
+            },
+            "observed_exceedance": false
+          }
+        },
+        "full_member_field_covered": true,
+        "section_stress_criteria_sufficiently_satisfied": true,
+        "normal_limit_MPa": 250.0,
+        "shear_limit_MPa": 144.33756729740645,
+        "interaction_limit_MPa": 275.0,
+        "polynomial_patches_checked": 106496,
+        "source_analysis_material": {
+          "E_MPa": 200000.0,
+          "G_MPa": 76923.07692307692
+        },
+        "method": "EN1993-1-3:2006 6.1.6(3)-(5); tensor Bernstein sufficient bounds; signed-section union",
+        "demand_basis": "Original first-order isolated ELU demand retained, not recalculated as EN action combinations",
+        "stress_scope": "Effective pure-section bending normal stresses at both exterior faces; gross B/V/Tsv/Tw; N=0",
+        "numerical_scope": "Outward-rounded bounds of the recovered polynomial field only, not an FE-error certificate",
+        "NBR_capacities_used": false,
+        "AISI_capacities_used": false,
+        "whole_member_approved": false,
+        "complete_EN_design_qualified": false,
+        "global_stability_qualified": false,
+        "excluded": [
+          "EN6.1.5 shear buckling resistance and EN6.1.10 N-M-V interaction",
+          "Global/member stability and applicability of first-order/small-rotation analysis",
+          "Local force introduction, connections, holes/net-section rupture and actual restraint details",
+          "Full serviceability and physical geometry/material verification"
+        ],
+        "integration_status": "Separate EN section component; explicit caller opt-in; no global approval",
+        "content_sha256": "dfcb5e9f6ac54c9a229029ca4449308a8eca5cff3f607ac4d249828c8f084b27"
+      }
+    },
+    {
+      "thickness_mm": 3.35,
+      "length_mm": 4000.0,
+      "direct_combination": {
+        "id": "DIRECT_ELU",
+        "limit_state": "ELU",
+        "type": "ELU direto — ações externas + PP automático",
+        "q_N_mm": 0.1683281615265789,
+        "P_N": 20.0,
+        "x_mm": 1700.0,
+        "q_vector": {
+          "normal": 0.1683281615265789,
+          "parallel": 0.0
+        },
+        "P_vector": {
+          "normal": 20.0,
+          "parallel": 0.0
+        },
+        "external_q_vector": {
+          "normal": 0.1,
+          "parallel": 0.0
+        },
+        "profile_PP_q_vector": {
+          "normal": 0.06832816152657889,
+          "parallel": 0.0
+        },
+        "profile_PP_factor": 1.25,
+        "load_basis": "direct_external_top_profile_PP_CG",
+        "source": "Valores digitados sem o peso próprio do perfil. O programa soma PP no CG pela massa da seção: 1,25 no ELU e 1,0 no ELS. Demais cargas no topo selecionado; ações digitadas já locais, sem nova rotação."
+      },
+      "load_roles": [
+        "EXTERNAL",
+        "PP",
+        "P"
+      ],
+      "stress_checks": {
+        "schema": "isolated_EN_6_1_6_sufficient_stress_bounds_v2",
+        "status": "computed_sufficient_EN_section_stress_bounds",
+        "combination_id": "DIRECT_ELU",
+        "member_id": "PURLIN",
+        "source_demand_sha256": "25b03916a6929ab8625b9761d587ddfaf4d890184dd9feacf47e55ef4852eec8",
+        "source_geometry_sha256": "90bf516ec9761304d22aba266bdf9c2f06bf6f73bc6989b46194bbd5d218eab3",
+        "component_sections_sha256": "763dd0895660b4e802fb19805710d1198265ba5eab594cbf08c0ca8e49db3d19",
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "model_origin": "QA intact nominal Ue model",
+        "intact_section_model_declared": true,
+        "criteria": {
+          "normal": {
+            "index_upper_bound": 0.08349660425548654,
+            "criterion": "within_limit",
+            "bound_control": {
+              "source_piece": {
+                "kind": "element",
+                "element_index": 35,
+                "element_id": "PURLIN:e36",
+                "a_mm": 1915.625,
+                "b_mm": 1987.5
+              },
+              "wall_segment": 55,
+              "face": 1,
+              "longitudinal_control": 1,
+              "wall_control": 2,
+              "signed_operator_superset": {
+                "Mx": "Mx_negative",
+                "My": "My_negative"
+              },
+              "sigma_interval_MPa": [
+                20.87415106387148,
+                20.87415106387163
+              ],
+              "tau_interval_MPa": [
+                0.2919463941697929,
+                0.2919463941697959
+              ],
+              "is_physical_state": false,
+              "semantics": "Bernstein bound control, not a stress witness"
+            },
+            "observed_exceedance": false
+          },
+          "shear": {
+            "index_upper_bound": 0.06886695196259694,
+            "criterion": "within_limit",
+            "bound_control": {
+              "source_piece": {
+                "kind": "element",
+                "element_index": 0,
+                "element_id": "PURLIN:e1",
+                "a_mm": 0.0,
+                "b_mm": 53.125
+              },
+              "wall_segment": 103,
+              "face": -1,
+              "longitudinal_control": 0,
+              "wall_control": 1,
+              "signed_operator_superset": {
+                "Mx": "Mx_negative",
+                "My": "My_negative"
+              },
+              "sigma_interval_MPa": [
+                -5.800897157087238e-16,
+                -5.800897157087175e-16
+              ],
+              "tau_interval_MPa": [
+                -9.940088313468587,
+                -9.940088313468541
+              ],
+              "is_physical_state": false,
+              "semantics": "Bernstein bound control, not a stress witness"
+            },
+            "observed_exceedance": false
+          },
+          "interaction": {
+            "index_upper_bound": 0.07601032980896578,
+            "criterion": "within_limit",
+            "bound_control": {
+              "source_piece": {
+                "kind": "element",
+                "element_index": 33,
+                "element_id": "PURLIN:e34",
+                "a_mm": 1771.875,
+                "b_mm": 1843.75
+              },
+              "wall_segment": 55,
+              "face": 1,
+              "longitudinal_control": 2,
+              "wall_control": 2,
+              "signed_operator_superset": {
+                "Mx": "Mx_negative",
+                "My": "My_negative"
+              },
+              "sigma_interval_MPa": [
+                20.835762124790737,
+                20.835762124790893
+              ],
+              "tau_interval_MPa": [
+                0.9660513966231089,
+                0.9660513966231173
+              ],
+              "is_physical_state": false,
+              "semantics": "Bernstein bound control, not a stress witness"
+            },
+            "observed_exceedance": false
+          }
+        },
+        "full_member_field_covered": true,
+        "section_stress_criteria_sufficiently_satisfied": true,
+        "normal_limit_MPa": 250.0,
+        "shear_limit_MPa": 144.33756729740645,
+        "interaction_limit_MPa": 275.0,
+        "polynomial_patches_checked": 106496,
+        "source_analysis_material": {
+          "E_MPa": 200000.0,
+          "G_MPa": 76923.07692307692
+        },
+        "method": "EN1993-1-3:2006 6.1.6(3)-(5); tensor Bernstein sufficient bounds; signed-section union",
+        "demand_basis": "Original first-order isolated ELU demand retained, not recalculated as EN action combinations",
+        "stress_scope": "Effective pure-section bending normal stresses at both exterior faces; gross B/V/Tsv/Tw; N=0",
+        "numerical_scope": "Outward-rounded bounds of the recovered polynomial field only, not an FE-error certificate",
+        "NBR_capacities_used": false,
+        "AISI_capacities_used": false,
+        "whole_member_approved": false,
+        "complete_EN_design_qualified": false,
+        "global_stability_qualified": false,
+        "excluded": [
+          "EN6.1.5 shear buckling resistance and EN6.1.10 N-M-V interaction",
+          "Global/member stability and applicability of first-order/small-rotation analysis",
+          "Local force introduction, connections, holes/net-section rupture and actual restraint details",
+          "Full serviceability and physical geometry/material verification"
+        ],
+        "integration_status": "Separate EN section component; explicit caller opt-in; no global approval",
+        "content_sha256": "04e56a8c44299e0d4673bf62bda0c72300f67ee86ce75771044824f34b343c34"
+      }
+    }
+  ]
+}

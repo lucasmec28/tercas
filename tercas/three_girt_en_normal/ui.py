@@ -1,4 +1,5 @@
 """Explicit opt-in and read-only saved normal-component display."""
+from ..three_girt_scope import view, central, NOTICE
 from .application import reference_configuration,saved_component
 LABEL='Incluir tensões normais e cisalhamento pela EN'
 MODEL_LABEL='Declarar modelo de seção nominal intacta, sem furos ou recortes'
@@ -48,7 +49,7 @@ def rows(component):
 
 def render_saved(st,demand):
     if demand.get('EN_normal_N_M_B_error'):st.warning('Componente normal EN não calculada: '+demand['EN_normal_N_M_B_error'])
-    c=saved_component(demand)
+    c=view(saved_component(demand),demand)
     if c is None:return
     st.subheader('Componente normal N+M+B pelo critério EN')
     has_shear=any('shear_interaction' in row for row in c['per_member'].values())

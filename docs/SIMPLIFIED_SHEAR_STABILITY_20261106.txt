@@ -1,0 +1,109 @@
+CORTANTE/INTERAÇÃO E ESTABILIDADE: APLICAÇÃO SIMPLIFICADA — 06/11/2026
+Base: f2aac5e63e24cf44f8091b830242db084b53dafd. Candidata local, sem publicação.
+
+FONTES CONFERIDAS
+NBR14762:2010, exemplar fornecido, SHA256
+c2a01615a3ce9e2b93aeb7fee757f7bf9dd932adaefbc242e848ce813dc82407.
+§§8.1–8.2, p24 impressa/PDF30; §§9.8.3–9.8.4, pp50–51/PDF56–57.
+EN1993-1-3:2006 no exemplar PN-EN1993-1-3:2008 fornecido, SHA256
+0f2752ce6b630b94168339914bdd79e43be8f6b98fe02b9cb6f1072a3efbf0d6.
+§6.1.5, pp45–46/PDF47–48 e §6.1.10, p55/PDF57.
+A tradução polonesa da p55 omite a explicação da dispensa abaixo de 0,5.
+O texto inglês de §6.1.10 foi conferido adicionalmente em:
+https://manara.edu.sy/downloads/files/1745952291_2.pdf
+https://teaching.eng.cam.ac.uk/system/files/4D10_2024_exam_final.pdf
+A implementação usa somente essa dispensa; não aplica a expressão (6.27)
+sem NRd, MyRd, MfRd e MplRd EN qualificados.
+
+VÃO ISOLADO: MÉTODO EXISTENTE CONFIRMADO
+VRd já usa NBR §9.8.3 com kv=5 para alma sem enrijecedores transversais.
+M–V já usa §9.8.4: soma quadrática na mesma seção e MRd de §9.8.2.1,
+não o mínimo local/FLT/distorcional. Permanecem os testes documentais CBCA,
+sem transpor seus denominadores MLE para a produção MSE.
+Os métodos e resultados existentes do vão isolado não foram alterados.
+
+REDE 7DOF: NOVA COMPONENTE DE ALMA
+O produtor da referência NBR acrescenta um snapshot próprio opcional
+web_shear_component, sem mudar o solver ou os campos N/M/B/T/V. A validação
+atual de fonte própria Ue e da demanda antecede qualquer cálculo novo.
+Falha da componente fica em web_shear_error e não apaga a referência N+M.
+Snapshots antigos sem o campo continuam sem cálculo retroativo.
+
+NBR: h=H-2(ri+t) é a altura PLANA, gamma=1,10 e kv=5. Calculam-se VRd e
+M–V para cada combinação ELU, travessa e trecho. Forte My_frame tem
+Vz_frame=-dMy/dx. Vy_frame=dMz/dx é o cortante fraco e NÃO usa VRd da alma.
+O máximo de M²/MRd_local²+V²/VRd² inclui extremos e raízes reais da derivada
+do polinômio quartico. Cada estado conserva M/V concomitantes; os dois lados
+das juntas pertencem a trechos distintos. Não se somam máximos independentes.
+O cálculo é numérico em binary64, não certificado de aritmética intervalar.
+
+M–V é uma componente de §9.8.4. N não nulo, momento fraco, B e T não são
+zerados nem recebem parcelas improvisadas. O resultado não encerra N+M+V+B+T.
+O índice NBR de cortante pode atender ou exceder sua capacidade identificada.
+Essa conclusão é da componente, não da barra inteira ou da rede.
+
+EN: somente quando a componente EN intacta já foi declarada e validada,
+com fyb=250 MPa. gammaM0=1 e E=210000 MPa pertencem à componente EN; não
+alteram a rigidez/demanda nem os denominadores NBR. Sem crédito de
+endurecimento por conformação, enrijecedores longitudinais ou de apoio.
+
+Para não confundir a largura plana NBR com a convenção EN, usa-se hw=H-t
+e sw<=hw (alma a 90 graus entre mesas). Tomar sw_upper=hw majora lambda_w
+=0,346(sw/t)sqrt(fyb/E). A Tabela 6.1 fornece um piso de fbv, logo um piso
+Vw,Rd=hw*t*fbv/gammaM0. Os ramos, inclusive as pequenas quedas dos coeficientes arredondados
+nas transições 0,83 e 1,4, são não crescentes.
+Assim o teto de |V|/Vw,Rd<=1 é condição suficiente de atendimento. Acima de 1
+é INCONCLUSIVO, não falha demonstrada da verdadeira capacidade.
+
+Teto |V|/Vw,Rd<=0,5 dispensa somente a redução adicional por cortante da alma
+de §6.1.10(1). Fora disso, a interação EN segue pendente. Essa dispensa não
+fecha cortante fraco, tensões N/M/B/T ou toda a interação da rede. Não se usa
+uma capacidade NBR em uma equação EN nem se escolhe o menor índice entre normas.
+
+ESTABILIDADE/TRAVAMENTO: LIMITE EFETIVO DE APLICAÇÃO
+NBR §8.1 remete ao procedimento NBR8800 para importância dos deslocamentos
+na resposta e limites da análise linear. §8.2 permite o método do comprimento
+efetivo em BARRAS ISOLADAS, com K obtido conforme NBR8800. As imperfeições de
+componente já são consideradas nas expressões resistentes aplicáveis.
+Isso confirma o uso já existente das referências de FLT da barra isolada
+DENTRO DO DOMÍNIO DECLARADO e não qualifica a rede por uma matriz não singular,
+equilíbrio, giro pequeno arbitrário ou simplesmente K=1.
+
+Os tirantes mantêm a rigidez axial declarada no modelo, sem verificação
+resistente ou de esbeltez. Sua posição não cria automaticamente travamento
+lateral ideal, torção impedida, empenamento impedido nem novo comprimento
+livre. A telha fornece somente ações, nenhuma rigidez ou contenção.
+
+A estabilidade/análise da rede continua explicitamente pendente. Não foi
+encontrada nas cláusulas conferidas uma dispensa que feche essa pendência
+sem demonstrar o modelo/segunda ordem necessário. Este é limite de
+implementação/aplicabilidade, não uma exigência inventada de certificado
+de campo, verificação resistente dos tirantes ou ensaio físico.
+
+INTEGRAÇÃO
+Novos resultados aparecem junto da referência NBR na interface e no Word.
+JSON mecânico conserva o snapshot nested, com hash próprio e vínculo ao
+mesmo hash de demanda da referência NBR. Não se altera a cadeia serviço→EN→NBR.
+O inventário global lê a cobertura salva da alma e identifica as parcelas
+calculadas, sem repetir que nenhum cortante foi tratado. Suas pendências de
+cortante fraco/interação geral/estabilidade permanecem; o piso EN não é
+confundido com capacidade exata nem o quadro é promovido a aprovação global.
+
+QA
+27 testes novos: três ramos NBR; transições EN e prova numérica do piso frente
+a sw menor, inclusive ambos os lados de 1,4; envelope quartico versus 200001
+estações; sinais e reversão; demanda real 7DOF com N não nulo e V fraco;
+separação das normas/geometrias; snapshot/hashes; legado; leituras sem cálculo;
+entradas não finitas e booleanas.
+Comando: python -m pytest -q tests/test_three_girt_shear.py
+A suíte consolidada de regressões é executada e reportada separadamente.
+
+REGRESSÃO FINAL DA CANDIDATA
+108 testes + 2 subtests aprovados em 71,52 s:
+test_three_girt_shear.py, test_three_girt_assessment.py,
+test_ui_three_girt_axial.py, test_cbca_reference_stages.py,
+test_flt_load_position.py e test_support_limit_mv_trace.py.
+Compileall dos arquivos alterados e git diff --check aprovados.
+Log local: /tmp/tercas_shear_finaltests2.log. Esta regressão direcionada não
+é a suíte completa nem comprovação física; a integração deve repetir o QA
+com o novo tratamento automático do peso próprio.

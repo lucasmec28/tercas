@@ -11,6 +11,8 @@ from ..three_girt_warping.application import fingerprint,SCHEMA as DEMAND_SCHEMA
 from ..global_verification import check,aggregate,axial_interaction_record
 
 SCHEMA='three_girt_global_inventory_v1'
+CENTRAL_SCHEMA='three_girt_middle_inventory_v2'
+from ..three_girt_scope import members, central, NOTICE, local_guard
 SOURCE='Inventário do modelo Vlasov atual; componentes e normas mantidos separados'
 EXCLUSIONS=['Resistência/dimensionamento dos cordões de solda, parafusos, tirantes, cantoneiras e ancoragens.',
     'Certificação de condições de campo; o cálculo usa hipóteses e dados declarados.',
@@ -47,8 +49,10 @@ def _load_binding(d,case):
         factor=coeff.get('PP',0.);pp=factor*vectors['PP']['parallel']
     elif data.get('load_mode')=='direct':
         state={'ELU':'uls','ELS':'sls'}[c['limit_state']]
-        if normal!=data['q_'+state] or parallel!=data.get('q_parallel_'+state,0.):raise ValueError('Saved direct actions differ')
-        pp=g['direct_pp_'+state+'_N_mm'];factor=g['direct_brace_factor_'+state] if g['brace_self_weight'] else 0.
+        from ..direct_self_weight import calculation_inputs,evidence as pp_evidence
+        pp_trace=pp_evidence(data);effective=calculation_inputs(data)
+        if normal!=effective['q_'+state] or parallel!=effective.get('q_parallel_'+state,0.):raise ValueError('Saved direct actions differ')
+        pp=pp_trace['states'][state]['profile_PP_q_N_mm']['parallel'] if pp_trace else g['direct_pp_'+state+'_N_mm'];factor=g['direct_brace_factor_'+state] if g['brace_self_weight'] else 0.
     else:raise ValueError('Unknown saved loading mode')
     if case['combined_girt_PP_N_mm']!=pp or case['brace_weight_factor']!=factor or case['model']['inputs']['brace_weight_factor']!=factor:
         raise ValueError('Saved self-weight bookkeeping differs')
@@ -66,6 +70,7 @@ def _load_binding(d,case):
 def validate_demand(d):
     """Saved hashes, inventories and analytical fields, not fresh mechanics."""
     if not isinstance(d,dict):raise ValueError('Resultado deve ser um objeto.')
+    members(d)
     if d.get('schema')!=DEMAND_SCHEMA or d.get('status')!='conditional_elastic_vlasov_demand':raise ValueError('Current solved 7DOF snapshot required')
     if d.get('input_fingerprint')!=fingerprint(dict(data=d['input_data'],config=d['configuration'])):raise ValueError('Demand inputs/configuration changed')
     if d.get('coverage_complete') is not True or not d.get('cases'):raise ValueError('Demand coverage incomplete')
@@ -144,6 +149,7 @@ def _en(d,c,error):
     if any(type(r.get('complete')) is not bool for r in c['rows']):raise ValueError('EN interval completeness is not boolean')
     out=[]
     for level,r in c['per_member'].items():
+        if level not in members(d):continue
         count=sum(v[1]==level for v in expected)
         if r['ELU_segments']!=count or r['complete_segments']!=sum(v['complete'] for v in c['rows'] if v['girt']==level):raise ValueError('EN coverage count differs')
         complete=r['complete'] is True
@@ -188,6 +194,7 @@ def _nbr(d,c,error):
         raise ValueError('NBR auxiliary combination counts differ')
     rows=[]
     for r,(cid,level,segment,x0,x1) in zip(c['rows'],expected):
+        if level not in members(d):continue
         if r['physical_member_length_mm']!=d['input_data']['L_mm'] or r['stability_lengths_mm']!=c['configuration']['effective_lengths_mm']:
             raise ValueError('NBR auxiliary physical/stability length differs')
         rows.append(axial_interaction_record(r,expected_combination_id=cid,expected_section_id=d['source_geometry']['profile_id'],
@@ -200,22 +207,24 @@ def _service(d,c,error):
     out=[]
     for case in c['cases']:
         for level,r in case['members'].items():
+            if level not in members(d):continue
+            sufficient=(local_guard(case,level) if central(d) else case['network_local_normal_gross_sufficient'])
             out.append(item('ELS:'+case['combination']['id']+':'+level+':horizontal_model','ELS',
                 source='NBR14762:2010 9.8.5; comparador local normal suficiente no modelo declarado',
-                index=r['diagnostic_gross_ratio'],qualified=case['network_local_normal_gross_sufficient'] is True,
-                reason='' if case['network_local_normal_gross_sufficient'] else 'Crivo local da rede inconclusivo; não é falha resistente nem flecha efetiva demonstrada.',
+                index=r['diagnostic_gross_ratio'],qualified=sufficient is True,
+                reason=('Comparação da central condicionada à rigidez bruta declarada do entorno; não é prova física do ELS.' if central(d) else '') if sufficient else 'Crivo local da travessa avaliada inconclusivo; não é falha resistente nem flecha efetiva demonstrada.',
                 trace=dict(member_id=level,combination_id=case['combination']['id'],witness=copy.deepcopy(r['witness']),
                     criterion_scope='horizontal_limit_in_declared_linear_model_only',source_component_sha256=c['content_sha256'])))
     return out
 
 
-def _uniaxial(c,error):
+def _uniaxial(c,error,d=None):
     if c is None:return [] if not error else [item('uniaxial:reader','ELS',reason=error)]
     return [item('uniaxial:'+case['combination']['id']+':'+level,'ELS',source='NBR14762:2010 9.8.5, alternativa de vigas isoladas',
         index=r['isolated_component_index'],qualified=r['isolated_component_index'] is not None,
         reason='Modelo independente; não substitui a flecha da rede.',
         trace=dict(criterion_scope='isolated_uniaxial_alternative_only',source_component_sha256=c['content_sha256']))
-        for case in c['cases'] for level,r in case['members'].items()]
+        for case in c['cases'] for level,r in case['members'].items() if d is None or level in members(d)]
 
 
 def _g81(d):
@@ -235,7 +244,7 @@ def _g81(d):
             and cap['Ba_Nmm2']==cap['phi_B']*cap['By_Nmm2']
             and cap.get('physical_product_verified') is False
             and {r.get('member') for r in records}==set(LEVELS) and len(records)==3)
-        for level in LEVELS:
+        for level in members(d):
             found=[r for r in records if r.get('member')==level];r=found[0] if len(found)==1 else {}
             expected=case['model']['girt_envelopes'][level]['B_equilibrium_Nmm2']['max_abs']
             coherent=(valid and r.get('combination_id')==case['combination']['id'] and r.get('B_Nmm2')==expected['B_equilibrium_Nmm2']
@@ -252,13 +261,13 @@ def _g81(d):
 
 
 def _applicability(d,nbr):
-    elu=[b for c in d['cases'] if c['combination']['limit_state']=='ELU' for b in c['model']['beams']]
+    elu=[b for c in d['cases'] if c['combination']['limit_state']=='ELU' for b in c['model']['beams'] if b['girt'] in members(d)]
     if not elu:return [item('ELU:coverage','ELU',reason='Nenhuma combinação ELU; filtro não é dispensa.')]
     # Exactly zero analytical coefficients, never sampled values or tolerances.
     zero_v=all(all(v==0 for v in b['normal_action_polynomials'][k][1:]) for b in elu for k in ('My_strong_Nmm','Mz_weak_Nmm'))
     tension=any(b['normal_action_polynomials']['N_N'][0]>0 for b in elu)
     reactions=[v for c in d['cases'] if c['combination']['limit_state']=='ELU' for n in c['model']['nodes']
-        if n['xyz_CG_mm'][0] in (0.,d['input_data']['L_mm']) for v in n['support_reactions'][:3]]
+        if (not central(d) or n['xyz_CG_mm'][1]==0.) and n['xyz_CG_mm'][0] in (0.,d['input_data']['L_mm']) for v in n['support_reactions'][:3]]
     zero_reactions=all(v==0 for v in reactions)
     no_interior=all(not c['model']['bars'] and not c['model']['inputs']['connections'] and not c['model']['inputs']['attachment_x_mm']
         and not c['model']['inputs']['nodal_loads'] for c in d['cases']) and d['configuration']['three_girt']['tie_count']==0
@@ -272,6 +281,29 @@ def _applicability(d,nbr):
             reason='Todas as reações de força ELU salvas são exatamente nulas.' if zero_reactions else 'Reações de apoio existem. Classificar sua introdução local no perfil: compressão transversal da alma, exceção aplicável de alma ligada, ou outro mecanismo. P externa nula não dispensa esta avaliação; não é dimensionamento dos cordões.'),
         item('interior_force_introduction','ELU',source='NBR14762:2010 9.5.1/9.6, conforme mecanismo local',qualified=no_interior,excluded=no_interior,
             reason='Topologia interior vazia, sem barras, P ou ações nodais internas. Não dispensa as reações dos extremos.' if no_interior else 'Forças interiores exigem identificar o mecanismo local do perfil. Não se aplica Anexo D automaticamente a força axial soldada e não se exige dimensionar a solda neste escopo.')]
+    if nbr is not None and not zero_v:
+        from ..three_girt_shear import saved as saved_web_shear
+        try:web=saved_web_shear(nbr)
+        except (ValueError,TypeError,KeyError,ArithmeticError) as exc:
+            web=None
+            for r in out:
+                if r['id'] in ('transverse_shear_resistance','N_M_V_shear_reduction'):
+                    r['reason']+=' Snapshot adicional de alma não utilizável: '+str(exc)
+        if web is not None:
+            web_rows=[r for r in web['rows'] if r['girt'] in members(d)]
+            en_rows=[r for r in web_rows if r['EN_web_shear'] is not None]
+            en_note=('O piso resistente EN da alma também foi calculado separadamente. '
+                if len(en_rows)==len(web_rows) else 'A capacidade EN da alma ainda não foi qualificada. ')
+            weak_note=('O cortante fraco é identicamente nulo. ' if all(r['weak_shear_identically_zero'] for r in web_rows) else
+                'A resistência do cortante fraco permanece pendente; VRd da alma não foi reutilizado. ')
+            for r in out:
+                if r['id']=='transverse_shear_resistance':
+                    r['reason']='A componente forte da alma foi avaliada por NBR §9.8.3. '+en_note+weak_note+'A abrangência transversal completa da rede não foi aprovada por essas componentes.'
+                    r['trace']['web_shear_component_sha256']=web['content_sha256']
+                elif r['id']=='N_M_V_shear_reduction':
+                    low=len(en_rows)==len(web_rows) and all(x['EN_no_web_shear_reduction']['status']=='meets' for x in en_rows)
+                    r['reason']='M–V NBR da alma foi calculado na mesma seção por §9.8.4, sem omitir o N da rede. '+('O crivo EN dispensa somente redução adicional por V da alma. ' if low else 'A redução EN por V segue sem dispensa demonstrada para toda a alma. ')+weak_note+'N/M/B/T permanecem independentes.'
+                    r['trace']['web_shear_component_sha256']=web['content_sha256']
     if not tension:out.append(item('tensile_section_scope','ELU',source='NBR14762:2010 9.6',qualified=True,excluded=True,reason='Nenhum intervalo ELU tem N de tração; não se exige Nt ou Ct sem demanda de tração.'))
     else:
         t=nbr.get('capacities',{}).get('tension',{}) if nbr else {};nt=t.get('Nt_Rd_N')
@@ -297,7 +329,10 @@ def assess(d):
     except (ValueError,TypeError,KeyError,ArithmeticError,AttributeError,IndexError) as exc:
         records=[item('saved_demand_integrity',reason=str(exc))]
         result=aggregate([r['id'] for r in records],records,inventory_qualified=True)
-        result.update(assessment_schema=SCHEMA,source_result_sha256=original,source_input_fingerprint=d.get('input_fingerprint'),
+        try:scoped=central(d)
+        except (ValueError,TypeError,KeyError):scoped=False
+        if scoped:result['verification_scope']=copy.deepcopy(d['verification_scope'])
+        result.update(assessment_schema=CENTRAL_SCHEMA if scoped else SCHEMA,source_result_sha256=original,source_input_fingerprint=d.get('input_fingerprint'),
             groups=[],whole_member_approved=False,current_adapter_can_approve=False,numerical_results_changed=False,excluded_scope=EXCLUSIONS)
         from ..global_verification import display_summary
         result['display_summary']=display_summary(result)
@@ -322,28 +357,36 @@ def assess(d):
         _group('NBR_reference','Referência NBR N+M de vão inteiro',nr,'Referência separada; não é prova de estabilidade da rede nem denominador substituto da EN.'),
         _group('G81','Componente independente de bimomento G8.1',gr,'Comparação auxiliar, não critério global adicional em paralelo à EN.'),
         _group('horizontal_service','Deslocamento horizontal Vlasov',sr,'Comparação no modelo linear declarado; aplicabilidade física separada.')])
-    ur=_safe_records('uniaxial:reader','ELS',lambda:_uniaxial(uni,ue))
+    ur=_safe_records('uniaxial:reader','ELS',lambda:_uniaxial(uni,ue,d))
     if ur:groups.append(_group('isolated_uniaxial','Alternativa uniaxial de vigas isoladas',ur,'Modelo independente, nunca utilizado para aprovar a rede.'))
     records+=er+sr+_safe_records('applicability_reader','MODEL',lambda:_applicability(d,nbr))
     for state in ('ELU','ELS'):
         if not any(c['combination']['limit_state']==state for c in d['cases']):records.append(item('missing_limit_state:'+state,state,reason='Nenhuma combinação '+state+' avaliada.'))
     result=aggregate([r['id'] for r in records],records,inventory_qualified=True)
-    result.update(assessment_schema=SCHEMA,source_result_sha256=original,source_input_fingerprint=d['input_fingerprint'],
+    result.update(assessment_schema=CENTRAL_SCHEMA if central(d) else SCHEMA,source_result_sha256=original,source_input_fingerprint=d['input_fingerprint'],
         groups=groups,whole_member_approved=False,current_adapter_can_approve=False,numerical_results_changed=False,
         combined_ELS_approved=False,physical_conditions_verified=False,historical_snapshots_requalified=False,
         auxiliary_groups_not_combined=['NBR_reference','G81','isolated_uniaxial'],excluded_scope=copy.deepcopy(EXCLUSIONS),
         interpretation='Estados calculados valem somente no modelo e critério identificados. Não se somam/misturam índices EN, NBR ou AISI; não há aprovação global automática.')
     from ..global_verification import display_summary
     result['display_summary']=display_summary(result)
+    if central(d):
+        for group in result['groups']:group['scope']='Somente travessa central. '+group['scope']
+        result['verification_scope']=copy.deepcopy(d['verification_scope'])
+        result['interpretation']=NOTICE+' '+result['interpretation']
     if fingerprint(d)!=original:raise AssertionError('Assessment mutated the saved demand')
     result['content_sha256']=fingerprint(result)
     return result
 
 
 def saved_assessment(d,a):
-    if not isinstance(a,dict) or a.get('assessment_schema')!=SCHEMA:raise ValueError('Unknown global inventory schema')
+    if not isinstance(a,dict) or a.get('assessment_schema') not in (SCHEMA,CENTRAL_SCHEMA):raise ValueError('Unknown global inventory schema')
     if a.get('content_sha256')!=fingerprint({k:v for k,v in a.items() if k!='content_sha256'}):raise ValueError('Saved inventory content changed')
     if a.get('source_result_sha256')!=fingerprint(d):raise ValueError('Saved inventory belongs to another result')
     if a.get('whole_member_approved') is not False or a.get('current_adapter_can_approve') is not False or a.get('numerical_results_changed') is not False:
         raise ValueError('Saved inventory exceeds qualified scope')
+    expected_schema=CENTRAL_SCHEMA if central(d) else SCHEMA
+    if a['assessment_schema']!=expected_schema:raise ValueError('Saved inventory schema differs from demand scope')
+    if a['assessment_schema']==CENTRAL_SCHEMA and a.get('verification_scope')!=d['verification_scope']:
+        raise ValueError('Saved central inventory scope changed')
     return a

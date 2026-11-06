@@ -1,0 +1,26 @@
+................................................................................................................................... [ 14%]
+........................................................................ [ 22%]
+........................................................................ [ 30%]
+........................................................................ [ 38%]
+........................................................................ [ 46%]
+........................................................................ [ 54%]
+........................................................................ [ 62%]
+........................................................................ [ 70%]
+........................................................................ [ 78%]
+........................................................................ [ 85%]
+........................................................................ [ 93%]
+.......................................................                  [100%]
+============================= slowest 12 durations =============================
+68.75s call     tests/test_ui_three_girt_en_normal.py::test_reduced_axial_coexists_with_service_and_saved_exports[1.2]
+61.54s call     tests/test_ui_three_girt_en_normal.py::test_reduced_axial_coexists_with_service_and_saved_exports[1.5]
+45.19s call     tests/test_ui_three_girt_en_normal.py::test_reduced_axial_coexists_with_service_and_saved_exports[2.0]
+40.16s call     tests/test_ui_three_girt_en_normal.py::test_EN_opt_in_coexists_and_changes_invalidate
+31.26s call     tests/test_three_girt_uniaxial.py::test_four_component_chain_and_saved_exports_without_recalculation
+27.47s call     tests/test_three_girt_en_normal_application.py::test_thin_effective_sections_and_complete_bending_coverage[1.5]
+26.62s call     tests/test_three_girt_en_normal_application.py::test_web_reduced_N_and_negative_My_close_signed_envelope_with_explicit_transport[2.25]
+25.59s call     tests/test_three_girt_en_normal_application.py::test_thin_effective_sections_and_complete_bending_coverage[1.2]
+25.13s setup    tests/test_three_girt_en_normal_application.py::test_current_case_closes_all_signed_integral_sections_without_global_approval
+22.94s call     tests/test_three_girt_en_normal_application.py::test_web_reduced_N_and_negative_My_close_signed_envelope_with_explicit_transport[2.0]
+19.37s call     tests/test_three_girt_en_normal_application.py::test_no_network_or_NBR_capacity_calculation
+15.81s call     tests/test_ui_aisi_current_input.py::test_current_component_render_and_invalidation
+906 passed, 229 subtests passed in 948.31s (0:15:48)

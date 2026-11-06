@@ -89,7 +89,8 @@ def build_spec(data):
   if val is not None and not finite(val):raise ValueError('Número inválido: '+key)
  fy=data['properties'].get('fy_MPa');fu=data['properties'].get('fu_MPa')
  if finite(fy) and finite(fu) and fu<fy:raise ValueError('fu não pode ser menor que fy.')
- d=copy.deepcopy(data);L=d['L_mm']
+ from .direct_self_weight import calculation_inputs
+ d=calculation_inputs(data);L=d['L_mm']
  if not finite(L) or not 0<L<=100000:raise ValueError('Informe um vão positivo, até 100.000 mm nesta versão.')
  for key in ['q_uls','P_uls','q_sls','P_sls','x_uls','x_sls']:
   if not finite(d.get(key)):raise ValueError('Ação ou posição inválida: '+key)
@@ -164,6 +165,9 @@ def _calculate(data):
  contact=evaluate_point_contact(data,spec)
  if contact is not None:b['point']=contact
  result['inclination_evidence']=inclination_evidence
+ from .direct_self_weight import evidence as direct_PP_evidence
+ pp=direct_PP_evidence(data)
+ if pp is not None:result['direct_self_weight_evidence']=pp
  result['whole_member_approved']=False
  from .weak_pierin import reference_for_inputs
  result['weak_critical_reference']=reference_for_inputs(data)
@@ -213,7 +217,8 @@ def rows(result):
  if result['input_snapshot']['selected_section']['family']=='Ue':
   out[-1]['Observação']+=' Esta linha avalia apenas o eixo de maior inércia. A Tabela 14 não dispensa o eixo fraco; sua resistência é tratada por sentido na interação biaxial, quando solicitada.'
  for i,r in enumerate(result['FLT_segments'],1):add(f'FLT — trecho {i}',r,'§9.8.2.2')
- shear=result['section_checks'].get('shear',{});d=result['input_data'];L=d['L_mm'];q=d['q_uls'];P=d['P_uls'];a=d['x_uls'];R=q*L/2+P*(L-a)/L;V=max(abs(R),abs(R-q*a),abs(R-q*a-P),abs(R-q*L-P))
+ from .direct_self_weight import calculation_inputs
+ shear=result['section_checks'].get('shear',{});d=calculation_inputs(result['input_data']);L=d['L_mm'];q=d['q_uls'];P=d['P_uls'];a=d['x_uls'];R=q*L/2+P*(L-a)/L;V=max(abs(R),abs(R-q*a),abs(R-q*a-P),abs(R-q*L-P))
  add('Cortante',shear,'§9.8.3',V/shear['VRd_N'] if shear.get('VRd_N') else None)
  mv=b['MV'];add('Flexão e cortante concomitantes',mv,'§9.8.4',mv.get('result',{}).get('index_squared'))
  add('Flecha — flexão',result['ELS'],'§9.8.5; critério informado')

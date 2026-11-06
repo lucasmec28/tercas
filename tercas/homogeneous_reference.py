@@ -40,7 +40,7 @@ TRACE_NOTE = ('Rastreabilidade M–V no limite junto ao apoio: NBR_branches.MV.r
 
 # Only actions and study identification are editable. Everything else, including
 # source prose and complete physical domain dictionaries, must match exactly.
-EDITABLE = {'project', 'actions_origin', 'load_mode', 'area_inputs', 'selected_types',
+EDITABLE = {'direct_load_basis', 'project', 'actions_origin', 'load_mode', 'area_inputs', 'selected_types',
             'q_uls', 'q_sls', 'P_uls', 'P_sls', 'x_uls', 'x_sls',
             'q_parallel_uls', 'q_parallel_sls', 'P_parallel_uls', 'P_parallel_sls'}
 OPTIONAL = {FIELD, 'model_domain', 'member_application'}
@@ -121,7 +121,7 @@ def _editor_errors(data, expected):
     except ValueError as exc:errors.append(str(exc))
     try:uniaxial_component_enabled(data)
     except ValueError as exc:errors.append(str(exc))
-    missing = (EDITABLE - DIRECT_OPTIONAL) - set(data)
+    missing = (EDITABLE - DIRECT_OPTIONAL - {'direct_load_basis'}) - set(data)
     if missing:errors.append('Campos de ações/identificação ausentes: ' + ', '.join(sorted(missing)))
     for key in ('project', 'actions_origin'):
         if not isinstance(data.get(key), str):errors.append(key + ' deve ser texto.')
