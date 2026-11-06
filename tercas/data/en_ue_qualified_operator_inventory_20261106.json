@@ -1,0 +1,4174 @@
+{
+  "schema": "EN_Ue_qualified_operator_inventory_v1",
+  "library_revision": "EN_Ue_section_library_20261106_r1",
+  "qualified_schema": "EN_Ue_Pierin_normal_section_library_qualified_v1",
+  "candidate_schema": "EN_Ue_Pierin_nominal_normal_operators_candidate_v1",
+  "candidate_method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+  "candidate_source_commit": "2fd6a29e5b3194b215f62082836b63e1be6486b7",
+  "complete_kernel_audit_sha256": "ce375847a8921f9c9c8355473770d7290f2b365035d5be8263376441a25f8abf",
+  "profile_count": 83,
+  "signed_branch_count": 498,
+  "eligible_signed_branch_count": 400,
+  "integration_conditions": {
+    "app_activation": "Separate integration release required; this library alone changes no app consumer.",
+    "scope": "Pure normal local/distortional section operators only, per eligible signed branch.",
+    "My_positive": "Inherited bounded EN13 Eq5.10b interpretation for mixed flanges with wholly compressed physical As; no additional universal translating-junction eigenmode requirement or qualification.",
+    "curling_shear_lag": "Applicability must be qualified for the actual profile and moment diagram; the seven legacy Ue100 proofs are not transferred.",
+    "EN6_1_6": "Use the same coherent gross contour for B and shear/torsional terms; this normal library does not qualify the combined check.",
+    "EN6_27": "Requires separately qualified EN shear capacities and concurrent signed action fields; no NBR/AISI substitution.",
+    "centroid_transport": "Apply axial transport once and do not credit favourable centroid shifts determined at fy."
+  },
+  "entries": {
+    "0": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:0",
+      "candidate_content_sha256": "5e9a689bfa4bf258b3029885857613cab9d3ebf5f1ce2558e9457d98c7f39198",
+      "qualified_content_sha256": "2558906bb682aab8def053defe05ee63731cb9f10fd9e7c397a640e688a010ff",
+      "source_binding": {
+        "catalog_index": 0,
+        "catalog_id": "planilha_v03_r5",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r5_36d05fd311d1d023",
+        "nodes_sha256": "7f6fe18e10ee8d271c58cc0b2f567a21b3ff039d06823861168bc8dc75279b11",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r5",
+          "dimensions_mm": {
+            "h": 50,
+            "bf": 25,
+            "lip": 10,
+            "t": 1.2
+          },
+          "inner_radius_mm": 1.2,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "36d05fd311d1d0232d41b2466caeab11e13c738f85786bbf91cbd467bfd13689",
+        "thickness_mm": 1.2,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 33632,
+        "N_compression": 33102,
+        "Mx_positive": 522880,
+        "Mx_negative": 522880,
+        "My_positive": 195552,
+        "My_negative": 195552
+      }
+    },
+    "1": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:1",
+      "candidate_content_sha256": "896fdd49472b3c12f9c643f6c5f13e6f5219a8f85851b493987c0501c26c95a6",
+      "qualified_content_sha256": "eeb04876fb9c13a7c060229b8c909b60184f784d9e833e4ce22de31ea7ae6cbf",
+      "source_binding": {
+        "catalog_index": 1,
+        "catalog_id": "planilha_v03_r6",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r6_b353e8597d11af3f",
+        "nodes_sha256": "5985e0c1bcc89da9b1bf64b00edd53c9756b662b4e43c5181c9b3da1ea6d940f",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r6",
+          "dimensions_mm": {
+            "h": 50,
+            "bf": 25,
+            "lip": 10,
+            "t": 1.5
+          },
+          "inner_radius_mm": 1.5,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "b353e8597d11af3f6a83e548f5bc79f18a3d1d36811a3c8b9db317424dcd09ab",
+        "thickness_mm": 1.5,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 41300,
+        "N_compression": 41300,
+        "Mx_positive": 630928,
+        "Mx_negative": 630928,
+        "My_positive": 232126,
+        "My_negative": 232126
+      }
+    },
+    "2": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:2",
+      "candidate_content_sha256": "c8ba66d72128425b975c98e0c7683cebd5155e2e341d7eed601baaac4a4b7912",
+      "qualified_content_sha256": "79cbccc9e4ea4c6bf0183c687b22ab8d1969376db3e3b35d09f99a5e4cbcf795",
+      "source_binding": {
+        "catalog_index": 2,
+        "catalog_id": "planilha_v03_r7",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r7_8023de4253b9fcb1",
+        "nodes_sha256": "843c7a49e559f821c4092ecac41465895ccc011f5aa10ebb54cfe075e23ecc09",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r7",
+          "dimensions_mm": {
+            "h": 50,
+            "bf": 25,
+            "lip": 10,
+            "t": 2
+          },
+          "inner_radius_mm": 2,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "8023de4253b9fcb1dd5c8644c78c8abe4baa245c95f2a755d8e8a29117e13761",
+        "thickness_mm": 2.0,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 53423,
+        "N_compression": 53423,
+        "Mx_positive": 791802,
+        "Mx_negative": 791802,
+        "My_positive": 283068,
+        "My_negative": 283068
+      }
+    },
+    "3": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:3",
+      "candidate_content_sha256": "e56e40dc2a3a2234df67c618c911d3bdd049906d49b68dec5a29df1176937181",
+      "qualified_content_sha256": "9eaba22994cdd1ba8cd604e5a328575e2e7e28f8640679c44849976427651fd8",
+      "source_binding": {
+        "catalog_index": 3,
+        "catalog_id": "planilha_v03_r8",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r8_25811b18af3ef0b7",
+        "nodes_sha256": "e6826588da38a595a2a12a953a87f9389f4bf9114ea28b932c317c5c17598b35",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r8",
+          "dimensions_mm": {
+            "h": 50,
+            "bf": 25,
+            "lip": 10,
+            "t": 2.25
+          },
+          "inner_radius_mm": 2.25,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "25811b18af3ef0b75e5721ea9e7431b94daa5e296fe39c8c859768bde9dbb667",
+        "thickness_mm": 2.25,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 59177,
+        "N_compression": 59177,
+        "Mx_positive": 863468,
+        "Mx_negative": 863468,
+        "My_positive": 304071,
+        "My_negative": 304071
+      }
+    },
+    "4": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:4",
+      "candidate_content_sha256": "86dafe3ccc399d719cf7287264f2ffda83b4d01204ceba9604c0435d70f2da8c",
+      "qualified_content_sha256": "4cb54a74e9f999a883a9428383e8376a20873c307da8154e0f4cba4238e6cdcc",
+      "source_binding": {
+        "catalog_index": 4,
+        "catalog_id": "planilha_v03_r9",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r9_3517ab52c8815db0",
+        "nodes_sha256": "61590250e9f00a0be376c8c9d30d3656c9fdc8449cb0e6a9d91198010df609c7",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r9",
+          "dimensions_mm": {
+            "h": 50,
+            "bf": 25,
+            "lip": 10,
+            "t": 2.65
+          },
+          "inner_radius_mm": 2.65,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "3517ab52c8815db05b7e271637d8f946e93a53e6657095bf09eaff07573ffe8b",
+        "thickness_mm": 2.65,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 67954,
+        "N_compression": 67954,
+        "Mx_positive": 966319,
+        "Mx_negative": 966319,
+        "My_positive": 331820,
+        "My_negative": 331820
+      }
+    },
+    "5": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:5",
+      "candidate_content_sha256": "ab33f1e509d3cf542ba02bcf9663dcf49f721566453b4b1648dd6f3415913e77",
+      "qualified_content_sha256": "5dc43aac8c5db8cc19751dd9cc4559c857db2aef5d911baa1eaf2c2b66bb483b",
+      "source_binding": {
+        "catalog_index": 5,
+        "catalog_id": "planilha_v03_r10",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r10_8604655d9d020bc0",
+        "nodes_sha256": "3df1aaaf749ea395ee8e65d12a8f107ce2ec218ee9accb2f9c2656e77c12621e",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r10",
+          "dimensions_mm": {
+            "h": 50,
+            "bf": 25,
+            "lip": 10,
+            "t": 3
+          },
+          "inner_radius_mm": 3,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "8604655d9d020bc0c9403c86dabcd3b5731db1bb79c35e7142745adba3e7f7ee",
+        "thickness_mm": 3.0,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 75203,
+        "N_compression": 75203,
+        "Mx_positive": 1044691,
+        "Mx_negative": 1044691,
+        "My_positive": 350486,
+        "My_negative": 350486
+      }
+    },
+    "6": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:6",
+      "candidate_content_sha256": "969bf9b65a47fb4b6f6434c15fde4fa15cd56f526cebc20dbe8f310ec1bb7385",
+      "qualified_content_sha256": "5c8f63d53b291617fa129449eb81b085230ee1abd8f7d3dca0d3431b7270f1fc",
+      "source_binding": {
+        "catalog_index": 6,
+        "catalog_id": "planilha_v03_r11",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r11_aadd3ec5faeb4126",
+        "nodes_sha256": "c7382914562b96fe0f17dd327fbfe98617b6f3caff07347565114f7f737486bb",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r11",
+          "dimensions_mm": {
+            "h": 75,
+            "bf": 40,
+            "lip": 15,
+            "t": 1.2
+          },
+          "inner_radius_mm": 1.2,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "aadd3ec5faeb4126383ec10a4363b50b033188a4d6cb32579904c0745874c235",
+        "thickness_mm": 1.2,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 53132,
+        "N_compression": 46570,
+        "Mx_positive": 1286254,
+        "Mx_negative": 1286254,
+        "My_positive": 515635,
+        "My_negative": null
+      }
+    },
+    "7": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:7",
+      "candidate_content_sha256": "1ab485e6d90819b9074c7904f4f9595aa1098a46bb293e11056e30853d092767",
+      "qualified_content_sha256": "78ad202899190723f8cb1241067f59b52ffb5c70f43d877195df5f9488fd124d",
+      "source_binding": {
+        "catalog_index": 7,
+        "catalog_id": "planilha_v03_r12",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r12_455f1d3a555db2dc",
+        "nodes_sha256": "e658109be79ae41b213a3921783f306b75e5b3a54db3b7891b9c5389977a1070",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r12",
+          "dimensions_mm": {
+            "h": 75,
+            "bf": 40,
+            "lip": 15,
+            "t": 1.5
+          },
+          "inner_radius_mm": 1.5,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "455f1d3a555db2dcc0cae227fd98fd2a2ffe391674700179727a72d3e2f11b1e",
+        "thickness_mm": 1.5,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 65675,
+        "N_compression": 61795,
+        "Mx_positive": 1572536,
+        "Mx_negative": 1572536,
+        "My_positive": 624409,
+        "My_negative": null
+      }
+    },
+    "8": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:8",
+      "candidate_content_sha256": "e9df70d9269c7cbc19e428df9c78faf5930aefc6ca6a846a844e57284ec0977b",
+      "qualified_content_sha256": "096d910288d7dc01df655146fd48f88e2c25acc4f804fcbbb80f5585e2c7e732",
+      "source_binding": {
+        "catalog_index": 8,
+        "catalog_id": "planilha_v03_r13",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r13_2f18f426b11f9b3b",
+        "nodes_sha256": "ac0e9d292213c212fc6c8a26baf0d81ef201b799dc63e7b3af9eafcfbf876574",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r13",
+          "dimensions_mm": {
+            "h": 75,
+            "bf": 40,
+            "lip": 15,
+            "t": 2
+          },
+          "inner_radius_mm": 2,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "2f18f426b11f9b3b912181c08eea4396751604d380d3a150605663c122d4ad3c",
+        "thickness_mm": 2.0,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 85923,
+        "N_compression": 85923,
+        "Mx_positive": 2019270,
+        "Mx_negative": 2019270,
+        "My_positive": 788735,
+        "My_negative": 788735
+      }
+    },
+    "9": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:9",
+      "candidate_content_sha256": "0eb934b18c0dba069bfab09725e94d08ee87ad2c036df9a25bdc2ff3be5297d1",
+      "qualified_content_sha256": "d99017faa1622011fbcf8568e635e7921f80774e0de18690c1319c796510c7e4",
+      "source_binding": {
+        "catalog_index": 9,
+        "catalog_id": "planilha_v03_r14",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r14_e1ad2bfd62783653",
+        "nodes_sha256": "fed6f621ac26df0594bd8be6f7d2016298d8a7a120052b321c7f2daec55e4f1f",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r14",
+          "dimensions_mm": {
+            "h": 75,
+            "bf": 40,
+            "lip": 15,
+            "t": 2.25
+          },
+          "inner_radius_mm": 2.25,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "e1ad2bfd627836533456b0f127b8a676e08ace6e9e5864850515a013b0e9cd94",
+        "thickness_mm": 2.25,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 95739,
+        "N_compression": 95739,
+        "Mx_positive": 2228619,
+        "Mx_negative": 2228619,
+        "My_positive": 863174,
+        "My_negative": 863174
+      }
+    },
+    "10": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:10",
+      "candidate_content_sha256": "e2f1ba73c3b7eb2fe925d9e2d2997b4f0a455aa5ea54f2ec948ddc9a62f643e5",
+      "qualified_content_sha256": "9d951140da45419ff2e57be1ba439a4ab800142401a1645f40e2b6fbbedeb62c",
+      "source_binding": {
+        "catalog_index": 10,
+        "catalog_id": "planilha_v03_r15",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r15_1bd02710521dcb64",
+        "nodes_sha256": "b39a757d7ebf5a343541e5e86eefc0c360fab1ed9832f0589873867c84c681dc",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r15",
+          "dimensions_mm": {
+            "h": 75,
+            "bf": 40,
+            "lip": 15,
+            "t": 2.65
+          },
+          "inner_radius_mm": 2.65,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "1bd02710521dcb642896fc95994d2d9b0d073971d685b9183767a747e35065e4",
+        "thickness_mm": 2.65,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 111017,
+        "N_compression": 111017,
+        "Mx_positive": 2544496,
+        "Mx_negative": 2544496,
+        "My_positive": 971911,
+        "My_negative": 971911
+      }
+    },
+    "11": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:11",
+      "candidate_content_sha256": "b0bafb754b298a3839f983d8e1796b4e3521c7c463b10fa5828b4d48e436f84c",
+      "qualified_content_sha256": "e96d52643242f26a691facde374f23dd1aac78e34f523eb558a5125496e89a89",
+      "source_binding": {
+        "catalog_index": 11,
+        "catalog_id": "planilha_v03_r16",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r16_d85d0e68c42719d7",
+        "nodes_sha256": "a69ee2115a7b5ead37e32afa2dad40cf83f0aa123361201fd80b4464c003ecb5",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r16",
+          "dimensions_mm": {
+            "h": 75,
+            "bf": 40,
+            "lip": 15,
+            "t": 3
+          },
+          "inner_radius_mm": 3,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "d85d0e68c42719d7f7b796185734f8a39dc89342406bd575021326b2c3b2983d",
+        "thickness_mm": 3.0,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 123953,
+        "N_compression": 123953,
+        "Mx_positive": 2801934,
+        "Mx_negative": 2801934,
+        "My_positive": 1056892,
+        "My_negative": 1056892
+      }
+    },
+    "12": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:12",
+      "candidate_content_sha256": "4b2c8fd93db13b35749b1675edec7fdfcc8c175707fe692c18136b4bcfce4e0e",
+      "qualified_content_sha256": "688974cd5b6b8982b2341ccdb141037bed0a68697d62a847aac0cd6307b443bc",
+      "source_binding": {
+        "catalog_index": 12,
+        "catalog_id": "planilha_v03_r17",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r17_37a38879be8efbf5",
+        "nodes_sha256": "84095ac411bc0f51db3cf91542a8e8c711994f40991c1d66a3ce5d4d19f7f954",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r17",
+          "dimensions_mm": {
+            "h": 100,
+            "bf": 40,
+            "lip": 17,
+            "t": 1.2
+          },
+          "inner_radius_mm": 1.2,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "37a38879be8efbf5f197019d1e231766344869f056abb57649b11d8116415acf",
+        "thickness_mm": 1.2,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 61832,
+        "N_compression": 48703,
+        "Mx_positive": 1911107,
+        "Mx_negative": 1911107,
+        "My_positive": 573525,
+        "My_negative": null
+      }
+    },
+    "13": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:13",
+      "candidate_content_sha256": "aa377d9bcdc6fd4e9917799e97d7fd5499f26b62e6df0edb03f7cf99e79238cf",
+      "qualified_content_sha256": "5f723250d52ca3804d5800570735e5b5722312ae00a272fd654e988b6b5859ab",
+      "source_binding": {
+        "catalog_index": 13,
+        "catalog_id": "planilha_v03_r18",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r18_00a69b4444ea11f4",
+        "nodes_sha256": "5c8f6461729fc1a01a7043a11ae4166aabdd5ccb6955655bffe4ba641188cdaa",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r18",
+          "dimensions_mm": {
+            "h": 100,
+            "bf": 40,
+            "lip": 17,
+            "t": 1.5
+          },
+          "inner_radius_mm": 1.5,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "00a69b4444ea11f4e99e277d6d4f0707de122775bdf470b0a1f8ed5da969804a",
+        "thickness_mm": 1.5,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 76550,
+        "N_compression": 65304,
+        "Mx_positive": 2344316,
+        "Mx_negative": 2344316,
+        "My_positive": 695855,
+        "My_negative": null
+      }
+    },
+    "14": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:14",
+      "candidate_content_sha256": "0196cb71ae29e73788b00dcb07f9d4c57a233d91c0d1c4f284f9db49001941e1",
+      "qualified_content_sha256": "174b3bc905fa78c9c9bbe6e149c1c3e37ef042041341cd79bbf572b2a0e5e77f",
+      "source_binding": {
+        "catalog_index": 14,
+        "catalog_id": "planilha_v03_r19",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r19_264dbf72d0aa97e8",
+        "nodes_sha256": "70d5e3636d11b65e1cf26ef2d9c908ce711d0a5cc008847af8bcad2fd2a5f1ea",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r19",
+          "dimensions_mm": {
+            "h": 100,
+            "bf": 40,
+            "lip": 17,
+            "t": 2
+          },
+          "inner_radius_mm": 2,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "264dbf72d0aa97e8e0ea1a2c8baafcb719e6b43ee516d9ef996a5eb9b22f371a",
+        "thickness_mm": 2.0,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 100423,
+        "N_compression": 93526,
+        "Mx_positive": 3027647,
+        "Mx_negative": 3027647,
+        "My_positive": 881957,
+        "My_negative": 881957
+      }
+    },
+    "15": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:15",
+      "candidate_content_sha256": "fd657d0461837ee25de208f5db34cd86e13cb49c9dc16bbf3cd08e0890d0f44b",
+      "qualified_content_sha256": "5eae0cf9838e772fe5fec90b0a8ba0d3b68c35c2194121fabcc69e410f7bc2c5",
+      "source_binding": {
+        "catalog_index": 15,
+        "catalog_id": "planilha_v03_r20",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r20_3475aa9724b781cd",
+        "nodes_sha256": "2a4a3a6de81c60fdfc8a2639751b315ba5435b492bcbf1f8abc54417e02a1515",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r20",
+          "dimensions_mm": {
+            "h": 100,
+            "bf": 40,
+            "lip": 17,
+            "t": 2.25
+          },
+          "inner_radius_mm": 2.25,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "3475aa9724b781cd8da793dd4cf259d1dfd27624babfe87fad8b9701eba70682",
+        "thickness_mm": 2.25,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 112052,
+        "N_compression": 108059,
+        "Mx_positive": 3351409,
+        "Mx_negative": 3351409,
+        "My_positive": 966902,
+        "My_negative": 966902
+      }
+    },
+    "16": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:16",
+      "candidate_content_sha256": "ec173a1a3a0c2ff3cbe581d70140a114dda21e87acc690568ee0c7bc6a624635",
+      "qualified_content_sha256": "67b11f8c5e279f035be814f0e169f9ab772286b931ab06a434347ce4b0417830",
+      "source_binding": {
+        "catalog_index": 16,
+        "catalog_id": "planilha_v03_r21",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r21_956178b357c187b0",
+        "nodes_sha256": "2f6dbf63470b2ed7eb080a5c79be96d463ec823c20b791ac83704d8824184914",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r21",
+          "dimensions_mm": {
+            "h": 100,
+            "bf": 40,
+            "lip": 17,
+            "t": 2.65
+          },
+          "inner_radius_mm": 2.65,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "956178b357c187b04b0d2c903b1c13473ae0fde09b8fcf65123bf642eabaafdb",
+        "thickness_mm": 2.65,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 130229,
+        "N_compression": 130229,
+        "Mx_positive": 3844948,
+        "Mx_negative": 3844948,
+        "My_positive": 1091917,
+        "My_negative": 1091917
+      }
+    },
+    "17": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:17",
+      "candidate_content_sha256": "35937a1a03499a80e3e8a8bc6d411264d9277317f7cd3ad80bfb21320f275387",
+      "qualified_content_sha256": "da88387469042ed134830407ff9f641ab2dc56c09572fa8c34680dc9ddb9a5b8",
+      "source_binding": {
+        "catalog_index": 17,
+        "catalog_id": "planilha_v03_r22",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r22_455070881ae1e9f5",
+        "nodes_sha256": "1e532b248b941d2e508176351e8a1810d3078e78eec6f9c464434291fcc2ff4c",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r22",
+          "dimensions_mm": {
+            "h": 100,
+            "bf": 40,
+            "lip": 17,
+            "t": 3
+          },
+          "inner_radius_mm": 3,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "455070881ae1e9f52acf147c66c6e61ff660a3cceff826d6d9a28371a363dafb",
+        "thickness_mm": 3.0,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 145703,
+        "N_compression": 145703,
+        "Mx_positive": 4252384,
+        "Mx_negative": 4252384,
+        "My_positive": 1190606,
+        "My_negative": 1190606
+      }
+    },
+    "18": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:18",
+      "candidate_content_sha256": "f7fb874cd56555a1c73ebb37dca101ad54ece49616de830835d7a4c98f0a71b8",
+      "qualified_content_sha256": "1995becc9624e6459b273d789175436801ff20ddfdf338d48bee3699091a92c9",
+      "source_binding": {
+        "catalog_index": 18,
+        "catalog_id": "planilha_v03_r23",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r23_9ca0e1d3e065ec87",
+        "nodes_sha256": "149c45babfd955a9d8d8f3478d6773ec7f70b419f217fd8c711c4fb6b2b946b7",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r23",
+          "dimensions_mm": {
+            "h": 100,
+            "bf": 40,
+            "lip": 17,
+            "t": 3.35
+          },
+          "inner_radius_mm": 3.35,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "9ca0e1d3e065ec874829e808358ac83f144aafb8f46be080f1d2a8402a357e3f",
+        "thickness_mm": 3.35,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 160774,
+        "N_compression": 160774,
+        "Mx_positive": 4637346,
+        "Mx_negative": 4637346,
+        "My_positive": 1279616,
+        "My_negative": 1279616
+      }
+    },
+    "19": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:19",
+      "candidate_content_sha256": "1a75806e34dcdff17c15b24d3ca7e8412a621d183213b73775d9f7d5e2a6d7b2",
+      "qualified_content_sha256": "bc936ea2026d6d4145f0e986343dff27f344a6a22939d4312fb6ef93cbd80c9b",
+      "source_binding": {
+        "catalog_index": 19,
+        "catalog_id": "planilha_v03_r24",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r24_464549569fd9ec14",
+        "nodes_sha256": "fa742ebef3386b22f8db547e279a3c521a4d3fe7c21d7c045459452c6ae917fc",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r24",
+          "dimensions_mm": {
+            "h": 100,
+            "bf": 50,
+            "lip": 17,
+            "t": 1.2
+          },
+          "inner_radius_mm": 1.2,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "464549569fd9ec1469a1abeba8464e9ee52d58154049d8cf419b41972112eb0b",
+        "thickness_mm": 1.2,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": false,
+        "Mx_negative": false,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 67832,
+        "N_compression": 51459,
+        "Mx_positive": null,
+        "Mx_negative": null,
+        "My_positive": 787902,
+        "My_negative": null
+      }
+    },
+    "20": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:20",
+      "candidate_content_sha256": "a9fda7e4016b6e720d5dc6bda42b22b3f390ad1a0e935fca99ec39367e625e7d",
+      "qualified_content_sha256": "1567d2d963d2cdedaaa917bf9a8807b21b2c72abc59599667e6f6daa3a0578b7",
+      "source_binding": {
+        "catalog_index": 20,
+        "catalog_id": "planilha_v03_r25",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r25_8ee4324a91341fb5",
+        "nodes_sha256": "2a332fc00e2578568ca7d2471bb87d9f9b8d97b70451b5e9da82adafb96df9a8",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r25",
+          "dimensions_mm": {
+            "h": 100,
+            "bf": 50,
+            "lip": 17,
+            "t": 1.5
+          },
+          "inner_radius_mm": 1.5,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "8ee4324a91341fb59eeef16e91d3b7c88ce55211dbdba1dfac99eda91c8e83f2",
+        "thickness_mm": 1.5,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 84050,
+        "N_compression": 71026,
+        "Mx_positive": 2708150,
+        "Mx_negative": 2708150,
+        "My_positive": 960000,
+        "My_negative": null
+      }
+    },
+    "21": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:21",
+      "candidate_content_sha256": "b0bd4503e4e609ce8dffe01760d230f67f07820daacd2414f62fc74e117cc368",
+      "qualified_content_sha256": "3cfb70a8f7b949edee804e77ca946cebbcb14275c30c3916b4da96b92925c918",
+      "source_binding": {
+        "catalog_index": 21,
+        "catalog_id": "planilha_v03_r26",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r26_05a1cba04f6f999a",
+        "nodes_sha256": "7e1ca939a029e3c4ac9443c99119df0e9c3dbae192d5900c6a3d3458a7ab878c",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r26",
+          "dimensions_mm": {
+            "h": 100,
+            "bf": 50,
+            "lip": 17,
+            "t": 2
+          },
+          "inner_radius_mm": 2,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "05a1cba04f6f999a42aaba359a79a8a85471d63169cb87bdf97a0b51e7ad8518",
+        "thickness_mm": 2.0,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 110423,
+        "N_compression": 103526,
+        "Mx_positive": 3507847,
+        "Mx_negative": 3507847,
+        "My_positive": 1225634,
+        "My_negative": 1225634
+      }
+    },
+    "22": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:22",
+      "candidate_content_sha256": "b33fd6a7375721a832661a93bb7fef3e1acf4f875d68c63352b324f62aedc0b9",
+      "qualified_content_sha256": "f795b47a2f5c6b934a8017eddfe461897509a09c4f0b81a6d7ed208adf285893",
+      "source_binding": {
+        "catalog_index": 22,
+        "catalog_id": "planilha_v03_r27",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r27_5b3519ad845facd1",
+        "nodes_sha256": "fd1771da3597fb6d3653fc7cd9352b04d2a5293548352068215f50c82b105937",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r27",
+          "dimensions_mm": {
+            "h": 100,
+            "bf": 50,
+            "lip": 17,
+            "t": 2.25
+          },
+          "inner_radius_mm": 2.25,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "5b3519ad845facd1e57aacf89760b0575ebdfd3ee6b9cf3ea1cb15b1a657456f",
+        "thickness_mm": 2.25,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 123302,
+        "N_compression": 119309,
+        "Mx_positive": 3888881,
+        "Mx_negative": 3888881,
+        "My_positive": 1348740,
+        "My_negative": 1348740
+      }
+    },
+    "23": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:23",
+      "candidate_content_sha256": "3c30f56e384f9aef0fab60d90995b409f2ec0340320858bb31c59dacd74d24ce",
+      "qualified_content_sha256": "71bd6a3c5b2345102fa333193400742e67b54cd3cb70d24979fc1b715ea487ab",
+      "source_binding": {
+        "catalog_index": 23,
+        "catalog_id": "planilha_v03_r28",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r28_3f1403c005f90f35",
+        "nodes_sha256": "cffd75dee44660cdd7b2c76d57cba6a273dcb35d0833b22a17eb47389153d5fc",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r28",
+          "dimensions_mm": {
+            "h": 100,
+            "bf": 50,
+            "lip": 17,
+            "t": 2.65
+          },
+          "inner_radius_mm": 2.65,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "3f1403c005f90f353d759671de3c45e21b4934cb4baa84cd6e32227bed68a3c6",
+        "thickness_mm": 2.65,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 143479,
+        "N_compression": 143479,
+        "Mx_positive": 4472801,
+        "Mx_negative": 4472801,
+        "My_positive": 1532582,
+        "My_negative": 1532582
+      }
+    },
+    "24": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:24",
+      "candidate_content_sha256": "91bdffe8b8c0c3ddb0c46642c034e8110da437116523c5c5a74f9898466308f5",
+      "qualified_content_sha256": "ef9215a70f35ceb52c5ce9105c9ed237ebffddae14355b47dc4eca384da0dcff",
+      "source_binding": {
+        "catalog_index": 24,
+        "catalog_id": "planilha_v03_r29",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r29_6378db224b9dfa01",
+        "nodes_sha256": "3139aff4a54956811e40c18b4f8884c89719be8ea3f6cbb1f8a30f1af525f410",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r29",
+          "dimensions_mm": {
+            "h": 100,
+            "bf": 50,
+            "lip": 17,
+            "t": 3
+          },
+          "inner_radius_mm": 3,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "6378db224b9dfa011dabd30d0261e9cf1bfd46dfb01bbd6ac379d5ff249d522c",
+        "thickness_mm": 3.0,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 160703,
+        "N_compression": 160703,
+        "Mx_positive": 4958059,
+        "Mx_negative": 4958059,
+        "My_positive": 1680487,
+        "My_negative": 1680487
+      }
+    },
+    "25": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:25",
+      "candidate_content_sha256": "1faac168e06c39c63577c8680e85528a8184bc2b391840088121b6843a1d9e98",
+      "qualified_content_sha256": "47f793050868c4cffe7b7f43ce4f6e56465b9a22629c9aa0d945b6d4b2a645b8",
+      "source_binding": {
+        "catalog_index": 25,
+        "catalog_id": "planilha_v03_r30",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r30_efe5400c827b1fe4",
+        "nodes_sha256": "6d7e92e74b44967fb2c72eaf5ba24fa9945143fff0dcc3fab08d1bf81211b6cd",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r30",
+          "dimensions_mm": {
+            "h": 100,
+            "bf": 50,
+            "lip": 17,
+            "t": 3.35
+          },
+          "inner_radius_mm": 3.35,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "efe5400c827b1fe4af1c38e844c722bcd8e504d3c9057c4e36d128dea8859c73",
+        "thickness_mm": 3.35,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 177524,
+        "N_compression": 177524,
+        "Mx_positive": 5419673,
+        "Mx_negative": 5419673,
+        "My_positive": 1816603,
+        "My_negative": 1816603
+      }
+    },
+    "26": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:26",
+      "candidate_content_sha256": "5e3b1c3a094d39b77a90c95f8b6c67b154f7861abc762394ce11fd35ac3ce640",
+      "qualified_content_sha256": "8fa97b788bd423c40a43d3f680eb173637608bb16270c2fffdbcabaf6fb16fe9",
+      "source_binding": {
+        "catalog_index": 26,
+        "catalog_id": "planilha_v03_r31",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r31_980dc2f8d7fbf830",
+        "nodes_sha256": "3814f4cd9fcfa474b6e3fcbd21eedb3fdee38818eca0440abb4408fd506143e2",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r31",
+          "dimensions_mm": {
+            "h": 125,
+            "bf": 50,
+            "lip": 17,
+            "t": 2
+          },
+          "inner_radius_mm": 2,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "980dc2f8d7fbf830fcdae22160f06a103c576fccccde62525824795dfe18c716",
+        "thickness_mm": 2.0,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 122923,
+        "N_compression": 106093,
+        "Mx_positive": 4725150,
+        "Mx_negative": 4725150,
+        "My_positive": 1257578,
+        "My_negative": null
+      }
+    },
+    "27": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:27",
+      "candidate_content_sha256": "ecaf8117f20cad7bdbda9531c2ef48a69245b010e24e94d3307a3b81ce99d079",
+      "qualified_content_sha256": "93d527cec3968084f83a77ac086336c99f705f50f43166cfaa64f191d872acee",
+      "source_binding": {
+        "catalog_index": 27,
+        "catalog_id": "planilha_v03_r32",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r32_b6a55bf8e51f26cb",
+        "nodes_sha256": "08fe9c6f01e983c33706b91093711476e5261aea2531b4fd5aeacfff65867d60",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r32",
+          "dimensions_mm": {
+            "h": 125,
+            "bf": 50,
+            "lip": 17,
+            "t": 2.25
+          },
+          "inner_radius_mm": 2.25,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "b6a55bf8e51f26cb852f84f800bcf99d679c821d320d8b3f491376cd61dd7f48",
+        "thickness_mm": 2.25,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 137364,
+        "N_compression": 123421,
+        "Mx_positive": 5246731,
+        "Mx_negative": 5246731,
+        "My_positive": 1384457,
+        "My_negative": 1384457
+      }
+    },
+    "28": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:28",
+      "candidate_content_sha256": "399953bc612b5cec3408d0f88f350b1472f484569b1fa7b6c1f05ace601da8ec",
+      "qualified_content_sha256": "81b0fda62a2ee3c57418d0e0a6af0db945c32410d2d73ca1e483203a04708479",
+      "source_binding": {
+        "catalog_index": 28,
+        "catalog_id": "planilha_v03_r33",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r33_53e8df9731b224c7",
+        "nodes_sha256": "b36b127a10be4fb7dd6ab5f2ca8cb7bd0df8bca57ac15fdd26315f8547cb8110",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r33",
+          "dimensions_mm": {
+            "h": 125,
+            "bf": 50,
+            "lip": 17,
+            "t": 2.65
+          },
+          "inner_radius_mm": 2.65,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "53e8df9731b224c75eb3f153bed28b707928183c0bc5f8b82f4cd16d63103629",
+        "thickness_mm": 2.65,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 160042,
+        "N_compression": 151378,
+        "Mx_positive": 6050139,
+        "Mx_negative": 6050139,
+        "My_positive": 1574221,
+        "My_negative": 1574221
+      }
+    },
+    "29": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:29",
+      "candidate_content_sha256": "831d8e5a6ff1814a9e7d0467a322b3566b2ac172bb69b69acd06208dc123fa28",
+      "qualified_content_sha256": "f2bf67d0b519e6b03720c69039bb6f7d7b5d225c729170c9a71188a2fbf1cda9",
+      "source_binding": {
+        "catalog_index": 29,
+        "catalog_id": "planilha_v03_r34",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r34_e419225ec8c758d5",
+        "nodes_sha256": "9e3a934f097d2537e99f61c2d56f976914aec25e4f8da7fd111308ee7eca3391",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r34",
+          "dimensions_mm": {
+            "h": 125,
+            "bf": 50,
+            "lip": 17,
+            "t": 3
+          },
+          "inner_radius_mm": 3,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "e419225ec8c758d562a836d469810cf475d5e4a37444674b2ba5b2bf59d5a639",
+        "thickness_mm": 3.0,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 179453,
+        "N_compression": 176141,
+        "Mx_positive": 6722007,
+        "Mx_negative": 6722007,
+        "My_positive": 1727187,
+        "My_negative": 1727187
+      }
+    },
+    "30": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:30",
+      "candidate_content_sha256": "7614d37e1d254b3db61883c8ca30f8b09de4327a8b5e16c6a064376beec8b891",
+      "qualified_content_sha256": "5fabe3a3b5b406dcd20097d1fd9710862936aa4c1e1e7a2c518f948c8be60f9d",
+      "source_binding": {
+        "catalog_index": 30,
+        "catalog_id": "planilha_v03_r35",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r35_f45f002f3662b9ad",
+        "nodes_sha256": "cb3783cee7bb2b92466a442ec4c19e30d1e05ff04ad0dfc980aad63ce6ff829f",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r35",
+          "dimensions_mm": {
+            "h": 125,
+            "bf": 50,
+            "lip": 17,
+            "t": 3.35
+          },
+          "inner_radius_mm": 3.35,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "f45f002f3662b9ad9337c9cc19721a5b9800eecd22294c0b92cf12987bf2fa28",
+        "thickness_mm": 3.35,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 198462,
+        "N_compression": 198462,
+        "Mx_positive": 7365147,
+        "Mx_negative": 7365147,
+        "My_positive": 1868246,
+        "My_negative": 1868246
+      }
+    },
+    "31": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:31",
+      "candidate_content_sha256": "2c7e1217fef601605e0ba04822c9513d0291cfd0027547a77c3e4ad58a06f7c5",
+      "qualified_content_sha256": "5b4634a661bbc2f6ab1a72f14c4612baef9db2abb1dc0024104fbe6e7c19ffee",
+      "source_binding": {
+        "catalog_index": 31,
+        "catalog_id": "planilha_v03_r36",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r36_cc21c1e57ad160aa",
+        "nodes_sha256": "70993e26cb06af6830d3dae71790d55d22ea753866fe6fcf614d4cb0ed47abcc",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r36",
+          "dimensions_mm": {
+            "h": 125,
+            "bf": 50,
+            "lip": 20,
+            "t": 3.75
+          },
+          "inner_radius_mm": 3.75,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "cc21c1e57ad160aa5daafb670293774302ba1a8a74d2c1fd90b17bb613d97076",
+        "thickness_mm": 3.75,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 225318,
+        "N_compression": 225318,
+        "Mx_positive": 8239675,
+        "Mx_negative": 8239675,
+        "My_positive": 2234307,
+        "My_negative": 2234307
+      }
+    },
+    "32": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:32",
+      "candidate_content_sha256": "33f401e8d7b9c3628b084a53e812a647d4bb2d44d1dbae8217eddfdb74c6787f",
+      "qualified_content_sha256": "c4b60d7ab3dbf5f0181cd49deeeae6e9c7e1405be6c7b8c8dab362d1a7929bc9",
+      "source_binding": {
+        "catalog_index": 32,
+        "catalog_id": "planilha_v03_r37",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r37_96cf02f4ffae43a8",
+        "nodes_sha256": "1bfd1dde9ca61e0a4d13b98799f1be46a77856fef32a119c6f225b898ed30e16",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r37",
+          "dimensions_mm": {
+            "h": 150,
+            "bf": 60,
+            "lip": 20,
+            "t": 2
+          },
+          "inner_radius_mm": 2,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "96cf02f4ffae43a894b68874fc1ba1adbe64214625f91a63eb819790aff0fca6",
+        "thickness_mm": 2.0,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 148423,
+        "N_compression": 118471,
+        "Mx_positive": 6906722,
+        "Mx_negative": 6906722,
+        "My_positive": 1842934,
+        "My_negative": null
+      }
+    },
+    "33": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:33",
+      "candidate_content_sha256": "516a4eeccbfd90bb5b2d2e5a9b2661af8ab50a73224efe0b085dcab17c40951a",
+      "qualified_content_sha256": "c8cfb44f20b7c24a65e1d52094ed96746eb1611f7772c70562ef25a3a96c2211",
+      "source_binding": {
+        "catalog_index": 33,
+        "catalog_id": "planilha_v03_r38",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r38_d3271af811c5ec0e",
+        "nodes_sha256": "eb37badf1d3e1eb141da2b8f1acd636d7cd00ac9469efa44a13bc3b38c53b060",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r38",
+          "dimensions_mm": {
+            "h": 150,
+            "bf": 60,
+            "lip": 20,
+            "t": 2.25
+          },
+          "inner_radius_mm": 2.25,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "d3271af811c5ec0e00d6bbe60c7de5810833f8ea0f1c15896680ca1d9e8da62f",
+        "thickness_mm": 2.25,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 166052,
+        "N_compression": 139262,
+        "Mx_positive": 7686628,
+        "Mx_negative": 7686628,
+        "My_positive": 2036569,
+        "My_negative": null
+      }
+    },
+    "34": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:34",
+      "candidate_content_sha256": "ff93183ae683fa4f2e9138f85907b0e355b2b39db8b1da87f4d16e9a848d4887",
+      "qualified_content_sha256": "5b185dba877b6d8d2a4169f680cd85aa7cc24ebf7b127d5980781e51ad7ba264",
+      "source_binding": {
+        "catalog_index": 34,
+        "catalog_id": "planilha_v03_r39",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r39_d712a87abe8888b8",
+        "nodes_sha256": "78e27f47434ea15668cc1c9cee146080af5f7cf17fc04cbf0496d106a6583c37",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r39",
+          "dimensions_mm": {
+            "h": 150,
+            "bf": 60,
+            "lip": 20,
+            "t": 2.65
+          },
+          "inner_radius_mm": 2.65,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "d712a87abe8888b8a605aa900fc0a87e409721e33c33a402563cebd5e6b3c0fb",
+        "thickness_mm": 2.65,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 193829,
+        "N_compression": 173067,
+        "Mx_positive": 8896717,
+        "Mx_negative": 8896717,
+        "My_positive": 2330178,
+        "My_negative": null
+      }
+    },
+    "35": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:35",
+      "candidate_content_sha256": "03ce686f5bf5796b12639d20fc2b7325e228960b5da00a9138b8b97cf356ba21",
+      "qualified_content_sha256": "ae7d31525f040ba8c209116cc4725b87aaea8a3510587db3cd312793bb0691f2",
+      "source_binding": {
+        "catalog_index": 35,
+        "catalog_id": "planilha_v03_r40",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r40_fdbdf79d9b7884cb",
+        "nodes_sha256": "8aa6b26a3a42a6c092167904845d199e68edda42e46e311a9a4e55af8c169807",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r40",
+          "dimensions_mm": {
+            "h": 150,
+            "bf": 60,
+            "lip": 20,
+            "t": 3
+          },
+          "inner_radius_mm": 3,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "fdbdf79d9b7884cbc23074a2ad42cf3b6dd2d1312f847582875f3aea273176a5",
+        "thickness_mm": 3.0,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 217703,
+        "N_compression": 202183,
+        "Mx_positive": 9917726,
+        "Mx_negative": 9917726,
+        "My_positive": 2571016,
+        "My_negative": 2571016
+      }
+    },
+    "36": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:36",
+      "candidate_content_sha256": "da27d08238133bc0205bfd0f3ae98695ae5036a506b0083d62499f892d9e6c11",
+      "qualified_content_sha256": "d153799126fc345969e188c35ab6714e5547f8b4d3437d98839eba099b1e2d5a",
+      "source_binding": {
+        "catalog_index": 36,
+        "catalog_id": "planilha_v03_r41",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r41_c246fb8b8d429552",
+        "nodes_sha256": "440c514f30f187b93e4ea18c26424ab1705777eff13b14030d61381343582334",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r41",
+          "dimensions_mm": {
+            "h": 150,
+            "bf": 60,
+            "lip": 20,
+            "t": 3.35
+          },
+          "inner_radius_mm": 3.35,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "c246fb8b8d4295527ea9c73bbfd270ff9712306e569260c543fe3f12a3432981",
+        "thickness_mm": 3.35,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 241174,
+        "N_compression": 231735,
+        "Mx_positive": 10903751,
+        "Mx_negative": 10903751,
+        "My_positive": 2797155,
+        "My_negative": 2797155
+      }
+    },
+    "37": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:37",
+      "candidate_content_sha256": "78de0cb3c57f75d796887ee1f95dd99cf9610d2efb8a6d6b165afdc0d9c316f8",
+      "qualified_content_sha256": "5a527adb5e9a1acb6f97648b38b08f43249ba3e077890664584bfe1d1437b6ac",
+      "source_binding": {
+        "catalog_index": 37,
+        "catalog_id": "planilha_v03_r42",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r42_86310f0d1935e12e",
+        "nodes_sha256": "d3bd50405f40bb984e58d37131df04b405a680a303ab5d3c9d71073bf2cab475",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r42",
+          "dimensions_mm": {
+            "h": 150,
+            "bf": 60,
+            "lip": 20,
+            "t": 3.75
+          },
+          "inner_radius_mm": 3.75,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "86310f0d1935e12e61b8b22b669ae53a803764126ec4c3cf291589f9a4bd323a",
+        "thickness_mm": 3.75,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 267505,
+        "N_compression": 265608,
+        "Mx_positive": 11988179,
+        "Mx_negative": 11988179,
+        "My_positive": 3037965,
+        "My_negative": 3037965
+      }
+    },
+    "38": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:38",
+      "candidate_content_sha256": "f70bd1f55e266bf2f6680590720de169bbfb117493064ee03e9115681a2cd6c7",
+      "qualified_content_sha256": "6c1ad780914204bfde33a9fcc992df5c0ed5df8397770f51265aa5e14ec93782",
+      "source_binding": {
+        "catalog_index": 38,
+        "catalog_id": "planilha_v03_r43",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r43_f390fd36df16be01",
+        "nodes_sha256": "13832a3b86c33fc21a25d19000c9e6e3630fa30047ec8679e52ce42dac232766",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r43",
+          "dimensions_mm": {
+            "h": 150,
+            "bf": 60,
+            "lip": 20,
+            "t": 4.25
+          },
+          "inner_radius_mm": 4.25,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "f390fd36df16be019f7151b1f0a68275e328d40a287c2cc769e2b6fd95aee93e",
+        "thickness_mm": 4.25,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 299679,
+        "N_compression": 299679,
+        "Mx_positive": 13280682,
+        "Mx_negative": 13280682,
+        "My_positive": 3313145,
+        "My_negative": 3313145
+      }
+    },
+    "39": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:39",
+      "candidate_content_sha256": "e55e7871ef7b2c94d3c8639ef061b88687cd4ec02e3af8b21d3ee0114c8d82c7",
+      "qualified_content_sha256": "483a322cd2dddf8c5bfc8a1178016b411d8f0c40e3c0785b11bd3ee1d3b0032d",
+      "source_binding": {
+        "catalog_index": 39,
+        "catalog_id": "planilha_v03_r44",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r44_f08927fd59875436",
+        "nodes_sha256": "df70a2a8dd5eccaec3e42cbfd3a2bbc062781f1c2318b90a06913619bef71d8c",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r44",
+          "dimensions_mm": {
+            "h": 150,
+            "bf": 60,
+            "lip": 20,
+            "t": 4.75
+          },
+          "inner_radius_mm": 4.75,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "f08927fd59875436a8e29f5b1399ca7a116dedb932ce0ab771f52735c9d27bef",
+        "thickness_mm": 4.75,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 331031,
+        "N_compression": 331031,
+        "Mx_positive": 14503958,
+        "Mx_negative": 14503958,
+        "My_positive": 3560391,
+        "My_negative": 3560391
+      }
+    },
+    "40": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:40",
+      "candidate_content_sha256": "c5ea87a2c880cd71652eb8085ce7b333bfef9d9995735db22f40af8dd443df05",
+      "qualified_content_sha256": "a79254a7922b298ca1bed9134fa7ef7519304b773ddc2bdd1bb0052e7d774fc4",
+      "source_binding": {
+        "catalog_index": 40,
+        "catalog_id": "planilha_v03_r45",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r45_e7eb3e2531abd91a",
+        "nodes_sha256": "3ca3fcb1ea018e3680182c0db33983f2693ca9616361c28855e50ce4b79bf62c",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r45",
+          "dimensions_mm": {
+            "h": 200,
+            "bf": 75,
+            "lip": 20,
+            "t": 2
+          },
+          "inner_radius_mm": 2,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "e7eb3e2531abd91a4d67289271db0a1c8cfe25235370c5d1aebfba5634d0dc49",
+        "thickness_mm": 2.0,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": false,
+        "Mx_negative": false,
+        "My_positive": false,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 188423,
+        "N_compression": 127695,
+        "Mx_positive": null,
+        "Mx_negative": null,
+        "My_positive": null,
+        "My_negative": null
+      }
+    },
+    "41": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:41",
+      "candidate_content_sha256": "ffffc9196f287e70c0ab0d9df3e6198fafe499729c1fd2509ffe9f19bcca3b38",
+      "qualified_content_sha256": "ef4c6223b53a549b5362b3de35ddda988aade4b50f535359121f21060dbc95f0",
+      "source_binding": {
+        "catalog_index": 41,
+        "catalog_id": "planilha_v03_r46",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r46_9db4ecf7212101d5",
+        "nodes_sha256": "d70e58f5fd2800d42925a256413ff405aaf14a282d31a8365e9c51b4bc2d1752",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r46",
+          "dimensions_mm": {
+            "h": 200,
+            "bf": 75,
+            "lip": 20,
+            "t": 2.25
+          },
+          "inner_radius_mm": 2.25,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "9db4ecf7212101d5fac219e6a682eecbbdf2fe8f9f515677c4ff754f1f719cc9",
+        "thickness_mm": 2.25,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": false,
+        "Mx_negative": false,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 211052,
+        "N_compression": 151151,
+        "Mx_positive": null,
+        "Mx_negative": null,
+        "My_positive": 2945514,
+        "My_negative": null
+      }
+    },
+    "42": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:42",
+      "candidate_content_sha256": "b8ab2c0bb311cd08faa952b30f83d1d7fa69d6f957a9736cfa0fa45dd1f79699",
+      "qualified_content_sha256": "74f38509227030a35bb4e8a83f1ac20c579745c805719c56577f7fca98672102",
+      "source_binding": {
+        "catalog_index": 42,
+        "catalog_id": "planilha_v03_r47",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r47_b2909dd61840166f",
+        "nodes_sha256": "b5a01115c932bb6215b8a6798717acf5b144b0286d59f86fa5e1d71206043b9e",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r47",
+          "dimensions_mm": {
+            "h": 200,
+            "bf": 75,
+            "lip": 25,
+            "t": 2.65
+          },
+          "inner_radius_mm": 2.65,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "b2909dd61840166fae35296b3543e63da9cf6c05035854541b6ddab3e4246706",
+        "thickness_mm": 2.65,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 253454,
+        "N_compression": 201120,
+        "Mx_positive": 15511381,
+        "Mx_negative": 15511381,
+        "My_positive": 3808670,
+        "My_negative": null
+      }
+    },
+    "43": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:43",
+      "candidate_content_sha256": "63d24ae7233cecca71559a549fc2fa28574368ef7b5a86b5a90a07274c73cbf4",
+      "qualified_content_sha256": "d62d8510cf66088b85c527fd4228c74fd0fbf68f09141d2951db64ea84c890d5",
+      "source_binding": {
+        "catalog_index": 43,
+        "catalog_id": "planilha_v03_r48",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r48_9e4a625e94ba02f0",
+        "nodes_sha256": "24cc3e8f2db4efa72a3115f5c1b5aa804de0b0c1f4b711f4f95d415d2b43e333",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r48",
+          "dimensions_mm": {
+            "h": 200,
+            "bf": 75,
+            "lip": 25,
+            "t": 3
+          },
+          "inner_radius_mm": 3,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "9e4a625e94ba02f0c65b3c97a889b16fab3d56363909435d7bd05a531d388701",
+        "thickness_mm": 3.0,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 285203,
+        "N_compression": 238612,
+        "Mx_positive": 17354964,
+        "Mx_negative": 17354964,
+        "My_positive": 4226203,
+        "My_negative": null
+      }
+    },
+    "44": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:44",
+      "candidate_content_sha256": "95491ec4b1a1d8515d734f0e798da19693577377f95a5fc4ff6aa544d548ca14",
+      "qualified_content_sha256": "e795c2f7f170dc4ad39dd20342c72aca59b763d530a15e4b2c76375a57f6da05",
+      "source_binding": {
+        "catalog_index": 44,
+        "catalog_id": "planilha_v03_r49",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r49_395b1e3960b636ce",
+        "nodes_sha256": "9973c50f3c7c065fa97295ccfe9a433bb69a9696d0c3655ed352517c62927909",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r49",
+          "dimensions_mm": {
+            "h": 200,
+            "bf": 75,
+            "lip": 25,
+            "t": 3.35
+          },
+          "inner_radius_mm": 3.35,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "395b1e3960b636ced7bf1e2704bfa6a93f63cf595d1a9db59718f1d8fbd6340f",
+        "thickness_mm": 3.35,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 316549,
+        "N_compression": 276513,
+        "Mx_positive": 19151646,
+        "Mx_negative": 19151646,
+        "My_positive": 4624701,
+        "My_negative": null
+      }
+    },
+    "45": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:45",
+      "candidate_content_sha256": "e6056ee271fc79673107cbd155f319a92680069edcf687ade98aba0b968b005c",
+      "qualified_content_sha256": "221af4577169e89858b4be8bbdc95fb6be5c1382e744e11f994c82949fcb2ec6",
+      "source_binding": {
+        "catalog_index": 45,
+        "catalog_id": "planilha_v03_r50",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r50_a814efa75543e90e",
+        "nodes_sha256": "30c2b6145e31fd76277c47916dda0fdc2f43787be9ebccb09313033c5aed9ed8",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r50",
+          "dimensions_mm": {
+            "h": 200,
+            "bf": 75,
+            "lip": 25,
+            "t": 4.75
+          },
+          "inner_radius_mm": 4.75,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "a814efa75543e90ec4f7c05e3476586b22c69e91a1b140d113fdae5652fe1cba",
+        "thickness_mm": 4.75,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 437906,
+        "N_compression": 428160,
+        "Mx_positive": 25875301,
+        "Mx_negative": 25875301,
+        "My_positive": 6034031,
+        "My_negative": 6034031
+      }
+    },
+    "46": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:46",
+      "candidate_content_sha256": "0679f997f2b42f5508ec991463fed5e768e46b8ed303102d278e750f03c5f822",
+      "qualified_content_sha256": "2428a3d7dea8097e6aa783f33b3746ec448ab74187df113fbbabd0f1a50c788a",
+      "source_binding": {
+        "catalog_index": 46,
+        "catalog_id": "planilha_v03_r51",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r51_81a7261b4f1eb574",
+        "nodes_sha256": "ac2b329f849d54c1d82e8771f47e6c1c037c3a0b4901b8b8d5141225d16a2770",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r51",
+          "dimensions_mm": {
+            "h": 200,
+            "bf": 75,
+            "lip": 30,
+            "t": 6.3
+          },
+          "inner_radius_mm": 6.3,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "81a7261b4f1eb574da12d7e3c268b9007f577ab5510c2b8973cb4ee2779d5f2b",
+        "thickness_mm": 6.3,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 580497,
+        "N_compression": 580497,
+        "Mx_positive": 33300688,
+        "Mx_negative": 33300688,
+        "My_positive": 8175826,
+        "My_negative": 8175826
+      }
+    },
+    "47": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:47",
+      "candidate_content_sha256": "4ccf4d80e249d8d1d64af7ecaa7f35c65ac6101e98bb2dd649be4afe25f31c88",
+      "qualified_content_sha256": "0a2487d6c1c756c0f86eeedc501dea7f9d2995b1a73c0571821fbd37b24246a1",
+      "source_binding": {
+        "catalog_index": 47,
+        "catalog_id": "planilha_v03_r52",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r52_6cd4bcf543806da0",
+        "nodes_sha256": "e9ab99bfa509b589f6f04668beee203f81bb83637635a10815ca7a9324ea0dc4",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r52",
+          "dimensions_mm": {
+            "h": 200,
+            "bf": 100,
+            "lip": 25,
+            "t": 2.65
+          },
+          "inner_radius_mm": 2.65,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "6cd4bcf543806da0cd72c05547e0e45b9fd91fd5d6033aba8d96f6510976ab75",
+        "thickness_mm": 2.65,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": false,
+        "Mx_negative": false,
+        "My_positive": false,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 286579,
+        "N_compression": 220770,
+        "Mx_positive": null,
+        "Mx_negative": null,
+        "My_positive": null,
+        "My_negative": null
+      }
+    },
+    "48": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:48",
+      "candidate_content_sha256": "919e1143b9c469b990045f62ee422865bebe8106cb7ead704096b5288c6e541f",
+      "qualified_content_sha256": "bc8dd3d036bc3e39824587a6f65ae4b4284bdf7afa33e97f3753698da2a90487",
+      "source_binding": {
+        "catalog_index": 48,
+        "catalog_id": "planilha_v03_r53",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r53_b6e1002021b25b49",
+        "nodes_sha256": "bff83fd8ca8f98431e51bc25529c27c96421e4881308d666cac137b19dc2117b",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r53",
+          "dimensions_mm": {
+            "h": 200,
+            "bf": 100,
+            "lip": 25,
+            "t": 3
+          },
+          "inner_radius_mm": 3,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "b6e1002021b25b49a2318d77bc623a706434ecb6496f6f3ccc935af2ee6a7c87",
+        "thickness_mm": 3.0,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": false,
+        "Mx_negative": false,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 322703,
+        "N_compression": 262388,
+        "Mx_positive": null,
+        "Mx_negative": null,
+        "My_positive": 6549981,
+        "My_negative": null
+      }
+    },
+    "49": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:49",
+      "candidate_content_sha256": "87a317ce77a519ad32671c5a9848703772f9df26249984d850f19e0836a2ac07",
+      "qualified_content_sha256": "d1d7e1930ea892feaf49552fe370271525206b46c6dc00d2dcd85946b85e9f06",
+      "source_binding": {
+        "catalog_index": 49,
+        "catalog_id": "planilha_v03_r54",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r54_dc9c42e80d60cb33",
+        "nodes_sha256": "217a14a4231df0a16360e190ce6ba7efe345f2dc6d055cc06f0af8cbde36cdfb",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r54",
+          "dimensions_mm": {
+            "h": 200,
+            "bf": 100,
+            "lip": 25,
+            "t": 3.35
+          },
+          "inner_radius_mm": 3.35,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "dc9c42e80d60cb338683d8b66fe7df726da98e9b053ac93eace9085448b3a235",
+        "thickness_mm": 3.35,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": false,
+        "Mx_negative": false,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 358424,
+        "N_compression": 305340,
+        "Mx_positive": null,
+        "Mx_negative": null,
+        "My_positive": 7194715,
+        "My_negative": null
+      }
+    },
+    "50": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:50",
+      "candidate_content_sha256": "605dc6d1c8f2f2b3fdefaa632de0a34afd66f508a6fb347c45b365fee4a10313",
+      "qualified_content_sha256": "a094da19353a9d39a25fceae323f06f1386307b3afe73609e09b96bf243e63e3",
+      "source_binding": {
+        "catalog_index": 50,
+        "catalog_id": "planilha_v03_r55",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r55_a54319e01f89e9a5",
+        "nodes_sha256": "29d5188bd2cb214cc4c5c473caf5480659ad9dcc9e578b160bf07f0d631d5f89",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r55",
+          "dimensions_mm": {
+            "h": 200,
+            "bf": 100,
+            "lip": 25,
+            "t": 3.75
+          },
+          "inner_radius_mm": 3.75,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "a54319e01f89e9a5890211fcf1f0c9cc7fc32e4593c642cdaa4a5b12aad3db62",
+        "thickness_mm": 3.75,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 398755,
+        "N_compression": 355698,
+        "Mx_positive": 25661314,
+        "Mx_negative": 25661314,
+        "My_positive": 7902232,
+        "My_negative": 7902232
+      }
+    },
+    "51": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:51",
+      "candidate_content_sha256": "07cd72ebbaf503bcae00f4e947a3fa2bec66945814bdd06c6baf47894cf82b76",
+      "qualified_content_sha256": "75ea464acd0b6748efee01e677851c2fd9460d509a55a888f0a3a12e514ed90f",
+      "source_binding": {
+        "catalog_index": 51,
+        "catalog_id": "planilha_v03_r56",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r56_4c4f24ba70cf5862",
+        "nodes_sha256": "26032bdca496a6cf9932ff5a8ec38098132f88bee62cbb50b669376cc52f8c1a",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r56",
+          "dimensions_mm": {
+            "h": 200,
+            "bf": 100,
+            "lip": 25,
+            "t": 4.25
+          },
+          "inner_radius_mm": 4.25,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "4c4f24ba70cf58621277f2fb75b253753674bd32a4d904ee055dba8ede42670d",
+        "thickness_mm": 4.25,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 448429,
+        "N_compression": 419949,
+        "Mx_positive": 28647517,
+        "Mx_negative": 28647517,
+        "My_positive": 8743257,
+        "My_negative": 8743257
+      }
+    },
+    "52": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:52",
+      "candidate_content_sha256": "fdf219f2a1a0c222c7c5e0f46aeb2ca5ea4b459dc3e1327485a794c186360185",
+      "qualified_content_sha256": "49c517d828692c8330dd256e4cdb3ab163c0d58b4eb51b6eeaaf88f3e2393be4",
+      "source_binding": {
+        "catalog_index": 52,
+        "catalog_id": "planilha_v03_r57",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r57_1bbe73f817678974",
+        "nodes_sha256": "b6cba3a5fd8866f33842a2e0fa92155cc9b375261874d555f1b402262666fe86",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r57",
+          "dimensions_mm": {
+            "h": 200,
+            "bf": 100,
+            "lip": 25,
+            "t": 4.75
+          },
+          "inner_radius_mm": 4.75,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "1bbe73f817678974913373623e54c0520a482cfc51c6675813ba583de094eb7f",
+        "thickness_mm": 4.75,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 497281,
+        "N_compression": 484904,
+        "Mx_positive": 31534118,
+        "Mx_negative": 31534118,
+        "My_positive": 9536856,
+        "My_negative": 9536856
+      }
+    },
+    "53": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:53",
+      "candidate_content_sha256": "97faf6d3051fc437607aadd4e6d12d6ad943ef4b9e4f9394474f3741b7e70cd1",
+      "qualified_content_sha256": "6968205c0b6d8288cda4a55f723adb9a6a50cb3344fdd9a8061e2e5ffe78cc5f",
+      "source_binding": {
+        "catalog_index": 53,
+        "catalog_id": "planilha_v03_r58",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r58_16dad4268a0ff8a7",
+        "nodes_sha256": "d10c6ded3c2ad1f345d613465a5a55c37cd286eebf1221384f5809980d5b4683",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r58",
+          "dimensions_mm": {
+            "h": 250,
+            "bf": 85,
+            "lip": 25,
+            "t": 2
+          },
+          "inner_radius_mm": 2,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "16dad4268a0ff8a708d3682aef312b4c80e85cf6aa74522d689251553751cfe0",
+        "thickness_mm": 2.0,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": false,
+        "Mx_negative": false,
+        "My_positive": false,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 228423,
+        "N_compression": 137250,
+        "Mx_positive": null,
+        "Mx_negative": null,
+        "My_positive": null,
+        "My_negative": null
+      }
+    },
+    "54": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:54",
+      "candidate_content_sha256": "e22513ddbb4ca7164ead824d35258cd92bae5976c1048397d7758443f2734e85",
+      "qualified_content_sha256": "e69b5edf3ceb61efbc4447ad2583d0a82c81d989ddaebef751f0c98be86ecda8",
+      "source_binding": {
+        "catalog_index": 54,
+        "catalog_id": "planilha_v03_r59",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r59_8f4985d8a7832b7d",
+        "nodes_sha256": "b507bd1b88044cc019996a8970f0e499982972e700e3b3b79f3170b4bde5c76e",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r59",
+          "dimensions_mm": {
+            "h": 250,
+            "bf": 85,
+            "lip": 25,
+            "t": 2.25
+          },
+          "inner_radius_mm": 2.25,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "8f4985d8a7832b7dfee889eabab362d85618b19107188d32d14725302238da66",
+        "thickness_mm": 2.25,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": false,
+        "Mx_negative": false,
+        "My_positive": false,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 256052,
+        "N_compression": 166511,
+        "Mx_positive": null,
+        "Mx_negative": null,
+        "My_positive": null,
+        "My_negative": null
+      }
+    },
+    "55": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:55",
+      "candidate_content_sha256": "4bf0c78c4d328ff4511f2239ca79899face059c09ecc091f58d6587cba097153",
+      "qualified_content_sha256": "195f1ffa1899eaf7e0289e3be7ff8446d8e18f926bd84b0086698f180ed8c782",
+      "source_binding": {
+        "catalog_index": 55,
+        "catalog_id": "planilha_v03_r60",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r60_b7f022b0c5033b93",
+        "nodes_sha256": "55a2e95a691c828f01a71deed94a32bc5c7da2c95c24b7bb96f99e734479ff36",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r60",
+          "dimensions_mm": {
+            "h": 250,
+            "bf": 85,
+            "lip": 25,
+            "t": 2.65
+          },
+          "inner_radius_mm": 2.65,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "b7f022b0c5033b9339ec4ea5e607af72ff05895df7a7ea5af7ab9ef4ee0fda10",
+        "thickness_mm": 2.65,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": false,
+        "Mx_negative": false,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 299829,
+        "N_compression": 210476,
+        "Mx_positive": null,
+        "Mx_negative": null,
+        "My_positive": 4703559,
+        "My_negative": null
+      }
+    },
+    "56": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:56",
+      "candidate_content_sha256": "03861aa39fa540209194bfa136bccfcb832b4da86d235586fbe32ba24c6ecfdd",
+      "qualified_content_sha256": "ee45f16116c9a5850b546d27db5798a1838cbbce6b275d58b6380e429fd2dbd5",
+      "source_binding": {
+        "catalog_index": 56,
+        "catalog_id": "planilha_v03_r61",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r61_5b20e9c006b289f1",
+        "nodes_sha256": "3cfd38f32c41d7e8090aa186cd804a2bd42bb5e8d86706dbd8d43cbc57f645cf",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r61",
+          "dimensions_mm": {
+            "h": 250,
+            "bf": 85,
+            "lip": 25,
+            "t": 3
+          },
+          "inner_radius_mm": 3,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "5b20e9c006b289f1e49eec2784f6fcea1d51ff97658be9f67884ec28eea8da57",
+        "thickness_mm": 3.0,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": false,
+        "Mx_negative": false,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 337703,
+        "N_compression": 251025,
+        "Mx_positive": null,
+        "Mx_negative": null,
+        "My_positive": 5229535,
+        "My_negative": null
+      }
+    },
+    "57": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:57",
+      "candidate_content_sha256": "73593075e2a8613b158c26b356f74811d2134a5322880454d9d42ecc631e1330",
+      "qualified_content_sha256": "f17d26b09ca30e7cae20c8e11fb0c2899f80a346e384a012e3984cefec25086e",
+      "source_binding": {
+        "catalog_index": 57,
+        "catalog_id": "planilha_v03_r62",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r62_a38cdec0d69ad26d",
+        "nodes_sha256": "1439ca0247338ff32f406227905b08a3f8b7cea142b3edb1622708274288f9cf",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r62",
+          "dimensions_mm": {
+            "h": 250,
+            "bf": 85,
+            "lip": 25,
+            "t": 3.35
+          },
+          "inner_radius_mm": 3.35,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "a38cdec0d69ad26d2f44421939ff9093e2c2fc829bdf1fcb6b5d74e33ee2548b",
+        "thickness_mm": 3.35,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 375174,
+        "N_compression": 293273,
+        "Mx_positive": 28038398,
+        "Mx_negative": 28038398,
+        "My_positive": 5734182,
+        "My_negative": null
+      }
+    },
+    "58": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:58",
+      "candidate_content_sha256": "82cb3d100a120fc9b4238d1d095e6273f0b8b3d289e1d4634dc19c04bba8f025",
+      "qualified_content_sha256": "0d853de7ff08c447a5be3c503b0f4312f714096ad5b2d99e90812209b04da204",
+      "source_binding": {
+        "catalog_index": 58,
+        "catalog_id": "planilha_v03_r63",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r63_68bac1e49e0bedd5",
+        "nodes_sha256": "70caeef9476ef08a46f53201da95c718efd43bfbdf4b1a9411baf9c147b59e84",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r63",
+          "dimensions_mm": {
+            "h": 250,
+            "bf": 85,
+            "lip": 25,
+            "t": 3.75
+          },
+          "inner_radius_mm": 3.75,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "68bac1e49e0bedd5c8c7b500b3881003ae3f8f16c6659563452ad7f4c185d785",
+        "thickness_mm": 3.75,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 417505,
+        "N_compression": 343350,
+        "Mx_positive": 31026569,
+        "Mx_negative": 31026569,
+        "My_positive": 6285162,
+        "My_negative": null
+      }
+    },
+    "59": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:59",
+      "candidate_content_sha256": "ddaa11d4e67e404417f80a62c59f2e73fdef399fa19ef0170eb674a6afc6fb45",
+      "qualified_content_sha256": "e31cb567d3d1c1fa4f4735a3ea3f9eab41579106d84e2364d17f8c9090ee0fe2",
+      "source_binding": {
+        "catalog_index": 59,
+        "catalog_id": "planilha_v03_r64",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r64_06c079588584eff0",
+        "nodes_sha256": "f1127b509a1860dfe11de944ec30649f0de68148ce1358f5d3faeca9da444f78",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r64",
+          "dimensions_mm": {
+            "h": 250,
+            "bf": 85,
+            "lip": 25,
+            "t": 4.25
+          },
+          "inner_radius_mm": 4.25,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "06c079588584eff0abb310fbd8dfedfbc28dbe92b376617e7c767556449a5c98",
+        "thickness_mm": 4.25,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 469679,
+        "N_compression": 408164,
+        "Mx_positive": 34656076,
+        "Mx_negative": 34656076,
+        "My_positive": 6935857,
+        "My_negative": 6935857
+      }
+    },
+    "60": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:60",
+      "candidate_content_sha256": "bcef93839f0cad13aac55df39c8b95c86910535b573e928d85a6fd8c3291735e",
+      "qualified_content_sha256": "2679af07fa5dc77dcc9e1b644c81df905fbeac808846709abd7ce2f07c580cde",
+      "source_binding": {
+        "catalog_index": 60,
+        "catalog_id": "planilha_v03_r65",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r65_d242456395858e61",
+        "nodes_sha256": "9f29b74f960cb0f89645fbc33c49934079919a8e7a0d4c6d7ea55060bb3a479d",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r65",
+          "dimensions_mm": {
+            "h": 250,
+            "bf": 85,
+            "lip": 25,
+            "t": 4.75
+          },
+          "inner_radius_mm": 4.75,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "d242456395858e618660fa073a94797b0137c11cc2383b8d2837a62a882c8946",
+        "thickness_mm": 4.75,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 521031,
+        "N_compression": 471340,
+        "Mx_positive": 38168936,
+        "Mx_negative": 38168936,
+        "My_positive": 7545052,
+        "My_negative": 7545052
+      }
+    },
+    "61": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:61",
+      "candidate_content_sha256": "fca2bf497a430a3ada421b435ea9ccae95245841ac938c48cf36db2465007df1",
+      "qualified_content_sha256": "647e6bb32967d3e4b789a52b950eee9b7c7f721db4705feba94fef0428a10a7f",
+      "source_binding": {
+        "catalog_index": 61,
+        "catalog_id": "planilha_v03_r66",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r66_dac7126963080c06",
+        "nodes_sha256": "cf07776f16937dff57a2ba1229c03b706cb9661a719b19217954abb6f497c091",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r66",
+          "dimensions_mm": {
+            "h": 250,
+            "bf": 85,
+            "lip": 30,
+            "t": 6.3
+          },
+          "inner_radius_mm": 6.3,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "dac7126963080c061c98cc8a64e84791539055de244e27b13cfcf76c94df57cd",
+        "thickness_mm": 6.3,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 690747,
+        "N_compression": 687082,
+        "Mx_positive": 49524835,
+        "Mx_negative": 49524835,
+        "My_positive": 10242265,
+        "My_negative": 10242265
+      }
+    },
+    "62": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:62",
+      "candidate_content_sha256": "bfc5d31340eff2d241a8e72aa6a083ed2a80951f1d31b82ca391c350f4bd665b",
+      "qualified_content_sha256": "2f6ceff7c8efe658cecb1902ff30af61c3ce109ac4742bebedc8278aa627ff51",
+      "source_binding": {
+        "catalog_index": 62,
+        "catalog_id": "planilha_v03_r67",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r67_29ba01f082c0bda5",
+        "nodes_sha256": "901e690c13d0a0bbe98d63e0c519e71edcd08e49cb9fb2701ca7e4cd815a513e",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r67",
+          "dimensions_mm": {
+            "h": 250,
+            "bf": 100,
+            "lip": 25,
+            "t": 2.65
+          },
+          "inner_radius_mm": 2.65,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "29ba01f082c0bda525cd78c2bf70721d30d869e45ee4e8a0ff32f4eef68c51a2",
+        "thickness_mm": 2.65,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": false,
+        "Mx_negative": false,
+        "My_positive": false,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 319704,
+        "N_compression": 221170,
+        "Mx_positive": null,
+        "Mx_negative": null,
+        "My_positive": null,
+        "My_negative": null
+      }
+    },
+    "63": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:63",
+      "candidate_content_sha256": "d594636a7b88620fc5ec5e813a04064aa2ce4ca194e88bb23046f9b6972913eb",
+      "qualified_content_sha256": "64bfd0c96533a8a26152af8eaa20f887b6fda95538a47b5e8e94415c26b30bf9",
+      "source_binding": {
+        "catalog_index": 63,
+        "catalog_id": "planilha_v03_r68",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r68_2fd7fee36a856b46",
+        "nodes_sha256": "36ab7a5c7225ac6faf41d0f4cfbaf2ecbbc061c9b34f3b64277452d4d5748d8b",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r68",
+          "dimensions_mm": {
+            "h": 250,
+            "bf": 100,
+            "lip": 25,
+            "t": 3
+          },
+          "inner_radius_mm": 3,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "2fd7fee36a856b465a02bcd4555591decae33670ddcedaebbee9ecedce91c088",
+        "thickness_mm": 3.0,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": false,
+        "Mx_negative": false,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 360203,
+        "N_compression": 264123,
+        "Mx_positive": null,
+        "Mx_negative": null,
+        "My_positive": 6720757,
+        "My_negative": null
+      }
+    },
+    "64": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:64",
+      "candidate_content_sha256": "f71c0ab1681324d76d7f8e9d895dbaca9b4dc76f06ef56032554f1bdb3f3a10d",
+      "qualified_content_sha256": "75a807dab7e6dd29321e4fd93de3e115fad88a8de3d6d6d456637442077ea416",
+      "source_binding": {
+        "catalog_index": 64,
+        "catalog_id": "planilha_v03_r69",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r69_6fe1eb8748a406db",
+        "nodes_sha256": "1ce558e2e5ec7421f2b4da76dcd97986098e2f0fac7347eb88bb70925f3e0fe6",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r69",
+          "dimensions_mm": {
+            "h": 250,
+            "bf": 100,
+            "lip": 25,
+            "t": 3.35
+          },
+          "inner_radius_mm": 3.35,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "6fe1eb8748a406dbc0f2a45e0cfe0295db32748e78d98b8e3c9c3b23a91699d0",
+        "thickness_mm": 3.35,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": false,
+        "Mx_negative": false,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 400299,
+        "N_compression": 308829,
+        "Mx_positive": null,
+        "Mx_negative": null,
+        "My_positive": 7384336,
+        "My_negative": null
+      }
+    },
+    "65": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:65",
+      "candidate_content_sha256": "00f446de9fa50ddcabc247d21aa1b8864826d9a4545e5554774bfbb748f6df8e",
+      "qualified_content_sha256": "6ffbd1038ebde934d05a5c8d3c831e0fabbca61adda0a921a0683d654563b7f9",
+      "source_binding": {
+        "catalog_index": 65,
+        "catalog_id": "planilha_v03_r70",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r70_771be51f6e38de8a",
+        "nodes_sha256": "3214316a2dfa59884f7002066e5b75dd984e6d2cbcb2c6f0feecdcfb6ee4417c",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r70",
+          "dimensions_mm": {
+            "h": 250,
+            "bf": 100,
+            "lip": 25,
+            "t": 3.75
+          },
+          "inner_radius_mm": 3.75,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "771be51f6e38de8a883592e19c1eb5d84e11cea5b09cf7b3d9e4c33f2ec01f41",
+        "thickness_mm": 3.75,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": false,
+        "Mx_negative": false,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 445630,
+        "N_compression": 361775,
+        "Mx_positive": null,
+        "Mx_negative": null,
+        "My_positive": 8113094,
+        "My_negative": null
+      }
+    },
+    "66": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:66",
+      "candidate_content_sha256": "82b1ecb3cf9994fd39815553d8197e2aa669db50fab232da2c2516456578f56e",
+      "qualified_content_sha256": "4b21414c58e0520c3825c73f831441e85d388e5d218d79c162db022589e125d2",
+      "source_binding": {
+        "catalog_index": 66,
+        "catalog_id": "planilha_v03_r71",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r71_2633e8c40e1675cb",
+        "nodes_sha256": "a943660bfc084d1f01f9b98aeb7cf8ee9637c138d0390cc88f824b357c6f3681",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r71",
+          "dimensions_mm": {
+            "h": 250,
+            "bf": 100,
+            "lip": 25,
+            "t": 4.25
+          },
+          "inner_radius_mm": 4.25,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "2633e8c40e1675cbe26ce8620399c289e915b215297f395766e1e94cfbd0311c",
+        "thickness_mm": 4.25,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 501554,
+        "N_compression": 430250,
+        "Mx_positive": 38506134,
+        "Mx_negative": 38506134,
+        "My_positive": 8980222,
+        "My_negative": 8980222
+      }
+    },
+    "67": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:67",
+      "candidate_content_sha256": "4c0d35d55394b72aede979119a43d11fa21724a173181c1a1e9406f74738fe78",
+      "qualified_content_sha256": "aca696e2254b191165e4011a7d1eecd9c98bec06a82465cf94c0831d011d5702",
+      "source_binding": {
+        "catalog_index": 67,
+        "catalog_id": "planilha_v03_r72",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r72_4adaf240d374b1eb",
+        "nodes_sha256": "fd2098e2e3cd0fc76edbd3c4d4695c7a2fc04c1dc38c865bd28de3ee87297429",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r72",
+          "dimensions_mm": {
+            "h": 250,
+            "bf": 100,
+            "lip": 25,
+            "t": 4.75
+          },
+          "inner_radius_mm": 4.75,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "4adaf240d374b1eb5a1791ebe1f458cb69290f7180e6cddfebcf501c23d81193",
+        "thickness_mm": 4.75,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": true
+      },
+      "signed_capacity_floor": {
+        "N_tension": 556656,
+        "N_compression": 500679,
+        "Mx_positive": 42454450,
+        "Mx_negative": 42454450,
+        "My_positive": 9799411,
+        "My_negative": 9799411
+      }
+    },
+    "68": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:68",
+      "candidate_content_sha256": "d29393476cd29c2f33f99d88c857e7bcdf0a7c3233ed55ecb745eb9671539a0d",
+      "qualified_content_sha256": "723608916ac592833d218d44ab945d8d733b13217319c4e749c5bc1149fd5956",
+      "source_binding": {
+        "catalog_index": 68,
+        "catalog_id": "planilha_v03_r73",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r73_fba737c614b898b2",
+        "nodes_sha256": "cb83e3a46b1a1a14b95e9e599ae9ce2b908eb015949f275e603fd5a807402775",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r73",
+          "dimensions_mm": {
+            "h": 300,
+            "bf": 85,
+            "lip": 25,
+            "t": 2
+          },
+          "inner_radius_mm": 2,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "fba737c614b898b240fa2749d8db592a016b3cb6e7ea8d8d558169aa21e529c7",
+        "thickness_mm": 2.0,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": false,
+        "Mx_negative": false,
+        "My_positive": false,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 253423,
+        "N_compression": 136446,
+        "Mx_positive": null,
+        "Mx_negative": null,
+        "My_positive": null,
+        "My_negative": null
+      }
+    },
+    "69": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:69",
+      "candidate_content_sha256": "71b7372fb29a90b1b02e9d10a234632e83e43b0db29e6373a60021740e5c5b6f",
+      "qualified_content_sha256": "1e64b582da767048af00b10d28538590ebba02c3b1cdf23d444a81456ccfa04e",
+      "source_binding": {
+        "catalog_index": 69,
+        "catalog_id": "planilha_v03_r74",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r74_14177efa6ae5ff91",
+        "nodes_sha256": "ab42e5093c94c634fbc0f64477677a44aa4bcdad2939b3c35c6f050a1db4e5c7",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r74",
+          "dimensions_mm": {
+            "h": 300,
+            "bf": 85,
+            "lip": 25,
+            "t": 2.25
+          },
+          "inner_radius_mm": 2.25,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "14177efa6ae5ff91f48a99c4552b6b729d9b05a01aba0159aa086d926c298627",
+        "thickness_mm": 2.25,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": false,
+        "Mx_negative": false,
+        "My_positive": false,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 284177,
+        "N_compression": 165936,
+        "Mx_positive": null,
+        "Mx_negative": null,
+        "My_positive": null,
+        "My_negative": null
+      }
+    },
+    "70": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:70",
+      "candidate_content_sha256": "d2db9c919e292e46db948cfb2fc84ec9f2b35046fd1fc8df2248ac1ac9a536ae",
+      "qualified_content_sha256": "53258c0bf1ff607fb9666fe8c455ce60889f370dd87d0bf099491a9fc9793598",
+      "source_binding": {
+        "catalog_index": 70,
+        "catalog_id": "planilha_v03_r75",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r75_bb3b3c7186c283b1",
+        "nodes_sha256": "7b34c51d0ceee9e9cfba6815b534d57524869c98e49d2ee3bdb437a7873c347f",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r75",
+          "dimensions_mm": {
+            "h": 300,
+            "bf": 85,
+            "lip": 25,
+            "t": 2.65
+          },
+          "inner_radius_mm": 2.65,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "bb3b3c7186c283b1bbc69f44a7cfafcc6ce5b658ca34ccc00e0c108079cb4c6f",
+        "thickness_mm": 2.65,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": false,
+        "Mx_negative": false,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 332954,
+        "N_compression": 210602,
+        "Mx_positive": null,
+        "Mx_negative": null,
+        "My_positive": 4782916,
+        "My_negative": null
+      }
+    },
+    "71": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:71",
+      "candidate_content_sha256": "4acdd381cd6a788b6f0f74bc892bc7ec88ef7bbd3c7743d0e9402acf73f27db7",
+      "qualified_content_sha256": "e3127244ed7ef53e8d600ba3722df325a5420e6c6c8bc5589e36b808e6486251",
+      "source_binding": {
+        "catalog_index": 71,
+        "catalog_id": "planilha_v03_r76",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r76_6cfc84cfbee6252c",
+        "nodes_sha256": "0feaf121e2b9204059d51dce3f243c1aa79c2b53a4da4cbd0fa5144a491d29f4",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r76",
+          "dimensions_mm": {
+            "h": 300,
+            "bf": 85,
+            "lip": 25,
+            "t": 3
+          },
+          "inner_radius_mm": 3,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "6cfc84cfbee6252c65279fadc55a87fa8dac634f96914d010ebe06298c031900",
+        "thickness_mm": 3.0,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": false,
+        "Mx_negative": false,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 375203,
+        "N_compression": 252026,
+        "Mx_positive": null,
+        "Mx_negative": null,
+        "My_positive": 5318716,
+        "My_negative": null
+      }
+    },
+    "72": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:72",
+      "candidate_content_sha256": "38606ae3d7d847a939789c513949c3f74023c6b56287d8c0f2a3190db7fb0ae5",
+      "qualified_content_sha256": "37e27300a5235240f2d0c963a78a6fa3ff9e31c2d4afbcaaa9d348eb14bc3ba4",
+      "source_binding": {
+        "catalog_index": 72,
+        "catalog_id": "planilha_v03_r77",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r77_c64d0e841a130cd0",
+        "nodes_sha256": "95973ec6a0dadcbab913bed47a0128b598b34bc040dcf33bae0e82ef26188875",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r77",
+          "dimensions_mm": {
+            "h": 300,
+            "bf": 85,
+            "lip": 25,
+            "t": 3.35
+          },
+          "inner_radius_mm": 3.35,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "c64d0e841a130cd0826b2ebbd7c317f408897bc938d5457eef7e9d799e56f8dc",
+        "thickness_mm": 3.35,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 417049,
+        "N_compression": 295425,
+        "Mx_positive": 36009783,
+        "Mx_negative": 36009783,
+        "My_positive": 5833023,
+        "My_negative": null
+      }
+    },
+    "73": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:73",
+      "candidate_content_sha256": "fe7c021d6dfdd8d6d3c433a40cf96fd04b556be7d3affbcdad9bb40faafca658",
+      "qualified_content_sha256": "3fbe8b6265ca66f43fc17678f4d2fe6dcceb9b6cafd45677b9be213b49664ed3",
+      "source_binding": {
+        "catalog_index": 73,
+        "catalog_id": "planilha_v03_r78",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r78_28ad405270914b11",
+        "nodes_sha256": "5fbd7da4c2756ce5821df866621341cc6e09558d9a5aaf77adfa032f9bb86212",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r78",
+          "dimensions_mm": {
+            "h": 300,
+            "bf": 85,
+            "lip": 25,
+            "t": 3.75
+          },
+          "inner_radius_mm": 3.75,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "28ad405270914b113b3b5248448c5845bad8bb78e6b4953512c43d5a4bdff116",
+        "thickness_mm": 3.75,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 464380,
+        "N_compression": 347199,
+        "Mx_positive": 39887967,
+        "Mx_negative": 39887967,
+        "My_positive": 6394841,
+        "My_negative": null
+      }
+    },
+    "74": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:74",
+      "candidate_content_sha256": "e5f9570ff04a3517582e957618e605e6cfaee810b8fece2d191c4109e69a556f",
+      "qualified_content_sha256": "0961b1a5cc80b38f02bd7803999260fcd32377d79f089db7a32a6033b6eaadc5",
+      "source_binding": {
+        "catalog_index": 74,
+        "catalog_id": "planilha_v03_r79",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r79_e04c1cb54b476939",
+        "nodes_sha256": "23a5b4dab461e353e1b2aa2c86e509aea471d1cef6187ad1dc3eabf54d78abfe",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r79",
+          "dimensions_mm": {
+            "h": 300,
+            "bf": 85,
+            "lip": 25,
+            "t": 4.25
+          },
+          "inner_radius_mm": 4.25,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "e04c1cb54b476939d4c8a5fc9247fb83f9bfff03ad0dc111398ad53b4e9b7aeb",
+        "thickness_mm": 4.25,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 522804,
+        "N_compression": 414779,
+        "Mx_positive": 44611425,
+        "Mx_negative": 44611425,
+        "My_positive": 7058773,
+        "My_negative": null
+      }
+    },
+    "75": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:75",
+      "candidate_content_sha256": "14bb860efde7708ced11d0eae78cf307136a0bc3e5d3d24e7ec8c2364a72aafb",
+      "qualified_content_sha256": "8f490a1fe57be6bb6c1dac632c3d7c86a91b864337516f9ff51b2a99bd6c2034",
+      "source_binding": {
+        "catalog_index": 75,
+        "catalog_id": "planilha_v03_r80",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r80_b1fc233fa0637eb4",
+        "nodes_sha256": "d3fe006aed32cc88f82bc90cbaee5a10301599a63728dd773cd3487bda51ae91",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r80",
+          "dimensions_mm": {
+            "h": 300,
+            "bf": 85,
+            "lip": 25,
+            "t": 4.75
+          },
+          "inner_radius_mm": 4.75,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "b1fc233fa0637eb47ef49d96018248a532cc45037a4a3073a41de9b4c23024e7",
+        "thickness_mm": 4.75,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 580406,
+        "N_compression": 484095,
+        "Mx_positive": 49197602,
+        "Mx_negative": 49197602,
+        "My_positive": 7680853,
+        "My_negative": null
+      }
+    },
+    "76": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:76",
+      "candidate_content_sha256": "37a77485847a4ed1b55bbdbfe01fcff428b1dcdef7c0730b069dd5768fbf5550",
+      "qualified_content_sha256": "63309986fd5dd7fd3aadfd944f6dda175cbe9d6cd7fb9305fa4e22a2fab08f7b",
+      "source_binding": {
+        "catalog_index": 76,
+        "catalog_id": "planilha_v03_r81",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r81_3940725ec654d9d8",
+        "nodes_sha256": "13d5b9f17c01c0f3af98427d7d533642f4445d14bd286c42b79d7a544f27e9ce",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r81",
+          "dimensions_mm": {
+            "h": 300,
+            "bf": 85,
+            "lip": 30,
+            "t": 6.3
+          },
+          "inner_radius_mm": 6.3,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "3940725ec654d9d81ae5618d945f43ca2de9dea0da8ef10f674c7f236f614c81",
+        "thickness_mm": 6.3,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 769497,
+        "N_compression": 717509,
+        "Mx_positive": 64127383,
+        "Mx_negative": 64127383,
+        "My_positive": 10432863,
+        "My_negative": null
+      }
+    },
+    "77": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:77",
+      "candidate_content_sha256": "bd709104eaef16ffd7f57aa08fd729c1e1de8ed65c007ec8e1cfc12f10a70161",
+      "qualified_content_sha256": "0b054a47302fb97b10e3f69d06a3f5bfb8c8ac1dfd8df24df232db93bc76e15b",
+      "source_binding": {
+        "catalog_index": 77,
+        "catalog_id": "planilha_v03_r82",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r82_02bf69df32696900",
+        "nodes_sha256": "ac7184cec01bc9268a205dbea21117e5e4247937dc73da8670aa45701387a120",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r82",
+          "dimensions_mm": {
+            "h": 300,
+            "bf": 100,
+            "lip": 25,
+            "t": 2.65
+          },
+          "inner_radius_mm": 2.65,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "02bf69df326969007532792722295e626903fabdd8ec6f3d38378b906a88668e",
+        "thickness_mm": 2.65,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": false,
+        "Mx_negative": false,
+        "My_positive": false,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 352829,
+        "N_compression": 220804,
+        "Mx_positive": null,
+        "Mx_negative": null,
+        "My_positive": null,
+        "My_negative": null
+      }
+    },
+    "78": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:78",
+      "candidate_content_sha256": "07ff8b3635488b1cd031c40f8a784beecc80ae3ede58bb5342df7de4200e3814",
+      "qualified_content_sha256": "49b50ae7c113fddf48f648be54c0a72ab96ea5c87c7a1e3f5d67f23eb1817967",
+      "source_binding": {
+        "catalog_index": 78,
+        "catalog_id": "planilha_v03_r83",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r83_77876a69cb7bd12d",
+        "nodes_sha256": "c772d7cff307d6685675ff15e130679c691ac468825ef06e91a322c3041b3ab1",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r83",
+          "dimensions_mm": {
+            "h": 300,
+            "bf": 100,
+            "lip": 25,
+            "t": 3
+          },
+          "inner_radius_mm": 3,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "77876a69cb7bd12d8e60a9011230148803279391dabdc10b461d4becabc05387",
+        "thickness_mm": 3.0,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": false,
+        "Mx_negative": false,
+        "My_positive": false,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 397703,
+        "N_compression": 264599,
+        "Mx_positive": null,
+        "Mx_negative": null,
+        "My_positive": null,
+        "My_negative": null
+      }
+    },
+    "79": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:79",
+      "candidate_content_sha256": "a68577200a218bf3df8cee47b6d8500e8ad4732bf5c94908257dbc9ecf1d358a",
+      "qualified_content_sha256": "24166b72417274f7b3033cdf8aa45decc77694a87b0781914cbafa202813beb3",
+      "source_binding": {
+        "catalog_index": 79,
+        "catalog_id": "planilha_v03_r84",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r84_7cdeb2d23ecbca68",
+        "nodes_sha256": "87d0c0273cf1cda7032fd1dc4cf1d5aec17922e69e9e6ef10c6813af73e9e647",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r84",
+          "dimensions_mm": {
+            "h": 300,
+            "bf": 100,
+            "lip": 25,
+            "t": 3.35
+          },
+          "inner_radius_mm": 3.35,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "7cdeb2d23ecbca68826fbb3496f15cacc58a7078e357d3f42e6e19c8a715f795",
+        "thickness_mm": 3.35,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": false,
+        "Mx_negative": false,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 442174,
+        "N_compression": 310428,
+        "Mx_positive": null,
+        "Mx_negative": null,
+        "My_positive": 7525504,
+        "My_negative": null
+      }
+    },
+    "80": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:80",
+      "candidate_content_sha256": "544213dd44d56f31a769c7751909605b021beba3b1162aa5ee74fc892fd2ca48",
+      "qualified_content_sha256": "f9ce4230031f1c6bceb8afc0f037a1b6b179a0c80f74c4dfc3af40e30d0ba6cf",
+      "source_binding": {
+        "catalog_index": 80,
+        "catalog_id": "planilha_v03_r85",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r85_c6c32481fb379074",
+        "nodes_sha256": "d9dc0551f9c7e6c70aba085e520d2679d3f1830441ff6ec0290d28f16aff3148",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r85",
+          "dimensions_mm": {
+            "h": 300,
+            "bf": 100,
+            "lip": 25,
+            "t": 3.75
+          },
+          "inner_radius_mm": 3.75,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "c6c32481fb379074079f6428eb3f68c4eba51577f27afff0679e187bd45d096f",
+        "thickness_mm": 3.75,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": false,
+        "Mx_negative": false,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 492505,
+        "N_compression": 365039,
+        "Mx_positive": null,
+        "Mx_negative": null,
+        "My_positive": 8269931,
+        "My_negative": null
+      }
+    },
+    "81": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:81",
+      "candidate_content_sha256": "de9cd998cb7536d6289c38acf6bbcc4bce61f8eeba941fb32da29630eaca59b2",
+      "qualified_content_sha256": "0307626bd6a7509080212ce2c861a0eacf9f28edea0296cfc1333c5fe9447026",
+      "source_binding": {
+        "catalog_index": 81,
+        "catalog_id": "planilha_v03_r86",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r86_659e6edeb2f2d4cf",
+        "nodes_sha256": "d02a199069f90f4f22ebaf3fecf33a6ff9e098cd8b6d43cf82bb3dc1bcd98fee",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r86",
+          "dimensions_mm": {
+            "h": 300,
+            "bf": 100,
+            "lip": 25,
+            "t": 4.25
+          },
+          "inner_radius_mm": 4.25,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "659e6edeb2f2d4cfc5a59a04eaff76c818a5c8e8fd28f77799b09d080bbf6c3c",
+        "thickness_mm": 4.25,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": false,
+        "Mx_negative": false,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 554679,
+        "N_compression": 436242,
+        "Mx_positive": null,
+        "Mx_negative": null,
+        "My_positive": 9156267,
+        "My_negative": null
+      }
+    },
+    "82": {
+      "reference_id": "EN_Ue_section_library_20261106_r1:catalog_index:82",
+      "candidate_content_sha256": "b86dcd8115942aa858faae7cb0420585376cbb917a79512f5643aee3ca493931",
+      "qualified_content_sha256": "7f8f6acd0d9254199809a3d50e9b7de1c942d9c38981f60e25167819e0892b18",
+      "source_binding": {
+        "catalog_index": 82,
+        "catalog_id": "planilha_v03_r87",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r87_342479dd8e5777c2",
+        "nodes_sha256": "76d092cfbefae8c7f0c1946eb9a9f2f3b57bc957c6b8e62a5ab6c55e5fcaa207",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r87",
+          "dimensions_mm": {
+            "h": 300,
+            "bf": 100,
+            "lip": 25,
+            "t": 4.75
+          },
+          "inner_radius_mm": 4.75,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "342479dd8e5777c20aeeb8aca59447279b1170c55adbee6f9c98403b12a9efdc",
+        "thickness_mm": 4.75,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 250.0,
+          "fya_MPa": 250.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "uniform_axial_and_integral_pure_moments_20261106",
+        "action_convention": "N tension positive, Mx=integral(y*sigma)dA, My=-integral(x*sigma)dA"
+      },
+      "eligible_by_action": {
+        "N_tension": true,
+        "N_compression": true,
+        "Mx_positive": true,
+        "Mx_negative": true,
+        "My_positive": true,
+        "My_negative": false
+      },
+      "signed_capacity_floor": {
+        "N_tension": 616031,
+        "N_compression": 510214,
+        "Mx_positive": 54373473,
+        "Mx_negative": 54373473,
+        "My_positive": 9994237,
+        "My_negative": null
+      }
+    }
+  },
+  "content_sha256": "51e7bac78b21e58f2adb2cc5bd25b1a65469fe0334e921e31bc351522c0e1f53"
+}

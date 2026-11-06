@@ -123,6 +123,12 @@ def qualify_legacy_strong_criticals(data):
 
 
 def qualify_strong_criticals(data):
+    from .ue_catalog_reference import claims_reference
+    if claims_reference(data):
+        reason='Contorno próprio Ue: críticos de outro modelo não são herdados; capacidades próprias ainda pendentes.'
+        effective={k:dict(value=None,origin=data.get('critical_origin',''),reason=reason) for k in ('Ml','Mdist')}
+        evidence=dict(source='ue_catalog_own_contour',pierin_U_reference=dict(status='outside_U_scope',reason=reason,axial_calculation_implemented=False),fields={k:dict(status='not_evaluated_own_contour',input_value_Nmm=data.get(k+'_Nmm'),reason=reason) for k in ('Ml','Mdist')},warnings=[reason])
+        return effective,evidence
     effective, evidence = qualify_legacy_strong_criticals(data)
     # New U table overlay is distinct from legacy workbook/Table12 provenance.
     # Qualify after the legacy path so imported old projects retain their route.

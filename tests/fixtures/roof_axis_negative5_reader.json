@@ -1,0 +1,383 @@
+{
+  "schema": "NBR14762_one_span_v1",
+  "input_fingerprint": "e3f8bc96782fd9c19f2b3611fb4ba5e3ff0a9d0bf3cc3887c54f2a8f51d34a26",
+  "input_data": {
+    "schema": "tercas_input_v2",
+    "catalog_index": 21,
+    "synthetic": true,
+    "project": "Ensaio sintético OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce, L=4000, θ=+5; não é projeto",
+    "properties": {
+      "h": 100,
+      "bf": 50,
+      "lip": 17,
+      "t": 2,
+      "mass_kg_m": 3.4672191949851374,
+      "A_cm2": 4.416839738834571,
+      "Ix_cm4": 70.15392822004888,
+      "Wx_cm3": 14.030785644009775,
+      "Iy_cm4": 15.771766001159301,
+      "J_mm4": 588.9119651779428,
+      "Cw_mm6": 365444260.9319717,
+      "ri_mm": 2.0,
+      "fy_MPa": 250.0,
+      "fu_MPa": 400.0,
+      "E_MPa": 200000.0,
+      "G_MPa": 76923.07692307692
+    },
+    "property_origin": "Referência própria OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce; R01 209 nós, ri=t=2; propriedades e módulos exteriores próprios, material declarado do ensaio. Não são propriedades consumidas de Pierin/catálogo.",
+    "L_mm": 4000.0,
+    "q_uls": 0.1,
+    "P_uls": 0.0,
+    "x_uls": 1700.0,
+    "q_sls": 0.06,
+    "P_sls": 0.0,
+    "x_sls": 1700.0,
+    "actions_origin": "Ações sintéticas para auditoria, não projeto real. Matriz fornecida por Lucas em 31/10/2026 preservada; P de manutenção separado. Não é rederivação normativa dos coeficientes.",
+    "Ml_Nmm": 19433882.82838218,
+    "Mdist_Nmm": 12998041.888658233,
+    "critical_origin": "Local forte: NBR14762:2010 Tabela12(b) com W exterior próprio. D forte e críticos fracos: FSM R01 próprios, material e sinais rastreados. Nenhuma dispensa T14 nas seis espessuras; nenhum crítico ou sentido de Pierin consumido.",
+    "ELS_limit_mm": 22.22222222222222,
+    "ELS_origin": "L/180 selecionado para ensaio; não regra universal.",
+    "route_domain": true,
+    "segments": [
+      {
+        "start_mm": 0.0,
+        "end_mm": 4000.0,
+        "Ly_top_effective_mm": 4000.0,
+        "Ly_bottom_effective_mm": 4000.0,
+        "Lz_effective_mm": 4000.0,
+        "Cb_mode": "one",
+        "restraint_provenance": "Lx=Ly=Lz=L, K=Cb=Cm=1; garfos ideais/empenamento livre. Sem apoio intermediário ou telha estrutural."
+      }
+    ],
+    "left_web": false,
+    "right_web": false,
+    "support_origin": "Garfos matemáticos, rotações de flexão e empenamento livres; ligação real não comprovada.",
+    "patch_mm": null,
+    "patch_origin": "Introdução local de P não qualificada neste ensaio.",
+    "steel_name": "ASTM A36",
+    "load_mode": "direct",
+    "selected_types": [
+      "ELU normal",
+      "ELS rara",
+      "ELS frequente",
+      "ELS quase permanente"
+    ],
+    "area_inputs": {
+      "spacing_m": 1.5,
+      "permanent_kgf_m2": 8.0,
+      "live_kgf_m2": 25.0,
+      "wind_up_kgf_m2": 60.0,
+      "wind_down_kgf_m2": 40.0
+    },
+    "ELS_down_denominator": 180.0,
+    "ELS_up_denominator": 120.0,
+    "member_application": "purlin",
+    "inclination": {
+      "value": -5.0,
+      "unit": "degrees",
+      "spacing_basis": "roof",
+      "permanent_basis": "roof",
+      "live_basis": "horizontal",
+      "wind_basis": "roof"
+    },
+    "model_domain": "cladding_actions_only_20261103_r1",
+    "weak_axis": {
+      "positive": {
+        "W_mm3": 4902.243195069812,
+        "Wc_mm3": 8846.89915060527,
+        "Ml_Nmm": 3988869.588929896,
+        "Mdist_Nmm": 3580000,
+        "Nex_N": 86548.93983928768,
+        "Nez_N": 24470.27624052526,
+        "r0_mm": 60.77579726084086,
+        "j_mm": 59.609396294018914,
+        "Cm": 1.0,
+        "Cs": 1,
+        "plain_u_no_distortion": false,
+        "provenance": "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce; mesmo contorno/material e sentido próprio: My positivo comprime alma, negativo lábios. Garfos ideais, L=4000, K=Cb=Cm=1, N0, torque imposto0; sem Pierin. Entrada numérica D=3.58e+06 é piso conservador DISCRETO individual, não autovalor D identificado nem dispensa; identificado continua nulo no registro. Domínio 3000–6000 mm."
+      },
+      "negative": {
+        "W_mm3": 4902.243195069812,
+        "Wc_mm3": 4902.243195069812,
+        "Ml_Nmm": 12086244.455138076,
+        "Mdist_Nmm": 4822053.201043427,
+        "Nex_N": 86548.93983928768,
+        "Nez_N": 24470.27624052526,
+        "r0_mm": 60.77579726084086,
+        "j_mm": 59.609396294018914,
+        "Cm": 1.0,
+        "Cs": -1,
+        "plain_u_no_distortion": false,
+        "provenance": "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce; mesmo contorno/material e sentido próprio: My positivo comprime alma, negativo lábios. Garfos ideais, L=4000, K=Cb=Cm=1, N0, torque imposto0; sem Pierin. D convencional predominante próprio=4822053.201043427 Nmm, vale da assinatura contínua; não D puro ou autovalor finito exato."
+      }
+    },
+    "ue_family_model": {
+      "H_external_mm": 100.0,
+      "B_external_mm": 50.0,
+      "lip_external_mm": 17.0,
+      "t_mm": 2.0,
+      "ri_mm": 2.0,
+      "L_mm": 4000.0,
+      "web_flat_mm": 92.0,
+      "E_MPa": 200000.0,
+      "G_MPa": 76923.07692307692,
+      "nu": 0.3,
+      "fy_MPa": 250.0,
+      "stability_lengths": {
+        "Lx_mm": 4000.0,
+        "Ly_mm": 4000.0,
+        "Lz_mm": 4000.0
+      },
+      "Kx": 1.0,
+      "Ky": 1.0,
+      "Kz": 1.0,
+      "Cb": 1.0,
+      "Cm": 1.0,
+      "supports": "ideal forks; bending rotations and warping free",
+      "N_N": 0.0,
+      "imposed_primary_torque_Nmm": 0.0,
+      "cladding": "no contact or structural contribution; actions only",
+      "geometry_convention": "R01 faceted thin-wall line with exterior fibres; ri=t, 209 nodes",
+      "physical_geometry_verified": false,
+      "Pierin_critical_values_or_signs_used": false
+    },
+    "ue_family_sources": {
+      "reference_id": "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce",
+      "registry_sha256": "3919d41d60e8423d7ae44a2bfb32bbd7c75783c7165bd78c027a20757e61cbe3",
+      "profile_sha256": "fde5d287a73df9adf1b9ab3e392d7207c3423acb7a8894de5553d402cc7aef90",
+      "nodes_sha256": "13c8bf700cce34d8fb2bc607e9ae06c305cc59cd7e0e67234a38fb0218704638",
+      "manifest_sha256": "e7237c35f9b557a820d3b478c1db02101e9a39e368addbbab64465f535288e95",
+      "consumption_decision_sha256": "f1790861e5373f00184f2481840e48c3f14c1a494d9666531ac2d6aa2158d6d4",
+      "web_bound_source": {
+        "path": "outputs/tercas_ue100_family_critical_20261103/web_floor/t2.00/CERTIFICATE.json",
+        "sha256": "171875bcf45a86f46a703c5698816271b6be56631f0c3d998f2de1e39c0dcbbc"
+      }
+    },
+    "ue_family_reference": {
+      "schema": "own_Ue100_six_scalar_components_app_v1",
+      "reference_id": "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce"
+    },
+    "direct_load_basis": "external_without_profile_self_weight_v1",
+    "roof_top_load": {
+      "schema": "roof_top_load_v1",
+      "enabled": true,
+      "load_line": "web_midplane",
+      "end_restraint": "fork_free_warping",
+      "intermediate_restraints": "none"
+    },
+    "deflection_model": "local_uniaxial_component_v1",
+    "isolated_en_stress_model": {
+      "schema": "isolated_EN_intact_section_choice_v1",
+      "enabled": true,
+      "intact_section_model_declared": true,
+      "model_origin": "Auditoria sintética somente: não representa projeto físico",
+      "section_material_identity": "64445d236433c7618926cd31c7cf14f44c22547740e39614684fd265df1e8eb9"
+    }
+  },
+  "roof_top_load_evidence": {
+    "schema": "roof_top_load_evidence_v3",
+    "status": "pending_model_scope",
+    "reason": "",
+    "source_input_fingerprint": "e3f8bc96782fd9c19f2b3611fb4ba5e3ff0a9d0bf3cc3887c54f2a8f51d34a26",
+    "choice_snapshot": {
+      "schema": "roof_top_load_v1",
+      "enabled": true,
+      "load_line": "web_midplane",
+      "end_restraint": "fork_free_warping",
+      "intermediate_restraints": "none"
+    },
+    "geometry": {
+      "h_mm": 100.0,
+      "bf_mm": 50.0,
+      "t_mm": 2.0,
+      "height_above_SC_mm": 49.999999999999986,
+      "load_x_from_web_midplane_mm": 0.0,
+      "web_midplane_to_flange_midwidth_mm": 24.0,
+      "load_line": "web_midplane",
+      "x_from_CG_mm": -16.82745087591539,
+      "x_from_SC_mm": 24.985063393599717,
+      "coherent_torsion_section": true,
+      "source": "Contorno próprio R01 verificado: cota externa superior e posição do esquema, com CG/CT do mesmo contorno.",
+      "physical_load_line_verified": false,
+      "scheme_is_assumed_model": true,
+      "y_from_CG_mm": 49.99999999999999,
+      "CG_xy_mm": [
+        16.82745087591539,
+        49.00000000000001
+      ],
+      "SC_xy_mm": [
+        -24.985063393599717,
+        49.000000000000014
+      ],
+      "section_profile_id": "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce",
+      "nodes_sha256": "13c8bf700cce34d8fb2bc607e9ae06c305cc59cd7e0e67234a38fb0218704638"
+    },
+    "scope": "Me elástico do esquema de cobertura: um vão inteiro, garfos ideais nas extremidades e empenamento livre, sem travamento intermediário ou rigidez da telha. PP no CG e demais ações na cota superior da seção. A posição de cada ação entra separadamente. Não calcula resistência conjunta com torção, deformação pré-flambagem, modos locais/distorcionais ou aprovação global.",
+    "source": "Vlasov: Sahraei et al. CSCE2017 Eq2; canal: Vermeylen et al. Eurosteel2023; NBR14762 §9.8.2.2 p48.",
+    "records": [
+      {
+        "combination_id": "DIRECT_ELU",
+        "limit_state": "ELU",
+        "direct_envelope": false,
+        "physical_applicability_verified": false,
+        "actions": [
+          {
+            "name": "EXTERNAL",
+            "kind": "uniform",
+            "q_down_N_mm": 0.1,
+            "q_parallel_N_mm": 0.0,
+            "height_above_SC_mm": 49.999999999999986,
+            "x_from_SC_mm": 24.985063393599717,
+            "load_line_source": "Contorno próprio R01 verificado: cota externa superior e posição do esquema, com CG/CT do mesmo contorno."
+          },
+          {
+            "name": "PP",
+            "kind": "uniform",
+            "q_down_N_mm": 0.042340522480749335,
+            "q_parallel_N_mm": -0.0037043157248300993,
+            "height_above_SC_mm": 0.0,
+            "x_from_SC_mm": 41.812514269515106,
+            "load_line_source": "PP no CG, calculado uma única vez pela massa do perfil"
+          }
+        ],
+        "separate_axis_capacity_scope": {
+          "schema": "NBR_9_9_separate_axis_roof_scope_v1",
+          "source": "NBR14762:2010 §§9.8.2.2 (p48), 9.9 (p53), Anexo E (p82).",
+          "scope": "Interação flexional NBR §9.9, N=0, com resistências por eixo: forte com altura e fraco pelo Anexo E/Cm=1, sem aproveitar a posição estabilizante das ações paralelas. Momentos concomitantes na mesma seção. Não é autovalor biaxial, interação com torção/bimomento ou aprovação global.",
+          "actions": [
+            {
+              "name": "PP",
+              "kind": "uniform",
+              "parallel_force": -0.0037043157248300993,
+              "x_from_SC_mm": 41.812514269515106,
+              "rotational_stiffness_term": -0.1548867541032477,
+              "position_classification": "destabilizing"
+            }
+          ],
+          "applicable": false,
+          "reason": "PP: posição desestabilizante no eixo fraco",
+          "strong_axis_projection_only": true,
+          "weak_favorable_height_used": false,
+          "combined_buckling_eigenvalue": false,
+          "primary_torsion_assessed": false,
+          "Me_eigenoperator_uses_normal_projection_only": true,
+          "whole_member_approved": false
+        },
+        "status": "pending_biaxial_model",
+        "Me_Nmm": null,
+        "lambda_cr": null,
+        "reason": "Interação por resistências separadas pendente: PP: posição desestabilizante no eixo fraco"
+      },
+      {
+        "combination_id": "DIRECT_ELS",
+        "limit_state": "ELS",
+        "direct_envelope": false,
+        "physical_applicability_verified": false,
+        "actions": [
+          {
+            "name": "EXTERNAL",
+            "kind": "uniform",
+            "q_down_N_mm": 0.06,
+            "q_parallel_N_mm": 0.0,
+            "height_above_SC_mm": 49.999999999999986,
+            "x_from_SC_mm": 24.985063393599717,
+            "load_line_source": "Contorno próprio R01 verificado: cota externa superior e posição do esquema, com CG/CT do mesmo contorno."
+          },
+          {
+            "name": "PP",
+            "kind": "uniform",
+            "q_down_N_mm": 0.033872417984599466,
+            "q_parallel_N_mm": -0.0029634525798640796,
+            "height_above_SC_mm": 0.0,
+            "x_from_SC_mm": 41.812514269515106,
+            "load_line_source": "PP no CG, calculado uma única vez pela massa do perfil"
+          }
+        ],
+        "separate_axis_capacity_scope": {
+          "schema": "NBR_9_9_separate_axis_roof_scope_v1",
+          "source": "NBR14762:2010 §§9.8.2.2 (p48), 9.9 (p53), Anexo E (p82).",
+          "scope": "Interação flexional NBR §9.9, N=0, com resistências por eixo: forte com altura e fraco pelo Anexo E/Cm=1, sem aproveitar a posição estabilizante das ações paralelas. Momentos concomitantes na mesma seção. Não é autovalor biaxial, interação com torção/bimomento ou aprovação global.",
+          "actions": [
+            {
+              "name": "PP",
+              "kind": "uniform",
+              "parallel_force": -0.0029634525798640796,
+              "x_from_SC_mm": 41.812514269515106,
+              "rotational_stiffness_term": -0.12390940328259818,
+              "position_classification": "destabilizing"
+            }
+          ],
+          "applicable": false,
+          "reason": "PP: posição desestabilizante no eixo fraco",
+          "strong_axis_projection_only": true,
+          "weak_favorable_height_used": false,
+          "combined_buckling_eigenvalue": false,
+          "primary_torsion_assessed": false,
+          "Me_eigenoperator_uses_normal_projection_only": true,
+          "whole_member_approved": false
+        },
+        "status": "pending_biaxial_model",
+        "Me_Nmm": null,
+        "lambda_cr": null,
+        "reason": "Interação por resistências separadas pendente: PP: posição desestabilizante no eixo fraco"
+      }
+    ],
+    "computed_cases": 0,
+    "resistance_qualified": false,
+    "whole_member_approved": false,
+    "load_basis": "direct_external_top_profile_PP_CG",
+    "direct_self_weight": {
+      "schema": "external_without_profile_self_weight_v1",
+      "mass_kg_m": 3.4672191949851374,
+      "gravity_m_s2": 9.80665,
+      "profile_characteristic_weight_N_mm": 0.034001805118501,
+      "PP_application": "centroid",
+      "external_application": "selected_top_load_line",
+      "user_actions_rotated": false,
+      "states": {
+        "uls": {
+          "factor": 1.25,
+          "external_q_N_mm": {
+            "normal": 0.1,
+            "parallel": 0.0
+          },
+          "profile_PP_q_N_mm": {
+            "normal": 0.042340522480749335,
+            "parallel": -0.0037043157248300993
+          },
+          "total_q_N_mm": {
+            "normal": 0.14234052248074935,
+            "parallel": -0.0037043157248300993
+          }
+        },
+        "sls": {
+          "factor": 1.0,
+          "external_q_N_mm": {
+            "normal": 0.06,
+            "parallel": 0.0
+          },
+          "profile_PP_q_N_mm": {
+            "normal": 0.033872417984599466,
+            "parallel": -0.0029634525798640796
+          },
+          "total_q_N_mm": {
+            "normal": 0.09387241798459947,
+            "parallel": -0.0029634525798640796
+          }
+        }
+      },
+      "scope": "Valores digitados sem o peso próprio do perfil. O programa soma PP no CG pela massa da seção: 1,25 no ELU e 1,0 no ELS. Demais cargas no topo selecionado; ações digitadas já locais, sem nova rotação."
+    },
+    "self_weight_added": true,
+    "primary_torque_enveloped": false,
+    "manual_effective_lengths_used": false,
+    "legacy_bending_denominators_unchanged": true,
+    "pending_cases": 2,
+    "torsion_assessment_separate": true,
+    "length_scope": "Vão inteiro do esquema; comprimentos efetivos manuais não entram nesta componente.",
+    "source_load_snapshot_sha256": "fcaf9795eefae35db310900b390c570850d6be78f9b3339dfdb44eb9023253c4",
+    "snapshot_sha256": "7f1907743a059d24fa112180f7f05d6d3c3c85a8d8bb33fd6da16671ddcdfb2b"
+  },
+  "_fixture_source": "Synthetic -5 degree direct roof case, published89785b input, recomputed231abfb. Read-only sidecar subset, no fabricated capacity."
+}

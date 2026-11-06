@@ -134,6 +134,10 @@ def attach(result):
             governing_bending_components=[k for k,v in parts.items() if v==minimum],
             Cb_applied_after_Me=False,primary_torque_by_action=copy.deepcopy(r['primary_torque_by_action']),
             M_V_denominator_source='NBR14762 §9.8.4 usa seção efetiva (§9.8.2.1); não alterado por esta componente.'))
+        if r.get('separate_axis_capacity_scope',{}).get('applicable'):
+            from .roof_biaxial import interaction
+            own=result[section['source_reference_field']]
+            evidence['records'][-1]['biaxial']=interaction(combos[(cid,state)],data['L_mm'],minimum,own)
         if envelope:
             evidence['records'][-1].update(resistance_is_lower_envelope=True,
                 reason=SCOPE+' Altura direta envolvida por hipótese conservadora; índice acima de 1 com piso resistente é inconclusivo, não reprovação da resistência real. Torção e parcelas paralelas ocultas permanecem fora desta garantia.')
@@ -242,8 +246,16 @@ def preserved(result):
             if (r.get('MRd_bending_component_Nmm')!=minimum or r.get('bending_component_index')!=r['Msd_max_abs_Nmm']/minimum
                 or r.get('governing_bending_components')!=[k for k,v in parts.items() if v==minimum]):
                 raise ValueError('Mínimo de componentes ou índice salvo inconsistente.')
-        elif r.get('index') is not None or not r.get('reason'):
-            raise ValueError('Pendência FLT salva não pode conter índice ativo.')
+            if 'biaxial' in r:
+                from .roof_biaxial import validate_saved
+                if not me_record.get('separate_axis_capacity_scope',{}).get('applicable'):
+                    raise ValueError('Interação NBR no topo sem posição fraca qualificada.')
+                validate_saved(r['biaxial'],dict(combos[key],span_mm=result['input_data']['L_mm']),
+                    minimum,result[section['source_reference_field']])
+            elif me_record.get('separate_axis_capacity_scope',{}).get('applicable'):
+                raise ValueError('Resistência por eixo salva sem interação concomitante.')
+        elif r.get('index') is not None or not r.get('reason') or 'biaxial' in r:
+            raise ValueError('Pendência FLT salva não pode conter índice ou interação ativa.')
     return copy.deepcopy(saved)
 
 
@@ -268,6 +280,7 @@ def validate_saved_global(result):
         or any(r['trace']['roof_top_nbr_snapshot_sha256']!=ev['snapshot_sha256'] for r in claims)):
         raise ValueError('Panorama salvo reivindica FLT no topo sem a componente vinculada íntegra; recalcule explicitamente.')
     expected={(r['combination_id'],'FLT_height') for r in ev['records']}|{(r['combination_id'],'FLT_coverage') for r in ev['records']}
+    expected|={(r['combination_id'],'biaxial') for r in ev['records'] if 'biaxial' in r}
     observed=[(r.get('trace',{}).get('combination_id'),r['id'].rsplit(':',1)[-1]) for r in claims]
     if len(observed)!=len(expected) or set(observed)!=expected:
         raise ValueError('Panorama salvo não conserva o inventário FLT do topo.')

@@ -141,7 +141,7 @@ def show_result(st,result):
     evidence=result.get('torsion_evidence')
     if not isinstance(evidence,dict):return
     st.subheader('Torção de Vlasov — diagnóstico separado')
-    st.warning(SCOPE)
+    st.warning(evidence.get('scope_pt',SCOPE))
     if evidence.get('reason'):st.warning(evidence['reason'])
     st.caption(str(evidence.get('computed_cases',0))+' combinações calculadas; '+str(evidence.get('pending_model_cases',0))+' pendentes de dados. '+
         'Tsv, Tw e B não alteram as resistências de flexão pura existentes. O complemento longitudinal AISI, quando calculado, aparece separadamente.')

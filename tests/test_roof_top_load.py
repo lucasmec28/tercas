@@ -92,8 +92,8 @@ def test_direct_envelope_does_not_decompose_or_add_self_weight():
     assert all(t['value'] is None for rec in ev['records'] for t in rec['primary_torque_by_action'])
 
 
-def test_biaxial_is_explicit_pending_and_preserves_actions():
-    d=own(angle=5.);r=family.calculate_reference(d);out=roof.attach(r)
+def test_destabilizing_weak_axis_is_pending_and_preserves_actions():
+    d=own(angle=-5.);r=family.calculate_reference(d);out=roof.attach(r)
     ev=roof.preserved(out);assert ev['computed_cases']==0
     assert all(rec['status']=='pending_biaxial_model' and rec['actions'] for rec in ev['records'])
     assert all(out[k]==v for k,v in r.items())

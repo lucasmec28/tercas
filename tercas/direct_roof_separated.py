@@ -26,7 +26,7 @@ def combinations(data):
     return out
 
 
-def actions(combo, geo):
+def actions(combo, geo, *, include_parallel=False):
     acts=[]; parallel=[]
     for name, vector, is_pp in [('EXTERNAL', combo['external_q_vector'], False),
                                  ('PP', combo['profile_PP_q_vector'], True)]:
@@ -35,13 +35,16 @@ def actions(combo, geo):
         ex=None
         if geo['coherent_torsion_section']:
             ex=geo['CG_xy_mm'][0]-geo['SC_xy_mm'][0] if is_pp else geo['x_from_SC_mm']
-        acts.append(dict(name=name, kind='uniform', q_down_N_mm=vector['normal'],
+        acts.append(dict(name=name, kind='uniform', q_down_N_mm=vector['normal'],q_parallel_N_mm=vector['parallel'],
             height_above_SC_mm=0. if is_pp else geo['height_above_SC_mm'], x_from_SC_mm=ex,
             load_line_source='PP no CG, calculado uma única vez pela massa do perfil' if is_pp else geo['source']))
     pv=combo['P_vector']
     if pv['parallel'] != 0: parallel.append('P')
     if pv['normal'] != 0 or pv['parallel'] != 0:
-        acts.append(dict(name='P',kind='point',P_down_N=pv['normal'],s_mm=combo['x_mm'],
+        acts.append(dict(name='P',kind='point',P_down_N=pv['normal'],P_parallel_N=pv['parallel'],s_mm=combo['x_mm'],
             height_above_SC_mm=geo['height_above_SC_mm'],x_from_SC_mm=geo['x_from_SC_mm'],
             load_line_source=geo['source'],position='fixed'))
+    if not include_parallel:
+        for a in acts:
+            a.pop('q_parallel_N_mm',None);a.pop('P_parallel_N',None)
     return acts,parallel

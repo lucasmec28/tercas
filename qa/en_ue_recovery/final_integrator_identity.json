@@ -1,0 +1,7 @@
+{
+  "known_final_sha256": "b53375fc4110e3ec9092cef329639e353ca9b689caae04d8868e14541b0c8cfb",
+  "restored_sha256": "b53375fc4110e3ec9092cef329639e353ca9b689caae04d8868e14541b0c8cfb",
+  "byte_exact": true,
+  "change": "The recorded normal_integration_conditions deepcopy field inserted at the only location matching the complete known SHA256.",
+  "inserted_before_line": 267
+}

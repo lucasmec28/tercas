@@ -1,0 +1,149 @@
+Recuperação da componente EN Ue isolada: inventário e plano
+
+Estado atual
+- Base local: 89785b61c2b01a7d5ec350b00c10fc5e9bc8e90d.
+- Checkout: /workspace/shared/tercas_en_ue_recovery_20261106.
+- Delta histórico: d62596d2569099192171268c60d838d88196395e.
+- Os objetos Git e os arquivos desse delta não foram recuperados.
+- O histórico desta tarefa ainda contém os comandos completos de criação e
+  todas as modificações do delta. Isso permite reconstruir texto, não comprova
+  igualdade byte a byte. QA anterior não aprova a reconstrução.
+- Nenhum módulo dependente foi escrito e nenhum teste/solver foi executado.
+
+Texto integral ainda recuperável neste contexto
+1. tercas/isolated_en_ue_catalog_application.py: criação integral e todas as
+   substituições posteriores, incluindo equilíbrio racional, Bernstein racional,
+   vínculo de cargas às entradas, linhas CG/topo, before-P e isolamento de legado.
+2. tercas/en_ue_bending_applicability.py: criação integral e refinamentos de D,
+   desigualdade estrita de Le, centróide nominal com Taylor racional e escopo.
+3. tercas/isolated_en_ue_catalog_ui.py: criação integral e correções de linguagem
+   para não declarar satisfeitos critérios de casos pendentes.
+4. tests/test_isolated_en_ue_catalog_application.py: criação e todos os testes
+   acrescentados, inclusive ataques rehashados e solução analítica independente.
+5. tests/test_ui_isolated_en_ue_catalog.py: criação integral do AppTest real.
+6. docs/EN_UE_ISOLATED_COMPONENT_20261106.txt: criação e acréscimo da matriz.
+7. qa/en_ue_application/count_coverage.py: criação integral.
+8. Hooks completos em isolated_en_application.py e isolated_en_ui.py.
+9. App.py: o único hook próprio já existe nos bytes r5 recuperados, isto é,
+   preservar isolated_en_ue_catalog_model na lista dos campos opcionais.
+
+O contexto também contém o texto integral lido de:
+- tercas/en_ue_catalog_capacity_reference.py.
+- tercas/en_signed_partial_interaction.py.
+A restauração desses dois arquivos depende de coordenação com seus responsáveis.
+Não tenho leitura integral de en_ue_shear.py nem en_ue_qualified_library.py,
+embora tenha partes, contratos e nomes de constantes. Não reconstruir essas
+bibliotecas como se o texto ou os inventários protegidos tivessem sido recuperados.
+
+Os logs de testes/tempos anteriores aparecem no histórico. Não serão recriados
+como recibos atuais. Recibos XML completos não foram recuperados por esta frente.
+
+Contrato externo do módulo de aplicação
+- CHOICE: isolated_en_ue_catalog_model.
+- CHOICE_SCHEMA: isolated_EN_Ue_catalog_choice_v1.
+- FIELD: isolated_EN_Ue_catalog_component.
+- SCHEMA: isolated_EN_Ue_catalog_saved_component_v1.
+- Entrada explícita ue_catalog_reference_v1, membro purlin, sem rede ativa.
+- Material resistente EN fixo E=210000, nu=0.3, fyb=fya=250, gammaM0=1.
+- E/G da análise são preservados e conferidos contra o material do adaptador.
+- Declaração de seção nominal intacta e origem vinculadas à identidade da seção,
+  material e aplicação. Troca de identidade não reaproveita declaração anterior.
+
+Dependência do adaptador geométrico/ações
+ue_catalog_reference.preserved(result) deve ler somente snapshots e fornecer:
+  source_binding = schema, catalog_index, catalog_id, geometry_schema,
+  nominal_identity_sha256, nodes_sha256, section_profile_id, properties_sha256,
+  material_sha256, material, density_kg_m3.
+O snapshot pai preserva geometric_properties e superseded_section_inputs.
+O adaptador chama isolated_en_application.attach_dense antes de compactar as
+análises torsionais. A seção deve ser a mesma prepare(index, arc_segments=32).
+O produtor só atribui aprovação numérica à demanda, nunca aprovação física/global.
+
+Dependências resistentes
+1. en_ue_qualified_library.qualified_reference(index): inventário externo pinado,
+   retorna qualified_content_sha256, source_binding, eligible_by_action e pisos.
+   O source_binding normal contém catalog_index, catalog_id, profile_id,
+   nominal_identity, nominal_identity_sha256, nodes_sha256, thickness_mm,
+   material, method_revision e action_convention.
+2. en_ue_catalog_capacity_reference.qualified_reference(index, qualified_hash):
+   retorna a união normal/cortante da mesma identidade, elegibilidade dos seis
+   ramos, signed_capacity_floor, shear_capacity_lower_N. Preserva condições,
+   qualificações independentes, material e flags falsas dos provedores.
+3. en_signed_partial_interaction: SCHEMA, ACTIONS, FALSE_FLAGS e primitivas
+   _outward(Fraction, direction), _binding(binding, ref), _bernstein(3 pares),
+   _required(axis, pair), _objective(intervals, signed_floors, shear_floors).
+   O wrapper final usa essas primitivas racionais. Não altera o núcleo nem seus
+   schemas históricos e não usa coeficientes float para perder M(0)=M(L)=0.
+
+Contrato do vínculo original guardado na criação
+original_source_binding contém catalog_source_binding, normal_source_binding,
+qualified_normal_sha256, source_analysis_sha256 e combination_id.
+Cada registro torsional recebe EN_ue_dense_source_sha256 antes da compactação,
+sem mudar esforços, reações, E/G ou ações. O reader compara o vínculo original
+com a autoridade pinada, a fonte catalogada e esse identificador da demanda.
+Nunca reconstrói o vínculo original a partir de um certificado substituto.
+
+Demanda e replay
+- single_vlasov_member_demand_v1 no cálculo; summary_v1 na leitura.
+- Método single_vlasov_CBCA_Annex_A_v1, ELU, N=0, first order, prismatic,
+  intermediate_braces=False, sheet_contact=False, sheet_restraint=False.
+- _load_inventory refaz somente a aritmética de direct.combinations(input) ou
+  area_bundle(input) para conferir o inventário salvo. Não chama solver/builders.
+- Confere papel, vetor [parallel,-normal], P, posição e L. PP fica no CG;
+  demais ações ficam na linha superior original escolhida.
+- Reproduz exatamente a sequência binary64 produtora das duas reações salvas.
+  As mesmas cargas/posições definem reações racionais da idealização biapoiada.
+- Guarda os números originais e a prova racional; nenhum epsilon apaga carga.
+- _rational_bound mantém Fraction até os controles Bernstein e o gauge assinado,
+  com schema isolated_EN_Ue_rational_equilibrium_bound_v1 próprio.
+- Todos os elementos são contíguos e cobrem o vão; nenhum atravessa P sem salto.
+- Before-P exige estado original em x=s=u=0, lado right, mesmo membro/caso/ELU,
+  N=0, momento nulo e reação coerente. A camada não é trocada por apoio exato.
+- Não usa apenas testemunhas extremas para validar o campo completo.
+
+Guarda de aplicabilidade
+- Schema EN_Ue_actual_bending_applicability_v1.
+- Shear lag por eixo ativo: b0x=bf-t/2 e b0y=max((h-t)/2,lip-t/2).
+- Usa zonas reais entre zeros adjacentes do momento para q uniforme e uma
+  posição P. Não divide Le por malha nem por P sem inversão.
+- Aceita somente limite inferior de Le > limite superior de 50*b0.
+- Curling qualifica resistências de flexão pura, não deslocamento N/M/B combinado.
+- Centróide da mesma linha nominal facetada de 32 cordas é conferido por fórmula
+  escalar e seno limitado por Taylor racional. Não constrói contorno/seção normal.
+- Majoração de u por painel; exige u<0.05*altura correspondente.
+- Falta de dispensa de shear lag mantém M-V pendente. Não usar beta*Mpiso como
+  atalho nem exigir declaração técnica vaga para esconder a pendência.
+
+Resultado e apresentação
+- Cortantes forte/fraco são independentes da disponibilidade dos ramos normais.
+- M-V fica sem índice quando uma guarda ou ramo requerido falta.
+- Ramo assinado não usado permanece ausente sem bloquear outro ramo.
+- Teto acima de 1 é inconclusivo, não falha física observada.
+- EN6.1.6/B/Tsv/Tw, estabilidade, cargas locais, ligações e ELS ficam separados.
+- Todas as flags físicas/globais continuam falsas.
+- O panorama só reconhece contagens e hash da componente validada. Não promove
+  torsion_warping nem qualquer aprovação global.
+
+Hooks próprios a restaurar
+isolated_en_application.attach_dense: se há marker ue_catalog_reference,
+  delega para attach_dense do módulo novo; preserva caminho antigo dos sete.
+isolated_en_application.finalize: finaliza novo campo, retorna pelo marker novo;
+  caso contrário continua rotina antiga. O finalizador novo ignora choice antigo
+  sem o marker catalogado, evitando interceptar resultado legado.
+isolated_en_application.global_context: quando novo FIELD existe, usa o contexto
+  novo; caso contrário executa exatamente a leitura antiga.
+isolated_en_ui: chama choice/show/report novos; com marker novo, o choice antigo
+  não é oferecido. Os leitores legados permanecem disponíveis para históricos.
+
+Menor caminho de restauração
+1. Recuperar primeiro os provedores geométricos/ações, normal, shear e kernel
+   e sua evidência de qualificação. Não fabricar autoridade pelos auto-hashes.
+2. Restaurar meu delta textual em arquivos novos e hooks mínimos. Não substituir
+   app.py integralmente por uma reconstrução: o integrador já tem bytes r5 exatos.
+3. Quando as dependências existirem, comparar contratos e hashes recuperáveis.
+   Diferenças de hashes requerem investigação; não declarar equivalência automática.
+4. Nova QA serial e monothread: guardas escalares e autoridade, backend genuíno
+   direto/área, ambos sinais, P interior/before-P, reações não diádicas, ataques
+   rehashados incluindo fonte inteira, legado e AppTest real de exports/rerender.
+5. Gerar novos recibos e matriz. Não importar os recibos anteriores como aprovação.
+6. Revisão independente e commit novo, com proveniência de reconstrução explícita.

@@ -122,7 +122,7 @@ def test_own_reference_editors_expose_scheme_without_technical_fields(loader):
 def test_saved_result_and_report_surface_pending_records_without_recomputation(monkeypatch):
     from tercas import ue_family_reference as family
     from tercas.roof_top_load import attach
-    d=family.load_reference(2.,4000.,5.)
+    d=family.load_reference(2.,4000.,-5.)
     d[FIELD]=choice();d['selected_types']=['ELS quase permanente']
     result=attach(family.calculate_reference(d))
     # Rendering and exporting must not call the solver again.
@@ -139,7 +139,7 @@ def test_saved_result_and_report_surface_pending_records_without_recomputation(m
     report(doc, result)
     text = '\n'.join(p.text for p in doc.paragraphs)
     assert result['input_fingerprint'] in text
-    assert 'componentes paralelas' in text
+    assert 'desestabilizante' in text
     assert 'não momento resistente' in text
     bad=copy.deepcopy(result);bad['roof_top_load_evidence']['computed_cases']=100
     doc=Document();report(doc,bad)

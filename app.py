@@ -19,6 +19,7 @@ from tercas.homogeneous_reference_ui import loader as reference_loader, render a
 from tercas.ue_reference import FIELD as UE_REFERENCE_FIELD, claims_reference as claims_ue_reference, assess as assess_ue_reference, activate as activate_ue_reference
 from tercas.ue_reference_ui import loader as ue_reference_loader, render as render_ue_reference
 from tercas.ue_family_reference import FIELD as UE_FAMILY_FIELD, claims_reference as claims_ue_family, assess as assess_ue_family, activate as activate_ue_family
+from tercas.ue_catalog_reference import FIELD as UE_CATALOG_FIELD, EVIDENCE as UE_CATALOG_EVIDENCE, claims_reference as claims_ue_catalog
 from tercas.ue_family_ui import loader as ue_family_loader, render as render_ue_family
 from tercas.ux_inputs import CB_LABELS,cb_code,flange_segments,whole_span
 from tercas.new_study_policy import for_new_study, initialize_session
@@ -57,7 +58,7 @@ def show_inclination(evidence,girt=False):
  st.caption('Valores nas seções listadas; não são envelope biaxial nem resistência. P e q são considerados juntos na mesma combinação.')
 
 def render_results(result,d):
- from tercas.roof_top_nbr_ui import presentation_rows as roof_nbr_rows
+ from tercas.roof_top_nbr_ui import presentation_rows as roof_nbr_rows, presentation_inclination as roof_nbr_inclination
  from tercas.roof_top_load_ui import show_result as show_roof_top_load
  show_roof_top_load(st,result)
  from tercas.biaxial_component_ui import show as show_biaxial_component
@@ -67,6 +68,8 @@ def render_results(result,d):
  show_aa_component(st,result)
  from tercas.study_completion import show_global
  show_global(st,result)
+ from tercas.ue_catalog_ui import show as show_ue_catalog
+ show_ue_catalog(st,result)
  from tercas.torsion_study_ui import show_result as show_torsion
  show_torsion(st,result)
  from tercas.aisi_torsion_ui import show as show_aisi_torsion
@@ -89,7 +92,7 @@ def render_results(result,d):
    record=result['ue_family_reference_evidence']
    st.caption('Fonte numérica ativa: '+record['reference_id']+'; propriedades e críticos próprios individuais.')
    st.warning('Família Ue100: D forte calculado, sem dispensa Tabela 14. D da alma é piso conservador discreto individual, não modo identificado.')
-   st.caption(('A componente flexional biaxial tem o alcance registrado acima; ELS físico completo, torção e aprovação global permanecem pendentes. ' if ('gross_biaxial_component_evidence' in result or 'aa_web_component_evidence' in result) else 'ELS biaxial, torção física e aprovação global continuam pendentes. ')+'Pierin somente corresponde à família nominal.')
+   st.caption(('A componente flexional biaxial e os complementos seccionais de torção têm somente o alcance explicitamente registrado; ELS físico completo e conclusão global permanecem separados. ' if ('gross_biaxial_component_evidence' in result or 'aa_web_component_evidence' in result) else 'ELS biaxial e conclusão global permanecem separados dos complementos seccionais de torção explicitamente registrados. ')+'Pierin somente corresponde à família nominal.')
   if result.get('ue_reference_evidence'):
    record=result['ue_reference_evidence']
    st.caption('Fonte numérica ativa: '+record['active_numeric_reference'])
@@ -106,13 +109,13 @@ def render_results(result,d):
     selected=st.selectbox('Combinação para consultar',range(len(names)),format_func=lambda i:names[i])
     item=result['cases'][selected];st.caption(measurement_text(item['combination']['expression'])+f"; q normal={fmt(item['combination']['q_kN_m'])} kN/m; P normal={fmt(item['combination'].get('P_N',0)/1000)} kN")
     st.dataframe(display_frame(domain_historical_rows(result,roof_nbr_rows(result,gross_component_rows(result,item['rows']),item['combination']['id']))),hide_index=True,width='stretch')
-    if item.get('evidence',{}).get('inclination'):show_inclination(domain_historical_inclination(result,item['evidence']['inclination']),girt=girt)
+    if item.get('evidence',{}).get('inclination'):show_inclination(domain_historical_inclination(result,roof_nbr_inclination(result,item['evidence']['inclination'],item['combination']['id'])),girt=girt)
     if girt and not is_girt_result(result):show_elastic_wall(item.get('evidence',{}))
   else:
    for warning in result.get('coverage_warnings',[])+result.get('critical_warnings',[]):st.warning(warning)
    if result.get('numerical_warnings'):st.warning('O integrador escalar anterior emitiu aviso numérico, preservado como diagnóstico. O estado da componente tensorial nova é informado separadamente.' if ('gross_biaxial_component_evidence' in result or 'aa_web_component_evidence' in result) else 'A integração da flecha emitiu aviso numérico. A verificação ELS ficou pendente; demais resultados foram preservados.')
    st.dataframe(display_frame(rows(result)),hide_index=True,width='stretch')
-   if result.get('inclination_evidence'):show_inclination(domain_historical_inclination(result,result['inclination_evidence']),girt=girt)
+   if result.get('inclination_evidence'):show_inclination(domain_historical_inclination(result,roof_nbr_inclination(result,result['inclination_evidence'])),girt=girt)
    if girt and not is_girt_result(result):show_elastic_wall(result)
   show_point_contact_results(st,result)
   from tercas.support_web.ui import render as render_support_web
@@ -163,6 +166,8 @@ st.markdown('<style>.block-container{max-width:1200px} h1,h2,h3{color:#25334a} d
 st.title('LRO | Terças e travessas laterais')
 with st.expander('Precisão dos números exibidos',expanded=False):st.caption(DISPLAY_NOTE)
 st.caption(f'NBR 14762:2010 · {VERSION} · primeira emissão restrita')
+from tercas.release_info import RELEASE_CAPTION
+st.caption(RELEASE_CAPTION)
 st.info('Um vão, perfis U/Ue. Solicitações nos dois eixos; resistências desta emissão restritas às rotas disponíveis. Resultados por verificação, sem aprovação global automática.')
 st.caption(DOMAIN_TEXT)
 
@@ -284,6 +289,7 @@ with left:
   changed.pop(REFERENCE_FIELD,None)
   changed.pop('homogeneous_lengths',None)
   changed.pop('homogeneous_reference_evidence',None)
+  changed.pop(UE_CATALOG_FIELD,None);changed.pop(UE_CATALOG_EVIDENCE,None)
   for field in (UE_REFERENCE_FIELD,'ue_model','ue_source_documents','active_numeric_reference','ue_reference_evidence',UE_FAMILY_FIELD,'ue_family_model','ue_family_sources','ue_family_reference_evidence','own_ue_isolated_application'):changed.pop(field,None)
   if 'three_girt_model' in changed:
    changed['three_girt_model'].update(sc_y_mm=None,sc_z_mm=0.,sc_origin='',connections_declared=False,load_line_declared=False)
@@ -294,7 +300,8 @@ with left:
   changed['synthetic']=changed.get('synthetic',False)
   if changed.get('steel_name')!='Personalizado':changed['properties'].update(material(changed['steel_name'])['properties'])
   else:
-   old=st.session_state.get('last_input',st.session_state.base)
+   old=copy.deepcopy(st.session_state.get('last_input',st.session_state.base))
+   old.pop(UE_CATALOG_FIELD,None);old.pop(UE_CATALOG_EVIDENCE,None)
    changed=inputs_for_section(old,index)
   load(changed);st.rerun()
 reference_data=st.session_state.get('last_input',st.session_state.base) if (REFERENCE_FIELD in st.session_state.base or claims_ue_reference(st.session_state.base) or claims_ue_family(st.session_state.base)) else st.session_state.base
@@ -314,7 +321,7 @@ b=copy.deepcopy(st.session_state.base);r=st.session_state.revision
 last=st.session_state.get('last_input',b)
 for key in ['load_mode','area_inputs','selected_types','ELS_down_denominator','ELS_up_denominator','q_uls','P_uls','x_uls','q_sls','P_sls','x_sls','actions_origin','ELS_limit_mm','ELS_origin']:
  b[key]=copy.deepcopy(last[key])
-for key in ['direct_load_basis','roof_top_load','point_contact','isolated_en_stress_model','torsion_model','deflection_model','member_application','wall_els','wall_tie_study','three_girt_model','weak_catalog','weak_axis','model_domain','u_panel_condition','inclination','q_parallel_uls','q_parallel_sls','P_parallel_uls','P_parallel_sls']:
+for key in ['direct_load_basis','roof_top_load','point_contact','isolated_en_ue_catalog_model','isolated_en_stress_model','torsion_model','deflection_model','member_application','wall_els','wall_tie_study','three_girt_model','weak_catalog','weak_axis','model_domain','u_panel_condition','inclination','q_parallel_uls','q_parallel_sls','P_parallel_uls','P_parallel_sls']:
  if key in last:b[key]=copy.deepcopy(last[key])
 d=copy.deepcopy(b)
 try:
@@ -609,6 +616,8 @@ else:
   from tercas.weak_catalog import critical_hypothesis
   from tercas.weak_axis import provisional_hypothesis
   provisional=critical_hypothesis(index)
+  if claims_ue_catalog(d):
+   provisional={sign:dict(Ml_Nmm=None,Mdist_Nmm=None,plain_u_no_distortion=False,provenance='Críticos próprios ainda não fornecidos para este contorno Ue.') for sign in ('positive','negative')}
   from tercas.weak_u_assumption import covered as u_covered,marked as u_marked,selected as u_selected,input_row as u_input_row,reasons as u_reasons,WARNING as U_WARNING
   u_src=copy.deepcopy(b.get('weak_axis',{}).get('positive',provisional['positive']))
   u_was_selected=u_selected(u_src);u_active=False;u_restored=None
@@ -696,6 +705,9 @@ if any(tag in provenance_text.casefold() for tag in ['sintétic','sintetic','did
 from tercas.deflection_scope import render_choice as render_deflection_choice
 render_deflection_choice(st,d,f'deflection_model_{r}')
 render_point_contact(st,d,f'point_contact_{r}',disabled=three_girt)
+from tercas.ue_catalog_ui import render_choice as render_ue_catalog_choice
+render_ue_catalog_choice(st,d,f'ue_catalog_{r}',load)
+
 st.session_state['last_input']=copy.deepcopy(d)
 try:
  if three_girt:
@@ -716,7 +728,8 @@ if 'result' in st.session_state and st.session_state.result['input_fingerprint']
  st.session_state.pop('result');st.info('Entradas alteradas. Calcule novamente; os resultados e exportações anteriores foram retirados.')
 calc_col,scan_col=st.columns(2)
 with calc_col:calculate_clicked=st.button('Calcular diagnóstico 3D' if three_girt else 'Calcular verificações disponíveis',type='primary')
-with scan_col:scan_clicked=st.button('Calcular todas as seções do catálogo',disabled=three_girt)
+with scan_col:scan_clicked=st.button('Calcular todas as seções do catálogo',disabled=three_girt or claims_ue_catalog(d))
+if claims_ue_catalog(d):st.caption('Comparação genérica do catálogo inativa nesta referência própria. Selecione outro Ue e aplique seu contorno explicitamente; fontes/capacidades não são transferidas por nome.')
 if three_girt:st.caption('Comparação resistente do catálogo indisponível no sistema 3D: não há índices qualificados para ordenar aprovação. Trocar perfil exige redocumentar SC/linhas das conexões.')
 if calculate_clicked:
  st.session_state.pop('result',None)
@@ -785,7 +798,7 @@ ue_reference_loader(st,r,load)
 reference_loader(st,r,load)
 render_input_import(r)
 
-st.caption('Método documentado na Rev07. Programa de domínio restrito: não dimensiona ligações ou torção primária. A opção de sistema 3D é apenas diagnóstico elástico, não dimensionamento. Nenhum crédito de travamento da telha.')
+st.caption('Método documentado na Rev07 e nos complementos identificados. Critérios resistentes e ELS parciais têm somente o alcance explicitamente exibido, inclusive no modelo 3D. Ligações não dimensionadas; introdução local depende do critério e detalhe registrados. Sem aprovação global nem crédito de travamento da telha.')
 
 
 # Optional experimental laboratory, same page: do not trigger multipage widget cleanup.

@@ -1,0 +1,14 @@
+{
+  "recovery_only": true,
+  "structural_solver_runs": 0,
+  "historical_audit_sha256": "ce375847a8921f9c9c8355473770d7290f2b365035d5be8263376441a25f8abf",
+  "historical_audit_source": "Verbatim complete SHA256 recovered by independent reviewer from original tool output",
+  "canonical_sha256": "51e7bac78b21e58f2adb2cc5bd25b1a65469fe0334e921e31bc351522c0e1f53",
+  "expected_canonical_sha256": "51e7bac78b21e58f2adb2cc5bd25b1a65469fe0334e921e31bc351522c0e1f53",
+  "file_sha256": "455f8aa52886d620ec54255c332d39ccbac55212870bc046dd3ff4fbe1429353",
+  "expected_file_sha256": "455f8aa52886d620ec54255c332d39ccbac55212870bc046dd3ff4fbe1429353",
+  "byte_exact": true,
+  "profile_count": 83,
+  "eligible_signed_branch_count": 400,
+  "current_run_is_not_the_historical_kernel_audit": true
+}

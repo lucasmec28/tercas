@@ -17,8 +17,17 @@ SCOPE = ('Tensões nominais do campo de parede fina de Vlasov, na mesma combina�
     'fora desta referência nominal de material.')
 
 
+def pending_reason(result):
+    from .ue_catalog_reference import claims_reference
+    if claims_reference(result.get('input_data',{})):
+        return ('O anexo de tensões nominais detalhadas ainda não está integrado ao novo contorno Ue. '
+                'A demanda Vlasov e as componentes já salvas permanecem disponíveis; não se transfere o anexo dos sete modelos antigos.')
+    return None
+
+
 def available_cases(result):
     """Offer only cases whose existing field passed its numerical guard."""
+    if pending_reason(result):return []
     ev = result.get('torsion_evidence')
     if not isinstance(ev, dict):return []
     known = {c['combination']['id'] for c in result.get('cases', [])}

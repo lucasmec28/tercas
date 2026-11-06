@@ -1,0 +1,104 @@
+{
+  "schema": "EN_Ue_source_text_recovery_manifest_v1",
+  "base_commit": "89785b61c2b01a7d5ec350b00c10fc5e9bc8e90d",
+  "historical_delta_reference_only": "d62596d2569099192171268c60d838d88196395e",
+  "status": "Recovered source text, runtime validation pending",
+  "new_runtime_code_invented": false,
+  "new_documents_written": [
+    "docs/RECOVERY_EN_UE_COMPONENT_CONTRACT_20261106.txt",
+    "docs/RECOVERY_EN_UE_FILES_20261106.json"
+  ],
+  "historical_QA_reused_as_current_approval": false,
+  "tests_executed": false,
+  "solvers_executed": false,
+  "static_checks": [
+    "Python AST parse only, without importing modules",
+    "Known compositor SHA-256 comparison"
+  ],
+  "not_recovered": [
+    "Historical Git objects",
+    "Historical XML receipts",
+    "test_en_ue_catalog_capacity_reference.py",
+    "en_ue_qualified_library.py and its pinned data assets",
+    "en_ue_shear.py and its pinned data assets"
+  ],
+  "external_dependencies_pending": [
+    "Recovered catalog_torsion_section and ue_catalog_reference",
+    "Qualified normal library and fixed source inventory",
+    "Independently qualified shear library and fixed inventory",
+    "test_ue_catalog_actions.inputs/run and test_ui_ue_catalog_actions.load_app"
+  ],
+  "files": [
+    {
+      "path": "tercas/en_signed_partial_interaction.py",
+      "sha256": "28f254273e1ce3f3959ba5808dfb51f18bd4c0625727382b252111977b2c1c93",
+      "bytes": 16065,
+      "origin": "Full text and ordered patches in this task transcript",
+      "historical_byte_identity_verified": false
+    },
+    {
+      "path": "tercas/en_ue_catalog_capacity_reference.py",
+      "sha256": "e0727b618b0e3d1ecebdb4933ea180f2e579fffd9c21437137faa139e44e756c",
+      "bytes": 7926,
+      "origin": "Full text and ordered patches in this task transcript",
+      "historical_byte_identity_verified": true,
+      "historical_sha256": "e0727b618b0e3d1ecebdb4933ea180f2e579fffd9c21437137faa139e44e756c"
+    },
+    {
+      "path": "tercas/en_ue_bending_applicability.py",
+      "sha256": "30e17002f62e81d4c03ad8c6e1062c71047268cf78e285dbb93ff73c9bb38f8d",
+      "bytes": 5935,
+      "origin": "Full text and ordered patches in this task transcript",
+      "historical_byte_identity_verified": false
+    },
+    {
+      "path": "tercas/isolated_en_ue_catalog_application.py",
+      "sha256": "90ba1544cb5cb2e0f61a569242e115342255243ee9ddbca05c36991bebbe9287",
+      "bytes": 30489,
+      "origin": "Full text and ordered patches in this task transcript",
+      "historical_byte_identity_verified": false
+    },
+    {
+      "path": "tercas/isolated_en_ue_catalog_ui.py",
+      "sha256": "2150e0628f9d31a342869870fca4ebd04e86d562211eff3b43c50c51ff60ed77",
+      "bytes": 4948,
+      "origin": "Full text and ordered patches in this task transcript",
+      "historical_byte_identity_verified": false
+    },
+    {
+      "path": "tests/test_isolated_en_ue_catalog_application.py",
+      "sha256": "091d185e2deec7fe7795a10b1650d01d2ed5a3ea3fbd566140283ed840801ac6",
+      "bytes": 15753,
+      "origin": "Full text and ordered patches in this task transcript",
+      "historical_byte_identity_verified": false
+    },
+    {
+      "path": "tests/test_ui_isolated_en_ue_catalog.py",
+      "sha256": "9d8e382cd1701609f59efc983de1e28049dbfa6232d1c561ca4a6aec7db0dc4e",
+      "bytes": 2502,
+      "origin": "Full text and ordered patches in this task transcript",
+      "historical_byte_identity_verified": false
+    },
+    {
+      "path": "tercas/isolated_en_application.py",
+      "sha256": "62b7195fe7d5b460335b80242c862190fdb8844894d68263ec8d471209bddd7b",
+      "bytes": 21613,
+      "origin": "Exact recorded hook patch reapplied to Git base 89785b6; not the whole r5 file",
+      "historical_byte_identity_verified": false
+    },
+    {
+      "path": "tercas/isolated_en_ui.py",
+      "sha256": "fb98e8b7b2b19ee58159d7a51b9108eb01b63f2d84a90ccb58a29dea7ce0e8e0",
+      "bytes": 10829,
+      "origin": "Exact recorded hook patch reapplied to Git base 89785b6; not the whole r5 file",
+      "historical_byte_identity_verified": false
+    },
+    {
+      "path": "app.py",
+      "sha256": "725359b544b593b5b4bb307aed8721b452a30e7bb2a268c5015342992e16dc7f",
+      "bytes": 73139,
+      "origin": "Exact recorded hook patch reapplied to Git base 89785b6; not the whole r5 file",
+      "historical_byte_identity_verified": false
+    }
+  ]
+}

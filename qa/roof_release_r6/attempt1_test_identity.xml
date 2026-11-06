@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="3" time="23.210" timestamp="2026-11-06T16:36:28.948593-03:00" hostname="795272940146"><testcase classname="tests.test_roof_release_composition" name="test_catalog_parallel_load_stays_partial_without_breaking_independent_EN[5.0]" time="1.723" /><testcase classname="tests.test_roof_release_composition" name="test_catalog_parallel_load_stays_partial_without_breaking_independent_EN[-5.0]" time="1.159" /><testcase classname="tests.test_roof_release_composition" name="test_real_app_own_five_degrees_combines_all_scopes_and_replays" time="17.003"><failure message="AssertionError: assert {'ELS:DIRECT_...ed_ELS_scope'} == {'combined_ELS_scope'}&#10;  &#10;  Extra items in the left set:&#10;  'ELS:DIRECT_ELS:combined_ELS_scope'&#10;  Extra items in the right set:&#10;  'combined_ELS_scope'&#10;  Use -v to get more diff">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f17e56cd9d0&gt;
+
+    def test_real_app_own_five_degrees_combines_all_scopes_and_replays(monkeypatch):
+        import streamlit as st
+        from streamlit.testing.v1 import AppTest
+        data = own_declared()
+        payload = json.dumps(data).encode()
+        monkeypatch.setattr(st, 'file_uploader', lambda *a, **k: SimpleNamespace(size=len(payload), getvalue=lambda: payload))
+        downloads = {}
+        original = st.download_button
+        def capture(label, value, *a, **k):
+            if label in ('Baixar estudo e resultados (JSON)', 'Baixar memória parcial (Word)'):
+                downloads[label] = value
+            return original(label, value, *a, **k)
+        monkeypatch.setattr(st, 'download_button', capture)
+        app = AppTest.from_file(str(Path(__file__).resolve().parents[1] / 'app.py')).run(timeout=30)
+        button = lambda label: next(w for w in app.button if w.label == label)
+        button('Aplicar entradas do arquivo').click().run(timeout=30)
+        button('Calcular verificações disponíveis').click().run(timeout=60)
+        assert not app.exception
+        assert any(w.value == RELEASE_CAPTION for w in app.caption)
+        result = copy.deepcopy(app.session_state.result)
+&gt;       assert_own_result(result)
+
+tests/test_roof_release_composition.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+result = {'schema': 'NBR14762_one_span_v1', 'input_snapshot': {'selected_section': {'entry_id': 'OWN_Ue100x50x17_t2p00_ri2p00_n... crítico ou sentido de Pierin consumido.'}, ...}, 'whole_member_approved': False, 'sheet_restraint_credit': False, ...}
+
+    def assert_own_result(result):
+        ev = nbr.preserved(result)
+        row = ev['records'][0]
+        assert row['index'] == pytest.approx(.2637128303218076, rel=2e-12)
+        assert row['biaxial']['governing']['index'] == pytest.approx(.2703624348153767, rel=2e-12)
+        assert en.preserved(result)['computed_cases'] == 1
+        en.validate_saved_global(result)
+        nbr.validate_saved_global(result)
+        summary = result['global_verification']
+        checks = {item['id']: item for item in summary['checks']}
+        for key in ('ELU:DIRECT_ELU:FLT_height', 'ELU:DIRECT_ELU:biaxial',
+                    'ELU:DIRECT_ELU:secondary_shear_scope', 'torsion_warping'):
+            assert checks[key]['status'] == 'meets'
+        for key in ('ELU:DIRECT_ELU:secondary_shear_scope', 'torsion_warping'):
+            assert checks[key]['index'] is None
+            assert 'EN' in checks[key]['source']
+&gt;       assert set(summary['pending_ids']) == {'combined_ELS_scope'}
+E       AssertionError: assert {'ELS:DIRECT_...ed_ELS_scope'} == {'combined_ELS_scope'}
+E         
+E         Extra items in the left set:
+E         'ELS:DIRECT_ELS:combined_ELS_scope'
+E         Extra items in the right set:
+E         'combined_ELS_scope'
+E         Use -v to get more diff
+
+tests/test_roof_release_composition.py:48: AssertionError</failure></testcase></testsuite></testsuites>

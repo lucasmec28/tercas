@@ -108,7 +108,10 @@ def _pending(result,c,reason):
 
 
 def attach_dense(result,section):
-    """Must precede torsion summary; does not mutate the torsion/AISI snapshots."""
+    """Must precede torsion summary; preserves original demand and AISI values."""
+    if 'ue_catalog_reference' in result['input_data']:
+        from .isolated_en_ue_catalog_application import attach_dense as attach_catalog
+        return attach_catalog(result,section)
     if CHOICE not in result['input_data']:return result
     out=copy.deepcopy(result)
     try:c=configuration(out['input_data'])
@@ -170,6 +173,9 @@ def attach_dense(result,section):
 
 def finalize(result):
     """Seal only a new calculation, after the compact torsion snapshot is final."""
+    from .isolated_en_ue_catalog_application import finalize as finalize_catalog
+    result=finalize_catalog(result)
+    if 'ue_catalog_reference' in result['input_data']:return result
     if CHOICE not in result['input_data']:return result
     out=copy.deepcopy(result)
     try:
@@ -298,8 +304,10 @@ def preserved(result):
     return copy.deepcopy(ev)
 
 
-def global_context(result):
+def global_context(result, *, sectional=False):
     """Inventory wording only: never inserts EN indices into NBR/H4/global sums."""
+    from .isolated_en_ue_catalog_application import FIELD as CATALOG_FIELD, global_context as catalog_context
+    if CATALOG_FIELD in result:return catalog_context(result,sectional=sectional)
     ev=preserved(result)
     if ev is None:return None
     text=(f"Tensões EN §6.1.6 avaliadas em {ev['computed_cases']} casos ELU; "
@@ -326,12 +334,21 @@ def global_context(result):
         text+='Permanecem separados o cortante da alma EN6.1.5 e a redução N–M–V EN6.1.10. '
     text+=('Estabilidade e adequação da análise, forças locais e ELS completo permanecem separados. '
         'Não é resistência torsional/global integral nem aprovação da barra.')
-    return dict(reason=text,binding=dict(snapshot_sha256=ev['snapshot_sha256'],computed_cases=ev['computed_cases'],
+    context=dict(reason=text,binding=dict(snapshot_sha256=ev['snapshot_sha256'],computed_cases=ev['computed_cases'],
         pending_cases=ev['pending_cases'],scope='Independent EN section-stress inventory only; no global approval'))
+    if sectional:
+        from .isolated_en_panorama import sectional_context
+        context['sectional']=sectional_context(result,ev)
+        if not context['sectional']['ELU_cases']:
+            context['reason']='Nenhuma combinação ELU na seleção; condições seccionais EN não qualificadas por este inventário. '+context['reason']
+    return context
 
 
 def validate_saved_global(result):
-    context=global_context(result)
+    summary=result.get('global_verification',{})
+    context=global_context(result,sectional=summary.get('sectional_conditions_policy') is not None)
     binding=result.get('global_verification',{}).get('isolated_EN_binding')
     expected=None if context is None else context['binding']
     if binding!=expected:raise ValueError('Panorama e complemento EN pertencem a snapshots diferentes.')
+    from .isolated_en_panorama import validate_saved
+    validate_saved(result,context)

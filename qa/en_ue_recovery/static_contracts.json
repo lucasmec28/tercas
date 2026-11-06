@@ -1,0 +1,51 @@
+{
+  "schema": "EN_Ue_recovery_static_contract_review_v1",
+  "base_commit": "b3584fd33a0cd6ab5ee58d300f1a5545fd0da770",
+  "runtime_tests_executed": false,
+  "solvers_executed": false,
+  "status": "Static review complete; exact shear inventory integrated; waiting for CPU after FLT",
+  "helper_changes": {
+    "cause": "Original test_ue_catalog_actions and test_ui_ue_catalog_actions helper modules absent in recovered checkout",
+    "replacement": "tests/en_ue_test_helpers.py",
+    "semantics": "Same original inputs: 4 m backend span, q=0.03/0.02, explicit nominal contour and complete span segments; same original unactivated UI seed and import flow",
+    "assertions_relaxed": false
+  },
+  "runtime_contract": {
+    "source_binding_keys": [
+      "schema",
+      "catalog_index",
+      "catalog_id",
+      "geometry_schema",
+      "nominal_identity_sha256",
+      "nodes_sha256",
+      "section_profile_id",
+      "properties_sha256",
+      "material_sha256",
+      "material",
+      "density_kg_m3"
+    ],
+    "source_binding_keys_unchanged": true,
+    "material_keys": [
+      "E_MPa",
+      "G_MPa",
+      "fy_MPa",
+      "fu_MPa"
+    ],
+    "source_evidence_schema_change": "ue_catalog_reference_v1 -> ue_catalog_reference_evidence_v1; EN uses own.preserved and does not assert old parent-evidence schema",
+    "geometry": "prepare(index, arc_segments=32); geometry and material snapshots remain separate",
+    "calculation_order": "attach_source -> torsion dense -> AISI -> EN dense -> compact -> finalizers -> global text",
+    "normal_integration_conditions_preserved": true,
+    "normal_inventory_entries": 83
+  },
+  "available_sources": {
+    "tercas/ue_catalog_reference.py": "b89f0202e599467201cf009604dcde1973907835e2c7e2e8f9876bcbb7377e6d",
+    "tercas/catalog_torsion_section.py": "127b16a5a9dd2aa3d2dc16986f107e0a90b8bb022b2b358321aa6d7a8ccb61ec",
+    "tercas/en_ue_qualified_library.py": "b53375fc4110e3ec9092cef329639e353ca9b689caae04d8868e14541b0c8cfb",
+    "tercas/en_ue_catalog_capacity_reference.py": "e0727b618b0e3d1ecebdb4933ea180f2e579fffd9c21437137faa139e44e756c",
+    "tercas/en_signed_partial_interaction.py": "28f254273e1ce3f3959ba5808dfb51f18bd4c0625727382b252111977b2c1c93",
+    "tercas/isolated_en_ue_catalog_application.py": "90ba1544cb5cb2e0f61a569242e115342255243ee9ddbca05c36991bebbe9287",
+    "tercas/data/en_ue_shear_inventory_20261106.json": "9268b4813d95b0f7ec3ca4d978fb7ada51563642a38f6762b85505cc847881b4"
+  },
+  "pending_files": [],
+  "dependency_commit": "e392510"
+}

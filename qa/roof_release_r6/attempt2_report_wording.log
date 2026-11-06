@@ -1,0 +1,106 @@
+..F
+=================================== FAILURES ===================================
+________ test_real_app_own_five_degrees_combines_all_scopes_and_replays ________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f289ec09e80>
+
+    def test_real_app_own_five_degrees_combines_all_scopes_and_replays(monkeypatch):
+        import streamlit as st
+        from streamlit.testing.v1 import AppTest
+        data = own_declared()
+        payload = json.dumps(data).encode()
+        monkeypatch.setattr(st, 'file_uploader', lambda *a, **k: SimpleNamespace(size=len(payload), getvalue=lambda: payload))
+        downloads = {}
+        original = st.download_button
+        def capture(label, value, *a, **k):
+            if label in ('Baixar estudo e resultados (JSON)', 'Baixar memória parcial (Word)'):
+                downloads[label] = value
+            return original(label, value, *a, **k)
+        monkeypatch.setattr(st, 'download_button', capture)
+        app = AppTest.from_file(str(Path(__file__).resolve().parents[1] / 'app.py')).run(timeout=30)
+        button = lambda label: next(w for w in app.button if w.label == label)
+        button('Aplicar entradas do arquivo').click().run(timeout=30)
+        button('Calcular verificações disponíveis').click().run(timeout=60)
+        assert not app.exception
+        assert any(w.value == RELEASE_CAPTION for w in app.caption)
+        result = copy.deepcopy(app.session_state.result)
+        assert_own_result(result)
+        assert json.loads(downloads['Baixar estudo e resultados (JSON)']) == result
+        doc = Document(io.BytesIO(downloads['Baixar memória parcial (Word)']))
+        text = '\n'.join(p.text for p in doc.paragraphs)
+>       assert 'conclusão global' in text.lower() and 'fora do escopo' in text.lower()
+E       AssertionError: assert ('conclusão global' in 'lro engenharia estudo de terça\nexibição com duas casas decimais; cálculos e arquivos json mantêm a precisão completa...rio ou telha estrutural.\nidentificação das entradas: 4a598fc04e666a7d46a1e238cf3d90ce40066c43408a6eb5d3dbc06047595435')
+E        +  where 'lro engenharia estudo de terça\nexibição com duas casas decimais; cálculos e arquivos json mantêm a precisão completa...rio ou telha estrutural.\nidentificação das entradas: 4a598fc04e666a7d46a1e238cf3d90ce40066c43408a6eb5d3dbc06047595435' = <built-in method lower of str object at 0x345e5540>()
+E        +    where <built-in method lower of str object at 0x345e5540> = 'LRO Engenharia Estudo de terça\nExibição com duas casas decimais; cálculos e arquivos JSON mantêm a precisão completa...rio ou telha estrutural.\nIdentificação das entradas: 4a598fc04e666a7d46a1e238cf3d90ce40066c43408a6eb5d3dbc06047595435'.lower
+
+tests/test_roof_release_composition.py:95: AssertionError
+----------------------------- Captured stderr call -----------------------------
+2026-11-06 16:37:34.719 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-06 16:37:35.161 DEBUG   streamlit.runtime.scriptrunner.script_runner: Running script
+2026-11-06 16:37:35.162 DEBUG   streamlit.runtime.media_file_manager: Disconnecting files for session with ID test session id
+2026-11-06 16:37:35.162 DEBUG   streamlit.runtime.media_file_manager: Sessions still active: dict_keys([])
+2026-11-06 16:37:35.163 DEBUG   streamlit.runtime.media_file_manager: Files: 0; Sessions with files: 0
+2026-11-06 16:37:40.906 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned files...
+2026-11-06 16:37:40.907 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned deferred callables...
+2026-11-06 16:37:40.929 DEBUG   streamlit.runtime.scriptrunner.script_runner: Beginning script thread
+2026-11-06 16:37:40.929 DEBUG   streamlit.runtime.scriptrunner.script_runner: Running script
+2026-11-06 16:37:40.929 DEBUG   streamlit.runtime.media_file_manager: Disconnecting files for session with ID test session id
+2026-11-06 16:37:40.930 DEBUG   streamlit.runtime.media_file_manager: Sessions still active: dict_keys([])
+2026-11-06 16:37:40.930 DEBUG   streamlit.runtime.media_file_manager: Files: 0; Sessions with files: 0
+2026-11-06 16:37:42.453 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned files...
+2026-11-06 16:37:42.454 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned deferred callables...
+2026-11-06 16:37:42.454 DEBUG   streamlit.runtime.scriptrunner.script_runner: Running script
+2026-11-06 16:37:42.454 DEBUG   streamlit.runtime.media_file_manager: Disconnecting files for session with ID test session id
+2026-11-06 16:37:42.454 DEBUG   streamlit.runtime.media_file_manager: Sessions still active: dict_keys([])
+2026-11-06 16:37:42.455 DEBUG   streamlit.runtime.media_file_manager: Files: 0; Sessions with files: 0
+2026-11-06 16:37:44.534 DEBUG   streamlit.runtime.memory_media_file_storage: Adding media file a086f16fe1bf690b9e45a949ccb524ff
+2026-11-06 16:37:44.541 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned files...
+2026-11-06 16:37:44.541 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned deferred callables...
+2026-11-06 16:37:44.557 DEBUG   streamlit.runtime.scriptrunner.script_runner: Beginning script thread
+2026-11-06 16:37:44.558 DEBUG   streamlit.runtime.scriptrunner.script_runner: Running script
+2026-11-06 16:37:44.558 DEBUG   streamlit.runtime.media_file_manager: Disconnecting files for session with ID test session id
+2026-11-06 16:37:44.558 DEBUG   streamlit.runtime.media_file_manager: Sessions still active: dict_keys([])
+2026-11-06 16:37:44.558 DEBUG   streamlit.runtime.media_file_manager: Files: 0; Sessions with files: 0
+2026-11-06 16:37:50.000 DEBUG   streamlit.runtime.memory_media_file_storage: Adding media file a086f16fe1bf690b9e45a949ccb524ff
+2026-11-06 16:37:51.998 DEBUG   streamlit.runtime.memory_media_file_storage: Adding media file 374c11fd3322fcc4d0552e8b352d418d
+2026-11-06 16:37:52.019 DEBUG   streamlit.runtime.memory_media_file_storage: Adding media file faf4cc11b89cb79922791eb75a21b94c
+2026-11-06 16:37:52.020 DEBUG   streamlit.runtime.memory_media_file_storage: Adding media file 696f00ee52b098881282d0d1b0f314fa
+2026-11-06 16:37:52.023 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned files...
+2026-11-06 16:37:52.023 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned deferred callables...
+------------------------------ Captured log call -------------------------------
+WARNING  streamlit.runtime.scriptrunner_utils.script_run_context:script_run_context.py:508 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+DEBUG    streamlit.runtime.scriptrunner.script_runner:script_runner.py:620 Running script
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:211 Disconnecting files for session with ID test session id
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:221 Sessions still active: dict_keys([])
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:225 Files: 0; Sessions with files: 0
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:150 Removing orphaned files...
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:171 Removing orphaned deferred callables...
+DEBUG    streamlit.runtime.scriptrunner.script_runner:script_runner.py:406 Beginning script thread
+DEBUG    streamlit.runtime.scriptrunner.script_runner:script_runner.py:620 Running script
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:211 Disconnecting files for session with ID test session id
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:221 Sessions still active: dict_keys([])
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:225 Files: 0; Sessions with files: 0
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:150 Removing orphaned files...
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:171 Removing orphaned deferred callables...
+DEBUG    streamlit.runtime.scriptrunner.script_runner:script_runner.py:620 Running script
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:211 Disconnecting files for session with ID test session id
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:221 Sessions still active: dict_keys([])
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:225 Files: 0; Sessions with files: 0
+DEBUG    streamlit.runtime.memory_media_file_storage:memory_media_file_storage.py:164 Adding media file a086f16fe1bf690b9e45a949ccb524ff
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:150 Removing orphaned files...
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:171 Removing orphaned deferred callables...
+DEBUG    streamlit.runtime.scriptrunner.script_runner:script_runner.py:406 Beginning script thread
+DEBUG    streamlit.runtime.scriptrunner.script_runner:script_runner.py:620 Running script
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:211 Disconnecting files for session with ID test session id
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:221 Sessions still active: dict_keys([])
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:225 Files: 0; Sessions with files: 0
+DEBUG    streamlit.runtime.memory_media_file_storage:memory_media_file_storage.py:164 Adding media file a086f16fe1bf690b9e45a949ccb524ff
+DEBUG    streamlit.runtime.memory_media_file_storage:memory_media_file_storage.py:164 Adding media file 374c11fd3322fcc4d0552e8b352d418d
+DEBUG    streamlit.runtime.memory_media_file_storage:memory_media_file_storage.py:164 Adding media file faf4cc11b89cb79922791eb75a21b94c
+DEBUG    streamlit.runtime.memory_media_file_storage:memory_media_file_storage.py:164 Adding media file 696f00ee52b098881282d0d1b0f314fa
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:150 Removing orphaned files...
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:171 Removing orphaned deferred callables...
+=========================== short test summary info ============================
+FAILED tests/test_roof_release_composition.py::test_real_app_own_five_degrees_combines_all_scopes_and_replays
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 2 passed in 22.55s

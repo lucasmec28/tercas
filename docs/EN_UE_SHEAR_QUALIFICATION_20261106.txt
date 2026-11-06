@@ -1,0 +1,133 @@
+PISOS EN DE CORTANTE PARA 83 Ue NOMINAIS PIERIN
+Revisão EN_Ue_shear_floors_20261106_r1. Componente de seção, não aprovação da barra.
+
+RESULTADO E ESCOPO
+A geometria autoriza o mesmo método já publicado para Ue100: uma alma na
+ direção forte e duas mesas vistas como almas na direção fraca. A qualificação
+é própria e separada dos operadores normais. Inclui somente as 83 linhas Ue
+nominais exatas, no contorno próprio catalog_torsion_section de 32 cordas por
+quarto de círculo, e E=210000 MPa, nu=0,3, fyb=fya=250 MPa, gammaM0=1.
+U simples, interpolação e geometria arbitrária não são admitidos.
+
+FONTES EFETIVAMENTE CONFERIDAS
+EN 1993-1-3:2006, com corrigendum novembro 2009 na cópia consultada:
+https://www.phd.eng.br/wp-content/uploads/2015/12/en.1993.1.3.2006.pdf
+SHA256 do PDF: fd37edf92be58e1dc48745c29ed5a14265797b4f5a8e16f0e6f3f5f6f899d163
+Páginas impressas 16-17: espessura de cálculo e tolerâncias (§3.2.4).
+Páginas 18-21: cantos arredondados, dimensões e limites (§5.1/5.2, Tabela5.1).
+Páginas 45-46: §6.1.5, equações6.8/6.10a e Tabela6.1.
+Página55: §6.1.10, soma das resistências de almas múltiplas.
+A tabela5.1 e a tabela6.1 foram inspecionadas visualmente; as equações6.10a e
+as definições de sw foram lidas também no PDF original, não só em OCR.
+
+SCIA Engineer 17.0, Steel Code Check Theory, 2017:
+https://help.scia.net/download/17.0/en/SteelCodeCheck_Theory_enu.pdf
+SHA256 do PDF: efa8d1b8e91a5e6bb9125eb96d79b1017117d4d1b8f1d6c638e76110b504b80b
+Página80 foi inspecionada visualmente: cada parede separada, soma e projeção
+em ambas as direções; enrijecedores RUO/DEF excluídos; ausência de crédito de
+enrijecimento no apoio por padrão. Sua largura sw é a largura nocional entre
+pontos médios das dobras. A modelagem comercial é corroboração, não norma.
+Não se presume que lc da Initial Shape da SCIA seja numericamente igual ao
+nosso hw. A capacidade implementada deriva de6.8 e de sua definição de hw.
+
+DEMONSTRAÇÃO GEOMÉTRICA, INDEPENDENTE DE DIMENSÕES ESPECÍFICAS
+Para a Ue de paredes ortogonais, dimensões externas H,B,C,t e raio interno ri,
+o raio médio r=ri+t/2. A distância normativa entre linhas médias é H-t para
+a alma principal e B-t entre a alma original e cada lábio. A rotação de90°
+só muda a orientação: cada mesa original liga duas paredes perpendiculares.
+Na topologia admitida há três paredes retas internas, sem enrijecedores
+intermediários: uma vertical e duas horizontais. A própria existência dos
+lábios não acrescenta área resistente nem crédito de enrijecedor de apoio.
+
+Para uma parede entre duas dobras de90°, a distância entre os pontos médios
+dos cantos, projetada na direção da parede, é
+sw = hw - 2 r (1 - 1/sqrt(2)).
+Os dois pontos médios estão na mesma coordenada normal à parede; essa
+projeção é portanto a sua separação, conforme Figura5.1, não o desenvolvimento
+do arco. O gerador próprio contém esses pontos como nós17/50/83/116. Em cada
+linha eles demonstram 0<sw<=hw. Ri pode variar: nenhuma igualdade ri=t é
+necessária para o argumento. Os 83 valores presentes usam ri=t; tal fato não
+estende a qualificação para outros raios, pois somente esses nós são fixados.
+
+Usa-se sw_upper=hw só na esbeltez. O hw multiplicador em6.8 continua a
+altura normativa EXATA entre linhas médias; não se aumenta o numerador
+substituindo uma altura real menor por um majorante. Com phi=90°, a área
+nominal normativa resistente é n hw t, n=1 forte ou2 fraco. Não é a soma dos
+comprimentos retos nem um acréscimo de resistência dos arcos/lábios.
+
+Para paredes sem enrijecedores longitudinais:
+lambda_upper = 0,346 (hw/t) sqrt(fyb/E).
+A coluna sem enrijecimento no apoio da Tabela6.1 é usada integralmente:
+fbv/fyb = 0,58 para lambda<=0,83;
+          0,48/lambda para0,83<lambda<1,4;
+          0,67/lambda² para lambda>=1,4.
+A função não cresce. Nos limites há pequenos saltos PARA BAIXO decorrentes
+dos coeficientes normativos arredondados; não se suaviza/interpola a tabela.
+Logo fbv(lambda_upper)<=fbv(lambda_real), e
+Vfloor = floor_N[n hw t fbv(lambda_upper)/gammaM0]
+é limite inferior. Dimensões e esbeltez não precisam ser iguais às Ue100.
+A soma fraca tem suporte expresso na regra de almas múltiplas §6.1.10 e na
+seleção direcional da SCIA. Ambas as mesas são iguais; o sinal de V não muda
+os parâmetros. A norma não exige nova análise de rigidez do lábio/Bcr para
+esta componente. Não se cria tal exigência. O lábio continua relevante à
+topologia e aos limites de proporção já exigidos pela norma.
+
+LIMITES QUE SÃO EFETIVAMENTE VERIFICADOS
+§5.1(6): ri<=0,04 t E/fyb.
+§5.2/Tabela5.1: B/t<=60; C/t<=50; H/t<=500, paredes a90°.
+§5.2(2): 0,2<=C/B<=0,6. Usam-se aqui as dimensões da Tabela5.1, não se
+acrescenta a esta prova uma restrição artificial de largura nocional C/B.
+§3.2.4: intervalo recomendado0,45<=t<=15mm. Todos os 83 passam.
+Os limites ri<=5t e ri<=0,1bp de§5.1(3) autorizam IGNORAR cantos em outro
+procedimento; não são convertidos em restrição geral desta geometria própria
+arredondada. Tampouco se importa hw/t<=200 de§6.1.7, que trata força local,
+para a componente distinta de cisalhamento distribuído§6.1.5.
+
+A espessura nominal é assumida espessura de cálculo do núcleo, como na
+geometria de origem. O registro não comprova produto físico, revestimento,
+tolerância negativa, certificado de material nem escolha nacional de gamma.
+Para outro t de cálculo/material, a identidade muda e esta biblioteca rejeita.
+Não se transfere a dispensa de curling/shear lag das sete seções legadas.
+Esses tópicos de flexão pertencem à aplicação correspondente, não a uma nova
+fórmula extra de cortante nem a uma exigência inventada para liberar esta
+componente.6.1.6,6.1.10, forças locais quando aplicáveis e estabilidade devem
+continuar suas verificações independentes.
+
+IMPLEMENTAÇÃO E CONTRATO
+tercas/en_ue_shear.py: equação escalar, produtor fresco, lookup e validadores.
+tercas/data/en_ue_shear_inventory_20261106.json: inventário fechado de83.
+tercas/data/en_ue_shear_sources_20261106.json: fontes e evidência versionadas.
+Não se lê/importa A/I/J/Cw ou críticos tabulados no cálculo. Os únicos dados
+Pierin usados são identidade nominal exata; H/B/C/t/ri vêm da geometria
+comum declarada. Nós e hash são iguais aos operadores próprios de32cordas.
+Não se calcula seção efetiva nem qualquer coeficiente normal neste módulo.
+
+Cada payload fixa catalog_index/id, profile_id, identidade nominal, hash dos
+nós, espessura, material, método, guardas e dois pisos. O inventário inteiro
+é fixado por hash no código. A prova tem status
+independently_qualified_frozen_reference, method
+EN13_Table6.1_unstiffened_web_and_two_rotated_flange_webs_v1,
+source_sha256/inventory_sha256 e walls strong=1/weak=2. Flags de barra,
+liberação no APP e operadores normais ficam falsas. Normal qualificado
+sozinho não preenche essa prova. Não há autoqualificação de hash desconhecido.
+
+build_catalog_shear_capacity(index) refaz os escalares e os nós e exige
+igualdade exata com o payload congelado. qualified_reference(index) e
+verify_shear_capacity leem somente os dados congelados. validate_saved
+exige também o snapshot original de geometria/material do cálculo (ou do
+operador normal autenticado à parte); não remonta modelo em leitura salva.
+Um certificado válido de outra linha não pode substituir esse vínculo.
+
+Aritmética: Decimal de60algarismos com sqrt majorada, divisão/produto
+direcionados e piso final inteiro em N. Os valores de diagnóstico são
+reportados para fora em binary64. Nenhum piso legado é reescrito. Esta
+extensão fica isolada e não modifica consumidores, APP ou publicação.
+
+VERIFICAÇÃO INDEPENDENTE
+Tests usam lambda² racional para escolher o ramo e formas algébricas
+independentes: patamar proporcional a hw*t, ramo médio independente de hw e
+proporcional a t², ramo esbelto proporcional a t³/hw. Testam os dois lados e
+o valor exato de0,83/1,4; não crescimento de fbv; limites; espessura/raio;
+83 linhas; rehash de adulterações; substituição por outra linha; rejeição
+U/material/raio/nós; leitura salva com produtores desabilitados.
+Os resultados e extremos medidos ficam em qa/en_ue_shear.

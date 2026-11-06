@@ -89,7 +89,10 @@ def _check_snapshot(result,section):
         raise ValueError('Stale result/input fingerprint')
     if data.get('model_domain')!='cladding_actions_only_20261103_r1':
         raise ValueError('No-contact, no-restraint cladding model must be explicit')
-    if 'ue_family_sources' in data:
+    from ..ue_catalog_reference import claims_reference as catalog_claims, section_for as own_section
+    if catalog_claims(data):
+        if section!=own_section(data):raise ValueError('Contorno e fonte própria Ue divergentes.')
+    elif 'ue_family_sources' in data:
         identity=data['ue_family_sources']
         if (identity.get('reference_id')!=section['profile_id'] or
                 identity.get('nodes_sha256')!=section['nodes_sha256'] or
@@ -111,7 +114,7 @@ def _check_snapshot(result,section):
             raise ValueError('Batch and torsion section differ: '+k)
     if p['t']!=section['thickness_mm']:raise ValueError('Thickness identity differs')
     L=finite(data['L_mm'],'length',True)
-    if not 3000<=L<=6000:raise ValueError('Frozen purlin application scope is 3000 to 6000 mm')
+    if not catalog_claims(data) and not 3000<=L<=6000:raise ValueError('Frozen purlin application scope is 3000 to 6000 mm')
     bundle=result['load_bundle'];cases=result['cases']
     if finite(bundle.get('L_mm'),'bundle length',True)!=L:
         raise ValueError('Batch load bundle and input span differ')

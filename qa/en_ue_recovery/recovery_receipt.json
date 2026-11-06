@@ -1,0 +1,44 @@
+{
+  "schema": "EN_Ue_filesystem_recovery_receipt_v1",
+  "base": "89785b61c2b01a7d5ec350b00c10fc5e9bc8e90d",
+  "historical_candidate_commit": "2fd6a29e5b3194b215f62082836b63e1be6486b7",
+  "historical_qualified_commit": "dc4aabcec70bad48d0b861d1adbd12fae903cddd",
+  "exact_files": {
+    "tercas/en_ue_catalog_operators.py": {
+      "expected_sha256": "86f8c5d6fb78b344f89d1f4e8adce789cf2a9790d3461d965a1fad83e3e62222",
+      "restored_sha256": "86f8c5d6fb78b344f89d1f4e8adce789cf2a9790d3461d965a1fad83e3e62222",
+      "byte_exact": true
+    },
+    "tercas/en_ue_qualified_library.py": {
+      "expected_sha256": "b53375fc4110e3ec9092cef329639e353ca9b689caae04d8868e14541b0c8cfb",
+      "restored_sha256": "b53375fc4110e3ec9092cef329639e353ca9b689caae04d8868e14541b0c8cfb",
+      "byte_exact": true
+    },
+    "tercas/data/en_ue_qualified_operator_inventory_20261106.json": {
+      "expected_sha256": "455f8aa52886d620ec54255c332d39ccbac55212870bc046dd3ff4fbe1429353",
+      "restored_sha256": "455f8aa52886d620ec54255c332d39ccbac55212870bc046dd3ff4fbe1429353",
+      "byte_exact": true
+    }
+  },
+  "all_critical_files_byte_exact": true,
+  "inventory_original_canonical_pin": "51e7bac78b21e58f2adb2cc5bd25b1a65469fe0334e921e31bc351522c0e1f53",
+  "historical_kernel_report_sha256": "ce375847a8921f9c9c8355473770d7290f2b365035d5be8263376441a25f8abf",
+  "historical_kernel_report_file_recovered": false,
+  "restored_text_without_historical_hash": {
+    "qa/run_en_ue_operators.py": "e2c52b36493e87fbb0943a7d5126319b753e25499f4fddf0256aad0c33066734",
+    "qa/compare_en_ue_candidate_kernels.py": "dcd276f77391c75188f4d820542152747aed7b5070a0e5250a045bd219efb94f",
+    "qa/prepare_en_ue_qualified_inventory.py": "b253de21974179702d0897342d855d1e8ba3afdd86d041cd8bc7297ac4346343",
+    "tests/test_en_ue_catalog_operators.py": "950c9423977c05421d5873c169e32b0058d94a7491cb9c5e9dfbe2497b6496d5",
+    "tests/test_en_ue_qualified_library.py": "91eb3f787984118238ce2d29f3d239b95dc1808743e13389da30f902f4cbb010"
+  },
+  "fresh_focused_tests_passed": 35,
+  "fresh_focused_seconds": 6.55,
+  "profile_count": 83,
+  "eligible_branches": 400,
+  "pending_branches": 98,
+  "new_kernel_comparison_executed": false,
+  "new_legacy_54_executed": false,
+  "structural_solver_runs": 0,
+  "consumer_activation": false,
+  "note": "Byte identity of source modules and complete inventory is independently checked against pre-loss SHA256 values; historical and fresh QA are distinguished."
+}

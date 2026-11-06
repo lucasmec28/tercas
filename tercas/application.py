@@ -49,6 +49,8 @@ def finite(x):return isinstance(x,(int,float)) and not isinstance(x,bool) and ma
 
 def build_spec(data):
  if not isinstance(data,dict):raise ValueError('O arquivo deve conter um objeto de entradas JSON.')
+ from .ue_catalog_reference import validate as validate_ue_catalog
+ validate_ue_catalog(data)
  from .roof_top_load import configuration as roof_configuration
  roof=roof_configuration(data)
  from .point_contact import configuration as point_contact_configuration
@@ -256,6 +258,8 @@ def rows(result):
  out=presentation_rows(result,out)
  from .flexural_components import presentation_rows as gross_component_rows
  out=gross_component_rows(result,out)
+ from .roof_top_nbr_ui import presentation_rows as roof_nbr_rows
+ out=roof_nbr_rows(result,out)
  from .model_domain import historical_rows
  return historical_rows(result,out)
 

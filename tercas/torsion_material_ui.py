@@ -68,6 +68,9 @@ def text_lines(packet):
 
 def render(st, result):
     """Return the same object unless a successful explicit request adds a detail."""
+    from .torsion_material import pending_reason
+    reason=pending_reason(result)
+    if reason:st.caption(reason)
     ids = available_cases(result)
     if not ids and 'torsion_nominal_material_details' not in result:return result
     with st.expander('Tensões concomitantes — diagnóstico nominal', expanded=False):

@@ -36,7 +36,8 @@ def test_direct_chain_and_material(direct):
     assert ev['computed_cases']==1 and ev['ELS_cases_excluded']==1 and ev['pending_cases']==0
     assert ev['source_fy_MPa']==250. and ev['material']==en.MATERIAL
     assert aisi.preserved(direct)['H4_computed_cases']==1
-    assert 'torsion_warping' in direct['global_verification']['pending_ids']
+    assert 'torsion_warping' not in direct['global_verification']['pending_ids']
+    assert direct['global_verification']['approved_within_declared_checklist'] is False
     assert not direct['whole_member_approved']
     assert en.preserved(json.loads(json.dumps(direct)))==ev
 
@@ -132,9 +133,11 @@ def test_saved_ui_word_no_solver_sources_or_sections(direct,monkeypatch):
 def test_global_inventory_reports_covered_stresses_without_approval(direct):
     en.validate_saved_global(direct)
     record=next(c for c in direct['global_verification']['checks'] if c['id']=='torsion_warping')
-    assert record['status']=='pending' and record['index'] is None
-    assert 'Tensões EN §6.1.6 avaliadas em 1' in record['reason']
-    assert 'EN6.1.5' in record['reason'] and 'EN6.1.10' in record['reason']
+    assert record['status']=='meets' and record['index'] is None
+    assert record['criterion_kind']=='condition'
+    assert '§6.1.6' in record['reason'] and '§6.1.10/6.27' in record['reason']
+    assert record['trace']['ELU_cases']==record['trace']['computed_cases']==1
+    assert record['trace']['pending_cases']==0
     r=copy.deepcopy(direct);r['global_verification']['isolated_EN_binding']['snapshot_sha256']='a'*64
     with pytest.raises(ValueError,match='snapshots diferentes'):en.validate_saved_global(r)
 

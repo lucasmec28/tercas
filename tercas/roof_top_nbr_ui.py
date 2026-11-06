@@ -41,6 +41,11 @@ def show(st,result):
     if ev.get('reason'):st.info(ev['reason'])
     rows=summary_rows(ev)
     if rows:st.dataframe(display_frame(rows),hide_index=True,width='stretch')
+    biaxial=[r for r in ev['records'] if 'biaxial' in r]
+    if biaxial:
+        from .roof_biaxial import SCOPE as BIAXIAL_SCOPE
+        st.caption(BIAXIAL_SCOPE)
+        st.dataframe(display_frame([biaxial_row(r) for r in biaxial]),hide_index=True,width='stretch')
     with st.expander('Memória NBR do topo: curva, fontes e componentes salvas',expanded=False):
         st.json({k:ev[k] for k in ('domain','source_section','source_roof_snapshot_sha256')})
         labels=[r['combination_id'] for r in ev['records']]
@@ -82,11 +87,19 @@ def report(doc,result):
             ' kN·m; MRd D='+('dispensa forte específica' if r['MRd_distortional_Nmm'] is None else
             technical_number(r['MRd_distortional_Nmm']/1e6)+' kN·m')+
             '; mínimo das componentes de flexão pura='+technical_number(r['MRd_bending_component_Nmm']/1e6)+' kN·m. Sem interação com torção.')
+        if 'biaxial' in r:
+            b=r['biaxial'];g=b['governing']
+            doc.add_paragraph(b['scope'])
+            doc.add_paragraph('Interação §9.9: x='+technical_number(g['x_mm'])+' mm; Mx='+
+                technical_number(g['Mx_Nmm']/1e6)+' kN·m; My='+technical_number(g['My_Nmm']/1e6)+
+                ' kN·m; MxRd='+technical_number(b['strong_capacity_Nmm']/1e6)+' kN·m; MyRd='+
+                technical_number(b['weak_axis_capacities']['positive' if g['My_Nmm']>=0 else 'negative']['MRd_Nmm']/1e6)+
+                ' kN·m; índice='+technical_number(g['index'],limit=1.)+'. '+biaxial_row(r)['Situação'])
     doc.add_paragraph('Rastreabilidade Me salvo SHA256: '+ev['source_roof_snapshot_sha256'])
 
 
 def presentation_rows(result,rows,combination_id=None):
-    """Replace only legacy FLT presentation, never change the underlying rows."""
+    """Replace resolved FLT/biaxial presentation, never mutate the legacy rows."""
     if FIELD not in result or not any(str(r.get('Verificação','')).startswith('FLT — trecho ') for r in rows):return rows
     try:ev=preserved(result)
     except (ValueError,TypeError,KeyError) as exc:ev=None;error='Componente NBR no topo inválida: '+str(exc)
@@ -113,4 +126,50 @@ def presentation_rows(result,rows,combination_id=None):
         if str(row.get('Verificação','')).startswith('FLT — trecho '):
             if not inserted:out.append(new);inserted=True
         else:out.append(copy.deepcopy(row))
+    return replace_biaxial_rows(out,records,combination_id)
+
+
+def biaxial_row(record):
+    b=record['biaxial'];g=b['governing'];status=b['criterion_status']
+    return {'Verificação':'Flexão biaxial','Situação':
+        {'meets':'Atende ao critério calculado','fails':'Não atende ao critério calculado',
+         'inconclusive':'Pendente — piso resistente insuficiente'}[status],
+        'Índice':g['index'],'Demanda / valor':f"x={g['x_mm']} mm; Mx={g['Mx_Nmm']} Nmm; My={g['My_Nmm']} Nmm",
+        'Resistência / limite':'|Mx|/MxRd + |My|/MyRd ≤ 1; N=0',
+        'Referência':b['source'],'Observação':b['scope'], 'Combinação':record['combination_id']}
+
+
+def replace_biaxial_rows(rows,records,combination_id):
+    computed=[r for r in records if 'biaxial' in r]
+    if not computed:return rows
+    chosen=max(computed,key=lambda r:r['biaxial']['governing']['index'])
+    new=biaxial_row(chosen)
+    if combination_id is not None:new.pop('Combinação')
+    # Uniaxial records need no weak interaction. Pending strong-axis cases remain
+    # explicitly uncovered, rather than being hidden by another case's index.
+    if any(r['status']!=COMPUTED for r in records):
+        new['Situação']='Parcial — '+new['Situação']
+        new['Observação']+=' Há combinações pendentes; o índice não cobre essas combinações.'
+    if not any(r.get('Verificação')=='Flexão biaxial' for r in rows):return rows+[new]
+    return [copy.deepcopy(new) if r.get('Verificação')=='Flexão biaxial' else r for r in rows]
+
+
+def presentation_inclination(result,evidence,combination_id=None):
+    """A displayed legacy pending label must not contradict its saved successor."""
+    if FIELD not in result:return evidence
+    try:saved=preserved(result)
+    except (ValueError,TypeError,KeyError):return evidence
+    cid='DIRECT_ELU' if combination_id is None else combination_id
+    row=next((r for r in saved['records'] if r['combination_id']==cid and 'biaxial' in r),None)
+    if row is None:return evidence
+    out=copy.deepcopy(evidence)
+    target=out.get('ELU') if combination_id is None else out
+    if not isinstance(target,dict) or 'states' not in target:return evidence
+    b=row['biaxial'];target['resistance_status']=biaxial_row(row)['Situação']+'. '+b['scope']
+    target['biaxial']={k:copy.deepcopy(b[k]) for k in ('status','governing','missing','candidate_count')}
+    target['strong_capacity_Nmm']=b['strong_capacity_Nmm']
+    target['weak_axis_capacities']={sign:dict(copy.deepcopy(c),
+        annex_e=dict(Me_Nmm=c['Me_Nmm']),
+        provenance='Fonte própria salva '+saved['source_section']['reference_id']+'; '+b['scope'])
+        for sign,c in b['weak_axis_capacities'].items()}
     return out

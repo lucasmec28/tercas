@@ -14,7 +14,8 @@ def complete_result(result):
     if fingerprint(result['input_data']) != result.get('input_fingerprint'):
         raise ValueError('Resultado/entradas divergentes; calcule novamente.')
     from .torsion_study import attach
-    out = attach(result)
+    from .ue_catalog_reference import attach_source
+    out = attach(attach_source(result))
     from .aisi_torsion_component import finalize
     out = finalize(out)
     from .isolated_en_application import finalize as finalize_EN
@@ -44,7 +45,7 @@ def show_global(st, result):
     message = record['display_summary']
     if record['status'] == 'reprovado':st.error(message)
     else:st.warning(message)
-    st.caption('Estado global do modelo declarado. Índices de verificações diferentes '
+    st.caption('Panorama dos critérios listados no modelo declarado. Índices de verificações diferentes '
                'não são somados nem representam uma utilização global. '
                'Tirantes, cantoneiras, ligações e ancoragens não são dimensionados.')
     if record.get('point_limit_scope_note'):st.caption(record['point_limit_scope_note'])
@@ -70,7 +71,13 @@ def report_global(doc, result):
         'ligações e ancoragens permanecem fora do dimensionamento.')
     for state in ('ELU','ELS'):
         r=record.get('by_limit_state',{}).get(state)
-        if r:doc.add_paragraph(state+': '+r['status']+'. Inclui as pendências comuns do modelo.')
+        if r:
+            status=r['status']
+            if record.get('sectional_conditions_policy'):
+                status={'aprovado':'critérios listados atendidos', 'reprovado':'não atendimento em critérios listados',
+                        'inconclusivo':'critérios listados inconclusivos'}.get(status,status)
+            doc.add_paragraph(state+': '+status+'. Inclui os critérios comuns listados do modelo; não conclui o estado limite completo.'
+                if record.get('sectional_conditions_policy') else state+': '+status+'. Inclui as pendências comuns do modelo.')
     if record.get('point_limit_scope_note'):doc.add_paragraph(record['point_limit_scope_note'])
     from .report_audit import report_saved_issues
     report_saved_issues(doc,result)

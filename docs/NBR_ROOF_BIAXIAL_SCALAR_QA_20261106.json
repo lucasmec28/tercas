@@ -1,0 +1,464 @@
+{
+  "base_commit": "89785b61c2b01a7d5ec350b00c10fc5e9bc8e90d",
+  "synthetic_not_user_project": true,
+  "tests": {
+    "new_focal": {
+      "passed": 44,
+      "seconds": 29.23
+    },
+    "directed_regression": {
+      "passed": 282,
+      "seconds": 415.43
+    },
+    "threads": {
+      "OPENBLAS_NUM_THREADS": 1,
+      "OMP_NUM_THREADS": 1,
+      "MKL_NUM_THREADS": 1
+    }
+  },
+  "cases": {
+    "0": {
+      "synthetic": true,
+      "input_unchanged": true,
+      "FLT_index": 0.26394360852979176,
+      "biaxial_index": null,
+      "biaxial_governing": null,
+      "unaffected_equals_published": {
+        "NBR_branches": true,
+        "direct_self_weight_evidence": true,
+        "torsion_evidence": true,
+        "aisi_torsion_component": true,
+        "isolated_EN_stress_component": true,
+        "ELS": true,
+        "input_snapshot": true
+      },
+      "global_approved": false,
+      "global_pending_ids": [
+        "torsion_warping"
+      ],
+      "result_file_sha256": "42c859484d0c775ba3dd9dea139813c5237663eb85eebf682ef096b00a5e1b2b",
+      "published_result_sha256": "4ea16bafca2af43f6642da39697ccb0233cbc171fe5252d486b29765b7a4dedc",
+      "input_data": {
+        "schema": "tercas_input_v2",
+        "catalog_index": 21,
+        "synthetic": true,
+        "project": "Ensaio sintético OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce, L=4000, θ=+0; não é projeto",
+        "properties": {
+          "h": 100,
+          "bf": 50,
+          "lip": 17,
+          "t": 2,
+          "mass_kg_m": 3.4672191949851374,
+          "A_cm2": 4.416839738834571,
+          "Ix_cm4": 70.15392822004888,
+          "Wx_cm3": 14.030785644009775,
+          "Iy_cm4": 15.771766001159301,
+          "J_mm4": 588.9119651779428,
+          "Cw_mm6": 365444260.9319717,
+          "ri_mm": 2.0,
+          "fy_MPa": 250.0,
+          "fu_MPa": 400.0,
+          "E_MPa": 200000.0,
+          "G_MPa": 76923.07692307692
+        },
+        "property_origin": "Referência própria OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce; R01 209 nós, ri=t=2; propriedades e módulos exteriores próprios, material declarado do ensaio. Não são propriedades consumidas de Pierin/catálogo.",
+        "L_mm": 4000.0,
+        "q_uls": 0.1,
+        "P_uls": 0.0,
+        "x_uls": 1700.0,
+        "q_sls": 0.06,
+        "P_sls": 0.0,
+        "x_sls": 1700.0,
+        "actions_origin": "Ações sintéticas para auditoria, não projeto real. Matriz fornecida por Lucas em 31/10/2026 preservada; P de manutenção separado. Não é rederivação normativa dos coeficientes.",
+        "Ml_Nmm": 19433882.82838218,
+        "Mdist_Nmm": 12998041.888658233,
+        "critical_origin": "Local forte: NBR14762:2010 Tabela12(b) com W exterior próprio. D forte e críticos fracos: FSM R01 próprios, material e sinais rastreados. Nenhuma dispensa T14 nas seis espessuras; nenhum crítico ou sentido de Pierin consumido.",
+        "ELS_limit_mm": 22.22222222222222,
+        "ELS_origin": "L/180 selecionado para ensaio; não regra universal.",
+        "route_domain": true,
+        "segments": [
+          {
+            "start_mm": 0.0,
+            "end_mm": 4000.0,
+            "Ly_top_effective_mm": 4000.0,
+            "Ly_bottom_effective_mm": 4000.0,
+            "Lz_effective_mm": 4000.0,
+            "Cb_mode": "one",
+            "restraint_provenance": "Lx=Ly=Lz=L, K=Cb=Cm=1; garfos ideais/empenamento livre. Sem apoio intermediário ou telha estrutural."
+          }
+        ],
+        "left_web": false,
+        "right_web": false,
+        "support_origin": "Garfos matemáticos, rotações de flexão e empenamento livres; ligação real não comprovada.",
+        "patch_mm": null,
+        "patch_origin": "Introdução local de P não qualificada neste ensaio.",
+        "steel_name": "ASTM A36",
+        "load_mode": "direct",
+        "selected_types": [
+          "ELU normal",
+          "ELS rara",
+          "ELS frequente",
+          "ELS quase permanente"
+        ],
+        "area_inputs": {
+          "spacing_m": 1.5,
+          "permanent_kgf_m2": 8.0,
+          "live_kgf_m2": 25.0,
+          "wind_up_kgf_m2": 60.0,
+          "wind_down_kgf_m2": 40.0
+        },
+        "ELS_down_denominator": 180.0,
+        "ELS_up_denominator": 120.0,
+        "member_application": "purlin",
+        "inclination": {
+          "value": 0.0,
+          "unit": "degrees",
+          "spacing_basis": "roof",
+          "permanent_basis": "roof",
+          "live_basis": "horizontal",
+          "wind_basis": "roof"
+        },
+        "model_domain": "cladding_actions_only_20261103_r1",
+        "weak_axis": {
+          "positive": {
+            "W_mm3": 4902.243195069812,
+            "Wc_mm3": 8846.89915060527,
+            "Ml_Nmm": 3988869.588929896,
+            "Mdist_Nmm": 3580000,
+            "Nex_N": 86548.93983928768,
+            "Nez_N": 24470.27624052526,
+            "r0_mm": 60.77579726084086,
+            "j_mm": 59.609396294018914,
+            "Cm": 1.0,
+            "Cs": 1,
+            "plain_u_no_distortion": false,
+            "provenance": "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce; mesmo contorno/material e sentido próprio: My positivo comprime alma, negativo lábios. Garfos ideais, L=4000, K=Cb=Cm=1, N0, torque imposto0; sem Pierin. Entrada numérica D=3.58e+06 é piso conservador DISCRETO individual, não autovalor D identificado nem dispensa; identificado continua nulo no registro. Domínio 3000–6000 mm."
+          },
+          "negative": {
+            "W_mm3": 4902.243195069812,
+            "Wc_mm3": 4902.243195069812,
+            "Ml_Nmm": 12086244.455138076,
+            "Mdist_Nmm": 4822053.201043427,
+            "Nex_N": 86548.93983928768,
+            "Nez_N": 24470.27624052526,
+            "r0_mm": 60.77579726084086,
+            "j_mm": 59.609396294018914,
+            "Cm": 1.0,
+            "Cs": -1,
+            "plain_u_no_distortion": false,
+            "provenance": "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce; mesmo contorno/material e sentido próprio: My positivo comprime alma, negativo lábios. Garfos ideais, L=4000, K=Cb=Cm=1, N0, torque imposto0; sem Pierin. D convencional predominante próprio=4822053.201043427 Nmm, vale da assinatura contínua; não D puro ou autovalor finito exato."
+          }
+        },
+        "ue_family_model": {
+          "H_external_mm": 100.0,
+          "B_external_mm": 50.0,
+          "lip_external_mm": 17.0,
+          "t_mm": 2.0,
+          "ri_mm": 2.0,
+          "L_mm": 4000.0,
+          "web_flat_mm": 92.0,
+          "E_MPa": 200000.0,
+          "G_MPa": 76923.07692307692,
+          "nu": 0.3,
+          "fy_MPa": 250.0,
+          "stability_lengths": {
+            "Lx_mm": 4000.0,
+            "Ly_mm": 4000.0,
+            "Lz_mm": 4000.0
+          },
+          "Kx": 1.0,
+          "Ky": 1.0,
+          "Kz": 1.0,
+          "Cb": 1.0,
+          "Cm": 1.0,
+          "supports": "ideal forks; bending rotations and warping free",
+          "N_N": 0.0,
+          "imposed_primary_torque_Nmm": 0.0,
+          "cladding": "no contact or structural contribution; actions only",
+          "geometry_convention": "R01 faceted thin-wall line with exterior fibres; ri=t, 209 nodes",
+          "physical_geometry_verified": false,
+          "Pierin_critical_values_or_signs_used": false
+        },
+        "ue_family_sources": {
+          "reference_id": "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce",
+          "registry_sha256": "3919d41d60e8423d7ae44a2bfb32bbd7c75783c7165bd78c027a20757e61cbe3",
+          "profile_sha256": "fde5d287a73df9adf1b9ab3e392d7207c3423acb7a8894de5553d402cc7aef90",
+          "nodes_sha256": "13c8bf700cce34d8fb2bc607e9ae06c305cc59cd7e0e67234a38fb0218704638",
+          "manifest_sha256": "e7237c35f9b557a820d3b478c1db02101e9a39e368addbbab64465f535288e95",
+          "consumption_decision_sha256": "f1790861e5373f00184f2481840e48c3f14c1a494d9666531ac2d6aa2158d6d4",
+          "web_bound_source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/web_floor/t2.00/CERTIFICATE.json",
+            "sha256": "171875bcf45a86f46a703c5698816271b6be56631f0c3d998f2de1e39c0dcbbc"
+          }
+        },
+        "ue_family_reference": {
+          "schema": "own_Ue100_six_scalar_components_app_v1",
+          "reference_id": "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce"
+        },
+        "direct_load_basis": "external_without_profile_self_weight_v1",
+        "roof_top_load": {
+          "schema": "roof_top_load_v1",
+          "enabled": true,
+          "load_line": "web_midplane",
+          "end_restraint": "fork_free_warping",
+          "intermediate_restraints": "none"
+        },
+        "deflection_model": "local_uniaxial_component_v1",
+        "isolated_en_stress_model": {
+          "schema": "isolated_EN_intact_section_choice_v1",
+          "enabled": true,
+          "intact_section_model_declared": true,
+          "model_origin": "Auditoria sintética somente: não representa projeto físico",
+          "section_material_identity": "64445d236433c7618926cd31c7cf14f44c22547740e39614684fd265df1e8eb9"
+        }
+      }
+    },
+    "5": {
+      "synthetic": true,
+      "input_unchanged": true,
+      "FLT_index": 0.2637128303218076,
+      "biaxial_index": 0.2703624348153767,
+      "biaxial_governing": {
+        "x_mm": 1999.9999999999995,
+        "Mx_Nmm": 284681.0449614987,
+        "My_Nmm": 7408.631449660198,
+        "index": 0.2703624348153767
+      },
+      "unaffected_equals_published": {
+        "NBR_branches": true,
+        "direct_self_weight_evidence": true,
+        "torsion_evidence": true,
+        "aisi_torsion_component": true,
+        "isolated_EN_stress_component": true,
+        "ELS": true,
+        "input_snapshot": true
+      },
+      "global_approved": false,
+      "global_pending_ids": [
+        "ELU:DIRECT_ELU:secondary_shear_scope",
+        "ELS:DIRECT_ELS:combined_ELS_scope",
+        "torsion_warping"
+      ],
+      "word_has_stale_biaxial_pending": false,
+      "word_has_new_interaction": true,
+      "result_file_sha256": "81cf48234e7c60ebdfd0be5a8632cc786aed9ef3c8ec141bc7c571f793d5939c",
+      "published_result_sha256": "331867277f7b3d5748a68d41fb68f47a5c6474b8fb8e516a41623c3abccf0250",
+      "input_data": {
+        "schema": "tercas_input_v2",
+        "catalog_index": 21,
+        "synthetic": true,
+        "project": "Ensaio sintético OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce, L=4000, θ=+5; não é projeto",
+        "properties": {
+          "h": 100,
+          "bf": 50,
+          "lip": 17,
+          "t": 2,
+          "mass_kg_m": 3.4672191949851374,
+          "A_cm2": 4.416839738834571,
+          "Ix_cm4": 70.15392822004888,
+          "Wx_cm3": 14.030785644009775,
+          "Iy_cm4": 15.771766001159301,
+          "J_mm4": 588.9119651779428,
+          "Cw_mm6": 365444260.9319717,
+          "ri_mm": 2.0,
+          "fy_MPa": 250.0,
+          "fu_MPa": 400.0,
+          "E_MPa": 200000.0,
+          "G_MPa": 76923.07692307692
+        },
+        "property_origin": "Referência própria OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce; R01 209 nós, ri=t=2; propriedades e módulos exteriores próprios, material declarado do ensaio. Não são propriedades consumidas de Pierin/catálogo.",
+        "L_mm": 4000.0,
+        "q_uls": 0.1,
+        "P_uls": 0.0,
+        "x_uls": 1700.0,
+        "q_sls": 0.06,
+        "P_sls": 0.0,
+        "x_sls": 1700.0,
+        "actions_origin": "Ações sintéticas para auditoria, não projeto real. Matriz fornecida por Lucas em 31/10/2026 preservada; P de manutenção separado. Não é rederivação normativa dos coeficientes.",
+        "Ml_Nmm": 19433882.82838218,
+        "Mdist_Nmm": 12998041.888658233,
+        "critical_origin": "Local forte: NBR14762:2010 Tabela12(b) com W exterior próprio. D forte e críticos fracos: FSM R01 próprios, material e sinais rastreados. Nenhuma dispensa T14 nas seis espessuras; nenhum crítico ou sentido de Pierin consumido.",
+        "ELS_limit_mm": 22.22222222222222,
+        "ELS_origin": "L/180 selecionado para ensaio; não regra universal.",
+        "route_domain": true,
+        "segments": [
+          {
+            "start_mm": 0.0,
+            "end_mm": 4000.0,
+            "Ly_top_effective_mm": 4000.0,
+            "Ly_bottom_effective_mm": 4000.0,
+            "Lz_effective_mm": 4000.0,
+            "Cb_mode": "one",
+            "restraint_provenance": "Lx=Ly=Lz=L, K=Cb=Cm=1; garfos ideais/empenamento livre. Sem apoio intermediário ou telha estrutural."
+          }
+        ],
+        "left_web": false,
+        "right_web": false,
+        "support_origin": "Garfos matemáticos, rotações de flexão e empenamento livres; ligação real não comprovada.",
+        "patch_mm": null,
+        "patch_origin": "Introdução local de P não qualificada neste ensaio.",
+        "steel_name": "ASTM A36",
+        "load_mode": "direct",
+        "selected_types": [
+          "ELU normal",
+          "ELS rara",
+          "ELS frequente",
+          "ELS quase permanente"
+        ],
+        "area_inputs": {
+          "spacing_m": 1.5,
+          "permanent_kgf_m2": 8.0,
+          "live_kgf_m2": 25.0,
+          "wind_up_kgf_m2": 60.0,
+          "wind_down_kgf_m2": 40.0
+        },
+        "ELS_down_denominator": 180.0,
+        "ELS_up_denominator": 120.0,
+        "member_application": "purlin",
+        "inclination": {
+          "value": 5.0,
+          "unit": "degrees",
+          "spacing_basis": "roof",
+          "permanent_basis": "roof",
+          "live_basis": "horizontal",
+          "wind_basis": "roof"
+        },
+        "model_domain": "cladding_actions_only_20261103_r1",
+        "weak_axis": {
+          "positive": {
+            "W_mm3": 4902.243195069812,
+            "Wc_mm3": 8846.89915060527,
+            "Ml_Nmm": 3988869.588929896,
+            "Mdist_Nmm": 3580000,
+            "Nex_N": 86548.93983928768,
+            "Nez_N": 24470.27624052526,
+            "r0_mm": 60.77579726084086,
+            "j_mm": 59.609396294018914,
+            "Cm": 1.0,
+            "Cs": 1,
+            "plain_u_no_distortion": false,
+            "provenance": "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce; mesmo contorno/material e sentido próprio: My positivo comprime alma, negativo lábios. Garfos ideais, L=4000, K=Cb=Cm=1, N0, torque imposto0; sem Pierin. Entrada numérica D=3.58e+06 é piso conservador DISCRETO individual, não autovalor D identificado nem dispensa; identificado continua nulo no registro. Domínio 3000–6000 mm."
+          },
+          "negative": {
+            "W_mm3": 4902.243195069812,
+            "Wc_mm3": 4902.243195069812,
+            "Ml_Nmm": 12086244.455138076,
+            "Mdist_Nmm": 4822053.201043427,
+            "Nex_N": 86548.93983928768,
+            "Nez_N": 24470.27624052526,
+            "r0_mm": 60.77579726084086,
+            "j_mm": 59.609396294018914,
+            "Cm": 1.0,
+            "Cs": -1,
+            "plain_u_no_distortion": false,
+            "provenance": "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce; mesmo contorno/material e sentido próprio: My positivo comprime alma, negativo lábios. Garfos ideais, L=4000, K=Cb=Cm=1, N0, torque imposto0; sem Pierin. D convencional predominante próprio=4822053.201043427 Nmm, vale da assinatura contínua; não D puro ou autovalor finito exato."
+          }
+        },
+        "ue_family_model": {
+          "H_external_mm": 100.0,
+          "B_external_mm": 50.0,
+          "lip_external_mm": 17.0,
+          "t_mm": 2.0,
+          "ri_mm": 2.0,
+          "L_mm": 4000.0,
+          "web_flat_mm": 92.0,
+          "E_MPa": 200000.0,
+          "G_MPa": 76923.07692307692,
+          "nu": 0.3,
+          "fy_MPa": 250.0,
+          "stability_lengths": {
+            "Lx_mm": 4000.0,
+            "Ly_mm": 4000.0,
+            "Lz_mm": 4000.0
+          },
+          "Kx": 1.0,
+          "Ky": 1.0,
+          "Kz": 1.0,
+          "Cb": 1.0,
+          "Cm": 1.0,
+          "supports": "ideal forks; bending rotations and warping free",
+          "N_N": 0.0,
+          "imposed_primary_torque_Nmm": 0.0,
+          "cladding": "no contact or structural contribution; actions only",
+          "geometry_convention": "R01 faceted thin-wall line with exterior fibres; ri=t, 209 nodes",
+          "physical_geometry_verified": false,
+          "Pierin_critical_values_or_signs_used": false
+        },
+        "ue_family_sources": {
+          "reference_id": "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce",
+          "registry_sha256": "3919d41d60e8423d7ae44a2bfb32bbd7c75783c7165bd78c027a20757e61cbe3",
+          "profile_sha256": "fde5d287a73df9adf1b9ab3e392d7207c3423acb7a8894de5553d402cc7aef90",
+          "nodes_sha256": "13c8bf700cce34d8fb2bc607e9ae06c305cc59cd7e0e67234a38fb0218704638",
+          "manifest_sha256": "e7237c35f9b557a820d3b478c1db02101e9a39e368addbbab64465f535288e95",
+          "consumption_decision_sha256": "f1790861e5373f00184f2481840e48c3f14c1a494d9666531ac2d6aa2158d6d4",
+          "web_bound_source": {
+            "path": "outputs/tercas_ue100_family_critical_20261103/web_floor/t2.00/CERTIFICATE.json",
+            "sha256": "171875bcf45a86f46a703c5698816271b6be56631f0c3d998f2de1e39c0dcbbc"
+          }
+        },
+        "ue_family_reference": {
+          "schema": "own_Ue100_six_scalar_components_app_v1",
+          "reference_id": "OWN_Ue100x50x17_t2p00_ri2p00_n12_a16_v1_13c8bf700cce"
+        },
+        "direct_load_basis": "external_without_profile_self_weight_v1",
+        "roof_top_load": {
+          "schema": "roof_top_load_v1",
+          "enabled": true,
+          "load_line": "web_midplane",
+          "end_restraint": "fork_free_warping",
+          "intermediate_restraints": "none"
+        },
+        "deflection_model": "local_uniaxial_component_v1",
+        "isolated_en_stress_model": {
+          "schema": "isolated_EN_intact_section_choice_v1",
+          "enabled": true,
+          "intact_section_model_declared": true,
+          "model_origin": "Auditoria sintética somente: não representa projeto físico",
+          "section_material_identity": "64445d236433c7618926cd31c7cf14f44c22547740e39614684fd265df1e8eb9"
+        }
+      }
+    },
+    "-5": {
+      "synthetic": true,
+      "input_unchanged": true,
+      "FLT_index": null,
+      "biaxial_index": null,
+      "biaxial_governing": null,
+      "unaffected_equals_published": null,
+      "global_approved": false,
+      "global_pending_ids": [
+        "ELU:DIRECT_ELU:FLT_height",
+        "ELU:DIRECT_ELU:biaxial",
+        "ELU:DIRECT_ELU:secondary_shear_scope",
+        "ELS:DIRECT_ELS:combined_ELS_scope",
+        "torsion_warping"
+      ],
+      "result_file_sha256": "6129c648dc5dd90c92703a4a34504532cee8391a830f74cea6b2fc547415f9c3"
+    }
+  },
+  "published": false,
+  "whole_member_approved": false,
+  "geometry_integrity_addendum": {
+    "tests": 24,
+    "passed": 24,
+    "seconds": 1.19,
+    "solver_used": false,
+    "source_files_reopened_by_reader": false,
+    "scope": "Seven exact own contours only; other coherent contours pending in separate-axis route; other components preserved.",
+    "coherent_rehash_mutations": [
+      "SC sign-changing",
+      "CG",
+      "height",
+      "load line x",
+      "dimensions",
+      "identity"
+    ],
+    "source_anchor_module": "tercas/roof_biaxial_geometry.py",
+    "actual_catalogue83_integration_test": "Parent to run after merge; not claimed by isolated checkout.",
+    "full_focal_rerun": {
+      "passed": 44,
+      "seconds": 29.88,
+      "BLAS_OMP_MKL_threads": 1
+    }
+  }
+}

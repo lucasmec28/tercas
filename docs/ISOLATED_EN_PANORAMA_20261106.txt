@@ -1,0 +1,34 @@
+Panorama seccional EN, política isolada v1 (06/11/2026)
+
+O novo cálculo do panorama distingue os critérios seccionais efetivamente
+avaliados da conclusão global fora do escopo. Com preserved(result) válido,
+EN §6.1.5 e §6.1.10/6.27 suficientes no mesmo caso/fonte podem atender a
+condição listada do cortante secundário. Não se copia índice EN a campo NBR.
+
+A condição listada torsion_warping passa a significar somente suficiência
+seccional conjunta EN §6.1.6 e §6.1.10/6.27: requer todos os casos ELU,
+inventário não vazio, íntegro e sem duplicatas, nenhum caso pendente e
+vínculos às mesmas combinações e ações salvas. Uma seleção legítima somente
+ELS permanece sem condição suficiente ELU, sem ser chamada de corrupção.
+Não significa resistência
+global de barra. O catálogo EN Ue não contém §6.1.6 e não atende essa condição.
+Teto acima de 1, ausência ou domínio inconclusivo continuam pendentes,
+nunca reprovação física inferida de limite suficiente.
+
+A política fica gravada somente nos panoramas novos. O leitor antigo não
+reclassifica históricos; o leitor novo confere condições, inventário, fontes,
+contagens e apresentação sem solver. Remover a política ou refazer apenas
+hashes não autoriza uma promoção incompatível com a fonte. O contexto EN é
+validado uma vez no builder, antes das combinações, evitando replay repetido.
+
+whole_member_approved, current_adapter_can_approve,
+approved_within_declared_checklist e torsion_warping_qualified permanecem
+False no adaptador. Mesmo se todos os critérios listados atenderem, o texto é
+“Critérios listados atendidos; conclusão global fora do escopo”. O agregador
+genérico conserva seu contrato anterior para outros inventários declarados.
+Não se inventa requisito normativo nem se completam estabilidade, introdução
+local, ligações ou ELS. Cada um conserva seu critério e alcance próprios.
+
+Cache de resultados ativos versionado; entradas, rascunhos e históricos não
+são migrados nem recalculados. Rodapé e nota da família Ue deixam de negar
+componentes resistentes reais e passam a remeter ao alcance exibido.

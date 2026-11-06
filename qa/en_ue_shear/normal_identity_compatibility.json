@@ -1,0 +1,683 @@
+{
+  "compatible_count": 83,
+  "binding_keys": [
+    "catalog_index",
+    "catalog_id",
+    "profile_id",
+    "nodes_sha256",
+    "nominal_identity",
+    "nominal_identity_sha256",
+    "thickness_mm",
+    "material"
+  ],
+  "normal_inventory_file_sha256": "455f8aa52886d620ec54255c332d39ccbac55212870bc046dd3ff4fbe1429353",
+  "normal_inventory_content_sha256": "51e7bac78b21e58f2adb2cc5bd25b1a65469fe0334e921e31bc351522c0e1f53",
+  "shear_inventory_content_sha256": "8beba399c4afc056eb6ae6d9a7b4f25beef7fd246089e34c1c17c13a5deba28f",
+  "scope": "Identity/material compatibility only; neither authority grants the other component",
+  "pairs": [
+    {
+      "catalog_index": 0,
+      "catalog_id": "planilha_v03_r5",
+      "nominal_identity_sha256": "36d05fd311d1d0232d41b2466caeab11e13c738f85786bbf91cbd467bfd13689",
+      "nodes_sha256": "7f6fe18e10ee8d271c58cc0b2f567a21b3ff039d06823861168bc8dc75279b11",
+      "shear_reference_sha256": "114afd2e30dd3ec9ff00411ace5d200ec6c4a1a0feb56d3da616770eb8bb9c05",
+      "normal_reference_sha256": "2558906bb682aab8def053defe05ee63731cb9f10fd9e7c397a640e688a010ff"
+    },
+    {
+      "catalog_index": 1,
+      "catalog_id": "planilha_v03_r6",
+      "nominal_identity_sha256": "b353e8597d11af3f6a83e548f5bc79f18a3d1d36811a3c8b9db317424dcd09ab",
+      "nodes_sha256": "5985e0c1bcc89da9b1bf64b00edd53c9756b662b4e43c5181c9b3da1ea6d940f",
+      "shear_reference_sha256": "7f9e75e978a495c10405f89087621ee643e011e0519f68c7d8defd59bc4f5cb1",
+      "normal_reference_sha256": "eeb04876fb9c13a7c060229b8c909b60184f784d9e833e4ce22de31ea7ae6cbf"
+    },
+    {
+      "catalog_index": 2,
+      "catalog_id": "planilha_v03_r7",
+      "nominal_identity_sha256": "8023de4253b9fcb1dd5c8644c78c8abe4baa245c95f2a755d8e8a29117e13761",
+      "nodes_sha256": "843c7a49e559f821c4092ecac41465895ccc011f5aa10ebb54cfe075e23ecc09",
+      "shear_reference_sha256": "c5c41fdee33435c6e64636c797e79af4f4a1414a0385d5be51c7cddcf75d99b1",
+      "normal_reference_sha256": "79cbccc9e4ea4c6bf0183c687b22ab8d1969376db3e3b35d09f99a5e4cbcf795"
+    },
+    {
+      "catalog_index": 3,
+      "catalog_id": "planilha_v03_r8",
+      "nominal_identity_sha256": "25811b18af3ef0b75e5721ea9e7431b94daa5e296fe39c8c859768bde9dbb667",
+      "nodes_sha256": "e6826588da38a595a2a12a953a87f9389f4bf9114ea28b932c317c5c17598b35",
+      "shear_reference_sha256": "2177250ab58d53428316a2ba8b4e7ce68f4719682f7ca101ea67ae5a42d64f18",
+      "normal_reference_sha256": "9eaba22994cdd1ba8cd604e5a328575e2e7e28f8640679c44849976427651fd8"
+    },
+    {
+      "catalog_index": 4,
+      "catalog_id": "planilha_v03_r9",
+      "nominal_identity_sha256": "3517ab52c8815db05b7e271637d8f946e93a53e6657095bf09eaff07573ffe8b",
+      "nodes_sha256": "61590250e9f00a0be376c8c9d30d3656c9fdc8449cb0e6a9d91198010df609c7",
+      "shear_reference_sha256": "58e83ae974b7fab5f5fa57d602c01b52332fce7c0584bcccced6cc0dec07223c",
+      "normal_reference_sha256": "4cb54a74e9f999a883a9428383e8376a20873c307da8154e0f4cba4238e6cdcc"
+    },
+    {
+      "catalog_index": 5,
+      "catalog_id": "planilha_v03_r10",
+      "nominal_identity_sha256": "8604655d9d020bc0c9403c86dabcd3b5731db1bb79c35e7142745adba3e7f7ee",
+      "nodes_sha256": "3df1aaaf749ea395ee8e65d12a8f107ce2ec218ee9accb2f9c2656e77c12621e",
+      "shear_reference_sha256": "cbe1c6288ffd3fcfa7c3a310331caf29ac1ec47466219803ec88320735cc592c",
+      "normal_reference_sha256": "5dc43aac8c5db8cc19751dd9cc4559c857db2aef5d911baa1eaf2c2b66bb483b"
+    },
+    {
+      "catalog_index": 6,
+      "catalog_id": "planilha_v03_r11",
+      "nominal_identity_sha256": "aadd3ec5faeb4126383ec10a4363b50b033188a4d6cb32579904c0745874c235",
+      "nodes_sha256": "c7382914562b96fe0f17dd327fbfe98617b6f3caff07347565114f7f737486bb",
+      "shear_reference_sha256": "d34df325293a9cbdb2f523229ae26fbbb7d52170c90c508cc8ae7d08bf19ee61",
+      "normal_reference_sha256": "5c8f63d53b291617fa129449eb81b085230ee1abd8f7d3dca0d3431b7270f1fc"
+    },
+    {
+      "catalog_index": 7,
+      "catalog_id": "planilha_v03_r12",
+      "nominal_identity_sha256": "455f1d3a555db2dcc0cae227fd98fd2a2ffe391674700179727a72d3e2f11b1e",
+      "nodes_sha256": "e658109be79ae41b213a3921783f306b75e5b3a54db3b7891b9c5389977a1070",
+      "shear_reference_sha256": "09fe4cbd0d2e272f25f4066756f560ab5cda106383b6fd3e9565966a512aa7fb",
+      "normal_reference_sha256": "78ad202899190723f8cb1241067f59b52ffb5c70f43d877195df5f9488fd124d"
+    },
+    {
+      "catalog_index": 8,
+      "catalog_id": "planilha_v03_r13",
+      "nominal_identity_sha256": "2f18f426b11f9b3b912181c08eea4396751604d380d3a150605663c122d4ad3c",
+      "nodes_sha256": "ac0e9d292213c212fc6c8a26baf0d81ef201b799dc63e7b3af9eafcfbf876574",
+      "shear_reference_sha256": "6ba1fff55766830516f5014276a26a2ab15d5f79b739a06ab7740c844daeedf9",
+      "normal_reference_sha256": "096d910288d7dc01df655146fd48f88e2c25acc4f804fcbbb80f5585e2c7e732"
+    },
+    {
+      "catalog_index": 9,
+      "catalog_id": "planilha_v03_r14",
+      "nominal_identity_sha256": "e1ad2bfd627836533456b0f127b8a676e08ace6e9e5864850515a013b0e9cd94",
+      "nodes_sha256": "fed6f621ac26df0594bd8be6f7d2016298d8a7a120052b321c7f2daec55e4f1f",
+      "shear_reference_sha256": "b08acd16abb9f16b965b524159829fdaa3ffdcceeb781e6c112917c363f425d8",
+      "normal_reference_sha256": "d99017faa1622011fbcf8568e635e7921f80774e0de18690c1319c796510c7e4"
+    },
+    {
+      "catalog_index": 10,
+      "catalog_id": "planilha_v03_r15",
+      "nominal_identity_sha256": "1bd02710521dcb642896fc95994d2d9b0d073971d685b9183767a747e35065e4",
+      "nodes_sha256": "b39a757d7ebf5a343541e5e86eefc0c360fab1ed9832f0589873867c84c681dc",
+      "shear_reference_sha256": "b50b7d21db1a69a5d971f7158a0bbe02943fc4a8e62fdef2b5eb19822df0f74a",
+      "normal_reference_sha256": "9d951140da45419ff2e57be1ba439a4ab800142401a1645f40e2b6fbbedeb62c"
+    },
+    {
+      "catalog_index": 11,
+      "catalog_id": "planilha_v03_r16",
+      "nominal_identity_sha256": "d85d0e68c42719d7f7b796185734f8a39dc89342406bd575021326b2c3b2983d",
+      "nodes_sha256": "a69ee2115a7b5ead37e32afa2dad40cf83f0aa123361201fd80b4464c003ecb5",
+      "shear_reference_sha256": "c1652e9a88a4c381bc9849a00ecfaee58d353b15598f5914f18f40c395da9818",
+      "normal_reference_sha256": "e96d52643242f26a691facde374f23dd1aac78e34f523eb558a5125496e89a89"
+    },
+    {
+      "catalog_index": 12,
+      "catalog_id": "planilha_v03_r17",
+      "nominal_identity_sha256": "37a38879be8efbf5f197019d1e231766344869f056abb57649b11d8116415acf",
+      "nodes_sha256": "84095ac411bc0f51db3cf91542a8e8c711994f40991c1d66a3ce5d4d19f7f954",
+      "shear_reference_sha256": "b1db3c21f87c297a24186d782f6d650dea82e79d26141511d15098dde56bd103",
+      "normal_reference_sha256": "688974cd5b6b8982b2341ccdb141037bed0a68697d62a847aac0cd6307b443bc"
+    },
+    {
+      "catalog_index": 13,
+      "catalog_id": "planilha_v03_r18",
+      "nominal_identity_sha256": "00a69b4444ea11f4e99e277d6d4f0707de122775bdf470b0a1f8ed5da969804a",
+      "nodes_sha256": "5c8f6461729fc1a01a7043a11ae4166aabdd5ccb6955655bffe4ba641188cdaa",
+      "shear_reference_sha256": "acfcc3b748b34ea0deefc2f32f5c5c3ad4a78beddf4c4cd785c221a996f7b2ae",
+      "normal_reference_sha256": "5f723250d52ca3804d5800570735e5b5722312ae00a272fd654e988b6b5859ab"
+    },
+    {
+      "catalog_index": 14,
+      "catalog_id": "planilha_v03_r19",
+      "nominal_identity_sha256": "264dbf72d0aa97e8e0ea1a2c8baafcb719e6b43ee516d9ef996a5eb9b22f371a",
+      "nodes_sha256": "70d5e3636d11b65e1cf26ef2d9c908ce711d0a5cc008847af8bcad2fd2a5f1ea",
+      "shear_reference_sha256": "a7d2002a71a15a5035474cf9fe936a2b36867f2147a8cf8e5eef265c6c79d974",
+      "normal_reference_sha256": "174b3bc905fa78c9c9bbe6e149c1c3e37ef042041341cd79bbf572b2a0e5e77f"
+    },
+    {
+      "catalog_index": 15,
+      "catalog_id": "planilha_v03_r20",
+      "nominal_identity_sha256": "3475aa9724b781cd8da793dd4cf259d1dfd27624babfe87fad8b9701eba70682",
+      "nodes_sha256": "2a4a3a6de81c60fdfc8a2639751b315ba5435b492bcbf1f8abc54417e02a1515",
+      "shear_reference_sha256": "2db587cd842c8de8af5b2943e4216c70563c13cf810f8c40b4a75bc5b40b407d",
+      "normal_reference_sha256": "5eae0cf9838e772fe5fec90b0a8ba0d3b68c35c2194121fabcc69e410f7bc2c5"
+    },
+    {
+      "catalog_index": 16,
+      "catalog_id": "planilha_v03_r21",
+      "nominal_identity_sha256": "956178b357c187b04b0d2c903b1c13473ae0fde09b8fcf65123bf642eabaafdb",
+      "nodes_sha256": "2f6dbf63470b2ed7eb080a5c79be96d463ec823c20b791ac83704d8824184914",
+      "shear_reference_sha256": "7b03760fda1097aec29228f8230ffa3666930372020ea1eb926b26cde38e3508",
+      "normal_reference_sha256": "67b11f8c5e279f035be814f0e169f9ab772286b931ab06a434347ce4b0417830"
+    },
+    {
+      "catalog_index": 17,
+      "catalog_id": "planilha_v03_r22",
+      "nominal_identity_sha256": "455070881ae1e9f52acf147c66c6e61ff660a3cceff826d6d9a28371a363dafb",
+      "nodes_sha256": "1e532b248b941d2e508176351e8a1810d3078e78eec6f9c464434291fcc2ff4c",
+      "shear_reference_sha256": "1cad941fa40aa8ab4bb382a18cc0a03da5e607b7e55ec622a1e8ab1af4dee1ec",
+      "normal_reference_sha256": "da88387469042ed134830407ff9f641ab2dc56c09572fa8c34680dc9ddb9a5b8"
+    },
+    {
+      "catalog_index": 18,
+      "catalog_id": "planilha_v03_r23",
+      "nominal_identity_sha256": "9ca0e1d3e065ec874829e808358ac83f144aafb8f46be080f1d2a8402a357e3f",
+      "nodes_sha256": "149c45babfd955a9d8d8f3478d6773ec7f70b419f217fd8c711c4fb6b2b946b7",
+      "shear_reference_sha256": "1d192acc0c2111ea74fc94c3c0ac4cf5251164f8477bd37d79ff5f289a0c7281",
+      "normal_reference_sha256": "1995becc9624e6459b273d789175436801ff20ddfdf338d48bee3699091a92c9"
+    },
+    {
+      "catalog_index": 19,
+      "catalog_id": "planilha_v03_r24",
+      "nominal_identity_sha256": "464549569fd9ec1469a1abeba8464e9ee52d58154049d8cf419b41972112eb0b",
+      "nodes_sha256": "fa742ebef3386b22f8db547e279a3c521a4d3fe7c21d7c045459452c6ae917fc",
+      "shear_reference_sha256": "ce4380f6b9aeb517021e117dd53679cd76cf61f41e74cf4bf745dd6f5b9ff966",
+      "normal_reference_sha256": "bc936ea2026d6d4145f0e986343dff27f344a6a22939d4312fb6ef93cbd80c9b"
+    },
+    {
+      "catalog_index": 20,
+      "catalog_id": "planilha_v03_r25",
+      "nominal_identity_sha256": "8ee4324a91341fb59eeef16e91d3b7c88ce55211dbdba1dfac99eda91c8e83f2",
+      "nodes_sha256": "2a332fc00e2578568ca7d2471bb87d9f9b8d97b70451b5e9da82adafb96df9a8",
+      "shear_reference_sha256": "c48d7a9b53dbea0214bcbe0c182644c611795bf1319d2ba522c2ee8b33b23caf",
+      "normal_reference_sha256": "1567d2d963d2cdedaaa917bf9a8807b21b2c72abc59599667e6f6daa3a0578b7"
+    },
+    {
+      "catalog_index": 21,
+      "catalog_id": "planilha_v03_r26",
+      "nominal_identity_sha256": "05a1cba04f6f999a42aaba359a79a8a85471d63169cb87bdf97a0b51e7ad8518",
+      "nodes_sha256": "7e1ca939a029e3c4ac9443c99119df0e9c3dbae192d5900c6a3d3458a7ab878c",
+      "shear_reference_sha256": "604d5224c692f7670d8fab42d6d6265e03e81ec1b4421de58b146395e99ab148",
+      "normal_reference_sha256": "3cfb70a8f7b949edee804e77ca946cebbcb14275c30c3916b4da96b92925c918"
+    },
+    {
+      "catalog_index": 22,
+      "catalog_id": "planilha_v03_r27",
+      "nominal_identity_sha256": "5b3519ad845facd1e57aacf89760b0575ebdfd3ee6b9cf3ea1cb15b1a657456f",
+      "nodes_sha256": "fd1771da3597fb6d3653fc7cd9352b04d2a5293548352068215f50c82b105937",
+      "shear_reference_sha256": "1d34c008db5911e5c44fdaf1e7e11a5502e806033a7afe137b8ac02344974de1",
+      "normal_reference_sha256": "f795b47a2f5c6b934a8017eddfe461897509a09c4f0b81a6d7ed208adf285893"
+    },
+    {
+      "catalog_index": 23,
+      "catalog_id": "planilha_v03_r28",
+      "nominal_identity_sha256": "3f1403c005f90f353d759671de3c45e21b4934cb4baa84cd6e32227bed68a3c6",
+      "nodes_sha256": "cffd75dee44660cdd7b2c76d57cba6a273dcb35d0833b22a17eb47389153d5fc",
+      "shear_reference_sha256": "0695b473e7e71c2dd3315d4428877f6e5e3719285b3b188168af2ae9546e30f4",
+      "normal_reference_sha256": "71bd6a3c5b2345102fa333193400742e67b54cd3cb70d24979fc1b715ea487ab"
+    },
+    {
+      "catalog_index": 24,
+      "catalog_id": "planilha_v03_r29",
+      "nominal_identity_sha256": "6378db224b9dfa011dabd30d0261e9cf1bfd46dfb01bbd6ac379d5ff249d522c",
+      "nodes_sha256": "3139aff4a54956811e40c18b4f8884c89719be8ea3f6cbb1f8a30f1af525f410",
+      "shear_reference_sha256": "c0353ebe21a87f8a0ca0ebc48c8b8fbf3356eba9d9cc95e366e0ac22b7a855a8",
+      "normal_reference_sha256": "ef9215a70f35ceb52c5ce9105c9ed237ebffddae14355b47dc4eca384da0dcff"
+    },
+    {
+      "catalog_index": 25,
+      "catalog_id": "planilha_v03_r30",
+      "nominal_identity_sha256": "efe5400c827b1fe4af1c38e844c722bcd8e504d3c9057c4e36d128dea8859c73",
+      "nodes_sha256": "6d7e92e74b44967fb2c72eaf5ba24fa9945143fff0dcc3fab08d1bf81211b6cd",
+      "shear_reference_sha256": "26f211886cc63b74cb042a67cbed27ad160412ccca165634c58734a9a20e64dc",
+      "normal_reference_sha256": "47f793050868c4cffe7b7f43ce4f6e56465b9a22629c9aa0d945b6d4b2a645b8"
+    },
+    {
+      "catalog_index": 26,
+      "catalog_id": "planilha_v03_r31",
+      "nominal_identity_sha256": "980dc2f8d7fbf830fcdae22160f06a103c576fccccde62525824795dfe18c716",
+      "nodes_sha256": "3814f4cd9fcfa474b6e3fcbd21eedb3fdee38818eca0440abb4408fd506143e2",
+      "shear_reference_sha256": "984696936dffb3f5d014d8929cb1143261ceb2b8f06627d9fd81cdcd0069fc97",
+      "normal_reference_sha256": "8fa97b788bd423c40a43d3f680eb173637608bb16270c2fffdbcabaf6fb16fe9"
+    },
+    {
+      "catalog_index": 27,
+      "catalog_id": "planilha_v03_r32",
+      "nominal_identity_sha256": "b6a55bf8e51f26cb852f84f800bcf99d679c821d320d8b3f491376cd61dd7f48",
+      "nodes_sha256": "08fe9c6f01e983c33706b91093711476e5261aea2531b4fd5aeacfff65867d60",
+      "shear_reference_sha256": "b5f3248722312786c826da8370faf575a7baddd65f820461b2e7626751fb8137",
+      "normal_reference_sha256": "93d527cec3968084f83a77ac086336c99f705f50f43166cfaa64f191d872acee"
+    },
+    {
+      "catalog_index": 28,
+      "catalog_id": "planilha_v03_r33",
+      "nominal_identity_sha256": "53e8df9731b224c75eb3f153bed28b707928183c0bc5f8b82f4cd16d63103629",
+      "nodes_sha256": "b36b127a10be4fb7dd6ab5f2ca8cb7bd0df8bca57ac15fdd26315f8547cb8110",
+      "shear_reference_sha256": "8276b9bd01b0a7cb55fbd63ad50abcb7938f95e16e94fe5bba4a04f832e569ae",
+      "normal_reference_sha256": "81b0fda62a2ee3c57418d0e0a6af0db945c32410d2d73ca1e483203a04708479"
+    },
+    {
+      "catalog_index": 29,
+      "catalog_id": "planilha_v03_r34",
+      "nominal_identity_sha256": "e419225ec8c758d562a836d469810cf475d5e4a37444674b2ba5b2bf59d5a639",
+      "nodes_sha256": "9e3a934f097d2537e99f61c2d56f976914aec25e4f8da7fd111308ee7eca3391",
+      "shear_reference_sha256": "8c7c8f93005959f245aceb4869d3530e43ba8c9941af853f0d4785f609bb336e",
+      "normal_reference_sha256": "f2bf67d0b519e6b03720c69039bb6f7d7b5d225c729170c9a71188a2fbf1cda9"
+    },
+    {
+      "catalog_index": 30,
+      "catalog_id": "planilha_v03_r35",
+      "nominal_identity_sha256": "f45f002f3662b9ad9337c9cc19721a5b9800eecd22294c0b92cf12987bf2fa28",
+      "nodes_sha256": "cb3783cee7bb2b92466a442ec4c19e30d1e05ff04ad0dfc980aad63ce6ff829f",
+      "shear_reference_sha256": "e60b27ffdf253dfbb9e24c0d867dfe8194184a0255566094d4e2af750129403c",
+      "normal_reference_sha256": "5fabe3a3b5b406dcd20097d1fd9710862936aa4c1e1e7a2c518f948c8be60f9d"
+    },
+    {
+      "catalog_index": 31,
+      "catalog_id": "planilha_v03_r36",
+      "nominal_identity_sha256": "cc21c1e57ad160aa5daafb670293774302ba1a8a74d2c1fd90b17bb613d97076",
+      "nodes_sha256": "70993e26cb06af6830d3dae71790d55d22ea753866fe6fcf614d4cb0ed47abcc",
+      "shear_reference_sha256": "149147f93e0b0b4b6a08a7b65387f70ded5ca1f111d49a59095430008cd1869a",
+      "normal_reference_sha256": "5b4634a661bbc2f6ab1a72f14c4612baef9db2abb1dc0024104fbe6e7c19ffee"
+    },
+    {
+      "catalog_index": 32,
+      "catalog_id": "planilha_v03_r37",
+      "nominal_identity_sha256": "96cf02f4ffae43a894b68874fc1ba1adbe64214625f91a63eb819790aff0fca6",
+      "nodes_sha256": "1bfd1dde9ca61e0a4d13b98799f1be46a77856fef32a119c6f225b898ed30e16",
+      "shear_reference_sha256": "ea1fe8457e2b1d5fe9f744669051e760de9055e764b9e775ecf5059d60bbe698",
+      "normal_reference_sha256": "c4b60d7ab3dbf5f0181cd49deeeae6e9c7e1405be6c7b8c8dab362d1a7929bc9"
+    },
+    {
+      "catalog_index": 33,
+      "catalog_id": "planilha_v03_r38",
+      "nominal_identity_sha256": "d3271af811c5ec0e00d6bbe60c7de5810833f8ea0f1c15896680ca1d9e8da62f",
+      "nodes_sha256": "eb37badf1d3e1eb141da2b8f1acd636d7cd00ac9469efa44a13bc3b38c53b060",
+      "shear_reference_sha256": "480ac2ee3757ff11439df009f4d052f7bce8afa4f4f36eb49b5079151de69bcc",
+      "normal_reference_sha256": "c8cfb44f20b7c24a65e1d52094ed96746eb1611f7772c70562ef25a3a96c2211"
+    },
+    {
+      "catalog_index": 34,
+      "catalog_id": "planilha_v03_r39",
+      "nominal_identity_sha256": "d712a87abe8888b8a605aa900fc0a87e409721e33c33a402563cebd5e6b3c0fb",
+      "nodes_sha256": "78e27f47434ea15668cc1c9cee146080af5f7cf17fc04cbf0496d106a6583c37",
+      "shear_reference_sha256": "4a567ed54b5d01a35e8195f5b16ce1aabe2e7f269b2690a6fb963e2c0002f271",
+      "normal_reference_sha256": "5b185dba877b6d8d2a4169f680cd85aa7cc24ebf7b127d5980781e51ad7ba264"
+    },
+    {
+      "catalog_index": 35,
+      "catalog_id": "planilha_v03_r40",
+      "nominal_identity_sha256": "fdbdf79d9b7884cbc23074a2ad42cf3b6dd2d1312f847582875f3aea273176a5",
+      "nodes_sha256": "8aa6b26a3a42a6c092167904845d199e68edda42e46e311a9a4e55af8c169807",
+      "shear_reference_sha256": "aa9a48e7a0f9914285887045855a29af0d97878e190974e34bdd78bdf8290ae8",
+      "normal_reference_sha256": "ae7d31525f040ba8c209116cc4725b87aaea8a3510587db3cd312793bb0691f2"
+    },
+    {
+      "catalog_index": 36,
+      "catalog_id": "planilha_v03_r41",
+      "nominal_identity_sha256": "c246fb8b8d4295527ea9c73bbfd270ff9712306e569260c543fe3f12a3432981",
+      "nodes_sha256": "440c514f30f187b93e4ea18c26424ab1705777eff13b14030d61381343582334",
+      "shear_reference_sha256": "ded767a33c178494b461e0f759474a82e44b38b1d5d898c95e113ef4645103ab",
+      "normal_reference_sha256": "d153799126fc345969e188c35ab6714e5547f8b4d3437d98839eba099b1e2d5a"
+    },
+    {
+      "catalog_index": 37,
+      "catalog_id": "planilha_v03_r42",
+      "nominal_identity_sha256": "86310f0d1935e12e61b8b22b669ae53a803764126ec4c3cf291589f9a4bd323a",
+      "nodes_sha256": "d3bd50405f40bb984e58d37131df04b405a680a303ab5d3c9d71073bf2cab475",
+      "shear_reference_sha256": "f4a00438863a9a08177945128ddeff722bd856131448e712ad6b6f4096e7bf06",
+      "normal_reference_sha256": "5a527adb5e9a1acb6f97648b38b08f43249ba3e077890664584bfe1d1437b6ac"
+    },
+    {
+      "catalog_index": 38,
+      "catalog_id": "planilha_v03_r43",
+      "nominal_identity_sha256": "f390fd36df16be019f7151b1f0a68275e328d40a287c2cc769e2b6fd95aee93e",
+      "nodes_sha256": "13832a3b86c33fc21a25d19000c9e6e3630fa30047ec8679e52ce42dac232766",
+      "shear_reference_sha256": "ead9bb56d57d927724529e9ffe7543b821f3b810c0196394398d10113b3150cc",
+      "normal_reference_sha256": "6c1ad780914204bfde33a9fcc992df5c0ed5df8397770f51265aa5e14ec93782"
+    },
+    {
+      "catalog_index": 39,
+      "catalog_id": "planilha_v03_r44",
+      "nominal_identity_sha256": "f08927fd59875436a8e29f5b1399ca7a116dedb932ce0ab771f52735c9d27bef",
+      "nodes_sha256": "df70a2a8dd5eccaec3e42cbfd3a2bbc062781f1c2318b90a06913619bef71d8c",
+      "shear_reference_sha256": "581274b2d64e797d7cfb970e91aea03650fe8cf239395dd2e7e6961ca1445d43",
+      "normal_reference_sha256": "483a322cd2dddf8c5bfc8a1178016b411d8f0c40e3c0785b11bd3ee1d3b0032d"
+    },
+    {
+      "catalog_index": 40,
+      "catalog_id": "planilha_v03_r45",
+      "nominal_identity_sha256": "e7eb3e2531abd91a4d67289271db0a1c8cfe25235370c5d1aebfba5634d0dc49",
+      "nodes_sha256": "3ca3fcb1ea018e3680182c0db33983f2693ca9616361c28855e50ce4b79bf62c",
+      "shear_reference_sha256": "83ca9f88ef580eb502395c278489600d7d08873077dfacd928c8c11d2d3027cf",
+      "normal_reference_sha256": "a79254a7922b298ca1bed9134fa7ef7519304b773ddc2bdd1bb0052e7d774fc4"
+    },
+    {
+      "catalog_index": 41,
+      "catalog_id": "planilha_v03_r46",
+      "nominal_identity_sha256": "9db4ecf7212101d5fac219e6a682eecbbdf2fe8f9f515677c4ff754f1f719cc9",
+      "nodes_sha256": "d70e58f5fd2800d42925a256413ff405aaf14a282d31a8365e9c51b4bc2d1752",
+      "shear_reference_sha256": "efffef2ba8e677ce750ec0deb211a293dd7f4934127a444327655eb94e8ddde8",
+      "normal_reference_sha256": "ef4c6223b53a549b5362b3de35ddda988aade4b50f535359121f21060dbc95f0"
+    },
+    {
+      "catalog_index": 42,
+      "catalog_id": "planilha_v03_r47",
+      "nominal_identity_sha256": "b2909dd61840166fae35296b3543e63da9cf6c05035854541b6ddab3e4246706",
+      "nodes_sha256": "b5a01115c932bb6215b8a6798717acf5b144b0286d59f86fa5e1d71206043b9e",
+      "shear_reference_sha256": "a832aa69a2ffbf94fe668114f54270dceb52ed1616282d0ec47836c11a36f015",
+      "normal_reference_sha256": "74f38509227030a35bb4e8a83f1ac20c579745c805719c56577f7fca98672102"
+    },
+    {
+      "catalog_index": 43,
+      "catalog_id": "planilha_v03_r48",
+      "nominal_identity_sha256": "9e4a625e94ba02f0c65b3c97a889b16fab3d56363909435d7bd05a531d388701",
+      "nodes_sha256": "24cc3e8f2db4efa72a3115f5c1b5aa804de0b0c1f4b711f4f95d415d2b43e333",
+      "shear_reference_sha256": "ebe3d6529c050676dfd825c4e354176b7e6dd87889574e201041fccd1e364dbb",
+      "normal_reference_sha256": "d62d8510cf66088b85c527fd4228c74fd0fbf68f09141d2951db64ea84c890d5"
+    },
+    {
+      "catalog_index": 44,
+      "catalog_id": "planilha_v03_r49",
+      "nominal_identity_sha256": "395b1e3960b636ced7bf1e2704bfa6a93f63cf595d1a9db59718f1d8fbd6340f",
+      "nodes_sha256": "9973c50f3c7c065fa97295ccfe9a433bb69a9696d0c3655ed352517c62927909",
+      "shear_reference_sha256": "1286426cc38a93a4d1a479c1fab57033c03b952ca278498b1f19cab3d2d5901b",
+      "normal_reference_sha256": "e795c2f7f170dc4ad39dd20342c72aca59b763d530a15e4b2c76375a57f6da05"
+    },
+    {
+      "catalog_index": 45,
+      "catalog_id": "planilha_v03_r50",
+      "nominal_identity_sha256": "a814efa75543e90ec4f7c05e3476586b22c69e91a1b140d113fdae5652fe1cba",
+      "nodes_sha256": "30c2b6145e31fd76277c47916dda0fdc2f43787be9ebccb09313033c5aed9ed8",
+      "shear_reference_sha256": "eaa0279aaa73cb202380151724f53a217d034b23d8efbb9235f90540411b8259",
+      "normal_reference_sha256": "221af4577169e89858b4be8bbdc95fb6be5c1382e744e11f994c82949fcb2ec6"
+    },
+    {
+      "catalog_index": 46,
+      "catalog_id": "planilha_v03_r51",
+      "nominal_identity_sha256": "81a7261b4f1eb574da12d7e3c268b9007f577ab5510c2b8973cb4ee2779d5f2b",
+      "nodes_sha256": "ac2b329f849d54c1d82e8771f47e6c1c037c3a0b4901b8b8d5141225d16a2770",
+      "shear_reference_sha256": "369f5644a9d0bdf2e81987d1f108627a37d0ce5ea7aee6176b5e089e46b05534",
+      "normal_reference_sha256": "2428a3d7dea8097e6aa783f33b3746ec448ab74187df113fbbabd0f1a50c788a"
+    },
+    {
+      "catalog_index": 47,
+      "catalog_id": "planilha_v03_r52",
+      "nominal_identity_sha256": "6cd4bcf543806da0cd72c05547e0e45b9fd91fd5d6033aba8d96f6510976ab75",
+      "nodes_sha256": "e9ab99bfa509b589f6f04668beee203f81bb83637635a10815ca7a9324ea0dc4",
+      "shear_reference_sha256": "f404efb4eef0a88b10d3ac4a97a428c856e77e989cf8f6699c4d6fcc1f19053f",
+      "normal_reference_sha256": "0a2487d6c1c756c0f86eeedc501dea7f9d2995b1a73c0571821fbd37b24246a1"
+    },
+    {
+      "catalog_index": 48,
+      "catalog_id": "planilha_v03_r53",
+      "nominal_identity_sha256": "b6e1002021b25b49a2318d77bc623a706434ecb6496f6f3ccc935af2ee6a7c87",
+      "nodes_sha256": "bff83fd8ca8f98431e51bc25529c27c96421e4881308d666cac137b19dc2117b",
+      "shear_reference_sha256": "94c8c187fd898b72c974619b57256ac348a752b1d3f5cc6b8750ab1b190bdb57",
+      "normal_reference_sha256": "bc8dd3d036bc3e39824587a6f65ae4b4284bdf7afa33e97f3753698da2a90487"
+    },
+    {
+      "catalog_index": 49,
+      "catalog_id": "planilha_v03_r54",
+      "nominal_identity_sha256": "dc9c42e80d60cb338683d8b66fe7df726da98e9b053ac93eace9085448b3a235",
+      "nodes_sha256": "217a14a4231df0a16360e190ce6ba7efe345f2dc6d055cc06f0af8cbde36cdfb",
+      "shear_reference_sha256": "d0e6572eb7d77c03581ef7e6c72ea8d19316246988e599bf275aa10b0a26c235",
+      "normal_reference_sha256": "d1d7e1930ea892feaf49552fe370271525206b46c6dc00d2dcd85946b85e9f06"
+    },
+    {
+      "catalog_index": 50,
+      "catalog_id": "planilha_v03_r55",
+      "nominal_identity_sha256": "a54319e01f89e9a5890211fcf1f0c9cc7fc32e4593c642cdaa4a5b12aad3db62",
+      "nodes_sha256": "29d5188bd2cb214cc4c5c473caf5480659ad9dcc9e578b160bf07f0d631d5f89",
+      "shear_reference_sha256": "79a04351fcdea61151d0aae068599e11236cd7d8dc5e8be6ceb3bede6f18a672",
+      "normal_reference_sha256": "a094da19353a9d39a25fceae323f06f1386307b3afe73609e09b96bf243e63e3"
+    },
+    {
+      "catalog_index": 51,
+      "catalog_id": "planilha_v03_r56",
+      "nominal_identity_sha256": "4c4f24ba70cf58621277f2fb75b253753674bd32a4d904ee055dba8ede42670d",
+      "nodes_sha256": "26032bdca496a6cf9932ff5a8ec38098132f88bee62cbb50b669376cc52f8c1a",
+      "shear_reference_sha256": "565bf19e402a4a01a2ecc171e2e000051eb7ce45d5f6391391965e1780216407",
+      "normal_reference_sha256": "75ea464acd0b6748efee01e677851c2fd9460d509a55a888f0a3a12e514ed90f"
+    },
+    {
+      "catalog_index": 52,
+      "catalog_id": "planilha_v03_r57",
+      "nominal_identity_sha256": "1bbe73f817678974913373623e54c0520a482cfc51c6675813ba583de094eb7f",
+      "nodes_sha256": "b6cba3a5fd8866f33842a2e0fa92155cc9b375261874d555f1b402262666fe86",
+      "shear_reference_sha256": "b2431e92cd59e00c97fca6b4135297dd1a7327640e312e3e2db4ad42bb0e4c85",
+      "normal_reference_sha256": "49c517d828692c8330dd256e4cdb3ab163c0d58b4eb51b6eeaaf88f3e2393be4"
+    },
+    {
+      "catalog_index": 53,
+      "catalog_id": "planilha_v03_r58",
+      "nominal_identity_sha256": "16dad4268a0ff8a708d3682aef312b4c80e85cf6aa74522d689251553751cfe0",
+      "nodes_sha256": "d10c6ded3c2ad1f345d613465a5a55c37cd286eebf1221384f5809980d5b4683",
+      "shear_reference_sha256": "c79b881ecfb1a4593a389ae3b7623a92e66e51c8f84a5514adbbaba73ef7428f",
+      "normal_reference_sha256": "6968205c0b6d8288cda4a55f723adb9a6a50cb3344fdd9a8061e2e5ffe78cc5f"
+    },
+    {
+      "catalog_index": 54,
+      "catalog_id": "planilha_v03_r59",
+      "nominal_identity_sha256": "8f4985d8a7832b7dfee889eabab362d85618b19107188d32d14725302238da66",
+      "nodes_sha256": "b507bd1b88044cc019996a8970f0e499982972e700e3b3b79f3170b4bde5c76e",
+      "shear_reference_sha256": "0ba8eb227dda2d83c3bdd7b4aabb4fb762360cd1458d33106bec84a9d9e87389",
+      "normal_reference_sha256": "e69b5edf3ceb61efbc4447ad2583d0a82c81d989ddaebef751f0c98be86ecda8"
+    },
+    {
+      "catalog_index": 55,
+      "catalog_id": "planilha_v03_r60",
+      "nominal_identity_sha256": "b7f022b0c5033b9339ec4ea5e607af72ff05895df7a7ea5af7ab9ef4ee0fda10",
+      "nodes_sha256": "55a2e95a691c828f01a71deed94a32bc5c7da2c95c24b7bb96f99e734479ff36",
+      "shear_reference_sha256": "58d46d827080c60b9e9b9c311225e105dde3d61f2f0872f5e4e6ff065cdde9e3",
+      "normal_reference_sha256": "195f1ffa1899eaf7e0289e3be7ff8446d8e18f926bd84b0086698f180ed8c782"
+    },
+    {
+      "catalog_index": 56,
+      "catalog_id": "planilha_v03_r61",
+      "nominal_identity_sha256": "5b20e9c006b289f1e49eec2784f6fcea1d51ff97658be9f67884ec28eea8da57",
+      "nodes_sha256": "3cfd38f32c41d7e8090aa186cd804a2bd42bb5e8d86706dbd8d43cbc57f645cf",
+      "shear_reference_sha256": "84f13268342f581702812b2b7d105d4d79302e93e68a56065fcc7f34e1e2eb82",
+      "normal_reference_sha256": "ee45f16116c9a5850b546d27db5798a1838cbbce6b275d58b6380e429fd2dbd5"
+    },
+    {
+      "catalog_index": 57,
+      "catalog_id": "planilha_v03_r62",
+      "nominal_identity_sha256": "a38cdec0d69ad26d2f44421939ff9093e2c2fc829bdf1fcb6b5d74e33ee2548b",
+      "nodes_sha256": "1439ca0247338ff32f406227905b08a3f8b7cea142b3edb1622708274288f9cf",
+      "shear_reference_sha256": "ec9bd470cd3478d1e5e888df0ee57c519c21bfe3bcb56f9fe51d696fc9c2c860",
+      "normal_reference_sha256": "f17d26b09ca30e7cae20c8e11fb0c2899f80a346e384a012e3984cefec25086e"
+    },
+    {
+      "catalog_index": 58,
+      "catalog_id": "planilha_v03_r63",
+      "nominal_identity_sha256": "68bac1e49e0bedd5c8c7b500b3881003ae3f8f16c6659563452ad7f4c185d785",
+      "nodes_sha256": "70caeef9476ef08a46f53201da95c718efd43bfbdf4b1a9411baf9c147b59e84",
+      "shear_reference_sha256": "bab3ec3e383fab87c68e2333c603ad66e885b39f39f50f87ca755f58f1786762",
+      "normal_reference_sha256": "0d853de7ff08c447a5be3c503b0f4312f714096ad5b2d99e90812209b04da204"
+    },
+    {
+      "catalog_index": 59,
+      "catalog_id": "planilha_v03_r64",
+      "nominal_identity_sha256": "06c079588584eff0abb310fbd8dfedfbc28dbe92b376617e7c767556449a5c98",
+      "nodes_sha256": "f1127b509a1860dfe11de944ec30649f0de68148ce1358f5d3faeca9da444f78",
+      "shear_reference_sha256": "f07535973d08da5c3581cd9f7c16ba4ac0c89d1ea002c5fdbf59bef0829c0a50",
+      "normal_reference_sha256": "e31cb567d3d1c1fa4f4735a3ea3f9eab41579106d84e2364d17f8c9090ee0fe2"
+    },
+    {
+      "catalog_index": 60,
+      "catalog_id": "planilha_v03_r65",
+      "nominal_identity_sha256": "d242456395858e618660fa073a94797b0137c11cc2383b8d2837a62a882c8946",
+      "nodes_sha256": "9f29b74f960cb0f89645fbc33c49934079919a8e7a0d4c6d7ea55060bb3a479d",
+      "shear_reference_sha256": "039dfc63485e1605c825c5cb25e69dc894177b97c09d8982543680c17c3740e7",
+      "normal_reference_sha256": "2679af07fa5dc77dcc9e1b644c81df905fbeac808846709abd7ce2f07c580cde"
+    },
+    {
+      "catalog_index": 61,
+      "catalog_id": "planilha_v03_r66",
+      "nominal_identity_sha256": "dac7126963080c061c98cc8a64e84791539055de244e27b13cfcf76c94df57cd",
+      "nodes_sha256": "cf07776f16937dff57a2ba1229c03b706cb9661a719b19217954abb6f497c091",
+      "shear_reference_sha256": "0f329f96c1a5a8210272a1c32aaee7c18cb162e3157991c782f56bc57ba2f03e",
+      "normal_reference_sha256": "647e6bb32967d3e4b789a52b950eee9b7c7f721db4705feba94fef0428a10a7f"
+    },
+    {
+      "catalog_index": 62,
+      "catalog_id": "planilha_v03_r67",
+      "nominal_identity_sha256": "29ba01f082c0bda525cd78c2bf70721d30d869e45ee4e8a0ff32f4eef68c51a2",
+      "nodes_sha256": "901e690c13d0a0bbe98d63e0c519e71edcd08e49cb9fb2701ca7e4cd815a513e",
+      "shear_reference_sha256": "841c52f38f24133e5267d29cfaf622b73e462027261d0a20e144fcf7aa37a819",
+      "normal_reference_sha256": "2f6ceff7c8efe658cecb1902ff30af61c3ce109ac4742bebedc8278aa627ff51"
+    },
+    {
+      "catalog_index": 63,
+      "catalog_id": "planilha_v03_r68",
+      "nominal_identity_sha256": "2fd7fee36a856b465a02bcd4555591decae33670ddcedaebbee9ecedce91c088",
+      "nodes_sha256": "36ab7a5c7225ac6faf41d0f4cfbaf2ecbbc061c9b34f3b64277452d4d5748d8b",
+      "shear_reference_sha256": "ef48b605a76dc8f906185e0adb3ed19e5f297b7288e3bb567f4ac0143c7e5780",
+      "normal_reference_sha256": "64bfd0c96533a8a26152af8eaa20f887b6fda95538a47b5e8e94415c26b30bf9"
+    },
+    {
+      "catalog_index": 64,
+      "catalog_id": "planilha_v03_r69",
+      "nominal_identity_sha256": "6fe1eb8748a406dbc0f2a45e0cfe0295db32748e78d98b8e3c9c3b23a91699d0",
+      "nodes_sha256": "1ce558e2e5ec7421f2b4da76dcd97986098e2f0fac7347eb88bb70925f3e0fe6",
+      "shear_reference_sha256": "114bf59235f82bc6703210b5a8048d7b7f4535689a96bb9dbfb44eb230d67a75",
+      "normal_reference_sha256": "75a807dab7e6dd29321e4fd93de3e115fad88a8de3d6d6d456637442077ea416"
+    },
+    {
+      "catalog_index": 65,
+      "catalog_id": "planilha_v03_r70",
+      "nominal_identity_sha256": "771be51f6e38de8a883592e19c1eb5d84e11cea5b09cf7b3d9e4c33f2ec01f41",
+      "nodes_sha256": "3214316a2dfa59884f7002066e5b75dd984e6d2cbcb2c6f0feecdcfb6ee4417c",
+      "shear_reference_sha256": "f2d6a8fb84949dc13940ad940f71332550d43a5c7eeafaaf4b8ff2d5e67eec05",
+      "normal_reference_sha256": "6ffbd1038ebde934d05a5c8d3c831e0fabbca61adda0a921a0683d654563b7f9"
+    },
+    {
+      "catalog_index": 66,
+      "catalog_id": "planilha_v03_r71",
+      "nominal_identity_sha256": "2633e8c40e1675cbe26ce8620399c289e915b215297f395766e1e94cfbd0311c",
+      "nodes_sha256": "a943660bfc084d1f01f9b98aeb7cf8ee9637c138d0390cc88f824b357c6f3681",
+      "shear_reference_sha256": "d3e132b732ea89a95d345a98a9d9f723590cf40f5fa20f1f76267c6bcd32c06b",
+      "normal_reference_sha256": "4b21414c58e0520c3825c73f831441e85d388e5d218d79c162db022589e125d2"
+    },
+    {
+      "catalog_index": 67,
+      "catalog_id": "planilha_v03_r72",
+      "nominal_identity_sha256": "4adaf240d374b1eb5a1791ebe1f458cb69290f7180e6cddfebcf501c23d81193",
+      "nodes_sha256": "fd2098e2e3cd0fc76edbd3c4d4695c7a2fc04c1dc38c865bd28de3ee87297429",
+      "shear_reference_sha256": "db4c19d5abd61b8362593a9a5ad2e9f02f9259829eb948edf926779dc1b0430b",
+      "normal_reference_sha256": "aca696e2254b191165e4011a7d1eecd9c98bec06a82465cf94c0831d011d5702"
+    },
+    {
+      "catalog_index": 68,
+      "catalog_id": "planilha_v03_r73",
+      "nominal_identity_sha256": "fba737c614b898b240fa2749d8db592a016b3cb6e7ea8d8d558169aa21e529c7",
+      "nodes_sha256": "cb83e3a46b1a1a14b95e9e599ae9ce2b908eb015949f275e603fd5a807402775",
+      "shear_reference_sha256": "36e74fb3c9af582147873968edc14ba3ca3243f2a59ba06db1a88a48e672cb90",
+      "normal_reference_sha256": "723608916ac592833d218d44ab945d8d733b13217319c4e749c5bc1149fd5956"
+    },
+    {
+      "catalog_index": 69,
+      "catalog_id": "planilha_v03_r74",
+      "nominal_identity_sha256": "14177efa6ae5ff91f48a99c4552b6b729d9b05a01aba0159aa086d926c298627",
+      "nodes_sha256": "ab42e5093c94c634fbc0f64477677a44aa4bcdad2939b3c35c6f050a1db4e5c7",
+      "shear_reference_sha256": "48c3b59013393bcc3e7edbf705d2469957cf99f6e25edf7cc6682fd6db42ec3d",
+      "normal_reference_sha256": "1e64b582da767048af00b10d28538590ebba02c3b1cdf23d444a81456ccfa04e"
+    },
+    {
+      "catalog_index": 70,
+      "catalog_id": "planilha_v03_r75",
+      "nominal_identity_sha256": "bb3b3c7186c283b1bbc69f44a7cfafcc6ce5b658ca34ccc00e0c108079cb4c6f",
+      "nodes_sha256": "7b34c51d0ceee9e9cfba6815b534d57524869c98e49d2ee3bdb437a7873c347f",
+      "shear_reference_sha256": "90fba4be38bebd9f7f03347644e0eea0d88b6cd003cef1e48eac7ab56d805347",
+      "normal_reference_sha256": "53258c0bf1ff607fb9666fe8c455ce60889f370dd87d0bf099491a9fc9793598"
+    },
+    {
+      "catalog_index": 71,
+      "catalog_id": "planilha_v03_r76",
+      "nominal_identity_sha256": "6cfc84cfbee6252c65279fadc55a87fa8dac634f96914d010ebe06298c031900",
+      "nodes_sha256": "0feaf121e2b9204059d51dce3f243c1aa79c2b53a4da4cbd0fa5144a491d29f4",
+      "shear_reference_sha256": "3a42858d5f926fbaec76608a2bfb60b6a43b0b630dc97600496cb7dc498a9665",
+      "normal_reference_sha256": "e3127244ed7ef53e8d600ba3722df325a5420e6c6c8bc5589e36b808e6486251"
+    },
+    {
+      "catalog_index": 72,
+      "catalog_id": "planilha_v03_r77",
+      "nominal_identity_sha256": "c64d0e841a130cd0826b2ebbd7c317f408897bc938d5457eef7e9d799e56f8dc",
+      "nodes_sha256": "95973ec6a0dadcbab913bed47a0128b598b34bc040dcf33bae0e82ef26188875",
+      "shear_reference_sha256": "0aac1f5edd765d5f2aba884a8199e1018214cf78585c65156a87efaece9113c4",
+      "normal_reference_sha256": "37e27300a5235240f2d0c963a78a6fa3ff9e31c2d4afbcaaa9d348eb14bc3ba4"
+    },
+    {
+      "catalog_index": 73,
+      "catalog_id": "planilha_v03_r78",
+      "nominal_identity_sha256": "28ad405270914b113b3b5248448c5845bad8bb78e6b4953512c43d5a4bdff116",
+      "nodes_sha256": "5fbd7da4c2756ce5821df866621341cc6e09558d9a5aaf77adfa032f9bb86212",
+      "shear_reference_sha256": "51204892a74c2ddc2e571ea1ef4ae7aecd113682a2286a72040e0cfe06f976ef",
+      "normal_reference_sha256": "3fbe8b6265ca66f43fc17678f4d2fe6dcceb9b6cafd45677b9be213b49664ed3"
+    },
+    {
+      "catalog_index": 74,
+      "catalog_id": "planilha_v03_r79",
+      "nominal_identity_sha256": "e04c1cb54b476939d4c8a5fc9247fb83f9bfff03ad0dc111398ad53b4e9b7aeb",
+      "nodes_sha256": "23a5b4dab461e353e1b2aa2c86e509aea471d1cef6187ad1dc3eabf54d78abfe",
+      "shear_reference_sha256": "73f65610d0d3236c19cb23232c52e2036c5b7572493723da136f072608bcb5c8",
+      "normal_reference_sha256": "0961b1a5cc80b38f02bd7803999260fcd32377d79f089db7a32a6033b6eaadc5"
+    },
+    {
+      "catalog_index": 75,
+      "catalog_id": "planilha_v03_r80",
+      "nominal_identity_sha256": "b1fc233fa0637eb47ef49d96018248a532cc45037a4a3073a41de9b4c23024e7",
+      "nodes_sha256": "d3fe006aed32cc88f82bc90cbaee5a10301599a63728dd773cd3487bda51ae91",
+      "shear_reference_sha256": "0ccbaac6f090bf0b67fafc8cea3459ccb30faac3796ef5d97b6b5122e559d6eb",
+      "normal_reference_sha256": "8f490a1fe57be6bb6c1dac632c3d7c86a91b864337516f9ff51b2a99bd6c2034"
+    },
+    {
+      "catalog_index": 76,
+      "catalog_id": "planilha_v03_r81",
+      "nominal_identity_sha256": "3940725ec654d9d81ae5618d945f43ca2de9dea0da8ef10f674c7f236f614c81",
+      "nodes_sha256": "13d5b9f17c01c0f3af98427d7d533642f4445d14bd286c42b79d7a544f27e9ce",
+      "shear_reference_sha256": "a502ee8e771bcc1ce0c7a76131817fa41f2d0d7af4a4f14a65f8eb5a257bfb70",
+      "normal_reference_sha256": "63309986fd5dd7fd3aadfd944f6dda175cbe9d6cd7fb9305fa4e22a2fab08f7b"
+    },
+    {
+      "catalog_index": 77,
+      "catalog_id": "planilha_v03_r82",
+      "nominal_identity_sha256": "02bf69df326969007532792722295e626903fabdd8ec6f3d38378b906a88668e",
+      "nodes_sha256": "ac7184cec01bc9268a205dbea21117e5e4247937dc73da8670aa45701387a120",
+      "shear_reference_sha256": "4088dc839d814d79b6f1cabd260bf2730f7cc278925ff06a02188591b67957c5",
+      "normal_reference_sha256": "0b054a47302fb97b10e3f69d06a3f5bfb8c8ac1dfd8df24df232db93bc76e15b"
+    },
+    {
+      "catalog_index": 78,
+      "catalog_id": "planilha_v03_r83",
+      "nominal_identity_sha256": "77876a69cb7bd12d8e60a9011230148803279391dabdc10b461d4becabc05387",
+      "nodes_sha256": "c772d7cff307d6685675ff15e130679c691ac468825ef06e91a322c3041b3ab1",
+      "shear_reference_sha256": "2467a688be95b483d87f7362aeeca1f8eddadcb76288a15df3b343c2fe4fa6b1",
+      "normal_reference_sha256": "49b50ae7c113fddf48f648be54c0a72ab96ea5c87c7a1e3f5d67f23eb1817967"
+    },
+    {
+      "catalog_index": 79,
+      "catalog_id": "planilha_v03_r84",
+      "nominal_identity_sha256": "7cdeb2d23ecbca68826fbb3496f15cacc58a7078e357d3f42e6e19c8a715f795",
+      "nodes_sha256": "87d0c0273cf1cda7032fd1dc4cf1d5aec17922e69e9e6ef10c6813af73e9e647",
+      "shear_reference_sha256": "02080f94ee005fb3f58a5edbc297d0a33f2e5de1de38a2af37f0a5cf34f97c9f",
+      "normal_reference_sha256": "24166b72417274f7b3033cdf8aa45decc77694a87b0781914cbafa202813beb3"
+    },
+    {
+      "catalog_index": 80,
+      "catalog_id": "planilha_v03_r85",
+      "nominal_identity_sha256": "c6c32481fb379074079f6428eb3f68c4eba51577f27afff0679e187bd45d096f",
+      "nodes_sha256": "d9dc0551f9c7e6c70aba085e520d2679d3f1830441ff6ec0290d28f16aff3148",
+      "shear_reference_sha256": "2d9dc0d29241cfeb249992bfc37cbbe2604f36ee0420832856107de692af76e0",
+      "normal_reference_sha256": "f9ce4230031f1c6bceb8afc0f037a1b6b179a0c80f74c4dfc3af40e30d0ba6cf"
+    },
+    {
+      "catalog_index": 81,
+      "catalog_id": "planilha_v03_r86",
+      "nominal_identity_sha256": "659e6edeb2f2d4cfc5a59a04eaff76c818a5c8e8fd28f77799b09d080bbf6c3c",
+      "nodes_sha256": "d02a199069f90f4f22ebaf3fecf33a6ff9e098cd8b6d43cf82bb3dc1bcd98fee",
+      "shear_reference_sha256": "ed23b7f2b8ec1a5cb558528015ba289b146f6e722bac084efc71aee394d94f51",
+      "normal_reference_sha256": "0307626bd6a7509080212ce2c861a0eacf9f28edea0296cfc1333c5fe9447026"
+    },
+    {
+      "catalog_index": 82,
+      "catalog_id": "planilha_v03_r87",
+      "nominal_identity_sha256": "342479dd8e5777c20aeeb8aca59447279b1170c55adbee6f9c98403b12a9efdc",
+      "nodes_sha256": "76d092cfbefae8c7f0c1946eb9a9f2f3b57bc957c6b8e62a5ab6c55e5fcaa207",
+      "shear_reference_sha256": "8facea7684f2fbbbf23413b87adcce30b4f9c261d77e465bddd2b015ae21cf2f",
+      "normal_reference_sha256": "7f8f6acd0d9254199809a3d50e9b7de1c942d9c38981f60e25167819e0892b18"
+    }
+  ]
+}

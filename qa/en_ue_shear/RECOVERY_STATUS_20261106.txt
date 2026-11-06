@@ -1,0 +1,44 @@
+Recovery after filesystem replacement, 2026-11-06.
+
+Recovered from complete earlier task tool-write text:
+- tercas/en_ue_shear.py, including both later edits to outward float reporting
+  and qualification material copied from its pinned source binding.
+- docs/EN_UE_SHEAR_QUALIFICATION_20261106.txt. Its file SHA256 matches the
+  original recorded hash 854d9d5a9f1603470c3b43dc9d1ce59cfef739e0d437ef0f8a681fa14d15afa0.
+- qa/en_ue_shear/generate_inventory.py and compare_normal_identity.py.
+- tests/test_en_ue_shear.py, including six additional final mutation cases.
+- tercas/data/en_ue_shear_sources_20261106.json from complete displayed text.
+
+Original runtime pins are preserved. Nothing is re-enrolled or repinned.
+No solver, inventory regeneration or tests have been executed in this
+recovery checkpoint. The complete original 83-entry inventory and old QA
+receipt bytes were not available as transcript text. Those files must be
+regenerated after the common geometry is recovered and CPU is released.
+A regenerated inventory is byte/content-exact only if independently checked
+against the recorded original identity; a test result will be a NEW result.
+Original full commit 77ed79065fb052f215fa8929d0e07196da761595 is not restored
+as a Git object merely by restoring these source texts.
+
+Recovery caution: the restored ORIGINAL generate_inventory.py writes pins
+into the module by design. For recovery, preserve the original two pins and
+compare regenerated outputs before accepting anything; a matching new pin
+written by that script is NOT evidence of matching the old release.
+
+Completed recovery after explicit CPU handover from the geometry worker:
+- 83 entries were regenerated through recover_inventory_fail_closed.py, not
+  through the original repinning generator. Runtime module/pins did not change.
+- Canonical inventory hash is exactly the original 8beba399c4afc056eb6ae6d9a7b4f25beef7fd246089e34c1c17c13a5deba28f.
+- Source manifest hash remains b5615b766a30aec50b19a29d18c9cf4e805e8721e8dd0822976172e187c6e47e.
+- Inventory Git blob is exactly the r5 manifest value
+  6f6fe942efdd0b2117f4767a2f12d70ff6398ff8. This binds the raw file bytes,
+  including their length, and independently confirms byte-exact recovery.
+- The manifest's separate bytes metadata says 360343, whereas the actual file
+  is 336991 bytes. This metadata discrepancy is retained in the receipt;
+  neither the canonical pin nor matching Git blob was changed to hide it.
+- NEW focused execution: 134 passed in 2.96 seconds. The XML/text are new QA
+  receipts, not claimed to reproduce the lost original execution log bytes.
+- NEW static comparison: all 83 nominal/node/material identities match the
+  recovered normal inventory in integration HEAD 72ab373c2a2586e95d498025b2d88f5d4ced4e6e.
+- No solver/UI was run here, no consumer/legacy changed, and nothing published.
+See inventory_recovery_receipt.json, recovered_134_focused.txt/xml and
+normal_identity_compatibility.json/txt for full evidence.

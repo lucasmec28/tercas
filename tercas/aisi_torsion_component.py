@@ -158,6 +158,8 @@ def _strong_capacity(data, section):
 
 def _weak_capacities(data, section):
     """Pinned pure-axis component denominators, with physical compression sides."""
+    from .ue_catalog_reference import claims_reference
+    if claims_reference(data):return None,['Capacidades flexionais AISI próprias ainda pendentes para este contorno Ue.']
     from .aisi_weak_sources import weak_capacity as weak
     root=Path(weak.__file__).parent
     expected='f634a4809f1fbe97a93f973f0afecfd17b59eaa040f0689bce69740e40d5f835'
@@ -341,6 +343,11 @@ def finalize(result):
                 ev['capacity_missing']=str(exc)
         out[FIELD]=ev
     ev=out[FIELD]
+    from .ue_catalog_reference import claims_reference, source_binding
+    if claims_reference(out['input_data']):
+        ev['ue_catalog_source_binding']=source_binding(out['input_data'])
+        ev['ue_catalog_scope']='G8.1 do mesmo contorno Ue; capacidades flexionais e H4 pendentes neste complemento.'
+        ev['implemented_domain']=ev['ue_catalog_scope']
     ev['source_torsion_snapshot_sha256']=digest(out.get('torsion_evidence'))
     ev['snapshot_sha256']=digest({k:v for k,v in ev.items() if k!='snapshot_sha256'})
     return out
@@ -364,6 +371,11 @@ def preserved(result):
             or ev.get('snapshot_sha256')!=digest({k:v for k,v in ev.items() if k!='snapshot_sha256'})
             or ev.get('whole_member_approved') is not False or ev.get('NBR_capacities_used') is not False):
         raise ValueError('Componente AISI incompatível com o snapshot; recalcule explicitamente.')
+    from .ue_catalog_reference import claims_reference, preserved as own_preserved
+    if claims_reference(result['input_data']):
+        source=own_preserved(result)
+        if source is None or ev.get('ue_catalog_source_binding')!=source['source_binding'] or ev.get('H4_computed_cases') or any(r.get('H4') is not None for r in ev['records']):
+            raise ValueError('Componente AISI não corresponde ao contorno próprio Ue ou herdou H4 indevido.')
     expected=_base(result)
     for key in ('load_basis','resistance_basis','source_editions_mixed','NBR_design_check',
                 'physical_design_approved','whole_member_approved','NBR_capacities_used'):

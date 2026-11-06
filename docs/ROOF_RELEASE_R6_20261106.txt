@@ -1,0 +1,13 @@
+EMISSÃO DE COBERTURA Ue83 — 06/11/2026
+
+Esta emissão é parcial, sem homologação estrutural ou aprovação global.
+
+Correção principal: NBR §9.9 usa resistências por eixo para as sete referências próprias Ue100, quando cada ação paralela tem posição não desestabilizante. A altura das ações normais permanece no cálculo forte; o efeito favorável paralelo não é aproveitado. O caso sintético +5° apresenta FLT 0,2637128303 e interação 0,2703624348. A posição desestabilizante −5° continua pendente.
+
+Os 83 Ue de catálogo são adotados explicitamente com propriedades do mesmo contorno. Seus cortantes EN são próprios; M–V depende dos ramos assinados disponíveis e das condições de aplicabilidade. Não se transferem críticos, H4 ou EN6.1.6 das sete referências para os 83. A parcela torsional completa do catálogo e os ramos resistentes ausentes não foram concluídos.
+
+O panorama distingue condições seccionais EN atendidas de conclusão global. No caso sintético +5° acima, a pendência restante é o ELS combinado; o modelo escolhido calcula somente flecha uniaxial local. Peso próprio automático, entradas antigas e resultados históricos foram preservados nos seus contratos. Não há crédito de travamento da telha.
+
+A análise de dois ciclos da rede não integra esta publicação. Apoios/introdução local e conclusão global mantêm seus limites próprios. A nova emissão invalida apenas caches ativos, preservando entradas e históricos.
+
+QA final focada: 335 testes aprovados, 217,75 s; não é execução integral de todos os testes do repositório. Recibo, tentativas anteriores e limites: qa/roof_release_r6/receipt.json. As comparações são sintéticas, não dados de projeto.

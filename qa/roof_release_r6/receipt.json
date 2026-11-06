@@ -1,0 +1,66 @@
+{
+  "schema": "roof_Ue83_r6_integration_receipt_v1",
+  "tested_commit": "652df1614ed06681271487dc005258ac90bb2ac4",
+  "published_base": "89785b61c2b01a7d5ec350b00c10fc5e9bc8e90d",
+  "counts": {
+    "tests": 335,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "elapsed_seconds": 217.75,
+  "complete_repository_suite_run": false,
+  "focused_final_suite": true,
+  "production_changed_after_final_test": false,
+  "release_identifier": "cobertura-Ue83-20261106-r6",
+  "cache_epoch": "active_ui_caches_roof_Ue83_biaxial_EN_sectional_20261106_r6",
+  "environment": {
+    "python": "3.12.14",
+    "blas_core": "Haswell",
+    "blas_threads": 1
+  },
+  "test_files": [
+    "test_roof_release_composition.py",
+    "test_roof_biaxial.py",
+    "test_roof_biaxial_geometry.py",
+    "test_isolated_en_panorama.py",
+    "test_isolated_en_ue_catalog_application.py",
+    "test_ui_isolated_en_ue_catalog.py",
+    "test_ui_ue_catalog_recovery.py",
+    "test_ui_cache_epoch.py",
+    "test_global_verification.py",
+    "test_recovered_composed_reference.py",
+    "test_recovered_real_capacity_matrix.py",
+    "test_release_info.py"
+  ],
+  "prior_attempts": [
+    {
+      "log": "attempt1_test_identity.log",
+      "result": "1 failed, 2 passed",
+      "cause": "New test used a shorthand ELS identifier instead of the existing case-qualified ID; test corrected, production unchanged."
+    },
+    {
+      "log": "attempt2_report_wording.log",
+      "result": "1 failed, 2 passed",
+      "cause": "New test demanded the all-listed-criteria-passed wording from an inconclusive ELS result; test now verifies the actual nonapproval text and state-limit scope. Production unchanged."
+    }
+  ],
+  "independent_static_review": {
+    "roof_biaxial": "Accepted after continuous-maximum proof and pinned CG/CT anchors; source/torque/legacy checks reviewed.",
+    "sectional_panorama": "Accepted after inventory, no-ELU, case/source, no-global-approval and report wording guards. Test results are separate from static review."
+  },
+  "scope": {
+    "roof_NBR_biaxial": "Seven own Ue100 profiles, qualified individual non-destabilizing parallel actions, same-case strong height resistance and signed weak resistance. Negative destabilizing application stays pending.",
+    "catalogue": "83 explicit Ue contours and two EN transverse shears; signed M-V only when every required branch and applicability guard exists. 400 available/98 absent normal branches are preserved.",
+    "torsion": "Existing qualified own-profile EN/AISI routes retained; catalogue83 has elastic Vlasov/G8.1, not inherited H4 or EN6.1.6.",
+    "self_weight": "New explicit direct-load contract adds profile PP at CG, ELU1.25/ELS1.0; legacy totals unchanged.",
+    "service": "Selected local uniaxial component only; combined ELS not approved.",
+    "network": "Two-cycle reconstruction stays in a separate branch and is not part of this roof release.",
+    "global_approval": false
+  },
+  "runtime_publication_verified_at_receipt_creation": false,
+  "hashes": {
+    "final_integration.log": "c733eeee8ed18a83e8af357a2bcb97be6af5ce6abcd2144e80020c3a69cc2981",
+    "final_integration.xml": "52074b8e17f3c814ac1455492222fb2a946da08e0188bac05c6f19b1ec379212"
+  }
+}

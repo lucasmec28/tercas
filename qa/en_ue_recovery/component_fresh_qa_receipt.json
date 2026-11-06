@@ -1,0 +1,68 @@
+{
+  "schema": "EN_Ue_fresh_recovery_QA_v1",
+  "base_commit": "e3925103b45bb516f7e08fbdd1ebc3886b1d2f79",
+  "test_command": "PYTHONPATH=/workspace/shared/tercas_test_dependencies_20261106 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 python -m pytest tests/test_isolated_en_ue_catalog_application.py tests/test_ui_isolated_en_ue_catalog.py tests/test_recovered_composed_reference.py tests/test_recovered_real_capacity_matrix.py -q --disable-warnings --maxfail=3 --junitxml=qa/en_ue_recovery/focused.xml",
+  "result": {
+    "tests": 168,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 84.366,
+    "per_module": {
+      "tests.test_isolated_en_ue_catalog_application": 118,
+      "tests.test_ui_isolated_en_ue_catalog": 1,
+      "tests.test_recovered_composed_reference": 48,
+      "tests.test_recovered_real_capacity_matrix": 1
+    }
+  },
+  "source_sha256": {
+    "tests/en_ue_test_helpers.py": "0fde0cb36918aae36038d229cf54ba808d446eb52ce3824e914f647467d0ea0d",
+    "tests/test_isolated_en_ue_catalog_application.py": "9f04122af197475fb8b2cffc29bdd9b38681a6a435e5210b2bdfbd32012d5c20",
+    "tests/test_ui_isolated_en_ue_catalog.py": "65cddd1e3a12e98d3c8272bd656dddfa89805347cfd2251ed8ff6efb5c39bbde",
+    "tests/test_recovered_composed_reference.py": "e30650fef99bf7d0f01c8898fb11faecc6a80403f4ad31eb70c26f162711d59e",
+    "tests/test_recovered_real_capacity_matrix.py": "2af4f6f418ec52780e2be015d3d37d90aad641e8c707c5feea51099e84ab56ef",
+    "tercas/en_signed_partial_interaction.py": "28f254273e1ce3f3959ba5808dfb51f18bd4c0625727382b252111977b2c1c93",
+    "tercas/en_ue_catalog_capacity_reference.py": "e0727b618b0e3d1ecebdb4933ea180f2e579fffd9c21437137faa139e44e756c",
+    "tercas/en_ue_bending_applicability.py": "30e17002f62e81d4c03ad8c6e1062c71047268cf78e285dbb93ff73c9bb38f8d",
+    "tercas/isolated_en_ue_catalog_application.py": "90ba1544cb5cb2e0f61a569242e115342255243ee9ddbca05c36991bebbe9287",
+    "tercas/isolated_en_ue_catalog_ui.py": "2150e0628f9d31a342869870fca4ebd04e86d562211eff3b43c50c51ff60ed77",
+    "tercas/ue_catalog_reference.py": "b89f0202e599467201cf009604dcde1973907835e2c7e2e8f9876bcbb7377e6d",
+    "tercas/catalog_torsion_section.py": "127b16a5a9dd2aa3d2dc16986f107e0a90b8bb022b2b358321aa6d7a8ccb61ec",
+    "tercas/en_ue_qualified_library.py": "b53375fc4110e3ec9092cef329639e353ca9b689caae04d8868e14541b0c8cfb",
+    "tercas/en_ue_shear.py": "2750b899729365aa515a5506b60d8f1278a27e6d1c1d316af2a53c3838c42526",
+    "tercas/data/en_ue_shear_inventory_20261106.json": "9268b4813d95b0f7ec3ca4d978fb7ada51563642a38f6762b85505cc847881b4",
+    "app.py": "0bcffc09f2087e8927d9310115f4179aeabff222608fcb45e76f0e7fbfa0d1a8"
+  },
+  "production_changes_in_this_delta": false,
+  "qa_helper_changes": "Two unavailable historical helper imports now use a dedicated helper preserving original source inputs and original Streamlit import flow. No test assertions or engineering criteria relaxed.",
+  "fresh_validation": true,
+  "prior_lost_receipts_reused": false,
+  "scope": {
+    "catalogue_profiles": 83,
+    "available_signed_branches": 400,
+    "absent_signed_branches": 98,
+    "shear_axes": [
+      "strong",
+      "weak"
+    ],
+    "nominal_geometry": "same 32-chord contour and source binding",
+    "material": "Demand retains project E/G; resistance remains fixed EN E=210000 MPa, fy=250 MPa, nu=0.3, gamma_M0=1",
+    "normal_applicability": "Curling source-specific for83; exact physical moment zero zones and strict Le>50 b0, with small nonzero actions retained",
+    "cases": "Direct N=0 signed M-V sufficient, tall weak bending pending but shear calculated, unused absent sign accepted, required absent sign pending, area ELU support-limit coverage, non-dyadic rational reaction proof with exact support zeros",
+    "readers": "Saved JSON/Word and UI rerender tested with relevant solver/source/normal builder disabled",
+    "tamper": "Rehashed fields, identities, source reactions both sides, moment originals, signs, coverage, coherent loads replacement, PP line, method/order/prismatic model rejected",
+    "ui": "Real Streamlit activation, explicit declaration, calculation, JSON and Word, no-solver rerender, load/material invalidation",
+    "legacy": "Absent/disabled/stale catalogue marker does not intercept legacy; broader legacy regressions handled separately"
+  },
+  "limits": [
+    "Does not qualify EN6.1.6 B/Tsv/Tw, global stability, complete design, physical geometry or whole-member approval.",
+    "No shear-lag beta reduction implemented: profiles/cases without concrete applicability remain pending M-V with independent shear retained.",
+    "No FLT or panorama code integrated into this QA checkout.",
+    "No push or publication."
+  ],
+  "artifacts": {
+    "focused.txt": "d520e350cc849cf6bf99130ff70acd18543e1da97cf1ec464059474684d7515d",
+    "focused.xml": "b644c186d3b67eca0e477f5029874667080d1abf1b4502c1ac703e14ec064814",
+    "static_contracts.json": "7b7dd1d9f285dd5add751228744d5d298e1c51504c36efde6569f55aa6262291"
+  }
+}

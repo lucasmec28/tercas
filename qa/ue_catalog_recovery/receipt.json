@@ -1,0 +1,142 @@
+{
+  "schema": "ue_catalog_reconstruction_qa_v1",
+  "base_commit": "89785b61c2b01a7d5ec350b00c10fc5e9bc8e90d",
+  "code_commit": "c9e215faebe6e40115b3200865bd0b9f6ada7ba6",
+  "recovery": "Original geometry text recovered; adapter/UI reconstructed and newly tested. Old receipts not reused.",
+  "exact_original_geometry_module_sha256": "127b16a5a9dd2aa3d2dc16986f107e0a90b8bb022b2b358321aa6d7a8ccb61ec",
+  "completed_runs": [
+    {
+      "label": "scalars",
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "181",
+      "time": "47.114",
+      "timestamp": "2026-11-06T15:27:56.882521-03:00",
+      "hostname": "795272940146",
+      "sha256": "34d210898b5645527dc768d71d6c201baf70a1820b08ee24150338c3ad64ac13"
+    },
+    {
+      "label": "flows",
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "89",
+      "time": "93.419",
+      "timestamp": "2026-11-06T15:31:00.002557-03:00",
+      "hostname": "795272940146",
+      "sha256": "1defe620b3ea1e8c12f6e93ab62d6ff308cf949522bce192c5e19ddd202b5ee0"
+    },
+    {
+      "label": "ui",
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "12",
+      "time": "31.350",
+      "timestamp": "2026-11-06T15:34:37.619991-03:00",
+      "hostname": "795272940146",
+      "sha256": "86417b3a2edc0f87fec48fd1f3992921510f4cba4c35327e608b356a1427fca3"
+    },
+    {
+      "label": "final_guards",
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "26",
+      "time": "68.447",
+      "timestamp": "2026-11-06T16:12:54.121210-03:00",
+      "hostname": "795272940146",
+      "sha256": "d8c0c76e76943b2325801c9afe8486f79e10223d34884edf80ca1a27e9348593"
+    },
+    {
+      "label": "legacy_focal",
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "16",
+      "time": "23.529",
+      "timestamp": "2026-11-06T16:14:42.253357-03:00",
+      "hostname": "795272940146",
+      "sha256": "411e262bd847a77a37827aae714b8c4d6f0330fef591cde1905ba543f6593de4"
+    },
+    {
+      "label": "final_ui",
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "2",
+      "time": "45.513",
+      "timestamp": "2026-11-06T16:15:06.439666-03:00",
+      "hostname": "795272940146",
+      "sha256": "e56363925fde75b812a0a03180dd9c984054e9af62e7a0cee4a30134e51a5059"
+    },
+    {
+      "label": "legacy_ui",
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "1",
+      "time": "16.882",
+      "timestamp": "2026-11-06T16:15:53.164838-03:00",
+      "hostname": "795272940146",
+      "sha256": "1e703c04f7a950942d0789c5b9e16223e6c442ea0cbbcddd1c30b20dec08334a"
+    }
+  ],
+  "counts_overlap": true,
+  "interrupted_run": {
+    "session": "94232",
+    "status": "no final result, no approval credited",
+    "log": "regression_interrupted.log"
+  },
+  "independent_review": {
+    "mode": "static read-only",
+    "findings_fixed": [
+      "old manual lines when top inactive",
+      "unintegrated nominal detail offered",
+      "AISI text claiming unavailable flexural capacities"
+    ]
+  },
+  "scope": {
+    "ue_rows": 83,
+    "plain_U_activated": false,
+    "seven_legacy_sections_bit_equal_to_base": true,
+    "PP": "own mass once at CG",
+    "external_actions": "selected top",
+    "inherited_criticals": false,
+    "inherited_H4": false,
+    "full_application_suite_run": false,
+    "published": false,
+    "whole_member_approved": false
+  },
+  "source_hashes": {
+    "app.py": "43347fea43cc9cc8ae37bcd5381827a26390fafe02222fb21bdf48c7438958af",
+    "tercas/aisi_torsion_component.py": "e2bd11871f65737a313a9276dd723a5e02eeb829c34c923d09d2d4ea0d8339b4",
+    "tercas/aisi_torsion_ui.py": "6bcce08e2a07628ae3a5ef294cc195ff339680b617a53e09ee2542be819d0a37",
+    "tercas/application.py": "75447fa181db7001c44e2b9db57b75d726fe41926d486c3e4d27809b6d7c367c",
+    "tercas/catalog_scan.py": "dc0ead6a5705a423f340eb5d9e7a65132cfe0a3139b59076e452065e91700ecb",
+    "tercas/catalog_torsion_section.py": "127b16a5a9dd2aa3d2dc16986f107e0a90b8bb022b2b358321aa6d7a8ccb61ec",
+    "tercas/direct_torsion.py": "d74957b0fc5c09d0d4540993c2423360d44db5d1388dc5ea90b6f7a59cecc832",
+    "tercas/en_ue_catalog_capacity_reference.py": "e0727b618b0e3d1ecebdb4933ea180f2e579fffd9c21437137faa139e44e756c",
+    "tercas/report.py": "15af094d93c901dfac9def88a9009f708b34a1888544cddfe8bc298dd70c30db",
+    "tercas/roof_top_load.py": "076c9656553fd1e5099971c17c0c2860106149e76367831b3d030e682275ca5d",
+    "tercas/strong_critical_guard.py": "5fe9f2d6de10090fe3dc7e30301d5a1ebfc19e4e1274a22161fcfe44902f3db5",
+    "tercas/study_completion.py": "134b4907c19a28ffb8665610a3a379ecf6013a541ec867b90f93d612d88d04bb",
+    "tercas/torsion_material.py": "8a64ebf2edf1954278005e1016e0aab02243096d8fbff6dc914fa79af1b7a7bc",
+    "tercas/torsion_material_ui.py": "6662525f1c5f695ed77aec4a348c580f55dadbbb3563965f4a07686b8b96d2d9",
+    "tercas/torsion_study.py": "d4b3964aac76d62af00fbcc3374529c3cc59fab6783dea0b619044863d796c5f",
+    "tercas/torsion_study_ui.py": "969565f6702c84b8db66057f3ed606f098c7814f59fb014a28e21e18951f74bf",
+    "tercas/torsion_vlasov/adapter.py": "2c08e913c9d4687b96d7040956d8d822619ec6d2722b2b479f7d499bb71a511c",
+    "tercas/torsion_vlasov/section.py": "28bf452fd1ccb4e7836735b55693ad0f531fced1e544e38865436a11f9852c60",
+    "tercas/ue_catalog_reference.py": "b89f0202e599467201cf009604dcde1973907835e2c7e2e8f9876bcbb7377e6d",
+    "tercas/ue_catalog_ui.py": "1f53f21d3911833d1b4b94ebd1f80aadc3bede95ec6486985a0ed99aa4e8d814",
+    "tercas/weak_axis.py": "d392004476c961297d8d8ab7b19cf4f0f3028d9c916c57041459023714225111"
+  }
+}

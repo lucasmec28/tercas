@@ -1,0 +1,28 @@
+{
+  "schema": "EN_Ue_shear_recovery_receipt_v1",
+  "source_commit": "77ed79065fb052f215fa8929d0e07196da761595",
+  "recovered_source_texts": true,
+  "regenerated_inventory": true,
+  "original_git_commit_restored": false,
+  "expected_inventory_content_sha256": "8beba399c4afc056eb6ae6d9a7b4f25beef7fd246089e34c1c17c13a5deba28f",
+  "actual_inventory_content_sha256": "8beba399c4afc056eb6ae6d9a7b4f25beef7fd246089e34c1c17c13a5deba28f",
+  "expected_source_content_sha256": "b5615b766a30aec50b19a29d18c9cf4e805e8721e8dd0822976172e187c6e47e",
+  "actual_source_content_sha256": "b5615b766a30aec50b19a29d18c9cf4e805e8721e8dd0822976172e187c6e47e",
+  "qualification_note_sha256": "854d9d5a9f1603470c3b43dc9d1ce59cfef739e0d437ef0f8a681fa14d15afa0",
+  "count": 83,
+  "pins_unchanged": true,
+  "module_before_after_sha256": "2750b899729365aa515a5506b60d8f1278a27e6d1c1d316af2a53c3838c42526",
+  "actual_inventory_file_sha256": "9268b4813d95b0f7ec3ca4d978fb7ada51563642a38f6762b85505cc847881b4",
+  "actual_inventory_git_blob_sha1": "6f6fe942efdd0b2117f4767a2f12d70ff6398ff8",
+  "actual_inventory_bytes": 336991,
+  "r5_manifest_git_blob_sha1": "6f6fe942efdd0b2117f4767a2f12d70ff6398ff8",
+  "r5_manifest_bytes": 360343,
+  "r5_manifest_blob_match": true,
+  "canonical_recovery_match": true,
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "BLAS_used": false
+  },
+  "new_tests_run_by_this_script": false
+}

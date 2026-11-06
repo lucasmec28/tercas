@@ -1,0 +1,71 @@
+{
+  "scope": "Listed isolated EN sectional conditions only; no global approval or publication",
+  "base_commit": "73da25b1f653ab46292d40fe52965a8775d8130b",
+  "static_validation": {
+    "AST": "passed",
+    "git_diff_check": "passed"
+  },
+  "lightweight_tests": {
+    "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONPATH=.:tests:<existing dependencies> python -m pytest -q tests/test_isolated_en_panorama.py tests/test_global_verification.py",
+    "passed": 86,
+    "seconds": 4.37,
+    "solver_or_UI_used": false
+  },
+  "saved_synthetic_5_degree_replay": {
+    "source": "audit_roof_89785b/audit_synthetic_angle_5.json",
+    "source_is_real_project": false,
+    "source_snapshot_unchanged": true,
+    "legacy_reader_passed_without_requalification": true,
+    "new_panorama_validated_against_EN_and_roof_NBR_bindings": true,
+    "solver_entry_points_disabled": true,
+    "seconds": 3.2139473330025794,
+    "secondary_shear_scope": "meets, sectional condition, index null",
+    "torsion_warping": "meets, sectional condition, index null",
+    "remaining_pending_in_old_mechanical_snapshot": [
+      "ELU:DIRECT_ELU:FLT_height",
+      "ELU:DIRECT_ELU:biaxial",
+      "ELS:DIRECT_ELS:combined_ELS_scope"
+    ],
+    "whole_member_approved": false,
+    "current_adapter_can_approve": false,
+    "approved_within_declared_checklist": false,
+    "final_replay_after_all_edits": "passed, old snapshot unchanged before explicit QA rebuild"
+  },
+  "not_run_yet": [
+    "full repository test suite",
+    "combined final FLT+EN83+panorama composition (assigned to integrator)",
+    "online browser/runtime",
+    "publication"
+  ],
+  "review": "Independent static acceptance by avaliar_terca_projeto after Word and failed-banner wording fixes; reviewer ran no tests/solvers/UI. Integrator requested legitimate ELS-only behavior, subsequently covered by final focused tests.",
+  "regression": {
+    "files": [
+      "tests/test_isolated_en_panorama.py",
+      "tests/test_global_verification.py",
+      "tests/test_isolated_en_application.py",
+      "tests/test_ui_cache_epoch.py"
+    ],
+    "passed": 116,
+    "seconds": 220.83,
+    "note": "Includes real own-EN direct/area fixtures, historical readers, rehashed corruption and Streamlit AppTest/cache. Final ELS-only guard and wording were rerun in the 86 lightweight tests."
+  },
+  "catalogue_focused_regression": {
+    "passed": 24,
+    "deselected": 94,
+    "seconds": 13.5,
+    "scope": "Direct pipeline; pending demand/domain; JSON and Word saved readers; refreshed-hash tampering; wrong source and PP application line. Reuses the original test helper recovered in commit 18320367 via import alias; no production shim."
+  },
+  "catalogue_pending_without_declaration": {
+    "status": "passed",
+    "snapshot_valid": true,
+    "pending_cases": 1,
+    "joint_sufficient": false,
+    "binding_preserved": true
+  },
+  "saved_source_integrity_checks": [
+    "Lowered normal index with refreshed hashes rejected; panorama pending",
+    "Changed dense-source hash with refreshed hashes rejected; panorama pending",
+    "Missing 6.27 with coherently refreshed hashes remains readable but conditions pending"
+  ],
+  "test_setup_note": "Initial catalogue collection stopped because base 73da25b lacked test_ue_catalog_actions. Recovered helper from EN83 commit 18320367 was used for successful focused run; this was a fixture packaging issue, not a product test failure."
+}

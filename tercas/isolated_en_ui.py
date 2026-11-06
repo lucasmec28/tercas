@@ -10,6 +10,9 @@ TITLE='Tensões combinadas e cisalhamento torsional — complemento EN'
 
 
 def render_choice(st,data,key):
+    from .isolated_en_ue_catalog_ui import render_choice as catalog_choice
+    catalog_choice(st,data,key+'_catalog')
+    if 'ue_catalog_reference' in data:return
     own=isinstance(data.get('ue_family_reference'),dict) or isinstance(data.get('ue_reference'),dict)
     if not own and a.CHOICE not in data:return
     if data.get('member_application','purlin')!='purlin':
@@ -121,6 +124,8 @@ def text_lines(ev):
 
 
 def show(st,result):
+    from .isolated_en_ue_catalog_ui import show as show_catalog
+    show_catalog(st,result)
     try:ev=a.preserved(result)
     except (ValueError,TypeError,KeyError) as exc:
         st.error('Registro EN isolado inválido: '+str(exc));return
@@ -132,6 +137,8 @@ def show(st,result):
 
 
 def report(doc,result):
+    from .isolated_en_ue_catalog_ui import report as report_catalog
+    report_catalog(doc,result)
     try:ev=a.preserved(result)
     except (ValueError,TypeError,KeyError) as exc:
         doc.add_heading('Complemento EN isolado — registro inválido',1)

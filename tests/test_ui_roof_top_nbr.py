@@ -74,12 +74,12 @@ def test_missing_sidecar_suppresses_saved_global_promotion():
 
 
 def test_word_and_UI_pending_component_are_specific():
-    d=family.load_reference(2.,4000.,5.);d['selected_types']=['ELU normal'];d[roof.FIELD]=roof.choice()
+    d=family.load_reference(2.,4000.,-5.);d['selected_types']=['ELU normal'];d[roof.FIELD]=roof.choice()
     result=nbr.attach(roof.attach(calculate_batch(d)))
     app=AppTest.from_string(SCRIPT).run();app.session_state.saved=result;app.run()
     assert not app.exception
     assert len(app.dataframe)==1
-    assert 'componentes paralelas' in app.dataframe[0].value.to_string()
+    assert 'desestabilizante' in app.dataframe[0].value.to_string()
     doc=Document();report(doc,result)
     text='\n'.join(p.text for p in doc.paragraphs)
-    assert 'componentes paralelas' in text and 'MRd,FLT=' not in text
+    assert 'desestabilizante' in text and 'MRd,FLT=' not in text

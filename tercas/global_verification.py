@@ -1,7 +1,7 @@
 """Explicit, fail-closed aggregation of checks, without structural calculations.
 
 The generic aggregator can approve a *declared complete checklist*. The current
-legacy adapter cannot approve a member: its torsion/warping check remains pending.
+isolated adapter reports only listed criteria and cannot approve a member.
 The current Vlasov adapter inventories its own criteria without that fixed gate.
 This module never adds component maxima, invents a resistance, or designs ties.
 All input objects and the app's existing numerical results remain unchanged.
@@ -200,7 +200,7 @@ def _zero_components(ev, axis):
     return all(_finite(v) and v == 0 for v in values)
 
 
-def _case_records(result, combination, evidence, *, batch, warnings=(), case_combination=None,roof_component=None):
+def _case_records(result, combination, evidence, *, batch, warnings=(), case_combination=None,roof_component=None,en_context=None):
     """Adapt typed raw evidence, not rounded/localized presentation rows."""
     cid, state = combination['id'], combination['limit_state']
     prefix = state+':'+cid+':'
@@ -291,7 +291,16 @@ def _case_records(result, combination, evidence, *, batch, warnings=(), case_com
             disqualify=conflict or not _finite(governing.get('x_mm'))))
         raw = ev.get('biaxial', {})
         governing = raw.get('governing') or {}
-        if _zero_components(ev, 'parallel') and not conflict:
+        height_biaxial=(r.get('biaxial') if roof_component is not None else None)
+        if height_biaxial is not None:
+            from .roof_biaxial import SOURCE as BIAXIAL_SOURCE
+            g=height_biaxial.get('governing') or {}
+            records.append(check(prefix+'biaxial',limit_state=state,source=BIAXIAL_SOURCE,
+                qualified=valid and height_biaxial.get('status')=='computed_fixed_position'
+                    and height_biaxial.get('criterion_status')!='inconclusive',
+                index=g.get('index'),trace=dict(roof_trace,concomitant_state=deepcopy(g)),
+                reason=height_biaxial.get('scope','')))
+        elif _zero_components(ev, 'parallel') and not conflict:
             records.append(check(prefix+'biaxial', limit_state=state, source=SCHEMA,
                 qualified=True, not_applicable=True, trace=trace,
                 reason='Estado uniaxial forte N=0: não há parcela de flexão fraca a adicionar. Verificações fortes mantidas.'))
@@ -340,13 +349,8 @@ def _case_records(result, combination, evidence, *, batch, warnings=(), case_com
         records.append(check(prefix+'axial_scope', limit_state=state, source=SCHEMA,
             qualified=True, not_applicable=True, trace=trace,
             reason='Rota isolada explicitamente N=0; não é uma verificação de sistema com N concomitante.'))
-        if _zero_components(ev, 'parallel'):
-            records.append(check(prefix+'secondary_shear_scope', limit_state=state,
-                source=SCHEMA, qualified=True, not_applicable=True, trace=trace,
-                reason='As componentes q e P locais secundárias são ambas exatamente zero.'))
-        else:
-            records.append(_pending(prefix+'secondary_shear_scope', state,
-                'A abrangência resistente completa do carregamento local secundário permanece pendente; nenhuma ação ausente foi zerada.', trace))
+        from .isolated_en_panorama import secondary_record
+        records.append(secondary_record(prefix,state,ev,trace,context=en_context,conflict=conflict))
     else:
         raw = evidence.get('ELS', {})
         gross_record=None
@@ -468,6 +472,14 @@ def build_global_verification(result):
     from .roof_top_nbr import preserved as saved_roof_nbr
     try:roof_component=saved_roof_nbr(result)
     except (ValueError,TypeError,KeyError) as exc:roof_component={'error':str(exc)}
+    from .isolated_en_panorama import DEFAULT_TORSION_REASON
+    torsion_reason=DEFAULT_TORSION_REASON
+    from .isolated_en_application import global_context
+    try:en_context=global_context(result,sectional=True)
+    except (ValueError,TypeError,KeyError) as exc:
+        en_context=None;torsion_reason='Registro EN isolado inválido; tensões não aproveitadas no panorama: '+str(exc)
+    if en_context is not None:torsion_reason=en_context['reason']
+
     schema = result.get('schema')
     model_domain = result.get('model_domain_evidence', {})
     records.append(check('model_domain', limit_state='MODEL', source=SCHEMA,
@@ -494,13 +506,13 @@ def build_global_verification(result):
                 continue
             case = found[0]
             records.extend(_case_records(result, combo, case.get('evidence', {}), batch=True,
-                                         warnings=case.get('warnings', []),case_combination=case.get('combination'),roof_component=roof_component))
+                                         warnings=case.get('warnings', []),case_combination=case.get('combination'),roof_component=roof_component,en_context=en_context))
         if not wanted or by_id:
             records.append(_pending('combination_inventory', 'MODEL', 'Inventário de combinações vazio ou resultados inesperados.'))
     elif schema == 'NBR14762_one_span_v1':
         for state in ('ELU', 'ELS'):
             records.extend(_case_records(result, {'id': 'DIRECT_'+state, 'limit_state': state},
-                                         result, batch=False,roof_component=roof_component))
+                                         result, batch=False,roof_component=roof_component,en_context=en_context))
     elif schema == 'tercas_three_girt_results_v1':
         records.extend(_frame_records(result))
     else:
@@ -510,21 +522,16 @@ def build_global_verification(result):
         if state not in present:
             records.append(_pending('missing_limit_state:'+state, state,
                 'Nenhuma combinação '+state+' avaliada; filtro não é dispensa desse estado limite.'))
-    torsion_reason=('Torção/empenamento pendentes: demanda Tsv/Tw/B e sua verificação devem ser qualificadas no mesmo modelo. '
-        'N=0, telha sem contato, rotação torsional fixa ou índice de flexão baixo não demonstram torção nula.')
-    from .isolated_en_application import global_context
-    try:en_context=global_context(result)
-    except (ValueError,TypeError,KeyError) as exc:
-        en_context=None;torsion_reason='Registro EN isolado inválido; tensões não aproveitadas no panorama: '+str(exc)
-    if en_context is not None:torsion_reason=en_context['reason']
-    records.append(_pending('torsion_warping', 'MODEL',torsion_reason))
+    from .isolated_en_panorama import POLICY, torsion_record
+    records.append(torsion_record(en_context,torsion_reason,conflict=bool(model_domain.get('conflict')) or model_domain.get('status')!='fixed_model_domain'))
     summary = aggregate([r['id'] for r in records], records, inventory_qualified=True)
     summary.update(whole_member_approved=False, torsion_warping_qualified=False,
+                   sectional_conditions_policy=POLICY, approved_within_declared_checklist=False,
                    current_adapter_can_approve=False, source_result_schema=schema,
                    source_input_fingerprint=result.get('input_fingerprint'),
                    combined_ELS_approved=False,
-                   numerical_results_changed=False,
-                   display_summary=display_summary(summary))
+                   numerical_results_changed=False)
+    summary['display_summary']=display_summary(summary)
     if en_context is not None:summary['isolated_EN_binding']=en_context['binding']
     if roof_component is not None:
         summary['roof_top_nbr_binding']={k:roof_component.get(k) for k in ('snapshot_sha256','source_roof_snapshot_sha256')}
@@ -593,12 +600,16 @@ def display_summary(summary):
     nfail = summary['counts']['fails']
     npending = summary['counts']['pending']
     torsion = ', incluindo torção/empenamento' if 'torsion_warping' in summary['pending_ids'] else ''
+    if summary['status'] == 'aprovado' and (summary.get('sectional_conditions_policy')
+            or summary.get('current_adapter_can_approve') is False):
+        return 'Critérios listados atendidos; conclusão global fora do escopo.'
     if summary['status'] == 'aprovado':
         return 'Aprovado no checklist completo do modelo declarado. Não certifica condições físicas nem itens fora do escopo.'
     if summary['status'] == 'reprovado':
         return (f'Reprovado nos critérios calculados: {nfail} não atendimento(s). '
                 + (f'Avaliação global ainda incompleta: {npending} pendência(s){torsion}.'
-                   if npending else 'Checklist declarado concluído.'))
+                   if npending else ('Conclusão global fora do escopo.'
+                       if summary.get('sectional_conditions_policy') else 'Checklist declarado concluído.')))
     return (f'Inconclusivo: {npending} pendência(s){torsion}. '
             'Os critérios calculados não constituem aprovação global.')
 

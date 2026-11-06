@@ -36,8 +36,11 @@ def text_lines(ev):
             'Análise com 0,90 das rigidezes: Ea='+fmt(analysis['E_MPa'])+' MPa e Ga='+fmt(analysis['G_MPa'])+' MPa. '+
             'O fator de rigidez não é aplicado novamente à resistência. φb=φB=0,90, uma única vez.')
         lines.append('Análise NBR preservada: E='+fmt(old['E_MPa'])+' MPa e G='+fmt(old['G_MPa'])+' MPa. Mesmas ações, posições, geometria e vínculos declarados; nenhum PP duplicado pelo complemento.')
-        lines.append('H4: envelope longitudinal concomitante no campo existente, com pisos algébricos AISI F2/F3/F4 como denominadores. My físico positivo comprime lábios; negativo comprime alma. '+
-            'F4 não aplicável na alma refere-se somente à capacidade de flexão fraca pura; não é dispensa para o campo misto.')
+        if ev.get('ue_catalog_source_binding'):
+            lines.append(ev.get('ue_catalog_scope','Contorno Ue próprio: capacidades flexionais e H4 pendentes.'))
+        else:
+            lines.append('H4: envelope longitudinal concomitante no campo existente, com pisos algébricos AISI F2/F3/F4 como denominadores. My físico positivo comprime lábios; negativo comprime alma. '+
+                'F4 não aplicável na alma refere-se somente à capacidade de flexão fraca pura; não é dispensa para o campo misto.')
         if ev.get('roof_height_source'):
             source=ev['roof_height_source']
             lines.extend([source['model'],source['adequacy_note'],source['interpretation']])
@@ -45,7 +48,10 @@ def text_lines(ev):
                 lines.append(source['direct_self_weight']['scope'])
                 lines.append('P direto conserva a posição interior informada; P não nulo exatamente no apoio permanece fora da entrada direta. '
                              'Não é reinterpretado como limite a→0+ nem como força móvel.')
-            lines.append('Mcre e Ma,piso calculados para cada ELU, em material nominal AISI, sem usar Me/MRd NBR e sem novo Cb. PP permanece no CG; forças externas no topo. Torque primário e avisos preservados. Flexão fraca real mantém H4 pendente; não se transfere o denominador fraco no CT.')
+            if ev.get('ue_catalog_source_binding'):
+                lines.append('Mcre, Ma,piso e H4 permanecem pendentes neste complemento para o contorno Ue próprio; não foram herdados de outra seção. PP, topo e torque da demanda foram preservados.')
+            else:
+                lines.append('Mcre e Ma,piso calculados para cada ELU, em material nominal AISI, sem usar Me/MRd NBR e sem novo Cb. PP permanece no CG; forças externas no topo. Torque primário e avisos preservados. Flexão fraca real mantém H4 pendente; não se transfere o denominador fraco no CT.')
             lines.append('Geometria, linha de aplicação e garfos são hipóteses explícitas do esquema, não comprovação das ligações/forças reais. '
                 + ('P conserva sua posição direta exata.' if source.get('direct_load_basis') else 'P conserva posições prescritas e limite analítico no apoio; não se declara envelope móvel.')
                 + ' A escolha física do esquema existente basta; nenhum Me ou Cb é solicitado.')

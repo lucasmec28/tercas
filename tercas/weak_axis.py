@@ -25,6 +25,9 @@ def validate(data):
 
 def capacities(data,family):
  cfg=validate(data);out={}
+ from .ue_catalog_reference import claims_reference
+ if claims_reference(data):
+  return {sign:dict(status='not_evaluated',missing=['Contorno próprio Ue: operadores e críticos do catálogo não são transferidos; capacidades próprias pendentes.'],design_approved=False) for sign in ('positive','negative')}
  from .model_domain import evidence as domain_evidence
  domain=domain_evidence(data)
  if family=='U' and domain['conflict']:

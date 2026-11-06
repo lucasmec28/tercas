@@ -54,10 +54,12 @@ def actions(combo, geometry):
 def attach(result, choice):
     from .application import fingerprint
     from .roof_top_load import geometry
-    from .torsion_study import section_for, SCOPE, configuration
+    from .torsion_study import section_for, scope_for, configuration
     from .torsion_vlasov.adapter import summarize_torsion_evidence
     from .aisi_torsion_component import attach_dense
     data = result['input_data']
+    SCOPE=scope_for(data)
+    from .ue_catalog_reference import claims_reference as catalog_claims, attach_resistance
     if (result.get('schema') != 'NBR14762_one_span_v1' or not active(data)
             or fingerprint(data) != result.get('input_fingerprint')):
         raise ValueError('Contrato direto separado incompatível com o resultado atual.')
@@ -73,7 +75,7 @@ def attach(result, choice):
                        ('Iy_weak_mm4', p['Iy_cm4']*10000), ('J_mm4', p['J_mm4']), ('Cw_mm6', p['Cw_mm6'])]:
         if not math.isclose(sp[key], value, rel_tol=2e-12, abs_tol=1e-9):
             raise ValueError('Seção direta e contorno torsional divergentes: '+key)
-    if not 3000 <= data['L_mm'] <= 6000 or p['t'] != section['thickness_mm']:
+    if (not catalog_claims(data) and not 3000 <= data['L_mm'] <= 6000) or p['t'] != section['thickness_mm']:
         raise ValueError('Espessura/vão fora do contorno próprio de torção.')
     geo = geometry(data)
     supports = {side: dict(twist='fixed', warping='free_assumed', origin=
@@ -109,7 +111,7 @@ def attach(result, choice):
         source_combinations=direct.combinations(data), source_preserved=True,
         coverage_complete=False, whole_member_approved=False, resistance_qualified=False,
         scope=SCOPE, app_axis_mapping='physical q=[parallel,-normal]; Mforte_R01=-Mx_physical; Mfraco_R01=-My_physical')
-    out = attach_dense(out, section)
+    out = attach_resistance(out, section) if catalog_claims(data) else attach_dense(out, section)
     from .isolated_en_application import attach_dense as attach_EN_dense
     out = attach_EN_dense(out, section)
     out['torsion_evidence'] = summarize_torsion_evidence(out['torsion_evidence'])

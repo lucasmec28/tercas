@@ -1,0 +1,38 @@
+{
+  "base": "89785b61c2b01a7d5ec350b00c10fc5e9bc8e90d",
+  "status": "static_checkpoint_not_tested",
+  "prior_receipts_reused": false,
+  "restored_from_original_text": [
+    "tercas/catalog_torsion_section.py",
+    "torsion_vlasov.section._construct",
+    "torsion_vlasov.section.from_polyline"
+  ],
+  "app_hooks": "restored from recovered r5 blob; release label and EN separate choice excluded",
+  "reconstructed": [
+    "tercas/ue_catalog_reference.py",
+    "tercas/ue_catalog_ui.py",
+    "consumer hooks"
+  ],
+  "syntax_parsed": true,
+  "solver_run": false,
+  "tests_run": false,
+  "sha256": {
+    "app.py": "43347fea43cc9cc8ae37bcd5381827a26390fafe02222fb21bdf48c7438958af",
+    "tercas/aisi_torsion_component.py": "4ad8e45e55f9db1ef601438bf07fe66d005d190fe3c371dc8f6c1356ef817feb",
+    "tercas/application.py": "75447fa181db7001c44e2b9db57b75d726fe41926d486c3e4d27809b6d7c367c",
+    "tercas/catalog_scan.py": "dc0ead6a5705a423f340eb5d9e7a65132cfe0a3139b59076e452065e91700ecb",
+    "tercas/direct_torsion.py": "d74957b0fc5c09d0d4540993c2423360d44db5d1388dc5ea90b6f7a59cecc832",
+    "tercas/report.py": "15af094d93c901dfac9def88a9009f708b34a1888544cddfe8bc298dd70c30db",
+    "tercas/roof_top_load.py": "076c9656553fd1e5099971c17c0c2860106149e76367831b3d030e682275ca5d",
+    "tercas/strong_critical_guard.py": "e82becb1561b6744483ef44d435676742a96e97215531f76b8735b3e56b76159",
+    "tercas/study_completion.py": "134b4907c19a28ffb8665610a3a379ecf6013a541ec867b90f93d612d88d04bb",
+    "tercas/torsion_study.py": "1e59a10aec83506255070df1aceffecefb8788313ee6ba36d27962b92c44b73f",
+    "tercas/torsion_study_ui.py": "969565f6702c84b8db66057f3ed606f098c7814f59fb014a28e21e18951f74bf",
+    "tercas/torsion_vlasov/adapter.py": "2c08e913c9d4687b96d7040956d8d822619ec6d2722b2b479f7d499bb71a511c",
+    "tercas/torsion_vlasov/section.py": "28bf452fd1ccb4e7836735b55693ad0f531fced1e544e38865436a11f9852c60",
+    "tercas/weak_axis.py": "d392004476c961297d8d8ab7b19cf4f0f3028d9c916c57041459023714225111",
+    "tercas/catalog_torsion_section.py": "127b16a5a9dd2aa3d2dc16986f107e0a90b8bb022b2b358321aa6d7a8ccb61ec",
+    "tercas/ue_catalog_reference.py": "e6a023a88deae0ca0586683566080b641a6e0632273ef0bc4dc9987a9e61525b",
+    "tercas/ue_catalog_ui.py": "1f53f21d3911833d1b4b94ebd1f80aadc3bede95ec6486985a0ed99aa4e8d814"
+  }
+}

@@ -156,11 +156,11 @@ def test_unconverged_and_empty_source_keep_specific_pending(one):
     assert all(x['reason']=='Source model not applicable.' for x in out[nbr.FIELD]['records'])
 
 
-def test_real_parallel_actions_remain_pending():
-    d=family.load_reference(2.,4000.,5.);d[roof.FIELD]=roof.choice();d['selected_types']=['ELU normal']
+def test_destabilizing_parallel_actions_remain_pending():
+    d=family.load_reference(2.,4000.,-5.);d[roof.FIELD]=roof.choice();d['selected_types']=['ELU normal']
     out=nbr.attach(roof.attach(calculate_batch(d)));ev=nbr.preserved(out)
     assert ev['computed_cases']==0 and ev['pending_cases']==40
-    assert all('componentes paralelas' in r['reason'] for r in ev['records'])
+    assert all('desestabilizante' in r['reason'] for r in ev['records'])
 
 
 def test_no_implicit_activation_or_historical_requalification():

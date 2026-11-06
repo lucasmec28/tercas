@@ -30,6 +30,11 @@ SCOPE = ('Torção de Vlasov, GJ + ECw, conforme mecânica do Anexo A do manual 
          'não acrescenta resistência com T/B nem aprova ELU ou ELS.')
 
 
+def scope_for(data):
+    from .ue_catalog_reference import claims_reference, SCOPE as own_scope
+    return own_scope if claims_reference(data) else SCOPE
+
+
 def configuration(data):
     """Absent is legacy. Missing line is permitted; malformed data are not."""
     if FIELD not in data:return None
@@ -64,7 +69,8 @@ def automatic_roof_choice(data):
     if not roof_enabled(data) or data.get('member_application','purlin')!='purlin':return None
     from .ue_family_reference import claims_reference as family_claims
     from .ue_reference import claims_reference as single_claims
-    if not (family_claims(data) or single_claims(data)):return None
+    from .ue_catalog_reference import claims_reference as catalog_claims
+    if not (family_claims(data) or single_claims(data) or catalog_claims(data)):return None
     g=geometry(data);c=blank_choice()
     for role in ROLES:
         c['load_lines'][role]=dict(declared=True,
@@ -74,6 +80,8 @@ def automatic_roof_choice(data):
 
 
 def section_for(data):
+    from .ue_catalog_reference import claims_reference, section_for as own_section
+    if claims_reference(data):return own_section(data)
     """Read and validate exact source bytes on every explicit calculation."""
     from .ue_family_reference import claims_reference as family_claims, assess as family_assess
     from .ue_reference import claims_reference as single_claims, assess as single_assess
@@ -104,6 +112,13 @@ def attach(result):
     if automatic is not None:c=automatic
     if c is None or not c['enabled']:return copy.deepcopy(result)
     data = result['input_data']
+    from .ue_catalog_reference import claims_reference as catalog_claims
+    if catalog_claims(data) and automatic is None:
+        out=copy.deepcopy(result)
+        out['torsion_evidence']=pending_evidence(result,
+            'Contorno próprio Ue: o adaptador de ações exige o esquema do topo ativo. Linhas manuais anteriores permanecem armazenadas, mas não substituem esse esquema.')
+        out['torsion_evidence']['scope_pt']=scope_for(data)
+        return out
     if data.get('member_application','purlin')=='wall_girt':
         out=copy.deepcopy(result)
         out['torsion_evidence']=pending_evidence(result,
@@ -120,7 +135,8 @@ def attach(result):
         return out
     from .ue_family_reference import claims_reference as family_claims
     from .ue_reference import claims_reference as single_claims
-    if not (family_claims(data) or single_claims(data)):
+    from .ue_catalog_reference import claims_reference as catalog_claims
+    if not (family_claims(data) or single_claims(data) or catalog_claims(data)):
         out=copy.deepcopy(result)
         out['torsion_evidence']=pending_evidence(result,
             'Declarações de linhas preservadas, mas sem aplicação à seção atual: '
@@ -136,7 +152,8 @@ def attach(result):
         for side in ('left','right')}
     out = attach_torsion_evidence(result, section=section, load_lines=lines, supports=supports)
     from .aisi_torsion_component import attach_dense
-    out = attach_dense(out, section)
+    from .ue_catalog_reference import claims_reference as catalog_claims, attach_resistance
+    out = attach_resistance(out, section) if catalog_claims(data) else attach_dense(out, section)
     from .isolated_en_application import attach_dense as attach_EN_dense
     out = attach_EN_dense(out, section)
     out['torsion_evidence'] = summarize_torsion_evidence(out['torsion_evidence'])
@@ -144,6 +161,6 @@ def attach(result):
     if automatic is not None:
         out['torsion_evidence']['load_line_choice_source']='automatic_selected_roof_scheme'
         out['torsion_evidence']['stored_manual_choice_preserved']=configuration(data)
-    out['torsion_evidence']['scope_pt'] = SCOPE
+    out['torsion_evidence']['scope_pt'] = scope_for(data)
     out['whole_member_approved'] = False
     return out

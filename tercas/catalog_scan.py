@@ -26,7 +26,8 @@ Even the originally selected section is compared on the same catalogue basis.
         data['three_girt_model'].update(sc_y_mm=None,sc_z_mm=0.,sc_origin='',connections_declared=False,load_line_declared=False)
     from .ue_reference import claims_reference
     from .ue_family_reference import claims_reference as family_claims
-    if claims_reference(data) or family_claims(data):raise ValueError('Referência própria Ue não pode ser transferida a outra seção.')
+    from .ue_catalog_reference import claims_reference as catalog_claims
+    if claims_reference(data) or family_claims(data) or catalog_claims(data):raise ValueError('Referência própria Ue não pode ser transferida a outra seção.')
     fresh = defaults(index)
     out = copy.deepcopy(data)
     out.pop("homogeneous_reference", None)
@@ -100,7 +101,8 @@ All 209 entries are selected by default; no hidden cut-off or load/combination c
     if 'homogeneous_reference' in data or 'homogeneous_lengths' in data:raise ValueError('Referência própria não pode ser transferida à comparação genérica do catálogo.')
     from .ue_reference import claims_reference
     from .ue_family_reference import claims_reference as family_claims
-    if claims_reference(data) or family_claims(data):raise ValueError('Referência própria Ue não pode ser transferida à comparação genérica do catálogo.')
+    from .ue_catalog_reference import claims_reference as catalog_claims
+    if claims_reference(data) or family_claims(data) or catalog_claims(data):raise ValueError('Referência própria Ue não pode ser transferida à comparação genérica do catálogo.')
     labels = catalog_labels()
     indices = list(range(len(labels))) if indices is None else list(indices)
     if any(not isinstance(i, int) or isinstance(i, bool) or not 0 <= i < len(labels) for i in indices):

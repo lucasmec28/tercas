@@ -16,7 +16,8 @@ LABELS = {
 ASSUMPTIONS = ('Modelo adotado: garfos nas extremidades, empenamento livre, sem travamentos intermediários. '
                'A telha não fornece rigidez lateral nem torsional. A escolha não comprova a ligação física.')
 SCOPE = ('Me é um crítico elástico de FLT do modelo de carga no topo, não momento resistente, '
-         'capacidade à torção ou aprovação global da terça. O núcleo atual cobre flexão forte uniaxial.')
+         'capacidade à torção ou aprovação global da terça. O núcleo calcula a componente forte; '
+         'a interação NBR §9.9 usa resistências por eixo quando a posição das ações fracas permite.')
 
 DIRECT_ASSUMPTIONS = (
     'Ao escolher este esquema no modo direto, adota-se a envoltória conservadora escalar de Me: '
@@ -118,9 +119,10 @@ def render_choice(st, data, key):
                        'A carga na mesa pode gerar torção primária; este componente não verifica essa resistência.')
             inclination = data.get('inclination', {})
             if inclination.get('value') not in (None, 0, 0.):
-                st.info('Inclinação: gravidade e PP podem produzir componente paralela. Combinações biaxiais ficam pendentes '
-                        'porque o núcleo atual não inclui o acoplamento de flexão nos dois eixos e torção; '
-                        'a pendência é do modelo implementado, não uma impossibilidade física.')
+                st.info('Inclinação: gravidade e PP podem produzir componente paralela. A interação NBR §9.9 usa '
+                        'resistências por eixo quando cada ação fraca está no CT ou em posição estabilizante. '
+                        'Posição fraca desestabilizante ou desconhecida permanece pendente. '
+                        'Não se calcula autovalor biaxial nem se encerra torção/empenamento.')
         st.caption('Os controles legados de Cb e comprimentos não definem os vínculos deste modelo separado.')
         try:
             g = geometry(data)
@@ -151,7 +153,7 @@ def summary_rows(evidence):
         rows.append({'Combinação': record.get('combination_id'), 'Estado limite': record.get('limit_state'),
                      'Situação': STATUS_LABELS.get(record.get('status'),record.get('status')), 'Me elástico [kN·m]': me/1e6 if _finite(me) else None,
                      'λ crítico': record.get('lambda_cr'), 'Modos': str(record.get('modes', '')),
-                     'Pendência / motivo': record.get('reason', '')})
+                     'Pendência / motivo': record.get('reason') or record.get('separate_axis_capacity_scope',{}).get('scope','')})
     return rows
 
 

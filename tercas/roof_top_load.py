@@ -61,7 +61,8 @@ def geometry(data):
         physical_load_line_verified=False,scheme_is_assumed_model=True)
     from .ue_family_reference import claims_reference as family_claims
     from .ue_reference import claims_reference as single_claims
-    if family_claims(data) or single_claims(data):
+    from .ue_catalog_reference import claims_reference as catalog_claims, source_binding
+    if family_claims(data) or single_claims(data) or catalog_claims(data):
         from .torsion_study import section_for
         s=section_for(data);sp=s['properties'];cg=sp['centroid_xy_mm'];sc=sp['shear_center_xy_mm']
         # R01 source origin is intersection of web/lower-flange midsurfaces.
@@ -75,6 +76,9 @@ def geometry(data):
             y_from_CG_mm=y-cg[1],CG_xy_mm=list(cg),SC_xy_mm=list(sc),
             coherent_torsion_section=True,section_profile_id=s['profile_id'],
             nodes_sha256=s['nodes_sha256'],source='Contorno próprio R01 verificado: cota externa superior e posição do esquema, com CG/CT do mesmo contorno.')
+    if catalog_claims(data):
+        g['source']='Contorno próprio Ue nominal: CG/CT e linha de topo do mesmo contorno.'
+        g['ue_catalog_source_binding']=source_binding(data)
     return g
 
 
@@ -137,6 +141,24 @@ def preserved(result):
         rows=ev.get('records',[])
         if rows and [(r.get('combination_id'),r.get('limit_state')) for r in rows]!=[(c['id'],c['limit_state']) for c in separated.combinations(result['input_data'])]:
             raise ValueError('Inventário direto separado incompleto.')
+    for r in ev.get('records',[]):
+        if 'separate_axis_capacity_scope' in r:
+            from .roof_biaxial_geometry import supported_geometry,validate_geometry
+            if supported_geometry(ev.get('geometry') or {}):
+                validate_geometry(ev['geometry'],result['input_data'])
+            from .roof_biaxial import classify_for_roof as classify,torque_records
+            combo=next(c for c in combination_inventory(result) if c['id']==r['combination_id'])
+            expected_actions=separated.actions(combo,ev['geometry'],include_parallel=True)[0] if ev['schema']==separated.SCHEMA else _actions(result['load_bundle'],combo,ev['geometry'],include_parallel=True)[0]
+            if r['actions']!=expected_actions:
+                raise ValueError('Ações por eixo não correspondem às parcelas salvas.')
+            scope=classify(r['actions'],ev.get('geometry') or {})
+            if scope!=r['separate_axis_capacity_scope'] or (r.get('Me_Nmm') is not None and not scope['applicable']):
+                raise ValueError('Domínio por eixo da componente Me salvo divergente.')
+            if 'primary_torque_by_action' in r:
+                if (r.get('primary_torque_report_includes_parallel_actions') is not True
+                    or r['primary_torque_by_action']!=torque_records(r['actions'],True)
+                    or r.get('normal_projection_primary_torque_by_action')!=torque_records(r['actions'],False)):
+                    raise ValueError('Torque total/projeção normal da componente Me salvo divergente.')
     return copy.deepcopy(ev)
 
 
@@ -159,7 +181,7 @@ def _pending(result,c,reason,geo=None):
         resistance_qualified=False,whole_member_approved=False)
 
 
-def _actions(bundle,combo,geo):
+def _actions(bundle,combo,geo, *, include_parallel=False):
     acts=[];parallel=[]
     for role,factor in combo['coefficients'].items():
         if role=='P':continue
@@ -170,15 +192,18 @@ def _actions(bundle,combo,geo):
         is_pp=role=='PP';ex=None
         if geo['coherent_torsion_section']:
             ex=geo['CG_xy_mm'][0]-geo['SC_xy_mm'][0] if is_pp else geo['x_from_SC_mm']
-        acts.append(dict(name=role,kind='uniform',q_down_N_mm=normal,
+        acts.append(dict(name=role,kind='uniform',q_down_N_mm=normal,q_parallel_N_mm=x,
             height_above_SC_mm=0. if is_pp else geo['height_above_SC_mm'],x_from_SC_mm=ex,
             load_line_source='PP no CG, somado uma vez' if is_pp else geo['source']))
     pv=combo['P_vector']
     if pv['parallel']!=0:parallel.append('P')
     if pv['normal']!=0 or pv['parallel']!=0:
-        acts.append(dict(name='P',kind='point',P_down_N=pv['normal'],s_mm=combo['x_mm'],
+        acts.append(dict(name='P',kind='point',P_down_N=pv['normal'],P_parallel_N=pv['parallel'],s_mm=combo['x_mm'],
             height_above_SC_mm=geo['height_above_SC_mm'],x_from_SC_mm=geo['x_from_SC_mm'],
             load_line_source=geo['source'],position=combo.get('point_position','fixed')))
+    if not include_parallel:
+        for a in acts:
+            a.pop('q_parallel_N_mm',None);a.pop('P_parallel_N',None)
     return acts,parallel
 
 
@@ -221,14 +246,20 @@ def attach(result):
     records=[]
     for combo in combos:
         base=dict(combination_id=combo['id'],limit_state=combo['limit_state'])
-        acts,parallel=_actions(expected,combo,geo)
+        acts,parallel=_actions(expected,combo,geo,include_parallel=True)
         if parallel:
-            records.append(dict(base,status='pending_biaxial_model',Me_Nmm=None,lambda_cr=None,
-                reason='Há componentes paralelas em '+', '.join(parallel)+'. Esta componente Me é uniaxial forte; não apaga a flexão fraca para liberar um resultado.',actions=acts));continue
+            from .roof_biaxial import classify_for_roof as classify
+            scope=classify(acts,geo);base['separate_axis_capacity_scope']=scope
+            if not scope['applicable']:
+                records.append(dict(base,status='pending_biaxial_model',Me_Nmm=None,lambda_cr=None,
+                    reason='Interação por resistências separadas pendente: '+scope['reason'],actions=acts));continue
         try:
             calc=refined(**params,actions=acts)
         except (ValueError,ArithmeticError) as exc:
             records.append(dict(base,status='pending_numerical_qualification',reason=str(exc),Me_Nmm=None,lambda_cr=None,actions=acts));continue
+        if parallel:
+            from .roof_biaxial import annotate_projection
+            calc=annotate_projection(calc,acts)
         records.append(dict(base,**calc,actions=acts))
     count=sum(r.get('numerically_converged') is True and r.get('Me_Nmm') is not None for r in records)
     ev=dict(schema='roof_top_load_evidence_v1',
@@ -302,15 +333,21 @@ def _attach_direct_separated(result,c):
         ev['reason']='Dados do modelo direto não qualificados: '+str(exc);return _save(out,ev)
     records=[]
     for combo in direct.combinations(data):
-        acts,parallel=direct.actions(combo,geo)
+        acts,parallel=direct.actions(combo,geo,include_parallel=True)
         base=dict(combination_id=combo['id'],limit_state=combo['limit_state'],
                   direct_envelope=False,physical_applicability_verified=False,actions=acts)
         if parallel:
-            records.append(dict(base,status='pending_biaxial_model',Me_Nmm=None,lambda_cr=None,
-                reason='Componentes paralelas individuais em '+', '.join(parallel)+'. Não são apagadas nem canceladas para liberar Me uniaxial.'));continue
+            from .roof_biaxial import classify_for_roof as classify
+            scope=classify(acts,geo);base['separate_axis_capacity_scope']=scope
+            if not scope['applicable']:
+                records.append(dict(base,status='pending_biaxial_model',Me_Nmm=None,lambda_cr=None,
+                    reason='Interação por resistências separadas pendente: '+scope['reason']));continue
         try:calc=refined(**params,actions=acts)
         except (ValueError,ArithmeticError) as exc:
             records.append(dict(base,status='pending_numerical_qualification',Me_Nmm=None,lambda_cr=None,reason=str(exc)));continue
+        if parallel:
+            from .roof_biaxial import annotate_projection
+            calc=annotate_projection(calc,acts)
         records.append(dict(base,**calc))
     count=sum(r.get('numerically_converged') is True and r.get('Me_Nmm') is not None for r in records)
     ev.update(status='elastic_critical_component' if count else 'pending_model_scope',reason='',

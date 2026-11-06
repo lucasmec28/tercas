@@ -1,0 +1,59 @@
+Recuperação do contorno e adaptador Ue — 06/11/2026
+
+Base publicada: 89785b61c2b01a7d5ec350b00c10fc5e9bc8e90d.
+Os commits anteriores 740a63e, 8c89b55 e 56415de não foram recuperados como objetos Git.
+Nenhum recibo de QA antigo é atribuído a esta reconstrução.
+
+Recuperado do texto original completo: tercas/catalog_torsion_section.py,
+SHA256 127b16a5a9dd2aa3d2dc16986f107e0a90b8bb022b2b358321aa6d7a8ccb61ec.
+Os hooks de app.py foram restaurados do blob r5 recuperado; rótulo de release e
+opt-in EN separado não fazem parte desta entrega.
+
+Reconstruídos a partir do contrato técnico e base publicada: ue_catalog_reference,
+ue_catalog_ui e hooks nos consumidores. As funções _construct e from_polyline foram também recuperadas do texto
+original completo. O wrapper legado conserva a aritmética publicada. Ainda
+serão executados novos testes.
+
+Escopo: ativação explícita apenas Ue83, propriedades/massa coerentes e material
+original preservado. PP no CG, ações externas no topo. Contorno Vlasov e G8.1
+próprios. Críticos tabulados, operadores efetivos e denominadores H4 não são
+herdados por nome/espessura. Nenhuma publicação nesta etapa.
+
+Estado deste primeiro checkpoint: edição estática; testes/solver ainda não
+executados por coordenação de CPU. Não é uma versão testada ou liberada.
+
+Checkpoint funcional posterior
+- Primeira focal geométrica/guardas: 181 passaram em 47,11 s. Os sete contornos
+  congelados foram comparados integralmente contra o código publicado 89785b6.
+- Fluxos: 89 passaram em 93,41 s, incluindo cada um dos 83 Ue, referência
+  analítica independente de bimomento, PP/topo e combinações por área.
+- UI/guardas: 12 passaram em 31,35 s, incluindo dois AppTests, JSON/Word,
+  rerenderização sem solver e invalidação por edição de ações/material/perfil.
+- As contagens se sobrepõem, portanto não são somadas como total independente.
+- A regressão legada foi interrompida na pausa do executor, sem resumo final ou
+  JUnit. O log foi preservado como regression_interrupted.log; não conta como
+  aprovação. Será concluída em uma execução nova e identificada.
+
+Revisão independente somente leitura identificou e esta revisão corrigiu:
+1. Topo inativo no Ue próprio não pode reativar linhas manuais antigas por área.
+2. Anexo nominal detalhado ainda limitado aos sete hashes antigos não é oferecido
+   aos novos Ue; demanda e componentes já salvas permanecem disponíveis.
+3. Apresentação AISI do novo Ue mostra G8.1 e a pendência flexional/H4, sem anunciar
+   Mcre/Ma calculados. O complemento EN separado pertence à integração seguinte.
+
+Essas correções de apresentação ainda passarão pela focal final. A propriedade
+geométrica não é qualificação física do produto nem aprovação da barra.
+
+Fechamento da reconstrução
+- A focal final de 26 testes passou em 68,43 s após todas as correções de revisão.
+- Regressão selecionada dos sete legados: 16 passaram em 23,52 s.
+- Dois AppTests novos repetidos no código final: 2 passaram em 45,51 s.
+- AppTest legado executado isoladamente: 1 passou em 16,88 s.
+- Todos esses comandos finais encerraram com código zero; os logs, JUnit e
+  códigos de saída individuais estão em qa/ue_catalog_recovery.
+- A rodada ampla interrompida continua sem aprovação atribuída. Em vez de repeti-la,
+  foram repetidos os consumidores e fluxos diretamente afetados.
+- Revisão de código e testes não autorizam aprovação global da barra. Integração
+  dos denominadores EN e estabilidade biaxial é acompanhada separadamente.
+- Nenhuma publicação foi feita nesta frente. O bundle final contém código e QA
+  para integração e persistência, não uma implantação online confirmada.

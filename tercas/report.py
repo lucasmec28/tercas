@@ -13,7 +13,7 @@ from .model_domain import report as domain_report,historical_rows,historical_inc
 from .member_application import is_girt,wall_els_config,wall_convention
 from .deflection_scope import report as deflection_scope_report
 from .flexural_components import presentation_rows as gross_component_rows,is_girt_result
-from .roof_top_nbr_ui import presentation_rows as roof_nbr_rows
+from .roof_top_nbr_ui import presentation_rows as roof_nbr_rows, presentation_inclination as roof_nbr_inclination
 from .biaxial_component_ui import report as gross_component_report
 from .aa_component_ui import report as aa_component_report
 from .aa_component import claims_result as aa_claims_result
@@ -162,6 +162,8 @@ def word(result):
  homogeneous_reference_report(doc,result)
  ue_reference_report(doc,result)
  ue_family_reference_report(doc,result)
+ from .ue_catalog_ui import report as ue_catalog_report
+ ue_catalog_report(doc,result)
  deflection_scope_report(doc,result)
  gross_component_report(doc,result);aa_component_report(doc,result)
  from .study_completion import report_global
@@ -190,7 +192,7 @@ def word(result):
  inclination_inputs(doc,result['input_data'],None if (result.get('homogeneous_reference_evidence') or result.get('ue_reference_evidence') or result.get('ue_family_reference_evidence')) else result.get('weak_critical_reference'))
  if not (result.get('homogeneous_reference_evidence') or result.get('ue_reference_evidence') or result.get('ue_family_reference_evidence')):strong_reference_report(doc,result.get('strong_critical_reference'))
  if result.get('inclination_evidence'):
-  doc.add_heading('Solicitações locais simultâneas',1);inclination_report(doc,historical_inclination(result,result['inclination_evidence']))
+  doc.add_heading('Solicitações locais simultâneas',1);inclination_report(doc,historical_inclination(result,roof_nbr_inclination(result,result['inclination_evidence'])))
  if not is_girt_result(result):wall_vertical_report(doc,result)
  doc.add_heading('Resultados por verificação',1)
  tab=doc.add_table(rows=1, cols=4);tab.style='Table Grid'
@@ -308,6 +310,8 @@ def batch_word(result):
  homogeneous_reference_report(doc,result)
  ue_reference_report(doc,result)
  ue_family_reference_report(doc,result)
+ from .ue_catalog_ui import report as ue_catalog_report
+ ue_catalog_report(doc,result)
  deflection_scope_report(doc,result)
  gross_component_report(doc,result);aa_component_report(doc,result)
  from .study_completion import report_global
@@ -360,7 +364,7 @@ def batch_word(result):
  for item in result['cases']:
   c=item['combination'];doc.add_heading(f"{c['id']} — {c['type']}",2)
   doc.add_paragraph(f"{measurement_text(c['expression'])} → q normal={fmt(c['q_kN_m'])} kN/m. P normal={fmt(c.get('P_N',0)/1000)} kN. Forças/efeitos superpostos antes das verificações.")
-  if item.get('evidence',{}).get('inclination'):inclination_report(doc,historical_inclination(result,item['evidence']['inclination']))
+  if item.get('evidence',{}).get('inclination'):inclination_report(doc,historical_inclination(result,roof_nbr_inclination(result,item['evidence']['inclination'],c['id'])))
   if not is_girt_result(result):wall_vertical_report(doc,item.get('evidence',{}))
   for row in display_records(historical_rows(result,roof_nbr_rows(result,gross_component_rows(result,item['rows']),c['id']))):
    index='—' if row['Índice'] is None else f"{fmt(row['Índice'])}"
