@@ -14,6 +14,10 @@ def append(doc,demand,selected=0):
         return
     from ..three_girt_shear import append_report as append_web_shear
     append_web_shear(doc,component,demand=demand)
+    from ..three_girt_local_stability import append_report as append_local_B1
+    append_local_B1(doc,component,demand=demand)
+    if component.get('central_local_B1_error'):
+        doc.add_paragraph('Amplificação local B1 da central inconclusiva: '+component['central_local_B1_error'])
     component=view(component,demand)
     doc.add_page_break();doc.add_heading('Compressão e flexão das travessas pela NBR',1)
     doc.add_paragraph('Componente aritmética NBR 14762:2010 §9.9 com esforço normal da rede e momentos da mesma seção. Os denominadores são referências escalares de vão inteiro, com K = Cb = Cm = 1. Não constituem aprovação da estabilidade do conjunto tridimensional, interação N+M+B ou ELS.')

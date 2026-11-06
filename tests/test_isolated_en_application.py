@@ -48,6 +48,9 @@ def test_area_inventory_and_support_limit_complete(area):
     assert ev['computed_cases']==len(expected) and not ev['pending_cases']
     assert any(c['combination'].get('point_position')=='support_limit' for c in area['cases'])
     assert all(r['check']['full_member_field_covered'] for r in ev['records'])
+    assert all(r['web_shear_component']['full_member_field_covered'] for r in ev['records'])
+    assert any(piece['source_piece']['kind']=='support_limit'
+        for r in ev['records'] for piece in r['web_shear_component']['pieces'])
     assert aisi.preserved(area)
 
 

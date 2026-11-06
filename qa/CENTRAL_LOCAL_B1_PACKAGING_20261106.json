@@ -1,0 +1,11 @@
+{
+  "uncompressed_file": "CENTRAL_LOCAL_B1_20261106.json",
+  "compressed_file": "CENTRAL_LOCAL_B1_20261106.json.gz",
+  "uncompressed_bytes": 352827,
+  "compressed_bytes": 17352,
+  "uncompressed_sha256": "adc64e8e3292cfd23c9fa98e9a8cea9e22a1690086d04b670522ff50e1094fb8",
+  "compressed_sha256": "ede540f139b3622df3807507129f6e69fb210686c87bbc90ce6d7d109b2ca4bd",
+  "content_preserved_byte_for_byte": true,
+  "synthetic_input_not_user_project": true,
+  "format": "gzip; Python gzip.decompress or gzip -dc yields the complete original UTF-8 JSON"
+}

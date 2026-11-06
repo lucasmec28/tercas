@@ -1,0 +1,144 @@
+INTERAÇÃO SECCIONAL EN POR ROTA SIMPLIFICADA
+Data: 06/11/2026. Candidata local baseada em 23dd035. Não publicada.
+Primeiro checkpoint ddea184 passou 70 testes em 27,11 s. O hook da rede
+foi depois desacoplado da referência NBR; a validação final está abaixo.
+
+Objetivo
+Fechar as verificações seccionais prescritivas sem inventar uma interação
+NBR/AISI/EN, converter torque arbitrariamente em força ou exigir torção nula.
+A rota é complementar ao campo completo de tensões EN6.1.6 já implementado.
+O novo registro não altera forças, torques, rigidezes ou vínculos do modelo.
+Na rede, somente os membros selecionados para verificação recebem este
+cálculo; a central é o alvo atual. As três barras físicas permanecem na rede.
+
+Fontes
+EN1993-1-3:2006, §§1.4,6.1.4.1,6.1.5,6.1.6,6.1.8,6.1.9,6.1.10:
+https://www.phd.eng.br/wp-content/uploads/2015/12/en.1993.1.3.2006.pdf
+Equação 6.27 conferida visualmente na p. 55 impressa, PDF 57.
+O exame de fontes e a interpretação de ambos os eixos/torção são registrados
+em EN_INTERACTION_SOURCE_REVIEW_20261106.txt. Essa interpretação é declarada,
+não uma afirmação de que a norma traz literalmente a fórmula reduzida abaixo.
+
+Capacidades normais
+São os mesmos sete contornos próprios Ue100x50x17, ri=t, sem furos/recortes,
+e os seis operadores puros efetivos EN já qualificados por direção/sentido.
+Material fixo: fyb=fya=250 MPa, E=210000 MPa, nu=0,3, gammaM0=1.
+
+Para cada operador, calcula-se o maior módulo da tensão por unidade de
+esforço em toda a linha física e nas duas faces exteriores de cada faceta.
+Como a tensão é afim na parede, os extremos ficam nas extremidades.
+A resistência inferior é 250/max|sigma_unit|, arredondada para baixo para
+inteiro em N ou Nmm. O máximo sobre a parede física completa também domina
+as parcelas retidas na seção efetiva. Não se toma ULS_pure_effort como MRd;
+não se atribui reserva plástica nem aumento de resistência por conformação.
+A seção pura é validada e vinculada por hash na produção do novo cálculo.
+A referência congelada permite ao leitor conferir o registro sem remontá-la.
+
+O menor piso dos dois sentidos é usado para cada eixo. É conservador e
+elimina a necessidade de dividir trechos nas raízes do momento. Para N,
+o menor entre tensão e compressão é usado, sem dispensar ruptura líquida
+quando ela for aplicável. Na rede, os momentos adicionais do centroide
+efetivo de N são transportados exatamente uma vez, como no componente EN
+normal existente. N não é apagado; B permanece no critério de tensões 6.1.6.
+
+Capacidades de cortante
+Cada direção tem capacidade própria, sem reutilizar o VRd NBR ou o VRd forte.
+Forte: uma alma, hw=100−t, sw<=hw.
+Fraca: a Ue é vista girada 90 graus. As duas mesas originais são duas almas
+internas, cada uma entre a linha média da alma original e a do seu lábio:
+hw=50−t, sw<=hw. As duas têm phi=90 graus. Não se dá contribuição resistente
+adicional aos lábios ou cantos, nem crédito de enrijecedor de apoio.
+
+Por parede: lambda_w=0,346*(sw/t)*sqrt(fyb/E), com sw superior igual a hw;
+fbv segue Tabela 6.1, ramo sem enrijecedor de apoio. Vb,inf=n*hw*t*fbv/gammaM0.
+No forte n=1; no fraco n=2. A definição normativa de hw entre linhas médias
+fundamenta essa geometria girada. A formulação por elementos do manual SCIA
+apoia a separação/soma direcional, mas não se afirma que seu lc e a nossa
+geometria de hw sejam literalmente a mesma grandeza.
+
+Equação implementada
+Sejam n=|N|/NRd,inf, mx=max(|Mx_original|,|Mx_corr|)/MxRd,inf e
+my=max(|My_original|,|My_corr|)/MyRd,inf,
+vy=|Vforte|/VforteRd,inf e vx=|Vfraco|/VfracoRd,inf.
+
+    p(v)=0 quando v<=0,5; p(v)=(2v−1)^2 quando v>0,5.
+    I = n+mx+my+max(p(vy),p(vx)).
+    I<=1; vy<=1; vx<=1.
+
+A Eq. 6.27 tem o coeficiente 1−Mf,Rd/Mpl,Rd. Tomar Mf=0 aumenta a penalidade
+sem precisar calcular Mpl. Somar os módulos dos dois momentos e usar o maior
+termo de cortante domina separadamente as duas inequações direcionais.
+Não se penaliza cortante abaixo de 0,5 com o quadrado indevido (2v−1)^2.
+As capacidades inferiores tornam a condição suficiente; exceder o teto não
+é falha comprovada da resistência real nem observação física de excesso.
+
+Torção
+B/Tsv/Tw e os dois cortantes continuam integralmente no campo de tensões
+EN6.1.6. Esse campo deve atender aos seus três limites independentes.
+O novo 6.27 trata os cortantes transversais pelas duas direções e não exige
+B/My/Tsv/Tw iguais a zero. A definição de VEd em EN1993-1-5 não é usada
+isoladamente para criar uma regra universal de nulidade da torção em Ue.
+Não se substitui 6.1.10 por von Mises nem se transfere Vpl,T de EN1-1 ao
+piso Vw de EN1-3. Os dois critérios complementares são mantidos.
+
+Envelopes e persistência
+O vetor N,Mx_corr,My_corr,Mx_original,My_original,Vforte,Vfraco é expresso
+em controles comuns de Bernstein
+de grau 2 por trecho. A soma de módulos e o máximo das penalidades convexas
+são convexos. O maior índice nos controles é um majorante em todo o trecho.
+Os controles não são estados físicos; não se apresentam como testemunhas.
+A aritmética da transformação/avaliação é intervalar com arredondamento
+para fora. A capacidade geométrica de cortante é calculada em binary64,
+como o piso EN anterior; não se alega certificado de erro do MEF.
+
+O vão isolado conserva os dois lados de P e o before-P explícito em a->0+.
+Carga fixa exatamente no apoio não é transformada nesse limite.
+Novo subcomponente versionado e com hash próprio: no isolado, dentro do
+registro da alma; na rede, em cada trecho do componente EN. A rede calcula
+e exibe a 6.27 com EN ligada mesmo quando a referência NBR está desligada.
+O inventário nativo de trechos EN vincula a coleção versionada; capacidades
+NBR não fornecem denominadores nem são necessárias como resultado
+resistente para produzir essa componente.
+O schema v1 anterior de alma continua legível, sem requalificação retroativa.
+A leitura verifica fontes, referência resistente, inventário, controles,
+aritmética e condições. Em cada trecho isolado, confere as identidades de M/V
+contra cargas e reações salvas, inclusive trechos sem testemunha de extremo.
+Na rede, compara os polinômios originais/corrigidos com a fonte EN e deriva
+os cortantes dos momentos originais salvos. Não reexecuta solver, modelo
+de seção ou envelope de tensões nem abre a fonte geométrica.
+
+Limites mantidos
+O resultado é seccional no modelo e material declarados. Não qualifica
+estabilidade do membro/rede, segunda ordem, forças locais de apoio/ligação,
+ruptura líquida, ligações, critérios completos de ELS ou condições físicas
+não declaradas. Não transforma combinações de ações NBR em combinações EN.
+Nenhum índice EN é somado a resistência NBR/AISI e a aprovação global fica
+falsa. A época de cache ativo deve ser atualizada na integração conjunta,
+sem migrar snapshots históricos.
+
+QA
+Recibo reproduzível: EN_SIMPLIFIED_INTERACTION_QA_20261106.json.
+- Checkpoint inicial: 70 testes, 27,11 s.
+- Regressão com EN independente: 246 testes, 738,53 s.
+- Escopo central, material/geometria e legados: 128 testes, 98,05 s.
+- Cinco AppTests reais: 184,90 s, incluindo EN ligada/NBR desligada.
+As contagens têm sobreposição e não devem ser somadas. Leitura sem solver,
+JSON/Word, erro opcional, material/geometria e adulteração com hashes refeitos
+foram exercitados. O recibo distingue jornada de UI de tempo incremental.
+
+Composição necessária: o campo complementar EN6.1.6 da rede deve observar
+EN6.1.3(3) para deslocamento favorável do centroide. A política independente
+de tensões original/corrigida (commit 9bf86d2) não é substituída por tomar
+o maior módulo do momento na 6.27, especialmente quando B e outro eixo
+podem cancelar tensões. O teste conjunto pós-composição deve conferir os
+hooks e a versão de cache, sem migrar resultados históricos.
+
+ADENDO DE REVISÃO: DESLOCAMENTO FAVORÁVEL DO CENTROIDE
+EN13 §6.1.3(3), p.42, e manual SCIA p.86: não se credita deslocamento
+favorável calculado com a seção efetiva em fy. O teto adicional compara,
+na mesma posição, max(|Mx original|, |Mx corrigido|) e analogamente My.
+Os sete campos (N, dois momentos corrigidos, dois originais e dois cortantes)
+compartilham os mesmos controles de Bernstein e são todos obrigatórios no
+backend, sem completar momentos originais ausentes. A função continua convexa.
+Não se recalcula nem se aplica duas vezes N·e; conserva-se o transporte salvo.
+A rota isolada tem N=0 e momentos originais iguais aos corrigidos.

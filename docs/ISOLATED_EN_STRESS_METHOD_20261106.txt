@@ -1,7 +1,13 @@
 CISALHAMENTO TORSIONAL E INTERAÇÃO DE TENSÕES: ROTA PRÁTICA
 Data de referência: 06/11/2026. Base: 5871f95.
-Candidata local, não publicada. A integração posterior com opt-in/UI/Word e
-schema v2 está documentada em ISOLATED_EN_INTEGRATION_20261106.txt.
+NOTA HISTÓRICA: o backend v1 do commit e4c9fb6 foi superado pelo v2 e pelos
+hooks do commit 9a0e2da. A integração com opt-in, UI, Word, snapshots,
+guardas de material e before-P está em ISOLATED_EN_INTEGRATION_20261106.txt.
+A ausência de integração descrita na pesquisa original abaixo não é o estado
+atual. Consulte o QA de integração dessa nota e os testes de regressão novos.
+O JSON ISOLATED_EN_STRESS_QA_20261106.json conserva exemplos sintéticos de
+qualificação do método: não é homologação física nem prova de integração UI.
+O histórico de cálculo não recebe requalificação retroativa.
 
 CONCLUSÃO APLICÁVEL
 Não precisa criar uma nova resistência torsional NBR nem outro solver.

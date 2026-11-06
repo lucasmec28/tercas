@@ -97,7 +97,15 @@ def render_choice(st,data,key):
             st.caption('Modelo desativado; declarações armazenadas preservadas. Não significa torção nula.')
             return
         if data.get('load_mode')!='area':
-            st.warning('Diagnóstico de torção pendente no modo direto. O adaptador exige ações por área separadas; não inventa linhas para ações já combinadas.')
+            from .direct_self_weight import active as direct_PP_active
+            if direct_PP_active(data):
+                st.info('Para calcular torção no modo direto com PP automático, escolha uma opção '
+                        '"Carga no topo" em "Esquema da carga da cobertura". A rota automática '
+                        'separa o PP no CG das ações externas no topo, dentro do domínio da seção própria.')
+                st.caption('Este diagnóstico manual de linhas de carga continua restrito ao modo por área. '
+                           'Ele não é necessário para a rota direta automática.')
+            else:
+                st.warning('Diagnóstico de torção pendente no modo direto. O adaptador exige ações por área separadas; não inventa linhas para ações já combinadas.')
             return
         try:roles=active_roles(data)
         except (ValueError,TypeError,KeyError,ArithmeticError) as exc:

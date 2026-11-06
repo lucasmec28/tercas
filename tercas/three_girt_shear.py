@@ -176,7 +176,7 @@ def presentation_rows(component, demand=None):
             M_V_NBR=mv['NBR_MV']['maximum']['index_squared'],
             Combinação_M_V=mv['combination_id'],Posição_M_V_mm=mv['NBR_MV']['maximum']['x_mm'],
             Teto_cortante_EN=max(r['EN_web_shear']['index_upper'] for r in er) if len(er)==len(rr) else None,
-            Redução_por_V_EN='Dispensada somente na alma' if len(er)==len(rr) and all(r['EN_no_web_shear_reduction']['status']=='meets' for r in er) else 'Pendente',
+            Redução_por_V_EN='Limiar da alma ≤0,5; registro histórico restrito' if len(er)==len(rr) and all(r['EN_no_web_shear_reduction']['status']=='meets' for r in er) else 'Pendente',
             Cortante_fraco='Identicamente nulo' if all(r['weak_shear_identically_zero'] for r in rr) else 'Pendente; VRd da alma não reutilizado'))
     return rows
 
@@ -192,6 +192,7 @@ def render_saved(st,component, demand=None):
     st.dataframe(presentation_rows(component,demand=demand),hide_index=True)
     st.caption(SCOPE)
     st.caption('M–V NBR usa MRd local de §9.8.2.1 e M/V da mesma seção; não é a interação completa quando N, B ou T estão presentes. O índice EN é um teto suficiente; acima de 1 não demonstra falha.')
+    st.caption('Registro restrito à alma: não demonstra dispensa de §6.1.10 para a seção completa. A componente EN6.27 adicional, quando salva, é apresentada no grupo EN independente da referência NBR.')
     st.caption(out['stability_scope'])
     with st.expander('Memória completa do cortante (inclui contexto superior/inferior)'):
         st.json(out)
@@ -207,6 +208,6 @@ def append_report(doc,component, demand=None):
     doc.add_paragraph('NBR: kv=5, sem crédito de enrijecedores transversais. M–V é o máximo concomitante de (M/MRd,local)²+(V/VRd)², com os dois lados de cada junta. Não se usa MRd reduzido por FLT/distorcional no denominador de §9.8.4.')
     for row in presentation_rows(component,demand=demand):
         doc.add_paragraph('; '.join(str(k)+' = '+str(v) for k,v in row.items()))
-    doc.add_paragraph('EN: o uso conservador de sw<=hw produz piso de Vw,Rd, sem misturar resistência NBR. Teto |V|/Vw,Rd<=0,5 dispensa somente a redução adicional por cortante da alma de §6.1.10. Valores acima são inconclusivos, não falhas demonstradas. N/M/B/T e cortante fraco permanecem independentes.')
+    doc.add_paragraph('Registro histórico restrito à alma: sw<=hw produz piso de Vw,Rd sem resistência NBR. O limiar transversal não demonstra dispensa de §6.1.10 para a seção completa e não foi reclassificado. A componente EN6.27 adicional, quando salva, é apresentada no grupo EN independente. Valores acima do teto suficiente são inconclusivos, não falhas demonstradas.')
     doc.add_paragraph(out['stability_scope'])
     doc.add_paragraph('Sem contribuição de rigidez da telha; tirantes não recebem verificação resistente nem de esbeltez. A rigidez axial declarada continua no modelo, mas não vira vínculo lateral/torsional ideal automaticamente.')

@@ -1,0 +1,117 @@
+{
+  "schema": "EN_6_27_QA_receipt_v1",
+  "date_utc": "2026-11-06T13:38:47Z",
+  "base_commit": "23dd0355e129c66d80b269fe18cd416c9fb0e9ad",
+  "test_environment": "Python 3.12; repository and installed test dependencies on PYTHONPATH; BLAS/OMP one thread. Commands are normalized for an installed dependency environment.",
+  "phases": [
+    {
+      "name": "initial_checkpoint",
+      "passed": 70,
+      "seconds": 27.11,
+      "commit": "ddea184a108cc60e2abab492689ac04fac2fec8f",
+      "normalized_command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python -m pytest -q -s tests/test_en_simplified_interaction.py tests/test_isolated_en_mv.py tests/test_three_girt_en_mv.py --maxfail=3 --durations=12",
+      "note": "Mathematics and initial hooks; the NBR-dependent storage hook was subsequently replaced by independent EN storage."
+    },
+    {
+      "name": "independent_EN_backend_regression",
+      "passed": 246,
+      "seconds": 738.53,
+      "normalized_command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python -m pytest -q -s tests/test_en_simplified_interaction.py tests/test_isolated_en_mv.py tests/test_three_girt_en_mv.py tests/test_isolated_en_shear.py tests/test_isolated_en_application.py tests/test_three_girt_shear.py tests/test_three_girt_en_normal_application.py tests/test_three_girt_assessment.py --maxfail=3 --durations=12"
+    },
+    {
+      "name": "final_scope_material_and_legacy",
+      "passed": 128,
+      "seconds": 98.05,
+      "normalized_command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python -m pytest -q tests/test_three_girt_en_mv.py tests/test_three_girt_en_middle_calculation.py tests/test_three_girt_en_normal_application.py::test_historical_normal_only_snapshot_still_exports --maxfail=2 --durations=8"
+    },
+    {
+      "name": "final_actual_UI",
+      "passed": 5,
+      "seconds": 184.9,
+      "normalized_command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python -m pytest -q tests/test_ui_isolated_en.py tests/test_ui_three_girt_en_normal.py::test_EN_6_27_is_available_with_NBR_disabled tests/test_ui_three_girt_en_normal.py::test_EN_opt_in_coexists_and_changes_invalidate tests/test_ui_three_girt_en_normal.py::test_EN_missing_declaration_preserves_demand_and_NBR --maxfail=2 --durations=8"
+    }
+  ],
+  "counts_overlap": true,
+  "all_recorded_phases_passed": true,
+  "source_files_sha256": {
+    "tercas/en_simplified_interaction.py": "a3bbb45d2fa2bcbb0eb11a02dfba71bf0b8abac7711059cfe4195fbd0cdf4b79",
+    "tercas/en_interaction_capacity_reference.py": "833c8a7f0f3a7bcd3bd12cdb3be202f1e2520beadf336a6dfbacbe66cad6685a",
+    "tercas/isolated_en_mv.py": "5839a7f9cf4241d384cca867d5e875dc7ae492e8945df4e87b0683786aa56aa5",
+    "tercas/three_girt_en_mv.py": "16f64b4979c3e31b962a512ae250dfa308a697bb25a40aad0cd972b489425fc1",
+    "tercas/isolated_en_application.py": "2a4859710c3ae09d6670d8aeace9c8c34287aae09b0c48a39efa130c10d59150",
+    "tercas/isolated_en_shear.py": "460adfe228c1243b80c56bb563a3c08ae3cd247ec41f04f12d101c3c1a813b1e",
+    "tercas/isolated_en_stress.py": "6ea71d006251f629a3ab082a62a3d81827a73b3130b513340708ee2445c031cf",
+    "tercas/isolated_en_ui.py": "1f54418e532288cc4d62eb0f4d3e71348add97284c940c10470903f9924b88d5",
+    "tercas/three_girt_en_normal/application.py": "96d05146cb402f7d163270b986771faa520b6b5eddd522057af7bb23b55edd41",
+    "tercas/three_girt_en_normal/ui.py": "83d5c22580037a7f008b81253b5cbe2ee879755da07fdafcbb661821dfd94af1",
+    "tercas/three_girt_en_normal/report.py": "f31f77486bf77d2c0a5005cadad7e5677032cc1385db382bd1cb155d53771021",
+    "tercas/three_girt_assessment/application.py": "463e42abe955426a9bba7dac4d9b2573fd41387d3bbd5fec012005d1ca744317",
+    "docs/EN_INTERACTION_CAPACITY_AUDIT_20261106.json": "ea442a5bc2103e980426405cdf3b5a0edd7e4d97cba28923e046a04c536fce98"
+  },
+  "references": [
+    {
+      "title": "EN1993-1-3:2006",
+      "url": "https://www.phd.eng.br/wp-content/uploads/2015/12/en.1993.1.3.2006.pdf",
+      "sha256": "fd37edf92be58e1dc48745c29ed5a14265797b4f5a8e16f0e6f3f5f6f899d163",
+      "clauses": [
+        "1.4",
+        "6.1.3(3)",
+        "6.1.4.1",
+        "6.1.5",
+        "6.1.6",
+        "6.1.10 Eq6.27"
+      ]
+    },
+    {
+      "title": "SCIA Engineer Steel Code Check Theory 17.0",
+      "url": "https://help.scia.net/download/17.0/en/SteelCodeCheck_Theory_enu.pdf",
+      "sha256": "efa8d1b8e91a5e6bb9125eb96d79b1017117d4d1b8f1d6c638e76110b504b80b",
+      "pages": [
+        80,
+        82,
+        86
+      ]
+    }
+  ],
+  "method": {
+    "normal": "n + max(|Mx_original|,|Mx_corrected|)/Mx_floor + max(|My_original|,|My_corrected|)/My_floor",
+    "shear_penalty": "max([max(0,2|Vstrong|/Vstrong_floor-1)]^2,[max(0,2|Vweak|/Vweak_floor-1)]^2)",
+    "sufficient": "normal + shear_penalty <= 1 and both transverse shear ratios <= 1",
+    "flange_reserve_Mf": 0,
+    "normal_capacities": "Pure effective EN operators; whole physical line and exterior faces; first absolute yield; integer floors; minimum of signed branches.",
+    "strong_shear": "One original web, hw=100-t; sw<=hw; no support-stiffener credit.",
+    "weak_shear": "Two original flanges as rotated webs, each hw=50-t; own Table6.1 capacity; no lip/corner resistance credit.",
+    "continuous_bound": "Seven explicit concurrent degree-two Bernstein fields. Controls are bounds, not physical witnesses.",
+    "separate_torsional_check": "EN6.1.6 retains B, Tsv, Tw and transverse shear at the same wall/face/position. No T-to-V conversion or requirement T=0."
+  },
+  "behavior": {
+    "EN_on_NBR_off_tested": true,
+    "EN_disabled_does_not_backfill": true,
+    "central_only_verification_preserves_three_member_model": true,
+    "source_geometry_material_guard_tested": true,
+    "rehashed_semantic_corruption_tested": true,
+    "legacy_without_marker_not_reclassified": true,
+    "saved_reads_without_solver_or_section_builder_tested": true,
+    "JSON_and_Word_exports_tested": true,
+    "optional_failure_preserves_mechanics_and_other_components": true,
+    "whole_member_approved": false,
+    "ties_or_connections_designed": false
+  },
+  "runtime_notes": [
+    "Initial direct/network synthetic setup: 4.97 s and 2.93 s respectively; initial NBR attach including prototype hook: 0.51 s.",
+    "Expanded regression includes old, large fixtures: isolated area setup 170.02 s; all-three-member EN setups/calls 41.32–68.24 s. These are complete fixture times, not the incremental 6.27 cost.",
+    "Actual UI test journeys: 20.59–49.97 s each, including multiple render/export/import interactions. EN-on/NBR-off journey: 36.66 s. These are not single-click solver times."
+  ],
+  "integration": {
+    "complementary_centroid_policy_commit": "9bf86d20171a0eff369f9d9fc1b84a7ab3e3228c",
+    "note": "Combine with the independent EN6.1.3(3) original/corrected-stress policy in EN6.1.6. The maximum-absolute-moment rule in this 6.27 component does not replace that stress policy. Combined post-merge integration and current-cache epoch belong to the release validation."
+  },
+  "limits": [
+    "Sufficient conservative construction from Eq6.27, not a literal replacement equation printed in the standard. SCIA is implementation evidence, not a formal CEN interpretation.",
+    "Pinned own Ue100x50x17, ri=t, seven thicknesses 1.20–3.35 mm; nominal intact model; EN fyb=fya250 MPa, E210000 MPa, gammaM0=1.",
+    "An upper bound above 1 is inconclusive, never a physical failure witness.",
+    "The existing first-order model, action combinations, material E/G used for demand, and all three physical members remain unchanged. Existing NBR combinations are not renamed as integral EN design.",
+    "Member/network stability, second-order applicability, local force introduction, net rupture where applicable, connections and complete ELS remain separate. No global approval.",
+    "Outward intervals enclose the stored polynomial field; binary64 geometric shear capacities and the FE discretization are not certified as continuum/physical-model error bounds."
+  ]
+}

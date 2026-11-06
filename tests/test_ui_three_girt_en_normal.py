@@ -78,3 +78,32 @@ def test_reduced_axial_coexists_with_service_and_saved_exports(monkeypatch,t):
     run(app);widget(app,'selectbox','Combinação Vlasov 3D detalhada').select(2);run(app)
     assert app.session_state[RESULT_KEY]==original
     assert word(original)[:2]==b'PK'
+
+
+def test_EN_6_27_is_available_with_NBR_disabled(monkeypatch):
+    from tercas.three_girt_axial.ui import LABEL as NBR_LABEL
+    from tercas.three_girt_axial.application import FIELD as NBR_FIELD
+    from tercas import three_girt_en_mv as mv
+    from tercas.three_girt_warping.report import word
+    from docx import Document
+    from io import BytesIO
+    d=apply(load_reference(3.35,4000.,5.),'wall_girt')
+    d['selected_types']=['ELU normal']
+    app=imported(monkeypatch,d);widget(app,'checkbox',WARPING).check();run(app)
+    widget(app,'checkbox',NBR_LABEL).uncheck();widget(app,'checkbox',LABEL).check();run(app)
+    widget(app,'checkbox',MODEL_LABEL).check()
+    widget(app,'text_input','Origem ou hipótese da seção nominal EN').set_value('Synthetic independent EN6.27 UI QA')
+    run(app);widget(app,'button','Calcular três travessas Vlasov e G8.1').click();run(app)
+    assert not app.exception
+    result=copy.deepcopy(app.session_state[RESULT_KEY]);source=saved_component(result)
+    assert NBR_FIELD not in result and source['EN_bending_shear_schema']==mv.COLLECTION_SCHEMA
+    assert all('EN_bending_shear_component' in r for r in source['rows'])
+    table=next(w.value for w in app.dataframe if 'Teto_interação_N_M_V_EN' in w.value.columns)
+    assert list(table['Travessa'])==['Central'] and table['Teto_interação_N_M_V_EN'].notna().all()
+    text='\n'.join(p.text for p in Document(BytesIO(word(result))).paragraphs)
+    assert 'Interação N–M–V e cortantes pela EN' in text and 'Mf=0' in text
+    def forbidden(*args,**kwargs):raise AssertionError('Independent EN read must not calculate')
+    monkeypatch.setattr(network,'solve',forbidden);monkeypatch.setattr(mv,'populate',forbidden)
+    run(app);assert app.session_state[RESULT_KEY]==result
+    widget(app,'checkbox',LABEL).uncheck();run(app)
+    assert RESULT_KEY not in app.session_state

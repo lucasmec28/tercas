@@ -1,6 +1,7 @@
 """Append the saved EN normal snapshot. No geometry or solver recalculation."""
 from ..three_girt_scope import view, central, NOTICE
 from .application import saved_component,SCHEMA
+from . import centroid_policy as cp
 from .ui import LEVELS
 from ..three_girt_report import _table
 
@@ -9,6 +10,7 @@ CRITERIA={
     'above_1_at_concomitant_state':'excesso em estado físico concomitante',
     'above_1_at_checked_state_full_envelope_incomplete':'excesso verificado, com cobertura parcial',
     'unresolved_numerical_bound':'inconclusivo: limite numérico não decidiu',
+    cp.PENDING:'pendente: cenário sem deslocamento do centroide não coberto',
     'incomplete_section_branch_coverage':'inconclusivo: falta ramo de seção efetiva'}
 
 
@@ -45,14 +47,14 @@ def append(document,demand):
                 '—' if w is None else w['combination_id']])
     if has_bounds:
         _table(d,['Travessa','Trechos ELU','Testemunha normal','Limite superior','Cobertura'],values,[1.0,1.05,1.25,1.25,1.5])
-        d.add_paragraph('Normal: a testemunha é um estado físico concomitante e não é apresentada como máximo exato. O limite superior cobre todos os operadores possíveis nos intervalos de troca de sinal. Só cobertura completa com limite superior ≤1 demonstra atendimento; limite inferior da testemunha >1 comprova excesso. Se a testemunha não excede 1 e o limite superior excede 1, a decisão é inconclusiva. Não se decide por tolerância em torno de 1. Limite numérico em binary64, não certificado formal intervalar.')
+        d.add_paragraph('Normal: a testemunha é um estado físico concomitante e não é apresentada como máximo exato. O limite superior cobre todos os operadores possíveis nos intervalos de troca de sinal. Só cobertura completa com limite superior ≤1 e cobertura de EN6.1.3(3), quando aplicável, demonstra atendimento; limite inferior da testemunha >1 comprova excesso. Se a testemunha não excede 1 e o limite superior excede 1, a decisão é inconclusiva. Não se decide por tolerância em torno de 1. Limite numérico em binary64, não certificado formal intervalar.')
     else:
         _table(d,['Travessa','Trechos ELU','Índice normal','Envelope','Combinação'],values,[1.0,1.05,1.2,1.2,1.6])
     d.add_paragraph('Máximos parciais excluem ramos bloqueados e não representam atendimento da travessa. Falha de elegibilidade não é reprovação resistente. Só o envelope completo dentro do limite pode demonstrar atendimento da componente normal no modelo declarado.')
     for member,item in c['per_member'].items():
         d.add_heading('Travessa '+LEVELS[member].lower()+' cobertura e testemunha',2)
         d.add_paragraph('Ramos pendentes: '+(', '.join(item['blocking_components']) or 'nenhum')+f". Intervalos de sinal elegíveis: {item['complete_sign_pieces']}/{item['total_sign_pieces']}.")
-        if has_bounds:d.add_paragraph('Decisão normal salva: '+CRITERIA[item['normal']['criterion']]+'. Os índices apresentados são arredondados; a decisão usa os valores completos salvos.')
+        if has_bounds:d.add_paragraph('Decisão normal com cobertura normativa: '+CRITERIA[cp.decision(c,member,'normal',item['normal']['criterion'])]+'. Os índices apresentados são arredondados; a decisão usa os valores completos salvos.')
         w=item['complete_envelope'] or item['partial_maximum']
         if w:
             if item['observed_normal_exceedance'] and not item['complete']:
@@ -78,7 +80,19 @@ def append(document,demand):
             d.add_paragraph('O ramo axial qualificado não libera os ramos de flexão pendentes. Os ramos seccionais efetivamente pendentes são listados por travessa acima; N qualificado não substitui nenhum deles. O transporte N·e e os sinais corrigidos podem exigir esses ramos, mantendo o envelope parcial. Intervalos e fatores de espessura constam do JSON.')
         else:
             d.add_paragraph('Somente a faixa central da alma é retirada pelas larguras efetivas em compressão uniforme ELU. Mesas e lábios permanecem integrais, com chi_d = 1 nos dois enrijecedores físicos. Faixas, propriedades e auditorias constam do JSON.')
-        d.add_paragraph('O transporte dos momentos por N·e é obrigatório e ocorre uma única vez. Não é substituição da seção efetiva pela bruta nem solução de tensão de serviço. As ações, reações e rigidezes da rede original permanecem inalteradas; B, omega/Cw e cisalhamento mantêm a seção bruta coerente prevista em §6.1.6. Estabilidade global e primeira ordem continuam sem aprovação por este complemento.')
+        d.add_paragraph('O transporte dos momentos por N·e ocorre uma única vez no cenário corrigido. Não é substituição da seção efetiva pela bruta nem solução de tensão de serviço. As ações, reações e rigidezes da rede original permanecem inalteradas; B, omega/Cw e cisalhamento mantêm a seção bruta coerente prevista em §6.1.6. Estabilidade global e primeira ordem continuam sem aprovação por este complemento.')
+        d.add_paragraph(cp.NOTICE+' Os números e testemunhas nas tabelas anteriores pertencem ao cenário corrigido salvo. Históricos sem prova adicional conservam esses números, mas não recebem crédito favorável.')
+        coverage=[]
+        for member in c['per_member']:
+            for key,label in (('normal','Normal'),('interaction','sigma–tau')):
+                policy=cp.qualification(c,member,key)
+                if not policy['required_segments']:continue
+                upper=policy['original_index_upper_bound']
+                coverage.append([LEVELS[member],label,f"{policy['covered_segments']}/{policy['required_segments']}",
+                    '—' if upper is None else f'{upper:.5f}','Coberto' if policy['qualified'] else 'PENDENTE'])
+        if coverage:
+            _table(d,['Travessa','Critério','Trechos cobertos','Teto sem deslocamento','EN 6.1.3(3)'],coverage,[.9,.9,1.1,1.5,1.2])
+            d.add_paragraph('Prova suficiente: D ≥ max|sigma_original − sigma_corrigida|. O teto original é Ucorr + D/250 para normal e Ucorr + D/275 para sigma–tau. D cobre os operadores dos sinais de ambos os cenários e toda a parede/trecho; B e tau não mudam. O teto não recebe posição, fibra, estado concomitante ou testemunha física.')
     flexures=[(name,c['component_sections']['components'][name]) for name in ('Mx_positive','Mx_negative') if c['component_sections']['components'][name].get('section_status')=='effective_local_flange_reduced_pure_Mx_ULS']
     if flexures:
         d.add_heading('Flexão forte com mesa localmente reduzida',2)
@@ -111,6 +125,8 @@ def append(document,demand):
         _append_shear(d,c)
     else:
         d.add_paragraph('Snapshot histórico: cisalhamento e interação sigma–tau não foram calculados. Não se requalifica o resultado durante a exportação.')
+    from ..three_girt_en_mv import append_report as append_mv
+    append_mv(d,c)
     d.add_paragraph('SHA256 do resultado normal salvo: '+c['content_sha256'])
 
 
@@ -127,9 +143,9 @@ def _append_shear(d,c):
     _table(d,['Travessa','Critério','Testemunha','Limite superior','Cobertura'],rows,[.95,1.0,1.1,1.2,1.0])
     for level,item in c['per_member'].items():
         values=item['shear_interaction']
-        decisions=[name+': '+('sem ramo elegível' if values[key] is None else CRITERIA[values[key]['criterion']]) for key,name in (('shear','cisalhamento'),('interaction','interação'))]
+        decisions=[name+': '+('sem ramo elegível' if values[key] is None else CRITERIA[cp.decision(c,level,key,values[key]['criterion'])]) for key,name in (('shear','cisalhamento'),('interaction','interação'))]
         d.add_paragraph(LEVELS[level]+'; '+'; '.join(decisions)+'.')
-    d.add_paragraph('A testemunha é um estado físico concomitante do modelo. A coluna Testemunha usa seu limite inferior conservador quando disponível. O limite superior é um majorante numérico de todo o intervalo e de todas as faces, não uma combinação física de máximos. Só cobertura completa com limite superior ≤ 1 demonstra atendimento do critério no modelo. O limite inferior de uma testemunha > 1 comprova excesso mesmo com cobertura parcial; limite não decidido não vira atendimento.')
+    d.add_paragraph('A testemunha é um estado físico concomitante do modelo. A coluna Testemunha usa seu limite inferior conservador quando disponível. O limite superior é um majorante numérico de todo o intervalo e de todas as faces, não uma combinação física de máximos. Só cobertura completa com limite superior ≤ 1 e cobertura de EN6.1.3(3), quando aplicável, demonstra atendimento do critério no modelo. O limite inferior de uma testemunha > 1 comprova excesso mesmo com cobertura parcial; limite não decidido não vira atendimento.')
     d.add_paragraph('As tensões são recuperadas em ambas as faces e no interior das paredes, não só nas fibras extremas da tensão normal. Envoltória de Bernstein quadrática na parede, com faixas analíticas dos campos hiperbólicos ao longo do vão. Subdivisão apenas quando necessária à decisão. Majorante numérico em binary64 com margem de arredondamento proporcional às magnitudes, não certificado formal de aritmética intervalar. O modelo de parede fina facetada não é um sólido curvo exato.')
     for level,item in c['per_member'].items():
         row=item['shear_interaction']['interaction']

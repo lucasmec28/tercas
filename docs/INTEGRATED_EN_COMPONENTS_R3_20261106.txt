@@ -1,0 +1,73 @@
+INTEGRAÇÃO DE COMPONENTES EN E REFERÊNCIA LOCAL DA CENTRAL
+06/11/2026. Atualização parcial; não é homologação estrutural.
+
+Escopo geométrico e físico
+As novas rotas EN têm domínio explícito nos sete contornos próprios
+Ue100x50x17, t=1,20/1,50/2,00/2,25/2,65/3,00/3,35 mm, com geometria,
+material e certificados vinculados. Isso não generaliza a qualquer perfil
+ou dimensão de tabela. Cada declaração de seção/modelo continua necessária.
+A telha não recebe crédito de contato ou travamento. Nas três travessas,
+a análise preserva as três barras, suas cargas, ligações, rigidezes e
+reações. Somente a central recebe as verificações resistentes solicitadas.
+
+1. Torção e tensões combinadas
+A análise Vlasov e os limites EN1993-1-3 §6.1.6 preservam N, flexão biaxial,
+B, cisalhamento transversal, Saint-Venant e empenamento. A rota AISI
+G8.1/H4 continua independente. A correção EN §6.1.3(3) impede creditar
+um deslocamento favorável do centroide efetivo calculado em fyb.
+O cenário sem deslocamento ganha um limite suficiente por diferença das
+tensões normais, sem novo solver e sem alterar B ou tau. Limite superior
+inconclusivo não é testemunha de falha. O panorama salvo anterior não pode
+reutilizar atendimento quando a nova cobertura é necessária e ausente.
+Isso é resistência seccional no modelo declarado, não estabilidade completa.
+
+2. Peso próprio e posição das ações
+O contrato direto já publicado permanece: cargas digitadas são externas,
+PP vem da massa da seção, com fatores 1,25 no ELU e 1,0 no ELS. PP fica no CG;
+as ações externas usam a linha superior declarada. Só PP é decomposto pelo
+ângulo na terça; na travessa é vertical. Dados históricos sem o marcador
+não são convertidos. O modo por área continua sem duplicação de PP.
+
+3. Cortante e interação N/M/V
+A resistência de parede EN §6.1.5 e a condição suficiente de §6.1.10/6.27
+são complementares ao critério de tensões com torção §6.1.6. Não se exige
+T=0 por causa da interação transversal, nem se converte torque em V.
+A rota usa capacidades inferiores próprias EN, primeiro escoamento efetivo,
+Mf=0 e ambos os cortantes; não mistura capacidades NBR/AISI. O teto é
+n+mx+my+max(rho_forte,rho_fraca), com rho=max(0,2v-1)^2 e cada v<=1.
+Momentos originais/corrigidos são comparados para não aproveitar benefício
+do centroide. Controles de Bernstein são majorantes, não estados físicos.
+Exceder esse teto suficiente não prova que a resistência real falhou.
+A antiga dispensa v1, de domínio restrito, continua histórica; sua exigência
+de torção nula não é apresentada como regra universal da norma.
+
+4. Estabilidade e travamento
+B1 por plano usa o vão físico integral e os vínculos declarados. O máximo
+de compressão por combinação fornece referência axial uniforme; N variável
+não bloqueia automaticamente essa aproximação. Há momentos amplificados e
+uma referência N/M separada quando todos os denominadores estão disponíveis.
+Ações e índices originais não são substituídos, nem se preenche Nc/Nt ausente.
+Não se usa B1<=1,10 como dispensa. Não se atribui apoio rígido aos tirantes
+ou à telha, nem se exigem aqui as resistências dos tirantes ou das extremas.
+A estabilidade global acoplada da rede continua sem conclusão automática.
+
+5. Flecha
+Permanecem as rotas explícitas uniaxiais e a análise da rede, com seus
+limites e guardas de consistência. Um índice uniaxial não substitui ELS
+físico completo com torção/biaxialidade ou prova de rigidez real do entorno.
+Não houve nova ampliação de escopo de ELS nesta atualização.
+
+Desempenho e preservação
+Os cálculos EN novos filtram a central antes dos envelopes resistentes
+caros, mantendo a validação mecânica das três barras. Não é remoção física
+do entorno. Schemas históricos continuam legíveis sem recalcular ou migrar
+suas demandas. A época de caches ativos é atualizada; entradas e históricos
+permanecem preservados. UI/Word e panorama usam as fontes salvas validadas.
+
+Evidência
+STAGED_RELEASE_REGRESSION_20261106.json registra a suíte completa da base
+congelada 23dd035, inclusive o único timeout legado de 3 s, sem ocultá-lo.
+O recibo final da integração registra separadamente os deltas posteriores,
+a repetição de persistência com orçamento explícito 30 s e os testes afetados.
+Este texto descreve o escopo; execução e publicação exigem seus recibos.
+Nenhum resultado desta atualização altera os flags de aprovação global.

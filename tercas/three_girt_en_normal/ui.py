@@ -1,6 +1,7 @@
 """Explicit opt-in and read-only saved normal-component display."""
 from ..three_girt_scope import view, central, NOTICE
 from .application import reference_configuration,saved_component
+from . import centroid_policy as cp
 LABEL='Incluir tensões normais e cisalhamento pela EN'
 MODEL_LABEL='Declarar modelo de seção nominal intacta, sem furos ou recortes'
 LEVELS={'upper':'Superior','middle':'Central','lower':'Inferior'}
@@ -9,7 +10,7 @@ LEVELS={'upper':'Superior','middle':'Central','lower':'Inferior'}
 def controls(st,data,demand_fingerprint,prefix):
     if not st.checkbox(LABEL,value=False,key=prefix+'_en_normal_enabled'):return None
     config=reference_configuration(dict(input_fingerprint=demand_fingerprint))
-    st.caption('Complemento seccional EN1993-1-3:2006, separado da NBR. Soma N, duas flexões e B na mesma fibra e posição. Apenas componentes com seção efetiva demonstrada no ELU; trechos fora do domínio ficam pendentes. Inclui cisalhamento e interação sigma–tau nos ramos elegíveis; não verifica estabilidade ou ELS.')
+    st.caption('Complemento seccional EN1993-1-3:2006, separado da NBR. Soma N, duas flexões e B na mesma fibra e posição. Apenas componentes com seção efetiva demonstrada no ELU; trechos fora do domínio ficam pendentes. Inclui cisalhamento, interação sigma–tau e componente N–M–V EN6.27 nos dois eixos, sem depender da referência NBR; não verifica estabilidade ou ELS.')
     with st.expander('Domínio do complemento normal EN'):
         st.caption('Seção própria Ue100×50×17, ri=t; fyb=fya=250 MPa, E de resistência=210000 MPa, nu=0,3 e gammaM0=1,00. Mantém E e combinações da demanda atual; não representa projeto integral EN. Espessura de cálculo/material reais precisam corresponder ao modelo declarado.')
         config['intact_section_model_declared']=st.checkbox(MODEL_LABEL,value=False,key=prefix+'_en_normal_intact')
@@ -19,6 +20,7 @@ def controls(st,data,demand_fingerprint,prefix):
         st.caption('N comprimido em 1,20/1,50 mm usa larguras locais e redução distorcional dos dois enrijecedores físicos pelo procedimento EN passos 1–2. A espessura efetiva reduz somente os As retidos, nunca a alma inteira. O transporte N·e continua obrigatório e ocorre uma única vez; os momentos corrigidos escolhem seus próprios ramos efetivos.')
         st.caption('My negativo em 1,50 mm usa alma efetiva reduzida por ponto fixo no ELU e mesas integrais com majorante triangular 149→0 MPa. Em 1,20 mm usa majorante misto 172→−43 MPa da própria mesa, sem crédito ao lábio. Mx± em 1,20 mm usa mesa comprimida localmente reduzida, Ixy e operador afim completos; o As físico permanece integral pela Eq5.17 no ELU normalizado nas faces. Os 42 ramos puros dos sete perfis estão disponíveis neste domínio, sem aprovação global.')
         st.caption('Nas trocas de sinal, coeficientes distintos são cobertos pela união de limites superiores; a testemunha física não é o máximo exato. Limite superior acima de 1 sem testemunha de excesso permanece inconclusivo.')
+        st.caption(cp.NOTICE)
     return config
 
 
@@ -29,6 +31,7 @@ def rows(component):
         'above_1_at_checked_state_full_envelope_incomplete':'Excesso normal em estado verificado; envelope parcial',
         'incomplete_section_branch_coverage':'Parcial: falta ramo de seção efetiva',
         'unresolved_numerical_bound':'Limite numérico não decidiu',
+        cp.PENDING:'Pendente: cenário sem deslocamento do centroide não coberto',
         'within_1_in_declared_section_model':'Dentro do limite normal no modelo',
         'above_1_in_declared_section_model':'Acima do limite normal no modelo'}
     for level,item in component['per_member'].items():
@@ -37,12 +40,16 @@ def rows(component):
         record=dict(Travessa=LEVELS[level],Cobertura=f"{item['complete_segments']}/{item['ELU_segments']} trechos ELU",
             Envelope='Completo no recorte' if item['complete'] else 'PARCIAL, não é envelope completo',
             Combinação=None if witness is None else witness['combination_id'],
-            Resultado=labels.get(item['normal_criterion'],'Não concluído'),
+            Resultado=labels.get(cp.decision(component,level,'normal',item['normal_criterion']),'Não concluído'),
             Ramos_pendentes=', '.join(item['blocking_components']) or 'Nenhum ramo seccional faltante')
         if normal:
             record['Índice_testemunha']=normal['index_lower_witness']
             record['Limite_superior']=normal['index_upper_bound'] if item['complete'] else normal['partial_index_upper_bound']
         else:record['Índice_normal']=None if witness is None else witness['normal_index']
+        policy=cp.qualification(component,level,'normal')
+        if policy['required_segments']:
+            record['Centroide_EN_6_1_3_3']='Coberto por teto suficiente' if policy['qualified'] else 'PENDENTE'
+            record['Teto_cenário_sem_deslocamento']=policy['original_index_upper_bound']
         records.append(record)
     return records
 
@@ -58,8 +65,9 @@ def render_saved(st,demand):
     axial=c['component_sections']['components']['N_compression']
     if axial.get('moment_transport_required'):
         st.caption(f"Compressão uniforme com seção efetiva reduzida: Aeff,N={axial['effective_properties']['A_mm2']:.6f} mm²; ex={axial['centroid_shift_from_gross_mm'][0]:.6f} mm. Momentos adicionais por N·e incluídos uma única vez nos momentos corrigidos; sinais e testemunhas usam esses valores.")
+        st.caption(cp.NOTICE+' As colunas de testemunha e limite superior mantêm o cenário corrigido salvo; o teto sem deslocamento é separado, sem recalcular históricos.')
     if any('normal' in row for row in c['per_member'].values()):
-        st.caption('Normal: testemunha física |sigmaN + sigmaMx + sigmaMy + sigmaB| /250 e limite superior são separados. Só cobertura completa com limite superior ≤1 demonstra atendimento. Limite inferior da testemunha >1 comprova excesso; os demais casos permanecem inconclusivos. Os limites são numéricos em binary64, não certificados formais intervalares.')
+        st.caption('Normal: testemunha física |sigmaN + sigmaMx + sigmaMy + sigmaB| /250 e limite superior são separados. Só cobertura completa com limite superior ≤1 e cobertura de EN6.1.3(3), quando aplicável, demonstra atendimento. Limite inferior da testemunha >1 comprova excesso; os demais casos permanecem inconclusivos. Os limites são numéricos em binary64, não certificados formais intervalares.')
     else:
         st.caption('Índice = maior |sigmaN + sigmaMx + sigmaMy + sigmaB| / 250 MPa, nas duas faces de cada segmento facetado. Campos concomitantes e extremos analíticos no vão. Empenamento constante através da espessura: não é solução de sólido curvo exato.')
     st.caption('Pendência de ramo não significa reprovação. Um máximo parcial não é envelope completo. NBR e AISI permanecem separadas; seus denominadores não entram neste índice. O critério de tensões não substitui flambagem por cisalhamento EN §6.1.5 nem interação N–M–V §6.1.10.')
@@ -67,6 +75,8 @@ def render_saved(st,demand):
         st.subheader('Cisalhamento e interação normal–cisalhamento EN')
         st.dataframe(shear_rows(c),hide_index=True)
         st.caption('Limites: |tau| ≤ 250/√3 MPa e √(sigma² + 3tau²) ≤ 275 MPa. A testemunha usa a mesma estação e fibra; o limite superior cobre continuamente todo o intervalo e a parede, mas não é uma combinação física de máximos. Se a cobertura é parcial, os números abrangem apenas os ramos calculados.')
+    from ..three_girt_en_mv import render_saved as render_mv
+    render_mv(st,c)
     with st.expander('Prova seccional e memória normal EN'):
         if has_shear:st.caption('Limites superiores numéricos em binary64, com margem de arredondamento proporcional às magnitudes. Não são certificados formais de aritmética intervalar.')
         st.json(dict(configuration=c['configuration'],material=c['component_sections']['material'],
@@ -78,6 +88,7 @@ def shear_rows(component):
         'above_1_at_concomitant_state':'Excesso em estado concomitante',
         'above_1_at_checked_state_full_envelope_incomplete':'Excesso verificado; cobertura parcial',
         'incomplete_section_branch_coverage':'Parcial: falta ramo de seção efetiva',
+        cp.PENDING:'Pendente: cenário sem deslocamento do centroide não coberto',
         'unresolved_numerical_bound':'Limite numérico não decidiu'}
     records=[]
     for level,item in component['per_member'].items():
@@ -89,5 +100,9 @@ def shear_rows(component):
                 Índice_testemunha=None if row is None else row['index_lower_witness'],
                 Limite_superior=None if row is None else row['index_upper_bound'] if values['complete'] else row['partial_index_upper_bound'],
                 Cobertura='Completa no recorte' if values['complete'] else 'PARCIAL',
-                Resultado='Sem ramo elegível' if row is None else labels[row['criterion']]))
+                Resultado='Sem ramo elegível' if row is None else labels[cp.decision(component,level,key,row['criterion'])]))
+            policy=cp.qualification(component,level,key)
+            if policy['required_segments']:
+                records[-1]['Centroide_EN_6_1_3_3']='Coberto por teto suficiente' if policy['qualified'] else 'PENDENTE'
+                records[-1]['Teto_cenário_sem_deslocamento']=policy['original_index_upper_bound']
     return records

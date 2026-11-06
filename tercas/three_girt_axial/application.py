@@ -284,6 +284,11 @@ def calculate(demand,config):
     from ..three_girt_shear import calculate_validated as calculate_web_shear
     try:out['web_shear_component']=calculate_web_shear(demand,ref)
     except (ValueError,TypeError,KeyError,ArithmeticError) as exc:out['web_shear_error']=str(exc)
+    from ..three_girt_scope import central
+    if central(demand):
+        from ..three_girt_local_stability import calculate_validated as calculate_local_B1, FIELD as B1_FIELD
+        try:out[B1_FIELD]=calculate_local_B1(demand,out)
+        except (ValueError,TypeError,KeyError,ArithmeticError) as exc:out['central_local_B1_error']=str(exc)
     out['content_sha256']=fingerprint(out)
     if fingerprint(demand)!=source_hash:raise AssertionError('Input demand was mutated')
     return out

@@ -46,6 +46,10 @@ def render_saved(st,demand):
     if component is None:return
     from ..three_girt_shear import render_saved as render_web_shear
     render_web_shear(st,component,demand=demand)
+    from ..three_girt_local_stability import render_saved as render_local_B1
+    render_local_B1(st,component,demand=demand)
+    if component.get('central_local_B1_error'):
+        st.info('Amplificação local B1 da central inconclusiva: '+component['central_local_B1_error'])
     component=view(component,demand)
     st.subheader('Compressão e flexão das travessas pela NBR')
     st.warning('Índices da referência de vão inteiro, não aprovação do conjunto. A central conserva N das diagonais; G8.1 e H4 não encerram N+M+B.')

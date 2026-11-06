@@ -73,7 +73,10 @@ class SimplifiedInputs(unittest.TestCase):
   self.assertEqual(next(x for x in at.number_input if 'mesa superior' in x.label).value,1500.)
   at.checkbox[0].check().run();at.button[1].click().run(timeout=30)
   self.assertEqual(at.session_state.result['input_data']['segments'][0]['Ly_top_effective_mm'],1500.)
-  at.checkbox[0].uncheck().run()
+  # This is a persistence check, not a 3 s latency benchmark. Match the
+  # explicit 30 s budget used for the surrounding calculation/rerenders.
+  at.checkbox[0].uncheck().run(timeout=30)
+  self.assertFalse(at.exception)
   self.assertEqual(next(x for x in at.number_input if 'mesa superior' in x.label).value,1500.)
  def test_auto_cb_short_length_has_visible_fallback(self):
   at=self.example()

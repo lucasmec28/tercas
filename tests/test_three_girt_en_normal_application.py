@@ -254,7 +254,10 @@ def test_shear_interaction_witnesses_recompose_with_complete_section_coverage(re
 
 def test_historical_normal_only_snapshot_still_exports(demand,result,monkeypatch):
     old=copy.deepcopy(result);old['schema']=a.LEGACY_SCHEMA
+    old.pop('EN_bending_shear_schema',None)
     for row in old['rows']:
+        row.pop('centroid_shift_policy',None)  # This later proof did not exist in v1.
+        row.pop('EN_bending_shear_component',None);row.pop('EN_bending_shear_error',None)
         row.pop('shear_interaction');row.pop('normal',None)
         for piece in row['pieces']:
             piece.pop('shear_interaction');piece.pop('normal',None)

@@ -16,6 +16,9 @@ def test_current_NBR_UI_saved_partial_and_invalidation(monkeypatch):
     saved=copy.deepcopy(app.session_state[RESULT_KEY]);assert FIELD in saved
     c=saved_component(saved);assert c['per_member']['middle']['missing_capacity_keys']==['Nt']
     assert c['per_member']['middle']['complete_reference_envelope'] is None
+    assert c['central_local_B1_component']['verified_members']==['middle']
+    assert c['central_local_B1_component']['network_stability_qualified'] is False
+    assert any(s.value=='Segunda ordem local da central (B1)' for s in app.subheader)
     def forbidden(*args,**kwargs):raise AssertionError('Display/export cannot rerun structural demand')
     monkeypatch.setattr(network,'solve',forbidden)
     run(app);assert app.session_state[RESULT_KEY]==saved

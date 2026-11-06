@@ -1,0 +1,111 @@
+CORTANTE TRANSVERSAL EN DO VÃO ISOLADO — 06/11/2026
+Base: f78544b63f7c3de2807a5fd05a21e08770e3b34b. Candidata local.
+
+DELTA E DOMÍNIO
+A rota explicitamente declarada EN do vão isolado passa a salvar uma componente
+separada de cortante transversal da alma. Somente família própria Ue100x50x17,
+as sete espessuras pinadas, ri=t, seção nominal intacta e fyb=250 MPa.
+Não há nova carga, solver, propriedade NBR/AISI, força fictícia ou vínculo.
+PP no CG, fatores e linhas de aplicação continuam exatamente como na demanda.
+A rede de três barras não recebe novos cálculos por esta integração.
+
+No contorno isolado, x é a direção das mesas e y é a direção da alma.
+Vy=dMx/ds é o cortante forte/transversal da alma. Vx=-dMy/ds é o cortante fraco.
+São convenções diferentes dos nomes de eixos do solver 7DOF: não se copia Vz
+literalmente da rede. A capacidade compartilhada usa hw=H-t e área hw*t,
+não a altura plana NBR H-2(ri+t). sw<=hw fornece lambda_w majorada e o piso
+Vw,Rd=hw*t*fbv/gammaM0 de EN1993-1-3 §6.1.5/Tabela6.1. E=210000 MPa e
+gammaM0=1 pertencem à capacidade EN, sem alterar a rigidez da análise.
+Sem crédito de enrijecedores longitudinais/de apoio ou conformação a frio.
+
+O campo Vy é afim por trecho. Intervalos arredondados para fora dos extremos
+cobrem o máximo absoluto de todo o trecho, preservando os dois lados de P e o
+estado before-P no limite a->0+. Não se somam máximos de seções diferentes.
+A capacidade geométrica é calculada em binary64; não se apresenta uma prova
+de arredondamento intervalar da capacidade nem de erro do MEF.
+Teto |Vy|/pisoVw<=1 é suficiente somente para a componente transversal.
+Teto>1 é inconclusivo, não falha comprovada da capacidade real.
+
+RETIFICAÇÃO IMPORTANTE DO ESCOPO DE §6.1.10
+A dispensa por VEd<=0,5Vw,Rd não é demonstrada para a seção inteira apenas por
+Vy transversal. EN1993-1-5:2006 §1.4, p6/PDF8, define VEd incluindo cortante
+de torque; EN1993-1-3:2006 §6.1.10 remete a EN1993-1-5. As tensões totais de
+V/Tsv/Tw continuam verificadas separadamente por §6.1.6 na rota existente.
+Não foi inventada uma conversão de Tsv/Tw em força equivalente de alma.
+B é tensão normal de empenamento: não é somado a V nem considerado torque.
+
+O snapshot distingue:
+- transverse_component_threshold_met: fato numérico |Vy|/pisoVw<=0,5;
+- shear_reduction_waiver_qualified: somente no subconjunto demonstrado sem
+  flexão/cortante fracos, B, Tsv e Tw, todos identicamente nulos, com N=0;
+- general_N_M_V_interaction_qualified e aprovação global: sempre falsos.
+Fora desse subconjunto, o limiar pode atender, mas a dispensa fica pendente.
+Nenhum campo pequeno é zerado por tolerância. Acima de0,5 não há ramo geral
+fabricado: faltam denominadores EN qualificados, especialmente My,Rd de §6.1.4.
+O operador de seção efetiva pura não é promovido automaticamente a essa
+resistência. Permanecem estabilidade, forças locais, ligações e ELS completo.
+
+Essa precisão restringe as afirmações de dispensa na nota histórica
+SIMPLIFIED_SHEAR_STABILITY_20261106.txt. Os snapshots antigos da rede ficam
+intactos, mas sua apresentação/Word agora diz 'Limiar transversal <=0,5;
+interação completa pendente', sem converter status legado em dispensa total.
+Na produção de novos panoramas da rede, V transversal=0 só exclui redução
+por V quando a solução analítica salva também prova Tsv=Tw=0: m_SC=0,
+phi nas duas extremidades igual, psi nas duas extremidades zero, GJ/ECw
+positivos e comprimento coerente. Isso implica torção constante sem precisar
+resolver novamente. Ausência de campos ou qualquer ação não nula mantém a
+pendência. Panoramas históricos já salvos são lidos sem reclassificação.
+
+FONTES
+EN1993-1-3:2006 §§6.1.5, 6.1.6 e6.1.10, pp45–47 e55:
+https://www.phd.eng.br/wp-content/uploads/2015/12/en.1993.1.3.2006.pdf
+EN1993-1-5:2006 §1.4, p6/PDF8:
+https://www.phd.eng.br/wp-content/uploads/2015/12/en.1993.1.5.2006.pdf
+Equações e geometrias previamente conferidas:
+docs/SIMPLIFIED_SHEAR_STABILITY_20261106.txt
+docs/ISOLATED_EN_INTEGRATION_20261106.txt
+
+PRESERVAÇÃO E LEITURA
+Novo campo opcional web_shear_component em cada registro ELU da aplicação.
+Hash próprio e vínculos ao mesmo campo denso, seção, combinação e snapshot
+compacto já usados pelas tensões EN. O payload v2 de tensões não muda.
+Falha apenas da nova componente registra motivo próprio, sem apagar tensões.
+Leituras conferem integridade, fonte, escopo, aritmética escalar, cobertura,
+contagens e prova de zeros salva. Não abrem geometria, não montam seções,
+não geram ações nem chamam cálculo resistente/solver.
+Sem campo salvo, o histórico continua sem cálculo EN de alma retroativo.
+UI/Word e panorama distinguem a componente transversal da dispensa qualificada.
+Todos os esforços e verificações anteriores são preservados.
+
+QA
+Testes novos: fórmulas independentes para sete espessuras, amostragem direta
+do campo, reversão de sinais, ambos os lados de P, before-P contra P fixa no
+apoio, limiares estritos 0,5/1, torção/força fraca não descartadas, domínio puro
+com dispensa verdadeira, JSON/Word, fontes/hashes, corrupção com hashes
+refeitos, leitura sem cálculo e legado sem migração. Resultados finais abaixo.
+
+REGRESSÃO FINAL
+123 testes aprovados em299,30s na candidata final:
+ tests/test_isolated_en_shear.py
+ tests/test_three_girt_assessment.py
+ tests/test_isolated_en_application.py
+ tests/test_ui_isolated_en.py
+Comando: OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1
+ PYTHONPATH=/workspace/shared/tercas_test_dependencies_20261106:.
+ python -m pytest -q <arquivos acima>
+Log: /tmp/isolated_shear_final_qa.log.
+Dependências: versões exatas de requirements.txt, mais pytest9.2.0, em target
+isolado compartilhado; o Python global não foi alterado.
+
+Revisão independente sem bloqueios remanescentes:78 testes adicionais/de
+regressão (com sobreposição) de panorama, UI e escopo central aprovados
+em217,48s; os32 testes da nova alma também passaram independentemente.
+Ela verificou a rejeição de zero Vy forjado com hashes refeitos e a prova de
+torção nula vinculada às cargas, rigidezes e deslocamentos dos nós salvos.
+A leitura da alma agora confere teto contra os extremos Vy compactos e cada
+testemunha contra o intervalo afim da peça, inclusive before-P.
+
+Compileall dos arquivos alterados e git diff --check aprovados. Esta seleção
+não é a suíte integral do aplicativo nem homologação física/normativa global.
+Na integração conjunta, atualizar a época de cache ativo; nenhum snapshot
+histórico é migrado. Não houve publicação ou alteração do checkout integrador.

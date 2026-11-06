@@ -1,0 +1,72 @@
+{
+  "schema": "EN_centroid_policy_QA_receipt_v1",
+  "base_commit": "23dd0355e129c66d80b269fe18cd416c9fb0e9ad",
+  "normative_source": "EN1993-1-3:2006 6.1.3(3), p.42/PDF44",
+  "normative_url": "https://www.phd.eng.br/wp-content/uploads/2015/12/en.1993.1.3.2006.pdf",
+  "policy_schema": "EN_6_1_3_3_yield_centroid_original_stress_bound_v1",
+  "independent_static_review": "No remaining blocker identified in difference bound, thickness/geometry binding, witnesses or saved-panorama gate.",
+  "commands": [
+    "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 python -m pytest -q tests/test_three_girt_assessment.py tests/test_three_girt_en_normal_application.py tests/test_three_girt_en_middle_calculation.py --durations=8",
+    "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 python -m pytest -q tests/test_three_girt_en_normal_application.py::test_historical_normal_only_snapshot_still_exports tests/test_three_girt_en_centroid_policy.py tests/test_three_girt_en_signed_branch_application.py tests/test_three_girt_en_axial_transport.py --durations=5"
+  ],
+  "results": {
+    "integration": {
+      "passed": 193,
+      "fixture_failure": 1,
+      "seconds": 439.86
+    },
+    "final_focused": {
+      "passed": 64,
+      "failed": 0,
+      "seconds": 56.05
+    },
+    "distinct_cases_passing_after_fixture_fix": 257
+  },
+  "fixture_correction": "The test fabricating a v1 normal-only snapshot now removes centroid_shift_policy together with the later normal/shear fields. That bound proof did not exist in v1. Production validation was not relaxed. The unrelated synthetic assessment fixture explicitly declares zero centroid shift.",
+  "geometry_check": "Seven pinned thickness/hash pairs and all 832 exterior vertices per profile checked; wrong thickness/hash pairs rejected.",
+  "saved_fixture": {
+    "filename": "joint_t1.2_snapshot.json",
+    "sha256": "2358452af66d3ec7eee1ba0d77f1aabab82e87410bcf248d0ce689e0d431fedc",
+    "original_EN_component_sha256": "33048c967e7a44f82f10617b7222976138686afe7348c56b036b2d61da918f5c",
+    "proof_augmented_EN_copy_sha256": "bee56a584e94409c264a59239da0bed65818f3015d73733ccddd5e4f61d3f94f",
+    "rows": 36,
+    "required_segments": 24,
+    "policy_arithmetic_seconds": 0.07785332099956577,
+    "saved_read_assess_word_seconds": 6.725647759998537,
+    "normal_original_scenario": {
+      "covered": 8,
+      "pending": 16,
+      "upper": 2.4503568043756556
+    },
+    "interaction_original_scenario": {
+      "covered": 8,
+      "pending": 16,
+      "upper": 2.389064672710973
+    },
+    "numeric_payload_unchanged": true,
+    "mechanical_source_unchanged": true,
+    "no_solver_or_envelope_on_saved_read": true,
+    "old_panorama_retired": true,
+    "full_historical_Word_verified": true,
+    "qualified_EN_only_Word_verified": true,
+    "dependent_NBR_hash_not_restamped": true,
+    "uncovered_by_prior_corrected_criterion": {
+      "normal": {
+        "above_1_at_concomitant_state": 16
+      },
+      "interaction": {
+        "above_1_at_concomitant_state": 16
+      }
+    },
+    "prior_within_limit_cases_lost_by_new_gate": {
+      "normal": 0,
+      "interaction": 0
+    }
+  },
+  "limitations": [
+    "Sufficient conservative bound, not an exact original-scenario envelope or a physical witness.",
+    "Upper bound above 1 remains pending; only an existing physical lower witness can establish an exceedance.",
+    "No network, NBR, AISI, ELS or global-approval formula changed.",
+    "No deployment or full-application aggregate QA claimed by this receipt."
+  ]
+}

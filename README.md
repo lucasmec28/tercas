@@ -447,3 +447,36 @@ análise física completa como entorno elástico. Não se removem cargas ou
 rigidez nem se inventam apoios. Históricos continuam com o escopo registrado.
 Ver `docs/CENTRAL_VERIFICATION_SCOPE_20261106.md`. Estabilidade relevante à
 central, ELS físico completo e aprovação global continuam separados.
+
+### Cortante transversal EN do vão isolado
+
+A mesma opção EN salva agora a componente da alma de §6.1.5, com piso
+conservador de Vw,Rd e Vy forte do campo existente. O limiar transversal de
+0,5 não demonstra dispensa §6.1.10 quando coexistem outros esforços:
+VEd inclui cortante de torque. A dispensa só é qualificada no subconjunto
+sem flexão/cortante fracos, B, Tsv e Tw, todos exatamente nulos. Interação
+geral, estabilidade e aprovação global permanecem pendentes. UI/Word usam
+somente evidência salva, sem migrar históricos. A redação da rede também
+distingue o limiar transversal de uma dispensa completa.
+Ver `docs/ISOLATED_EN_WEB_SHEAR_20261106.txt`.
+
+### Complementos EN e referência local B1 de 06/11/2026
+
+A atualização adicional mantém as três barras no modelo e calcula os envelopes
+resistentes EN somente da central nos estudos novos. Ela acrescenta a condição
+suficiente EN §6.1.10/6.27 para N, flexão biaxial e os dois cortantes, separada
+das tensões com torção de §6.1.6. Não se exige torque nulo nem se misturam
+resistências EN, NBR e AISI.
+
+A guarda EN §6.1.3(3) cobre também a omissão de deslocamento favorável do
+centroide efetivo calculado em fyb. A referência local B1 admite N máximo
+por combinação e conserva os índices originais; não preenche resistências
+faltantes e não transforma amplificação local em aprovação da rede.
+
+O domínio das novas rotas EN é a família própria Ue100×50×17 com sete
+espessuras e certificados/material declarados, não qualquer seção. Histórico,
+limites suficientes inconclusivos, falhas físicas e pendências globais são
+mantidos distintos. Veja `docs/INTEGRATED_EN_COMPONENTS_R3_20261106.txt`,
+`docs/EN_SIMPLIFIED_INTERACTION_20261106.txt`,
+`docs/EN_CENTROID_FAVOURABLE_STRESS_20261106.txt` e
+`docs/CENTRAL_LOCAL_B1_20261106.md`. Nenhuma homologação global é emitida.

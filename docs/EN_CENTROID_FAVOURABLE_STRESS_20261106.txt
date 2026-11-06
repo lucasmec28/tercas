@@ -1,0 +1,101 @@
+EN6.1.3(3) / EN6.1.6: deslocamento favorável do centroide
+=====================================================
+
+Fonte normativa
+EN1993-1-3:2006, §6.1.3(3), p.42 (PDF44):
+https://www.phd.eng.br/wp-content/uploads/2015/12/en.1993.1.3.2006.pdf
+"When the shift of the neutral axis gives a favourable result in the stress
+check, then that shift should be neglected only if the shift has been calculated
+at yield strength and not with the actual compressive stresses."
+
+Os ramos axiais efetivos desta família são calculados em fyb. Avaliar apenas os
+momentos transportados pode dar crédito favorável por cancelamento com B ou
+outra parcela de tensão. Escolher apenas o maior módulo de momento não prova a
+dominância da tensão total de EN6.1.6.
+
+Alteração restrita
+- Nenhum solver, carga, rigidez, ação da rede, NBR/AISI ou ELS muda.
+- As testemunhas e os números do cenário corrigido permanecem como antes.
+- Cada trecho novo recebe centroid_shift_policy, schema versionado
+  EN_6_1_3_3_yield_centroid_original_stress_bound_v1, vinculado ao certificado
+  de seção, transporte, limites corrigidos e identidade do trecho.
+- A regra só exige cobertura adicional quando N<0 e existe momento Ne não nulo.
+  N=0, tração e e=0 não recebem uma exigência nova.
+
+Certificado suficiente, não um novo cenário físico testemunhado
+D limita |sigma_original - sigma_corrigida| em toda a parede e trecho. A diferença
+elimina o N/Aeff comum, B e o cisalhamento. N constante implica derivadas iguais
+dos momentos antes/depois do transporte, portanto tau permanece inalterado.
+
+O campo restante é quadrático em t e afim na seção. Operadores possíveis são
+selecionados pelas uniões exatas de sinais de cada cenário, incluindo intervalos
+sub-ulp. O eixo com polinômios idênticos tem diferença zero, mesmo se troca sinal.
+Para os demais eixos, a união conservadora de pares de operadores cobre todas as
+possibilidades. Coeficientes racionais exatos dos valores binary64 geram o teto
+de Bernstein quadrático em [0,1]. Os quatro cantos da caixa que contém todas as
+paredes bastam para a dependência afim. A soma dos tetos por eixo continua sendo
+apenas um majorante.
+
+A caixa deriva das dimensões da família pinada Ue100x50x17, do t salvo e do Cg:
+x em [-t/2,50-t/2]-Cg.x, y em [-t/2,100-t/2]-Cg.y, com pad externo de 1e-9 mm.
+A geração confere todas as fibras exteriores contra essa caixa. A leitura
+confere os vínculos e a aritmética salva sem reconstruir seção ou solucionar rede.
+
+Desigualdades triangular e Lipschitz:
+Uoriginal,normal <= Ucorrigida,normal + D/250
+Uoriginal,interacao <= Ucorrigida,interacao + D/275
+
+O último valor é um teto de sqrt(sigma²+3tau²), que é 1-Lipschitz em sigma para
+tau fixo. Os resultados racionais são arredondados para cima. Isso não transforma
+o envelope corrigido, cujo método/padding continua binary64, em prova formal de
+aritmética intervalar.
+
+Não se atribui ao teto original t, fibra, estado recuperado ou witness. O limite
+superior >1 não é falha física: gera pendência específica. Uma testemunha física
+corrigida já acima de 1 permanece falha comprovada no respectivo critério.
+
+Históricos e apresentação
+Os schemas externos v1-v5 e seus escopos não são reescritos. A leitura de um
+histórico sem essa prova preserva todos os números, mas UI, Word, resumo e
+panorama não podem concluir atendimento de normal/interação na compressão com
+Ne não nulo. Cisalhamento puro não recebe o gate. A prova é separada do critério
+N-M-V/6.27, da estabilidade e da aprovação global, que continuam independentes.
+
+Regressões executadas
+- cancelamento com B apesar de maior módulo do momento corrigido;
+- operadores distintos e raízes nos cenários original/corrigido;
+- N=0, tração e e=0 intactos;
+- teto sem witness e pendência sem falsa reprovação;
+- alteração do schema, hashes, identidade, D e witness rejeitada mesmo após
+  recompor o hash da política;
+- históricos sem promoção e panorama aceitando teto suficiente sem inventar
+  testemunha concomitante.
+
+QA em 06/11/2026
+Revisão independente estática concluída sem bloqueio na prova D, no vínculo
+espessura/hash geométrico ou na retirada do panorama antigo. Os sete perfis
+usam seus hashes geométricos pinados por espessura; o nome textual do perfil
+não é utilizado como substituto desse vínculo.
+
+193 casos de integração passaram. Houve uma falha exclusivamente na fixture
+que fabricava v1 apagando normal/shear, mas retinha a nova prova vinculada a
+esses campos. A fixture agora também remove centroid_shift_policy, inexistente
+em v1. O leitor de produção não foi enfraquecido. A rodada final desse teste
+mais os casos focados passou: 64/64. São 257 casos distintos aprovados ao final.
+A fixture sintética de contrato do assessment também declara e=0 explicitamente.
+
+Snapshot ENv5 de 1,20 mm: 36 trechos, 24 com compressão Ne. A aritmética da prova
+levou 0,078 s; os tetos cobriram 8 dos 24 trechos e deixaram a prova adicional
+pendente em 16 para os dois critérios. Todos esses 16 já apresentavam excesso
+físico concomitante no cenário corrigido, tanto normal quanto interação. Nenhum
+atendimento anterior desse snapshot foi perdido apenas pela nova guarda.
+Nenhum teto foi promovido a falha física. Números, testemunhas e
+fonte mecânica permaneceram idênticos. Word histórico completo e relatório EN
+qualificado isolado foram conferidos com solver, reconstrução de seção e novo
+envelope proibidos. O hash NBR dependente da EN histórica não foi regravado na
+cópia de QA. Fluxos novos completos foram exercitados pela suíte de integração.
+
+Comandos, hashes e resultados estão no recibo técnico compacto
+qa/centroid_policy_20261106/receipt.json. O snapshot grande e os Word de QA não
+integram o commit. Esta evidência não atesta publicação nem substitui a suíte
+agregada final da aplicação.

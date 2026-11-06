@@ -1,0 +1,315 @@
+Aplicabilidade de curling e shear lag nas sete seções Ue100
+
+Data da revisão: 06/11/2026.
+Repositório examinado: lucasmec28/tercas.
+Base examinada: 1cac48ba1beaa9dffb4fb36646734c9beafda4ec.
+
+Este documento preserva uma revisão normativa e cálculos de pesquisa. Não é
+um certificado integrado ao aplicativo, não altera fontes geométricas e não
+qualifica retroativamente resultados salvos. Nenhum código novo, solver,
+modificação de produção ou publicação faz parte desta entrega.
+
+Conclusão
+
+Há uma verificação escalar suficiente de curling para as componentes puras
+de flexão das sete seções efetivas EN. As margens geométricas são amplas.
+Shear lag também admite dispensa simples, mas depende do comprimento entre
+zeros do momento. O comprimento total de 3 a 6 m não basta para qualquer
+combinação com força concentrada ou qualquer diagrama da travessa central.
+
+Esses resultados tratam a aplicabilidade das seções no método simplificado.
+Não constituem demonstração da deformação física combinada sob N/M/B,
+estabilidade, resistência local de ligações ou aprovação global do membro.
+Não se propõe um modelo universal para resolver essas questões separadas.
+
+1 Fontes normativas e conferência visual
+
+EN1993-1-3:2006, exemplar inglês BS com corrigenda incorporada:
+https://www.phd.eng.br/wp-content/uploads/2015/12/en.1993.1.3.2006.pdf
+SHA256 do PDF consultado:
+fd37edf92be58e1dc48745c29ed5a14265797b4f5a8e16f0e6f3f5f6f899d163
+
+Páginas conferidas visualmente:
+- §5.4(1), p.22 impressa, página 24 do PDF: dispensa de curling inferior a
+  5% da altura da seção.
+- §5.4(2), Eq.5.3a e Fig.5.3, p.23 impressa, página 25 do PDF: equação para
+  perfil inicialmente reto e definições de suas grandezas.
+- §6.1.4.3, p.45 impressa, página 47 do PDF: remissão de shear lag à EN15.
+- §6.1.6(3)-(5), pp.46-47 impressas, páginas 48-49 do PDF: propriedades
+  efetivas para N/M e propriedades brutas para B e cisalhamentos.
+- §6.1.4.1(4): a seção efetiva de flexão é determinada para momento puro
+  sobre o eixo pertinente, no ELU de referência.
+
+EN1993-1-5:2006, exemplar inglês BS:
+https://www.phd.eng.br/wp-content/uploads/2015/12/en.1993.1.5.2006.pdf
+SHA256 do PDF consultado:
+91e91d5a8f7cb3a6e28549f29118eb3c6306c80977b22305a52e63be08f4d47a
+
+Páginas conferidas visualmente:
+- §3.1(1)-(3), §3.2.1 e Fig.3.1, p.9 impressa, página 11 do PDF.
+- Fig.3.2 e Tabela3.1, p.10 impressa, página 12 do PDF.
+
+As imagens foram conferidas na revisão; os PDFs normativos não são
+redistribuídos com este documento. Os hashes identificam os exemplares,
+não certificam a vigência normativa para uma obra ou seu Anexo Nacional.
+
+2 Domínio geométrico e material examinado
+
+São os sete contornos próprios congelados Ue100x50x17, raio interno ri=t,
+espessuras t=1,20/1,50/2,00/2,25/2,65/3,00/3,35 mm, com 209 nós cada.
+Altura externa 100 mm, largura externa 50 mm e lábio externo 17 mm.
+
+Fontes do repositório na base indicada:
+- tercas/data/torsion_profiles/ue100x50x17_t*.json
+- tercas/three_girt_en_normal/en1993_normal_components.py
+- tercas/isolated_en_stress.py
+- tercas/three_girt_en_normal/application.py
+- tests/test_three_girt_en_normal_sections.py
+
+O cálculo usa a geometria facetada de linha média e os operadores afins
+puros já construídos pelo aplicativo. Não substitui esses contornos por
+uma geometria lisa, catálogo dimensionalmente semelhante ou outra seção.
+O domínio resistente EN é E=210000 MPa, fyb=fya=250 MPa e gammaM0=1.
+Não se transfere esta prova para outro E, aço, espessura de núcleo, furo ou
+recorte. O E da demanda pode estar salvo separadamente e não foi alterado.
+
+3 Curling pela equação para perfil inicialmente reto
+
+EN13 Eq.5.3a:
+
+    u = 2 * sigma_a^2 * b_s^4 / (E^2 * t^2 * z)
+
+A norma admite mesas comprimidas e tracionadas, com ou sem enrijecedores,
+mas a expressão não se destina ao caso com enrijecedores transversais de
+mesa muito próximos. O perfil deve ser reto antes da aplicação das ações.
+Não se substitui a equação de viga inicialmente arqueada por esta expressão.
+
+Definições reais da norma:
+- u: deslocamento da mesa em direção ao eixo neutro, denominado curling.
+- b_s: metade da distância entre almas em seções caixão/cartola, ou largura
+  da parcela de mesa que se projeta para fora da alma, conforme Fig.5.3.
+- t: espessura da mesa.
+- z: distância da mesa em consideração ao eixo neutro.
+- sigma_a: tensão longitudinal média na mesa, referida à área bruta. Quando
+  obtida sobre seção efetiva, a norma determina a conversão pela razão da
+  área efetiva da mesa para sua área bruta. Não é o pico isolado de uma
+  parcela arbitrária, nem automaticamente a tensão total dividida por fy.
+
+A condição de dispensa de §5.4(1) é estrita: u < 0,05 * altura da seção.
+
+4 Aplicação de curling às componentes puras existentes
+
+A flexão forte considera as duas mesas projetadas da alma, com b_s<=50 mm.
+Na orientação da flexão fraca, a alma original é o painel interno entre as
+duas mesas originais, que funcionam como as paredes transmissoras. Usa-se
+b_s<=100/2=50 mm nesse painel; os lábios são balanços de até 17 mm. O uso de
+50 mm para todos esses painéis é uma majoração geométrica.
+
+Para cada ramo puro Mx+/Mx-/My+/My-, a linha de tensão nula foi obtida do
+operador já existente:
+
+    sigma por unidade de momento = c0 + cx*(x-Cgx) + cy*(y-Cgy).
+
+A distância perpendicular de um ponto da linha média à linha neutra é:
+
+    abs(c0 + cx*(x-Cgx) + cy*(y-Cgy)) / sqrt(cx^2 + cy^2).
+
+Foram considerados os painéis físicos delimitados pelos meios dos cantos,
+como no próprio construtor de seções, e os dois sentidos de cada eixo.
+Índices de nós inclusivos usados na auditoria da linha média:
+- Mesas da flexão forte: 20..60 e 148..188.
+- Painéis da flexão fraca: 0..20, 60..148 e 188..208.
+Os índices referem-se exclusivamente à ordem dos 209 nós congelados.
+
+Não foi usado z=H/2 cegamente: a seção efetiva t1,20 em Mx tem Ixy e termo
+constante; os My negativos finos têm eixo neutro deslocado. As parcelas
+cx/cy/c0 foram mantidas. Os resultados abaixo são numéricos em binary64,
+não uma prova formal intervalar da geometria física.
+
+Valores mínimos de z observados na linha média, em mm, por espessura:
+
+ t       forte        fraca
+ 1,20    48,251596     16,750444
+ 1,50    48,590990     16,450093
+ 2,00    48,121320     15,948771
+ 2,25    47,886485     15,697754
+ 2,65    47,510749     15,295616
+ 3,00    47,181981     14,943213
+ 3,35    46,853212     14,590296
+
+Pisos deliberadamente inferiores para a prova comum às sete seções:
+
+    z_forte >= 45 mm; z_fraca >= 14 mm;
+    b_s <= 50 mm; t >= 1,20 mm; E = 210000 MPa.
+
+Nos estados puros de referência ELU, |sigma_a|<=250 MPa. A média de tensões
+sobre a área efetiva, convertida para a área bruta, não excede esse teto.
+Nas componentes integrais normalizadas pela linha média, a média de mesa
+é igualmente limitada; não se confunde essa média com o pico exterior.
+
+Como u cresce com sigma_a^2 e b_s^4 e decresce com t^2 e z, a substituição
+pelos limites acima fornece:
+
+    u_forte <= 0,273386104 mm < 5,0 mm = 5% de 100 mm;
+    u_fraca <= 0,878741047 mm < 2,5 mm = 5% de 50 mm.
+
+Para a flexão fraca foi adotada conservadoramente a altura 50 mm da seção
+na orientação girada. Os lábios têm largura menor que 50 mm e não pioram
+essa majoração.
+
+Conclusão por seção pura: a redução por curling pode ser dispensada neste
+recorte de referência, desde que se preservem as condições geométricas,
+material, interpretação dos painéis e perfil inicialmente reto descritas.
+Essa é uma prova candidata para documentar a aplicabilidade das seções
+puras existentes. Não está gravada como novo certificado no aplicativo.
+
+Limite da conclusão: não se calculou u físico do campo combinado N/M/B.
+Um teto de |sigma_total|<=250 MPa, com cancelamentos entre parcelas, não
+permite por si só preencher sigma_a e z na Eq.5.3a. Não se declarou que o
+eixo neutro combinado permanece em H/2 ou que a expressão escalar possa
+ser aplicada sem definição ao campo de empenamento. Também não se
+apresenta essa declaração física mais ampla como condição adicional
+inventada para o método seccional simplificado de §6.1.6.
+
+5 Shear lag e a condição de dispensa
+
+EN15 §3.1(1):
+
+    b0 < Le/50.
+
+A desigualdade é estrita. b0 é a largura do balanço de mesa ou metade da
+largura de elemento interno. Le é o comprimento entre pontos de momento
+fletor nulo; não é automaticamente o vão total, a malha ou o espaçamento
+dos tirantes.
+
+Para as sete Ue, nos dois eixos, b0<=50 mm. Assim, uma condição suficiente
+comum, sem refinar as larguras reais, é:
+
+    Le > 2500 mm.
+
+A Tabela3.1 define adicionalmente, quando usada a sua rota de largura:
+
+    kappa = alpha0*b0/Le;
+    alpha0 = sqrt(1 + Asl/(b0*t));
+    beta = 1 quando kappa <= 0,02.
+
+Asl é a área dos enrijecedores longitudinais dentro de b0. A dispensa de
+§3.1(1) não recebe uma condição extra de kappa. Como verificação adicional,
+mesmo contando todo o lábio de 17 mm como enrijecedor da mesa forte e usando
+Le=3000 mm:
+
+    kappa_forte <= sqrt(50*(50+17))/3000 = 0,019293063;
+    kappa_fraca <= 50/3000 = 0,016666667.
+
+Esses dois valores também pertencem ao ramo beta=1. A área do lábio é
+majorada por 17*t; não foi usada uma seção efetiva para inflar artificialmente
+Le ou eliminar um termo desfavorável.
+
+EN15 §3.2.1(2)/Fig.3.1 oferece aproximações para vigas contínuas quando
+vãos adjacentes não diferem mais de 50% e balanços não excedem metade do
+vão adjacente. A figura contém 0,85L1, 0,70L2, 0,25(L1+L2) e 2L3. Fora desse
+recorte, Le deve vir dos pontos adjacentes de momento nulo. Não se aplicaram
+os fatores da figura automaticamente à rede Pierin.
+
+6 Domínio suficiente do vão isolado
+
+A dispensa se fecha nas sete seções para o seguinte recorte:
+- Vão reto simplesmente apoiado, N=0 da fonte isolada.
+- Somente ações transversais uniformemente distribuídas, inclusive PP no
+  CG e ações externas no topo; nenhuma força concentrada interna.
+- Momentos ativos em cada eixo com zeros apenas nas extremidades.
+- L>2500 mm; em particular, todo o intervalo 3 a 6 m examinado atende.
+
+Nesse recorte, cada momento ativo é proporcional a x*(L-x), portanto Le=L.
+Forças uniformes de sentidos opostos podem cancelar seu coeficiente; se
+um eixo ficar exatamente sem momento, sua parcela de flexão está ausente.
+Não se atribui a ela Le infinito. A linha de carga no topo e a torção ativa
+não invalidam por si esse diagrama de flexão no modelo linear declarado.
+
+Isso não cobre automaticamente P interno, mudanças de carregamento ao
+longo do vão, momentos impostos nas extremidades ou qualquer outra condição
+capaz de criar zonas curtas entre zeros. Uma carga concentrada não implica
+que a dispensa sempre falhe: exige examinar o diagrama real.
+
+7 Contraprova existente no próprio repositório
+
+Fonte: tests/test_isolated_en_stress.py, função make(reversal=True), na
+base 1cac48b. São entradas sintéticas de teste, não um projeto físico:
+
+    L=4000 mm; qy=-0,15 N/mm;
+    Py=+500 N em a=1700 mm.
+
+As outras componentes e os torques do teste não são apagados; apenas o
+seu diagrama forte é suficiente para esta contraprova.
+
+As reações transversais são 12,5 N à esquerda e 87,5 N à direita. Na convenção
+correspondente, em Nmm e com x em mm:
+
+    Mx(x) = 12,5*x - 0,075*x^2,                  0<=x<=1700;
+    Mx(x) = 512,5*x - 0,075*x^2 - 850000,       1700<=x<=4000.
+
+Os zeros são:
+
+    0; 166,6666667; 2833,3333333; 4000 mm.
+
+Os comprimentos entre zeros são 166,6666667; 2666,6666666; 1166,6666667 mm.
+No primeiro intervalo, Le/50=3,3333333 mm, muito menor que a mesa física
+da Ue. No último, Le/50=23,3333333 mm também é insuficiente para essa mesa.
+Logo, L=4000 mm e elegibilidade da seção efetiva não dão uma dispensa
+universal. Essa contraprova não afirma falha resistente: falhar a condição
+suficiente significa que a dispensa por essa regra não foi demonstrada.
+
+8 Travessa central e transporte de N
+
+O modelo resolve a rede completa e mantém as ligações e forças; a seleção
+central é um escopo de verificação, não um vão isolado substituto.
+Os momentos são polinomiais por trecho físico. Conexões podem modificar
+inclinações, sentidos e condições de extremidade. Um tirante não define
+sozinho um novo Le, e um elemento de malha não define uma zona de shear lag.
+
+Na rota EN, N é constante em cada trecho. Com e=Ceff,N-Cg e convenção R01:
+
+    Mx_corr = Mx - N*ey;
+    My_corr = My + N*ex.
+
+Esse transporte ocorre uma única vez. Uma qualificação da dispensa precisa
+definir coerentemente os diagramas de flexão usados pela seção efetiva,
+preservar Ne, sinais, continuidade física e eventuais saltos. Não se pode
+apagar a correção para obter zeros mais convenientes. N constante não
+significa que os diagramas corrigidos tenham zeros nas extremidades.
+
+A guarda suficiente pode aceitar zonas qualificadas com Le>2500 mm nos
+eixos ativos. Quando não houver dois zeros delimitadores demonstrados,
+não se inventa Le=L ou infinito. É necessário justificar o Le aplicável
+pelas condições reais do modelo ou manter a dispensa inconclusiva. Os
+polinômios, ações e referências necessários já estão presentes; não se
+concluiu que falta um solver universal ou um dado geométrico adicional.
+
+9 Compatibilidade com N e torção em EN6 1 6
+
+EN13 §6.1.6(3),(5) manda usar as respectivas seções efetivas para N/M e a
+mesma seção bruta coerente para B, V, Tsv e Tw. A remissão de shear lag em
+§6.1.4.3 trata das componentes de flexão. Não foi encontrada base nessas
+cláusulas para impor um beta de shear lag adicional a B ou exigir Le para
+liberar a parcela bruta de empenamento.
+
+N puro uniforme segue §§6.1.2 e 6.1.3. A introdução de tração por uma ligação
+em balanço tem remissão específica em §6.1.2(2) à EN1993-1-8 §3.10.3 e não
+é dispensada pela regra de vão de flexão. Forças locais, ligações e a
+realização dos vínculos conservam escopo próprio.
+
+As condições propostas não eliminam EN6.1.5, EN6.1.10 ou estabilidade.
+Não misturam capacidades NBR ou AISI com a prova EN. Também não tornam
+as combinações de ações existentes uma análise integral EN.
+
+10 Resultado a preservar
+
+A pesquisa sustenta uma verificação curta de curling das componentes puras
+e uma guarda por diagrama para dispensar shear lag. Não sustenta uma flag
+universal para toda combinação isolada ou toda travessa central.
+
+Para eventual implementação futura, ainda seria necessário registrar essas
+hipóteses, os valores/zonas examinados e a origem, vincular o registro ao
+caso e às seções corretas, testar as contraprovas e preservar históricos
+sem requalificação automática. Isso descreve o limite da pesquisa, não uma
+implementação feita ou uma extensão prometida nesta entrega.

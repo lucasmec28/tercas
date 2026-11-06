@@ -39,20 +39,32 @@ def render_choice(st,data,key):
         st.caption('Somente Ue100 próprio, N=0, fyb=fya=250 MPa e ELU. Seções efetivas EN; '
             'E=210000 MPa e γM0=1 no critério, sem alterar E/G das ações calculadas. '
             'O modelo Vlasov e suas linhas de carga precisam estar disponíveis. '
-            'Flambagem por cisalhamento, interação N–M–V, estabilidade e ELS permanecem separados.')
+            'Cortantes transversais EN6.1.5 e interação EN6.1.10 nos dois eixos complementam 6.1.6; '
+            'estabilidade e ELS permanecem separados.')
 
 
 def rows(ev):
     out=[]
     for row in ev['records']:
         check=row['check'];criteria=check['criteria'] if check else {}
+        web=row.get('web_shear_component')
+        mv=web.get('bending_shear_component') if web else None
         out.append({'Combinação':row['combination_id'],
             'Teto normal EN':criteria.get('normal',{}).get('index_upper_bound'),
             'Teto cisalhamento EN':criteria.get('shear',{}).get('index_upper_bound'),
             'Teto interação σ–τ EN':criteria.get('interaction',{}).get('index_upper_bound'),
             'Componente de tensões':('Suficiente no campo declarado' if check['section_stress_criteria_sufficiently_satisfied']
                 else 'Inconclusivo pelo teto; não é reprovação') if check else 'Pendente',
-            'Motivo':row.get('reason') or ''})
+            'Teto cortante transversal da alma EN':web['web_shear']['index_upper'] if web else None,
+            'Componente da alma':('Suficiente para Vy transversal pelo piso de Vw,Rd' if web['web_shear']['status']=='meets'
+                else 'Inconclusivo pelo piso; não é reprovação') if web else 'Sem cálculo salvo',
+            'Redução adicional por V EN':('Dispensada nos dois eixos' if mv['shear_reduction_waived']
+                else 'Incluída na equação 6.27') if mv else ('Dispensada no domínio sem B/torção/flexão fraca'
+                if web['no_web_shear_reduction']['status']=='meets' else 'Registro histórico restrito; sem requalificação') if web else 'Pendente',
+            'Teto dos dois cortantes EN':mv['shear_ratio_upper'] if mv else None,
+            'Teto M–V adicional EN6.27':mv['index_upper'] if mv else None,
+            'M–V adicional EN6.27':('Suficiente no domínio salvo' if mv['component_qualified'] else 'Inconclusivo pelo teto') if mv else 'Sem registro adicional',
+            'Motivo':row.get('reason') or row.get('web_shear_error') or (mv['reason'] if mv else web.get('bending_shear_error','') if web else '')})
     return out
 
 
@@ -65,9 +77,35 @@ def text_lines(ev):
         'não um estado físico de tensões. Nenhum teto acima de 1 é rotulado como falha.',
         'Nesta rota isolada N=0. As tensões normais de flexão usam seções efetivas EN; B/V/Tsv/Tw usam a seção bruta coerente. Material EN fixo: '
         'fyb=fya=250 MPa, E=210000 MPa, ν=0,3, γM0=1. E/G da análise e combinações originais são preservados.',
-        'Não conclui flambagem por cisalhamento EN6.1.5, redução N–M–V EN6.1.10, estabilidade, '
-        'adequação da primeira ordem, forças locais, ligações ou ELS.',
+        'A componente de tensões não conclui por si só flambagem por cisalhamento EN6.1.5, redução N–M–V EN6.1.10, '
+        'estabilidade, adequação da primeira ordem, forças locais, ligações ou ELS.',
         f"{ev['computed_cases']} casos ELU calculados; {ev['pending_cases']} pendentes; {ev['ELS_cases_excluded']} casos ELS fora deste critério."]
+    webs=[r['web_shear_component'] for r in ev['records'] if 'web_shear_component' in r]
+    if webs:
+        mvs=[w['bending_shear_component'] for w in webs if 'bending_shear_component' in w]
+        lines += ['EN6.1.5: sw≤hw=H−t produz piso conservador da alma forte. '
+            'Na direção fraca, as duas mesas originais fornecem duas almas com hw=b−t; '
+            'não se reutiliza a capacidade forte. Sem crédito de enrijecedores. '
+            'Cada trecho e ambos os lados de P, inclusive before-P quando declarado, são preservados.']
+        if mvs:
+            from .en_simplified_interaction import SCOPE as MV_SCOPE, capacity_text
+            lines += [MV_SCOPE,capacity_text(mvs[0]['capacity_reference'],include_axial=False),
+                'Componente adicional EN6.27: soma dos módulos N/NRd, Mx/MxRd e My/MyRd, mais a maior penalidade '
+                'max(0,2|V|/VbRd−1)² dos dois eixos, junto de |V|≤VbRd em ambos. '
+                'Mf=0 não usa reserva de mesas/plasticidade. Os pisos de flexão vêm dos operadores puros efetivos EN '
+                'e do primeiro escoamento nas faces físicas; não usam ULS_pure_effort nem MRd NBR.',
+                f'{len(mvs)} casos com 6.27 calculado; {sum(m["component_qualified"] for m in mvs)} suficientes no domínio salvo. '
+                'Torção não precisa ser nula: B/Tsv/Tw continuam nas três desigualdades 6.1.6. '
+                'Ambas as componentes precisam atender; nenhuma delas prova estabilidade ou aprovação global.',
+                'A aplicação de 6.1.10 por dois cortantes transversais e 6.1.6 para torção segue a interpretação documentada '
+                'no manual oficial SCIA Engineer 17.0, pp. 80–86. O registro antigo de limiar da alma é preservado, não reclassificado.',
+                'Fonte de implementação: https://help.scia.net/download/17.0/en/SteelCodeCheck_Theory_enu.pdf']
+        else:
+            from .isolated_en_shear import SCOPE
+            lines += [SCOPE, 'Registro histórico restrito à alma. VEd inclui cortante de torque na definição de EN1993-1-5 §1.4; '
+                'esta implementação antiga não demonstra dispensa para a seção. Não se recalcula nem reclassifica o histórico.']
+    else:
+        lines.append('Sem componente salva de cortante da alma EN6.1.5/6.1.10. Histórico não recalculado.')
     if ev.get('reason'):lines.append(ev['reason'])
     return lines
 
@@ -94,6 +132,7 @@ def report(doc,result):
     for row in rows(ev):
         doc.add_paragraph(' | '.join(k+': '+(fmt(v) if type(v) in (int,float) else str(v))
             for k,v in row.items() if v is not None))
-    doc.add_paragraph('Fonte: EN1993-1-3:2006 §6.1.6(3)–(5), pp.46–47. '
+    doc.add_paragraph('Fonte das tensões: EN1993-1-3:2006 §6.1.6(3)–(5), pp.46–47; '
+        'componente de alma, quando salva: §§6.1.5 e 6.1.10(1), pp.45–46 e 55. '
         'Fonte geométrica própria: '+str(ev.get('source_profile',{}).get('profile_id','pendente'))+'. '
         'Hash do snapshot torsional: '+ev['source_torsion_snapshot_sha256']+'.')

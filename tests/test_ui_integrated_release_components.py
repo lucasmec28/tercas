@@ -46,7 +46,8 @@ def test_all_components_coexist_without_mutating_or_resolving_saved_model(monkey
     assert all({b['girt'] for b in c['model']['beams']}==set(scope.LEVELS) for c in result['cases'])
     u,s,e,n=uni.saved_component(result),service.saved_component(result),en.saved_component(result),nbr.saved_component(result)
     assert u and s and e and n
-    assert e['schema']==en.SCHEMA and all(v['complete'] for v in e['per_member'].values())
+    assert e['schema']==en.CENTRAL_SCHEMA and set(e['per_member'])=={'middle'}
+    assert e[scope.FIELD]==result[scope.FIELD] and all(v['complete'] for v in e['per_member'].values())
     assert all(e[k] is False for k in en.FALSE_FLAGS)
     assert u['whole_member_approved'] is False and s['whole_member_approved'] is False
     def forbidden(*args,**kwargs):raise AssertionError('Saved display/sidecars/export must not resolve the member or capacities')

@@ -104,7 +104,8 @@ def fake_en(d,lo=.2,hi=.4,complete=True):
         bound=dict(index_lower_witness=lo,index_upper_bound=hi,witness=dict(girt=g,index=lo,index_lower_witness=lo))
         members[g]=dict(ELU_segments=sum(r['girt']==g for r in rows),complete_segments=sum(r['girt']==g and r['complete'] for r in rows),
             complete=complete,shear_interaction=dict(complete=complete,normal=copy.deepcopy(bound),shear=copy.deepcopy(bound),interaction=copy.deepcopy(bound)))
-    return dict(schema='synthetic_saved_bound_contract',content_sha256='fixture',rows=rows,per_member=members)
+    return dict(schema='synthetic_saved_bound_contract',content_sha256='fixture',rows=rows,per_member=members,
+        component_sections=dict(components=dict(N_compression=dict(centroid_shift_from_gross_mm=[0.,0.]))))
 
 @pytest.mark.parametrize('lo,hi,complete,status',[(.2,.4,True,'meets'),(.2,.4,False,'pending'),(.9,1.1,True,'pending'),(1.1,1.3,True,'fails'),(1.1,None,False,'fails')])
 def test_bound_verdict_does_not_use_upper_bound_as_failure(demand,lo,hi,complete,status):
@@ -132,8 +133,14 @@ def test_exact_zero_V_tension_and_empty_interior_exclusions(demand):
     d=copy.deepcopy(demand);d['configuration']['three_girt']['tie_count']=0
     for c in d['cases']:
         m=c['model'];m['bars']=[];m['inputs'].update(connections={},attachment_x_mm=[],nodal_loads=[])
-        for b in m['beams']:b['normal_action_polynomials'].update(N_N=[0.],My_strong_Nmm=[1.,0.,0.],Mz_weak_Nmm=[2.,0.,0.])
-        for n in m['nodes']:n['support_reactions']=[0.]*7
+        for b in m['beams']:
+            b['normal_action_polynomials'].update(N_N=[0.],My_strong_Nmm=[1.,0.,0.],Mz_weak_Nmm=[2.,0.,0.])
+            b['torsion_state_parameters'].update(m_SC_N=0.,nodal_phi_psi=[0.,0.,0.,0.])
+        for load in m['inputs']['loads']:
+            load.update(distributed_torque_CG_N=0.,q_z_N_mm=0.,q_y_N_mm=0.)
+        for n in m['nodes']:
+            n['support_reactions']=[0.]*7
+            n['displacements'].update(rx=0.,psi=0.)
     rows=byid(a._applicability(d,None))
     for key in ('transverse_shear_resistance','N_M_V_shear_reduction','support_force_introduction','interior_force_introduction','tensile_section_scope'):
         assert rows[key]['status']=='not_applicable'
@@ -239,3 +246,70 @@ def test_NBR_auxiliary_inventory_is_bound_to_original_demand(complete,mutation):
 def test_duplicate_auxiliary_checks_fail_closed_instead_of_throwing():
     r=a.item('same','ELU',index=.2,qualified=True);g=a._group('test','Test',[r,r],'Synthetic')
     assert g['pending_ids']==['same'] and g['status']=='inconclusivo'
+
+
+def test_zero_transverse_force_does_not_waive_existing_torsional_shear(demand):
+    d=copy.deepcopy(demand)
+    for case in d['cases']:
+        for beam in case['model']['beams']:
+            beam['normal_action_polynomials'].update(My_strong_Nmm=[0.],Mz_weak_Nmm=[0.])
+    assert any(abs(state['T_SV_Nmm'])>0. or abs(state['T_w_Nmm'])>0.
+        for case in d['cases'] if case['combination']['limit_state']=='ELU'
+        for beam in case['model']['beams'] for state in beam['states'])
+    before=copy.deepcopy(d);checks=byid(a._applicability(d,None))
+    assert checks['transverse_shear_resistance']['status']=='not_applicable'
+    assert checks['N_M_V_shear_reduction']['status']=='pending'
+    assert 'Registro anterior' in checks['N_M_V_shear_reduction']['reason']
+    assert 'nova rota não exige torque nulo' in checks['N_M_V_shear_reduction']['reason']
+    assert d==before
+
+
+@pytest.mark.parametrize('change',[
+    lambda b:b['torsion_state_parameters'].update(m_SC_N=1e-30),
+    lambda b:b['torsion_state_parameters'].update(nodal_phi_psi=[0.,1e-30,0.,0.]),
+    lambda b:b['torsion_state_parameters'].update(nodal_phi_psi=[0.,0.,1e-30,0.]),
+    lambda b:b.pop('torsion_state_parameters'),
+    lambda b:b.update(torsion_state_parameters=None),
+    lambda b:b['torsion_state_parameters'].update(nodal_phi_psi=[0.,False,0.,0.]),
+    lambda b:b['torsion_state_parameters'].update(GJ_Nmm2=0.)])
+def test_zero_torsional_shear_proof_requires_complete_exact_field(change):
+    beam=dict(length_mm=1000.,torsion_state_parameters=dict(L_mm=1000.,GJ_Nmm2=10.,ECw_Nmm4=100.,
+        m_SC_N=0.,nodal_phi_psi=[0.,0.,0.,0.]))
+    beam.update(girt='middle',x_start_mm=0.,x_end_mm=1000.)
+    model=dict(inputs=dict(upper_gap_mm=100.,lower_gap_mm=100.,
+        section=dict(G_MPa=2.,J_mm4=5.,E_MPa=2.,Cw_mm6=50.,sc_y_mm=0.,sc_z_mm=0.),
+        loads=[dict(distributed_torque_CG_N=0.,q_z_N_mm=0.,q_y_N_mm=0.) for _ in range(3)]),
+        nodes=[dict(xyz_CG_mm=[x,0.,0.],displacements=dict(rx=0.,psi=0.)) for x in (0.,1000.)])
+    assert a._zero_torsional_shear(beam,model)
+    constant=copy.deepcopy(beam);constant['torsion_state_parameters']['nodal_phi_psi']=[.1,0.,.1,0.]
+    assert not a._zero_torsional_shear(constant,model)
+    constant_model=copy.deepcopy(model)
+    for n in constant_model['nodes']:n['displacements']['rx']=.1
+    assert a._zero_torsional_shear(constant,constant_model)
+    change(beam);assert not a._zero_torsional_shear(beam,model)
+
+
+def test_saved_panorama_is_not_reclassified_by_new_zero_shear_guard(demand,monkeypatch):
+    saved=a.assess(demand);before=copy.deepcopy(saved)
+    def fail(*args):raise AssertionError('No new applicability assessment on saved read')
+    monkeypatch.setattr(a,'_applicability',fail)
+    assert a.saved_assessment(demand,saved)==before
+
+
+def test_rehashed_fake_zero_torsion_is_not_bound_to_real_nodes_and_loads(demand):
+    d=copy.deepcopy(demand)
+    for case in d['cases']:
+        for beam in case['model']['beams']:
+            beam['normal_action_polynomials'].update(My_strong_Nmm=[0.],Mz_weak_Nmm=[0.])
+            beam['torsion_state_parameters'].update(m_SC_N=0.,nodal_phi_psi=[0.,0.,0.,0.])
+        rehash(case['model'])
+    checks=byid(a._applicability(d,None))
+    assert checks['transverse_shear_resistance']['status']=='not_applicable'
+    assert checks['N_M_V_shear_reduction']['status']=='pending'
+
+
+@pytest.mark.parametrize('field',['L_mm','GJ_Nmm2','ECw_Nmm4'])
+def test_zero_torsion_proof_rejects_different_saved_stiffness_or_length(demand,field):
+    model=demand['cases'][0]['model'];beam=copy.deepcopy(model['beams'][0])
+    beam['torsion_state_parameters'][field]*=1.01
+    assert not a._zero_torsional_shear(beam,model)

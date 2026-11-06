@@ -1,0 +1,174 @@
+REVISÃO DE FONTES: INTERAÇÃO N–M–V E TORÇÃO, EN 1993-1-3:2006
+Data: 06/11/2026. Escopo: componente de resistência de seção Ue 100 x 50 x 17,
+ri = t, t entre 1,20 e 3,35 mm. Não é uma verificação integral da barra.
+
+CONCLUSÃO CORRIGIDA
+Não foi encontrada, no §6.1.10 da EN 1993-1-3:2006, condição de aplicabilidade
+que exija B = Tsv = Tw = 0. A documentação primária da SCIA aplica a Eq. (6.27)
+aos dois pares transversais de momento/cortante e verifica, separadamente,
+as tensões combinadas de torção e empenamento pelo §6.1.6. Isso sustenta
+qualificar o componente N–M–V transversal mesmo havendo torção, desde que a
+consolidação exija também o §6.1.6 com todos os esforços concomitantes.
+
+A afirmação anterior de que a definição de VEd na EN 1993-1-5 obrigaria, por
+si só, a bloquear o componente quando há torque foi excessiva e deve ser
+retirada. Não se recomenda converter T em uma força equivalente inventada,
+nem transplantar diretamente Vpl,T da EN 1993-1-1 para Vw da EN 1993-1-3.
+
+Grau de evidência: há texto normativo específico para torção e documentação
+inequívoca de implementação comercial consistente com a separação acima.
+Não foi localizada interpretação formal do CEN sobre essa questão de escopo.
+A documentação de software não é uma emenda ou interpretação oficial da norma.
+
+1. FONTES E PÁGINAS VERIFICADAS
+
+1.1 EN 1993-1-3:2006, cópia integral consultada:
+https://www.phd.eng.br/wp-content/uploads/2015/12/en.1993.1.3.2006.pdf
+As páginas abaixo são os números impressos da norma:
+- pp. 43–44, §6.1.4.1: resistência à flexão e propriedades efetivas.
+- pp. 45–46, §6.1.5: resistência ao cisalhamento, hw, sw e Tabela 6.1.
+- pp. 46–47, §6.1.6: torção e tensões totais de cisalhamento/empenamento.
+- p. 55, §6.1.10: Eq. (6.27), dispensa abaixo de 0,5 Vw,Rd e soma de almas.
+O §1.4(1) herda símbolos da EN 1993-1-1; não estabelece herança geral da
+lista de símbolos da EN 1993-1-5.
+
+1.2 Manual oficial SCIA, Steel Code Check Theory, versão 17.0, 2017:
+https://help.scia.net/download/17.0/en/SteelCodeCheck_Theory_enu.pdf
+As páginas impressas e a numeração física do PDF coincidem nos trechos:
+- p. 80, Shear Force: §6.1.5, cada elemento de alma separadamente e soma;
+  duas direções com projeções cos²(alpha) e sin²(alpha). Somente elementos
+  I, UO e SO; elementos classificados como enrijecedores RUO/DEF excluídos.
+- p. 82, Torsional Moment: afirma expressamente que a verificação de tensões
+  combinadas incluindo torção e empenamento segue EN 1993-1-3 §6.1.6.
+- p. 86, Combined Shear Force, Axial Force and Bending Moment: afirma que
+  segue §6.1.10 e escreve Eq. (6.27) para ambas as direções, usando Vy,Ed /
+  Vy,b,Rd e Vz,Ed / Vz,b,Rd, respectivamente. As fórmulas não incluem T,
+  B nem Vpl,T. A mesma página adota Mf,Rd = 0 para a direção fraca como
+  aproximação conservadora. A p. 87 detalha Mf,Rd da direção forte.
+- p. 86 também inclui os momentos adicionais da mudança do centroide
+  efetivo em compressão quando desfavoráveis.
+As páginas 80 e 86 foram conferidas visualmente, incluindo as equações;
+a p. 82 foi conferida no texto extraído do PDF oficial.
+
+A mesma formulação está publicada na ajuda oficial atualizada:
+https://help.scia.net/21.0/en/steel/code_checks_inc_fire_resistance/tb_steel_uls/en/combined_shear_force_axial.htm
+
+Na p. 25 do mesmo manual, o capítulo geral da EN 1993-1-1 trata explicitamente
+Vpl,T; essa regra não aparece na formulação do capítulo de perfis formados
+a frio aqui citada. A ausência, isoladamente, não provaria uma interpretação;
+a evidência positiva é a definição explícita das duas fórmulas e da
+verificação separada do §6.1.6 no próprio capítulo de perfis formados a frio.
+
+1.3 EN 1993-1-5:2006 e EN 1993-1-1:2005:
+https://www.phd.eng.br/wp-content/uploads/2015/12/en.1993.1.5.2006.pdf
+https://www.phd.eng.br/wp-content/uploads/2015/12/en.1993.1.1.2005.pdf
+A definição de VEd da EN 1993-1-5 inclui cisalhamento decorrente de torque.
+Isso não fornece, por si só, uma conversão escalar única T -> V para uma
+seção aberta. A EN 1993-1-5 não se restringe a caixões, mas suas remissões
+no §6.1.10 da EN 1993-1-3 não permitem presumir tal conversão sem uma
+regra aplicável. A EN 1993-1-1 §6.2.7(9) reduz Vpl em interação com torção;
+não foi encontrada autorização para trocar diretamente Vpl por Vw nessa regra.
+
+2. MODELO CONSERVADOR PARA O COMPONENTE N–M–V
+
+A Eq. (6.27) contém o termo:
+(1 - Mf,Rd / Mpl,Rd) * (2 VEd / Vw,Rd - 1)^2.
+
+Tomar Mf,Rd = 0 substitui esse coeficiente por 1, uma majoração conservadora
+quando as resistências têm seu significado normativo não negativo. Não exige
+calcular Mpl para esse limite inferior. Para VEd <= 0,5 Vw,Rd, a parcela de
+penalidade é zero, conforme a dispensa expressa do §6.1.10.
+
+Definindo, com módulos dos esforços e resistências positivas:
+  nu_i = |Vi| / Vw,i,min;
+  rho_i = [max(0, 2 nu_i - 1)]^2;
+  n = |N| / NRd,min;
+  mx = |Mx,corr| / Mx,Rd,min;
+  my = |My,corr| / My,Rd,min;
+
+a condição suficiente
+  n + mx + my + max(rho_forte, rho_fraca) <= 1,
+acompanhada de nu_forte <= 1 e nu_fraca <= 1, domina cada uma das duas
+inequações direcionais, pois as parcelas adicionais são não negativas.
+
+Isso é uma envoltória conservadora construída a partir da norma, não uma
+nova equação transcrita dela. Não é necessário somar as duas penalidades
+para dominar as duas verificações direcionais. Uma falha dessa envoltória
+ou de uma resistência deliberadamente reduzida não prova, por si só, falha
+da verificação normativa mais refinada.
+
+As resistências mínimas devem ser limites inferiores efetivamente verificados:
+- NRd,min deve cobrir o sinal de N e a seção efetiva aplicável.
+- MRd,min de cada eixo deve cobrir os sinais relevantes dos operadores
+  efetivos puros EN, com primeiro escoamento absoluto e sem reserva plástica.
+- Os momentos adicionais devidos ao deslocamento do centroide efetivo sob
+  compressão devem estar incluídos quando desfavoráveis.
+- As propriedades efetivas devem incluir os efeitos locais/distorcionais
+  exigíveis pelo §5.5; não misturar denominadores EN com NBR/AISI.
+- As parcelas devem vir da mesma combinação e posição da barra, não de
+  máximos provenientes de estados distintos apresentados como concomitantes.
+
+3. RESISTÊNCIAS DE CISALHAMENTO FORTE E FRACA DA Ue
+
+Norma, §6.1.5: Vb,Rd = (hw / sin(phi)) t fbv / gammaM0.
+hw é a distância entre linhas médias das mesas. sw é a distância entre
+pontos médios das dobras. Para estas paredes ortogonais sem enrijecedor
+longitudinal, sw <= hw. Usar hw como limite superior de sw aumenta lambda_w
+e não aumenta fbv, gerando um limite inferior de resistência. Deve-se usar
+a coluna da Tabela 6.1 sem enrijecimento no apoio se não há comprovação desse
+travamento. Não se presume o apoio enrijecido apenas por existir uma ligação.
+
+Direção forte: a alma principal tem hw = h - t e phi = 90 graus.
+  Vforte,min = (h - t) t fbv_forte / gammaM0.
+
+Direção fraca: girando a Ue em 90 graus, cada mesa original é uma alma que
+liga a parede principal ao respectivo lábio, entre linhas médias separadas
+por b - t. Há duas dessas almas, com phi = 90 graus. O §6.1.10 manda somar
+as resistências das almas quando há mais de uma. Assim, o modelo é:
+  Vfraca,min = 2 (b - t) t fbv_fraca / gammaM0.
+
+É admissível empregar também aqui o fbv_forte se ele já é um limite inferior
+para ambas as mesas: b - t < h - t, e fbv da Tabela 6.1 não aumenta com a
+esbeltez. Isso é mais conservador, não uma reutilização arbitrária de Vforte.
+A resistência vale para ambos os sinais do cortante, para a Ue simétrica
+considerada. O fbv não depende do sinal, e inverter o esforço não muda as
+larguras nem a condição geométrica de apoio das paredes.
+
+Não se credita uma resistência adicional dos lábios ou uma parcela adicional
+de cantos. A distância normativa entre linhas médias, porém, inclui a projeção
+das regiões de encontro; não descrevê-la como mera soma dos comprimentos retos.
+O comprimento lc da modelagem SCIA depende de sua Initial Shape: a SCIA
+confirma a seleção, soma e orientação das paredes, mas não foi demonstrada
+identidade numérica entre sua discretização de cantos e o modelo hw = b - t.
+
+4. TORÇÃO E LIMITES DA CONCLUSÃO
+
+Manter integralmente o §6.1.6: sigma_total contém N, My, Mz e empenamento;
+tau_total contém os dois cortantes, torção uniforme e cisalhamento de
+empenamento. Os esforços normais/flexão usam suas seções efetivas; os
+cisalhamentos e tensões de empenamento usam propriedades brutas, conforme
+§6.1.6(3). A verificação precisa preservar sinais, pontos e concomitância.
+O uso de fya requer as condições da norma; fyb permanece uma escolha
+conservadora quando não se comprova o aumento por encruamento.
+
+Não há base aqui para dispensar §6.1.10 apenas com von Mises <= fy. A permissão
+elástica da EN 1993-1-1 §6.2.1(5) ressalva outras fórmulas de interação, e o
+limite hw/t <= 72 epsilon/eta de §6.2.6(6) é um critério específico de
+flambagem de alma ao cisalhamento, não uma dispensa geral de interação nem
+uma demonstração da estabilidade de mesas, lábios ou da barra inteira.
+
+A conclusão permite qualificar este COMPONENTE de N–M–V transversal com
+§6.1.6 concomitante. Não dispensa instabilidade global/flexo-torcional,
+distorção, efeitos de segunda ordem, introdução localizada de cargas,
+reações, ligações nem outras verificações aplicáveis. Não foi feita aqui
+uma prova independente de toda instabilidade de chapa sob torção.
+
+Os relatórios CYPE encontrados separavam as verificações §6.1.10 e §6.1.6,
+mas os exemplos consultados declaravam ausência de momento torsor. Portanto,
+não foram usados como validação de um caso de torção não nula.
+
+Não resta bloqueio documental para a implementação do componente com o
+escopo acima. Resta distinguir claramente no relatório do cálculo a
+conformidade das verificações implementadas da conformidade integral da
+barra/estrutura e registrar que a envoltória proposta é suficiente e
+conservadora, não a única forma normativa admissível.

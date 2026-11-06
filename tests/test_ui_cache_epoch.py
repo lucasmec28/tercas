@@ -12,23 +12,34 @@ APP=str(Path(__file__).resolve().parents[1]/'app.py')
 FIXTURE=Path(__file__).parent/'data/legacy_ief_cache_r3.json'
 
 @pytest.mark.parametrize('old',(None,'old_epoch'))
-def test_migration_changes_only_two_active_caches_and_epoch(old):
+def test_migration_changes_only_three_active_caches_and_epoch(old):
     state={'base':{'custom':'base'},'last_input':{'custom':'input'},'revision':9,
            'widget_key':17.,'custom_steel_draft':{'value':None},'length_draft_values_9':{'Lx':None},
            'manual_result_history':{'past':'untouched'},'catalog_scan_history':{'past':'untouched'},
+           'three_girt_result_history':{'past_3D':'untouched'},
+           'three_girt_warping_result':{'old_3D':1},
            'result':{'old':1},'catalog_scan_state':{'running':True,'next_index':42}}
     if old is not None:state[KEY]=old
     before=copy.deepcopy(state)
     assert refresh(state)
-    expected={k:v for k,v in before.items() if k not in ('result','catalog_scan_state',KEY)}|{KEY:EPOCH}
+    expected={k:v for k,v in before.items() if k not in ('result','catalog_scan_state','three_girt_warping_result',KEY)}|{KEY:EPOCH}
     assert state==expected
     state['result']={'new':2};state['catalog_scan_state']={'running':False}
+    state['three_girt_warping_result']={'new_3D':2}
     current=copy.deepcopy(state)
     assert not refresh(state) and state==current
 
 
 def test_empty_session_initializes_epoch_without_notification_or_extra_inputs():
     state={};assert not refresh(state);assert state=={KEY:EPOCH}
+
+
+def test_old_three_girt_cache_alone_triggers_notice_without_touching_inputs_or_history():
+    state={'last_input':{'unchanged':True},'three_girt_warping_result':{'old_3D':1},
+           'three_girt_result_history':{'historical_3D':1},'three_warping_7_origin':'kept'}
+    before=copy.deepcopy(state)
+    assert refresh(state)
+    assert state=={k:v for k,v in before.items() if k!='three_girt_warping_result'}|{KEY:EPOCH}
 
 
 def button(app,label):return next(w for w in app.button if w.label==label)

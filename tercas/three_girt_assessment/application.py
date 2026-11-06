@@ -142,10 +142,13 @@ def _beam_inventory(d,state):
 def _en(d,c,error):
     source='EN1993-1-3:2006 6.1.6, componente seccional declarada'
     if c is None:return [item('EN:section_stresses','ELU',source=source,reason=error or 'Componente seccional EN não calculada; não se presume resistência N+M+B ou cisalhamento nula.')]
-    expected=_beam_inventory(d,'ELU')
+    from ..three_girt_en_normal.application import verification_members
+    from ..three_girt_en_normal import centroid_policy as cp
+    checked_members=verification_members(c,d)
+    expected=[r for r in _beam_inventory(d,'ELU') if r[1] in checked_members]
     if not expected:return [item('EN:ELU_inventory','ELU',source=source,reason='Nenhum intervalo ELU avaliado.') ]
     actual=[(r['combination_id'],r['girt'],r['segment_id'],r['x_start_mm'],r['x_end_mm']) for r in c['rows']]
-    if expected!=actual or set(c['per_member'])!=set(LEVELS):raise ValueError('EN segment/member inventory differs from demand')
+    if expected!=actual or set(c['per_member'])!=set(checked_members):raise ValueError('EN segment/member inventory differs from demand')
     if any(type(r.get('complete')) is not bool for r in c['rows']):raise ValueError('EN interval completeness is not boolean')
     out=[]
     for level,r in c['per_member'].items():
@@ -156,31 +159,38 @@ def _en(d,c,error):
         if complete is not (r['complete_segments']==count):raise ValueError('EN coverage conclusion differs')
         shear=r.get('shear_interaction');normal=r.get('normal') or (shear.get('normal') if shear else None)
         for key in ('normal','shear','interaction'):
+            centroid=cp.qualification(c,level,key)
             bound=normal if key=='normal' else shear.get(key) if shear else None
             trace=dict(member_id=level,coverage_complete=complete,component_schema=c['schema'],
-                source_component_sha256=c['content_sha256'],criterion_scope='declared_EN_section_model_only')
+                source_component_sha256=c['content_sha256'],criterion_scope='declared_EN_section_model_only',
+                centroid_shift_policy=centroid)
             if bound is not None:
                 lo=bound.get('index_lower_witness');hi=bound.get('index_upper_bound')
-                if not _finite(lo) or lo<0 or (hi is not None and (not _finite(hi) or hi<lo)):
+                if (lo is not None and (not _finite(lo) or lo<0)) or (hi is not None and (not _finite(hi) or hi<0 or (lo is not None and hi<lo))):
                     raise ValueError('EN lower/upper bound contract differs')
-                witness=bound.get('witness',{})
-                saved_lower=(witness.get('index') if c['schema']=='three_girt_EN_normal_shear_interaction_integral_v2' else witness.get('index_lower_witness'))
-                if saved_lower!=lo or witness.get('girt')!=level or not _finite(witness.get('index')) or witness['index']<lo:
+                witness=bound.get('witness')
+                if (lo is None)!=(witness is None):raise ValueError('EN lower witness missing')
+                saved_lower=None if witness is None else (witness.get('index') if c['schema']=='three_girt_EN_normal_shear_interaction_integral_v2' else witness.get('index_lower_witness'))
+                if witness is not None and (saved_lower!=lo or witness.get('girt')!=level or not _finite(witness.get('index')) or witness['index']<lo):
                     raise ValueError('EN concomitant lower witness differs')
-                fail=lo>1
-                passed=complete and shear is not None and shear.get('complete') is True and _finite(hi) and 0<=hi<=1
-                index=lo if fail else hi if passed else None
+                fail=lo is not None and lo>1
+                passed=complete and shear is not None and shear.get('complete') is True and _finite(hi) and 0<=hi<=1 and centroid['qualified']
+                qualified_upper=max(hi,centroid['original_index_upper_bound'] or 0.) if passed else None
+                index=lo if fail else qualified_upper
                 trace.update(index_lower_witness=lo,index_upper_bound=hi,
+                    qualified_scenarios_index_upper_bound=qualified_upper,
                     partial_index_upper_bound=bound.get('partial_index_upper_bound'),witness=copy.deepcopy(bound.get('witness')),
-                    numeric_measure='concomitant_lower_witness' if fail else 'full_interval_upper_bound' if passed else 'inconclusive_bound')
+                    numeric_measure='concomitant_lower_witness' if fail else
+                        'full_interval_upper_bound_with_original_centroid_scenario' if passed and centroid['required_segments'] else
+                        'full_interval_upper_bound' if passed else 'inconclusive_bound')
                 out.append(item('EN:'+level+':'+key,'ELU',source=source,index=index,qualified=fail or passed,trace=trace,
-                    reason='' if fail or passed else 'Cobertura de seção ou limite numérico inconclusivo; máximo parcial não foi promovido.'))
+                    reason='' if fail or passed else centroid['reason'] or 'Cobertura de seção ou limite numérico inconclusivo; máximo parcial não foi promovido.'))
             elif key=='normal':
                 w=r.get('complete_envelope') or r.get('partial_maximum');index=w.get('normal_index') if w else None
-                qualified=_finite(index) and index>=0 and (complete or index>1)
+                qualified=_finite(index) and index>=0 and ((complete and centroid['qualified']) or index>1)
                 trace['witness']=copy.deepcopy(w)
                 out.append(item('EN:'+level+':normal','ELU',source=source,index=index,qualified=qualified,trace=trace,
-                    reason='' if qualified else 'Envelope normal parcial ou ausente.'))
+                    reason='' if qualified else centroid['reason'] or 'Envelope normal parcial ou ausente.'))
             else:out.append(item('EN:'+level+':'+key,'ELU',source=source,trace=trace,reason='Snapshot histórico sem este critério; não recalculado.'))
     return out
 
@@ -260,11 +270,46 @@ def _g81(d):
     return out
 
 
+def _zero_torsional_shear(beam,model):
+    """Exact constant-twist proof, bound to saved geometry/loads/end nodes.
+
+    Positive GJ/ECw, m=0 and equal end twists / zero end derivatives give
+    constant phi, hence Tsv=Tw=0. Missing/unbound fields never imply zero.
+    No sampling, tolerance, source files or new solve is used.
+    """
+    try:
+        a=beam['torsion_state_parameters'];nodal=a['nodal_phi_psi']
+        if (not isinstance(nodal,list) or len(nodal)!=4 or any(not _finite(v) for v in nodal)
+            or any(not _finite(a.get(k)) or a[k]<=0. for k in ('L_mm','GJ_Nmm2','ECw_Nmm4'))
+            or not _finite(a.get('m_SC_N'))):return False
+        inp=model['inputs'];sec=inp['section'];level=LEVELS.index(beam['girt'])
+        load=inp['loads'][level]
+        if any(not _finite(sec[k]) or sec[k]<=0. for k in ('G_MPa','J_mm4','E_MPa','Cw_mm6')):return False
+        if any(not _finite(sec[k]) for k in ('sc_y_mm','sc_z_mm')):return False
+        if any(not _finite(load[k]) for k in ('distributed_torque_CG_N','q_z_N_mm','q_y_N_mm')):return False
+        length=beam['x_end_mm']-beam['x_start_mm']
+        torque=load['distributed_torque_CG_N']-sec['sc_y_mm']*load['q_z_N_mm']+sec['sc_z_mm']*load['q_y_N_mm']
+        if (a['L_mm']!=length or beam['length_mm']!=length
+            or a['GJ_Nmm2']!=sec['G_MPa']*sec['J_mm4']
+            or a['ECw_Nmm4']!=sec['E_MPa']*sec['Cw_mm6'] or a['m_SC_N']!=torque):return False
+        y=(inp['upper_gap_mm'],0.,-inp['lower_gap_mm'])[level];source=[]
+        for x in (beam['x_start_mm'],beam['x_end_mm']):
+            nodes=[n for n in model['nodes'] if n['xyz_CG_mm']==[x,y,0.]]
+            if len(nodes)!=1:return False
+            source.extend(nodes[0]['displacements'][key] for key in ('rx','psi'))
+        if any(not _finite(v) for v in source) or source!=nodal:return False
+        return a['m_SC_N']==0. and nodal[0]==nodal[2] and nodal[1]==nodal[3]==0.
+    except (KeyError,TypeError,ValueError,IndexError,AttributeError):return False
+
+
 def _applicability(d,nbr):
     elu=[b for c in d['cases'] if c['combination']['limit_state']=='ELU' for b in c['model']['beams'] if b['girt'] in members(d)]
     if not elu:return [item('ELU:coverage','ELU',reason='Nenhuma combinação ELU; filtro não é dispensa.')]
     # Exactly zero analytical coefficients, never sampled values or tolerances.
     zero_v=all(all(v==0 for v in b['normal_action_polynomials'][k][1:]) for b in elu for k in ('My_strong_Nmm','Mz_weak_Nmm'))
+    zero_total_shear=zero_v and all(_zero_torsional_shear(b,c['model'])
+        for c in d['cases'] if c['combination']['limit_state']=='ELU'
+        for b in c['model']['beams'] if b['girt'] in members(d))
     tension=any(b['normal_action_polynomials']['N_N'][0]>0 for b in elu)
     reactions=[v for c in d['cases'] if c['combination']['limit_state']=='ELU' for n in c['model']['nodes']
         if (not central(d) or n['xyz_CG_mm'][1]==0.) and n['xyz_CG_mm'][0] in (0.,d['input_data']['L_mm']) for v in n['support_reactions'][:3]]
@@ -275,12 +320,25 @@ def _applicability(d,nbr):
         reason='Estabilidade e aplicabilidade da análise de primeira ordem da rede nos ELU/ELS ainda não verificadas. Comprimentos NBR de referência e comparação horizontal local não são prova do conjunto. Nenhum certificado de campo, GJef/Cwef ou corte universal de giro foi imposto.'),
         item('transverse_shear_resistance','ELU',source='EN1993-1-3:2006 6.1.5',qualified=zero_v,excluded=zero_v,
             reason='Campo transversal V identicamente nulo em todos os polinômios ELU; Tsv/Tw e sigma–tau permanecem separados.' if zero_v else 'Resistência/flambagem por cortante transversal não demonstrada nesta rede; sigma–tau de 6.1.6 não a substitui.'),
-        item('N_M_V_shear_reduction','ELU',source='EN1993-1-3:2006 6.1.10(1)',qualified=zero_v,excluded=zero_v,
-            reason='V transversal identicamente nulo: sem redução adicional por V; critérios N/M/B permanecem.' if zero_v else 'Dispensa de redução por V exige VEd≤0,5Vw,Rd com Vw,Rd qualificado. Esse denominador não está salvo; não se impõe interação adicional indiscriminadamente.'),
+        item('N_M_V_shear_reduction','ELU',source='EN1993-1-3:2006 6.1.10(1)',qualified=zero_total_shear,excluded=zero_total_shear,
+            reason=('V transversal, Tsv e Tw identicamente nulos no campo salvo: sem redução adicional por cortante; critérios N/M/B permanecem.' if zero_total_shear else
+                'Registro anterior sem componente EN6.27 nos dois eixos; este caso não foi coberto pelo subconjunto restrito salvo. A nova rota não exige torque nulo e mantém torção em 6.1.6.' if zero_v else
+                'Registro anterior sem componente EN6.27 nos dois eixos. O limiar de 0,5 e a interação precisam de resistências EN próprias; não se impõe nulidade da torção nem interação adicional indiscriminada.')),
         item('support_force_introduction','ELU',source='NBR14762:2010 9.5.1 e Anexo D.1',qualified=zero_reactions,excluded=zero_reactions,
             reason='Todas as reações de força ELU salvas são exatamente nulas.' if zero_reactions else 'Reações de apoio existem. Classificar sua introdução local no perfil: compressão transversal da alma, exceção aplicável de alma ligada, ou outro mecanismo. P externa nula não dispensa esta avaliação; não é dimensionamento dos cordões.'),
         item('interior_force_introduction','ELU',source='NBR14762:2010 9.5.1/9.6, conforme mecanismo local',qualified=no_interior,excluded=no_interior,
             reason='Topologia interior vazia, sem barras, P ou ações nodais internas. Não dispensa as reações dos extremos.' if no_interior else 'Forças interiores exigem identificar o mecanismo local do perfil. Não se aplica Anexo D automaticamente a força axial soldada e não se exige dimensionar a solda neste escopo.')]
+    if nbr is not None:
+        from ..three_girt_local_stability import saved as saved_local_B1
+        try:local=saved_local_B1(nbr,demand=d)
+        except (ValueError,TypeError,KeyError,ArithmeticError) as exc:
+            local=None
+            out[0]['reason']+=' Snapshot local B1 não utilizável: '+str(exc)
+        if local is not None:
+            out[0]['reason']='A amplificação flexional local B1 da central foi quantificada por plano, no vão integral. '
+            out[0]['reason']+='N variável é admitido pela referência aproximada com N máximo; o complemento N/M incorpora B1 aos momentos, sem alterar a solução física. '
+            out[0]['reason']+='Permanece inconclusiva a influência dos deslocamentos na redistribuição da rede. B1 próximo de 1 não é aprovação global; não se exige automaticamente outro solver.'
+            out[0]['trace']['central_local_B1_component_sha256']=local['content_sha256']
     if nbr is not None and not zero_v:
         from ..three_girt_shear import saved as saved_web_shear
         try:web=saved_web_shear(nbr)
@@ -302,8 +360,42 @@ def _applicability(d,nbr):
                     r['trace']['web_shear_component_sha256']=web['content_sha256']
                 elif r['id']=='N_M_V_shear_reduction':
                     low=len(en_rows)==len(web_rows) and all(x['EN_no_web_shear_reduction']['status']=='meets' for x in en_rows)
-                    r['reason']='M–V NBR da alma foi calculado na mesma seção por §9.8.4, sem omitir o N da rede. '+('O crivo EN dispensa somente redução adicional por V da alma. ' if low else 'A redução EN por V segue sem dispensa demonstrada para toda a alma. ')+weak_note+'N/M/B/T permanecem independentes.'
+                    r['reason']='M–V NBR da alma foi calculado na mesma seção por §9.8.4, sem omitir o N da rede. '+('O limiar EN de 0,5 atende no registro restrito da alma, que não contém a nova componente 6.27 dos dois eixos. ' if low else 'O registro restrito da alma não demonstra a redução/interação EN6.27 da seção. ')+weak_note+'N/M/B/T permanecem independentes.'
                     r['trace']['web_shear_component_sha256']=web['content_sha256']
+    from ..three_girt_en_normal.application import saved_component as saved_en_mv_source
+    try:en_mv_source=saved_en_mv_source(d)
+    except (ValueError,TypeError,KeyError,ArithmeticError,AttributeError,IndexError) as exc:
+        en_mv_source=None
+        for r in out:
+            if r['id'] in ('transverse_shear_resistance','N_M_V_shear_reduction') and r['status']=='pending':
+                r['reason']+=' Fonte adicional EN6.27 não utilizável: '+str(exc)
+    if en_mv_source and en_mv_source.get('EN_bending_shear_schema') is not None:
+        selected=[r for r in en_mv_source['rows'] if r['girt'] in members(d)]
+        mvs=[r['EN_bending_shear_component'] for r in selected if 'EN_bending_shear_component' in r]
+        covered=bool(selected) and len(mvs)==len(selected)
+        if covered:
+            shear=max(r['result']['shear_ratio_upper'] for r in mvs)
+            interaction=max(r['result']['index_upper'] for r in mvs)
+            trace={'EN_normal_component_sha256':en_mv_source['content_sha256'],
+                'EN_6_27_components_sha256':[r['content_sha256'] for r in mvs],
+                'all_transverse_directions_included':True,'torsion_retained_in_separate_EN_6_1_6':True,
+                'favorable_centroid_shift_not_credited':True}
+            replacement={
+                'transverse_shear_resistance':item('transverse_shear_resistance','ELU',
+                    source='EN1993-1-3:2006 6.1.5; duas direções, capacidades por paredes',index=shear,
+                    qualified=shear<=1.,trace=trace,
+                    reason='Cortantes transversais forte e fraco cobertos por pisos EN distintos. Alma original no forte; duas mesas originais no fraco. Teto acima de 1 é inconclusivo, não falha demonstrada.'),
+                'N_M_V_shear_reduction':item('N_M_V_shear_reduction','ELU',
+                    source='EN1993-1-3:2006 6.1.10 Eq6.27, Mf=0; interpretação por dois eixos SCIA 17.0',
+                    index=interaction,qualified=all(r['result']['component_qualified'] for r in mvs),trace=trace,
+                    reason='Interação N/M e ambos os cortantes transversais avaliada com pisos EN e Mf=0. B/Tsv/Tw não precisam ser nulos: permanecem nas três desigualdades complementares de 6.1.6. O transporte do centroide de N é preservado uma vez, sem creditar cancelamento favorável dos momentos. Não encerra estabilidade nem aprovação global.')}
+            out=[replacement.get(r['id'],r) for r in out]
+        else:
+            errors='; '.join(sorted({r.get('EN_bending_shear_error','Trecho sem registro') for r in selected if 'EN_bending_shear_component' not in r}))
+            for r in out:
+                if r['id'] in ('transverse_shear_resistance','N_M_V_shear_reduction') and r['status']=='pending':
+                    r['reason']='Componente EN6.27 solicitada, com cobertura incompleta: '+errors
+                    r['trace']['EN_normal_component_sha256']=en_mv_source['content_sha256']
     if not tension:out.append(item('tensile_section_scope','ELU',source='NBR14762:2010 9.6',qualified=True,excluded=True,reason='Nenhum intervalo ELU tem N de tração; não se exige Nt ou Ct sem demanda de tração.'))
     else:
         t=nbr.get('capacities',{}).get('tension',{}) if nbr else {};nt=t.get('Nt_Rd_N')
@@ -322,6 +414,7 @@ def _safe_records(key,state,fn):
 
 def assess(d):
     if not isinstance(d,dict):raise ValueError('Resultado deve ser um objeto.')
+    from ..three_girt_en_normal import centroid_policy as cp
     original=None;records=[];groups=[]
     try:
         original=fingerprint(d)
@@ -336,6 +429,7 @@ def assess(d):
             groups=[],whole_member_approved=False,current_adapter_can_approve=False,numerical_results_changed=False,excluded_scope=EXCLUSIONS)
         from ..global_verification import display_summary
         result['display_summary']=display_summary(result)
+        result[cp.ASSESSMENT_REVISION]=cp.SCHEMA
         result['content_sha256']=fingerprint(result)
         return result
     from ..model_domain import evidence as model_evidence
@@ -370,6 +464,7 @@ def assess(d):
         interpretation='Estados calculados valem somente no modelo e critério identificados. Não se somam/misturam índices EN, NBR ou AISI; não há aprovação global automática.')
     from ..global_verification import display_summary
     result['display_summary']=display_summary(result)
+    result[cp.ASSESSMENT_REVISION]=cp.SCHEMA
     if central(d):
         for group in result['groups']:group['scope']='Somente travessa central. '+group['scope']
         result['verification_scope']=copy.deepcopy(d['verification_scope'])
@@ -389,4 +484,10 @@ def saved_assessment(d,a):
     if a['assessment_schema']!=expected_schema:raise ValueError('Saved inventory schema differs from demand scope')
     if a['assessment_schema']==CENTRAL_SCHEMA and a.get('verification_scope')!=d['verification_scope']:
         raise ValueError('Saved central inventory scope changed')
+    if d.get('EN_normal_N_M_B_component') is not None:
+        from ..three_girt_en_normal import centroid_policy as cp
+        en,error=_read(d,'three_girt_en_normal','EN_normal_N_M_B_component')
+        if en is not None:cp.verify_assessment(en,a,members(d))
+        elif any(row['id'].startswith('EN:') and row['status']=='meets' for row in a['checks']):
+            raise ValueError('Saved EN inventory source is no longer usable: '+str(error))
     return a

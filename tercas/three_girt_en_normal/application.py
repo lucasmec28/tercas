@@ -15,6 +15,8 @@ from fractions import Fraction
 from pathlib import Path
 from . import field_envelope as f
 from . import shear_interaction as si
+from . import centroid_policy as cp
+from .. import three_girt_scope as verification
 from .en1993_normal_components import build_component_sections,verify_component_sections
 
 FIELD='EN_normal_N_M_B_component'
@@ -22,6 +24,8 @@ LEGACY_SCHEMA='three_girt_EN_normal_N_M_B_integral_v1'
 LEGACY_SHEAR_SCHEMA='three_girt_EN_normal_shear_interaction_integral_v2'
 LEGACY_EFFECTIVE_SCHEMA='three_girt_EN_normal_shear_effective_sections_v3'
 SCHEMA='three_girt_EN_normal_shear_signed_union_v4'
+CENTRAL_SCHEMA='three_girt_EN_middle_normal_shear_signed_union_v5'
+SIGNED_UNION_SCHEMAS=(SCHEMA,CENTRAL_SCHEMA)
 CONFIG_SCHEMA='three_girt_EN_normal_N_M_B_choice_v1'
 REQUEST='EN_normal_N_M_B_requested_configuration'
 ERROR='EN_normal_N_M_B_error'
@@ -429,6 +433,7 @@ def calculate(demand,config):
     # NBR capacities (_capacities), interaction or any new network solution.
     from ..three_girt_axial.application import _validate,reference_configuration as nbr_config,_polynomials
     _validate(demand,nbr_config(demand))
+    checked_members=verification.members(demand)
     if demand['input_data']['properties']['fy_MPa']!=250.:
         raise ValueError('EN normal implementation currently qualified only for fyb=fya=250 MPa')
     profile,section=_profile_and_section(demand)
@@ -441,10 +446,14 @@ def calculate(demand,config):
     for case in demand['cases']:
         if case['combination']['limit_state']!='ELU':continue
         for beam in case['model']['beams']:
+            # Retain the cheap torsion-field validity gate for all ELU beams.
+            # Select only resistance work, never the physical source.
+            torsion=f.torsion_field(beam['torsion_state_parameters'])
+            if beam['girt'] not in checked_members:continue
             raw=_polynomials(beam)
             original=dict(N=raw['N_N'],Mx=[-v for v in raw['My_strong_Nmm']],My=[-v for v in raw['Mz_weak_Nmm']])
             polys,transport=_transport_polynomials(original,certificate)
-            pieces=[];prepared_fields_cache={};torsion=f.torsion_field(beam['torsion_state_parameters'])
+            pieces=[];prepared_fields_cache={}
             edge0=recover_exported_state(case['model'],beam,beam['x_start_mm'])
             edge1=recover_exported_state(case['model'],beam,beam['x_end_mm'])
             total_torque=[edge0['T_equilibrium_SC_Nmm'],edge1['T_equilibrium_SC_Nmm']-edge0['T_equilibrium_SC_Nmm']]
@@ -498,9 +507,10 @@ def calculate(demand,config):
                 partial_maximum=winner if not complete else None,
                 observed_normal_exceedance=bool(normal['index_lower_witness'] is not None and normal['index_lower_witness']>1),
                 blocking_components=sorted({k for p in pieces for k in p['blocking_components']})))
+            rows[-1][cp.FIELD]=cp.build(rows[-1],certificate,fibers=fibers)
     if not rows:raise ValueError('No ELU combination for the normal component')
     members={}
-    for level in LEVELS:
+    for level in checked_members:
         rr=[r for r in rows if r['girt']==level];complete=all(r['complete'] for r in rr)
         normal=_normal_aggregate([p['normal'] for r in rr for p in r['pieces'] if p['complete']],complete)
         winner=normal['witness']
@@ -513,7 +523,8 @@ def calculate(demand,config):
             blocking_components=sorted({k for r in rr for k in r['blocking_components']}),
             observed_normal_exceedance=bool(normal['index_lower_witness'] is not None and normal['index_lower_witness']>1),
             normal_criterion=normal['criterion'])
-    result=dict(schema=SCHEMA,status='computed_conditional_EN_normal_shear_interaction',
+    result=dict(schema=CENTRAL_SCHEMA if verification.central(demand) else SCHEMA,
+        status='computed_conditional_EN_normal_shear_interaction',
         branch_policy='union_of_required_signed_coefficients',
         normal_envelope_semantics='Physical lower witness and separate numerical upper bound; compatibility maximum aliases are not exact maxima',
         configuration=copy.deepcopy(config),source_input_fingerprint=demand['input_fingerprint'],
@@ -534,6 +545,11 @@ def calculate(demand,config):
             'Physical lower witnesses exclude blocked intervals; aliases named maximum or envelope are lower witnesses, never exact maxima. Only complete upper bounds can establish a within-limit criterion.',
             'Signed-section unions cover root brackets conservatively. Artificial branch states are never accepted as witnesses. Bounds use magnitude-scaled binary64 padding, not formal interval arithmetic; unresolved gaps remain inconclusive.'],
         **{key:False for key in FALSE_FLAGS})
+    if result['schema']==CENTRAL_SCHEMA:
+        result[verification.FIELD]=copy.deepcopy(demand[verification.FIELD])
+    result['limits'].append('EN6.1.3(3): yield-calculated axial centroid shifts cannot receive favourable credit. A separately versioned sufficient bound covers original unshifted stresses; absent or undecided coverage remains pending. Original-scenario bounds have no physical witness. Saved corrected numerical envelopes are unchanged.')
+    from ..three_girt_en_mv import populate as populate_mv
+    populate_mv(demand,result,profile=profile)
     result['content_sha256']=fingerprint(result)
     return result
 
@@ -547,18 +563,48 @@ def attach(demand,config):
 
 
 
+def verification_members(component,demand):
+    """Versioned resistance coverage; never infer a new scope for old files."""
+    selected=verification.members(demand)
+    if component['schema']==CENTRAL_SCHEMA:
+        if selected!=('middle',) or component.get(verification.FIELD)!=demand[verification.FIELD]:
+            raise ValueError('Saved central EN verification scope differs from demand')
+        return selected
+    # v1-v4 may belong to an already scoped demand, but still stored all three
+    # members. A new marker must never silently reinterpret those snapshots.
+    if verification.FIELD in component:
+        raise ValueError('Historical EN schema cannot carry a central calculation scope')
+    return LEVELS
+
+
+def _verify_saved_coverage(component,demand):
+    selected=verification_members(component,demand)
+    expected=[(case['combination']['id'],beam['girt'],beam['id'],beam['x_start_mm'],beam['x_end_mm'])
+              for case in demand['cases'] if case['combination']['limit_state']=='ELU'
+              for beam in case['model']['beams'] if beam['girt'] in selected]
+    if component['schema']==CENTRAL_SCHEMA and not expected:
+        raise ValueError('Saved central EN requires nonempty ELU coverage')
+    actual=[(row['combination_id'],row['girt'],row['segment_id'],row['x_start_mm'],row['x_end_mm'])
+            for row in component['rows']]
+    if actual!=expected or set(component['per_member'])!={r[1] for r in expected}:
+        raise ValueError('Saved EN segment/member coverage differs from calculation scope')
+    return selected
+
+
 def _verify_saved_action_references(component,demand):
     """Validate saved transport arithmetic, never resolve or rebuild a section."""
     from ..three_girt_axial.application import _polynomials
+    selected=verification_members(component,demand)
     beams={(case['combination']['id'],beam['id']):beam for case in demand['cases']
-           if case['combination']['limit_state']=='ELU' for beam in case['model']['beams']}
+           if case['combination']['limit_state']=='ELU' for beam in case['model']['beams']
+           if beam['girt'] in selected}
     seen=set();references={}
     def witness_reference(w,expected):
         if w is None:return
         _,reference=_normal_action_state(w['concomitant_7DOF_state'],expected)
         if w.get('normal_action_reference')!=reference:
             raise ValueError('Saved concomitant centroid transport changed')
-        if component['schema']==SCHEMA:
+        if component['schema'] in SIGNED_UNION_SCHEMAS:
             exact=_exact_actions(expected['corrected_polynomials_R01'],w['t'])
             signs={axis:(value>0)-(value<0) for axis,value in exact.items()}
             selected={axis:_component_key(axis,sign) for axis,sign in signs.items()}
@@ -577,7 +623,7 @@ def _verify_saved_action_references(component,demand):
         original=dict(N=raw['N_N'],Mx=[-v for v in raw['My_strong_Nmm']],My=[-v for v in raw['Mz_weak_Nmm']])
         _,expected=_transport_polynomials(original,component['component_sections']);references[key]=expected
         if row.get('normal_action_reference')!=expected:raise ValueError('Saved beam centroid transport changed')
-        if component['schema']==SCHEMA:
+        if component['schema'] in SIGNED_UNION_SCHEMAS:
             _validate_saved_bound(row['normal'],row['complete'])
             witness_reference(row['normal']['witness'],expected)
         for name in ('complete_envelope','partial_maximum'):
@@ -586,7 +632,7 @@ def _verify_saved_action_references(component,demand):
             aggregate=row['shear_interaction'][criterion]
             if aggregate:witness_reference(aggregate['witness'],expected)
         for piece in row['pieces']:
-            if component['schema']==SCHEMA:
+            if component['schema'] in SIGNED_UNION_SCHEMAS:
                 _validate_saved_bound(piece['normal'],piece['complete'])
                 witness_reference(piece['normal']['witness'],expected)
             witness_reference(piece['maximum_absolute'],expected)
@@ -595,7 +641,7 @@ def _verify_saved_action_references(component,demand):
                     witness_reference(piece['shear_interaction'][criterion]['witness'],expected)
     if seen!=set(beams):raise ValueError('Saved transported beam coverage incomplete')
     for member in component['per_member'].values():
-        if component['schema']==SCHEMA:
+        if component['schema'] in SIGNED_UNION_SCHEMAS:
             _validate_saved_bound(member['normal'],member['complete'])
             w=member['normal']['witness']
             if w:witness_reference(w,references[(w['combination_id'],w['segment_id'])])
@@ -627,22 +673,41 @@ def _validate_saved_bound(bound,complete):
 def saved_component(demand):
     component=demand.get(FIELD)
     if component is None:return None
-    if not isinstance(component,dict) or component.get('schema') not in (LEGACY_SCHEMA,LEGACY_SHEAR_SCHEMA,LEGACY_EFFECTIVE_SCHEMA,SCHEMA):raise ValueError('Unknown saved EN normal component')
+    if not isinstance(component,dict) or component.get('schema') not in (LEGACY_SCHEMA,LEGACY_SHEAR_SCHEMA,LEGACY_EFFECTIVE_SCHEMA,*SIGNED_UNION_SCHEMAS):raise ValueError('Unknown saved EN normal component')
     if component.get('content_sha256')!=fingerprint({k:v for k,v in component.items() if k!='content_sha256'}):
         raise ValueError('Saved EN normal component content changed')
     if (component.get('source_demand_sha256')!=fingerprint(mechanical_source(demand)) or
         component.get('source_input_fingerprint')!=demand.get('input_fingerprint') or
         any(component.get(k) is not False for k in FALSE_FLAGS)):
         raise ValueError('Saved EN normal source/scope changed')
+    _verify_saved_coverage(component,demand)
+    if component['schema']==CENTRAL_SCHEMA:
+        # Hashes do not replace the physical coverage/identity checks. Reading
+        # uses saved fields only, with no solver or section recalculation.
+        from ..three_girt_assessment.application import validate_demand
+        validate_demand(demand)
     verify_component_sections(component['component_sections'])
-    if component['schema'] in (LEGACY_EFFECTIVE_SCHEMA,SCHEMA):_verify_saved_action_references(component,demand)
+    if component['schema'] in (LEGACY_EFFECTIVE_SCHEMA,*SIGNED_UNION_SCHEMAS):_verify_saved_action_references(component,demand)
+    cp.verify(component)
+    from ..three_girt_en_mv import validate_component as validate_mv
+    validate_mv(component,demand)
     return component
 
 
 def summary(result):
-    return dict(schema=result['schema'],ELU_combinations=result['ELU_combinations'],
+    out=dict(schema=result['schema'],ELU_combinations=result['ELU_combinations'],
         ELS_combinations_excluded=result['ELS_combinations_excluded'],normal_limit_MPa=result['normal_limit_MPa'],
         members={name:{k:copy.deepcopy(v) for k,v in row.items() if k not in ('complete_envelope','partial_maximum')}
             | {'complete_normal_index':None if row['complete_envelope'] is None else row['complete_envelope']['normal_index'],
-               'partial_normal_index':None if row['partial_maximum'] is None else row['partial_maximum']['normal_index']}
+               'partial_normal_index':None if row['partial_maximum'] is None else row['partial_maximum']['normal_index'],
+               cp.FIELD:{key:cp.qualification(result,name,key) for key in ('normal','interaction')}}
             for name,row in result['per_member'].items()},**{k:False for k in FALSE_FLAGS})
+    for name,row in out['members'].items():
+        row['normal_criterion']=cp.decision(result,name,'normal',row['normal_criterion'])
+        if row.get('normal'):row['normal']['criterion']=row['normal_criterion']
+        if row.get('shear_interaction'):
+            for key in ('normal','interaction'):
+                if row['shear_interaction'].get(key):
+                    bound=row['shear_interaction'][key]
+                    bound['criterion']=cp.decision(result,name,key,bound['criterion'])
+    return out

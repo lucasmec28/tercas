@@ -5,7 +5,7 @@ import json
 import math
 from pathlib import Path
 
-from .isolated_en_stress import check_member, stress_norm, _sha as field_digest, SCHEMA as BOUND_SCHEMA
+from .isolated_en_stress import check_member, check_web_shear, stress_norm, _sha as field_digest, SCHEMA as BOUND_SCHEMA
 
 CHOICE='isolated_en_stress_model'
 CHOICE_SCHEMA='isolated_EN_intact_section_choice_v1'
@@ -152,6 +152,11 @@ def attach_dense(result,section):
                 row['source_analysis_sha256']=field_digest(analysis)
                 row['check']=check_member(analysis,profile,intact_section_model_declared=True,model_origin=c['model_origin'])
                 row['status']='computed'
+                try:
+                    row['web_shear_component']=check_web_shear(analysis,profile,
+                        intact_section_model_declared=True,model_origin=c['model_origin'])
+                except (ValueError,TypeError,KeyError,ArithmeticError) as exc:
+                    row['web_shear_error']=str(exc)
             except (ValueError,TypeError,KeyError,ArithmeticError) as exc:row['reason']=str(exc)
         ev['records'].append(row)
     ev['computed_cases']=sum(r['status']=='computed' for r in ev['records'])
@@ -273,7 +278,13 @@ def preserved(result):
             if row['status']=='computed':
                 if _domain_reason(result['input_data'],c):raise ValueError('Componente EN calculada fora do domínio declarado.')
                 _validate_bound(row['check'],row,summary,ev)
-            elif row['status']!='pending' or row['check'] is not None or not row.get('reason'):
+                if 'web_shear_component' in row:
+                    from .isolated_en_shear import validate_saved
+                    validate_saved(row['web_shear_component'],row,summary['analysis'],ev)
+                elif 'web_shear_error' in row and (not isinstance(row['web_shear_error'],str) or not row['web_shear_error']):
+                    raise ValueError('Pendência de cortante EN sem motivo.')
+            elif (row['status']!='pending' or row['check'] is not None or not row.get('reason')
+                  or 'web_shear_component' in row):
                 raise ValueError('Pendência EN sem motivo ou com índice fabricado.')
         n=sum(r['status']=='computed' for r in rows)
         passed=bool(rows) and n==len(rows) and all(r['check']['section_stress_criteria_sufficiently_satisfied'] for r in rows)
@@ -297,9 +308,24 @@ def global_context(result):
         text+='As três desigualdades são satisfeitas por condição suficiente no campo declarado. '
     elif ev['computed_cases']:
         text+='Tetos inconclusivos ou cobertura pendente não demonstram reprovação. '
-    text+=('Permanecem separadas a flambagem por cisalhamento EN6.1.5, a redução N–M–V EN6.1.10, '
-        'a estabilidade e adequação da análise, as forças locais e o ELS completo. '
-        'Não é resistência torsional/global integral.')
+    webs=[r['web_shear_component'] for r in ev['records'] if 'web_shear_component' in r]
+    mvs=[w['bending_shear_component'] for w in webs if 'bending_shear_component' in w]
+    complete=len(mvs)==ev['ELU_cases'] and bool(mvs) and all(m['component_qualified'] for m in mvs)
+    if mvs:
+        text+=(f'Cortante da alma EN6.1.5 avaliado; componente adicional EN6.1.10/EN6.27 nos dois eixos calculada em {len(mvs)} casos; '
+            f'{sum(m["component_qualified"] for m in mvs)} suficientes. '
+            'Pisos EN independentes, Mf=0 e torção mantida separadamente em 6.1.6. ')
+        if complete and ev['all_section_stress_criteria_satisfied']:
+            text+='Interação seccional N/M/V e tensões torsionais atendidas pelos critérios complementares no modelo declarado. '
+        else:text+='Cobertura ou tetos da interação seccional ainda inconclusivos. '
+    elif webs:
+        reduced=sum(w['no_web_shear_reduction']['status']=='meets' for w in webs)
+        text+=(f'Cortante da alma EN6.1.5 avaliado em {len(webs)} casos; '
+            f'{reduced} dispensas no domínio restrito antigo. Interação geral e efeitos torsionais não são aprovados por esse registro histórico. ')
+    else:
+        text+='Permanecem separados o cortante da alma EN6.1.5 e a redução N–M–V EN6.1.10. '
+    text+=('Estabilidade e adequação da análise, forças locais e ELS completo permanecem separados. '
+        'Não é resistência torsional/global integral nem aprovação da barra.')
     return dict(reason=text,binding=dict(snapshot_sha256=ev['snapshot_sha256'],computed_cases=ev['computed_cases'],
         pending_cases=ev['pending_cases'],scope='Independent EN section-stress inventory only; no global approval'))
 

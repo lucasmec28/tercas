@@ -1,7 +1,7 @@
 """Sufficient EN 1993-1-3:2006 6.1.6 stress check for an isolated Vlasov field.
 
-Separate optional backend, NOT an AISI/NBR resistance, whole-member check, or
-production UI integration. Uses existing EN pure effective sections and the
+Optional backend with explicit app integration since schema v2. NOT an
+AISI/NBR resistance or whole-member check. Uses EN pure effective sections and the
 existing recovered polynomial demand. No new beam solver or buckling model.
 
 The convex norm of common-degree tensor Bernstein controls gives an upper
@@ -198,3 +198,10 @@ SAVED_SCOPE = {
    'Global/member stability and applicability of first-order/small-rotation analysis',
    'Local force introduction, connections, holes/net-section rupture and actual restraint details',
    'Full serviceability and physical geometry/material verification']}
+
+
+def check_web_shear(demand, profile, *, intact_section_model_declared=False, model_origin=''):
+    """Independent optional §§6.1.5/6.1.10 web component; not a stress recheck."""
+    certificate = _validate(demand, profile, intact_section_model_declared, model_origin)
+    from .isolated_en_shear import calculate_validated
+    return calculate_validated(demand, profile, model_origin, certificate=certificate)

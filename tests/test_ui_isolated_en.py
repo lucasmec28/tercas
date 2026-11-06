@@ -41,11 +41,18 @@ def test_explicit_en_flow_exports_and_read_only_rerender(monkeypatch):
     assert any(ui.TITLE in w.value for w in app.subheader)
     table=next(w.value for w in app.dataframe if 'Teto interação σ–τ EN' in w.value.columns)
     assert len(table)==1
+    assert table['Teto M–V adicional EN6.27'].notna().all()
+    assert table['Teto dos dois cortantes EN'].notna().all()
+    assert ev['records'][0]['web_shear_component']['bending_shear_component']['component_qualified']
     assert json.loads(downloads['Baixar estudo e resultados (JSON)'])==result
     doc=Document(io.BytesIO(downloads['Baixar memória parcial (Word)']))
-    assert ui.TITLE in '\n'.join(p.text for p in doc.paragraphs)
+    report_text='\n'.join(p.text for p in doc.paragraphs)
+    assert ui.TITLE in report_text and 'Mf=0' in report_text and 'primeiro escoamento' in report_text
     def fail(*a,**kw):raise AssertionError('No EN recalculation on saved rendering')
     monkeypatch.setattr(en,'check_member',fail)
+    from tercas import isolated_en_mv, en_simplified_interaction
+    monkeypatch.setattr(isolated_en_mv,'calculate',fail)
+    monkeypatch.setattr(en_simplified_interaction,'capacities',fail)
     app.run(timeout=30)
     next(w for w in app.checkbox if w.label=='Exibir memória numérica salva do caso direto').check().run(timeout=30)
     assert not app.exception and app.session_state.result==result

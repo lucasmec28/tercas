@@ -1,0 +1,93 @@
+{
+  "schema": "hosted_post_reboot_smoke_receipt_v1",
+  "date": "2026-11-06",
+  "application": "https://tercas.streamlit.app/",
+  "repository_commit": "f78544b63f7c3de2807a5fd05a21e08770e3b34b",
+  "hosted_commit_exposed_by_UI": false,
+  "observed_streamlit_version": "1.66.0",
+  "scope": "Disposable synthetic studies through the normal UI, exported JSON and an independent clean-process reproduction. Not structural project approval.",
+  "fresh_direct_session": {
+    "automatic_profile_PP_caption": true,
+    "manual_legacy_adoption_required": false
+  },
+  "U100_profile_PP": {
+    "L_mm": 3000.0,
+    "inclination_degrees": 0.0,
+    "mass_kg_m": 3.036769013984079,
+    "external_q_and_P_all_zero": true,
+    "direct_load_basis": "external_without_profile_self_weight_v1",
+    "total_q_normal_ELU_N_mm": 0.037225663563733705,
+    "total_q_normal_ELS_N_mm": 0.029780530850986964,
+    "total_q_parallel_ELU_and_ELS_N_mm": 0.0,
+    "factors": {
+      "ELU": 1.25,
+      "ELS": 1.0
+    }
+  },
+  "Ue100_isolated_EN": {
+    "profile": "Ue100x50x17x1.20",
+    "L_mm": 4000.0,
+    "inclination_degrees": 0.0,
+    "load_mode": "direct",
+    "top_load_line": "web_midplane",
+    "external_actions_zero": true,
+    "computed_ELU_cases": 1,
+    "pending_cases": 0,
+    "ELS_cases_excluded": 1,
+    "whole_member_approved": false,
+    "complete_EN_design_qualified": false
+  },
+  "independent_readback": [
+    {
+      "file": "u100_zero_result.json",
+      "source_sha256": "1aa6705fbe7445bd85802cf257995ac19f725ed597bfa1d7cf558ed9a276177b",
+      "input_snapshot_equal_after_JSON_serialization": true,
+      "global_not_approved": true
+    },
+    {
+      "file": "ue100_en_direct_result.json",
+      "source_sha256": "41f9a1e4377466dc612a69a7ff9260a769b3cd1aa2115cfa037c54a0b7c6f7b5",
+      "input_snapshot_equal_after_JSON_serialization": true,
+      "global_not_approved": true,
+      "EN_saved_reader_valid": true,
+      "EN_computed_cases": 1,
+      "EN_pending_cases": 0,
+      "EN_indices": [
+        {
+          "combination": "DIRECT_ELU",
+          "criterion": "normal",
+          "online": 0.05742548602120348,
+          "local": 0.0574254860212055,
+          "absolute_difference": 2.0192181260370035e-15
+        },
+        {
+          "combination": "DIRECT_ELU",
+          "criterion": "shear",
+          "online": 0.03345914624951189,
+          "local": 0.03345914624951193,
+          "absolute_difference": 3.469446951953614e-17
+        },
+        {
+          "combination": "DIRECT_ELU",
+          "criterion": "interaction",
+          "online": 0.05221124575592698,
+          "local": 0.052211245755928816,
+          "absolute_difference": 1.8388068845354155e-15
+        }
+      ],
+      "comparison_scope": "Same consumed input snapshot. Each source snapshot validates independently; different-platform numerical hashes are not required to match. EN indexes checked at relative tolerance1e-10 and absolute1e-12."
+    }
+  ],
+  "central_scope": {
+    "observed_before_reboot": true,
+    "post_reboot_visual_flow_completed": false,
+    "mechanical_scope_regression_covered": true
+  },
+  "traceback_observed": false,
+  "interpretation": [
+    "The earlier fresh-input and isolated-EN divergence disappeared after reboot.",
+    "The legacy manual torsion diagnostic does not activate the separated direct route. Choose the explicit roof top-load scheme for that route.",
+    "The local reproduction has the same consumed inputs; small floating-point output differences across hosts are recorded rather than requiring numerical hashes to match.",
+    "Source-code regression and this smoke test do not qualify full physical stability, complete serviceability or global member approval."
+  ]
+}
