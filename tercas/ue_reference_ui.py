@@ -110,6 +110,8 @@ def render(st, data, revision, load, render_results, render_import):
     render_roof_top_load(st, data, f'roof_top_load_{revision}')
     from .deflection_scope import render_choice
     render_choice(st, data, f'ue_ref_deflection_model_{revision}')
+    from .isolated_service_ui import controls as service_controls
+    service_controls(st, data, f'ue_ref_combined_service_{revision}')
     from .deflection_scope import enabled as uniaxial_component_enabled
     from .flexural_components import selected as gross_component_selected
     st.caption(TRACE_NOTE.split(' A evidência MLE')[0] if uniaxial_component_enabled(data) or gross_component_selected(data) else TRACE_NOTE)

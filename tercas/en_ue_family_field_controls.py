@@ -4,7 +4,7 @@ import numpy as np
 from .torsion_vlasov.intervals import Interval as I, stack, power_to_bernstein, elevate_bernstein
 from .torsion_vlasov.yield_envelope import _member_polynomials
 
-def _field_controls(demand, certificate):
+def _field_controls(demand, certificate, *, operator_intervals=None):
     """Yield signed-operator supersets; no fictitious control is a witness."""
     pol, identities = _member_polynomials(demand)
     section = demand['section']; p = section['properties']; th = section['thickness_mm']
@@ -39,7 +39,11 @@ def _field_controls(demand, certificate):
             component = certificate['components'][key]
             if not component['eligible']:
                 raise ValueError('EN signed effective section unavailable: ' + key + '; ' + str(component.get('blocking_reasons',[])))
-            coefficients[action] = I(component['sigma_coefficients_c0_cx_cy'])
+            if operator_intervals is not None and key in operator_intervals:
+                pairs=operator_intervals[key]
+                coefficients[action]=I([v[0] for v in pairs],[v[1] for v in pairs])
+            else:
+                coefficients[action] = I(component['sigma_coefficients_c0_cx_cy'])
         for face in (-1, 1):
             position = xy[:-1] + normal * (face * th / 2)
             sigma = outer(pol['B'] / p['Cw_mm6'], w)

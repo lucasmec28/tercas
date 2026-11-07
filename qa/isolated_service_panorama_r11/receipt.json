@@ -1,0 +1,40 @@
+{
+  "schema": "isolated_service_panorama_r11_receipt_v1",
+  "base_commit": "0cc446e",
+  "date": "2026-11-07",
+  "files": [
+    "tercas/isolated_service_panorama.py",
+    "tests/test_isolated_service_panorama.py",
+    "docs/ISOLATED_SERVICE_PANORAMA_R11.md"
+  ],
+  "scope": "Pure conditional ELS panorama adapter and proposed integration hooks; no global_verification.py/study_completion.py edits.",
+  "tests": {
+    "new_scalar_tests": 45,
+    "existing_global_regressions": 60,
+    "total_passed": 105,
+    "seconds": 1.7,
+    "log": "scalar_tests.txt",
+    "member_solves": 0,
+    "UI_runs": 0,
+    "BLAS_threads": 1,
+    "OPENBLAS_CORETYPE": "Haswell"
+  },
+  "source_authentication": "Delegates to isolated_service_component.saved. Contract projection tests mock only that boundary; one real pending component is authenticated without any member solve.",
+  "classification": {
+    "meets": "index_upper <= 1; active index is upper",
+    "fails": "index_lower > 1; active index is lower; failure limited to selected linear criterion",
+    "pending": "interval crossing 1, inconclusive sufficient MLE, pending source/choice, model conflict",
+    "not_applicable": "only producer-authenticated explicitly zero characteristic suction"
+  },
+  "integrity": [
+    "Full packet/configuration/case/model-domain binding",
+    "Strict saved criteria and exact annotation ID inventory",
+    "Physical ELS pending scopes remain pending",
+    "Saved derived aggregate summary checked against saved criteria",
+    "No member solver or historical migration",
+    "Global and physical approval flags remain false"
+  ],
+  "review": "Independent static review accepted bounds, isolated note-f identity and absence of new MODEL gate; orphan annotation and derived-summary guards added in response.",
+  "integration": "See docs/ISOLATED_SERVICE_PANORAMA_R11.md. Parent inserts apply before aggregate, saves binding before any global hash, and invokes validate_saved in UI/Word validation blocks.",
+  "publication": false
+}

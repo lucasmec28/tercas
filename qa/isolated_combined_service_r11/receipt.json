@@ -1,0 +1,73 @@
+{
+  "schema": "isolated_combined_service_r11_receipt_v1",
+  "date": "2026-11-07",
+  "base_commit": "7e5349b2fe69d5d537f6e3269eac28507fdecf6d",
+  "normative_source_sha256": "c2a01615a3ce9e2b93aeb7fee757f7bf9dd932adaefbc242e848ce813dc82407",
+  "environment": {
+    "OPENBLAS_CORETYPE": "Haswell",
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "validation": [
+    {
+      "scope": "Final scalar mechanics, all 83 Ue contours, inactive non-purlin models, old service plan/completion/global regressions",
+      "passed": 202,
+      "seconds": 4.72,
+      "log": "scalar_regressions.txt",
+      "member_solves": 0
+    },
+    {
+      "scope": "Consumer fixture, source replay, coherent rehashed tampering, four independent uniform ODE member benchmarks",
+      "passed": 25,
+      "log": "member_ui_tests.txt",
+      "member_solves": 6,
+      "note": "Same run had one failing initial UI test before calculation: old own-reference editor lacked its hook. Hooks were subsequently added."
+    },
+    {
+      "scope": "Own-reference legacy actual UI, JSON/Word and read-only rerender",
+      "passed": 1,
+      "log": "ui_final.txt",
+      "note": "Same run had a catalogue fixture failure because a standard steel label did not match inherited explicitly preserved material constants."
+    },
+    {
+      "scope": "Catalogue 19 actual UI calculation after declaring its unchanged inherited material custom",
+      "log": "ui_catalog_retest.txt",
+      "note": "Calculation and index succeeded; test incorrectly expected unchanged documentation metadata from the standard catalogue editor. Test narrowed to exact mechanical values, ELS choice, saved output and invalidation. No producer was changed to relax this."
+    },
+    {
+      "scope": "Final catalogue 19 actual UI, exact mechanical inputs, conditional index, JSON, Word, no-solver/no-mechanics rerender, invalidation on limit edit",
+      "passed": 1,
+      "deselected": 1,
+      "seconds": 17.57,
+      "log": "ui_catalog_final.txt"
+    }
+  ],
+  "integrity": {
+    "dense_source_saved": true,
+    "saved_nodal_arithmetic_replayed_without_member_solve": true,
+    "flexural_reactions_recovered_from_loads": true,
+    "full_selected_section_identity_checked": true,
+    "E_G_fy_bound_to_input": true,
+    "comparison_replayed_deterministically": true,
+    "cache_binds_all_source_and_output_content": true,
+    "historical_absence_preserved": true
+  },
+  "scope": {
+    "source_combinations_changed": false,
+    "supplementary_suction_separate": true,
+    "PP_in_supplementary_suction": false,
+    "sheet_stiffness_or_restraint": false,
+    "effective_lengths_shorten_physical_span": false,
+    "numerical_twist_warning_is_normative_limit": false,
+    "whole_member_approved": false,
+    "combined_ELS_approved": false,
+    "physical_first_order_applicability_qualified": false
+  },
+  "review": "Independent static review accepted the combined linear field, sufficient local-normal MLE comparator, explicit criterion and saved-source integrity after fixes. No physical stability or finite-rotation qualification claimed.",
+  "remaining": [
+    "If the sufficient complete gross MLE screen is inconclusive, this branch does not compute an iterated effective biaxial/warping stiffness; index stays absent.",
+    "Project applicability, selected service portion and ponding remain their applicable assessments, not invented universal tests or angular limits.",
+    "Parent runs final integrated app composition separately."
+  ]
+}

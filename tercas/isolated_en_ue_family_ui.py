@@ -65,7 +65,18 @@ def text_lines(ev):
         c=row.get('check')
         if not c:lines.append(row['combination_id']+': '+str(row.get('reason')));continue
         lines.append(row['combination_id']+': cortantes mínimos [N] '+str(c['shear_source_snapshot']['shear_capacity_lower_N'])+'.')
+        lag=c.get('shear_lag_supplement')
+        if lag:
+            if lag['eligible']:
+                lines.append(row['combination_id']+': shear lag explícito em Mx puro; Le físicos [mm] '+str([z['Le_mm'] for z in lag['physical_zero_zones']])+f"; beta inferior={lag['beta_global_lower']:.8g}; Ix inferior={lag['Ix_lower_mm4']:.8g} mm⁴; piso Mx±={lag['moment_capacity_floor_Nmm']} N·mm.")
+                lines.append('Envoltória suficiente por perda espelhada de área, sem inventar a localização da área efetiva. Tensões Mx intervalares preservam B/torção; não há testemunha de excesso físico nesse ramo nem aprovação global.')
+            else:lines.append('Shear lag adicional pendente: '+str(lag['blocking_reasons']))
+
+        if c.get('schema')=='EN_Ue_family_concurrent_section_components_v2':
+            lines.append('Histórico v2 preservado: rótulos e números pertencem à execução original e não requalificam shear lag, curling ou o projeto atual.')
         for name,criterion in c['stress']['criteria'].items():
+            if 'diagnostic_index_upper_bound' in criterion:
+                lines.append(row['combination_id']+' / '+name+': tensão normativa pendente por aplicabilidade; teto apenas diagnóstico='+str(criterion['diagnostic_index_upper_bound'])+'; '+str(criterion.get('reason')))
             lines.append(row['combination_id']+' / '+name+': '+criterion['criterion']+'; controle '+str(criterion.get('bound_control')))
             witness=criterion.get('physical_witness')
             if witness:lines.append('Testemunha concomitante: |σ|≥'+str(witness['absolute_sigma_lower_MPa'])+' MPa; limite '+str(witness['normal_limit_MPa'])+' MPa; localização '+str(witness['location'])+'.')

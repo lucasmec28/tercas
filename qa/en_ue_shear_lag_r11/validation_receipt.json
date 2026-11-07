@@ -1,0 +1,295 @@
+{
+  "distinct_tests": 56,
+  "passed": 56,
+  "aggregation": "Latest result per exact pytest class/name; original run and retest XML retained unchanged",
+  "note": "Initial combined run had 54 passes plus one over-restrictive numeric assertion in a scalar short-span test. Only that expectation changed; 19 scalar tests plus authentic v2 replay then passed. No production source changed between these final runs.",
+  "legacy_engine_sha256": "39ce4199580b505def0933dacab49f6bc5d5841287f020e05955d2a3fd1e053e",
+  "technical_files": {
+    "en_ue_family_shear_lag.py": "9bfd1dc97d9e51196f1475645bfeb0f887cd1d72db92f420948fbae061fc6413",
+    "isolated_en_ue_family.py": "99f4044df7a6ff95f8be7361c36106a01f6fcaf96bf716b37fdb99fb98ae9980",
+    "en_ue_family_field_controls.py": "4ca410d9a47e4c783b8a92288308bb576f5d32e8e0e45f81620cd7764a6c905b",
+    "isolated_en_ue_family_ui.py": "b0fccfbd436234915e136fc691d66398b96995f8bc2e0696f6ada8da19969067"
+  },
+  "tests": [
+    {
+      "id": "tests.test_en_ue_family_endpoint_search::test_boolean_selector_rejected[face]",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_en_ue_family_endpoint_search::test_boolean_selector_rejected[longitudinal_control]",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_en_ue_family_endpoint_search::test_boolean_selector_rejected[wall_control]",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_en_ue_family_endpoint_search::test_bound_excess_without_endpoint_excess",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_en_ue_family_endpoint_search::test_family_interior_control_has_separate_endpoint",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_en_ue_family_endpoint_search::test_large_signed_load_and_rotation_never_approve_physics[-100.0]",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_en_ue_family_endpoint_search::test_large_signed_load_and_rotation_never_approve_physics[100.0]",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_en_ue_family_endpoint_search::test_same_search_algorithm_with_parametric_limit",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_en_ue_family_shear_lag::test_beta_envelope_covers_point_seven_upward_formula_jump",
+      "status": "passed",
+      "source": "final_rechecks.xml"
+    },
+    {
+      "id": "tests.test_en_ue_family_shear_lag::test_decimal_inertia_loss_and_integer_capacity_are_independent[51]",
+      "status": "passed",
+      "source": "final_rechecks.xml"
+    },
+    {
+      "id": "tests.test_en_ue_family_shear_lag::test_decimal_inertia_loss_and_integer_capacity_are_independent[52]",
+      "status": "passed",
+      "source": "final_rechecks.xml"
+    },
+    {
+      "id": "tests.test_en_ue_family_shear_lag::test_decimal_inertia_loss_and_integer_capacity_are_independent[58]",
+      "status": "passed",
+      "source": "final_rechecks.xml"
+    },
+    {
+      "id": "tests.test_en_ue_family_shear_lag::test_decimal_inertia_loss_and_integer_capacity_are_independent[59]",
+      "status": "passed",
+      "source": "final_rechecks.xml"
+    },
+    {
+      "id": "tests.test_en_ue_family_shear_lag::test_decimal_inertia_loss_and_integer_capacity_are_independent[60]",
+      "status": "passed",
+      "source": "final_rechecks.xml"
+    },
+    {
+      "id": "tests.test_en_ue_family_shear_lag::test_decimal_inertia_loss_and_integer_capacity_are_independent[67]",
+      "status": "passed",
+      "source": "final_rechecks.xml"
+    },
+    {
+      "id": "tests.test_en_ue_family_shear_lag::test_fraction_zero_lengths_are_converted_outward",
+      "status": "passed",
+      "source": "final_rechecks.xml"
+    },
+    {
+      "id": "tests.test_en_ue_family_shear_lag::test_nonpositive_inertia_bound_is_not_promoted",
+      "status": "passed",
+      "source": "final_rechecks.xml"
+    },
+    {
+      "id": "tests.test_en_ue_family_shear_lag::test_physical_zeros_not_mesh_or_point_splits_and_sign_inversion",
+      "status": "passed",
+      "source": "final_rechecks.xml"
+    },
+    {
+      "id": "tests.test_en_ue_family_shear_lag::test_reduced_local_section_and_r10_are_not_silently_promoted",
+      "status": "passed",
+      "source": "final_rechecks.xml"
+    },
+    {
+      "id": "tests.test_en_ue_family_shear_lag::test_short_physical_zone_uses_equations_not_arbitrary_length_guard",
+      "status": "passed",
+      "source": "final_rechecks.xml"
+    },
+    {
+      "id": "tests.test_en_ue_family_shear_lag::test_six_sections_are_bounded_without_relocating_area[51]",
+      "status": "passed",
+      "source": "final_rechecks.xml"
+    },
+    {
+      "id": "tests.test_en_ue_family_shear_lag::test_six_sections_are_bounded_without_relocating_area[52]",
+      "status": "passed",
+      "source": "final_rechecks.xml"
+    },
+    {
+      "id": "tests.test_en_ue_family_shear_lag::test_six_sections_are_bounded_without_relocating_area[58]",
+      "status": "passed",
+      "source": "final_rechecks.xml"
+    },
+    {
+      "id": "tests.test_en_ue_family_shear_lag::test_six_sections_are_bounded_without_relocating_area[59]",
+      "status": "passed",
+      "source": "final_rechecks.xml"
+    },
+    {
+      "id": "tests.test_en_ue_family_shear_lag::test_six_sections_are_bounded_without_relocating_area[60]",
+      "status": "passed",
+      "source": "final_rechecks.xml"
+    },
+    {
+      "id": "tests.test_en_ue_family_shear_lag::test_six_sections_are_bounded_without_relocating_area[67]",
+      "status": "passed",
+      "source": "final_rechecks.xml"
+    },
+    {
+      "id": "tests.test_en_ue_family_shear_lag::test_uncovered_domain_stays_pending[kwargs0-pure strong]",
+      "status": "passed",
+      "source": "final_rechecks.xml"
+    },
+    {
+      "id": "tests.test_isolated_en_ue_family::test_batch_authentication_once",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_isolated_en_ue_family::test_direct_field_regression_and_unchanged_source",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_isolated_en_ue_family::test_dispatch_explicit_and_no_old_routes",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_isolated_en_ue_family::test_geometry_resealed_forgery_rejected",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_isolated_en_ue_family::test_ineligible_profile_directly_preserves_all_pending_reasons",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_isolated_en_ue_family::test_material_gamma_and_declared_stiffness",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_isolated_en_ue_family::test_nonunit_gamma_is_explicit_pending",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_isolated_en_ue_family::test_required_sign_reports_pending_not_wrong_operator",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_isolated_en_ue_family::test_resealed_proof_does_not_pass_warm_cache",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_isolated_en_ue_family::test_roundtrip_word_and_no_solver",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_isolated_en_ue_family::test_saved_rejects_mutations[count]",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_isolated_en_ue_family::test_saved_rejects_mutations[fy]",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_isolated_en_ue_family::test_saved_rejects_mutations[gamma]",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_isolated_en_ue_family::test_saved_rejects_mutations[normal]",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_isolated_en_ue_family::test_saved_rejects_mutations[omega]",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_isolated_en_ue_family::test_saved_rejects_mutations[proof]",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_isolated_en_ue_family::test_shear_preserved_when_normal_branch_missing",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_isolated_en_ue_family::test_zero_needs_no_unavailable_signed_branch",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_isolated_en_ue_shear_lag::test_authentic_v2_engine_outputs_replay_without_requalification",
+      "status": "passed",
+      "source": "final_rechecks.xml"
+    },
+    {
+      "id": "tests.test_isolated_en_ue_shear_lag::test_inclined_biaxial_case_does_not_receive_pure_mx_proof",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_isolated_en_ue_shear_lag::test_inversion_and_point_jump_keep_exact_physical_zones",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_isolated_en_ue_shear_lag::test_json_word_and_cold_reader_preserve_supplement_without_member_solver",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_isolated_en_ue_shear_lag::test_resealed_supplement_tampering_fails_warm_and_cold[Ix_lower_mm4]",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_isolated_en_ue_shear_lag::test_resealed_supplement_tampering_fails_warm_and_cold[beta_global_lower]",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_isolated_en_ue_shear_lag::test_resealed_supplement_tampering_fails_warm_and_cold[moment_capacity_floor_Nmm]",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_isolated_en_ue_shear_lag::test_resealed_supplement_tampering_fails_warm_and_cold[operator_intervals]",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_isolated_en_ue_shear_lag::test_resealed_supplement_tampering_fails_warm_and_cold[source]",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_isolated_en_ue_shear_lag::test_six_actual_flows_use_supplement_not_dispensation",
+      "status": "passed",
+      "source": "final_tests.xml"
+    },
+    {
+      "id": "tests.test_isolated_en_ue_shear_lag::test_v2_replay_stays_pending_instead_of_silent_upgrade",
+      "status": "passed",
+      "source": "final_tests.xml"
+    }
+  ]
+}

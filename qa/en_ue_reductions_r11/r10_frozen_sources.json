@@ -1,0 +1,71 @@
+{
+  "baseline_commit": "39d1673b0f879112367d36abc2b10f0525072f87",
+  "technical_binding": "7683fe8882512fe502948bbc922c0263d86af12459d1c9a3a41df4e62d403376",
+  "sources": [
+    {
+      "file": "catalog_torsion_section.py",
+      "sha256": "127b16a5a9dd2aa3d2dc16986f107e0a90b8bb022b2b358321aa6d7a8ccb61ec",
+      "byte_identical": true
+    },
+    {
+      "file": "catalogs.py",
+      "sha256": "36946b7de35df3ebc32f45881a2aab68e1777fe22e071a8b771272ba7f44cf6d",
+      "byte_identical": true
+    },
+    {
+      "file": "core/catalogo_documentado.json",
+      "sha256": "329866603c8af367bd6060ad309e5c2600e0786c10304e7e4c12b1789a0dd211",
+      "byte_identical": true
+    },
+    {
+      "file": "data/pierin_2013_weak_reference.json",
+      "sha256": "2ab2314ce2e53cc39dbfd5e2e0d1268c599247fc24b913dffbbac76abfa5a702",
+      "byte_identical": true
+    },
+    {
+      "file": "en_ue_catalog_operators.py",
+      "sha256": "86f8c5d6fb78b344f89d1f4e8adce789cf2a9790d3461d965a1fad83e3e62222",
+      "byte_identical": true
+    },
+    {
+      "file": "en_ue_family_kernel.py",
+      "sha256": "b41b423a06614cb7cd9fa0775e7cae529106e1a78bb0a25c4568b09bce6ccd3a",
+      "byte_identical": true
+    },
+    {
+      "file": "en_ue_family_provider.py",
+      "sha256": "fe31111bf4d518fb586a3d7c9fed062bc0c2aaef1dd55be6a23fbcc81dd45c9a",
+      "byte_identical": true
+    },
+    {
+      "file": "pierin_ue_registry.py",
+      "sha256": "0050d40496b1fe1014eb6327416a5dd77dad375aa6a467a135f575e6c29b10dc",
+      "byte_identical": true
+    },
+    {
+      "file": "three_girt_en_normal/en1993_normal_components.py",
+      "sha256": "2f407a8d96ff24ed5541efe7a1507cacde9a21d3729db83a8f627e54b6efc745",
+      "byte_identical": true
+    },
+    {
+      "file": "torsion_vlasov/bounded_polynomial.py",
+      "sha256": "2dc3f67ee5c7a8ddee18f9e9b77102432348dd2339e8523a698b6bc78768b2b4",
+      "byte_identical": true
+    },
+    {
+      "file": "torsion_vlasov/intervals.py",
+      "sha256": "c738ca89326f9fd9198199d6df48197f4fa5c632094d33fe13b62626f08f4168",
+      "byte_identical": true
+    },
+    {
+      "file": "torsion_vlasov/section.py",
+      "sha256": "28bf452fd1ccb4e7836735b55693ad0f531fced1e544e38865436a11f9852c60",
+      "byte_identical": true
+    },
+    {
+      "file": "weak_pierin.py",
+      "sha256": "4e7b2cd4bdca6fdcd72832bc5250917e2618bd43ab9c26c4fce4066584f8ea25",
+      "byte_identical": true
+    }
+  ]
+}

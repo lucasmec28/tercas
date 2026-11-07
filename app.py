@@ -323,7 +323,7 @@ b=copy.deepcopy(st.session_state.base);r=st.session_state.revision
 last=st.session_state.get('last_input',b)
 for key in ['load_mode','area_inputs','selected_types','ELS_down_denominator','ELS_up_denominator','q_uls','P_uls','x_uls','q_sls','P_sls','x_sls','actions_origin','ELS_limit_mm','ELS_origin']:
  b[key]=copy.deepcopy(last[key])
-for key in ['isolated_en_ue_family_model','isolated_en_ue125_300_model','direct_load_basis','roof_top_load','point_contact','isolated_en_ue_catalog_model','isolated_en_stress_model','torsion_model','deflection_model','member_application','wall_els','wall_tie_study','three_girt_model','weak_catalog','weak_axis','model_domain','u_panel_condition','inclination','q_parallel_uls','q_parallel_sls','P_parallel_uls','P_parallel_sls']:
+for key in ['isolated_combined_service','isolated_en_ue_family_model','isolated_en_ue125_300_model','direct_load_basis','roof_top_load','point_contact','isolated_en_ue_catalog_model','isolated_en_stress_model','torsion_model','deflection_model','member_application','wall_els','wall_tie_study','three_girt_model','weak_catalog','weak_axis','model_domain','u_panel_condition','inclination','q_parallel_uls','q_parallel_sls','P_parallel_uls','P_parallel_sls']:
  if key in last:b[key]=copy.deepcopy(last[key])
 d=copy.deepcopy(b)
 try:
@@ -706,6 +706,8 @@ if any(tag in provenance_text.casefold() for tag in ['sintétic','sintetic','did
  st.warning('Há referências a dados sintéticos/didáticos nas entradas ou origens. Foram preservadas; confira essas premissas antes de usar como dados de projeto.')
 from tercas.deflection_scope import render_choice as render_deflection_choice
 render_deflection_choice(st,d,f'deflection_model_{r}')
+from tercas.isolated_service_ui import controls as render_combined_service
+render_combined_service(st,d,f'isolated_combined_service_{r}')
 render_point_contact(st,d,f'point_contact_{r}',disabled=three_girt)
 from tercas.ue_catalog_ui import render_choice as render_ue_catalog_choice
 render_ue_catalog_choice(st,d,f'ue_catalog_{r}',load)

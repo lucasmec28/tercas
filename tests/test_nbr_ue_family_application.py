@@ -84,9 +84,12 @@ def test_full_replay_rejects_rehashed_forgery(mutation):
     with pytest.raises(ValueError):app.preserved(new)
 
 
-def test_partial_negative_sign_never_becomes_complete_or_cross_axis():
+def test_new_negative_reference_remains_sign_specific_and_not_member_approval():
     row=app.attach(source(py=-100.))[app.FIELD]['records'][0]
-    assert not row['weak_negative_complete']
+    assert row['weak_negative_complete']
+    assert not row['whole_member_approved']
+    distortion=next(c for c in row['components'] if c['method']=='weak_negative_distortional')
+    assert distortion['approximate']
     negative=next(c for c in row['components'] if c['method']=='weak_negative_local')
     positive=next(c for c in row['components'] if c['method']=='weak_positive_local')
     assert negative['demand']['Msd_Nmm']>0 and positive['demand']['Msd_Nmm']==0
@@ -98,13 +101,14 @@ def test_ui_word_json_and_legacy_are_read_only(monkeypatch):
     monkeypatch.setattr(roof_top_load,'refined',lambda **kw:pytest.fail('reader invokes eigen solver'))
     new=app.attach(source());assert app.preserved(json.loads(json.dumps(new)))==new[app.FIELD]
     class UI:
-        def __init__(self):self.rows=[]
+        def __init__(self):self.tables=[]
         def subheader(self,*a):pass
         def caption(self,*a):pass
         def warning(self,*a):pytest.fail(str(a))
-        def dataframe(self,rows,**kw):self.rows=rows
-    st=UI();ui.show(st,new);assert len(st.rows)==12
-    doc=Document();ui.report(doc,new);assert len(doc.tables)==1 and len(doc.tables[0].rows)==13
+        def dataframe(self,rows,**kw):self.tables.append(rows)
+    count=len(new[app.FIELD]['records'][0]['components'])
+    st=UI();ui.show(st,new);assert len(st.tables[0])==count and len(st.tables[1])==1
+    doc=Document();ui.report(doc,new);assert len(doc.tables)==1 and len(doc.tables[0].rows)==count+1
     legacy=source();before=copy.deepcopy(legacy)
     assert app.preserved(legacy) is None
     ui.report(Document(),legacy);assert legacy==before
@@ -126,7 +130,7 @@ def test_missing_or_disabled_roof_scheme_keeps_local_and_explicit_position_pendi
 def test_unverified_height_eigenvalue_cannot_create_new_family_capacity():
     old=source();old['roof_top_load_evidence']={'Me_Nmm':1e99,'snapshot_sha256':'forged'}
     row=app.attach(old)[app.FIELD]['records'][0]
-    height=next(c for c in row['components'] if c['method']=='FLT_height_physical_span')
+    height=next(c for c in row['components'] if c['method']=='FLT_height_effective_reference')
     assert height['index'] is None and height['capacity_Nmm'] is None
 
 
@@ -189,7 +193,8 @@ def test_distortional_inapplicability_count_requires_exact_status_and_proof():
     assert positive['indexed_cases']==0
     proof=ev['sources']['own_rounded_contour']['weak']['positive']['local']['proof']
     assert positive['not_applicable_basis']==dict(status='not_applicable_lips_in_tension',proof=proof)
-    assert negative['not_applicable_cases']==0 and negative['pending_cases']==1
+    assert negative['not_applicable_cases']==0 and negative['pending_cases']==0
+    assert negative['indexed_cases']==1
     assert negative['not_applicable_basis'] is None
     row=next(c for c in ev['records'][0]['components'] if c['method']=='weak_positive_distortional')
     assert row['index'] is None and row['capacity_Nmm'] is None

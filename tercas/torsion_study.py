@@ -156,6 +156,8 @@ def attach(result):
     out = attach_resistance(out, section) if catalog_claims(data) else attach_dense(out, section)
     from .isolated_en_application import attach_dense as attach_EN_dense
     out = attach_EN_dense(out, section)
+    from .isolated_service_component import attach_dense as attach_service_dense
+    out = attach_service_dense(out, section)
     out['torsion_evidence'] = summarize_torsion_evidence(out['torsion_evidence'])
     out['torsion_evidence']['choice_snapshot'] = copy.deepcopy(c)
     if automatic is not None:

@@ -1,0 +1,115 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_ test_direct_combined_service_screen_exports_and_readonly_rerender[catalog_19] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd24a8e5100>
+reference = 'catalog_19'
+
+    @pytest.mark.parametrize('reference',['legacy_own','catalog_19'])
+    def test_direct_combined_service_screen_exports_and_readonly_rerender(monkeypatch,reference):
+        d=inputs(t=3.35,q=.01);d[c.CHOICE]=choice('declared_limit')
+        if reference=='catalog_19':
+            from tercas.ue_catalog_reference import activate
+            d['catalog_index']=19;d['steel_name']='Personalizado';d=activate(d)
+        payload=json.dumps(d).encode()
+        monkeypatch.setattr(st,'file_uploader',lambda *a,**k:SimpleNamespace(size=len(payload),getvalue=lambda:payload))
+        downloads={};original=st.download_button
+        def capture(label,data,*args,**kwargs):
+            if label in ('Baixar estudo e resultados (JSON)','Baixar memória parcial (Word)'):downloads[label]=data
+            return original(label,data,*args,**kwargs)
+        monkeypatch.setattr(st,'download_button',capture)
+        app=AppTest.from_file(APP).run(timeout=45)
+        next(x for x in app.button if x.label=='Aplicar entradas do arquivo').click().run(timeout=45)
+        assert not app.exception
+        assert next(x for x in app.checkbox if x.label=='Calcular deslocamento combinado no ponto declarado').value
+        next(x for x in app.button if x.label=='Calcular verificações disponíveis').click().run(timeout=90)
+        assert not app.exception
+        assert not any('Não foi possível calcular' in e.value for e in app.error),[e.value for e in app.error]
+        result=copy.deepcopy(app.session_state.result);ev=c.saved(result)
+        assert ev['computed_cases']==1 and ev['records'][0]['comparison']['index_upper'] is not None
+>       assert app.session_state.last_input==d
+E       AssertionError: assert {'schema': 't...projeto', ...} == {'schema': 't...projeto', ...}
+E         
+E         Omitting 38 identical items, use -vv to show
+E         Differing items:
+E         {'property_origin': 'Aço Personalizado: Contorno próprio nominal Ue; propriedades geométricas calculadas juntas; mater...plicabilidade; Contorno próprio nominal Ue; propriedades geométricas calculadas juntas; material original preservado.'} != {'property_origin': 'Contorno próprio nominal Ue; propriedades geométricas calculadas juntas; material original preservado.'}
+E         {'weak_catalog': {'Lx_mm': 4000.0, 'geometry_mode': 'catalog', 'mean_line': {'am_mm': 98.8, 'bm_mm': 48.8, 'cm_mm': 16...2014 Ex08 p69: am=h−t, bm=...
+E         
+E         ...Full output truncated (10 lines hidden), use '-vv' to show
+
+tests/test_ui_isolated_service.py:38: AssertionError
+----------------------------- Captured stderr call -----------------------------
+2026-11-07 00:14:24.802 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-07 00:14:25.238 DEBUG   streamlit.runtime.scriptrunner.script_runner: Running script
+2026-11-07 00:14:25.238 DEBUG   streamlit.runtime.media_file_manager: Disconnecting files for session with ID test session id
+2026-11-07 00:14:25.238 DEBUG   streamlit.runtime.media_file_manager: Sessions still active: dict_keys([])
+2026-11-07 00:14:25.238 DEBUG   streamlit.runtime.media_file_manager: Files: 0; Sessions with files: 0
+2026-11-07 00:14:27.771 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned files...
+2026-11-07 00:14:27.771 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned deferred callables...
+2026-11-07 00:14:27.790 DEBUG   streamlit.runtime.scriptrunner.script_runner: Beginning script thread
+2026-11-07 00:14:27.790 DEBUG   streamlit.runtime.scriptrunner.script_runner: Running script
+2026-11-07 00:14:27.790 DEBUG   streamlit.runtime.media_file_manager: Disconnecting files for session with ID test session id
+2026-11-07 00:14:27.790 DEBUG   streamlit.runtime.media_file_manager: Sessions still active: dict_keys([])
+2026-11-07 00:14:27.790 DEBUG   streamlit.runtime.media_file_manager: Files: 0; Sessions with files: 0
+2026-11-07 00:14:28.912 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned files...
+2026-11-07 00:14:28.912 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned deferred callables...
+2026-11-07 00:14:28.912 DEBUG   streamlit.runtime.scriptrunner.script_runner: Running script
+2026-11-07 00:14:28.912 DEBUG   streamlit.runtime.media_file_manager: Disconnecting files for session with ID test session id
+2026-11-07 00:14:28.912 DEBUG   streamlit.runtime.media_file_manager: Sessions still active: dict_keys([])
+2026-11-07 00:14:28.912 DEBUG   streamlit.runtime.media_file_manager: Files: 0; Sessions with files: 0
+2026-11-07 00:14:29.991 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned files...
+2026-11-07 00:14:29.992 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned deferred callables...
+2026-11-07 00:14:30.005 DEBUG   streamlit.runtime.scriptrunner.script_runner: Beginning script thread
+2026-11-07 00:14:30.005 DEBUG   streamlit.runtime.scriptrunner.script_runner: Running script
+2026-11-07 00:14:30.006 DEBUG   streamlit.runtime.media_file_manager: Disconnecting files for session with ID test session id
+2026-11-07 00:14:30.006 DEBUG   streamlit.runtime.media_file_manager: Sessions still active: dict_keys([])
+2026-11-07 00:14:30.006 DEBUG   streamlit.runtime.media_file_manager: Files: 0; Sessions with files: 0
+2026-11-07 00:14:32.203 WARNING streamlit.deprecation_util: Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-11-07 00:14:33.031 DEBUG   streamlit.runtime.memory_media_file_storage: Adding media file 7842429afd19b3056aa60b5950e72d6c
+2026-11-07 00:14:33.055 DEBUG   streamlit.runtime.memory_media_file_storage: Adding media file e612498a2918178da7060b26c095be41
+2026-11-07 00:14:33.056 DEBUG   streamlit.runtime.memory_media_file_storage: Adding media file 0a97d34d123c8da9f8c8802000bfb226
+2026-11-07 00:14:33.159 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned files...
+2026-11-07 00:14:33.159 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned deferred callables...
+------------------------------ Captured log call -------------------------------
+WARNING  streamlit.runtime.scriptrunner_utils.script_run_context:script_run_context.py:508 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+DEBUG    streamlit.runtime.scriptrunner.script_runner:script_runner.py:620 Running script
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:211 Disconnecting files for session with ID test session id
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:221 Sessions still active: dict_keys([])
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:225 Files: 0; Sessions with files: 0
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:150 Removing orphaned files...
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:171 Removing orphaned deferred callables...
+DEBUG    streamlit.runtime.scriptrunner.script_runner:script_runner.py:406 Beginning script thread
+DEBUG    streamlit.runtime.scriptrunner.script_runner:script_runner.py:620 Running script
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:211 Disconnecting files for session with ID test session id
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:221 Sessions still active: dict_keys([])
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:225 Files: 0; Sessions with files: 0
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:150 Removing orphaned files...
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:171 Removing orphaned deferred callables...
+DEBUG    streamlit.runtime.scriptrunner.script_runner:script_runner.py:620 Running script
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:211 Disconnecting files for session with ID test session id
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:221 Sessions still active: dict_keys([])
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:225 Files: 0; Sessions with files: 0
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:150 Removing orphaned files...
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:171 Removing orphaned deferred callables...
+DEBUG    streamlit.runtime.scriptrunner.script_runner:script_runner.py:406 Beginning script thread
+DEBUG    streamlit.runtime.scriptrunner.script_runner:script_runner.py:620 Running script
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:211 Disconnecting files for session with ID test session id
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:221 Sessions still active: dict_keys([])
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:225 Files: 0; Sessions with files: 0
+WARNING  streamlit.deprecation_util:deprecation_util.py:81 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+DEBUG    streamlit.runtime.memory_media_file_storage:memory_media_file_storage.py:164 Adding media file 7842429afd19b3056aa60b5950e72d6c
+DEBUG    streamlit.runtime.memory_media_file_storage:memory_media_file_storage.py:164 Adding media file e612498a2918178da7060b26c095be41
+DEBUG    streamlit.runtime.memory_media_file_storage:memory_media_file_storage.py:164 Adding media file 0a97d34d123c8da9f8c8802000bfb226
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:150 Removing orphaned files...
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:171 Removing orphaned deferred callables...
+=========================== short test summary info ============================
+FAILED tests/test_ui_isolated_service.py::test_direct_combined_service_screen_exports_and_readonly_rerender[catalog_19]
+1 failed, 1 deselected in 10.12s

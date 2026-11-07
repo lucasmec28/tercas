@@ -23,7 +23,8 @@ from . import en_signed_partial_interaction as core
 from .en_ue_family_applicability import assess
 
 LEGACY_SCHEMA='EN_Ue_family_concurrent_section_components_v1'
-SCHEMA='EN_Ue_family_concurrent_section_components_v2'
+PRE_SHEAR_LAG_SCHEMA='EN_Ue_family_concurrent_section_components_v2'
+SCHEMA='EN_Ue_family_concurrent_section_components_v3'
 _VERIFIED_READS=OrderedDict()
 _READ_LOCK=RLock()
 FALSE_FLAGS=('whole_member_approved','complete_EN_design_qualified','global_stability_qualified','combined_ELS_qualified',
@@ -56,7 +57,7 @@ def _validate(demand, normal_snapshot, model_origin):
     return normal,shear,pieces
 
 
-def _stress(demand, certificate, model_origin, *, normal_witness=False):
+def _stress(demand, certificate, model_origin, *, normal_witness=False, operator_intervals=None):
     """Upper<=1 is sufficient for these three section criteria only.
 
     No branch sum is interpreted as a concurrent physical maximum. An upper
@@ -69,7 +70,7 @@ def _stress(demand, certificate, model_origin, *, normal_witness=False):
         shear=I(normal_limit) / I(3.).sqrt(), interaction=I(normal_limit) * I(1.1))
     bounds = dict(normal=0., shear=0., interaction=0.)
     controls = {}; count = 0
-    for selected, face, sigma, tau, identities in _field_controls(demand, certificate):
+    for selected, face, sigma, tau, identities in _field_controls(demand, certificate, operator_intervals=operator_intervals):
         values = dict(normal=sigma.abs(), shear=tau.abs(),
             interaction=stress_norm(sigma, tau))
         for key, values_at_controls in values.items():
@@ -130,8 +131,9 @@ def _stress(demand, certificate, model_origin, *, normal_witness=False):
     output['content_sha256'] = _sha(output)
     return output
 
-def _interaction(demand, normal, shear, pieces, applicability):
+def _interaction(demand, normal, shear, pieces, applicability, *, capacity_overrides=None):
     floors={k:F(v['first_yield_capacity_floor']) for k,v in normal['components'].items() if v['eligible']}
+    if capacity_overrides is not None:floors.update({k:F(v) for k,v in capacity_overrides.items()})
     # Axial action is proved exactly zero; no fictitious axial floor is supplied.
     caps=shear['shear_capacity_lower_N'];rows=[];maxima=[];missing_branches=set()
     for piece in pieces:
@@ -174,10 +176,20 @@ def _interaction(demand, normal, shear, pieces, applicability):
     return shear_result,mv,rows
 
 
-def _calculate(demand, *, normal_snapshot, model_origin, normal_witness=True):
+def _calculate(demand, *, normal_snapshot, model_origin, normal_witness=True, shear_lag_extension=True):
     """Evaluate the existing dense field before its normal app compaction."""
     normal,shear,pieces=_validate(demand,normal_snapshot,model_origin)
-    try:stress=_stress(demand,normal,model_origin,normal_witness=normal_witness)
+    applicability=assess(demand,normal_snapshot)
+    supplement=None;operator_intervals=None;capacity_overrides=None
+    if shear_lag_extension and applicability['axes'].get('Mx',{}).get('active') and not applicability['axes']['Mx']['shear_lag_qualified']:
+        from .en_ue_family_shear_lag import build as build_lag, apply_applicability
+        supplement=build_lag(demand,normal,applicability)
+        if supplement['eligible']:
+            applicability=apply_applicability(applicability,supplement)
+            operator_intervals=supplement['operator_intervals']
+            capacity_overrides=supplement['signed_capacity_floor']
+    try:stress=_stress(demand,normal,model_origin,
+        normal_witness=normal_witness and operator_intervals is None,operator_intervals=operator_intervals)
     except ValueError as error:
         if not str(error).startswith('EN signed effective section unavailable:'):raise
         # No fabricated sigma/tau or combined-stress approval. Only V/capacity
@@ -188,22 +200,40 @@ def _calculate(demand, *, normal_snapshot, model_origin, normal_witness=True):
             section_stress_criteria_sufficiently_satisfied=False,normal_limit_MPa=normal['normal_yield_limit_MPa'],
             material=normal['material'],whole_member_approved=False)
     stress_computed=stress['status']!='pending_signed_normal_operator'
-    applicability=assess(demand,normal_snapshot)
+    if operator_intervals is not None:
+        stress['shear_lag_supplement_sha256']=supplement['content_sha256']
+        stress['stress_scope']='Signed pure-Mx shear-lag interval envelope plus original gross B/V/Tsv/Tw; no exact physical distribution or exceedance witness'
+        if supplement.get('independent_My_companion') is not None:
+            stress['stress_scope']='Signed pure-Mx shear-lag interval envelope plus independently applicable unchanged pure-My effective operator and original gross B/V/Tsv/Tw; respective effective sections under EN13 6.1.6(3),(5), no shared effective tensor or exact physical distribution/exceedance witness'
     stress['raw_bounds_sufficient']=stress['section_stress_criteria_sufficiently_satisfied']
     stress['section_stress_criteria_sufficiently_satisfied'] &= applicability['qualified']
     stress['applicability_qualified']=applicability['qualified']
+    if shear_lag_extension and stress_computed and not applicability['qualified']:
+        # v3: an arithmetic bound from an inapplicable bending operator is a
+        # diagnostic, not a qualified normal/combined-stress criterion. Leave
+        # the independent concomitant tau and resistant shear available.
+        for key in ('normal','interaction'):
+            criterion=stress['criteria'][key]
+            criterion['diagnostic_index_upper_bound']=criterion['index_upper_bound']
+            criterion['diagnostic_criterion']=criterion['criterion']
+            if 'physical_witness' in criterion:
+                criterion['diagnostic_physical_witness']=criterion.pop('physical_witness')
+            criterion.update(index_upper_bound=None,criterion='pending_bending_applicability',
+                observed_exceedance=False,reason=applicability['reason'])
+        stress['normal_and_interaction_pending_applicability']=True
     if stress_computed:stress['status']='computed_sufficient_EN_section_stress_bounds' if applicability['qualified'] else 'pending_bending_applicability'
     stress['content_sha256']=_sha({k:v for k,v in stress.items() if k!='content_sha256'})
-    v,m,rows=_interaction(demand,normal,shear,pieces,applicability)
-    out=dict(schema=SCHEMA if normal_witness else LEGACY_SCHEMA,normal_source_sha256=normal['content_sha256'],
+    v,m,rows=_interaction(demand,normal,shear,pieces,applicability,capacity_overrides=capacity_overrides)
+    out=dict(schema=(SCHEMA if shear_lag_extension else PRE_SHEAR_LAG_SCHEMA) if normal_witness else LEGACY_SCHEMA,normal_source_sha256=normal['content_sha256'],
         shear_source_snapshot=shear,source_analysis_sha256=_sha(demand),
         source_analysis_material=dict(E_MPa=demand['E_MPa'],G_MPa=demand['G_MPa']),
         material=copy.deepcopy(normal['material']),model_origin=model_origin,
         source_demand=copy.deepcopy(demand),stress=stress,shear=v,mv=m,pieces=rows,
         applicability=applicability,full_member_field_covered=True,
-        component_status=dict(stress='computed' if stress_computed else 'pending',shear='computed',mv='computed' if m['index_upper'] is not None else 'pending'),
+        component_status=dict(stress='computed' if stress_computed and (applicability['qualified'] or not shear_lag_extension) else 'pending',shear='computed',mv='computed' if m['index_upper'] is not None else 'pending'),
         scope='EN6.1.6 plus EN6.1.5/6.1.10 Eq6.27; família Ue Pierin, material declarado, N=0, no roof restraint or global approval',
         **{k:False for k in FALSE_FLAGS})
+    if supplement is not None:out['shear_lag_supplement']=supplement
     out['content_sha256']=_sha(out)
     return out
 
@@ -216,7 +246,8 @@ def _compact_source(demand):
 
 def _read_token(check, summary, normal_snapshot, source_sha256, model_origin):
     for value in (check,summary,normal_snapshot,source_sha256,model_origin):_json_native(value)
-    return (_sha(check),_sha(summary),_sha(normal_snapshot),source_sha256,model_origin)
+    from .en_ue_family_shear_lag import source_binding
+    return (_sha(check),_sha(summary),_sha(normal_snapshot),source_sha256,model_origin,source_binding())
 
 
 def _remember_verified(token):
@@ -279,9 +310,9 @@ def validate_saved_many(requests, *, normal_snapshot, model_origin):
             raise ValueError('Explicit saved check, summary and original source hash required')
         check=request['check'];summary=request['summary'];source_sha256=request['source_sha256']
         for value in (check,summary,source_sha256):_json_native(value)
-        if type(check) is not dict or check.get('schema') != SCHEMA:
+        if type(check) is not dict or check.get('schema') not in (SCHEMA,PRE_SHEAR_LAG_SCHEMA):
             raise ValueError('EN family snapshot schema required')
-        token=(_sha(check),_sha(summary),normal_sha256,source_sha256,model_origin)
+        token=_read_token(check,summary,normal_snapshot,source_sha256,model_origin)
         shear_key=_sha(check['shear_source_snapshot'])
         if shear_key not in verified_shear:
             if _sha(check['shear_source_snapshot'])!=_sha(normal_snapshot['shear']):
@@ -300,7 +331,7 @@ def validate_saved_many(requests, *, normal_snapshot, model_origin):
         replay_summary=_compact_source(demand)
         if _sha(replay_summary)!=_sha(summary):raise ValueError('Original dense field and saved summary differ')
         expected=_calculate(demand,normal_snapshot=normal_snapshot,model_origin=model_origin,
-            normal_witness=True)
+            normal_witness=True,shear_lag_extension=check['schema']==SCHEMA)
         if _sha(check)!=_sha(expected):raise ValueError('EN family saved arithmetic or authority differs from original source')
         _remember_verified(token)
     return True

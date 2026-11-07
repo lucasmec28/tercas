@@ -1,0 +1,14 @@
+..................F....................................                  [100%]
+=================================== FAILURES ===================================
+______ test_short_physical_zone_uses_equations_not_arbitrary_length_guard ______
+
+    def test_short_physical_zone_uses_equations_not_arbitrary_length_guard():
+        p,_=proof(L=50.,a=25.)
+        assert p['eligible'] and p['moment_capacity_floor_Nmm']>0
+>       assert p['beta_global_lower']<.02
+E       assert 0.043999260315440866 < 0.02
+
+tests/test_en_ue_family_shear_lag.py:142: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_en_ue_family_shear_lag.py::test_short_physical_zone_uses_equations_not_arbitrary_length_guard
+1 failed, 54 passed in 49.01s

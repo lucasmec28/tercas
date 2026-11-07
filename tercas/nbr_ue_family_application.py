@@ -7,10 +7,11 @@ from . import nbr_ue_family as provider
 from . import roof_top_load as roof
 
 FIELD = 'nbr_ue_family_application'
-SCHEMA = 'nbr_ue_family_application_v1'
+SCHEMA = 'nbr_ue_family_application_v2'
 SCOPE = ('Componentes de flexão NBR, não aprovação resistente/global. Contorno próprio e '
          'referência nominal publicada são alternativas distintas; índices não são somados. '
-         'Sem torção/bimomento, interação biaxial ou ELS combinado. Sem rigidez da telha.')
+         'Interação biaxial N=0 usa capacidades próprias concomitantes e qualificadas por sinal. '
+         'Torção/bimomento, cortante e ELS combinado permanecem separados. Sem rigidez da telha.')
 
 
 def _eligible(data):
@@ -82,25 +83,16 @@ def _position(actions, axis):
 
 
 def _demand(combo, L, axis, sign=None):
-    """Exact extrema on every quadratic piece; physical L and simultaneous witness."""
-    from .roof_biaxial_positive import _pieces, _coefficients, _stations, _state
-    xs = set()
-    for lo, hi, after in _pieces(combo, L):
-        xs.update(_stations(_coefficients(combo, L, after, axis), lo, hi))
-    states = [_state(x, combo, L, 1., 1.) for x in sorted(xs)]
-    key = 'Mx_Nmm' if axis == 'normal' else 'My_Nmm'
-    def demand(s):
-        return abs(s[key]) if sign is None else max(0., s[key] * (1 if sign == 'positive' else -1))
-    witness = max(states, key=demand)
-    return dict(Msd_Nmm=demand(witness), witness={k: v for k, v in witness.items() if k != 'index'},
-                candidate_x_mm=sorted(xs), axis=axis, sign=sign,
-                physical_span_mm=L, exact_piecewise_extremum=True)
+    from .nbr_family_biaxial import demand
+    return demand(combo,L,axis,sign)
 
 
 def _component(route, name, branch, demand, *, applicable=True, reason=None, approximate=False):
     cap = branch.get('MRd_Nmm')
     usable = branch.get('eligible') is True and isinstance(cap, (float, int)) and not isinstance(cap, bool) and math.isfinite(cap) and cap > 0
-    index = demand['Msd_Nmm'] / cap if usable and applicable else None
+    from fractions import Fraction
+    from .nbr_family_biaxial import _bound
+    index = _bound(Fraction(demand['Msd_exact'])/Fraction(cap),True) if usable and applicable else None
     return dict(route=route, method=name, capacity_Nmm=cap, demand=copy.deepcopy(demand),
         index=index, status='component_index' if index is not None else branch.get('status', 'pending'),
         reason=reason or branch.get('reason') or branch.get('status') or '',
@@ -180,6 +172,10 @@ def _build(result):
     records = []
     for combo, acts in action_inventory:
         pos = {axis: _position(acts, axis) for axis in ('normal', 'parallel')}
+        from .nbr_ue_shear_lag import assess as shear_lag_assess, MEMBER_MODEL
+        shear_lag=shear_lag_assess(physical_span_mm=data['L_mm'],
+            external_dimensions_mm=own['source_binding']['nominal_identity']['dimensions_mm'],
+            actions=acts,member_model=MEMBER_MODEL)
         strong = _demand(combo, data['L_mm'], 'normal')
         parts = []
         for method, branch in nominal['strong'].items():
@@ -191,23 +187,93 @@ def _build(result):
                 reason=('Posição desestabilizante/indeterminada: FLT clássico não resolve altura.' if not supported
                         else 'FLT clássico CT/estabilizante; comprimentos resistentes declarados, Cb=1, sem benefício de altura.' if method == 'FLT_reference'
                         else None), approximate=branch.get('elastic_approximation', False)))
-        # Existing height remains in its original route. A self-hashed Me is
-        # not an independent eigenvalue proof and cannot create a new capacity.
-        height = dict(eligible=False, status='separate_existing_height_route',
-            reason='Altura desestabilizante exige operador especializado em L físico. '
-                   'Resultados existentes permanecem separados; nova rota requer prova independente de Me, não apenas hash.',
-            physical_span_mm=data['L_mm'], manual_effective_lengths_used=False)
-        parts.append(_component('own_rounded_contour', 'FLT_height_physical_span', height, strong))
+        from .flt_height_effective import qualify_family
+        height = qualify_family(data, acts)
+        height_capacity = dict(eligible=False,status='outside_documented_height_reference',reason=height['reason'])
+        if height['elastic_reference_eligible']:
+            binding=height['source_binding'];material=own['source_binding']['material']
+            if (binding['nodes_sha256']!=own['source_binding']['nodes_sha256']
+                or binding['material']!={k:material[k] for k in ('E_MPa','G_MPa','fy_MPa')}):
+                raise ValueError('Altura FLT e resistência NBR pertencem a seções/materiais diferentes.')
+            from .nbr_ue_family_expansion import OutsideMethod as ExpandedOutsideMethod
+            try:
+                height_capacity=provider.strong_capacity_at_me(data['catalog_index'],material=material,Me_Nmm=height['Me_Nmm'])
+            except (provider.OutsideMethod,ExpandedOutsideMethod) as exc:
+                height_capacity=dict(eligible=False,status='outside_height_resistance_method',reason=str(exc),MRd_Nmm=None)
+            else:
+                height_capacity.update(status='computed_documentary_height_NBR_reference',reason=height['reason'])
+        parts.append(_component('own_rounded_contour','FLT_height_effective_reference',height_capacity,strong,approximate=True))
+        distortional_floor=None
+        conventional_distortion=own['strong']['distortional']
+        unresolved_Lcr=conventional_distortion.get('elastic_reference',{}).get('Lcrd_mm')
+        if (not conventional_distortion['eligible'] and type(unresolved_Lcr) in (int,float)
+                and math.isfinite(unresolved_Lcr) and data['L_mm']<unresolved_Lcr):
+            from .nbr_ue_strong_distortional_floor import assess as assess_distortional_floor
+            try:
+                distortional_floor=assess_distortional_floor(data['catalog_index'],
+                    material=own['source_binding']['material'],Msd_Nmm=strong['Msd_Nmm'])
+            except provider.OutsideMethod as exc:
+                distortional_floor=dict(eligible=False,MRd_lower_bound_Nmm=None,
+                    status='outside_distortional_floor_method',scope=str(exc),snapshot_sha256=None)
+            if distortional_floor['eligible'] and distortional_floor['source_binding']!=own['source_binding']:
+                raise ValueError('Piso distorcional e resistência própria pertencem a fontes diferentes.')
+            component=_component('own_rounded_contour','distortional_approximation_floor',
+                dict(eligible=distortional_floor['eligible'],MRd_Nmm=distortional_floor['MRd_lower_bound_Nmm'],
+                    status=distortional_floor['status'],reason=distortional_floor['scope']),strong,approximate=True)
+            if component['index'] is not None:
+                component.update(status='sufficient_approximation_floor_index',
+                    reference_comparison='sufficient_under_adopted_approximation' if component['index']<=1 else 'inconclusive_floor_exceeded')
+            component.update(
+                capacity_lower_bound_only=True,capacity_measure='MRd_lower_bound_Nmm',
+                floor_source_sha256=distortional_floor['snapshot_sha256'],failure_proven=False,
+                physical_resistance_bound=False,floor_exceeded_means='inconclusive_not_failed')
+            parts.append(component)
+        energy_floor=None
+        if not height_capacity.get('eligible') and pos['normal']['classification'] not in ('shear_center','stabilizing'):
+            from .flt_height_nbr_floor import qualify_family as qualify_floor
+            material=own['source_binding']['material']
+            energy_floor=qualify_floor(data,acts,formula_nu=material['nu'],gamma=material['gamma'])
+            bound=energy_floor['energy_floor']['source_binding']
+            if (bound['nodes_sha256']!=own['source_binding']['nodes_sha256']
+                or bound['material']!={k:material[k] for k in ('E_MPa','G_MPa','fy_MPa')}):
+                raise ValueError('Piso de energia e resistência pertencem a fontes diferentes.')
+            cap=dict(eligible=energy_floor['resistance_floor_eligible'],MRd_Nmm=energy_floor['MRd_lower_bound_Nmm'],
+                status=energy_floor['status'],reason=energy_floor['reason'])
+            component=_component('own_rounded_contour','FLT_height_energy_floor',cap,strong,approximate=True)
+            if component['index'] is not None:
+                component['index']=max(component['index'],energy_floor['utilization_upper_bound'])
+                component['status']='sufficient_bound_index'
+                component['reference_comparison']='sufficient_under_declared_operator' if component['index']<=1 else 'inconclusive_floor_exceeded'
+            component.update(capacity_lower_bound_only=True,capacity_measure='MRd_lower_bound_Nmm',
+                floor_source_sha256=energy_floor['snapshot_sha256'],failure_proven=False,
+                floor_exceeded_means='inconclusive_not_failed')
+            parts.append(component)
         for sign, branches in own['weak'].items():
             demand = _demand(combo, data['L_mm'], 'parallel', sign)
             for method in ('local', 'FLT_reference', 'distortional'):
                 supported = method != 'FLT_reference' or pos['parallel']['classification'] in ('shear_center', 'stabilizing')
                 parts.append(_component('own_rounded_contour', 'weak_' + sign + '_' + method,
                     branches[method], demand, applicable=supported,
-                    reason='Posição individual desestabilizante/indeterminada no eixo fraco.' if not supported else None))
-        records.append(dict(combination_id=combo['id'], limit_state='ELU', combination=copy.deepcopy(combo),
+                    reason='Posição individual desestabilizante/indeterminada no eixo fraco.' if not supported else None,
+                    approximate=branches[method].get('elastic_approximation', False)))
+        for component in parts:
+            axis=component['demand']['axis'];gate=shear_lag['axes'][axis]
+            if component['demand']['Msd_Nmm']>0 and not gate['qualified']:
+                component.update(unqualified_diagnostic_index=component['index'],index=None,
+                    previous_component_status=component['status'],status='pending_NBR_9_4_applicability',
+                    reference_comparison=None,reason=gate['reason']+' Componente pura: '+component['reason'])
+        record=dict(combination_id=combo['id'], limit_state='ELU', combination=copy.deepcopy(combo),
             actions=acts, load_position_by_axis=pos, components=parts, height_source=height,
-            weak_negative_complete=own['weak']['negative']['complete_reference_components'], whole_member_approved=False))
+            shear_lag_applicability=shear_lag,
+            height_capacity=height_capacity,
+            height_energy_floor=energy_floor,
+            strong_distortional_floor=distortional_floor,
+            weak_negative_complete=own['weak']['negative']['complete_reference_components'], whole_member_approved=False)
+        from .nbr_family_member import build as member_interaction
+        record['member_interaction']=member_interaction(record,sources,data['L_mm'])
+        from .nbr_family_mv import build as build_mv
+        record['strong_web_MV']=build_mv(record,sources,data['L_mm'])
+        records.append(record)
     coverage = {}
     for record in records:
         for component in record['components']:
@@ -243,6 +309,9 @@ def preserved(result):
     saved = result.get(FIELD)
     if saved is None:
         return None
+    if saved.get('schema') == 'nbr_ue_family_application_v1':
+        from .nbr_ue_family_application_v1 import preserved as preserved_v1
+        return preserved_v1(result)
     if not _eligible(result['input_data']) or saved != _build(result):
         raise ValueError('NBR família: componentes, fontes, ações, casos ou aritmética divergentes; recalcule explicitamente.')
     return copy.deepcopy(saved)

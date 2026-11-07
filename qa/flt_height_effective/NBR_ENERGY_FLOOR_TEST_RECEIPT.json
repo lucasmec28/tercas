@@ -1,0 +1,58 @@
+{
+  "schema": "flt_height_nbr_floor_test_receipt_v1",
+  "synthetic_inputs_only": true,
+  "test_result": "361 passed in 66.88s",
+  "new_bridge_tests": 116,
+  "test_command": "python -m pytest tests/test_flt_height_nbr_floor.py tests/test_flt_height_energy_floor.py tests/test_flt_height_effective.py tests/test_resistance_effective_lengths.py tests/test_nbr_ue_family_expansion.py -q",
+  "runtime": {
+    "OPENBLAS_CORETYPE": "Haswell",
+    "OPENBLAS_NUM_THREADS": 1,
+    "OMP_NUM_THREADS": 1,
+    "MKL_NUM_THREADS": 1
+  },
+  "matrix_summary": {
+    "schema": "flt_height_nbr_energy_floor_family_qa_v1",
+    "synthetic_inputs_only": true,
+    "section_count": 66,
+    "material_count": 4,
+    "case_count": 264,
+    "eligible_floors": 264,
+    "status_counts": {
+      "inconclusive_floor_exceeded": 80,
+      "sufficient_under_declared_operator": 184
+    },
+    "method_counts": {
+      "T12b_MSE_existing_envelope_with_exact_algebra_guard": 248,
+      "MLE_uniform_retained_core_floor": 16
+    },
+    "physical_span_mm": 4100.0,
+    "Ly_mm": 2050.0,
+    "Lz_mm": 2733.0,
+    "point_station_mm": 1410.0,
+    "inclination_deg": 5.71,
+    "original_external_uniform_N_mm": 0.5,
+    "original_external_point_N": 150.0,
+    "self_weight": "Own-contour mass at CG, separate from roof actions",
+    "physical_energy_inequalities_verified": false,
+    "physical_supports_created": false,
+    "physical_resistance_lower_bound_claimed": false,
+    "whole_member_approved": false,
+    "no_member_eigen_solver_run": true,
+    "all_saved_certificates_replayed": true
+  },
+  "independent_algebra_and_static_code_review": "No remaining blocker within conditional scalar scope; not professional structural certification or physical verification",
+  "dependencies": {
+    "energy_commit": "d7e2bf6eb32043ea7def87546c7114339955aef2",
+    "nbr_parent_commit": "90c0da9",
+    "nbr_local_equivalent": "76ffc7d"
+  },
+  "historical_modules_or_snapshots_modified": false,
+  "member_eigen_solver_run": false,
+  "file_sha256": {
+    "tercas/flt_height_nbr_floor.py": "0e7101e75732dca816b391c412b6cfe3de96a99c42709ac6c94bc4e4948f7d58",
+    "tests/test_flt_height_nbr_floor.py": "fadcd3527aeab7722301cb664f360a0994c8be50bdf94953e9d884efb9b64bb6",
+    "docs/FLT_HEIGHT_NBR_FLOOR_R11.md": "95924ab502de0feea2ed37d60124f80816c31e162d6babd09f53753521b39e77",
+    "qa/flt_height_effective/generate_nbr_floor.py": "de403a73736432cd765440fa8b674d96da1fd4f1cfd4196e5d83177c691891bd",
+    "qa/flt_height_effective/FAMILY66_NBR_ENERGY_FLOOR_RESULTS.json": "758836f2808abc2abe3aafd6a60728e767e588b83b5aeff4b752359cde0d6a89"
+  }
+}

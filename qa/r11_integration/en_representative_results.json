@@ -1,0 +1,80 @@
+[
+  {
+    "index": 19,
+    "elapsed_seconds": 2.4675275050001346,
+    "ELU_cases": 1,
+    "stress": 1,
+    "shear": 1,
+    "mv": 1,
+    "partial": 0,
+    "reasons": [
+      null
+    ],
+    "whole_member_approved": false
+  },
+  {
+    "index": 26,
+    "elapsed_seconds": 2.1891711309999664,
+    "ELU_cases": 1,
+    "stress": 1,
+    "shear": 1,
+    "mv": 1,
+    "partial": 0,
+    "reasons": [
+      null
+    ],
+    "whole_member_approved": false
+  },
+  {
+    "index": 51,
+    "elapsed_seconds": 1.9459776459998466,
+    "ELU_cases": 1,
+    "stress": 1,
+    "shear": 1,
+    "mv": 0,
+    "partial": 1,
+    "reasons": [
+      "Mx: shear lag: Le deve exceder estritamente 50\u00b7b0 em toda zona entre zeros; My: shear lag: Le deve exceder estritamente 50\u00b7b0 em toda zona entre zeros"
+    ],
+    "whole_member_approved": false
+  },
+  {
+    "index": 53,
+    "elapsed_seconds": 2.5491189199999553,
+    "ELU_cases": 1,
+    "stress": 1,
+    "shear": 1,
+    "mv": 0,
+    "partial": 1,
+    "reasons": [
+      "Mx: shear lag: Le deve exceder estritamente 50\u00b7b0 em toda zona entre zeros; My: shear lag: Le deve exceder estritamente 50\u00b7b0 em toda zona entre zeros; curling: teto de deslocamento do painel n\u00e3o inferior a 5% da altura associada"
+    ],
+    "whole_member_approved": false
+  },
+  {
+    "index": 79,
+    "elapsed_seconds": 2.5339548199999626,
+    "ELU_cases": 1,
+    "stress": 1,
+    "shear": 1,
+    "mv": 0,
+    "partial": 1,
+    "reasons": [
+      "Mx: shear lag: Le deve exceder estritamente 50\u00b7b0 em toda zona entre zeros; My: shear lag: Le deve exceder estritamente 50\u00b7b0 em toda zona entre zeros; curling: teto de deslocamento do painel n\u00e3o inferior a 5% da altura associada"
+    ],
+    "whole_member_approved": false
+  },
+  {
+    "index": 82,
+    "elapsed_seconds": 2.087319450999985,
+    "ELU_cases": 1,
+    "stress": 1,
+    "shear": 1,
+    "mv": 0,
+    "partial": 1,
+    "reasons": [
+      "Mx: shear lag: Le deve exceder estritamente 50\u00b7b0 em toda zona entre zeros; My: shear lag: Le deve exceder estritamente 50\u00b7b0 em toda zona entre zeros"
+    ],
+    "whole_member_approved": false
+  }
+]

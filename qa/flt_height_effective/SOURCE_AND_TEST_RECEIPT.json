@@ -1,0 +1,43 @@
+{
+  "schema": "flt_height_effective_review_receipt_v1",
+  "base_commit": "39d1673b0f879112367d36abc2b10f0525072f87",
+  "public_table_source": {
+    "url": "https://www.c430.it/pas/doc/edilizia/acciao-statilimite-ntc.pdf",
+    "pdf_sha256": "0e0715f5f026468b0590db9c52cbcf60ee1374446da1e3d3d3d2ba5afceddd3b",
+    "formula_pdf_page": 47,
+    "coefficient_table_pdf_page": 50,
+    "table_visually_inspected": true,
+    "table_reference": "ENV1993-1-1:1992 Table F.1.2 rows 1 and 3",
+    "redistributed_pdf": false,
+    "original_ENV_url_download_qualified": false,
+    "original_ENV_url_current_result": "HTML parking page, not PDF; no successful-source-download claim"
+  },
+  "test_run": {
+    "command": "python -m pytest tests/test_flt_height_effective.py tests/test_resistance_effective_lengths.py -q",
+    "passed": 110,
+    "failed": 0,
+    "elapsed_seconds_reported": 23.42,
+    "BLAS_threads": 1,
+    "new_member_eigen_solver_run": false,
+    "AppTest_run": false,
+    "scope": "Scalar module, declared-length regressions, source/shape/maximum replay. Not full application certification."
+  },
+  "family_matrix": {
+    "generator": "qa/flt_height_effective/generate.py",
+    "artifact": "qa/flt_height_effective/FAMILY66_RESULTS.json",
+    "sections": 66,
+    "independent_length_pairs_per_section": 4,
+    "computed_documentary_elastic_references": 264,
+    "demand_extrema_unchanged_for_all_length_pairs": true,
+    "synthetic_inputs_only": true,
+    "private_project_inputs": false
+  },
+  "qualification": {
+    "elastic_documentary_reference": true,
+    "mathematically_certified_lower_bound": false,
+    "combined_q_and_P_qualified": false,
+    "arbitrary_effective_factors_qualified": false,
+    "physical_supports_inferred": false,
+    "whole_member_approved": false
+  }
+}

@@ -39,7 +39,7 @@ def install_context(monkeypatch, result, ev, *, catalog=False):
 
 def test_listed_sufficient_conditions_never_global_approval(monkeypatch):
     result, ev = saved_source()
-    # Keep this deliberately small checklist otherwise sufficient.
+    # Zero parallel bending does not prove zero torsional point displacement.
     result['inclination_evidence']['ELS']['q_vector']['parallel'] = 0.
     calls = install_context(monkeypatch, result, ev)
     summary = build_global_verification(result)
@@ -50,8 +50,9 @@ def test_listed_sufficient_conditions_never_global_approval(monkeypatch):
         assert records[key]['criterion_kind'] == 'condition'
         assert records[key]['index'] is None
         assert records[key]['trace']['EN_indices_imported_into_NBR'] is False
-    assert summary['status'] == 'aprovado'  # Generic internal listed-check status only.
-    assert summary['display_summary'] == 'Critérios listados atendidos; conclusão global fora do escopo.'
+    assert summary['status'] == 'inconclusivo'
+    assert records['ELS:DIRECT_ELS:combined_ELS_scope']['status']=='pending'
+    assert summary['display_summary'] == 'Inconclusivo: 1 pendência(s). Os critérios calculados não constituem aprovação global.'
     assert all(summary[k] is False for k in ('whole_member_approved', 'current_adapter_can_approve',
         'approved_within_declared_checklist', 'torsion_warping_qualified', 'combined_ELS_approved'))
     result['global_verification'] = summary
@@ -152,7 +153,7 @@ def test_report_and_failed_banner_keep_listed_scope(monkeypatch):
         def add_heading(self, text, level):self.text.append(text)
     doc=Doc();report_global(doc,result);text=' '.join(doc.text)
     assert 'ELU: critérios listados atendidos' in text
-    assert 'ELS: critérios listados atendidos' in text
+    assert 'ELS: critérios listados inconclusivos' in text
     assert 'ELU: aprovado' not in text and 'ELS: aprovado' not in text
     failed = aggregate(['failed'], [check('failed',limit_state='ELU',source='synthetic',qualified=True,index=2.)], inventory_qualified=True)
     failed['sectional_conditions_policy']=policy.POLICY

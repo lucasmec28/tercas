@@ -18,7 +18,8 @@ def test_legacy_witness_and_no_pin_promotion():
     for key in ('j_mm','r0_squared_mm2','integral_x3_mm5','integral_xy2_mm5'):
         assert result['section_constants'][key]==pytest.approx(legacy_e.section_constants()[key],rel=2e-12)
     assert not result['whole_member_approved']
-    assert result['weak']['negative']['pure_weak_reference_MRd_Nmm'] is None
+    assert result['weak']['negative']['pure_weak_reference_MRd_Nmm']>0
+    assert result['weak']['negative']['complete_reference_is_approximate']
 
 @pytest.mark.parametrize('index',registry.new_study_indices())
 @pytest.mark.parametrize('fy',[250.,300.])

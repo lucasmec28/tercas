@@ -116,7 +116,9 @@ def test_nonunit_gamma_is_explicit_pending():
     assert ev['computed_cases']==0 and 'gamma_M0=1' in ev['records'][0]['reason']
 
 
-def test_shear_preserved_when_normal_branch_missing():
+def test_shear_preserved_when_normal_branch_missing(monkeypatch):
+    from tercas._en_ue_family_r10 import en_ue_family_provider as legacy
+    monkeypatch.setattr(provider,"section",legacy.section)
     r=run(data(index=19));ev=app.preserved(r)
     assert ev['shear_computed_cases']==1 and ev['stress_computed_cases']==0
     assert ev['mv_computed_cases']==0 and ev['partial_cases']==1
@@ -140,7 +142,9 @@ def test_resealed_proof_does_not_pass_warm_cache(result):
     with pytest.raises(ValueError,match='arithmetic or authority'):app.preserved(r)
 
 
-def test_ineligible_profile_directly_preserves_all_pending_reasons():
+def test_ineligible_profile_directly_preserves_all_pending_reasons(monkeypatch):
+    from tercas._en_ue_family_r10 import en_ue_family_provider as legacy
+    monkeypatch.setattr(provider,"section",legacy.section)
     r=run(data(index=82));ev=app.preserved(r)
     assert ev['shear_computed_cases']==1
     assert ev['stress_computed_cases']==0 and ev['mv_computed_cases']==0

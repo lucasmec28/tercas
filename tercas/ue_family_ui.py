@@ -119,6 +119,8 @@ def render(st, data, revision, load, render_results, render_import):
     render_roof_top_load(st, data, f'roof_top_load_{revision}')
     from .deflection_scope import render_choice
     render_choice(st, data, f'ue_family_ref_deflection_model_{revision}')
+    from .isolated_service_ui import controls as service_controls
+    service_controls(st, data, f'ue_family_ref_combined_service_{revision}')
     from .torsion_study_ui import render_choice as render_torsion_choice
     render_torsion_choice(st, data, f'torsion_choice_{revision}')
     from .isolated_en_ui import render_choice as render_EN_choice

@@ -1,0 +1,286 @@
+{
+  "250.0": [
+    {
+      "catalog_index": 40,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 41,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 47,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 48,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 49,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 53,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 54,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 62,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 63,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 64,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 79,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    }
+  ],
+  "300.0": [
+    {
+      "catalog_index": 40,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 41,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 47,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 48,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 49,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 50,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 53,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 54,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 55,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 62,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 63,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 64,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 65,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 79,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 80,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    }
+  ],
+  "345.0": [
+    {
+      "catalog_index": 20,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 40,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 41,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 47,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 48,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 49,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 50,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 51,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 53,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 54,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 55,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 56,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 57,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 62,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 63,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 64,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 65,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 66,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 79,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 80,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 81,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    }
+  ],
+  "350.0": [
+    {
+      "catalog_index": 20,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 32,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 40,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 41,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 47,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 48,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 49,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 50,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 51,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 53,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 54,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 55,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 56,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 57,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 62,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 63,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 64,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 65,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 66,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 79,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 80,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    },
+    {
+      "catalog_index": 81,
+      "reason": "Negative weak Is<Ia under final flange envelope: partially supported flange under gradient needs a qualified reduced-section/local-elastic method"
+    }
+  ]
+}

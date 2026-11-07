@@ -140,12 +140,12 @@ def test_all_known_checks_meet_torsion_still_pending_no_input_mutation():
     g = build_global_verification(r)
     assert r == before
     assert g['status'] == 'inconclusivo'
-    assert g['pending_ids'] == ['torsion_warping']
+    assert g['pending_ids'] == ['ELS:DIRECT_ELS:combined_ELS_scope', 'torsion_warping']
     assert not g['whole_member_approved'] and not g['current_adapter_can_approve']
     assert g['by_limit_state']['ELU']['status'] == 'inconclusivo'
     assert g['by_limit_state']['ELS']['status'] == 'inconclusivo'
     assert g['listed_checks_only']['ELU']['status'] == 'aprovado'
-    assert g['listed_checks_only']['ELS']['status'] == 'aprovado'
+    assert g['listed_checks_only']['ELS']['status'] == 'inconclusivo'
     assert g['listed_checks_only_is_complete_limit_state_approval'] is False
     attached = attach_global_verification(r)
     assert attached['global_verification'] == g and 'global_verification' not in r
@@ -386,6 +386,32 @@ def test_distortional_exemption_needs_its_recorded_basis():
     assert statuses(build_global_verification(r)['checks'])['ELU:DIRECT_ELU:distortional']['status'] == 'pending'
     r['NBR_branches']['distortional']['table'] = {'exempt':True}
     assert statuses(build_global_verification(r)['checks'])['ELU:DIRECT_ELU:distortional']['status'] == 'not_applicable'
+
+
+def test_zero_parallel_top_load_does_not_exclude_torsional_service():
+    # Exact scalar counterexample: a downward load at the web top is eccentric
+    # from a channel's shear centre. No beam/matrix solve is needed.
+    r = fixture(parallel=0)
+    qx, qy = 0., -.1
+    load_xy, shear_center_xy = [0., 99.4], [-18., 49.4]
+    torque = (load_xy[0]-shear_center_xy[0])*qy - (load_xy[1]-shear_center_xy[1])*qx
+    assert torque == -1.8 and qx == 0
+    r['torsion_evidence'] = {'records': [{'combination_id': 'DIRECT_ELS',
+        'limit_state': 'ELS', 'analysis': {'loads': [{'torque_SC_N': torque}]}}]}
+    g = build_global_verification(r)
+    record = next(v for v in g['checks'] if v['id'] == 'ELS:DIRECT_ELS:combined_ELS_scope')
+    assert record['status'] == 'pending' and record['index'] is None
+    assert record['trace']['torsional_displacement_excluded'] is False
+    assert g['combined_ELS_approved'] is False
+
+
+def test_missing_torsional_service_evidence_is_not_zero():
+    for label in ('large_linear_rotation', 'zero_rotation', 'missing_rotation'):
+        r = fixture(parallel=0)
+        r['untrusted_service_label'] = label
+        g = build_global_verification(r)
+        assert 'ELS:DIRECT_ELS:combined_ELS_scope' in g['pending_ids']
+        assert g['counts']['fails'] == 0
 
 
 class TestGlobalVerification(unittest.TestCase):

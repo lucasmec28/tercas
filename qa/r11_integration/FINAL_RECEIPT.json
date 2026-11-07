@@ -1,0 +1,68 @@
+{
+  "release": "componentes-Ue-ELS-MV-FLT-20261107-r11",
+  "production_source_commit": "a5e698c106bf401f34e589d308eb5d2719c7a059",
+  "calculation_source_commit": "aa1eef2887b1177b270c5990e5434c5bf3162134",
+  "presentation_source_commit": "a5e698c106bf401f34e589d308eb5d2719c7a059",
+  "tests": {
+    "consolidated_backend": {
+      "tests": 1702,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "seconds": 191.302,
+      "sha256": "5ba172f0840e44f70e9d283c68a48c4f785fec13b960fa8e8b1dc3993897c9c6"
+    },
+    "final_ui": {
+      "tests": 3,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "seconds": 58.625,
+      "sha256": "8b9c8a96ab1ac5f303d0f906315f7d618530872331404d5dbd03a40322ca0bcb"
+    },
+    "final_service_projection": {
+      "tests": 203,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "seconds": 25.015,
+      "sha256": "ff25fcfeb0539e51f932fe797fede1dcf91fe8782d040a26272e30f6ba54da51"
+    },
+    "final_service_ui": {
+      "tests": 3,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "seconds": 46.305,
+      "sha256": "e2b1d847dd0bbebeebf617e4fe6a6221ccaf4ed167a097c7fc6fbfaf521453d8"
+    }
+  },
+  "counts_overlap_do_not_sum": true,
+  "application_matrix": {
+    "EN_MV": 36,
+    "EN_shear": 66,
+    "EN_stress": 36,
+    "NBR_biaxial_computed": 66,
+    "profiles": 66,
+    "service_with_index": 66
+  },
+  "saved_field_replays": 66,
+  "member_solvers_blocked_during_replay": true,
+  "pure_arithmetic_replay_permitted": true,
+  "unchanged_calculation_packets": true,
+  "unchanged_non_service_checks": true,
+  "compileall_passed": true,
+  "diff_check_passed": true,
+  "global_approval": false,
+  "caveats": [
+    "Not a full repository test suite or all load/material combinations.",
+    "Family application matrix: P=0, fy300, Mx+/My+, declared 20 mm service limit.",
+    "30 of66 EN normal/interaction cases remain pending by applicability.",
+    "Weak-negative NBR coverage remains55/51/45/44 forfy250/300/345/350.",
+    "The first replay harness incorrectly blocked pure arithmetic calculate(); no production change was needed. Its stopped log is retained."
+  ],
+  "artifact_sha256": {
+    "family_application_matrix_current.json": "719d6c174f376a61542f2d7e7bf434b8e9e16145e9419b03623eb19efb8b074f",
+    "service_panorama_family_replay.json": "f255ebedb7713c7a6b5d2ea01c7c4d7507a4b0d20ff6300f53e967a0f04f2fdf"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "250.0": {
+    "strong_local": 66,
+    "strong_distortional": 66,
+    "strong_FLT_reference": 66,
+    "weak_positive_local": 66,
+    "weak_negative_local": 55,
+    "weak_positive_reference": 66,
+    "weak_negative_reference": 55,
+    "weak_positive_distortional": 66,
+    "weak_negative_distortional": 66
+  },
+  "300.0": {
+    "strong_local": 66,
+    "strong_distortional": 66,
+    "strong_FLT_reference": 66,
+    "weak_positive_local": 66,
+    "weak_negative_local": 51,
+    "weak_positive_reference": 66,
+    "weak_negative_reference": 51,
+    "weak_positive_distortional": 66,
+    "weak_negative_distortional": 66
+  },
+  "345.0": {
+    "strong_local": 66,
+    "strong_distortional": 66,
+    "strong_FLT_reference": 66,
+    "weak_positive_local": 66,
+    "weak_negative_local": 45,
+    "weak_positive_reference": 66,
+    "weak_negative_reference": 45,
+    "weak_positive_distortional": 66,
+    "weak_negative_distortional": 66
+  },
+  "350.0": {
+    "strong_local": 66,
+    "strong_distortional": 66,
+    "strong_FLT_reference": 66,
+    "weak_positive_local": 66,
+    "weak_negative_local": 44,
+    "weak_positive_reference": 66,
+    "weak_negative_reference": 44,
+    "weak_positive_distortional": 66,
+    "weak_negative_distortional": 66
+  }
+}

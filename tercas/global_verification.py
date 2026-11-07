@@ -383,9 +383,12 @@ def _case_records(result, combination, evidence, *, batch, warnings=(), case_com
                 ('Teto suficiente da componente flexional AA no modelo registrado; ' if aa_record and raw.get('criterion_status')=='meets' else 'Teto AA inconclusivo ou sem registro válido; ')+
                 'não é flecha exata e não qualifica ELS físico completo, torção, empenamento ou estabilidade.',trace))
         elif _zero_components(ev, 'parallel'):
-            records.append(check(prefix+'combined_ELS_scope', limit_state=state,
-                source=SCHEMA, qualified=True, not_applicable=True, trace=trace,
-                reason='Estado uniaxial forte pelas duas componentes locais explicitamente nulas.'))
+            records.append(_pending(prefix+'combined_ELS_scope', state,
+                'Componentes paralelas nulas dispensam somente a flexão fraca. '
+                'Não demonstram torque nulo no centro de torção nem deslocamento torsional nulo '
+                'no ponto de serviço. ELS completo e aplicabilidade da análise permanecem pendentes.',
+                dict(trace, zero_parallel_actions_only=True,
+                     torsional_displacement_excluded=False)))
         else:
             records.append(_pending(prefix+'combined_ELS_scope', state,
                 'Rigidez efetiva combinada/ELS completo do estado biaxial não qualificados. Flecha escalar/bruta não libera esta verificação.', trace))
@@ -524,6 +527,14 @@ def build_global_verification(result):
                 'Nenhuma combinação '+state+' avaliada; filtro não é dispensa desse estado limite.'))
     from .isolated_en_panorama import POLICY, torsion_record
     records.append(torsion_record(en_context,torsion_reason,conflict=bool(model_domain.get('conflict')) or model_domain.get('status')!='fixed_model_domain'))
+    from .nbr_family_panorama import apply as apply_family, BINDING as FAMILY_BINDING
+    records,family_binding=apply_family(result,records)
+    # The new family criteria replace only their authenticated own-contour
+    # counterparts. The historical physical-span height result remains stored
+    # and separately viewable, but is not a supporting source of this panorama.
+    if family_binding is not None:roof_component=None
+    from .isolated_service_panorama import apply as apply_service, BINDING as SERVICE_BINDING
+    records,service_binding=apply_service(result,records)
     summary = aggregate([r['id'] for r in records], records, inventory_qualified=True)
     summary.update(whole_member_approved=False, torsion_warping_qualified=False,
                    sectional_conditions_policy=POLICY, approved_within_declared_checklist=False,
@@ -533,6 +544,8 @@ def build_global_verification(result):
                    numerical_results_changed=False)
     summary['display_summary']=display_summary(summary)
     if en_context is not None:summary['isolated_EN_binding']=en_context['binding']
+    if family_binding is not None:summary[FAMILY_BINDING]=family_binding
+    if service_binding is not None:summary[SERVICE_BINDING]=service_binding
     if roof_component is not None:
         summary['roof_top_nbr_binding']={k:roof_component.get(k) for k in ('snapshot_sha256','source_roof_snapshot_sha256')}
     excluded=[r['id'] for r in records if r['status']=='not_applicable'

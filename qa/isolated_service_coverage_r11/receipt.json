@@ -1,0 +1,63 @@
+{
+  "schema": "isolated_service_calculation_coverage_r11_receipt_v1",
+  "base_commit": "aa1eef2",
+  "date": "2026-11-07",
+  "scope": "Revise only unpublished candidate panorama projection, tests and documentation. No global_verification/study_completion edits.",
+  "tests": {
+    "panorama_scalar_tests": 78,
+    "related_scalar_regressions": 105,
+    "total_passed": 183,
+    "seconds": 1.54,
+    "log": "scalar_tests.txt",
+    "member_solves": 0,
+    "UI_runs": 0,
+    "BLAS_threads": 1,
+    "OPENBLAS_CORETYPE": "Haswell"
+  },
+  "changes": [
+    "Calculation coverage is distinct from numerical comparison and physical/global approval.",
+    "Complete declared field/MLE/point/direction/chord/criterion yields coverage meets without an index.",
+    "Actual absent field, incomplete configuration, MLE inconclusive or model conflict retain concrete pending coverage.",
+    "Linear twist values and warnings remain explicit; no angular or fixed physical flag coverage gate.",
+    "Outside selected A1 e/f pair is scoped only to that criterion, never general ELS exemption.",
+    "Ponding remains separate system requirement, already inventoried once in completion_requirements; no new per-case gate.",
+    "Retire only unavailable automatic direct MSE without root OR effective-case criterion and without an explicit method; preserve all other old checks.",
+    "Saved display_summary guard and full replay/binding preserved."
+  ],
+  "sources": [
+    {
+      "standard": "ABNT NBR14762:2010",
+      "sha256": "c2a01615a3ce9e2b93aeb7fee757f7bf9dd932adaefbc242e848ce813dc82407",
+      "clauses": [
+        "8.1",
+        "9.8.5(a)",
+        "A.2.4",
+        "A.3.1-3",
+        "Tabela A.1 notas e/f/g"
+      ],
+      "PDF_pages": [
+        30,
+        57,
+        75,
+        76,
+        77
+      ]
+    },
+    {
+      "standard": "ABNT NBR8800:2008",
+      "sha256": "bd34211d1498d787b79164a64b48c00815b5934a5993caccc2a48d7d9c2bbe89",
+      "url": "https://engcivil20142.wordpress.com/wp-content/uploads/2018/03/nbr8800_2008_1.pdf",
+      "clauses": [
+        "4.9.2.2",
+        "4.9.8.1-2"
+      ],
+      "PDF_pages": [
+        34,
+        39
+      ]
+    }
+  ],
+  "review": "Independent normative/static review accepted this restricted automatic-method retirement and coverage distinction; required effective-case guard, preserved old meets/fails and opt-ins, and no MLE-inconclusive retirement. All are covered by scalar tests.",
+  "historical_policy": "Published history without binding remains unchanged. Unpublished v1 candidate snapshots require explicit reprojection; no reader migration.",
+  "publication": false
+}

@@ -1,0 +1,49 @@
+{
+  "schema": "isolated_service_completion_QA_v1",
+  "timestamp_utc": "2026-11-07T02:47:25.018585+00:00",
+  "base_commit": "39d1673b0f879112367d36abc2b10f0525072f87",
+  "safety_commit": "f6aa9b4e72c3a7d7856c76e80169fba6b19de405",
+  "normative_source": {
+    "standard": "ABNT NBR14762:2010",
+    "sha256": "c2a01615a3ce9e2b93aeb7fee757f7bf9dd932adaefbc242e848ce813dc82407",
+    "visual_pages_pdf": [
+      30,
+      57,
+      58,
+      75,
+      76,
+      77
+    ],
+    "pdf_copied_to_repository": false
+  },
+  "test_command": "python -m pytest tests/test_global_verification.py tests/test_serviceability_plan.py tests/test_completion_requirements.py -q",
+  "test_exit_code": 0,
+  "test_result": "105 passed in 1.58s",
+  "standalone_exit_code": 0,
+  "standalone_test_count": 60,
+  "scalar_contract_tests_only": true,
+  "member_solver_repeated": false,
+  "AppTest_repeated": false,
+  "family66_matrix_repeated": false,
+  "prepared_uplift_solved": false,
+  "combined_ELS_approved": false,
+  "whole_member_approved": false,
+  "environment": {
+    "OPENBLAS_CORETYPE": "Haswell",
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "file_sha256": {
+    "tercas/serviceability_plan.py": "605fd0e9ad49d3aa6463e06777c7bd94944ae0406ec5a5cf6939548fb980368e",
+    "tercas/completion_requirements.py": "7284c1dc034c11d713b0088f6713c9febe4939d828c9fa0c1d7e0d33200a208e",
+    "tercas/global_verification.py": "90eb2cffe2368094f05dd089adafaec417354380f8d088c78a3e0fe65ad7c2e5",
+    "tercas/study_completion.py": "a30927b06fbc67622d3b673353d2b4e2fb35847a09b9c78dc7cd0ef892585e86",
+    "tests/test_global_verification.py": "d9358e4747c9ec10d0c7a9b67b880733a587dc0993f917f05302ed66f284670c",
+    "tests/test_serviceability_plan.py": "ff3780e310d54142618e0f5c4a27ff984d67b1fb894747dbcc7ecef445d3934a",
+    "tests/test_completion_requirements.py": "a6463485820bf6b0dd6455a2490348f1728af26446c95116aa9b35ae6735705e",
+    "docs/ISOLATED_SERVICE_COMPLETION_R11.md": "cb734cf8ec26649d07b73ac1140a8369aef7cb1673a3f1b87c9ef4c03e32fa52"
+  },
+  "pytest_log_sha256": "6bbfe4cab2bca8f0ee17f91251901a39d8bca73f51847a00d7a9ad8232add468",
+  "verification_scope": "Scalar kinematics and normative limit preparation; independent inventory, source binding, tampering, JSON and Word/UI consumer contracts. Not physical/normative validation of complete member design."
+}

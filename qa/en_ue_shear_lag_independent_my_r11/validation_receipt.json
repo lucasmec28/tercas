@@ -1,0 +1,21 @@
+{
+  "scope": "Restricted independent My companion for pure-Mx shear-lag envelope; candidate R11 v3 unpublished",
+  "base_commit": "4333cd090523ed5d1359ff1f43dc86eecd0f8751",
+  "tests": 24,
+  "failures": 0,
+  "errors": 0,
+  "source_files_sha256": {
+    "tercas/en_ue_family_shear_lag.py": "b13e790b4f08a3e258de72098a22ac231f3ffaf280c1245edc156eaff0b5fd77",
+    "tercas/en_ue_family_applicability.py": "6b4ca9224610de1bb46456d892f458a807aec32495fa79113adc65b39b58669c",
+    "tercas/isolated_en_ue_family.py": "6ca020d52bec8cd010645787e595cbcc6b8ab834810a87a51c29401ac31eeeb8",
+    "tercas/en_ue_family_field_controls.py": "4ca410d9a47e4c783b8a92288308bb576f5d32e8e0e45f81620cd7764a6c905b"
+  },
+  "technical_source_sha256": "00a364f9dc739b6ea44fb96c2083cea5d1ed64d6df8a452731a8e5149bf78949",
+  "pytest_xml_sha256": "04430401b6f911d0a9b6ed6100ff094c2056e638db32b643a6dec3d3bc9f22d5",
+  "member_solver_executed": false,
+  "ui_executed": false,
+  "weak_axis_shear_lag_implemented": false,
+  "shared_effective_tensor_claimed": false,
+  "historical_v1_v2_changed": false,
+  "whole_member_approved": false
+}

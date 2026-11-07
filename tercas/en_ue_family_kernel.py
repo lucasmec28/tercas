@@ -17,7 +17,7 @@ from .catalog_torsion_section import CONVENTION, nominal_channel_nodes
 from .weak_pierin import reference_for_index
 
 SCHEMA = 'EN_complete_Pierin_Ue_family_N0_v1'
-REVISION = 'explicit_material_integral_and_reduced_web_20261106_v1'
+REVISION = 'effective_local_distortional_steps12_20261107_v2'
 ACTIONS = ('Mx_positive', 'Mx_negative', 'My_positive', 'My_negative')
 ARC_SEGMENTS = 32
 
@@ -56,8 +56,8 @@ def _geometry(index, material):
     mirror_error = max(mirror_error, max((abs(nodes[i][1] + nodes[-1 - i][1] - (d['h'] - t)) for i in range(len(nodes)))))
     if mirror_error > 1e-10 or abs(gross['Ixy_mm4']) > 1e-12 * math.sqrt(gross['Ix_strong_mm4'] * gross['Iy_weak_mm4']):
         raise ValueError('Horizontal nominal symmetry not demonstrated')
-    guard = dict(external_b_over_t=d['bf'] / t, external_c_over_t=d['lip'] / t, external_h_over_t=d['h'] / t, external_c_over_b=d['lip'] / d['bf'], notional_c_over_b=groups[0]['b_mm'] / groups[1]['b_mm'], inner_radius_mm=ri, radius_limit_mm=0.04 * t * material['E_MPa'] / material['fyb_MPa'], lip_angle_degrees=90.0, mirror_max_error_mm=mirror_error, reference='EN13 5.1(6), 5.2/Table5.1/Eq5.2a, 5.5.3.2(1)', notional_ratio_extra_implementation_restriction='Inherited 0.2 <= bp,c/bp <= 0.6; distinct from external Eq5.2 ratio')
-    guard['satisfied'] = guard['external_b_over_t'] <= 60.0 and guard['external_c_over_t'] <= 50.0 and (guard['external_h_over_t'] <= 500.0) and (0.2 <= guard['external_c_over_b'] <= 0.6) and (0.2 <= guard['notional_c_over_b'] <= 0.6) and (ri <= guard['radius_limit_mm'])
+    guard = dict(external_b_over_t=d['bf'] / t, external_c_over_t=d['lip'] / t, external_h_over_t=d['h'] / t, external_c_over_b=d['lip'] / d['bf'], notional_c_over_b=groups[0]['b_mm'] / groups[1]['b_mm'], inner_radius_mm=ri, radius_limit_mm=0.04 * t * material['E_MPa'] / material['fyb_MPa'], lip_angle_degrees=90.0, mirror_max_error_mm=mirror_error, reference='EN13 5.1(6), 5.2/Table5.1/Eq5.2a, 5.5.3.2(1)', notional_ratio_formula_domain='0 < bp,c/bp <= 0.6 for Eq5.13; external c/b separately follows Eq5.2')
+    guard['satisfied'] = guard['external_b_over_t'] <= 60.0 and guard['external_c_over_t'] <= 50.0 and (guard['external_h_over_t'] <= 500.0) and (0.2 <= guard['external_c_over_b'] <= 0.6) and (0.0 < guard['notional_c_over_b'] <= 0.6) and (ri <= guard['radius_limit_mm'])
     return (entry, reference, identity, nodes, t, groups, full, gross, guard)
 
 class _MethodDomainError(ValueError):
@@ -109,8 +109,8 @@ class _Kernel:
         if min(stress) < -1e-10:
             raise ValueError('Mixed-sign lip outside the implemented pure-component domain')
         ratio = g['b_mm'] / flange['b_mm']
-        if not 0.2 <= ratio <= 0.6:
-            raise ValueError('Lip/flange ratio outside EN1993-1-3 Eq.5.2')
+        if not 0.0 < ratio <= 0.6:
+            raise ValueError('Notional lip/flange ratio outside EN1993-1-3 Eq.5.13')
         k = 0.5 if ratio <= 0.35 else 0.5 + 0.83 * (ratio - 0.35) ** (2.0 / 3.0)
         critical = self._critical(k, t, g['b_mm'])
         slenderness = math.sqrt(self.material['fyb_MPa'] / critical)
@@ -382,7 +382,8 @@ def _classify_blocking_reasons(component,guard):
                        and guard['external_h_over_t']<=500. and .2<=guard['external_c_over_b']<=.6
                        and guard['inner_radius_mm']<=guard['radius_limit_mm'])
             reason['category']='implementation_method_not_covered' if normative else 'outside_normative_geometric_domain'
-        elif detail in ('No fixed point convergence','Final recheck failed','Reduced web depends on fixed point seed'):
+        elif detail in ('No fixed point convergence','Final recheck failed','Reduced web depends on fixed point seed',
+                        'Effective web stress-gradient iteration did not converge'):
             reason['category']='numerical_failure'
         elif detail in ('Effective geometry lost symmetry','Closed-form reduced web and contour evaluation disagree'):
             reason['category']='integrity_failure'
@@ -424,6 +425,33 @@ def build(index,*,fyb_MPa,gamma_M0=1.,material_declaration=None):
             except ValueError as error:
                 result=_base(name)
                 result['blocking_reasons']=[dict(code='SIGNED_COMPONENT_DOMAIN_NOT_QUALIFIED',detail=str(error),audit=getattr(error,'audit',None))]
+            if not result['eligible']:
+                original_trial=copy.deepcopy(result)
+                try:
+                    from .en_ue_family_reductions import reduced_moment, adaptive_outstand
+                    if name=='My_negative':
+                        class RefinedKernel(_Kernel):
+                            def _outstand(self,nodes,t,lip,flange,comp):
+                                original=super()._outstand(nodes,t,lip,flange,comp)
+                                return original if original['integral_bound'] else adaptive_outstand(self,nodes,t,lip,flange,comp)
+                        refined=RefinedKernel(values)
+                        result=refined._negative_my(nodes,t,groups,gross)
+                        seeds=[]
+                        for initial in (.25,.5,.75):
+                            trial=refined._negative_my(nodes,t,groups,gross,initial)
+                            if abs(trial['rho_web']-result['rho_web'])>1e-11:
+                                raise ValueError('Reduced web depends on fixed point seed')
+                            seeds.append(dict(initial_rho=initial,rho_web=trial['rho_web'],residual=trial['fixed_point_audit']['residual']))
+                        result['fixed_point_audit']['independent_seeds']=seeds
+                        result['fixed_point_audit']['contraction_certificate']=_reduced_contraction(refined,nodes,t,groups,full,gross,result['rho_web'])
+                        result['proof']='EN15 4.4(4)/Eq4.4 Note1; uniform web k=4; signed Table4.2 free-outstand majorants in [-1,0], individually pointwise verified on all lines/faces including tensile ordinates. EN13 6.1.4.1(4).'
+                    else:
+                        result=reduced_moment(kernel,name,nodes,t,groups,full,gross)
+                    result['previous_method_trial']=original_trial
+                except ValueError as error:
+                    result=_base(name)
+                    result['blocking_reasons']=[dict(code='EFFECTIVE_SECTION_EXTENSION_NOT_QUALIFIED',detail=str(error),audit=getattr(error,'audit',None))]
+                    result['previous_method_trial']=original_trial
         if result['eligible']:
             audit=kernel._capacity_floor(nodes,t,gross['centroid_xy_mm'],result['sigma_coefficients_c0_cx_cy'])
             result['capacity_audit']=audit; result['first_yield_capacity_floor']=audit['integer_floor']

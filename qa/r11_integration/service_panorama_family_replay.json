@@ -1,0 +1,2140 @@
+{
+  "calculation_source_commit": "aa1eef2887b1177b270c5990e5434c5bf3162134",
+  "complete": true,
+  "kind": "new_presentation_replay_of_preserved_synthetic_fields",
+  "presentation_source_commit": "a5e698c106bf401f34e589d308eb5d2719c7a059",
+  "production_file_sha256": {
+    "tercas/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tercas/_en_ue_family_r10/__init__.py": "6cbae63bb88613bd6c398ab3c1d8f4500f2f7deee753b6ddf56b8af53acb57b9",
+    "tercas/_en_ue_family_r10/catalog_torsion_section.py": "127b16a5a9dd2aa3d2dc16986f107e0a90b8bb022b2b358321aa6d7a8ccb61ec",
+    "tercas/_en_ue_family_r10/catalogs.py": "36946b7de35df3ebc32f45881a2aab68e1777fe22e071a8b771272ba7f44cf6d",
+    "tercas/_en_ue_family_r10/en_ue_catalog_operators.py": "86f8c5d6fb78b344f89d1f4e8adce789cf2a9790d3461d965a1fad83e3e62222",
+    "tercas/_en_ue_family_r10/en_ue_family_kernel.py": "b41b423a06614cb7cd9fa0775e7cae529106e1a78bb0a25c4568b09bce6ccd3a",
+    "tercas/_en_ue_family_r10/en_ue_family_provider.py": "fe31111bf4d518fb586a3d7c9fed062bc0c2aaef1dd55be6a23fbcc81dd45c9a",
+    "tercas/_en_ue_family_r10/pierin_ue_registry.py": "0050d40496b1fe1014eb6327416a5dd77dad375aa6a467a135f575e6c29b10dc",
+    "tercas/_en_ue_family_r10/three_girt_en_normal/__init__.py": "6cbae63bb88613bd6c398ab3c1d8f4500f2f7deee753b6ddf56b8af53acb57b9",
+    "tercas/_en_ue_family_r10/three_girt_en_normal/en1993_normal_components.py": "2f407a8d96ff24ed5541efe7a1507cacde9a21d3729db83a8f627e54b6efc745",
+    "tercas/_en_ue_family_r10/torsion_vlasov/__init__.py": "6cbae63bb88613bd6c398ab3c1d8f4500f2f7deee753b6ddf56b8af53acb57b9",
+    "tercas/_en_ue_family_r10/torsion_vlasov/bounded_polynomial.py": "2dc3f67ee5c7a8ddee18f9e9b77102432348dd2339e8523a698b6bc78768b2b4",
+    "tercas/_en_ue_family_r10/torsion_vlasov/intervals.py": "c738ca89326f9fd9198199d6df48197f4fa5c632094d33fe13b62626f08f4168",
+    "tercas/_en_ue_family_r10/torsion_vlasov/section.py": "28bf452fd1ccb4e7836735b55693ad0f531fced1e544e38865436a11f9852c60",
+    "tercas/_en_ue_family_r10/weak_pierin.py": "4e7b2cd4bdca6fdcd72832bc5250917e2618bd43ab9c26c4fce4066584f8ea25",
+    "tercas/aa_bundle/aa_portable.py": "5724db13d47d130e95d508cff7f39f01ce244e5ee71f4f84c5e8f8082af1327c",
+    "tercas/aa_bundle/outputs/tercas_biaxial_general_method_20261104/gross_mle_domain_revision2/gross_mle.py": "6c55ca5d6ee5ef7c371b93963f7101fea4cb2b1426f12acff442520eb0fd03ca",
+    "tercas/aa_bundle/outputs/tercas_biaxial_general_method_20261104/web_only_control_domain_revision1/control_core.py": "da042ecc53cfb4c296ab541ef069ec6b3bf120a33d0ee24574125420ef3f3e75",
+    "tercas/aa_bundle/outputs/tercas_biaxial_general_method_20261104/web_only_domain_api_revision1/api.py": "0626f4490ee41d29db07663872a5c5945648933fed762b4c4f1d554ba3dd21da",
+    "tercas/aa_bundle/outputs/tercas_biaxial_general_method_20261104/web_only_domain_api_revision1/bound_core.py": "7d887228de934bdfd50a95e834205adf6b47680bb6c5037d55c49b5e21c888ce",
+    "tercas/aa_bundle/outputs/tercas_biaxial_general_method_20261104/web_only_domain_bound/bound_ray.py": "2e540f8498be508631a0a6115f90117f8b900d82412dd90e89673eb23e15a66a",
+    "tercas/aa_bundle/outputs/tercas_biaxial_general_method_20261104/web_only_family_api_revision2/api.py": "b2406ea7836f591c6bf99566d8396ed4d8cdd29654343d48b822c05ac7658c87",
+    "tercas/aa_bundle/outputs/tercas_biaxial_general_method_20261104/web_only_family_api_revision2/bound_core.py": "6b5f592f327573116c7e2170c792108bcf47a034b5be2866b5268bf8874b625f",
+    "tercas/aa_bundle/outputs/tercas_biaxial_general_method_20261104/web_only_family_api_revision2/control_core.py": "9722bcf88b4d9697a2e816d0c21713b7e3b54736bf1246b8d0cc39509a331d42",
+    "tercas/aa_bundle/outputs/tercas_biaxial_general_method_20261104/web_only_family_api_revision2/geometry_source.py": "8fc9f1402d71d337301710ce82f27e40d65522f4107887294f3061dd1b1b1727",
+    "tercas/aa_bundle/outputs/tercas_biaxial_general_method_20261104/web_only_independent/pure_weak_oracle.py": "fa90b12620c78f04c8bf302bb7b23ab3b00f6b10431324fd3fd08bf5f4d039e0",
+    "tercas/aa_bundle/outputs/tercas_biaxial_general_method_20261104/web_only_local_partition_revision2/api.py": "82e8d55e16d3d0930979d13876d840665c37a02481f4f17ae728a6fa79110e6f",
+    "tercas/aa_bundle/outputs/tercas_biaxial_general_method_20261104/web_only_piecewise_field/bounded_polynomial_source.py": "510d92dbeb0f745ad45fecf7280e74e9c3dda39d0ec47449537f31c972735a7d",
+    "tercas/aa_bundle/outputs/tercas_biaxial_general_method_20261104/web_only_piecewise_field/piecewise_field.py": "8cf6b069614e7dc1114655b9fe693bdae1746987f6042f33d6b40ff5f07801f4",
+    "tercas/aa_bundle/outputs/tercas_biaxial_general_method_20261104/web_only_positive_ratio_api_revision1/api.py": "a186eecdfc2f5a8e5be73cc0f385d93df8602f0190e3af80c1a50b3fb5b0e8e1",
+    "tercas/aa_bundle/outputs/tercas_biaxial_general_method_20261104/web_only_positive_ratio_api_revision1/bound_core.py": "6b5f592f327573116c7e2170c792108bcf47a034b5be2866b5268bf8874b625f",
+    "tercas/aa_bundle/outputs/tercas_biaxial_general_method_20261104/web_only_positive_ratio_api_revision1/control_core.py": "4dab6f4b1e2f58e51f5bfcbe24fab0efd692c75a663fb6390736304fd0a4b4c5",
+    "tercas/aa_bundle/outputs/tercas_biaxial_general_method_20261104/web_only_positive_ratio_api_revision1/geometry_source.py": "8fc9f1402d71d337301710ce82f27e40d65522f4107887294f3061dd1b1b1727",
+    "tercas/aa_component.py": "b746b9d22ec459feec1d339fbc93c2c41072329e871c84ebbed8f2583fe05fa9",
+    "tercas/aa_component_contract.py": "c87d5815c0b396bd84e3ade9858f2209ccc79f067c498b07217f4e147a1efa61",
+    "tercas/aa_component_ui.py": "ad2d36eeb03e0a43139a3c9c0c7266428ea3fe91f24032ca5b3578d5f6f22e7e",
+    "tercas/aa_saved_certificate.py": "cb96a100690cdee3b07474863b7a121b7cee10ae4fc61ca5a556c9dcbfe5011f",
+    "tercas/aisi_research/__init__.py": "df47ebe247520cc3481135b807e3db9687070fdef6c1ebe00f47e77aff82db23",
+    "tercas/aisi_research/adapter.py": "bf918ed394746ae2238454f5f38a2067e1ad3d19c2e296a949c578dd2b9f9d8d",
+    "tercas/aisi_research/aisi_candidate.py": "1d11a81351b3683c7f1a05306ae3d2f8342f7a96390f22f649a409bf1661d24b",
+    "tercas/aisi_research/panel.py": "e865250edffc31193d0d35dc4dc5de8c2d9564e07d7274ce050dfdfe7376b3c2",
+    "tercas/aisi_research/provenance/aisi_candidate.py": "5a8d6b14d94a935f36a0522099ae966d4571c459694fc924c9466939b5d780e3",
+    "tercas/aisi_research/provenance/check_material_scaling.py": "16777a8deb94165b98028729d57599cbd8247f0cc6f7ba7807f7f78dfa4268f5",
+    "tercas/aisi_research/provenance/independent_review/review.py": "47900704449838a48478b81cd0da10d67ce0ece57d30dbc42bbcc2f6287ce035",
+    "tercas/aisi_research/provenance/test_candidate.py": "a45a081c2dd108b2e95a48359cc686376d1541585a21cf5f555cc63a1f2d9769",
+    "tercas/aisi_research/vendor/__init__.py": "475a1e779fb0a770c5d89dc83b3f41c2e6911ef05c8855f75641306fe0e703b6",
+    "tercas/aisi_research/vendor/bounded_polynomial.py": "2dc3f67ee5c7a8ddee18f9e9b77102432348dd2339e8523a698b6bc78768b2b4",
+    "tercas/aisi_research/vendor/fsm_core.py": "11595d158c1f52a9865e176d3853eb45879e8cad5d2c50197a6b3923d15fc81d",
+    "tercas/aisi_research/vendor/section.py": "a0fbb76a1051879aa67446586a2100e6015344a9b636826321ecc1af5d4f3797",
+    "tercas/aisi_roof_height.py": "24182eefcb8cffd44c79b72d2976c293287efc156fcf6e07fded46811b55cc65",
+    "tercas/aisi_torsion_component.py": "e2bd11871f65737a313a9276dd723a5e02eeb829c34c923d09d2d4ea0d8339b4",
+    "tercas/aisi_torsion_ui.py": "7e2d3a7d1c12f51f9bc89e9e15ca6e8bff7dbeef16e124610fe3a378df623d2b",
+    "tercas/aisi_weak_sources/__init__.py": "4942d65c6ccd3efa0cd9086631be13317d92570bcb2ba3a4f55380543b8e0610",
+    "tercas/aisi_weak_sources/check_material_scaling.py": "0140831d5b96848d6496af7f122a9be3103041853a705a7e70c82927059df6ce",
+    "tercas/aisi_weak_sources/f4_applicability/independent/review_geometry.py": "b34841e508ae4b2a70a1e576d8c7c31bd464fa8066bcc73d53b451e20347f243",
+    "tercas/aisi_weak_sources/independent_review/check_material_independent.py": "59e75518f0f29a600b3c56af8cacbf58d1322856c99ebc6588c67bcf27f29149",
+    "tercas/aisi_weak_sources/independent_review/test_consumer_independent.py": "44af0a64fb4ea202785a6da542c6ac2e38480fb56ac63512febf67e227ec7e23",
+    "tercas/aisi_weak_sources/prepare_inputs.py": "82c242269fc6cd504cf524c4b0310c7bbd343dcf18d3c1fca3b45c520bb8c5cd",
+    "tercas/aisi_weak_sources/replay_portable.py": "4b84f607a28a9684078107e05e6fb4da256f4fc0b35e8d29525547ccb1a98101",
+    "tercas/aisi_weak_sources/source_review/PRIOR_INTERVAL_COEFFICIENT_KERNEL.py": "104c362eebd0fb822548bf1b98d8d9f045f25f3b8f555738a11cad415e4cc741",
+    "tercas/aisi_weak_sources/source_review/PRIOR_STRONG_SCALING.py": "16777a8deb94165b98028729d57599cbd8247f0cc6f7ba7807f7f78dfa4268f5",
+    "tercas/aisi_weak_sources/test_weak_capacity.py": "a15314800aa83ec3e224143e0e73bdc742d93dacc4a15a138e94f9dc446c3adc",
+    "tercas/aisi_weak_sources/vendor/__init__.py": "475a1e779fb0a770c5d89dc83b3f41c2e6911ef05c8855f75641306fe0e703b6",
+    "tercas/aisi_weak_sources/vendor/fsm_core.py": "11595d158c1f52a9865e176d3853eb45879e8cad5d2c50197a6b3923d15fc81d",
+    "tercas/aisi_weak_sources/weak_capacity.py": "2136c382bfaec30f4ad665583d0f8585d9f8d805302a68d6ba7d6d06ba481d9d",
+    "tercas/annex_e_properties.py": "9364908ec7fbcba0c915c51f9aa33b6e34a2871bbd077c443a625b8e319c81b6",
+    "tercas/application.py": "fa6aee423c92feeb6511022d18cb19e5578de8cd6a3c5cc27da75aba024ecea0",
+    "tercas/batch.py": "acf24b323785b1a04dbbda0343b5d13bd4a48b1120b1ed28fb46f3aca900c7aa",
+    "tercas/biaxial_component.py": "ed6d554c7a6c6008c43f3aa4e07b4bdb5f6e40835d7cf88b8ae9ff3bb2935d31",
+    "tercas/biaxial_component_ui.py": "bda627acb3e2b1bb2707f2ec6c9e7db5cf05d9d7bb3ef5e661c41e9ef24953ef",
+    "tercas/biaxial_gross/__init__.py": "74ea1b4daba08675b497f9e75c1f23bfeaecedc613dba5c28075ee89f93108b9",
+    "tercas/biaxial_gross/bounded_polynomial.py": "510d92dbeb0f745ad45fecf7280e74e9c3dda39d0ec47449537f31c972735a7d",
+    "tercas/biaxial_gross/gross_mle.py": "6c55ca5d6ee5ef7c371b93963f7101fea4cb2b1426f12acff442520eb0fd03ca",
+    "tercas/biaxial_gross/tensor_beam.py": "f3080817668d9584f8c01bdc220da85d2d1a0d8a72422acc574a127598c6860f",
+    "tercas/bounded_polynomial.py": "2dc3f67ee5c7a8ddee18f9e9b77102432348dd2339e8523a698b6bc78768b2b4",
+    "tercas/catalog_scan.py": "dc0ead6a5705a423f340eb5d9e7a65132cfe0a3139b59076e452065e91700ecb",
+    "tercas/catalog_torsion_section.py": "127b16a5a9dd2aa3d2dc16986f107e0a90b8bb022b2b358321aa6d7a8ccb61ec",
+    "tercas/catalogs.py": "36946b7de35df3ebc32f45881a2aab68e1777fe22e071a8b771272ba7f44cf6d",
+    "tercas/completion_requirements.py": "1e8360922368739912ab9f6d1cd6ae9db7f0df81b86dbd05afab8b27750d0e39",
+    "tercas/core/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tercas/core/anexo_d.py": "6d8c3f272659b13028f1d775c83a6322edd70f7fcbf7f240fcda51f61810446e",
+    "tercas/core/contrato.py": "664742e335f2d49899076c0b22db897c5fb502cfb4c2eddeb0ee8ea1664004db",
+    "tercas/core/envelope_mv.py": "064a4e7863c849353814bd2d1f9684ca7b4d1d359e33868d96615eae23734dfa",
+    "tercas/core/especificacao_unica.py": "2ae933265e02fb92b769af1ea0a4b088d51295c745c5b8b031cc6e9fbec48f2a",
+    "tercas/core/flt_vrd.py": "662e402f09b0070eaa4caa112b438bc6643e61007e1d94bb50f08e9c4a514237",
+    "tercas/core/introducao_um_vao.py": "751310d5e231e954106ad5901f5d83ed67647553261053d392cf597e744a286e",
+    "tercas/core/local_table12.py": "48080a5c3c9faf1a7b48f515cb35cf3e70518fe4ca5952da3e45857768d967a0",
+    "tercas/core/protocolo_ief.py": "c3417b4c18196b06428e523068650252152623ac5936527da651919db76715c6",
+    "tercas/core/ramos_estabilidade_nbr.py": "8983fdc178ac42ba4bc57eb7638c66d125e72815e721fd223141bdd02325de46",
+    "tercas/core/ramos_genericos.py": "03f6e5677e82a4779d5992c409a8a27b90c2e66fe0c5a162e465e41dd5521671",
+    "tercas/core/selecao.py": "f65b7d86a5bc1fb47698cc9e472d183160c176d65d17ba7efa87ff068bfdf120",
+    "tercas/core/travamentos_nbr.py": "aae431761001a12e8b38f5040e55ea7109f91abd6a741115df8e3b361f84b3c9",
+    "tercas/core/ue_nbr.py": "f9c635c9baa37709454d31e14883c53082cb1ba346599bd2fb77bb39be3a1e39",
+    "tercas/deflection_scope.py": "d05f9d0d310798fee512a68aa279b31526993d78428fcca1ba6e757cd1d81fee",
+    "tercas/direct_roof_envelope.py": "cdf97648c793b928a7ca6dfeff54a30c34bff0a5785fa3a00731f11222265a00",
+    "tercas/direct_roof_separated.py": "4b27753097e02a417ca9a06368dbaca2c9d35547de10ed1b8ae35e84150d86fb",
+    "tercas/direct_self_weight.py": "5830a4e277c69c4cb6e05afeb4b93259a0923b8b43984e7d8adea661492025b0",
+    "tercas/direct_torsion.py": "a734e47f7e71ee345e553412ddeb704e35ef937f7e092f2bf3b0d42aada9a5de",
+    "tercas/drawing.py": "a36779d84be5c105a966f6b46b972438a0af4f8f1b10dd5b132ab7b12f044cfd",
+    "tercas/drawing_cases.py": "d73435eacc80a3c4bed754b964a31125477237ba13c5df55d1dd5d5f401fd430",
+    "tercas/en_interaction_capacity_reference.py": "1034a51097a92fc0b02bd1d1d08ae74eed7172730bda7b286d741dd9caf0a4c1",
+    "tercas/en_signed_partial_interaction.py": "28f254273e1ce3f3959ba5808dfb51f18bd4c0625727382b252111977b2c1c93",
+    "tercas/en_simplified_interaction.py": "50c32a6813fdf251755fe7f67f433a24f29443d4974a44077583660a8f956086",
+    "tercas/en_ue125_300_applicability.py": "37767e7fa99352331a6328bbfa39778038308d87b92ef00c04986a97f6a55bd9",
+    "tercas/en_ue125_300_authority.py": "f94cb95dda8287a3a7e89b870a63cad4dab25f3d3a94afd78426ef0481f9aeaa",
+    "tercas/en_ue125_300_builder.py": "a44e7669cce771bc08525d9667739adbe5144e9f43c93ef661aa80bca2ed338d",
+    "tercas/en_ue125_300_normal_witness.py": "004b507037d85c08bc22aa5bf4ae483eb721e48e51da2543721600be88885aee",
+    "tercas/en_ue125_300_source_replay.py": "07bc64244ee171f3c5c775269266f8f32c831397bbf0b8c63d60909a01d4f3af",
+    "tercas/en_ue125_shear300.py": "4f16ca96d3c8f6dffd7309edbb63196368f3e00f5683e5ed0c515a1c55016aeb",
+    "tercas/en_ue_bending_applicability.py": "30e17002f62e81d4c03ad8c6e1062c71047268cf78e285dbb93ff73c9bb38f8d",
+    "tercas/en_ue_catalog_capacity_reference.py": "e0727b618b0e3d1ecebdb4933ea180f2e579fffd9c21437137faa139e44e756c",
+    "tercas/en_ue_catalog_operators.py": "86f8c5d6fb78b344f89d1f4e8adce789cf2a9790d3461d965a1fad83e3e62222",
+    "tercas/en_ue_family_applicability.py": "6b4ca9224610de1bb46456d892f458a807aec32495fa79113adc65b39b58669c",
+    "tercas/en_ue_family_field_controls.py": "4ca410d9a47e4c783b8a92288308bb576f5d32e8e0e45f81620cd7764a6c905b",
+    "tercas/en_ue_family_geometry.py": "db53a550e4c040697b11bb7f754bc9e5436cbcb72353719d35dd9263418559e2",
+    "tercas/en_ue_family_kernel.py": "86c943b4cae18588f222484314257545a88cb4354d446d97b1e05ff64b8664cb",
+    "tercas/en_ue_family_normal_witness.py": "75ef888cd2a7070677dce303bb704eb438339d4ab3f9c7cdb7f5cc3b93936122",
+    "tercas/en_ue_family_provider.py": "1fd4ff5735f71e8ebad00a90ef792efad5f7cea494ea3ee75388b1f3ffcd2cfb",
+    "tercas/en_ue_family_reductions.py": "7c6e30af654ce116c6281fd3c371db3a098cca53e2dff1832d3212c1f8257321",
+    "tercas/en_ue_family_shear_lag.py": "b13e790b4f08a3e258de72098a22ac231f3ffaf280c1245edc156eaff0b5fd77",
+    "tercas/en_ue_qualified_library.py": "b53375fc4110e3ec9092cef329639e353ca9b689caae04d8868e14541b0c8cfb",
+    "tercas/en_ue_shear.py": "2750b899729365aa515a5506b60d8f1278a27e6d1c1d316af2a53c3838c42526",
+    "tercas/envelope_mv.py": "49872e1f8b5527232464e078a4619a611da9cc77da7554ec639318fea6a0c199",
+    "tercas/flexural_components.py": "25cb6892529bdfb3855e43ecf13f1fe72c5d0371b146b3c5ee0d6ae25dd6ea30",
+    "tercas/flt_height_effective.py": "ce7a0ae7af9d8532275407ebe1665d7671bb5fda30892e0c33f19869aa38c4e9",
+    "tercas/flt_height_energy_floor.py": "b1d07c24fa0ae1e04eb5df3650803bedc8a601a1ec455081582189c05248e624",
+    "tercas/flt_height_nbr_floor.py": "0e7101e75732dca816b391c412b6cfe3de96a99c42709ac6c94bc4e4948f7d58",
+    "tercas/global_verification.py": "9b6c202847c3097f4fba0d0b0a5ae1d8bb2b36603efca1dc358581f320f80ccd",
+    "tercas/homogeneous_lengths.py": "6c1864f90e68e6f8111b45d32eb6c92cf84a45dbfc2a46efa39082ab2f3af011",
+    "tercas/homogeneous_lengths_ui.py": "6ceeec8361ad56f1d677046dd21164bf34b49b4d6430599988d517a569be2a8b",
+    "tercas/homogeneous_reference.py": "cb69ae110f6e1fec427e033740356d0250ce71d0b830bc02e37c5fcf936da845",
+    "tercas/homogeneous_reference_ui.py": "14ccd4a9cec9f393a410c2b5b71b46d0e773f2f0520fda2ecd26ffa529b614ec",
+    "tercas/inclination.py": "6f375aa0022b1bba95389bb40ffebb61c26a8e7ffc87c0cb9b453280855fd526",
+    "tercas/inclination_adapter.py": "c441e14527a3f25d1f7a0dc2899d7df79fc16a850213607e9251097ec6b035e1",
+    "tercas/isolated_en_application.py": "3004bbbb00d5dae145104000aa60f353831398e9c30b2e4c9f1924db37c59839",
+    "tercas/isolated_en_mv.py": "d315f1b87ccc2047006874ed239c53124d053edc95b56202b788d658839af5dc",
+    "tercas/isolated_en_panorama.py": "bf5e6b3f7b6f1d7c6a6fb1d91f365341c19969fc036795f03359ad3a94d4cc70",
+    "tercas/isolated_en_shear.py": "460adfe228c1243b80c56bb563a3c08ae3cd247ec41f04f12d101c3c1a813b1e",
+    "tercas/isolated_en_stress.py": "6ea71d006251f629a3ab082a62a3d81827a73b3130b513340708ee2445c031cf",
+    "tercas/isolated_en_ue125_300.py": "0ce6fb94b6a5c8a3cd106cff9443822246c722e103b0a84a80c41573fc58317d",
+    "tercas/isolated_en_ue125_300_application.py": "54ba821c9a71d6d7d108a4830260668b852d39350fa50b76062b57b769050ae7",
+    "tercas/isolated_en_ue125_300_ui.py": "c70ca30d6d4c5e4d6c6a5d543a3c5f5eefb3f51a556bfd6b628a971bbd475a72",
+    "tercas/isolated_en_ue_catalog_application.py": "1cdcf206a75b8d505d79e8ce19e1eba881f0ed60f11d8918673ed3f5f1db9557",
+    "tercas/isolated_en_ue_catalog_ui.py": "2150e0628f9d31a342869870fca4ebd04e86d562211eff3b43c50c51ff60ed77",
+    "tercas/isolated_en_ue_family.py": "6ca020d52bec8cd010645787e595cbcc6b8ab834810a87a51c29401ac31eeeb8",
+    "tercas/isolated_en_ue_family_application.py": "6b4da32aa726b212559fadbc18e2f0d84d36d2ab9bf468023badb2a9113f6909",
+    "tercas/isolated_en_ue_family_ui.py": "b0fccfbd436234915e136fc691d66398b96995f8bc2e0696f6ada8da19969067",
+    "tercas/isolated_en_ui.py": "1d392cef4b2d24d1cf9cd28befcd69ac7df5b299a35c843d7f9a85a2ea7cc9bd",
+    "tercas/isolated_service_component.py": "d16e779ef0a31c43b1bba7e8f90a2c3135a3a64ff68e5b64516c805b8b069e1f",
+    "tercas/isolated_service_mechanics.py": "8a0f39944c35d499433a13081ee3aad2d9e8f85457490a9c23b07183d14d133b",
+    "tercas/isolated_service_panorama.py": "f6355da1903e4ce288ce3f8e2244e4981ddf8f972d01bedd83ea34ab3b75a837",
+    "tercas/isolated_service_ui.py": "0fd26f242ebc677e409a56666020873194de964897f4dd15f4f2b1e7fca6ec77",
+    "tercas/load_combinations.py": "de4d5db5d916a63bacfd8583c1f8b882f96b029e8614b17d21672ad4e247fb9e",
+    "tercas/ltb_load_height.py": "52ce3c2e7439aea304547a56a193af0a3142a734f370b0def18c89f5915b6a5e",
+    "tercas/member_application.py": "5f52dbd099c8d42ebdcbd2799cea863189b7c320c20ab50b823fb6397a9ac9ab",
+    "tercas/mobile_deflection_adapter.py": "df2cdbccd7b121e2c17f604085c36033f41231cc769ffadfb3c6d6bf68c7e970",
+    "tercas/mobile_deflection_bound.py": "4f01733e00d4ae0bd6f84b869e6e98598a3eba545ea7eeb82ffb9ce82f796d0e",
+    "tercas/mobile_point.py": "fb92490acfb945e4b63140b0b926f2badd67cd718dd8d43eb8863ee1ba59591d",
+    "tercas/model_domain.py": "7e734b3696b0b3dcf85a7b832835e621144413ae829de28fba2dd3d2d25b380b",
+    "tercas/nbr_family_biaxial.py": "a8c74c2588a2e4096d2e8bcc6c7c4ffb8e8c65af96f673cf3c8380b4e2066926",
+    "tercas/nbr_family_member.py": "c85cfa900a531dfafe39ac79d11333eaa06de793038f755624163d68da76afea",
+    "tercas/nbr_family_mv.py": "8589ed6f38c4678edf824f48c244af17d6e1f71384a4d2ad9eddd7ca7e6f077f",
+    "tercas/nbr_family_panorama.py": "728f8faa66ae9bfb70c917ae80aa84d385e08caaa1a824d3e3c12bc10ecd9adb",
+    "tercas/nbr_ue_family.py": "612e10b8b432dd266b3ea67ec4a003697de1e4d2740da8d38eeb237af86f1fef",
+    "tercas/nbr_ue_family_application.py": "9c7a09c80c0e0be88c2747ba21f8d0671c7ded0e572c90f091f843289862b3ee",
+    "tercas/nbr_ue_family_application_v1.py": "5da680e11acdaa22ebcf1148680c47a105d3536da5e62da0892ceb3339f4da1a",
+    "tercas/nbr_ue_family_base.py": "664dd0a33e989e89ee29c762f8a3bf82836425a526233a710b873818ddf00751",
+    "tercas/nbr_ue_family_expansion.py": "52b028348a497841aad1dcdd02095081ef19edb3e8b5a1ffb339e2106cbc96de",
+    "tercas/nbr_ue_family_ui.py": "647447570ea51e4759f6c765434d8a51b4c5b90848822d1077e8d2c320e8773d",
+    "tercas/nbr_ue_family_v1.py": "396dfd91b64f96ffd79f1743ae2a50629e36463ead78a74f878345f908b5edd5",
+    "tercas/nbr_ue_shear_lag.py": "deead4b3e7ec942b3737e9ce227c4fa6b320f85d99e2f6f62497e3844f2d5151",
+    "tercas/nbr_ue_strong_distortional_floor.py": "4eda024f9b6c86b24bb32bea3f48e8c7e4ea2544fce7205faf2029a5e1992440",
+    "tercas/new_study_policy.py": "184f652582dc6f9289596a67602b6dc68ff1de1016b3aa1e08ad14620a487579",
+    "tercas/nominal_snapshot.py": "dc07f64a8ef61407b364cc82c021cdf93362deb7f37b06adb81776cfdb91a186",
+    "tercas/pierin_ue_registry.py": "0050d40496b1fe1014eb6327416a5dd77dad375aa6a467a135f575e6c29b10dc",
+    "tercas/pierin_ue_registry_ui.py": "cb5f5e44b90a4127822c2f0eda426c3c7442b9597daf2d7683e3d1990a28d90a",
+    "tercas/point_combinations.py": "ede66c5886fe0d9a3e54a4fff3d0f8f5e9fe5fa42ca731c872c04bb2959199c4",
+    "tercas/point_contact.py": "2c09dd52156f57c7b9025022ea3a620709535d0ef7fccc644a554c3f29cfa8c9",
+    "tercas/point_contact_ui.py": "67e570cb5044d9891cc31cb8583409318d7d881826fe9432926ee62fe0572e26",
+    "tercas/point_limit.py": "4a2a35bc7ea7d7308f78de06b38bb49cee4478a57cf1b501591b2c6789e572d8",
+    "tercas/presentation.py": "2f5f45aed7685da6708391c8fabae0519a81def44b8384b1329f36bd00b80e02",
+    "tercas/release_info.py": "945c2829630a77abc9cb3d92c7c3e649c4841f84505239ae63b8bf6477126f45",
+    "tercas/report.py": "2ec6e1e2381ddf87a8a5d0eb88eb1476643cbad74aab6f40fd7d1be3ab629497",
+    "tercas/report_audit.py": "8f644925fe91a60b9309119e5fe0f16a6f29271aff0afdeb5db721b66d4a7e9b",
+    "tercas/resistance_effective_lengths.py": "a06cc299591edcdc89940997e5225cd9dedd87393d80c4600b3ff7b1a66ea67f",
+    "tercas/resistance_effective_lengths_ui.py": "17b824406adaa96e825c796dcde2323bcb3c8215d37ce25fa4cda1a188eb8e5b",
+    "tercas/roof_biaxial.py": "846cb1fec3ed154c48d290d1ea4dd5bf222130bf150f67ec1cb47a5b2dc00f62",
+    "tercas/roof_biaxial_geometry.py": "8c23fc80080c31b69f4d7e809886a70da0cf9cca9a4976a2c339989616dd6b9f",
+    "tercas/roof_biaxial_positive.py": "9f6525a4198d8e334fd95a1fea9922b5f8a520e893bf1a03d0f3f294429c9a71",
+    "tercas/roof_catalog_nbr.py": "19d00a364eda36d5f225ee0ecb7f05593fdf633350b603ee03e9840dce457f59",
+    "tercas/roof_catalog_positive.py": "e8546e55f913106633fba17db78970ea739019c9991dc1672e29801d6be494f5",
+    "tercas/roof_top_load.py": "580776591f270df5fe10b0ce1eca518cb6e72eb8e98eaf59b48b511aed3aa71c",
+    "tercas/roof_top_load_ui.py": "0b445b9dcbd1005ec6697daa42b03ed3f2ac60960266357862fae97342a81502",
+    "tercas/roof_top_nbr.py": "c7dbd42bb5547e341bc1dd266e55c85fe949e868db77c1855e6a56d9bd5e4128",
+    "tercas/roof_top_nbr_ui.py": "830cc3808769a547acf75bff9156403022abdc61edfe9fce2c4414b3ea69adf7",
+    "tercas/serviceability_plan.py": "605fd0e9ad49d3aa6463e06777c7bd94944ae0406ec5a5cf6939548fb980368e",
+    "tercas/strong_critical_guard.py": "6fb754b9bea65d7d64eabb537c97b07d54188be8b75a9ff9cbb9aa2d5246fb89",
+    "tercas/strong_pierin.py": "8e8045124bcef0628d2e62dcd992ea1c3d2f457ca6663fe356dae2448fe99b70",
+    "tercas/study_completion.py": "1b47e71e2ac2f59684287221ce14fcf60addb36acf0d0e6ff0a0edf487dbb600",
+    "tercas/support_web/__init__.py": "369ae696dd02f087aef8d85f6100b6bc9b80a61eb6c01d06424ae8a5acb74241",
+    "tercas/support_web/application.py": "f35f124216546781ee23986f1e7b18c868a66c298fdf8e0dc74b707d727b1edf",
+    "tercas/support_web/mechanics.py": "e8b5182651709388cbcb943f0c2843fd425bd88990cf83f7d73b4000cfa0910c",
+    "tercas/support_web/report.py": "5b1da8a95a975211c01e731e59f806cd56629483db7429f5ebf11524e3a35a49",
+    "tercas/support_web/sources.py": "a25f9fe156e6f1b5e8a7e012aa62cbc3d559aa8652d0278f54864e5c57cf21a6",
+    "tercas/support_web/ui.py": "b0fadbd297c789a54ef73cbc0011009677fe67b5a122763cdee55375694af014",
+    "tercas/three_girt_application.py": "27ea2f48e25085a9e466d631dd50f18f2670dad3df4389ec3b44eae5a9dac4e8",
+    "tercas/three_girt_assessment/__init__.py": "82a750cd193398590109dfd129e1850a25dced0f7fc46af713a337f2e4efe285",
+    "tercas/three_girt_assessment/application.py": "b7b722b8a24c5312bda80571e58c8323d1c665588d5955851436b7cf8e74f6da",
+    "tercas/three_girt_assessment/presentation.py": "df7d707fdd5ebdba2276120d544c392179511959ddab337a1dc607059ad3217c",
+    "tercas/three_girt_assessment/report.py": "9e5f0b14593cdb7a198f750ecce6921429860be3772c16eff70dcbdf3912f56c",
+    "tercas/three_girt_assessment/ui.py": "bc58e5cf3c5c9172361f551d2590d9a395401593d240f43d50f71f9002865232",
+    "tercas/three_girt_axial/__init__.py": "e4846de5047140e850373c54b81e138e4ddc23cb6d4d560585ad9d40c16d0b10",
+    "tercas/three_girt_axial/application.py": "76f21e4f991cedd56ea5a35420fa96a6648d775df5b250c011b57d8cd128642c",
+    "tercas/three_girt_axial/backend.py": "632b9a33fe8ad3ce7746654af4ebc68746994d7cd18c0355ba3c187684f282e2",
+    "tercas/three_girt_axial/report.py": "dc4fd0718dcbbd80c8d86980446c600aa88a9434b7473613abdaaceb713b7148",
+    "tercas/three_girt_axial/tension_detail.py": "2e3daf5c2f7d8579c341d066f3519c812ac8c6017733cd73af850108bec84bf3",
+    "tercas/three_girt_axial/tension_detail_ui.py": "4591d0bbac9e763bf826ef16bcf8e30d5331b9e4fe6a2011c6b67da3dcb9698c",
+    "tercas/three_girt_axial/ui.py": "8b7de115e04f95059dcddad90292b577ef13d47e606127d4e98d0d933437e301",
+    "tercas/three_girt_en_mv.py": "089f7ace9f821b3d7f0282fd2964fcbb4de5cd6fcb4cc8b3955f80a4fe567b09",
+    "tercas/three_girt_en_normal/__init__.py": "ffa913ef06db0cbd65c3d4b97e7715b11b0229a9b4f3c0914b4b9200a49ab2ad",
+    "tercas/three_girt_en_normal/application.py": "a49dcbbd047d3a7d89317d8c78c85293ccbcebb60ad25a4a59f86c1bb73106e1",
+    "tercas/three_girt_en_normal/centroid_policy.py": "214c68165be5d62ab30ff20936c92f59cd81efb60947be235142716fe6aae653",
+    "tercas/three_girt_en_normal/en1993_normal_components.py": "2f407a8d96ff24ed5541efe7a1507cacde9a21d3729db83a8f627e54b6efc745",
+    "tercas/three_girt_en_normal/field_envelope.py": "fd9c208ed55514c4ce00e77f1fc68384e604d5c5b489f2cf9816d5b9d962dd87",
+    "tercas/three_girt_en_normal/report.py": "305903fb1de23e1899d3c2ae9ab50fb634b9286debbe981113eb88212fba7afc",
+    "tercas/three_girt_en_normal/shear_interaction.py": "8adcb2175280381eeb69f7fcecc3ec5bc6c3ecd4ab2e48dea7c114c0232ac2d6",
+    "tercas/three_girt_en_normal/ui.py": "e90bbf951885f02455f60ca383276dc2ef18e1ffbe2018af22f8c12393c30f5c",
+    "tercas/three_girt_frame.py": "2873dfbdec7f7906ddafc008e193ea8072befd3df606851f7c63b8d8ff1aedd8",
+    "tercas/three_girt_local_stability.py": "e77cc9eca06ba6ecb5995bc8fcb63adbc2e3db05bd99874c14489d182fc40187",
+    "tercas/three_girt_report.py": "a12d8bdba14cea30848c51272f00a61fa7af7403668406aa345b43324f083c37",
+    "tercas/three_girt_scope.py": "67d204320b7074c0faa3de3d7a56550fca9e20917f181f28a28d962e265301a0",
+    "tercas/three_girt_service/__init__.py": "e77c00d9c6c1f3727463316f4b362c1722edf8d653e9a00e7eac06d6521f94c7",
+    "tercas/three_girt_service/application.py": "f915c3f9ea51da4fa0c84ff296362f0d7dc3414a43616af3d2ff0fd4cec7acf0",
+    "tercas/three_girt_service/report.py": "35f6cf831f1e808f56fe3b9407d642a0041ac30f197b82d8c0e09158ff4e7fd7",
+    "tercas/three_girt_service/ui.py": "1d2cf5cc9638013a90dbd23b112668f4b084fb41aa08d848e6b3a345590d2333",
+    "tercas/three_girt_shear.py": "b687e56cd72fab44fb7895edb16bcc6166d1ea86a5720e8b7afe0c59a212c99f",
+    "tercas/three_girt_ui.py": "575b2d6246b5f335e3d138954b5e5dbd168f193898667905564d8cf4cebf9450",
+    "tercas/three_girt_uniaxial/__init__.py": "37892699a235c46234e9ef56573d136d99c2e8eb687e4de0eeb05c4397b475b3",
+    "tercas/three_girt_uniaxial/application.py": "3ea63ad3e8e853d9030cec2a612bd5f3dca6d6b4137b8752c9504552d07a19f4",
+    "tercas/three_girt_uniaxial/report.py": "65b2da63ee53925692601d8eff8409865b2ad8edcf45ef26b8192f62c0df792f",
+    "tercas/three_girt_uniaxial/ui.py": "8f5948a1b13763903c14927f6476385a4b8ef2f5cc37e3397dfde47546a03d12",
+    "tercas/three_girt_warping/__init__.py": "831515388e7f3c5fdbe77445687aa2dbda24cee1a2444d82a970b8c4266fba87",
+    "tercas/three_girt_warping/application.py": "0d8c844fd5b32337c5e34270568b399eccd57b5edc0a2f263507df2b09fcbad3",
+    "tercas/three_girt_warping/element.py": "71ad6d0708554e7f3f4ece1d4834e77c3527af482c8170babfdbe7859d5036de",
+    "tercas/three_girt_warping/exact_torsion.py": "f24677e09fb72359b76993e1dbb15cb6f6fb76cc9a0bacbd49da7bab13860ac9",
+    "tercas/three_girt_warping/network.py": "ff2f00d721f4efe55121f34c2f0e05ed1a731b5b2adac15d35228260dee7e795",
+    "tercas/three_girt_warping/report.py": "1f0e29d800ed08b1097e05f2b2a6bee62f4e8881c18cf85502196030abe9f1b1",
+    "tercas/three_girt_warping/ui.py": "8ea24d699f85f495451610e97b945c4b23168db55e9352443446eaa0fb2171d2",
+    "tercas/torsion_applicability.py": "c155fe98b2ceb8c8636bd5d6d84d996ecdd3fd4010ee9278641740249b5fe996",
+    "tercas/torsion_material.py": "8a64ebf2edf1954278005e1016e0aab02243096d8fbff6dc914fa79af1b7a7bc",
+    "tercas/torsion_material_ui.py": "6662525f1c5f695ed77aec4a348c580f55dadbbb3563965f4a07686b8b96d2d9",
+    "tercas/torsion_study.py": "887e239fbb864e4bceaadea01bb8aa40143ffd1029d582191266ac8b56aaee15",
+    "tercas/torsion_study_ui.py": "6e96ff13a5660b055b752da8ece1342f9edf43bbe6f79dd848e04def9bd8cdbd",
+    "tercas/torsion_vlasov/__init__.py": "475a1e779fb0a770c5d89dc83b3f41c2e6911ef05c8855f75641306fe0e703b6",
+    "tercas/torsion_vlasov/adapter.py": "2c08e913c9d4687b96d7040956d8d822619ec6d2722b2b479f7d499bb71a511c",
+    "tercas/torsion_vlasov/bounded_polynomial.py": "2dc3f67ee5c7a8ddee18f9e9b77102432348dd2339e8523a698b6bc78768b2b4",
+    "tercas/torsion_vlasov/case_study.py": "d692443b8f49789dfbade283abc564082b120b6ef037be9e91fc60acc21c606b",
+    "tercas/torsion_vlasov/intervals.py": "c738ca89326f9fd9198199d6df48197f4fa5c632094d33fe13b62626f08f4168",
+    "tercas/torsion_vlasov/section.py": "28bf452fd1ccb4e7836735b55693ad0f531fced1e544e38865436a11f9852c60",
+    "tercas/torsion_vlasov/vlasov.py": "1fcb729c00022bc65a1452ecb541805738bd763409111294eccd218e25f4e996",
+    "tercas/torsion_vlasov/yield_envelope.py": "e59a828354acdf97f7f9ca82d278b8ef83a93a5d291c1fe42f2abf94e13cc50d",
+    "tercas/ue_catalog_nbr_bending.py": "3e2e2c0110fbc5e5c3743432dce3980d5bdfb3ef378d6fc8b21700a1df41cd45",
+    "tercas/ue_catalog_nbr_distortional.py": "b5a35851eb5bd374202b76554f8b670c4442bfce1136382f5555391d3d1f756b",
+    "tercas/ue_catalog_nbr_weak_annex_e.py": "23b39ef4ef6f4d4387583115fb9f5a6dc71861cd42f8f3014925e34ed56e261b",
+    "tercas/ue_catalog_nbr_weak_mle.py": "cef0a8a8e52f93f58e047f1f4be8ffba14d9d67c0869e51c7569e1c1d6cc6240",
+    "tercas/ue_catalog_nbr_weak_positive.py": "8b4da75c851a6ed0a65462aaab68fe450a42576fe9e40183a2f1a66c52c5bd31",
+    "tercas/ue_catalog_reference.py": "b89f0202e599467201cf009604dcde1973907835e2c7e2e8f9876bcbb7377e6d",
+    "tercas/ue_catalog_ui.py": "1f53f21d3911833d1b4b94ebd1f80aadc3bede95ec6486985a0ed99aa4e8d814",
+    "tercas/ue_family_reference.py": "c77f546efca1568042f26503664e9c755a970b2c5885e7c4c6af43a251453d34",
+    "tercas/ue_family_ui.py": "0f0c93bc019dd4dec2765b67241e2124674b245d7742bf780d314494742fe3bd",
+    "tercas/ue_member_application.py": "02bd49daa94500359cbf13a7643e8dd62de9cdde4a7e851896a311e7dc3012ac",
+    "tercas/ue_member_application_ui.py": "80fb580ecf0b7d2cad49fc520c5e908767ee98472a0436cf1e2d8a64a2c3a6e3",
+    "tercas/ue_reference.py": "3a38548e4f38ee94ac3434633bf28bfa4aa5265b475fb7877b61d181719ff3db",
+    "tercas/ue_reference_ui.py": "637521f6f0a1eaefd85ab9f9cea730b9d4c1c249c145f21383bacee544a0ef66",
+    "tercas/ui_cache_epoch.py": "245ab2a0230e67265599f8b98edb5c6ed0e92de9e1c1c0a0d1563c84be0f2533",
+    "tercas/ux_inputs.py": "fb51b7e15f7b6c05b90b512ba473166229c370301f0cc5a22fda1a1cda370ce3",
+    "tercas/weak_axis.py": "d392004476c961297d8d8ab7b19cf4f0f3028d9c916c57041459023714225111",
+    "tercas/weak_catalog.py": "aab45405eb13042d1a2d9a76965949e7aaac264f5fe0d15369d4f98c1dc3a9e2",
+    "tercas/weak_pierin.py": "4e7b2cd4bdca6fdcd72832bc5250917e2618bd43ab9c26c4fce4066584f8ea25",
+    "tercas/weak_u_assumption.py": "851c1608ed98aaaffb0740c46a301d2c8492da51e70c96c2e66a85583165d29a",
+    "tercas/weak_vertical_elastic.py": "460399017aeb713fe4a19e54197c6982258af256c8c03669d433e34d610fc1f9"
+  },
+  "records": [
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.7235935824883971,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.6868598510000083,
+      "index": 0,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "ea05512301aea4a81ebac4db25eccd1bd57ada7ceb7dd66b0f97de623c650dd8",
+      "source_file_sha256": "c16c19605df51cb434b93d221eed1cb28c85f911124e8aba41aab0d8d6c78f29"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.5885600861775778,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.290046082999652,
+      "index": 1,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "f9e500aa482e08c7cf6fc7b8de1c167a5abfcc0708e034b3f680d42587af698b",
+      "source_file_sha256": "c22c071bf5699c4e6c4f1d7461e29fe594511771c505a3f1efbad41e278ba44d"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.4779381524602389,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.3870183609997184,
+      "index": 2,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "d887f96da8564295d56e297e2d75c4436c6ddf2a79a039c7a584fc5238564da9",
+      "source_file_sha256": "443c9667ec5f72f7889335e855952ce4d4a4a84c4cdc5854c243ed296f961150"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.44737875504108804,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.2698093119997793,
+      "index": 3,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "fb52d383c91679372917e8e85836ad24e975d876ee90b591d49014847f809f08",
+      "source_file_sha256": "b13e4b3998a537d9b42c8f9ae7b75cfe8e4d40ae228e40fc62bb886e2e121eb8"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.40474510609836045,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.9957901100005984,
+      "index": 6,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "d115829d4fde77ed98789acb51104d90d19cdfc240ca9f52cd76ce3d0951c447",
+      "source_file_sha256": "7a444d43b18482c501543fd057db27f76ab5ec8efa6c0fb37a61cd0a9d067583"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.3234025757661576,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 3.1495742150000297,
+      "index": 7,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "726a0f3bff782a3ff9a16e9c824ea838e5af59a05ad33a057a5d68e6ff9ed746",
+      "source_file_sha256": "7b940fe098a2ce354f6efddfb99e3c625d818e4507098158b97885ec08917738"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.24268951153095145,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.5846164399999907,
+      "index": 8,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "64147bed08140179db67af03c753a414f85e31fe3e20e12f9060ca420face718",
+      "source_file_sha256": "324ef4cfce9274365a932ec0b9613bb249ead18cd2226789f0f5cdff7daea508"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.21734213949642572,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 3.641077605000646,
+      "index": 9,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "c2649594fcb85f01b91d2b22facda88ab7270ba71e2c090c07aff44f9e20a58c",
+      "source_file_sha256": "b5a53e6799a4d0de0cc86182c72ee5a5e678af78b4f0d6d4f93b6ab87607c2d5"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.18890014517883952,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 3.828007114000684,
+      "index": 10,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "a45f727df087c2bec3dc20d68c09953ae995fa7d82a411e6ca06b2b5cfdfe438",
+      "source_file_sha256": "007b7d532c78e68d630900514a0673f871843b0139a89c8103c591c45b6de824"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.17204429347891292,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 3.518316790999961,
+      "index": 11,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "6702c35ce601936778ff9672f5e506dabaaf904a0ad8a902c43da78a25560df2",
+      "source_file_sha256": "97da23c6b89ab1ef1994e2a9b39ed381807d1bab8cb6dd47478e6d4ce7a8aa49"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.2388218280536783,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 3.0414733480001814,
+      "index": 12,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "48b8e0e46342b3e1c371ae2db9f3a531c96f423052c11bc5cba0bbbb35563187",
+      "source_file_sha256": "b65edd27183b42375c78a71a5a4fc01fc18c740b890ca74f8a833bd05c2b33aa"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.19666277685608605,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 3.949299904000327,
+      "index": 13,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "cc05377ed1faca1912ed76b50347b1db03799bddc03f6603a7b80ffbc86e8a88",
+      "source_file_sha256": "f22c4db7d7c64366eb57a61f724ed0320fa6d2fdb0e09d08d843cd42aece101d"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.1509209204557832,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.5103453669999,
+      "index": 14,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "58aaf5687d897ad2cf6c7aac561a00b3623e86a5698ff8a4ad64a9047004e557",
+      "source_file_sha256": "557d009c8c55d8408c2ab4c7a7921ff2f39f98322e516bfd3010d23588f13531"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.13538176163120835,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.298902085000009,
+      "index": 15,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "49bbcbab4155189563e429ccdda79830bb1684736603e5886258574066d86594",
+      "source_file_sha256": "ae7d094d295a25a4fc7f5a8ddc0c9cca92cac461d64efb2ba74b4d4f144718fe"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.1170571944140588,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.4327003870002954,
+      "index": 16,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "c918c8b8cb04e08fd27420b243e47f577b54a5df42298bb8bf8209c27015458d",
+      "source_file_sha256": "9456a882e25e98ba77b202f5698a82b28377b1d5434f8564bb001c87fbaf5ec1"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.10566108709069177,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.358573493000222,
+      "index": 17,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "092477da686e930de59f4dfde20b988d1652bd79495693587450e1ff6e58d2df",
+      "source_file_sha256": "95478bf905f6f18ab97841f07e972ea62bb4dcd8b3d80dc3fa11d8dce96a2303"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.09723960031039293,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.354325753000012,
+      "index": 18,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "1b8ee3ccb952c22e067efc94b17733a431706f4281488a32f4f2eb8febd6dfcd",
+      "source_file_sha256": "4b59abaf3adc8b4b15e753cfcde4b55ad6830de204786198f869c5064351b767"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.25401018461243285,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 3.2549959759999183,
+      "index": 19,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "1d3e6d40d7bdd5b7f16798f04ba3eb767e7d301fae739791820bdd0072ad4773",
+      "source_file_sha256": "154a6262f139afa5de78623a73bb3c4a3899a2f735b86cf4e72745c6f6729555"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.21437773603260724,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 3.1224762020001435,
+      "index": 20,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "9b0e6b986138954658033e3680d1b7d63a59bb2246f9afa8cb7390dd791fec22",
+      "source_file_sha256": "411b53efa1bb3691450358621f4bb8206e34d7466ef28a8f0ee659c2559ed9a9"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.16822727534126314,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.761164462999659,
+      "index": 21,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "90e339d741a97eaf4d51bc8886c043f8c3769e4a2bebfe998d4868a600c9ed39",
+      "source_file_sha256": "cb8a8bd31733e5ebca4e145933eff38bfce6176148cd7d98d3fd8c9032e37961"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.15138207493599506,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.3119521320004424,
+      "index": 22,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "1693a8aefd73a8c080862e41a76f7648c722a47c945aab775d427e74aa0ff711",
+      "source_file_sha256": "4b5f6598fc140325a6a226d0a2c8c9abb41402d03e2b03aad68284783d380064"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.13045982208674362,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.644786423000369,
+      "index": 23,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "8b7c3d208f3cfe2737f7f216292071e0e7440222f6057319fbb174337cc57353",
+      "source_file_sha256": "3d3f12541a746973936a3bee80cf9175c5fef128ab5ab95363f522b8c7ef3e2e"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.11673520858280195,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 3.3707850599994345,
+      "index": 24,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "a9355c649847a027d47341ee43d4529f6c584081edbff6f273f3a12a308fe92a",
+      "source_file_sha256": "e8f45d067852c0a69eaaf231a37f89f722e47daaaafaec364951f18c48cf6bf0"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.10615530769522152,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 3.8035102919993733,
+      "index": 25,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "896acecf48da2e3d26b2b732b502fe083ce3167e06908f3d1d2476073c11b9fe",
+      "source_file_sha256": "7100c5d644f9b25791bbf6a7a5432fb0f76154fdde6000efb554e1bf9fecae9e"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.11321352848323905,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 3.6337002800000846,
+      "index": 26,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "87ccdbea57913e33c1bc04f105eaf27458a29c331d0c70db795e57f993660f3f",
+      "source_file_sha256": "ee8b0dde24e515ded6f9f0083a5e36d2f8f53a46fa395fdd32a3a7ebfe950599"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.10292310704149138,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 3.1005460209999,
+      "index": 27,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "0b2dee28dd10922d8e8b11ad26e8df3699affb4fa30167444b616d0973fb0fdb",
+      "source_file_sha256": "b04ad64527a2f7237222028164369fef4c1564fc68e9efba01eb94a3adb4b314"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.08963454092866299,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.8106552440003725,
+      "index": 28,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "63e11e5c9b9c4cb39360d0849e7cebb1111866be4de2d9b3ffed42c63e07a806",
+      "source_file_sha256": "2beb2d408290d34c490a8baf0c05b78d0499366f30cf31aa96e3c3725ad6a073"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.08054355413360292,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 3.523292523999771,
+      "index": 29,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "6ad4f9e7afda84a29d7544fa544de8f6dd14cdb0cbcc66922183d7b2844c8499",
+      "source_file_sha256": "c51bea2871fe2423bbd17baa812844e76c8d26624114b4dcad9826682985d430"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.07329366433446477,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 3.0035357609995117,
+      "index": 30,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "ca6572fa5b140ad0525976f7f7166bae578636ad9567beb4a2f11fecf54dd1e1",
+      "source_file_sha256": "e3495e21e03f60c240b797ac12b5625fd9df25eecc6e0c19d35d0b19aeff38c6"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.06872131300753245,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 4.048896888999479,
+      "index": 31,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "9900260ead54e41745a94631081cb7aad3a128818676354bfcb0061e33b7d8b0",
+      "source_file_sha256": "ff94e3ce0c23b499af3902089a7f639d2ec86ae1ea99ae5d0898b7dd86fd3745"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.0875476179634896,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 3.930768992000594,
+      "index": 32,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "547b3429e55ccbd20838800715aaf25ab9195f6fa284c6aa48c6593bcf72c21a",
+      "source_file_sha256": "38a28d9d006887bd646b1d35e89ac714ff0f0d26bb4cbc6a536fe541ddb63095"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.08161198567364844,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 3.4636155719999806,
+      "index": 33,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "10dc108b25de6ba710b2bf924afdd10039f3ed4a1d924bd1f254a4c20ba2556e",
+      "source_file_sha256": "1aa9a0aa10d54c859aad65912f5b3d2d742d36daaf1fcc08561d7729a9170a0b"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.0733426202851093,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 3.1447848979996706,
+      "index": 34,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "2d8d1518565311864565ba88223302d2ada84ce36979274773faf009552a90c6",
+      "source_file_sha256": "2661067473a405a02d7d5ed95782d2dded16ecfc3378f8b7ed88b64303529cc5"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.0671372777959961,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 3.9490373580001688,
+      "index": 35,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "6f0a8b81eee4ec8c10f257176301090df671712e5cbde939691bac31a6484f05",
+      "source_file_sha256": "a26fe878b76ca4a025dc9ac432ab3ae2bd0089c4539acc78fb61a8dd1d8c9287"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.06175981651410365,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.7303345290001744,
+      "index": 36,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "b72f7e72ea4d974d228968653e04071daa85a5c668f1c9d517cb0f4261dd03c7",
+      "source_file_sha256": "ff05eb89a7e5e90dc18e707fc590e5753682c56c2658f31870194b7031ca06b4"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.05650337105353527,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 3.257892816000094,
+      "index": 37,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "b79a36e21abe9488c4323967f2dacf9cfc380913e3bbac872540c66b8b228dff",
+      "source_file_sha256": "459145f9a1f4f85fb8adfc9f080ea0cdaeea8b02fcda3a164b90c97866ca8531"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.05200811155551473,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 5.215572277999854,
+      "index": 40,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "8dcadd4e0c193ee7a7539ac04dc0c4ac3cdedef7986cf1e6e673347ca20a7794",
+      "source_file_sha256": "7a2ee4238eddd750041d72eb36e32f3aaaf443b9c43bf337d6ac386e91620831"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.04978738435115015,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 3.323002883999834,
+      "index": 41,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "1dca53d5aeeaa7c1209f13cb19043a90cb9fbb1aaf63bfb1e19e8809b163a26f",
+      "source_file_sha256": "21e26f40a84f30a7006091b910eeee54bc39e9821c1523dde1ddd13e48381900"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.04694297794605615,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 3.4768463370000973,
+      "index": 42,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "93e78511acd7b8665aea8208cbaa0eaf1d4be8929dc299fb7539649dea7fb263",
+      "source_file_sha256": "ca55929613472ed800697fcd74cfc7e9821e4dfbf7c80030bdd2d0f49f9aade7"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.04455666006774177,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.8056525789997977,
+      "index": 43,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "7c896d515da453597a45174d9ed41033c133c5ddb7768755b39ace31840f0c2a",
+      "source_file_sha256": "5677ce8cde3733cdb90ea38427047f59f699cd362b5185d02f5efa9d7466c480"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.04231825229318931,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 3.452757228000337,
+      "index": 44,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "d237fae964e2ced80107295ce661761526a6eec062e8eca0592b075822c2b2ee",
+      "source_file_sha256": "560a0e5de93b38519215814c27deee279d0d387203b711e82218da9c22fcf035"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.034597295008087274,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.5991241930005344,
+      "index": 45,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "c12b1993f917996246ee6287e0d17dbe255956ec3f2c6a02693e6851fb185f56",
+      "source_file_sha256": "1a716e7ed5a4afb83a341dc7850b89a57a0cffb44f79241dbc1babcc95bd1170"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.05178885029662096,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 3.178171401000327,
+      "index": 47,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "a16c48e241f49d673329333f55b5bb66f5f23a85c445a883b9160ca8720ac366",
+      "source_file_sha256": "b9f7bb75f5c628e44d86f8ed01603c13345cc2d216139edf5497fedd6b9f6558"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.04991688759013983,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 5.42711011099982,
+      "index": 48,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "7ace29598fe57248575cd4cef6de45c73a1edb398b84e13532e25a15982a484a",
+      "source_file_sha256": "f225c4a058a1af43781e8fa6436628c638ff660d3b3991a38b3a7ab046e2ec42"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.04813095158882717,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 5.091933177000101,
+      "index": 49,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "2d99a46d91c3e2e6b2f89b1f3e8ea274931ab9dd9046cff926f38f4c82eebf67",
+      "source_file_sha256": "111daf16646b5c2ad39516ec0379f8c3378cc9c5396da0b07e7e82579c7a0c67"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.04615840967945747,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.8930477390003944,
+      "index": 50,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "5ace1543b822e0aec5bc78d156ffdf6f3a68fdb09a6dd6fe3d0d8743746187b7",
+      "source_file_sha256": "cb874c48993957b4d268d655e6ed4fdfff423226ad75a8cdd8816a98be4e64c1"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.043771856172053314,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.3105183369998485,
+      "index": 51,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "72981fe986baae6fd221e0c5634bb3b06466b5c324f4367ad2a4ac30176093de",
+      "source_file_sha256": "094745b1ab7def1d32993d647452c0b1c2993d57c902273fcaea6a0c13026d93"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.04147023585609991,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.3412832320000234,
+      "index": 52,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "94dc7cbf6cfdc6701c50bdbd7fc286f82073b8ba808a2de1e64e5e8121359c4e",
+      "source_file_sha256": "e07cdcef1ebb620f23de9853c0d48afe2233e2fcc1fc657ff7fee9ae636490e5"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.03288511143910347,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.9638916479998443,
+      "index": 53,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "81d31fc5ec4c5e0e13c540444bc5b0389ebd74d8dc45f4885a2ee034e53d75e4",
+      "source_file_sha256": "a57b25e1a43ed96e9a944b73305dd65fe97c4938cdc19293918f5e91bca5dec2"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.03193249974684281,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.9728568339996855,
+      "index": 54,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "bee73d3679da5c6d4abf2b6cfa52ddc9d6e867f053492ed757ff21dd2fd3f102",
+      "source_file_sha256": "c6282cf2e8e2a725f5bb11c38ef48b44718acabaa70abce82aaf2d5f8fdeb1a2"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.030580635707846304,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.8664699439996184,
+      "index": 55,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "83462f7398ffbec83fa10a6779039e5ceb4d7e416444af3a63057c51bcadaa50",
+      "source_file_sha256": "09dd31dca10635d95efed9d50a4c7ab1f7a9ca800efe466ca8d6a9e7908e8402"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.029499465359859523,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 3.225818292999975,
+      "index": 56,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "92887ae7a5f587104b0def2273c7273989d524baf40ea51a1c9a8ac0e49d4d93",
+      "source_file_sha256": "0ea29859ac0266665d7cf7faef7d6a3deae475bf27a357b617e7fe3e982c8e2a"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.028473746833376463,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.6314157030001297,
+      "index": 57,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "b568cb2b49ca0cb792123679bbfb3c64a315940075ae8d8e226a6a88dc3ecc56",
+      "source_file_sha256": "80acddf7cc34828708fa94fb0ca9040076c77a61f180f41302c222d6c734d5e3"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.02734614312641875,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.4877955259999,
+      "index": 58,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "1eb0e23f58d853cb873bad9b037f739cc8564313aa16cd067af9d8f909acdffc",
+      "source_file_sha256": "f8bf4ad23c41f9a473cb5466031778c20851912aacca54d4492dcf082637a48a"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.02598733597308538,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.5535132430004523,
+      "index": 59,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "33da456bcc492c9dbb30fb4b2b8cac943f39f7d1d7f7c7526ed64e3d2d030942",
+      "source_file_sha256": "5640a5b0e35d929578524aa7ee262eddfe0cc4b3d8508fd03fe8cec0af854ee4"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.02468073663171054,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.4568025389999093,
+      "index": 60,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "cbf602bc38a936243ca3465d985f5f7540cb1e24dc2275121667488f3cd90d72",
+      "source_file_sha256": "19099bdca5941b47d1650c9a54449d546fa01ffbab8bcdcfe4e1b539fb8c4c57"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.03214002364334848,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.9291226949999327,
+      "index": 62,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "f5d51852eeaaa770c04725697ba9811228d91e680b048e8d333a294402f54d0e",
+      "source_file_sha256": "33526b63f36f0801cffd15c6430e9d0e9fdf6bb6a9fceb3cfea03b0f15eda635"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.031210052545203305,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.9748457810001128,
+      "index": 63,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "0867aba3803c482b8bddce7cde13729284f76dd61d8ae36159b00b2f03c8f8fc",
+      "source_file_sha256": "b259e4fe4cfa6011044bc4958230d6099b308f4255336ba82ef076d1df4fe4c6"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.030329269109737877,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 3.152472666999529,
+      "index": 64,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "858ae16eacc8c94a83afdb69c792d43af12201fb9e62545d815dc320a42c5dde",
+      "source_file_sha256": "43932d111731fbba156c7405cb8dcd2cdfd486c53bca4f826a2cb62441369677"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.029356140329700516,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.963822395000534,
+      "index": 65,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "9b35247d36049dee3ff5d9cc93c2b205e008599bce8f6c4adfcd9f16c0a836c4",
+      "source_file_sha256": "bcfd4a9e17369bda2ba169e5bd635e7d91e4f8e8f5317e0e07b660d4d0f747f4"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.028167895663793453,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.568734161000066,
+      "index": 66,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "3e8dd414d01c6a41125b504920776cdccc1cd0d858f15f922279ddc00cf2f609",
+      "source_file_sha256": "0d982bab2c4198c7d6f48280256f3aebb3f1782450df5bb65f5a6eee836dd901"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.02700098626133491,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.4351056469995456,
+      "index": 67,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "43dade04e3a46061013495a49ff5e509a76eedd61a47a4a2925d16a5fe13c23a",
+      "source_file_sha256": "5ca586f540211f441812f8bc3a9dd4ff5957ca2c00b3b242d0643b6371d0ebac"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.02041778706337751,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 4.261146822000228,
+      "index": 79,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "5e6493557c0ae0704f3e98eb66b99c9e2edeac02b109016796632751e7fca521",
+      "source_file_sha256": "a67d37d8cb40b5c639889ecd7290679fadadad1476596eb701bf6beb03b41e7f"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.01988481182537861,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 3.2917188889996396,
+      "index": 80,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "32b63ab865e8dadf93f6825df11ec0ce4d84a8da12e5da301892467f404730c7",
+      "source_file_sha256": "5f0c0d54807788799270e0c55926e7b9b0792af886f161f9d48d3e4c176bc46c"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.019234309999676496,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.7363261440004862,
+      "index": 81,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "ceee4a7d9c0ba3c096ec42ae9f87ec58f6f4b1afc84db5a20f8eb7de57f99726",
+      "source_file_sha256": "49be354027d8a88b057ff31d1dcceaccf3820ccba63d85555d312ceaddaaf9e8"
+    },
+    {
+      "ELS": [
+        {
+          "id": "ELS:DIRECT_ELS:deflection",
+          "index": null,
+          "reason": "Somente a rota MSE automática indisponível e sem critério próprio foi substituída pelo objetivo de deslocamento no ponto explicitamente escolhido. A rigidez desse objetivo está coberta pelo crivo MLE completo da fonte combinada. Não afirma equivalência com a flecha flexional, não usa cancelamento para provar essa componente e não afirma MSE/Ml antigos calculados.",
+          "status": "not_applicable"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_ELS_scope",
+          "index": null,
+          "reason": "Cálculo combinado completo para o ponto, direção, corda, parcela total sem contraflecha e critério declarados. A comparação numérica está em ELS:DIRECT_ELS:combined_point_linear e pode atender, exceder ou permanecer inconclusiva. Não depende de certificação física adicional; não constitui aprovação física/global.",
+          "status": "meets"
+        },
+        {
+          "id": "ELS:DIRECT_ELS:combined_point_linear",
+          "index": 0.018591141146199735,
+          "reason": "Atende condicionalmente ao critério linear declarado: limite superior do índice ≤1. Critério do deslocamento projetado no ponto e na direção declarados, relativo à corda dos extremos físicos do mesmo ponto, no campo linear concomitante salvo. Não é aprovação do ELS físico integral, estabilidade ou validade de giro finito.",
+          "status": "meets"
+        }
+      ],
+      "calculation_packets_unchanged": true,
+      "elapsed_seconds": 2.9841821629997867,
+      "index": 82,
+      "non_service_checks_unchanged": true,
+      "projected_global_sha256": "feb82b7085e6694bf6b9b3a60016c586c6ae608c616daade3e2638a7e54713cb",
+      "source_file_sha256": "307360689d61a7d4df26d02dc3e094e892ccb7327c224d802f61ba3df128e931"
+    }
+  ],
+  "whole_member_approved": false
+}

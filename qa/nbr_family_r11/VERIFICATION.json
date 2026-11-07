@@ -1,0 +1,168 @@
+{
+  "base_commit": "39d1673b0f879112367d36abc2b10f0525072f87",
+  "scope": "Scalar provider/application/Word unit tests; no member solver, AppTest, deployment or physical validation.",
+  "focused_tests": {
+    "passed": 514,
+    "seconds": 49.57,
+    "log": "FOCUSED_TESTS.log"
+  },
+  "matrix": {
+    "profiles": 66,
+    "materials_fy_MPa": [
+      250,
+      300,
+      345,
+      350
+    ],
+    "physical_span_mm": 6000,
+    "rows": 264,
+    "signs": [
+      "positive",
+      "negative"
+    ],
+    "counts": {
+      "250.0": {
+        "strong_FLT_reference": 66,
+        "strong_distortional": 66,
+        "strong_local": 66,
+        "weak_negative_distortional": 66,
+        "weak_negative_local": 55,
+        "weak_negative_reference": 55,
+        "weak_positive_distortional": 66,
+        "weak_positive_local": 66,
+        "weak_positive_reference": 66
+      },
+      "300.0": {
+        "strong_FLT_reference": 66,
+        "strong_distortional": 66,
+        "strong_local": 66,
+        "weak_negative_distortional": 66,
+        "weak_negative_local": 51,
+        "weak_negative_reference": 51,
+        "weak_positive_distortional": 66,
+        "weak_positive_local": 66,
+        "weak_positive_reference": 66
+      },
+      "345.0": {
+        "strong_FLT_reference": 66,
+        "strong_distortional": 66,
+        "strong_local": 66,
+        "weak_negative_distortional": 66,
+        "weak_negative_local": 45,
+        "weak_negative_reference": 45,
+        "weak_positive_distortional": 66,
+        "weak_positive_local": 66,
+        "weak_positive_reference": 66
+      },
+      "350.0": {
+        "strong_FLT_reference": 66,
+        "strong_distortional": 66,
+        "strong_local": 66,
+        "weak_negative_distortional": 66,
+        "weak_negative_local": 44,
+        "weak_negative_reference": 44,
+        "weak_positive_distortional": 66,
+        "weak_positive_local": 66,
+        "weak_positive_reference": 66
+      }
+    }
+  },
+  "runtime": {
+    "OPENBLAS_CORETYPE": "Haswell",
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "historical_provider_sha256": "396dfd91b64f96ffd79f1743ae2a50629e36463ead78a74f878345f908b5edd5",
+  "negative_weak_remaining": {
+    "250.0": [
+      40,
+      41,
+      47,
+      48,
+      49,
+      53,
+      54,
+      62,
+      63,
+      64,
+      79
+    ],
+    "300.0": [
+      40,
+      41,
+      47,
+      48,
+      49,
+      50,
+      53,
+      54,
+      55,
+      62,
+      63,
+      64,
+      65,
+      79,
+      80
+    ],
+    "345.0": [
+      20,
+      40,
+      41,
+      47,
+      48,
+      49,
+      50,
+      51,
+      53,
+      54,
+      55,
+      56,
+      57,
+      62,
+      63,
+      64,
+      65,
+      66,
+      79,
+      80,
+      81
+    ],
+    "350.0": [
+      20,
+      32,
+      40,
+      41,
+      47,
+      48,
+      49,
+      50,
+      51,
+      53,
+      54,
+      55,
+      56,
+      57,
+      62,
+      63,
+      64,
+      65,
+      66,
+      79,
+      80,
+      81
+    ]
+  },
+  "complete_member_claimed": false,
+  "expansion_tests": {
+    "passed": 62,
+    "seconds": 6.34,
+    "log": "EXPANSION_TESTS.log"
+  },
+  "weak_distortion_second_delta": {
+    "parent_commit": "1688f6e4315b94acfe40c734806acc79a3190752",
+    "proof": "Global minimum of the approximate q>0 elastic formula, not a physical/FSM lower bound.",
+    "physical_span_shorter_than_Lcr_no_longer_blocks_this_reference": true,
+    "strong_distortion_changed": false
+  }
+}

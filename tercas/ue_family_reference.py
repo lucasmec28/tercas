@@ -22,7 +22,7 @@ REPORTING_VERSION = 'own_Ue100_six_self_contained_snapshot_v1'
 EDITABLE = {'direct_load_basis', 'project', 'actions_origin', 'load_mode', 'area_inputs', 'selected_types',
             'q_uls', 'q_sls', 'P_uls', 'P_sls', 'x_uls', 'x_sls',
             'q_parallel_uls', 'q_parallel_sls', 'P_parallel_uls', 'P_parallel_sls',
-            'deflection_model', 'torsion_model', 'point_contact', 'roof_top_load', 'isolated_en_stress_model'}
+            'deflection_model', 'torsion_model', 'point_contact', 'roof_top_load', 'isolated_en_stress_model', 'isolated_combined_service'}
 SCOPE = ('Seis referências numéricas próprias Ue100×50×17, ri=t, linha '
          'facetada R01 de 209 nós. E=200000 MPa, ν=0,3, G=E/2,6, fy=250 MPa. '
          '3000≤L≤6000 mm, Lx=Ly=Lz=L, K=Cb=Cm=1, garfos ideais e empenamento livre. '

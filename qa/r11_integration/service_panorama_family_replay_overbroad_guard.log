@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/workspace/scratch/200bd23c4a9b/tercas_release_r11_20261107/qa/r11_integration/replay_service_panorama_family.py", line 59, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/workspace/scratch/200bd23c4a9b/tercas_release_r11_20261107/qa/r11_integration/replay_service_panorama_family.py", line 39, in main
+    es=en.preserved(old);ns=nbr.preserved(old);ss=service.saved(old)
+                                                  ^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/200bd23c4a9b/tercas_release_r11_20261107/tercas/isolated_service_component.py", line 293, in saved
+    _replay_saved(row,summary,ev['dimensions'],result['input_data']['properties']['fy_MPa'],c,item['limit_mm'])
+  File "/workspace/scratch/200bd23c4a9b/tercas_release_r11_20261107/tercas/isolated_service_component.py", line 227, in _replay_saved
+    expected=mechanics.calculate(dense,dimensions,fy,c,limit)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1198, in _execute_mock_call
+    raise effect
+AssertionError: Replay must not run solver: tercas.isolated_service_mechanics.calculate

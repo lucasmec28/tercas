@@ -18,6 +18,7 @@ TECHNICAL_BINDING_REVISION = 'EN_Ue_family_technical_sources_v1'
 # UI, release labels and unrelated checks must not enter saved section identity.
 TECHNICAL_SOURCES = (
     'en_ue_family_kernel.py',
+    'en_ue_family_reductions.py',
     'en_ue_family_provider.py',
     'en_ue_catalog_operators.py',
     'catalog_torsion_section.py',
@@ -73,6 +74,10 @@ def section(index,*,fyb_MPa,gamma_M0=1.,material_declaration=None):
 
 def verify(certificate):
     """Compare all content against trusted local recomputation, not selfhash."""
+    if not isinstance(certificate,dict):raise ValueError('Malformed family section')
+    if certificate.get('method_revision') == 'explicit_material_integral_and_reduced_web_20261106_v1':
+        from ._en_ue_family_r10.en_ue_family_provider import verify as verify_r10
+        return verify_r10(certificate)
     try:
         expected=section(certificate['catalog_index'],fyb_MPa=certificate['material']['fyb_MPa'],
                          gamma_M0=certificate['material']['gamma_M0'],

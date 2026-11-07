@@ -1,0 +1,39 @@
+........................................................................ [ 33%]
+............................................F..F........................ [ 67%]
+......................................................................   [100%]
+=================================== FAILURES ===================================
+__________________ test_ui_word_json_and_legacy_are_read_only __________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fddbc7f6a80>
+
+    def test_ui_word_json_and_legacy_are_read_only(monkeypatch):
+        from tercas import roof_top_load
+        monkeypatch.setattr(roof_top_load,'refined',lambda **kw:pytest.fail('reader invokes eigen solver'))
+        new=app.attach(source());assert app.preserved(json.loads(json.dumps(new)))==new[app.FIELD]
+        class UI:
+            def __init__(self):self.rows=[]
+            def subheader(self,*a):pass
+            def caption(self,*a):pass
+            def warning(self,*a):pytest.fail(str(a))
+            def dataframe(self,rows,**kw):self.rows=rows
+>       st=UI();ui.show(st,new);assert len(st.rows)==12
+                                ^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 1 == 12
+E        +  where 1 = len([{'Combinação': 'DIRECT_ELU', 'Índice': None, 'Posição_mm': None, 'Situação': 'pending_actual_member_components', ...}])
+E        +    where [{'Combinação': 'DIRECT_ELU', 'Índice': None, 'Posição_mm': None, 'Situação': 'pending_actual_member_components', ...}] = <test_nbr_ue_family_application.test_ui_word_json_and_legacy_are_read_only.<locals>.UI object at 0x7fddbc7f5cd0>.rows
+
+tests/test_nbr_ue_family_application.py:109: AssertionError
+_____ test_unverified_height_eigenvalue_cannot_create_new_family_capacity ______
+
+    def test_unverified_height_eigenvalue_cannot_create_new_family_capacity():
+        old=source();old['roof_top_load_evidence']={'Me_Nmm':1e99,'snapshot_sha256':'forged'}
+        row=app.attach(old)[app.FIELD]['records'][0]
+>       height=next(c for c in row['components'] if c['method']=='FLT_height_physical_span')
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       StopIteration
+
+tests/test_nbr_ue_family_application.py:132: StopIteration
+=========================== short test summary info ============================
+FAILED tests/test_nbr_ue_family_application.py::test_ui_word_json_and_legacy_are_read_only
+FAILED tests/test_nbr_ue_family_application.py::test_unverified_height_eigenvalue_cannot_create_new_family_capacity
+2 failed, 212 passed in 60.29s (0:01:00)

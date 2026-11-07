@@ -20,6 +20,8 @@ def complete_result(result):
     out = finalize(out)
     from .isolated_en_application import finalize as finalize_EN
     out = finalize_EN(out)
+    from .isolated_service_component import finalize as finalize_service
+    out = finalize_service(out)
     from .roof_top_load import attach as attach_roof_top_load
     out = attach_roof_top_load(out)
     from .roof_top_nbr import attach as attach_roof_nbr
@@ -31,7 +33,8 @@ def complete_result(result):
     out['completion_snapshot'] = dict(schema=VERSION,
         source_input_fingerprint=result['input_fingerprint'],
         original_mechanics_changed=False, historical_results_requalified=False)
-    return out
+    from .completion_requirements import attach as attach_requirements
+    return attach_requirements(out)
 
 
 def show_global(st, result):
@@ -46,6 +49,10 @@ def show_global(st, result):
         validate_saved_global(result)
         from .isolated_en_application import validate_saved_global as validate_EN_global
         validate_EN_global(result)
+        from .nbr_family_panorama import validate_saved as validate_NBR_family_global
+        validate_NBR_family_global(result)
+        from .isolated_service_panorama import validate_saved as validate_service_global
+        validate_service_global(result)
     except (ValueError,TypeError,KeyError) as exc:
         st.warning('Panorama não exibido: '+str(exc));return
     message = record['display_summary']
@@ -55,6 +62,10 @@ def show_global(st, result):
                'não são somados nem representam uma utilização global. '
                'Tirantes, cantoneiras, ligações e ancoragens não são dimensionados.')
     if record.get('point_limit_scope_note'):st.caption(record['point_limit_scope_note'])
+    from .completion_requirements import show as show_requirements
+    show_requirements(st,result)
+    from .isolated_service_ui import show as show_service
+    show_service(st,result)
     from .report_audit import show_saved_issues
     show_saved_issues(st,result)
 
@@ -76,6 +87,10 @@ def _report_global(doc,result,roof_nbr_presentation=None):
         else:roof_nbr_presentation.validate_global(result)
         from .isolated_en_application import validate_saved_global as validate_EN_global
         validate_EN_global(result)
+        from .nbr_family_panorama import validate_saved as validate_NBR_family_global
+        validate_NBR_family_global(result)
+        from .isolated_service_panorama import validate_saved as validate_service_global
+        validate_service_global(result)
     except (ValueError,TypeError,KeyError) as exc:
         doc.add_paragraph('Panorama não exibido: '+str(exc));return
     doc.add_heading('Estado conjunto das verificações',1)
@@ -94,6 +109,10 @@ def _report_global(doc,result,roof_nbr_presentation=None):
             doc.add_paragraph(state+': '+status+'. Inclui os critérios comuns listados do modelo; não conclui o estado limite completo.'
                 if record.get('sectional_conditions_policy') else state+': '+status+'. Inclui as pendências comuns do modelo.')
     if record.get('point_limit_scope_note'):doc.add_paragraph(record['point_limit_scope_note'])
+    from .completion_requirements import report as report_requirements
+    report_requirements(doc,result)
+    from .isolated_service_ui import report as report_service
+    report_service(doc,result)
     from .report_audit import report_saved_issues
     report_saved_issues(doc,result)
     from .roof_top_load_ui import report as report_roof_top_load

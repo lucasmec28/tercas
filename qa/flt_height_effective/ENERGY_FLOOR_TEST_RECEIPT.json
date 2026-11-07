@@ -1,0 +1,47 @@
+{
+  "schema": "flt_height_energy_floor_test_receipt_v1",
+  "dependency_commit": "330e8d615bca0649f5c9843eee089207415050ac",
+  "test_run": {
+    "command": "python -m pytest tests/test_flt_height_effective.py tests/test_flt_height_energy_floor.py tests/test_resistance_effective_lengths.py -q",
+    "passed": 191,
+    "new_energy_floor_tests": 81,
+    "failed": 0,
+    "elapsed_seconds_reported": 34.32,
+    "BLAS_threads": 1,
+    "member_eigen_solver_run": false,
+    "AppTest_run": false,
+    "compiled_modules": ["tercas/flt_height_energy_floor.py", "qa/flt_height_effective/generate_energy.py"]
+  },
+  "family_matrix": {
+    "generator": "qa/flt_height_effective/generate_energy.py",
+    "artifact": "qa/flt_height_effective/FAMILY66_ENERGY_FLOOR_RESULTS.json",
+    "sections": 66,
+    "computed_conditional_energy_floors": 66,
+    "load_distribution": "Uniform external roof action plus off-centre point load at 1410 mm, own self-weight separately at CG",
+    "Lphysical_mm": 4100.0,
+    "Ly_mm": 2050.0,
+    "Lz_mm": 2733.0,
+    "fy_MPa": 300.0,
+    "inclination_degrees": 5.71,
+    "synthetic_inputs_only": true
+  },
+  "arithmetic": {
+    "load_aggregation_and_extrema": "Exact rational arithmetic from supplied numbers",
+    "pi": "Explicit rational enclosure",
+    "Ny_and_T": "Outward lower conversion",
+    "B_and_D": "Outward upper conversion",
+    "square_root": "Upper enclosure by scaled integer square root, more than 128 significant bits",
+    "lambda_and_Me": "Outward lower conversion",
+    "final_determinant": "Exact rational nonnegative check",
+    "severe_cancellation_regression": "L=1.1, q=[1e16,-1e16+2]",
+    "force_height_product_cancellation_regressions": true
+  },
+  "qualification": {
+    "conditional_on_declared_Euler_energy_inequalities": true,
+    "physical_realization_of_effective_lengths_verified": false,
+    "historical_free_warping_solver_lower_bound_claimed": false,
+    "NBR_capacity_floor_qualified": false,
+    "primary_torsion_or_biaxial_stability_qualified": false,
+    "whole_member_approved": false
+  }
+}

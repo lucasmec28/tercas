@@ -1,0 +1,58 @@
+......................................................................F. [ 41%]
+........................F............................................... [ 82%]
+...............................                                          [100%]
+=================================== FAILURES ===================================
+___________ test_listed_sufficient_conditions_never_global_approval ____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f25816ff680>
+
+    def test_listed_sufficient_conditions_never_global_approval(monkeypatch):
+        result, ev = saved_source()
+        # Keep this deliberately small checklist otherwise sufficient.
+        result['inclination_evidence']['ELS']['q_vector']['parallel'] = 0.
+        calls = install_context(monkeypatch, result, ev)
+        summary = build_global_verification(result)
+        assert len(calls) == 1  # No per-combination preserved call.
+        records = statuses(summary['checks'])
+        for key in ('ELU:DIRECT_ELU:secondary_shear_scope', 'torsion_warping'):
+            assert records[key]['status'] == 'meets'
+            assert records[key]['criterion_kind'] == 'condition'
+            assert records[key]['index'] is None
+            assert records[key]['trace']['EN_indices_imported_into_NBR'] is False
+>       assert summary['status'] == 'aprovado'  # Generic internal listed-check status only.
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 'inconclusivo' == 'aprovado'
+E         
+E         - aprovado
+E         + inconclusivo
+
+tests/test_isolated_en_panorama.py:53: AssertionError
+_______________ test_report_and_failed_banner_keep_listed_scope ________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f257f1b6990>
+
+    def test_report_and_failed_banner_keep_listed_scope(monkeypatch):
+        from tercas import roof_top_nbr, report_audit, roof_top_load_ui
+        from tercas.study_completion import report_global
+        from tercas.global_verification import aggregate, check
+        result, ev = saved_source()
+        result['inclination_evidence']['ELS']['q_vector']['parallel'] = 0.
+        install_context(monkeypatch, result, ev)
+        result['global_verification'] = build_global_verification(result)
+        monkeypatch.setattr(roof_top_nbr, 'validate_saved_global', lambda *a: None)
+        monkeypatch.setattr(report_audit, 'report_saved_issues', lambda *a: None)
+        monkeypatch.setattr(roof_top_load_ui, 'report', lambda *a: None)
+        class Doc:
+            def __init__(self):self.text=[]
+            def add_paragraph(self, text):self.text.append(text)
+            def add_heading(self, text, level):self.text.append(text)
+        doc=Doc();report_global(doc,result);text=' '.join(doc.text)
+        assert 'ELU: critérios listados atendidos' in text
+>       assert 'ELS: critérios listados atendidos' in text
+E       AssertionError: assert 'ELS: critérios listados atendidos' in 'Aplicabilidade torsional indisponível: registro salvo inconsistente (Demanda de torção não corresponde às entradas sa...critérios listados inconclusivos. Inclui os critérios comuns listados do modelo; não conclui o estado limite completo.'
+
+tests/test_isolated_en_panorama.py:155: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_isolated_en_panorama.py::test_listed_sufficient_conditions_never_global_approval
+FAILED tests/test_isolated_en_panorama.py::test_report_and_failed_banner_keep_listed_scope
+2 failed, 173 passed in 21.50s

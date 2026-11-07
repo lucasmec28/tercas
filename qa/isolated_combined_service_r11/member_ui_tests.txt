@@ -1,0 +1,101 @@
+.........................F                                               [100%]
+=================================== FAILURES ===================================
+______ test_direct_combined_service_screen_exports_and_readonly_rerender _______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4fdb912a20>
+
+    def test_direct_combined_service_screen_exports_and_readonly_rerender(monkeypatch):
+        d=inputs(t=3.35,q=.01);d[c.CHOICE]=choice('declared_limit');payload=json.dumps(d).encode()
+        monkeypatch.setattr(st,'file_uploader',lambda *a,**k:SimpleNamespace(size=len(payload),getvalue=lambda:payload))
+        downloads={};original=st.download_button
+        def capture(label,data,*args,**kwargs):
+            if label in ('Baixar estudo e resultados (JSON)','Baixar memória parcial (Word)'):downloads[label]=data
+            return original(label,data,*args,**kwargs)
+        monkeypatch.setattr(st,'download_button',capture)
+        app=AppTest.from_file(APP).run(timeout=45)
+        next(x for x in app.button if x.label=='Aplicar entradas do arquivo').click().run(timeout=45)
+        assert not app.exception
+>       assert next(x for x in app.checkbox if x.label=='Calcular deslocamento combinado no ponto declarado').value
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       StopIteration
+
+tests/test_ui_isolated_service.py:26: StopIteration
+----------------------------- Captured stderr call -----------------------------
+2026-11-07 00:10:34.451 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-07 00:10:34.986 DEBUG   streamlit.runtime.scriptrunner.script_runner: Running script
+2026-11-07 00:10:34.986 DEBUG   streamlit.runtime.media_file_manager: Disconnecting files for session with ID test session id
+2026-11-07 00:10:34.986 DEBUG   streamlit.runtime.media_file_manager: Sessions still active: dict_keys([])
+2026-11-07 00:10:34.986 DEBUG   streamlit.runtime.media_file_manager: Files: 0; Sessions with files: 0
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+2026-11-07 00:10:40.133 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned files...
+2026-11-07 00:10:40.134 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned deferred callables...
+2026-11-07 00:10:40.169 DEBUG   streamlit.runtime.scriptrunner.script_runner: Beginning script thread
+2026-11-07 00:10:40.169 DEBUG   streamlit.runtime.scriptrunner.script_runner: Running script
+2026-11-07 00:10:40.169 DEBUG   streamlit.runtime.media_file_manager: Disconnecting files for session with ID test session id
+2026-11-07 00:10:40.169 DEBUG   streamlit.runtime.media_file_manager: Sessions still active: dict_keys([])
+2026-11-07 00:10:40.170 DEBUG   streamlit.runtime.media_file_manager: Files: 0; Sessions with files: 0
+2026-11-07 00:10:42.259 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned files...
+2026-11-07 00:10:42.260 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned deferred callables...
+2026-11-07 00:10:42.260 DEBUG   streamlit.runtime.scriptrunner.script_runner: Running script
+2026-11-07 00:10:42.260 DEBUG   streamlit.runtime.media_file_manager: Disconnecting files for session with ID test session id
+2026-11-07 00:10:42.260 DEBUG   streamlit.runtime.media_file_manager: Sessions still active: dict_keys([])
+2026-11-07 00:10:42.260 DEBUG   streamlit.runtime.media_file_manager: Files: 0; Sessions with files: 0
+2026-11-07 00:10:44.725 DEBUG   streamlit.runtime.memory_media_file_storage: Adding media file d93a64ab7a7f58d1c47e7570691682c7
+2026-11-07 00:10:44.732 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned files...
+2026-11-07 00:10:44.732 DEBUG   streamlit.runtime.media_file_manager: Removing orphaned deferred callables...
+------------------------------ Captured log call -------------------------------
+WARNING  streamlit.runtime.scriptrunner_utils.script_run_context:script_run_context.py:508 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+DEBUG    streamlit.runtime.scriptrunner.script_runner:script_runner.py:620 Running script
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:211 Disconnecting files for session with ID test session id
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:221 Sessions still active: dict_keys([])
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:225 Files: 0; Sessions with files: 0
+WARNING  matplotlib:__init__.py:537 mkdir -p failed for path /home/agent/.config/matplotlib: [Errno 30] Read-only file system: '/home/agent/.config/matplotlib'
+WARNING  matplotlib:__init__.py:554 Matplotlib created a temporary cache directory at /tmp/matplotlib-yjteip2h because there was an issue with the default path (/home/agent/.config/matplotlib); it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:150 Removing orphaned files...
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:171 Removing orphaned deferred callables...
+DEBUG    streamlit.runtime.scriptrunner.script_runner:script_runner.py:406 Beginning script thread
+DEBUG    streamlit.runtime.scriptrunner.script_runner:script_runner.py:620 Running script
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:211 Disconnecting files for session with ID test session id
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:221 Sessions still active: dict_keys([])
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:225 Files: 0; Sessions with files: 0
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:150 Removing orphaned files...
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:171 Removing orphaned deferred callables...
+DEBUG    streamlit.runtime.scriptrunner.script_runner:script_runner.py:620 Running script
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:211 Disconnecting files for session with ID test session id
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:221 Sessions still active: dict_keys([])
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:225 Files: 0; Sessions with files: 0
+DEBUG    streamlit.runtime.memory_media_file_storage:memory_media_file_storage.py:164 Adding media file d93a64ab7a7f58d1c47e7570691682c7
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:150 Removing orphaned files...
+DEBUG    streamlit.runtime.media_file_manager:media_file_manager.py:171 Removing orphaned deferred callables...
+=========================== short test summary info ============================
+FAILED tests/test_ui_isolated_service.py::test_direct_combined_service_screen_exports_and_readonly_rerender
+1 failed, 25 passed in 18.75s
