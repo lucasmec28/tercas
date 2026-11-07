@@ -1,0 +1,11 @@
+{
+  "index": 53,
+  "fy_MPa": 300,
+  "calculated": true,
+  "RP23_negative_local": true,
+  "JSON_matches": true,
+  "Word_contains_RP23": true,
+  "rerender_unchanged": true,
+  "no_solver_on_rerender": true,
+  "whole_member_approved": false
+}

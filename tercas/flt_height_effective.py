@@ -126,7 +126,7 @@ def _finish(evidence):
     return evidence
 
 
-def qualify_family(data, actions):
+def _documentary_family(data, actions):
     """Fresh deterministic reference for any complete Pierin Ue own contour.
 
     No local critical or capacity is imported here. A resistance consumer must
@@ -209,6 +209,135 @@ def qualify_family(data, actions):
         coefficient_source='ENV1993-1-1:1992 Table F.1.2 row '+('1' if distribution['kind']=='uniform' else '3'),
         coefficient_interpolation_used=False,
         reason='Me documental calculado com as hipóteses declaradas; não é limite inferior certificado nem aprovação da estabilidade física.')
+    return _finish(evidence)
+
+
+
+COMBINED_FIELD = 'flt_combined_height_method'
+LEGACY_COMBINED_METHOD = 'full_span_Vlasov_Ritz_height_v1'
+COMBINED_METHOD = 'full_span_Vlasov_Ritz_height_v2'
+COMBINED_METHODS = (LEGACY_COMBINED_METHOD, COMBINED_METHOD)
+
+
+
+def authenticate_family_geometry(data, geometry, actions):
+    """Bind a fresh parallel projection to the exact own contour and load lines.
+
+    No hardcoded profile anchors, no user hash as authority. The normal-only
+    Ritz operator is unchanged; this just authenticates the already defined
+    separate-axis eligibility check for the complete Pierin family.
+    """
+    from . import ue_catalog_reference as own, roof_top_load as roof
+    packet = own.validate(data)
+    if packet is None:
+        raise ValueError('Contorno próprio obrigatório.')
+    section = packet['section']; props = section['properties']
+    symmetry = symmetry_proof(section)
+    if not symmetry['qualified']:
+        raise ValueError('Simetria forte não demonstrada.')
+    cg, sc = props['centroid_xy_mm'], props['shear_center_xy_mm']
+    h, b, t = (data['properties'][k] for k in ('h', 'bf', 't'))
+    line = roof.configuration(data)['load_line']
+    x = 0. if line == 'web_midplane' else (b-t)/2
+    y = h-t/2
+    binding = own.source_binding(data)
+    expected = dict(coherent_torsion_section=True, section_profile_id=section['profile_id'],
+        nodes_sha256=section['nodes_sha256'], ue_catalog_source_binding=binding,
+        CG_xy_mm=list(cg), SC_xy_mm=list(sc), load_line=line,
+        h_mm=h, bf_mm=b, t_mm=t, load_x_from_web_midplane_mm=x,
+        web_midplane_to_flange_midwidth_mm=(b-t)/2,
+        height_above_SC_mm=y-sc[1], x_from_CG_mm=x-cg[0],
+        y_from_CG_mm=y-cg[1], x_from_SC_mm=x-sc[0],
+        physical_load_line_verified=False, scheme_is_assumed_model=True)
+    if any(geometry.get(k) != v for k, v in expected.items()):
+        raise ValueError('CG/CT, linha ou vínculo geométrico divergem da fonte reconstruída.')
+    # The application supplies PP at CG and external q/P at its declared top
+    # line. An arbitrary eccentricity cannot impersonate that authenticated line.
+    for a in actions:
+        is_pp = a['name'] == 'PP'
+        ex = cg[0]-sc[0] if is_pp else expected['x_from_SC_mm']
+        height = 0. if is_pp else expected['height_above_SC_mm']
+        if (a.get('x_from_SC_mm') != ex or a.get('height_above_SC_mm') != height):
+            raise ValueError('Posição individual de '+a['name']+' diverge do CG/topo declarado.')
+    return dict(schema='same_own_contour_parallel_projection_v1',
+        geometry=copy.deepcopy(geometry), source_binding=binding,
+        strong_symmetry=symmetry, action_positions_bound_to_same_contour=True,
+        physical_restraints_verified=False, combined_buckling_eigenvalue=False)
+
+
+def activate_combined(data):
+    """Creation/adoption only. Absence preserves the historical documentary route."""
+    out = copy.deepcopy(data)
+    out[COMBINED_FIELD] = COMBINED_METHOD
+    return out
+
+
+def qualify_family(data, actions):
+    """Prefer tabulated ENV; opt-in full-span Ritz for other load distributions.
+
+    Saved opt-in results replay the numerical operator as well as all source
+    bindings. Legacy inputs without the marker never enter the solver.
+    """
+    marker = data.get(COMBINED_FIELD)
+    if marker is not None and marker not in COMBINED_METHODS:
+        raise ValueError('Método FLT q+P não reconhecido; recalcule com declaração válida.')
+    evidence = _documentary_family(data, actions)
+    if marker is None or evidence['elastic_reference_eligible']:
+        return evidence
+    # A missing height, asymmetric contour, or effective restraint factor is
+    # never repaired by inventing physical fixity in the sine-basis operator.
+    from . import roof_top_load as roof
+    if (not roof.enabled(data) or not evidence['strong_symmetry']['qualified']
+            or evidence['Ly_used_mm'] != data['L_mm']
+            or evidence['Lz_used_mm'] != data['L_mm']
+            or 'load_reduction' not in evidence):
+        return evidence
+    audit = evidence['load_reduction']
+    points = [p for p in audit['point_groups'] if p['force'] or p['force_height']]
+    if not points:
+        return evidence
+    evidence.pop('snapshot_sha256', None)
+    evidence.update(method=marker,
+        scope='Referência elástica numérica no operador Vlasov existente: garfos extremos, empenamento livre, Ly=Lz=L físico. Alturas individuais de q e P preservadas. Sem torção primária, acoplamento biaxial, limite inferior certificado ou aprovação global.',
+        coefficient_interpolation_used=False,
+        length_interpretation='Full physical span in the existing fork/free-warping operator; no fixity inferred from effective lengths',
+        combined_method_declared=True)
+    if evidence['individual_parallel_actions_present']:
+        from .roof_biaxial import classify, classify_for_roof
+        geo = roof.geometry(data)
+        if marker == LEGACY_COMBINED_METHOD:
+            scope = classify_for_roof(actions, geo)
+        else:
+            try:
+                authenticated = authenticate_family_geometry(data, geo, actions)
+            except (ValueError, TypeError, KeyError) as exc:
+                evidence['reason'] = 'Geometria/linhas da projeção paralela não autenticadas: '+str(exc)
+                return _finish(evidence)
+            evidence['authenticated_family_geometry'] = authenticated
+            scope = classify(actions, geo)
+        evidence['separate_axis_capacity_scope'] = scope
+        if not scope['applicable']:
+            evidence['reason'] = 'Projeção paralela fora da crítica existente: '+scope['reason']
+            return _finish(evidence)
+    from .ltb_load_height import refined
+    material = evidence['source_binding']['material']
+    props = evidence['section_properties']
+    try:
+        critical = refined(L_mm=data['L_mm'], E_MPa=material['E_MPa'], G_MPa=material['G_MPa'],
+            Iweak_mm4=props['Iy_weak_mm4'], J_mm4=props['J_mm4'], Cw_mm6=props['Cw_mm6'],
+            actions=actions)
+    except (ValueError, ArithmeticError) as exc:
+        evidence.update(status='pending_numerical_qualification', reason=str(exc))
+        return _finish(evidence)
+    evidence['numerical_critical'] = critical
+    if not critical.get('numerically_converged') or critical.get('Me_Nmm') is None:
+        evidence.update(status='pending_numerical_qualification',
+            reason=critical.get('reason', 'Crítica sem convergência ou sem momento de referência.'))
+        return _finish(evidence)
+    evidence.update(status='computed_full_span_numerical_elastic_reference',
+        elastic_reference_eligible=True, Me_Nmm=critical['Me_Nmm'],
+        lambda_reference=critical['lambda_cr'],
+        reason='Me por Vlasov/Ritz no vão físico, com alturas individuais e refinamento numérico; não é limite inferior certificado nem aprovação física.')
     return _finish(evidence)
 
 

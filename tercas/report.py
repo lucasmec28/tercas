@@ -154,7 +154,7 @@ def word(result):
  doc.styles['Normal'].font.size=Pt(10)
  doc.styles['Normal'].paragraph_format.space_after=Pt(5)
  doc.sections[0].top_margin=Inches(.7);doc.sections[0].bottom_margin=Inches(.7)
- doc.add_heading('LRO Engenharia Estudo de travessa lateral' if is_girt(result['input_data']) else 'LRO Engenharia Estudo de terça',0)
+ doc.add_heading('Estudo de travessa lateral' if is_girt(result['input_data']) else 'Estudo de terça',0)
  doc.add_paragraph(DISPLAY_NOTE)
  doc.add_paragraph(TECHNICAL_NOTE)
  doc.add_paragraph('Emissão parcial — NBR 14762:2010 — sem crédito de travamento da telha')
@@ -307,7 +307,7 @@ def batch_word(result):
  for style in doc.styles:
   for border in style.element.xpath('.//w:pBdr'):border.getparent().remove(border)
  doc.styles['Normal'].paragraph_format.space_after=Pt(5)
- doc.add_heading('LRO Engenharia Travessas laterais por combinações' if is_girt(result['input_data']) else 'LRO Engenharia Terças por combinações',0)
+ doc.add_heading('Travessas laterais por combinações' if is_girt(result['input_data']) else 'Terças por combinações',0)
  doc.add_paragraph(DISPLAY_NOTE)
  doc.add_paragraph(TECHNICAL_NOTE)
  doc.add_paragraph('NBR 14762:2010 · estudo parcial · sem travamento da telha. NÃO É APROVAÇÃO GLOBAL. Ligações e apoios fora do escopo.')

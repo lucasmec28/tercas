@@ -1,0 +1,111 @@
+RESULTADO FINAL — adaptador versionado v2
+325 testes passaram: 323 em 293,31 s e 2 controles adicionais em 2,18 s.
+Referência normal q+P: 66/66 contornos em ambos os sinais. Projeção paralela
+estabilizante com geometria própria autenticada: 66/66; desestabilizante: 0/66.
+Isso é cobertura do Me condicional, não aprovação do elemento nem cobertura
+universal de cargas/vínculos. Ly=Lz=L físico continua obrigatório no Ritz.
+ENV puro, ausência de marcador, token v1 e registros roof históricos preservados.
+
+UI real v2 com Word/JSON incluídos: índice 0 calculou em 4,95 s e rerenderizou
+em 3,38 s; índice 26 em 5,12 s e 3,22 s. Importação, adesão explícita e restauração
+foram verificadas. Produtor por área manteve inventário e posições físicas;
+replay v1 elegível e pendente preservou o método. BLAS com uma thread.
+Compileall e git diff --check passaram. Não houve publicação remota.
+
+As seções seguintes preservam a sequência de reconstrução e distinguem a
+cobertura histórica do checkpoint v1 da ampliação autenticada final v2.
+
+FLT q+P: reconstrução sobre R12, 07/11/2026
+
+Adaptação, não solver novo: reaproveita tercas.ltb_load_height.refined
+(energia Vlasov/Ritz com senos). q e P conservam alturas próprias; não se
+substituem por uma altura fictícia. ENV puro continua preferido e inalterado.
+
+Ativação: novos estudos recebem flt_combined_height_method=
+full_span_Vlasov_Ritz_height_v1. Sem marcador, os cálculos e snapshots antigos
+permanecem no método documental original. Não há migração ao importar.
+Snapshots novos numéricos repetem também o operador no leitor para rejeitar
+adulteração mesmo quando o hash foi recalculado.
+
+Domínio: família completa Pierin Ue (66 contornos), seção própria simétrica,
+altura adotada, Ly=Lz=L físico, garfos extremos/empenamento livre no operador
+já existente, sem telha colaborante. Fatores resistentes 0,5 não viram fixidez.
+Ações/demandas mantêm o vão físico; sem apoios novos. Ramo puro ENV continua
+com seus comprimentos admitidos. Nenhum resultado é limite inferior garantido
+ou aprovação física/global. Torção primária, pré-deformação e autovalor
+biaxial não são resolvidos por esta adaptação.
+
+Fontes herdadas e mantidas no código:
+- Sahraei/Pezeshky/Mohareb, CSCE2017, Eq2 (potenciais q*h e P*h separados):
+  https://legacy.csce.ca/elf/apps/CONFERENCEVIEWER/conferences/2017/pdfs/EMM/FinalPaper_635.pdf
+- Vermeylen et al., Eurosteel2023, Eq1/discussão de canais simétricos:
+  https://orbi.uliege.be/bitstream/2268/306606/1/VermeylenMaxime-Eurosteel%202023.pdf
+- ENV1993-1-1:1992 AnexoF, TabelaF.1.2 para ramos puros já existentes.
+Não se afirma fórmula documental genérica q+P com comprimentos arbitrários.
+
+Cobertura numérica observada na focal inicial:
+- 66/66 contornos convergiram para q+P normal positivo; 66/66 para negativo.
+  Caso sintético L4100, P em1537, PP no CG, carga externa no topo.
+- Suporte exato, limite1e-6, centro e limite oposto: ambos sinais,10casos.
+- Projeção paralela estabilizante: 1/66 (Ue125 índice26). Outros65 preservam
+  bloqueio de geometria da crítica existente. As sete referências Ue100
+  históricas não são o mesmo contorno próprio nominal Pierin desta matriz.
+- Projeção paralela desestabilizante: 0/66. Nenhum bloqueio foi removido.
+- Não confundir cobertura de referência Me com capacidade NBR, interação,
+  abrangência arbitrária de carregamentos ou aprovação do elemento.
+
+Focal inicial:292pass/3fail em127,95s. As3falhas eram expectativas de testes:
+contagem paralela inicialmente8 versus1 real; dois testes esperavam criação
+sem o marcador novo intencional. As expectativas foram corrigidas sem ampliar
+qualquer guarda. Resultado da execução final acompanha o pacote.
+
+Focal final do núcleo/consumidor/criação:298pass em143,34s, com BLAS1.
+Arquivos: test_flt_combined_height, test_flt_height_effective,
+test_new_study_policy, test_nbr_family_height_integration,
+test_ui_pierin_new_study. Compileall e git diff --check sem erros.
+
+Adesão de entrada importada: primeiro aplicar o contorno próprio Ue se
+necessário; no mesmo painel há “Adotar FLT q+P para novo cálculo”. A adoção
+apenas marca uma cópia das entradas, invalida o cálculo ativo e preserva o
+estado anterior no histórico restaurável. Não recalcula nem altera snapshot
+histórico. “Restaurar estudo preservado” repõe entradas/resultados anteriores.
+Apenas importar/abrir/renderizar não ativa a atualização.
+
+Criação pelo for_new_study: iniciar estudo Ue, iniciar catálogo, carregar
+exemplo e referências próprias usam a política de criação. A marca não
+libera métodos para U genérico, perfis incompletos ou outras aplicações.
+
+QA adicional:10pass em91,45s. Total308pass nas duas focais finais.
+Teste real Streamlit de entrada importada Ue125, q+P e inclinação5,71graus:
+importação3,30s; adesão2,49s; cálculo com Word/JSON7,56s;
+rerender com Word/JSON2,94s; restauração4,24s. JSON idêntico ao resultado,
+Word identifica Vlasov/Ritz, rerender não muda snapshot, restauração repõe
+entrada sem marcador. Sem timeout. Somente warnings ambientais de fontes
+Fontconfig/ScriptRunContext nos logs de AppTest.
+
+Ampliação paramétrica versionada v2 (posterior ao checkpoint308)
+-----------------------------------------------------------
+O token atual é full_span_Vlasov_Ritz_height_v2. O token v1 continua aceito
+com sua classificação geométrica histórica; resultado v1 pendente não é
+promovido ao v2 pelo leitor. Criação e adesão explícita agora escolhem v2.
+
+Na nova rota, a limitação por âncoras de perfis foi substituída pela
+reconstrução de autoridade geométrica: own.validate/section_for fornecem
+CG/CT, perfil, nós, dimensões e identidade nominal do mesmo contorno próprio.
+A linha de topo é reconstruída do esquema declarado e comparada à geometria
+usada. As posições individuais também precisam coincidir com CG para PP ou
+topo declarado para as demais ações. Um hash declarado não substitui essas
+comparações. A geometria autenticada integra a evidência e seu replay.
+
+Só então aplica-se o classifier de posições individuais já existente.
+Posições paralelas negativas/desconhecidas continuam impedidas. O termo
+estabilizante paralelo não é usado para aumentar a crítica: o mesmo operador
+normal Vlasov/Ritz continua intacto. Não é autovalor biaxial nem prova de
+resistência completa. Classify_for_roof, âncoras históricas, antigos registros
+roof_top_load e denominadores legados não foram alterados.
+
+Os testes novos adulteram CG, CT, linha, vínculo e posição individual,
+inclusive recalculando hashes, e verificam rejeição. A matriz paralela usa
+alturas/abscissas do próprio contorno por perfil, não uma excentricidade
+constante. Consumidores reais de ações cobrem índices0,26,53,79; a interface
+com cálculo, Word, JSON, rerender e restauração cobre índices0 e26.

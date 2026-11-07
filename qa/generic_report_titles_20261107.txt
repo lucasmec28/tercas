@@ -1,0 +1,25 @@
+Generic application and Word titles — 2026-11-07
+Base: c7723fe1b9334e99611d4a136cbacd8f745b7d9e
+
+Scope:
+- Replace fixed company branding with neutral application/page titles.
+- Direct Word: Estudo de terça / Estudo de travessa lateral.
+- Combination Word: Terças por combinações / Travessas laterais por combinações.
+- No changes to calculations, physical inputs, source packages, or stored hashes.
+- No rewriting of user-entered project metadata or historical results.
+
+Verification:
+- 44 focused tests passed in 9.39 seconds: test_generic_report_titles.py,
+  test_nbr_family_word_dispatch.py and test_report_audit.py.
+- Real Word exports covered both member kinds and direct/area entry points.
+- Tests verify result deep equality, input fingerprint, and full-result SHA-256
+  before/after export; calculation entry points are forbidden during export.
+- Streamlit AppTest confirmed generic visible heading and no exception;
+  AST check confirmed the neutral browser-page title.
+- Full-result SHA-256 compared with the unchanged base for four synthetic cases
+  (both member kinds, direct and ELS quase permanente area): all unchanged.
+- 460 relevant source/data text files in app.py and tercas/ scanned for fixed
+  company branding and formatted fiscal identifiers: no remaining matches.
+  Historical documentation outside this scope was not rewritten.
+- git diff --check passed. No publication. Focused QA is not full-suite QA or
+  engineering certification.

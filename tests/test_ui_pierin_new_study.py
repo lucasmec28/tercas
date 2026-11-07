@@ -44,6 +44,8 @@ def test_explicit_start_preserves_prior_study_and_can_restore():
     assert app.session_state.last_input['catalog_index'] == 26
     from tercas.direct_self_weight import FIELD, MODE
     assert app.session_state.last_input[FIELD] == MODE
+    from tercas.flt_height_effective import COMBINED_FIELD, COMBINED_METHOD
+    assert app.session_state.last_input[COMBINED_FIELD] == COMBINED_METHOD
     assert app.session_state.last_input['q_uls'] == 0
     assert app.session_state.last_input['load_mode'] == 'direct'
     assert app.session_state[HISTORY][0]['last_input'] == prior

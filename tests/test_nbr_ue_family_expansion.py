@@ -99,7 +99,8 @@ def test_partial_edge_stiffener_gradient_is_not_promoted(index):
     p,props=geometry(index);m=dict(f.DEFAULT_MATERIAL,fy_MPa=350.)
     with pytest.raises(ex.OutsideMethod,match='Is<Ia'):
         ex.weak_negative_full_flange(p,props,m,350.)
-    out=f.assess(index,L_mm=6000.,material=m)['weak']['negative']
+    from tercas import nbr_ue_family_v2
+    out=nbr_ue_family_v2.assess(index,L_mm=6000.,material=m)['weak']['negative']
     assert out['distortional']['eligible']
     assert not out['local']['eligible'] and not out['complete_reference_components']
     assert out['pure_weak_reference_MRd_Nmm'] is None

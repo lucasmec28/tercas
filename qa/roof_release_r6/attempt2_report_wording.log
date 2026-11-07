@@ -29,9 +29,9 @@ monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f289ec09e80>
         doc = Document(io.BytesIO(downloads['Baixar memória parcial (Word)']))
         text = '\n'.join(p.text for p in doc.paragraphs)
 >       assert 'conclusão global' in text.lower() and 'fora do escopo' in text.lower()
-E       AssertionError: assert ('conclusão global' in 'lro engenharia estudo de terça\nexibição com duas casas decimais; cálculos e arquivos json mantêm a precisão completa...rio ou telha estrutural.\nidentificação das entradas: 4a598fc04e666a7d46a1e238cf3d90ce40066c43408a6eb5d3dbc06047595435')
-E        +  where 'lro engenharia estudo de terça\nexibição com duas casas decimais; cálculos e arquivos json mantêm a precisão completa...rio ou telha estrutural.\nidentificação das entradas: 4a598fc04e666a7d46a1e238cf3d90ce40066c43408a6eb5d3dbc06047595435' = <built-in method lower of str object at 0x345e5540>()
-E        +    where <built-in method lower of str object at 0x345e5540> = 'LRO Engenharia Estudo de terça\nExibição com duas casas decimais; cálculos e arquivos JSON mantêm a precisão completa...rio ou telha estrutural.\nIdentificação das entradas: 4a598fc04e666a7d46a1e238cf3d90ce40066c43408a6eb5d3dbc06047595435'.lower
+E       AssertionError: assert ('conclusão global' in 'Relatório técnico estudo de terça\nexibição com duas casas decimais; cálculos e arquivos json mantêm a precisão completa...rio ou telha estrutural.\nidentificação das entradas: 4a598fc04e666a7d46a1e238cf3d90ce40066c43408a6eb5d3dbc06047595435')
+E        +  where 'Relatório técnico estudo de terça\nexibição com duas casas decimais; cálculos e arquivos json mantêm a precisão completa...rio ou telha estrutural.\nidentificação das entradas: 4a598fc04e666a7d46a1e238cf3d90ce40066c43408a6eb5d3dbc06047595435' = <built-in method lower of str object at 0x345e5540>()
+E        +    where <built-in method lower of str object at 0x345e5540> = 'Relatório técnico Estudo de terça\nExibição com duas casas decimais; cálculos e arquivos JSON mantêm a precisão completa...rio ou telha estrutural.\nIdentificação das entradas: 4a598fc04e666a7d46a1e238cf3d90ce40066c43408a6eb5d3dbc06047595435'.lower
 
 tests/test_roof_release_composition.py:95: AssertionError
 ----------------------------- Captured stderr call -----------------------------

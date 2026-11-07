@@ -7,7 +7,7 @@ from . import nbr_ue_family as provider
 from . import roof_top_load as roof
 
 FIELD = 'nbr_ue_family_application'
-SCHEMA = 'nbr_ue_family_application_v2'
+SCHEMA = 'nbr_ue_family_application_v3_rp23_candidate'
 SCOPE = ('Componentes de flexão NBR, não aprovação resistente/global. Contorno próprio e '
          'referência nominal publicada são alternativas distintas; índices não são somados. '
          'Interação biaxial N=0 usa capacidades próprias concomitantes e qualificadas por sinal. '
@@ -187,7 +187,7 @@ def _build(result):
                 reason=('Posição desestabilizante/indeterminada: FLT clássico não resolve altura.' if not supported
                         else 'FLT clássico CT/estabilizante; comprimentos resistentes declarados, Cb=1, sem benefício de altura.' if method == 'FLT_reference'
                         else None), approximate=branch.get('elastic_approximation', False)))
-        from .flt_height_effective import qualify_family
+        from .flt_height_effective import qualify_family, COMBINED_METHODS
         height = qualify_family(data, acts)
         height_capacity = dict(eligible=False,status='outside_documented_height_reference',reason=height['reason'])
         if height['elastic_reference_eligible']:
@@ -201,7 +201,8 @@ def _build(result):
             except (provider.OutsideMethod,ExpandedOutsideMethod) as exc:
                 height_capacity=dict(eligible=False,status='outside_height_resistance_method',reason=str(exc),MRd_Nmm=None)
             else:
-                height_capacity.update(status='computed_documentary_height_NBR_reference',reason=height['reason'])
+                height_capacity.update(status=('computed_full_span_numerical_height_NBR_reference'
+                    if height['method'] in COMBINED_METHODS else 'computed_documentary_height_NBR_reference'),reason=height['reason'])
         parts.append(_component('own_rounded_contour','FLT_height_effective_reference',height_capacity,strong,approximate=True))
         distortional_floor=None
         conventional_distortion=own['strong']['distortional']
@@ -305,13 +306,16 @@ def attach(result):
 
 
 def preserved(result):
-    """Replay analytic sources, inventory, actions and extrema, never eigen solve."""
+    """Replay sources, inventory and extrema; opted-in mixed loads also replay Ritz."""
     saved = result.get(FIELD)
     if saved is None:
         return None
     if saved.get('schema') == 'nbr_ue_family_application_v1':
         from .nbr_ue_family_application_v1 import preserved as preserved_v1
         return preserved_v1(result)
+    if saved.get('schema') == 'nbr_ue_family_application_v2':
+        from .nbr_ue_family_application_v2 import preserved as preserved_v2
+        return preserved_v2(result)
     if not _eligible(result['input_data']) or saved != _build(result):
         raise ValueError('NBR família: componentes, fontes, ações, casos ou aritmética divergentes; recalcule explicitamente.')
     return copy.deepcopy(saved)

@@ -1,0 +1,17 @@
+{
+  "scope": "Neutral public titles and minimized QA distribution; numeric engineering modules unchanged.",
+  "base_engineering_QA_commit": "c7723fe1b9334e99611d4a136cbacd8f745b7d9e",
+  "current_code_commit": "87abbb066475d79772c4e566c8b396099f5eb0d2",
+  "tests": 44,
+  "seconds": 7.89,
+  "exit_code": 0,
+  "full_study_JSON_distributed": false,
+  "full_Word_export_distributed": false,
+  "identifying_labels_in_tracked_texts": 0,
+  "private_project_data_included": false,
+  "number_formats_checked": "Business tax identifier and named organization patterns; executable source and tracked text assets.",
+  "historical_log_note": "Two public log copies have organization labels replaced; counts and outcomes preserved and redaction documented separately.",
+  "results_unchanged": "Four synthetic report cases matched deep equality, fingerprints and full-result SHA-256 across export, and matched the unchanged base in independent focal comparison.",
+  "xml_sha256": "1da7622141111682a5838a37285468a67acfb7a9902bdfe8d6699c29a0d259bd",
+  "global_approval": false
+}

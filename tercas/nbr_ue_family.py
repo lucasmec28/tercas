@@ -13,7 +13,7 @@ from .nbr_ue_family_base import (FIELD, DEFAULT_MATERIAL, OutsideMethod, positiv
     material_values, rho, elastic_distortion, weak_kernel, section_constants,
     prepare, registry, digest, chi_flt, tabulated_reference, _missing)
 
-SCHEMA='nbr_ue_family_components_v2'
+SCHEMA='nbr_ue_family_components_v3_rp23_candidate'
 SOURCE_DOCUMENTS=copy.deepcopy(legacy.SOURCE_DOCUMENTS)+copy.deepcopy(expanded.SOURCE_DOCUMENTS)
 
 
@@ -49,105 +49,18 @@ def strong_capacity_at_me(index,*,material=None,Me_Nmm):
         Me_qualified_by_this_helper=False,resistance_lower_bound_qualified=False,whole_member_approved=False)
 
 
-def assess(index,*,L_mm,material=None,lengths=None,load_position='unknown'):
-    out=base.assess(index,L_mm=L_mm,material=material,lengths=lengths,load_position=load_position)
-    m=out['source_binding']['material'];p,props=_geometry(index);L=out['physical_span_mm']
-    out['schema']=SCHEMA;out['source_documents']=copy.deepcopy(SOURCE_DOCUMENTS)
-    out['method_revision']='R11: sign-specific full-flange MLE, conventional strong MLE and weak-negative elastic distortion'
-    out['complete_reference_meaning']='All pure-axis reference components available, including labelled approximations; not actual-load, biaxial or member approval.'
-    if not out['strong']['local']['eligible']:
-        old_reason=out['strong']['local']['reason']
-        try:
-            sec=expanded.strong_effective_modulus(p,props,m,m['fy_MPa'])
-        except expanded.OutsideMethod as exc:
-            out['strong']['local'].update(reason=old_reason+'; '+str(exc))
-        else:
-            out['strong']['local']=dict(eligible=True,status='computed_conventional_MLE',
-                method=sec['method'],source=expanded.SOURCE_MLE,section=sec,
-                Wc_mm3=props['Ix_strong_mm4']/(p['h']/2),
-                Wfirst_effective_mm3=sec['Wfirst_mm3'],
-                MRd_Nmm=sec['Wfirst_mm3']*m['fy_MPa']/m['gamma'],
-                table12_outside_reason=old_reason,local_elastic_critical_inferred=False)
-            flt=out['strong']['FLT_reference']
-            try:
-                flt.update(strong_capacity_at_me(index,material=m,Me_Nmm=flt['Me_reference_Nmm']))
-            except expanded.OutsideMethod as exc:
-                flt.update(_missing(str(exc)))
-    positive_branch=out['weak']['positive']
-    if not positive_branch['local']['eligible']:
-        try:
-            weak,section,width=expanded.weak_positive_full_flange(p,props,m)
-        except expanded.OutsideMethod as exc:
-            positive_branch['local']['reason']=str(exc)
-        else:
-            sec,proof=weak['section'],weak['proof'];fy=m['fy_MPa'];gamma=m['gamma']
-            wc=props['Iy_weak_mm4']/(props['centroid_xy_mm'][0]+p['t']/2)
-            me=positive_branch['FLT_reference']['Me_reference_Nmm']
-            chi,branch=chi_flt(math.sqrt(wc*fy/me));local=sec['Wfirst_mm3']*fy/gamma
-            if chi*fy>=proof['compression_stress_at_first_yield_MPa']:
-                trial=sec;fltval=local;method='Local first yield verified below chi*fy compression cap'
-            else:
-                trial=section(width(chi*fy));fltval=chi*fy*trial['Wc_web_mm3']/gamma
-                method='NBR9.8.2.2(a), uniform-web MLE at chi*fy; fully effective flange rechecked'
-            gradient=(m['fy_MPa']/(p['bf']-p['t']/2-trial['centroid_x_mm'])
-                if fltval==local else chi*fy/(trial['centroid_x_mm']+p['t']/2))
-            try:
-                flt_proof=expanded.positive_flange_majorant(p,m,trial['centroid_x_mm'],gradient)
-                if not flt_proof['fully_effective']:
-                    raise expanded.OutsideMethod('Positive FLT flange full-effectiveness proof unavailable')
-            except expanded.OutsideMethod as exc:
-                flt_branch=dict(_missing(str(exc)),Me_reference_Nmm=me)
-            else:
-                flt_branch=dict(eligible=True,Me_reference_Nmm=me,chi=chi,curve_branch=branch,
-                    MRd_Nmm=fltval,method=method,section=trial,flange_proof=flt_proof,
-                    local_first_yield_cap_required=True)
-            positive_branch.update(local=dict(eligible=True,status='computed_sign_specific_MLE',
-                MRd_Nmm=local,section=sec,proof=proof,source=expanded.SOURCE_MLE),
-                FLT_reference=flt_branch,
-                distortional=dict(eligible=True,status='not_applicable_lips_in_tension',MRd_Nmm=None),
-                pure_weak_reference_MRd_Nmm=min(local,fltval) if flt_branch['eligible'] else None,
-                complete_reference_components=flt_branch['eligible'])
-    negative_branch=out['weak']['negative']
-    if not negative_branch['local']['eligible']:
-        try:
-            weak=expanded.weak_negative_full_flange(p,props,m,m['fy_MPa'])
-        except expanded.OutsideMethod as exc:
-            negative_branch['local']['reason']=str(exc)
-        else:
-            sec,proof=weak['section'],weak['proof'];fy=m['fy_MPa'];gamma=m['gamma']
-            local=sec['Wfirst_mm3']*fy/gamma
-            wc=props['Iy_weak_mm4']/(p['bf']-p['t']/2-props['centroid_xy_mm'][0])
-            me=negative_branch['FLT_reference']['Me_reference_Nmm']
-            chi,branch=chi_flt(math.sqrt(wc*fy/me))
-            negative_branch['local']=dict(eligible=True,status='computed_sign_specific_MLE',
-                MRd_Nmm=local,section=sec,proof=proof,source=expanded.SOURCE_MLE)
-            try:
-                trial=expanded.weak_negative_full_flange(p,props,m,chi*fy)
-            except expanded.OutsideMethod as exc:
-                negative_branch['FLT_reference']=dict(_missing(str(exc)),Me_reference_Nmm=me)
-            else:
-                negative_branch['FLT_reference']=dict(eligible=True,Me_reference_Nmm=me,
-                    chi=chi,curve_branch=branch,MRd_Nmm=chi*fy*trial['section']['Wc_lips_mm3']/gamma,
-                    method='NBR9.8.2.2(a), reduced uniform lips and proved full flanges',
-                    section=trial['section'],proof=trial['proof'],local_first_yield_cap_required=True)
-    # This is a new elastic computation specific to web-tension bending, never
-    # the strong Mdist or the sign-unknown published Mly.
-    try:
-        distortion=expanded.weak_negative_distortion(p,props,m,elastic_distortion(p,m)['flange_lip'])
-    except expanded.OutsideMethod as exc:
-        distortion=_missing(str(exc))
-    neg=out['weak']['negative'];neg['distortional']=distortion
-    complete=all(neg[k]['eligible'] for k in ('local','FLT_reference','distortional'))
-    neg['complete_reference_components']=complete
-    neg['pure_weak_reference_MRd_Nmm']=min(neg[k]['MRd_Nmm'] for k in ('local','FLT_reference','distortional')) if complete else None
-    neg['complete_reference_is_approximate']=complete and distortion.get('elastic_approximation',False)
-    out.pop('snapshot_sha256',None);out['snapshot_sha256']=digest(out)
-    return out
+def assess(index,**inputs):
+    """Fresh v3 candidate; versioned v2 readers retain their original producer."""
+    from .nbr_ue_weak_rp23 import assess as candidate_assess
+    return candidate_assess(index,**inputs)
 
 
 def validate_saved(evidence,**inputs):
     if evidence.get('schema')==legacy.SCHEMA:
         return legacy.validate_saved(evidence,**inputs)
+    if evidence.get('schema')=='nbr_ue_family_components_v2':
+        from .nbr_ue_family_v2 import validate_saved as validate_v2
+        return validate_v2(evidence,**inputs)
     expected=assess(**inputs)
     if evidence!=expected:raise ValueError('Changed family components or inputs; recalculate explicitly')
     return copy.deepcopy(expected)
@@ -180,7 +93,7 @@ def attach(result,*,fresh_calculation=False,lengths=None,load_position='unknown'
     data=result['input_data'];index=data['catalog_index'];row=registry.select_new_study(index,include_routes=False);p=data['properties']
     if any(p.get(k)!=v for k,v in row['dimensions_mm'].items()):raise ValueError('Current nominal dimensions differ from selected complete Pierin row')
     m=dict(E_MPa=p['E_MPa'],G_MPa=p['G_MPa'],fy_MPa=p['fy_MPa'],nu=formula_nu,gamma=1.1)
-    packet=dict(schema='nbr_ue_family_reference_attachment_v2',
+    packet=dict(schema='nbr_ue_family_reference_attachment_v3_rp23_candidate',
         own_rounded_contour=assess(index,L_mm=data['L_mm'],material=m,lengths=lengths,load_position=load_position),
         published_nominal_reference=tabulated_reference(index,material=m),routes_must_not_be_mixed=True,
         legacy_denominators_replaced=False,roof_height_effect_qualified=False,whole_member_approved=False)

@@ -11,7 +11,8 @@ def for_new_study(data):
     """Only fresh inputs from a named UI creation action may call this helper."""
     enabled(data)  # Reject an unknown pre-existing value instead of overwriting it.
     from .direct_self_weight import activate as activate_direct_PP
-    return activate_direct_PP(data)  # No automatic ELS fallback or biaxial adoption.
+    from .flt_height_effective import activate_combined
+    return activate_combined(activate_direct_PP(data))  # No automatic ELS fallback or biaxial adoption.
 
 
 def initialize_session(state, factory):

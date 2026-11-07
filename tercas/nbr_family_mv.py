@@ -291,7 +291,7 @@ def build(record, sources, span_mm):
     never qualifies the whole member or the combined weak/torsional actions.
     """
     own = sources['own_rounded_contour']
-    if own.get('schema') != 'nbr_ue_family_components_v2' or own.get('physical_span_mm') != span_mm:
+    if own.get('schema') not in ('nbr_ue_family_components_v2','nbr_ue_family_components_v3_rp23_candidate') or own.get('physical_span_mm') != span_mm:
         raise ValueError('Fonte NBR propria atual e mesmo vao fisico requeridos.')
     if record.get('limit_state') != 'ELU' or record['combination'].get('limit_state') != 'ELU':
         raise ValueError('M-V resistente requer combinacao ELU.')

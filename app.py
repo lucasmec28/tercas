@@ -162,9 +162,9 @@ def render_results(result,d):
     st.json(result,expanded=False)
 
 
-st.set_page_config(page_title='LRO | Terças',page_icon='🏗️',layout='wide')
+st.set_page_config(page_title='Terças e travessas laterais',page_icon='🏗️',layout='wide')
 st.markdown('<style>.block-container{max-width:1200px} h1,h2,h3{color:#25334a} div.stButton>button[kind="primary"]{background:#d96516;border:0}</style>',unsafe_allow_html=True)
-st.title('LRO | Terças e travessas laterais')
+st.title('Terças e travessas laterais')
 with st.expander('Precisão dos números exibidos',expanded=False):st.caption(DISPLAY_NOTE)
 st.caption(f'NBR 14762:2010 · {VERSION} · primeira emissão restrita')
 from tercas.release_info import RELEASE_CAPTION

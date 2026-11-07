@@ -3,7 +3,7 @@
 This session marker is not evidence of a runtime build or of physical validity.
 It never enters input JSON, calculated snapshots, or historical Word records.
 """
-EPOCH = 'active_ui_caches_Ue_simultaneous_shear_lag_20261107_r12'
+EPOCH = 'active_ui_caches_Ue_RP23_Flt_qP_20261107_r13'
 KEY = 'calculation_cache_epoch'
 ACTIVE_KEYS = ('result', 'catalog_scan_state', 'three_girt_warping_result')
 

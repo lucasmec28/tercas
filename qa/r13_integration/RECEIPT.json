@@ -1,0 +1,50 @@
+{
+  "release": "componentes-Ue-RP23-FLT-qP-20261107-r13",
+  "code_commit": "fed0b90241d4df6547e3887b833e1a5afa907d08",
+  "baseline_local_commit": "9a86c9a80f093514c9288156dfda0bc6900c43b5",
+  "baseline_published_commit": "e23347a3cf4a8fd9974629d80fddab42851b1553",
+  "tests": [
+    {
+      "name": "combined_backend",
+      "tests": 754,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 270.02,
+      "xml_sha256": "a57504255e9476627af16a2830655660ac62944b25a128207c085bf21c171429",
+      "log_sha256": "9a7913bba81bbb616508ce57a9f0557b5c6a362705ade34bdd9a9f92f6100c04",
+      "exit_code": 0
+    },
+    {
+      "name": "combined_ui",
+      "tests": 26,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 184.42,
+      "xml_sha256": "ed8b5fbf733867bcf801fe215ce20838ce4e6f876390ef2ed01800bbcbe5bf6c",
+      "log_sha256": "5533743b16f188e9541e9acb9a4a9fcb429ede1b84834b436f6be667338618fc",
+      "exit_code": 0
+    }
+  ],
+  "scope": "Focused affected backend and UI checks, not the complete repository suite or a structural project certification.",
+  "integrated_changes": [
+    "Versioned RP23 local weak-negative elastic approximation fallback with preserved NBR resistance curves and historical v2 readers.",
+    "Versioned full-span Vlasov/Ritz q+P height adapter with authenticated geometry for the 66 documentary-complete Pierin Ue contours.",
+    "New-study opt-in, explicit adoption for imported inputs, UI/Word/JSON and cache invalidation."
+  ],
+  "privacy": {
+    "real_project_data_included": false,
+    "primary_full_text_PDFs_included": false,
+    "QA_cases": "Programmatically constructed synthetic fixtures. The app synthetic=false input flag distinguishes catalog profiles from arbitrary synthetic sections; it does not mean project data.",
+    "public_QA_scope": "Executable synthetic test generators, summary receipts and logs. Full generated study JSON and Word outputs are excluded from the public release."
+  },
+  "limits": [
+    "RP23 is an explicitly approximate external reference, not a guaranteed lower bound; ri/t=1 is outside the reported calibration sample radii.",
+    "Mixed-load Ritz adapter requires Ly=Lz=physical L and fork/free-warping end assumptions; no physical restraint is inferred from effective lengths.",
+    "Combined curling and spatial shear lag outside the qualified routes remain pending. No curling research candidate is included in this release.",
+    "All 66 weak components observed at fy=250/300/345/350 and L=6000 are a parameter matrix, not all possible load/length/member combinations.",
+    "No complete NBR/AISI/EN or whole-member approval is asserted."
+  ],
+  "release_homologated": false
+}

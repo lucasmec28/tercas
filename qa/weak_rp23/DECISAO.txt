@@ -1,0 +1,39 @@
+Candidata RP23 para flexão fraca negativa — 07/11/2026
+Base: R12 9a86c9a. Integração funcional apenas nesta cópia, não publicada.
+
+Decisão
+Manter MLE NBR admissível e preencher exclusivamente suas lacunas de My negativo com a aproximação elástica publicada AISI RP23-01, Eq. 28–30, e curva resistente NBR. Não importar resistência DSM AISI nem atribuir sentido ao Mly escalar Pierin. My positivo já usa MLE em 66/66: sua resistência pode ser calculada sem inventar um crítico local escalar a partir do resultado MLE.
+
+Comparação prática
+1. MLE existente: preservado prioritariamente. Já reduz lábios e prova mesas inteiras sob gradiente. Nas lacunas, Is<Ia exige tratamento de mesa com apoio parcial e gradiente, não uma conexão simples de rotina existente.
+2. RP23: aproximação de seção pronta para calcular. 58/66 satisfazem os limites expressos 2,5<=b/d<=11,1; 0,07<=psi<=0,77; d/t>=4,4. Oito restantes já têm MLE. Para fy=250/300/345/350 MPa, o fallback preenche 11/15/21/22 lacunas, resultando 66/66 referências de ambos sentidos em L=6000 mm. Isso não aprova todas as condições de carga/comprimento/material nem o membro inteiro.
+3. pyCUFSM 0.2.0: benchmark prévio de cinco pontos RP21 até 0,61% não resolve os defeitos conhecidos de classificação local/D e cFSM. Não qualificado para referência modal automática de produção. Benchmark não repetido. CUFSM oficial MATLAB/standalone requer executor compatível; nenhum novo solver foi criado.
+
+Rastreabilidade e limites
+b=B-t; d=D-t/2; psi=xCG/(b-xCG), com CG do contorno próprio.
+Fcr=k*pi²*E/[12*(1-nu²)]*(t/b)².
+Ml=Fcr*Iy/(B-t/2-xCG), fibra externa comprimida conforme Eq. 11.
+A condição d/t>=4,4 é expressa na p. 20 e não dispensa D. O índice 3, Ue50x25x10x2,25, permanece fora de RP23. D negativo continua cálculo S100-2024 separado com curva NBR; nunca é herdado do forte ou dispensado por RP23.
+O contorno nominal tem ri/t=1, fora dos valores amostrados anteriormente identificados (~1,5–2,2). Isso não é veto expresso das Eq. 28–30, mas não autoriza transferir média/COV da amostra, chamar resultado de piso conservador ou certificar FSM do mesmo contorno. Cada referência registra aproximação e ausência de garantia. B/H, D/B, B/t e D/t do conjunto não comercial são coordenadas descritivas de calibração, não limites normativos inventados.
+Me e comprimentos vêm da base. RP23 não qualifica FLT, posição de carga, apoios, campos combinados ou o membro inteiro. Produtores e consumidores mantêm essas verificações separadas.
+
+Fontes
+RP23-01, second printing, July 2023, pp. 9, 11, 16–20, 37–38.
+https://www.buildusingsteel.org/wp-content/uploads/2023/07/AISI-RP23-01-Analytical-Equations-for-Critical-Local-Buckling-Stress-of-Lipped-Channels-second-printing.pdf
+SHA256: b9b558f1880796d72be2aef68dc00c4b264981be547086a40f90d8165f243221
+Equações conferidas visualmente na p. 19/PDF21. Exemplo 11.1.3 reproduz k~10,30 e Fcr~182,9 ksi. A última linha contém produto inconsistente (186,1*0,093=46,6), não utilizado. A conversão segue a Eq. 11 dimensional.
+CBCA 2016, p. 73/PDF74 e p. 74/PDF75, conferidos visualmente: curva MSE local e FLT, com Ml por análise de estabilidade elástica. SHA256 no arquivo SOURCES.json.
+NBR 14762: autorização para Ml por análise de estabilidade elástica está em 9.8.2.1(b). O item 9.3 trata D, não permite por si uma aproximação local. RP23 é aproximação externa derivada de FSM, não fórmula NBR/Tabela12. Bytes do PDF original ausentes aqui. Revisor releu reprodução da primária no Studylib, p. 45 e 9.8.2.2(b), pp. 47–48, e conferiu RP23 Eq. 11 e Eq. 28–30. Aceite estático matemático no domínio declarado, condicionado à revisão do dispatch/replay e QA final; não é homologação de raio/calibração ou aprovação global.
+PDFs/texto integral das fontes não estão no pacote de código.
+
+Integração versionada
+nbr_ue_weak_rp23 fornece produtor elástico e fallback. nbr_ue_family e application geram v3 somente em novas avaliações. Os módulos v2 preservam aritmética e replay anteriores; application_v2 usa provider_v2. Panorama e M–V reconhecem v3 preservando v2. Biaxial usa os mesmos denominadores de origem, sinal e aproximação. UI/Word exibem indicadores e nota RP23, sem checkbox novo. Metadados dizem referência aproximada integrada, sem verificação física ou aprovação global. Estado de publicação fica apenas no recibo. Nenhuma promoção de snapshots antigos ou alteração do repositório original.
+
+QA e limites
+Cobertura algébrica 66×4: 45,87 s, BLAS1, sem solver espectral; coverage.json.
+Suíte focal: 102 testes passaram em 37,12 s. Os 22 testes novos passaram novamente em 48,86 s após ajuste de referência normativa/material. Última reexecução após ajuste de metadados consta em final_tests.log.
+Direto/área usam inventário sintético e consumidores/replay algébricos reais. Word real em memória e XML conferido no teste de dispatch. Na etapa algébrica não foram executados AppTest ou solver Vlasov real. O AppTest real posterior está registrado abaixo. A suíte integral do app não foi executada nesta tarefa. Candidata requer QA global integrado antes da publicação.
+
+Guarda final de aplicabilidade
+O fallback só aceita as duas falhas MLE documentadas de mesa sob gradiente, nunca uma falha genérica de geometria/material. Revalida Table4: mesa plana/t<=60, alma plana/t<=200, lábio plano/t<=60. Matriz final (27,81 s) confirmou que todos os 11/15/21/22 casos eram exclusivamente Is<Ia no envelope final da mesa. Intervalos globais dos fallbacks: mesa plana/t=19,529–38,5; alma plana/t=43,059–121; lábio plano/t=3,882–10,5. coverage.json registra motivos e razões por caso. Cobertura permaneceu 66/66 em ambos os sinais nos quatro fy.
+AppTest real do índice 53, fy=300 MPa: 1 teste passou em 22,87 s, após janela coordenada. Importação, cálculo, tabela NBR fraca, Word/JSON e rerender sem solver/mudança foram verificados. Artefatos sintéticos em app53/. Últimos 25 testes aritméticos/replay passaram em 66,76 s após ajuste final de metadados.

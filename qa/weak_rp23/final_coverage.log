@@ -1,0 +1,31 @@
+{
+  "250.0": {
+    "RP23": 58,
+    "local": 66,
+    "reference": 66,
+    "fallback": 11,
+    "positive": 66
+  },
+  "300.0": {
+    "RP23": 58,
+    "local": 66,
+    "reference": 66,
+    "fallback": 15,
+    "positive": 66
+  },
+  "345.0": {
+    "RP23": 58,
+    "local": 66,
+    "reference": 66,
+    "fallback": 21,
+    "positive": 66
+  },
+  "350.0": {
+    "RP23": 58,
+    "local": 66,
+    "reference": 66,
+    "fallback": 22,
+    "positive": 66
+  }
+}
+Seconds 27.809895235999647

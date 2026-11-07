@@ -13,7 +13,7 @@ BINDING='NBR_family_binding'
 def _build(result):
     from .nbr_ue_family_application import FIELD, preserved, _not_applicable_basis
     raw=result.get(FIELD)
-    if not isinstance(raw,dict) or raw.get('schema')!='nbr_ue_family_application_v2':
+    if not isinstance(raw,dict) or raw.get('schema') not in ('nbr_ue_family_application_v2','nbr_ue_family_application_v3_rp23_candidate'):
         return [],None
     packet=preserved(result)
     rows=packet['records']

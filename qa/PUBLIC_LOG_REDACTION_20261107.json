@@ -1,0 +1,19 @@
+{
+  "note": "Public copies have identifying organization labels replaced. They are not byte-identical raw logs. Test outcome counts, cases and numeric calculations were not changed.",
+  "files": [
+    {
+      "path": "qa/roof_release_r6/attempt2_report_wording.log",
+      "original_sha256": "887eed1742990ff114c07fa8579686c3715a2c9fcb4580a19860a870f35a14c4",
+      "public_sha256": "d43421538139cc4cded7539786de3c09931f16764598f6065c9dee2f75de9ed0",
+      "identifying_labels_replaced": 3,
+      "test_outcomes_unchanged": true
+    },
+    {
+      "path": "qa/roof_release_r6/attempt2_report_wording.xml",
+      "original_sha256": "2e254850ae95991b8c4b79d8221f11cd944c496ec468ddeca9967af5fb28114b",
+      "public_sha256": "df55c630d258d21f04b60ffc85ed068493af5cbc01c0c78cc9772f37769a510a",
+      "identifying_labels_replaced": 4,
+      "test_outcomes_unchanged": true
+    }
+  ]
+}

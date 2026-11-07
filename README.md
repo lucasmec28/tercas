@@ -1,4 +1,4 @@
-# LRO — Terças (emissão restrita — 0.4.4-estudo)
+# Terças e travessas laterais (emissão restrita — 0.4.4-estudo)
 
 Aplicativo Streamlit para verificações parciais de um vão U/Ue, segundo o método documentado na Rev07 e NBR 14762:2010. **Não considera telha como travamento e não emite aprovação global.**
 

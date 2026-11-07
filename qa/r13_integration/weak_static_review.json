@@ -1,0 +1,44 @@
+{
+  "scope": "Independent static review of new weak-negative local elastic reference and versioned replay; no physical-project approval",
+  "baseline_local_commit": "9a86c9a80f093514c9288156dfda0bc6900c43b5",
+  "published_baseline_commit": "e23347a3cf4a8fd9974629d80fddab42851b1553",
+  "reviewed_module_sha256": "9d9d3f835602dde53bfd79c57401ff21163edf61826364f218a5bd28ed5abde7",
+  "checks": {
+    "RP23_equations_28_30_visually_checked": true,
+    "RP23_d_over_t_at_least_4_4_visually_checked": true,
+    "RP23_Eq11_exterior_compressed_fibre_modulus_visually_checked": true,
+    "NBR_9_8_2_1b_and_9_8_2_2b_primary_reproduction_checked": true,
+    "v2_provider_identical_to_R12": true,
+    "v2_application_only_changed_import_to_frozen_provider": true,
+    "directional_local_critical_not_inherited_from_Pierin_scalar": true,
+    "distortional_reference_independent": true,
+    "preserved_NBR_curve_no_AISI_strength_curve": true
+  },
+  "sources": [
+    {
+      "url": "https://www.buildusingsteel.org/wp-content/uploads/2023/07/AISI-RP23-01-Analytical-Equations-for-Critical-Local-Buckling-Stress-of-Lipped-Channels-second-printing.pdf",
+      "pages_printed": [
+        11,
+        19,
+        20
+      ]
+    },
+    {
+      "url": "https://studylib.net/doc/28226231/430662924-nbr-14762-2010-pdf",
+      "pages_printed": [
+        45,
+        47,
+        48
+      ],
+      "note": "Reproduction of NBR text; extracted encoding is imperfect. Curve and definitions cross-checked with preserved implementation and CBCA review."
+    }
+  ],
+  "conclusions": [
+    "Transcription and scalar resistance arithmetic consistent within the stated domain.",
+    "RP23 is an external elastic approximation derived from finite-strip results, not NBR Table12 or a guaranteed lower bound.",
+    "The radius ratio of the app is outside the reported calibration samples; no fit statistics are transferred.",
+    "Static acceptance remains conditional on final integration and regression checks."
+  ],
+  "global_approval": false,
+  "private_project_data_used": false
+}

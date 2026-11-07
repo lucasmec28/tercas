@@ -2,6 +2,19 @@
 from .ue_catalog_reference import FIELD, SCOPE, claims_reference, activate, validate, preserved
 
 
+def adopt_combined_for_calculation(state, data, load):
+    """Explicit adoption keeps the complete earlier study in restorable history."""
+    from .flt_height_effective import activate_combined
+    from .pierin_ue_registry_ui import HISTORY, _snapshot
+    from .pierin_ue_registry import select_new_study
+    validate(data)
+    select_new_study(data['catalog_index'], include_routes=False)
+    changed = activate_combined(data)
+    history = list(state.get(HISTORY, [])) + [_snapshot(state)]
+    load(changed)
+    state[HISTORY] = history
+
+
 def render_choice(st,data,key,load):
     from .catalogs import catalog_entry
     network=data.get('three_girt_model',{})
@@ -18,6 +31,20 @@ def render_choice(st,data,key,load):
             try:changed=activate(data)
             except (ValueError,TypeError,KeyError) as exc:st.error(str(exc))
             else:load(changed);st.rerun()
+        if claims_reference(data):
+            from .flt_height_effective import COMBINED_FIELD, COMBINED_METHOD
+            from .pierin_ue_registry import select_new_study
+            try:
+                validate(data)
+                select_new_study(data['catalog_index'], include_routes=False)
+            except (ValueError, TypeError, KeyError):
+                return
+            if data.get(COMBINED_FIELD) != COMBINED_METHOD:
+                st.caption('Adesão explícita para recálculo: q+P com alturas próprias somente com Ly=Lz=L e projeção paralela elegível. Preserva o estudo anterior no histórico restaurável; não atualiza resultados salvos.')
+                if st.button('Adotar FLT q+P para novo cálculo', key=key+'_combined'):
+                    adopt_combined_for_calculation(st.session_state, data, load)
+                    st.rerun()
+
 
 
 def show(st,result):
