@@ -1,0 +1,9 @@
+RESTORATION CHECKPOINT, NOT A PASSED NUMERICAL QA RECEIPT
+Recovered base fcd2671b0ac996daa4dfcd928d3568a246cf8717.
+Lost source commit8608350 behavior reconstructed under scratch.
+Actual original Annex E/positive git-show modules survived in recovery scripts
+and are copied to tests/fixtures/leff_baseline for full replay comparison.
+
+Tests written, not run on restored bytes. Previous64 passed results apply only
+to lost checkout. No solver or numeric tests run before this recovery checkpoint.
+Static git diff --check passed. New testing awaits parent CPU coordination.

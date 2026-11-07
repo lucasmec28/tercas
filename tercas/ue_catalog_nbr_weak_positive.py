@@ -7,19 +7,20 @@ from . import ue_catalog_nbr_weak_mle as mle
 from . import ue_catalog_reference as own
 
 SCHEMA = 'ue125_positive_pure_weak_reference_v1'
+SCHEMA_EFFECTIVE = 'ue125_positive_pure_weak_reference_v2_effective_lengths'
 FIELD = 'ue_catalog_nbr_weak_positive_reference'
 RP_URL = ('https://www.buildusingsteel.org/wp-content/uploads/2021/03/'
           'AISI-RP21-01-Development-of-Design-Tables-for-the-Cold-Formed-Steel-Cross-Sections-in-AISI-D100.pdf')
 
 
-def qualify_reference(data, *, sign, axial_force_N):
+def qualify_reference(data, *, sign, axial_force_N, historical_span_policy=False):
     """Explicit pure-component scope. Zero My demand is handled by consumers."""
     if sign != 'positive':
         raise ValueError('Only positive My_app pure weak reference is qualified.')
     if (isinstance(axial_force_N, bool) or not isinstance(axial_force_N, (float, int))
             or not math.isfinite(axial_force_N) or axial_force_N != 0):
         raise ValueError('Pure weak reference requires numeric axial_force_N=0.')
-    reference = annex.qualify_reference(data)
+    reference = annex.qualify_reference(data, historical_span_policy=historical_span_policy)
     if reference is None:
         return None
     # Smallest certified web area gives largest possible CG for both local
@@ -72,12 +73,15 @@ def qualify_reference(data, *, sign, axial_force_N):
         combined_state_distortion_assessed=False, interaction_9_9_qualified=False,
         primary_torsion_assessed=False, ELS_qualified=False,
         global_properties_modified=False, whole_member_approved=False)
+    if reference['domain']['manual_effective_lengths_used']:
+        out['schema'] = SCHEMA_EFFECTIVE
     out['snapshot_sha256'] = own.digest(out)
     return out
 
 
 def validate_saved(evidence, data):
-    expected = qualify_reference(data, sign='positive', axial_force_N=0.)
+    expected = qualify_reference(data, sign='positive', axial_force_N=0.,
+        historical_span_policy=isinstance(evidence, dict) and evidence.get('schema') == SCHEMA)
     if expected is None or not isinstance(evidence, dict) or own.digest(evidence) != own.digest(expected):
         raise ValueError('Saved positive pure weak reference changed or unsupported; recalculate explicitly.')
     return copy.deepcopy(expected)

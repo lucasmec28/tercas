@@ -206,6 +206,10 @@ def _calculate(data):
 STATUS={'not_evaluated':'Não avaliado','invalid_inputs':'Entrada inválida','FLT_not_evaluated':'Não avaliado','route_domain_not_declared':'Domínio não informado','computed':'Calculado','computed_bending_component':'Componente de flexão calculada','computed_from_supplied_inputs':'Calculado com dados informados','computed_fixed_load_position':'Calculado na posição informada','computed_from_supplied_effective_lengths':'Calculado com comprimentos informados','not_applicable':'Não aplicável','exempt_Table14':'Dispensado pela Tabela 14 (eixo forte)','stiffener_exception_9_5_1':'Exceção de enrijecedor §9.5.1','outside_implemented_family':'Fora da versão','invalid_or_outside_implemented_domain':'Entrada inválida ou fora do domínio'}
 
 def rows(result):
+ return _rows(result)
+
+
+def _rows(result,roof_formatter=None):
  out=[]
  def add(name,r,source,index=None):
   idx=r.get('index') if index is None else index
@@ -259,7 +263,7 @@ def rows(result):
  from .flexural_components import presentation_rows as gross_component_rows
  out=gross_component_rows(result,out)
  from .roof_top_nbr_ui import presentation_rows as roof_nbr_rows
- out=roof_nbr_rows(result,out)
+ out=roof_nbr_rows(result,out) if roof_formatter is None else roof_formatter(out)
  from .model_domain import historical_rows
  return historical_rows(result,out)
 

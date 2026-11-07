@@ -1,0 +1,12 @@
+{
+  "fixture": "synthetic direct one ELU plus ELS, identical input",
+  "baseline_seed_disabled_seconds": 2.2657145210032468,
+  "fresh_seed_enabled_seconds": 1.5126393259997712,
+  "outputs_byte_identical": true,
+  "result_sha256": "89ea856f05f899958aa353acfc2ed9742ec574faa98a2a7bd5239ff86f1c22fd",
+  "canonical_result_bytes": 446650,
+  "fresh_warm_read_seconds": 0.03885757299576653,
+  "external_cold_read_seconds": 0.6801153299966245,
+  "baseline_first_run_in_interpreter": true,
+  "scope": "Timing is one synthetic case, not batch40 prediction; baseline includes first-use imports"
+}

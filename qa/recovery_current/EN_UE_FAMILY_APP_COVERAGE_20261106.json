@@ -1,0 +1,1266 @@
+{
+  "profile_count": 66,
+  "computed_profiles": 66,
+  "pending_profiles": 0,
+  "shear_profiles": 66,
+  "stress_profiles": 44,
+  "mv_profiles": 38,
+  "partial_profiles": 28,
+  "global_approved": false,
+  "records": [
+    {
+      "index": 0,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 1,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 2,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 3,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 6,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 7,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 8,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 9,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 10,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 11,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 12,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 13,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 14,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 15,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 16,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 17,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 18,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 19,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 0,
+      "mv_computed": 0,
+      "partial": 1,
+      "records": [
+        {
+          "status": "computed",
+          "reason": "EN signed effective section unavailable: Mx_negative; [{'category': 'implementation_method_not_covered', 'code': 'PURE_MOMENT_LOCAL_REDUCTION_NOT_QUALIFIED', 'normative_rejection_inferred': False, 'panels': [{'panel': 'upper_flange', 'rho': 0.912659986713153}]}]",
+          "mv_status": "pending"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 20,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 21,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 22,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 23,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 24,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 25,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 26,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 27,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 28,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 29,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 30,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 31,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 32,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 0,
+      "mv_computed": 0,
+      "partial": 1,
+      "records": [
+        {
+          "status": "computed",
+          "reason": "EN signed effective section unavailable: Mx_negative; [{'As_red_over_As': 0.9989111068699525, 'category': 'implementation_method_not_covered', 'code': 'PURE_MOMENT_DISTORTIONAL_REDUCTION_NOT_QUALIFIED', 'flange': 'upper_flange', 'normative_rejection_inferred': False}]",
+          "mv_status": "pending"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 33,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 34,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 35,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 36,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 37,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 40,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 0,
+      "mv_computed": 0,
+      "partial": 1,
+      "records": [
+        {
+          "status": "computed",
+          "reason": "EN signed effective section unavailable: Mx_negative; [{'category': 'implementation_method_not_covered', 'code': 'PURE_MOMENT_LOCAL_REDUCTION_NOT_QUALIFIED', 'normative_rejection_inferred': False, 'panels': [{'panel': 'upper_flange', 'rho': 0.9734660279815719}]}]",
+          "mv_status": "pending"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 41,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 0,
+      "mv_computed": 0,
+      "partial": 1,
+      "records": [
+        {
+          "status": "computed",
+          "reason": "EN signed effective section unavailable: Mx_negative; [{'As_red_over_As': 0.8703200547119017, 'category': 'implementation_method_not_covered', 'code': 'PURE_MOMENT_DISTORTIONAL_REDUCTION_NOT_QUALIFIED', 'flange': 'upper_flange', 'normative_rejection_inferred': False}]",
+          "mv_status": "pending"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 42,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 43,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 44,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 45,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 1,
+      "partial": 0,
+      "records": [
+        {
+          "status": "computed",
+          "reason": null,
+          "mv_status": "sufficient"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 47,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 0,
+      "mv_computed": 0,
+      "partial": 1,
+      "records": [
+        {
+          "status": "computed",
+          "reason": "EN signed effective section unavailable: Mx_negative; [{'category': 'implementation_method_not_covered', 'code': 'PURE_MOMENT_LOCAL_REDUCTION_NOT_QUALIFIED', 'normative_rejection_inferred': False, 'panels': [{'panel': 'upper_flange', 'rho': 0.9699301100880332}]}]",
+          "mv_status": "pending"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 48,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 0,
+      "mv_computed": 0,
+      "partial": 1,
+      "records": [
+        {
+          "status": "computed",
+          "reason": "EN signed effective section unavailable: Mx_negative; [{'As_red_over_As': 0.8935340334997666, 'category': 'implementation_method_not_covered', 'code': 'PURE_MOMENT_DISTORTIONAL_REDUCTION_NOT_QUALIFIED', 'flange': 'upper_flange', 'normative_rejection_inferred': False}]",
+          "mv_status": "pending"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 49,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 0,
+      "mv_computed": 0,
+      "partial": 1,
+      "records": [
+        {
+          "status": "computed",
+          "reason": "EN signed effective section unavailable: Mx_negative; [{'As_red_over_As': 0.9313444584928778, 'category': 'implementation_method_not_covered', 'code': 'PURE_MOMENT_DISTORTIONAL_REDUCTION_NOT_QUALIFIED', 'flange': 'upper_flange', 'normative_rejection_inferred': False}]",
+          "mv_status": "pending"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 50,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 0,
+      "mv_computed": 0,
+      "partial": 1,
+      "records": [
+        {
+          "status": "computed",
+          "reason": "EN signed effective section unavailable: Mx_negative; [{'As_red_over_As': 0.9683459001625077, 'category': 'implementation_method_not_covered', 'code': 'PURE_MOMENT_DISTORTIONAL_REDUCTION_NOT_QUALIFIED', 'flange': 'upper_flange', 'normative_rejection_inferred': False}]",
+          "mv_status": "pending"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 51,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 0,
+      "partial": 1,
+      "records": [
+        {
+          "status": "computed",
+          "reason": "Mx: shear lag: Le deve exceder estritamente 50·b0 em toda zona entre zeros",
+          "mv_status": "pending"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 52,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 0,
+      "partial": 1,
+      "records": [
+        {
+          "status": "computed",
+          "reason": "Mx: shear lag: Le deve exceder estritamente 50·b0 em toda zona entre zeros",
+          "mv_status": "pending"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 53,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 0,
+      "mv_computed": 0,
+      "partial": 1,
+      "records": [
+        {
+          "status": "computed",
+          "reason": "EN signed effective section unavailable: Mx_negative; [{'category': 'implementation_method_not_covered', 'code': 'PURE_MOMENT_LOCAL_REDUCTION_NOT_QUALIFIED', 'normative_rejection_inferred': False, 'panels': [{'panel': 'web', 'rho': 0.8890184893762082}, {'panel': 'upper_flange', 'rho': 0.9010037584119992}]}]",
+          "mv_status": "pending"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 54,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 0,
+      "mv_computed": 0,
+      "partial": 1,
+      "records": [
+        {
+          "status": "computed",
+          "reason": "EN signed effective section unavailable: Mx_negative; [{'category': 'implementation_method_not_covered', 'code': 'PURE_MOMENT_LOCAL_REDUCTION_NOT_QUALIFIED', 'normative_rejection_inferred': False, 'panels': [{'panel': 'web', 'rho': 0.9863318486150623}, {'panel': 'upper_flange', 'rho': 0.9693024272102486}]}]",
+          "mv_status": "pending"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 55,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 0,
+      "mv_computed": 0,
+      "partial": 1,
+      "records": [
+        {
+          "status": "computed",
+          "reason": "EN signed effective section unavailable: Mx_negative; [{'As_red_over_As': 0.9040446835930761, 'category': 'implementation_method_not_covered', 'code': 'PURE_MOMENT_DISTORTIONAL_REDUCTION_NOT_QUALIFIED', 'flange': 'upper_flange', 'normative_rejection_inferred': False}]",
+          "mv_status": "pending"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 56,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 0,
+      "mv_computed": 0,
+      "partial": 1,
+      "records": [
+        {
+          "status": "computed",
+          "reason": "EN signed effective section unavailable: Mx_negative; [{'As_red_over_As': 0.9447167373904882, 'category': 'implementation_method_not_covered', 'code': 'PURE_MOMENT_DISTORTIONAL_REDUCTION_NOT_QUALIFIED', 'flange': 'upper_flange', 'normative_rejection_inferred': False}]",
+          "mv_status": "pending"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 57,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 0,
+      "mv_computed": 0,
+      "partial": 1,
+      "records": [
+        {
+          "status": "computed",
+          "reason": "EN signed effective section unavailable: Mx_negative; [{'As_red_over_As': 0.9791891823491884, 'category': 'implementation_method_not_covered', 'code': 'PURE_MOMENT_DISTORTIONAL_REDUCTION_NOT_QUALIFIED', 'flange': 'upper_flange', 'normative_rejection_inferred': False}]",
+          "mv_status": "pending"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 58,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 0,
+      "partial": 1,
+      "records": [
+        {
+          "status": "computed",
+          "reason": "Mx: shear lag: Le deve exceder estritamente 50·b0 em toda zona entre zeros",
+          "mv_status": "pending"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 59,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 0,
+      "partial": 1,
+      "records": [
+        {
+          "status": "computed",
+          "reason": "Mx: shear lag: Le deve exceder estritamente 50·b0 em toda zona entre zeros",
+          "mv_status": "pending"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 60,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 0,
+      "partial": 1,
+      "records": [
+        {
+          "status": "computed",
+          "reason": "Mx: shear lag: Le deve exceder estritamente 50·b0 em toda zona entre zeros",
+          "mv_status": "pending"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 62,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 0,
+      "mv_computed": 0,
+      "partial": 1,
+      "records": [
+        {
+          "status": "computed",
+          "reason": "EN signed effective section unavailable: Mx_negative; [{'category': 'implementation_method_not_covered', 'code': 'PURE_MOMENT_LOCAL_REDUCTION_NOT_QUALIFIED', 'normative_rejection_inferred': False, 'panels': [{'panel': 'upper_flange', 'rho': 0.9699301100880332}]}]",
+          "mv_status": "pending"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 63,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 0,
+      "mv_computed": 0,
+      "partial": 1,
+      "records": [
+        {
+          "status": "computed",
+          "reason": "EN signed effective section unavailable: Mx_negative; [{'As_red_over_As': 0.8556514997786087, 'category': 'implementation_method_not_covered', 'code': 'PURE_MOMENT_DISTORTIONAL_REDUCTION_NOT_QUALIFIED', 'flange': 'upper_flange', 'normative_rejection_inferred': False}]",
+          "mv_status": "pending"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 64,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 0,
+      "mv_computed": 0,
+      "partial": 1,
+      "records": [
+        {
+          "status": "computed",
+          "reason": "EN signed effective section unavailable: Mx_negative; [{'As_red_over_As': 0.8941367927078193, 'category': 'implementation_method_not_covered', 'code': 'PURE_MOMENT_DISTORTIONAL_REDUCTION_NOT_QUALIFIED', 'flange': 'upper_flange', 'normative_rejection_inferred': False}]",
+          "mv_status": "pending"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 65,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 0,
+      "mv_computed": 0,
+      "partial": 1,
+      "records": [
+        {
+          "status": "computed",
+          "reason": "EN signed effective section unavailable: Mx_negative; [{'As_red_over_As': 0.9316961626812361, 'category': 'implementation_method_not_covered', 'code': 'PURE_MOMENT_DISTORTIONAL_REDUCTION_NOT_QUALIFIED', 'flange': 'upper_flange', 'normative_rejection_inferred': False}]",
+          "mv_status": "pending"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 66,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 0,
+      "mv_computed": 0,
+      "partial": 1,
+      "records": [
+        {
+          "status": "computed",
+          "reason": "EN signed effective section unavailable: Mx_negative; [{'As_red_over_As': 0.9714466156317003, 'category': 'implementation_method_not_covered', 'code': 'PURE_MOMENT_DISTORTIONAL_REDUCTION_NOT_QUALIFIED', 'flange': 'upper_flange', 'normative_rejection_inferred': False}]",
+          "mv_status": "pending"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 67,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 1,
+      "mv_computed": 0,
+      "partial": 1,
+      "records": [
+        {
+          "status": "computed",
+          "reason": "Mx: shear lag: Le deve exceder estritamente 50·b0 em toda zona entre zeros",
+          "mv_status": "pending"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 79,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 0,
+      "mv_computed": 0,
+      "partial": 1,
+      "records": [
+        {
+          "status": "computed",
+          "reason": "EN signed effective section unavailable: Mx_negative; [{'As_red_over_As': 0.8639715251040011, 'category': 'implementation_method_not_covered', 'code': 'PURE_MOMENT_DISTORTIONAL_REDUCTION_NOT_QUALIFIED', 'flange': 'upper_flange', 'normative_rejection_inferred': False}]",
+          "mv_status": "pending"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 80,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 0,
+      "mv_computed": 0,
+      "partial": 1,
+      "records": [
+        {
+          "status": "computed",
+          "reason": "EN signed effective section unavailable: Mx_negative; [{'As_red_over_As': 0.9022237076211813, 'category': 'implementation_method_not_covered', 'code': 'PURE_MOMENT_DISTORTIONAL_REDUCTION_NOT_QUALIFIED', 'flange': 'upper_flange', 'normative_rejection_inferred': False}]",
+          "mv_status": "pending"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 81,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 0,
+      "mv_computed": 0,
+      "partial": 1,
+      "records": [
+        {
+          "status": "computed",
+          "reason": "EN signed effective section unavailable: Mx_negative; [{'As_red_over_As': 0.942616827158771, 'category': 'implementation_method_not_covered', 'code': 'PURE_MOMENT_DISTORTIONAL_REDUCTION_NOT_QUALIFIED', 'flange': 'upper_flange', 'normative_rejection_inferred': False}]",
+          "mv_status": "pending"
+        }
+      ],
+      "global_approved": false
+    },
+    {
+      "index": 82,
+      "fy_MPa": 300.0,
+      "flow": "direct original synthetic q=0.03, first-order roof load",
+      "computed": 1,
+      "pending": 0,
+      "shear_computed": 1,
+      "stress_computed": 0,
+      "mv_computed": 0,
+      "partial": 1,
+      "records": [
+        {
+          "status": "computed",
+          "reason": "EN signed effective section unavailable: Mx_negative; [{'As_red_over_As': 0.976853126327128, 'category': 'implementation_method_not_covered', 'code': 'PURE_MOMENT_DISTORTIONAL_REDUCTION_NOT_QUALIFIED', 'flange': 'upper_flange', 'normative_rejection_inferred': False}]",
+          "mv_status": "pending"
+        }
+      ],
+      "global_approved": false
+    }
+  ]
+}

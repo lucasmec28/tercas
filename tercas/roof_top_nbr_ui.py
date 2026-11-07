@@ -36,6 +36,9 @@ def show(st,result):
         st.warning('Resistência NBR no topo não exibida: '+str(exc));return
     if ev is None:return
     st.subheader(TITLE);st.caption(SOURCE);st.warning(SCOPE)
+    from .resistance_effective_lengths_ui import saved_length_note
+    length_note = saved_length_note(ev)
+    if length_note:st.caption(length_note)
     st.caption(f"{ev['computed_cases']} combinações ELU com componente calculada; {ev['pending_cases']} pendentes. "+NOTE)
     if ev.get('inconclusive_envelope_cases'):st.info(str(ev['inconclusive_envelope_cases'])+' resultado(s) direto(s) com piso insuficiente: decisão inconclusiva, não reprovação.')
     if ev.get('reason'):st.info(ev['reason'])
@@ -59,8 +62,15 @@ def report(doc,result):
     try:ev=preserved(result)
     except (ValueError,TypeError,KeyError) as exc:
         doc.add_paragraph('Resistência NBR no topo não exibida: '+str(exc));return
+    _report_evidence(doc,ev)
+
+
+def _report_evidence(doc,ev):
     if ev is None:return
     doc.add_heading(TITLE,1);doc.add_paragraph(SOURCE);doc.add_paragraph(SCOPE);doc.add_paragraph(NOTE)
+    from .resistance_effective_lengths_ui import saved_length_note
+    length_note = saved_length_note(ev)
+    if length_note:doc.add_paragraph(length_note)
     doc.add_paragraph(f"{ev['computed_cases']} combinações ELU calculadas; {ev['pending_cases']} pendentes. ELS não recebe estes índices de resistência.")
     if ev.get('reason'):doc.add_paragraph(ev['reason'])
     section=ev.get('source_section')
@@ -113,6 +123,10 @@ def presentation_rows(result,rows,combination_id=None):
     try:ev=preserved(result)
     except (ValueError,TypeError,KeyError) as exc:ev=None;error='Componente NBR no topo inválida: '+str(exc)
     else:error=None
+    return _presentation_rows(result,rows,combination_id,ev,error)
+
+
+def _presentation_rows(result,rows,combination_id,ev,error):
     records=[] if ev is None else [r for r in ev['records'] if combination_id is None or r['combination_id']==combination_id]
     computed=[r for r in records if r['status']==COMPUTED];pending=[r for r in records if r['status']!=COMPUTED]
     chosen=max(computed,key=lambda r:r['index']) if computed else None
@@ -168,6 +182,10 @@ def presentation_inclination(result,evidence,combination_id=None):
     if FIELD not in result:return evidence
     try:saved=preserved(result)
     except (ValueError,TypeError,KeyError):return evidence
+    return _presentation_inclination(evidence,combination_id,saved)
+
+
+def _presentation_inclination(evidence,combination_id,saved):
     cid='DIRECT_ELU' if combination_id is None else combination_id
     row=next((r for r in saved['records'] if r['combination_id']==cid and 'biaxial' in r),None)
     if row is None:return evidence
@@ -182,3 +200,56 @@ def presentation_inclination(result,evidence,combination_id=None):
         provenance='Fonte própria salva '+saved['source_section']['reference_id']+'; '+b['scope'])
         for sign,c in b['weak_axis_capacities'].items()}
     return out
+
+
+def _word_presenters(result):
+    """One complete NBR read for this emission, never a cross-render cache.
+
+    Callers supply only the original result, never evidence or a trusted flag.
+    The closed formatters retain detached evidence and the minimal detached
+    context needed for labels/global bindings. Public reader APIs stay intact.
+    """
+    from types import SimpleNamespace
+    present=FIELD in result
+    try:saved=copy.deepcopy(preserved(result))
+    except (ValueError,TypeError,KeyError) as exc:
+        saved=None;failure=(type(exc),copy.deepcopy(exc.args));message=str(exc)
+    else:failure=None;message=None
+    # This is a content binding, not an authority proof. Non-finite legacy
+    # diagnostics must still reach the existing controlled error presentation.
+    import hashlib,json
+    def content_digest(value):
+        return hashlib.sha256(json.dumps(value,sort_keys=True,separators=(',',':'),
+            ensure_ascii=False,allow_nan=True).encode()).hexdigest()
+    source_digest=content_digest(result) if present else None
+    bundle=result.get('load_bundle');bundle=bundle if isinstance(bundle,dict) else {}
+    roof=result.get('roof_top_load_evidence');roof=roof if isinstance(roof,dict) else {}
+    context=copy.deepcopy(dict(
+        input_data=result.get('input_data'),input_fingerprint=result.get('input_fingerprint'),
+        global_verification=result.get('global_verification'),
+        load_bundle=dict(combinations=bundle.get('combinations',[])),
+        roof_top_load_evidence={k:roof.get(k)
+            for k in ('schema','load_basis')}))
+    def read():
+        if failure:raise failure[0](*failure[1])
+        return saved
+    def rows(source_rows,combination_id=None):
+        if not present or not any(str(r.get('Verificação','')).startswith('FLT — trecho ') for r in source_rows):
+            return copy.deepcopy(source_rows)
+        error='Componente NBR no topo inválida: '+message if failure else None
+        return copy.deepcopy(_presentation_rows(context,source_rows,combination_id,saved,error))
+    def inclination(evidence,combination_id=None):
+        if not present or failure:return copy.deepcopy(evidence)
+        return copy.deepcopy(_presentation_inclination(evidence,combination_id,saved))
+    def report(doc):
+        if failure:doc.add_paragraph('Resistência NBR no topo não exibida: '+message);return
+        _report_evidence(doc,saved)
+    def validate_global(current_result):
+        # Bind the private view to actual content, not an object ID or a
+        # caller-updated declared hash. A different/mutated result is rejected.
+        if (present!=(FIELD in current_result)
+            or present and content_digest(current_result)!=source_digest):
+            raise ValueError('Contexto NBR do relatório pertence a outro resultado ou foi alterado.')
+        from .roof_top_nbr import _validate_saved_global
+        _validate_saved_global(current_result,read)
+    return SimpleNamespace(rows=rows,inclination=inclination,report=report,validate_global=validate_global)

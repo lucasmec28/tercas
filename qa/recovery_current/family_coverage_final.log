@@ -1,0 +1,43 @@
+{
+  "EN_profiles": 66,
+  "EN_materials": [
+    "ASTM A36",
+    "USI-CIVIL 300",
+    "USI-CIVIL 350",
+    "ASTM A572 Gr.50"
+  ],
+  "NBR": {
+    "250.0": {
+      "strong_local": 62,
+      "strong_distortional": 66,
+      "strong_FLT_reference": 62,
+      "weak_positive_local": 49,
+      "weak_negative_local": 49,
+      "weak_positive_reference": 49
+    },
+    "300.0": {
+      "strong_local": 62,
+      "strong_distortional": 66,
+      "strong_FLT_reference": 62,
+      "weak_positive_local": 43,
+      "weak_negative_local": 43,
+      "weak_positive_reference": 43
+    },
+    "345.0": {
+      "strong_local": 62,
+      "strong_distortional": 66,
+      "strong_FLT_reference": 62,
+      "weak_positive_local": 36,
+      "weak_negative_local": 36,
+      "weak_positive_reference": 36
+    },
+    "350.0": {
+      "strong_local": 62,
+      "strong_distortional": 66,
+      "strong_FLT_reference": 62,
+      "weak_positive_local": 35,
+      "weak_negative_local": 35,
+      "weak_positive_reference": 35
+    }
+  }
+}

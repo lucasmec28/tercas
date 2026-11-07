@@ -1,0 +1,61 @@
+CORTANTE SECCIONAL Ue125x50x17x2 ri2, fyb=fya=300 MPa
+Revisão EN_Ue125_300_shear_floors_20261106_r1. Não libera consumidores.
+
+Fonte primária: EN1993-1-3:2006 (corrigendum2009), §6.1.5,
+https://www.phd.eng.br/wp-content/uploads/2015/12/en.1993.1.3.2006.pdf
+Consulta textual primária em 2026-11-06: páginas impressas45/46 e55,
+Tabela6.1, equações6.8/6.10a, definição de sw e soma de almas em6.1.10.
+A ferramenta de screenshots retornou apenas marcadores, não pixels neste
+executor: não se reivindica nova inspeção visual. A conferência visual anterior
+está documentada em EN_UE_SHEAR_QUALIFICATION_20261106.txt (base9a55de7).
+Esta é rederivação material300 explícita, não escala do inventário250.
+
+Tabela6.1, coluna sem enrijecimento de apoio: coeficientes literais
+0,58*300=174 MPa; 0,48*300=144 MPa; 0,67*300=201 MPa.
+Patamar para lambda<=0,83, 144/lambda para0,83<lambda<1,4,
+201/lambda² para lambda>=1,4. Não substituir0,58 por1/sqrt(3),
+nem ajustar os pequenos saltos descendentes das constantes normativas.
+Lambda=0,346*(sw/t)*sqrt(300/210000). GammaM0=1, nu=0,3.
+
+Somente index26, prepare(26,arc_segments=32):134 nós, raio médio3mm.
+A alma principal vertical corresponde à direção forte. As duas mesas são
+paredes horizontais internas entre alma e lábio, tratadas como almas após
+rotação de90 graus; somam-se suas resistências na direção fraca. Não há
+crédito resistente de lábios, enrijecedores, plasticidade ou cantos extras.
+As alturas EXATAS entre linhas médias são123mm forte e48mm em cada mesa.
+As áreas normativas hw*t/sin(phi), phi=90 graus, são246mm² forte e
+96mm² por mesa (192mm² fraco). Não são áreas efetivas de flexão, nem área
+bruta total, nem apenas os comprimentos retos da discretização.
+
+Para as três paredes, sw=hw-2*r*(1-1/sqrt(2)) entre pontos médios de cantos.
+Os nós50/83,17/50 e116/83 confirmam respectivamente sw121,24264068711929mm
+e46,24264068711929mm duas vezes. Portanto0<sw<=hw. Usar hw no lambda
+majora esbeltez e minora fbv monotônico. O multiplicador de6.8 continua
+hw EXATO, não sw aumentado artificialmente. Esta prova reaplica ao próprio
+contorno, não herda um bound material250. Resultado: lambda_upper forte
+0,8042706021163347 e fraco0,31386169838686234, ambos patamar. Pisos
+42804N e33408N. O ramo foi reavaliado em300, não presumido do material250.
+
+Guardas reaplicadas: B/t25<=60; C/t8,5<=50; H/t62,5<=500;
+C/B0,34 entre0,2 e0,6; ri2<=0,04*t*E/fyb=56mm; núcleo2mm dentro0,45..15.
+Os limites para ignorar cantos e os de força local não são restrições extras
+deste método com cantos explícitos. Assume-se t nominal igual ao núcleo de
+cálculo: produto físico, revestimento, tolerâncias e material não certificados.
+
+Decimal60 dígitos: sqrt arredondada corretamente e avançada para cima;
+razões/produtos de lambda para cima; resistência para baixo; piso inteiroN.
+Relato float de lambda/fbv para fora. Testes independentes usam lambda²
+racional e fórmulas simbolicamente reduzidas em Decimal90, três ramos e
+transições. As constantes174/144/201 são produtos exatos dos decimais da
+norma, sem arredondamento adicional prévio.
+
+Autoridade independente: módulo en_ue125_shear300, fonte e inventário único
+fixados por SHA256, payload material300 novo. Leitura/validação salvas não
+reconstroem geometria, operadores ou solver. Hash refeito não autoriza
+adulteração. Vinculação exige snapshot original com identidade/nós/material.
+Qualificação geométrica é a mesma nominal; material e revisão permanecem
+campos próprios. Os83 registros250, APP e consumidores não mudam.
+E/G200000/77000 da análise de demanda não são alterados ou reinterpretados.
+Cortante de seção não resolve torção, estabilidade, força local ou modelo
+primeira ordem/global. Não se exige T=0 e não se converte T em V. EN6.1.6,
+6.1.10 e demais verificações aplicáveis continuam componentes separados.

@@ -1,6 +1,6 @@
 """Own Ue125 Annex E REFERENCE, not applicability to actual eccentric actions.
 
-Whole physical span, fork ends, free warping, Cm=1. No manual effective lengths,
+Physical demand span unchanged; explicit resistance lengths supported, Cm=1. No
 roof restraint, favourable gradient/height, D, biaxial or global approval.
 """
 import copy
@@ -52,13 +52,18 @@ def section_constants():
                 integration='Exact cubic primitives over own straight/faceted midsurface segments; dA=t ds')
 
 
-def _certificate(data, binding, length):
+def _certificate(data, binding, length, *, historical_span_policy=False):
     sec = section_constants()
+    from .resistance_effective_lengths import configuration, annex_e_forces
+    lengths = None if historical_span_policy else configuration(data)
+    lx = length if lengths is None else lengths['Lx_mm']
+    lz = length if lengths is None else lengths['Lz_mm']
     local = mle.qualify(data)
     try:
-        q2 = (math.pi/length)**2
-        nex = _positive(mle.E*sec['Ix_mm4']*q2, 'Nex')
-        nez = _positive((77000.*sec['J_mm4']+mle.E*sec['Cw_mm6']*q2)/sec['r0_squared_mm2'], 'Nez')
+        forces = annex_e_forces(E_MPa=mle.E, G_MPa=77000.,
+            Ix_mm4=sec['Ix_mm4'], J_mm4=sec['J_mm4'], Cw_mm6=sec['Cw_mm6'],
+            r0_squared_mm2=sec['r0_squared_mm2'], Lx_mm=lx, Lz_mm=lz)
+        nex, nez = forces['Nex_N'], forces['Nez_N']
         j, r2 = sec['j_mm'], sec['r0_squared_mm2']
         root = math.hypot(j, math.sqrt(r2*nez/nex))
         # Rationalized minus root avoids subtracting near-equal numbers.
@@ -87,11 +92,11 @@ def _certificate(data, binding, length):
     out = dict(schema=SCHEMA, status='reference_components_only', source=SOURCE,
         source_binding=copy.deepcopy(binding), material=copy.deepcopy(base.MATERIAL),
         local_mle_snapshot_sha256=local['snapshot_sha256'], section_constants=sec,
-        domain=dict(physical_span_mm=length, Lx_used_mm=length, Lz_used_mm=length,
+        domain=dict(physical_span_mm=length, Lx_used_mm=lx, Lz_used_mm=lz,
             end_restraint='fork_free_warping', intermediate_restraints='none',
             Cm=1., reference_load_position='shear_center',
             axial_force_N=0., bending_reference='pure_weak_axis',
-            manual_effective_lengths_used=False, moment_gradient_benefit_used=False,
+            manual_effective_lengths_used=lengths is not None, moment_gradient_benefit_used=False,
             favorable_load_height_used=False, roof_restraint_credit=False),
         Nex_N=nex, Nez_N=nez, by_sign=signs,
         real_action_applicability='not_assessed',
@@ -101,21 +106,26 @@ def _certificate(data, binding, length):
         interaction_9_9_qualified=False, primary_torsion_assessed=False,
         physical_conditions_verified=False, ELS_qualified=False,
         global_properties_modified=False, whole_member_approved=False)
+    if lengths is not None:
+        out['schema'] = 'ue125_weak_annex_e_reference_v2_effective_lengths'
+        out['domain']['resistance_effective_lengths'] = lengths
+        out['domain']['height_effect_included'] = False
     out['snapshot_sha256'] = own.digest(out)
     return out
 
 
-def qualify_reference(data):
+def qualify_reference(data, *, historical_span_policy=False):
     """Standalone reference only; never invoked by a production consumer here."""
     if not own.claims_reference(data):
         return None
     binding, length = _inputs(data)
-    return _certificate(data, binding, length)
+    return _certificate(data, binding, length, historical_span_policy=historical_span_policy)
 
 
 def validate_saved(evidence, data):
     binding, length = _inputs(data)
-    expected = _certificate(data, binding, length)
+    expected = _certificate(data, binding, length,
+        historical_span_policy=isinstance(evidence, dict) and evidence.get('schema') == SCHEMA)
     if not isinstance(evidence, dict) or own.digest(evidence) != own.digest(expected):
         raise ValueError('Saved Annex E reference changed or unsupported; explicit recalculation required.')
     return copy.deepcopy(expected)

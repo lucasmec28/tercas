@@ -1,0 +1,39 @@
+{
+  "base_commit": "17633302cd09af03eded70e5e5d4441ee6739b82",
+  "scope": "Batch authentication and detached internal presentation only; no calculation, tolerance, timeout or saved-schema changes",
+  "final_tests": {
+    "command": "OPENBLAS_CORETYPE=Haswell OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONPATH=.:/workspace/shared/tercas_test_dependencies_20261106 python -m pytest -q tests/test_en_ue125_300_batch_read.py tests/test_isolated_en_ue125_300.py tests/test_en_ue125_300_normal_witness.py tests/test_isolated_en_ue125_300_application.py tests/test_ui_isolated_en_ue125_300.py tests/test_isolated_en_ue125_300_area_source.py",
+    "session_id": 94629,
+    "exit_code": 0,
+    "passed": 92,
+    "duration_seconds": 69.28,
+    "log": "batch_read_tests.txt"
+  },
+  "initial_tests": {
+    "passed": 88,
+    "failed": 1,
+    "status": "Not approved; isolated Word test mocked old preserved seam. Updated mock to the new internal presentation reader without changing assertions; covered by final pass."
+  },
+  "performance": {
+    "file": "batch_read_performance.json",
+    "fixture": "One authentic synthetic area run with 40 ELU cases and no ELS; no private data",
+    "comparison": "Sequential singleton validations under the same guard policy versus batch; not an older-release timing",
+    "qualification": "The single 40-case timing preceded the final additional normal-JSON file freshness guard. That guard was measured separately in batch_normal_file_guard_performance.json and is covered by all final tests. No second 40-case solve.",
+    "full_snapshot_byte_identical": true,
+    "result_byte_unchanged": true
+  },
+  "guards": [
+    "Original frozen normal snapshot and derivation source files every call",
+    "Actual current normal JSON, section JSON and both shear JSON files every call",
+    "Real canonical content and native JSON types, not declared hash, object identity or file stat",
+    "Full per-row token and replay on any miss, v1/v2 witness semantics unchanged",
+    "Input/combination/load/source/support/warning bindings and complete counts/inventory",
+    "Detached presentation after complete validation; public preserved remains full"
+  ],
+  "limits": [
+    "No private AppTest performed in this worker",
+    "No claim that the private 40-ELU calculate/render is below 60 seconds",
+    "No new result cache or render context",
+    "No publication"
+  ]
+}

@@ -309,6 +309,11 @@ def preserved(result):
 
 def validate_saved_global(result):
     """Do not display an old promotion after its supporting sidecar is removed."""
+    return _validate_saved_global(result,lambda:preserved(result))
+
+
+def _validate_saved_global(result,read_evidence):
+    """Shared binding checks; the Word factory owns its closed reader."""
     global_record=result.get('global_verification')
     if not isinstance(global_record,dict):return
     binding=global_record.get('roof_top_nbr_binding')
@@ -316,7 +321,7 @@ def validate_saved_global(result):
             and isinstance(r.get('trace'),dict) and r['trace'].get('roof_top_nbr_snapshot_sha256') is not None]
     if binding is None and not claims:return
     if not isinstance(binding,dict):raise ValueError('Vínculo do panorama FLT no topo ausente ou inválido.')
-    ev=preserved(result)
+    ev=read_evidence()
     clean=copy.deepcopy(global_record)
     recorded_hash=clean.get('roof_top_nbr_binding',{}).pop('global_snapshot_sha256',None)
     if (ev is None or not isinstance(binding,dict)

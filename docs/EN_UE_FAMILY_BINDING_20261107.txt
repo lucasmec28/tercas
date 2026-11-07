@@ -1,0 +1,27 @@
+Identidade técnica persistida versus invalidação transitória do cache
+
+Antes da primeira publicação da família, separar duas responsabilidades:
+- _source_key mantém hash conservador de todos .py/.json em tercas, usado só
+  como argumento do cache. UI/release podem invalidar cache sem invalidar seção.
+- _technical_source_key lê dependências técnicas explicitamente enumeradas,
+  inclusive convenções, aritmética outward, seleção documental e dois JSON de
+  origem. Seu hash e revisão do binding entram no certificado persistido.
+
+A lista inclui o kernel/provedor, primitivas EN reaproveitadas, geometria nominal,
+finite(), constantes de painéis/sentidos, intervalos e cadastro/referência Pierin.
+Não inclui UI, release_info, módulos de aplicação/membro não usados pelo kernel,
+nem inventários de autoridades legadas que o método não lê. A lista deve ser
+revista quando novas dependências técnicas forem introduzidas.
+
+verify continua comparando todo o certificado com o resultado canônico local.
+Não ignora campos, não aceita o selfhash externo como autoridade e não migra
+automaticamente certificados anteriores. Mudança técnica permanece detectável
+mesmo quando, incidentalmente, produz os mesmos números para um caso.
+A mudança de contrato invalida somente certificados experimentais anteriores
+à primeira publicação da família que tinham o binding allcode. Nenhuma
+qualificação/snapshot das autoridades legadas é alterado.
+
+Testes novos são sintéticos, sem solver: UI/release/dado irrelevante provocam
+cache miss mas preservam certificado; fórmula/dado técnico alterado rejeita
+certificado anterior; alteração resealada não passa; fonte ausente falha fechado.
+Preparados, mas não executados nesta etapa por reserva da CPU do coordenador.

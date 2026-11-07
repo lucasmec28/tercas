@@ -23,6 +23,7 @@ from tercas.ue_catalog_reference import FIELD as UE_CATALOG_FIELD, EVIDENCE as U
 from tercas.ue_family_ui import loader as ue_family_loader, render as render_ue_family
 from tercas.ux_inputs import CB_LABELS,cb_code,flange_segments,whole_span
 from tercas.new_study_policy import for_new_study, initialize_session
+from tercas.pierin_ue_registry_ui import render as render_new_pierin_ue_study
 from tercas.point_contact_ui import render as render_point_contact, show_saved_results as show_point_contact_results
 
 def show_elastic_wall(evidence):
@@ -271,6 +272,7 @@ def show_manual_inspection(preserved,reason):
  ue_reference_loader(st,st.session_state.revision,load)
  reference_loader(st,st.session_state.revision,load)
  render_input_import(st.session_state.revision)
+ render_new_pierin_ue_study(st, defaults, for_new_study, load)
  st.stop()
 
 
@@ -321,7 +323,7 @@ b=copy.deepcopy(st.session_state.base);r=st.session_state.revision
 last=st.session_state.get('last_input',b)
 for key in ['load_mode','area_inputs','selected_types','ELS_down_denominator','ELS_up_denominator','q_uls','P_uls','x_uls','q_sls','P_sls','x_sls','actions_origin','ELS_limit_mm','ELS_origin']:
  b[key]=copy.deepcopy(last[key])
-for key in ['direct_load_basis','roof_top_load','point_contact','isolated_en_ue_catalog_model','isolated_en_stress_model','torsion_model','deflection_model','member_application','wall_els','wall_tie_study','three_girt_model','weak_catalog','weak_axis','model_domain','u_panel_condition','inclination','q_parallel_uls','q_parallel_sls','P_parallel_uls','P_parallel_sls']:
+for key in ['isolated_en_ue_family_model','isolated_en_ue125_300_model','direct_load_basis','roof_top_load','point_contact','isolated_en_ue_catalog_model','isolated_en_stress_model','torsion_model','deflection_model','member_application','wall_els','wall_tie_study','three_girt_model','weak_catalog','weak_axis','model_domain','u_panel_condition','inclination','q_parallel_uls','q_parallel_sls','P_parallel_uls','P_parallel_sls']:
  if key in last:b[key]=copy.deepcopy(last[key])
 d=copy.deepcopy(b)
 try:
@@ -811,3 +813,7 @@ with st.expander('Laboratório FSM experimental — separado do dimensionamento'
  if st.session_state.get('tercas_fsm_lab_open',False):
   from experimental_fsm.app_integration.panel import render as render_fsm_laboratory
   render_fsm_laboratory(st,namespace='tercas_fsm_lab')
+
+
+# Append creation controls after historical widgets; do not shift their order.
+render_new_pierin_ue_study(st, defaults, for_new_study, load)

@@ -1,0 +1,24 @@
+Independent review completed 2026-11-06.
+Scope: only four pure normal-moment operators, N=0, exact own Ue125x50x17x2 ri2
+contour/material E210000, nu0.3, fyb=fya300, gammaM0=1. No blocking finding.
+
+Independent Decimal60 web-removal bisection:
+rho=0.8550207846169322
+centroid_x=16.28047450196935 mm
+Iy=161793.11266632784 mm4
+My_negative first yield=1483454.69749614 Nmm, integer floor1483454.
+Independent Gauss2 confirmed N=0 and unit moments in all four operators.
+
+Primary sources verified: EN11 3.2.6; EN13 5.5/6.1.4;
+EN15 4.4(4) and Tables4.1/4.2 (visual table check).
+Two-face/corner floors, Eq5.17 caps and frozen reader accepted in this scope.
+
+No authority for EN6.1.6 combination, shear, global stability, physical
+geometry/product or app consumers. Runtime and whole-member flags remain false.
+
+Final metadata-only qualification edit preserved every component object,
+material value and gross property exactly (equality assertion executed).
+The radius guard was explicitly rechecked at material300: ri2 <=56mm.
+Final certificate SHA256:
+1c0505339281278b7472802dbf892fe6154c7cb56ef256ab731af3255108862f
+Final regression:15 passed0.75s, no solver/AppTest/83-row rebuild.

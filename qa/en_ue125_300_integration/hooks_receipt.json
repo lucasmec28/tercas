@@ -1,0 +1,37 @@
+{
+  "scope": "Synthetic EN300 application/UI integration and focused historical regressions; no private project inputs",
+  "environment": "OPENBLAS_CORETYPE=Haswell OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONPATH=.:/workspace/shared/tercas_test_dependencies_20261106",
+  "interrupted": {
+    "command": "OPENBLAS_CORETYPE=Haswell OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONPATH=.:/workspace/shared/tercas_test_dependencies_20261106 python -m pytest -q tests/test_isolated_en_ue125_300_application.py tests/test_ui_isolated_en_ue125_300.py tests/test_isolated_en_application.py tests/test_isolated_en_ue_catalog_application.py tests/test_isolated_en_panorama.py tests/test_ui_isolated_en_ue_catalog.py",
+    "exit_code": 130,
+    "status": "Deliberately interrupted before the legacy full-area fixture completed; not a passing test run",
+    "passed_tests_claimed": 0,
+    "log": "hooks_interrupted.txt"
+  },
+  "final_focused": {
+    "command": "OPENBLAS_CORETYPE=Haswell OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONPATH=.:/workspace/shared/tercas_test_dependencies_20261106 python -m pytest -q tests/test_isolated_en_ue125_300_application.py tests/test_ui_isolated_en_ue125_300.py tests/test_isolated_en_ue125_300_area_source.py tests/test_isolated_en_application.py tests/test_isolated_en_ue_catalog_application.py tests/test_isolated_en_panorama.py tests/test_ui_isolated_en_ue_catalog.py -k 'not area_inventory_and_support_limit_complete and not source_summary_limit and not area_preserves_every_support_limit'",
+    "exit_code": 0,
+    "passed": 188,
+    "deselected": 3,
+    "duration_seconds": 114.74,
+    "log": "hooks_focused.txt",
+    "excluded_scope": "Two legacy seven-profile full-area fixture tests and one legacy catalogue full-area test; not claimed as tested in this pass"
+  },
+  "coverage": [
+    "Explicit fy300 option/declaration/origin and shared activate helper",
+    "Direct dense calculation before compaction",
+    "JSON and Word",
+    "Rerender with solver and resistant-section builder blocked",
+    "Standalone saved readers additionally block geometric prepare",
+    "Changed material/profile/option and source mutation rejection",
+    "ELU versus ELS-only coverage",
+    "One authentic area P support-limit source with before-P state, not a truncated batch result",
+    "Original couples, fork supports, small-rotation warning and physical-hypothesis guards",
+    "Legacy direct readers and catalogue/panorama/UI regression"
+  ],
+  "limits": [
+    "Not a full batch40 EN300 performance qualification",
+    "Not complete member design, first-order physical suitability or combined ELS approval",
+    "No publication performed"
+  ]
+}

@@ -180,6 +180,10 @@ def show_result(st, result):
 
 
 def report(doc, result):
+    return _report(doc,result)
+
+
+def _report(doc,result,nbr_report=None):
     try:evidence = preserved(result)
     except (ValueError,TypeError,KeyError) as exc:
         doc.add_paragraph('Me no topo não exibido: '+str(exc));return
@@ -204,4 +208,5 @@ def report(doc, result):
     doc.add_paragraph('Rastreabilidade das entradas: '+str(evidence.get('source_input_fingerprint', 'não informada')))
     doc.add_paragraph('Resultados legados separados. Nenhuma resistência à torção ou aprovação global é demonstrada por este componente.')
     from .roof_top_nbr_ui import report as report_nbr
-    report_nbr(doc,result)
+    if nbr_report is None:report_nbr(doc,result)
+    else:nbr_report(doc)

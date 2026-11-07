@@ -1,0 +1,9 @@
+{
+  "scope": "One synthetic point source solved once and shared by both implementations",
+  "historical_commit": "351b178e5fa75904f04c13484227d725c005a467",
+  "historical_module_sha256": "eefc3c20deb584b9f474a206f7d48c40e2cf67aa6a8169237c325a593b673c00",
+  "legacy_v1_output_byte_identical": true,
+  "canonical_output_bytes": 152059,
+  "canonical_output_sha256": "764b9e125c6559b6e204c58cfa6348a72766500906b981f383ba4b357b59c9bd",
+  "new_witness_policy_disabled_for_legacy": true
+}

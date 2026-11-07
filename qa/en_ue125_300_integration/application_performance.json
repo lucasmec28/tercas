@@ -1,0 +1,9 @@
+{
+  "fixture": "synthetic direct one ELU plus one ELS",
+  "complete_result_seconds": 3.296216855997045,
+  "result_json_bytes": 473040,
+  "en300_component_json_bytes": 309583,
+  "dense_source_json_bytes_per_ELU": 194697,
+  "cold_preserved_seconds": 0.8047240349987987,
+  "warm_preserved_seconds": 0.04643403599766316
+}

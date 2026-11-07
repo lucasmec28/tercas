@@ -24,6 +24,8 @@ def complete_result(result):
     out = attach_roof_top_load(out)
     from .roof_top_nbr import attach as attach_roof_nbr
     out = attach_roof_nbr(out)
+    from .nbr_ue_family_application import attach as attach_nbr_family
+    out = attach_nbr_family(out)
     out['global_verification'] = build_global_verification(out)
     out['whole_member_approved'] = False
     out['completion_snapshot'] = dict(schema=VERSION,
@@ -33,6 +35,8 @@ def complete_result(result):
 
 
 def show_global(st, result):
+    from .nbr_ue_family_ui import show as show_nbr_family
+    show_nbr_family(st, result)
     from .torsion_applicability import show as show_applicability
     show_applicability(st, result)
     record = result.get('global_verification')
@@ -56,13 +60,20 @@ def show_global(st, result):
 
 
 def report_global(doc, result):
+    return _report_global(doc,result)
+
+
+def _report_global(doc,result,roof_nbr_presentation=None):
+    from .nbr_ue_family_ui import report as report_nbr_family
+    report_nbr_family(doc, result)
     from .torsion_applicability import report as report_applicability
     report_applicability(doc, result)
     record = result.get('global_verification')
     if not isinstance(record,dict):return
     from .roof_top_nbr import validate_saved_global
     try:
-        validate_saved_global(result)
+        if roof_nbr_presentation is None:validate_saved_global(result)
+        else:roof_nbr_presentation.validate_global(result)
         from .isolated_en_application import validate_saved_global as validate_EN_global
         validate_EN_global(result)
     except (ValueError,TypeError,KeyError) as exc:
@@ -86,4 +97,7 @@ def report_global(doc, result):
     from .report_audit import report_saved_issues
     report_saved_issues(doc,result)
     from .roof_top_load_ui import report as report_roof_top_load
-    report_roof_top_load(doc,result)
+    if roof_nbr_presentation is None:report_roof_top_load(doc,result)
+    else:
+        from .roof_top_load_ui import _report
+        _report(doc,result,nbr_report=roof_nbr_presentation.report)

@@ -1,0 +1,8 @@
+Endpoint witness recovery checkpoint. No numerical tests executed on these bytes.
+Base: fcd2671b0ac996daa4dfcd928d3568a246cf8717.
+Recovered from the verbatim patch/test history of prior commit 2b6ef12b8464fb1504fcd6def7179dedad1e730f after the shared workspace disappeared.
+Original Git objects were not used to establish byte identity. This is a newly reconstructed candidate, not a claim that the old commit was restored exactly.
+Production scope: search at most eight actual endpoints in the governing source patch. observe(interior) remains None, every candidate re-evaluates source signs/c0/B/face with directed intervals, and only abs(sigma).lo > 300 produces a point witness. V1, upper bounds and resistance limits are unchanged by the intended delta.
+Files reconstructed: tercas/en_ue125_300_normal_witness.py, tercas/isolated_en_ue125_300.py, tests/test_en_ue125_300_endpoint_search.py.
+The former 41-test approval belongs only to the former checkout and does NOT validate this reconstruction. Fresh focused QA and independent review remain pending, to be coordinated before any numerical run.
+Only synthetic test inputs were reconstructed. No private input was read or copied.

@@ -12,7 +12,7 @@ DEFAULT_TORSION_REASON = ('Torção/empenamento pendentes: demanda Tsv/Tw/B e su
     'N=0, telha sem contato, rotação torsional fixa ou índice de flexão baixo não demonstram torção nula.')
 
 
-def sectional_context(result, ev, *, catalog=False):
+def sectional_context(result, ev, *, catalog=False, en300=False):
     """Called only after the corresponding preserved(result) has succeeded."""
     from .isolated_en_application import digest
     inv = ev['source_inventory']
@@ -48,7 +48,11 @@ def sectional_context(result, ev, *, catalog=False):
         bound = (isinstance(combo, dict) and combo.get('id') == cid and combo.get('limit_state') == 'ELU'
             and all(isinstance(combo.get(k), dict) and combo[k] == raw.get(k) for k in ('q_vector', 'P_vector')))
         computed = row['status'] == 'computed'
-        if catalog:
+        if en300:
+            c = row.get("check") or {}
+            mv = computed and c.get("shear", {}).get("component_sufficient") is True and c.get("mv", {}).get("component_sufficient") is True
+            stress = computed and c.get("stress", {}).get("section_stress_criteria_sufficiently_satisfied") is True
+        elif catalog:
             c = row.get('check') or {}
             mv = computed and c.get('shear', {}).get('component_sufficient') is True and c.get('mv', {}).get('component_sufficient') is True
             stress = False  # Catalogue shear / 6.27 never contains EN 6.1.6.

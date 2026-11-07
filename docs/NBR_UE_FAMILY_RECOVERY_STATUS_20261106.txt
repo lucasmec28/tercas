@@ -1,0 +1,4 @@
+Restored provider,205-case test source and method/API documentation from conversation history.
+Not byte-identical to lost080f2b0. No tests or solver executed after reconstruction.
+Detailed coverage JSON was lost and must be regenerated; old summary retained explicitly as historical.
+Dependencies are expected from restored application base, not included in this delta.

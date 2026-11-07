@@ -10,6 +10,11 @@ TITLE='Tensões combinadas e cisalhamento torsional — complemento EN'
 
 
 def render_choice(st,data,key):
+    from .isolated_en_ue_family_ui import render_choice as family_choice
+    family_choice(st,data,key+'_family')
+    if 'isolated_en_ue_family_model' in data:return
+    from .isolated_en_ue125_300_ui import render_choice as choice_300
+    choice_300(st,data,key+"_300")
     from .isolated_en_ue_catalog_ui import render_choice as catalog_choice
     catalog_choice(st,data,key+'_catalog')
     if 'ue_catalog_reference' in data:return
@@ -124,6 +129,10 @@ def text_lines(ev):
 
 
 def show(st,result):
+    from .isolated_en_ue_family_ui import show as family_show
+    family_show(st,result)
+    from .isolated_en_ue125_300_ui import show as show_300
+    show_300(st,result)
     from .isolated_en_ue_catalog_ui import show as show_catalog
     show_catalog(st,result)
     try:ev=a.preserved(result)
@@ -137,6 +146,10 @@ def show(st,result):
 
 
 def report(doc,result):
+    from .isolated_en_ue_family_ui import report as family_report
+    family_report(doc,result)
+    from .isolated_en_ue125_300_ui import report as report_300
+    report_300(doc,result)
     from .isolated_en_ue_catalog_ui import report as report_catalog
     report_catalog(doc,result)
     try:ev=a.preserved(result)

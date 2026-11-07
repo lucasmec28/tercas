@@ -1,0 +1,15 @@
+{
+  "fixture": "Synthetic area 40 ELU, no ELS, four area loads 1 kgf/m2, no private data",
+  "complete_result_seconds": 46.841678012002376,
+  "result_json_bytes": 14162946,
+  "ELU_cases": 40,
+  "sequential_full_reader_seconds": 1.8956098390044644,
+  "batch_full_reader_seconds": 1.4688067140014027,
+  "batch_presentation_reader_seconds": 0.7648593529956997,
+  "full_component_json_bytes": 11487895,
+  "presentation_json_bytes": 589913,
+  "full_snapshot_byte_identical": true,
+  "word_seconds": 5.727363051002612,
+  "word_bytes": 65859,
+  "result_byte_unchanged": true
+}

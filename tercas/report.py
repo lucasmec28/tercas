@@ -143,6 +143,8 @@ def inclination_inputs(doc,data,reference=None):
  doc.add_paragraph('Ly superior/inferior refere-se às mesas na seção de referência (na travessa girada: direita/esquerda). Comprimentos para FLT não criam apoio vertical nem torsional por simples existência de tirantes.' if wall else 'Ly superior/inferior: comprimento lateral associado à menor inércia para FLT da flexão forte. Lz: comprimento torsional; não representa a maior inércia nem cria apoio no diagrama de cargas.')
 
 def word(result):
+ from .roof_top_nbr_ui import _word_presenters
+ roof_nbr=_word_presenters(result)
  doc=Document()
  for name in ['Normal','Title','Heading 1','Heading 2']:
   style=doc.styles[name];style.font.name='Arial';style.font.color.rgb=RGBColor(0,0,0)
@@ -166,8 +168,8 @@ def word(result):
  ue_catalog_report(doc,result)
  deflection_scope_report(doc,result)
  gross_component_report(doc,result);aa_component_report(doc,result)
- from .study_completion import report_global
- report_global(doc,result)
+ from .study_completion import _report_global
+ _report_global(doc,result,roof_nbr_presentation=roof_nbr)
  from .point_contact import report as report_point_contact
  report_point_contact(doc,result)
  from .torsion_study_ui import report as torsion_report
@@ -192,7 +194,7 @@ def word(result):
  inclination_inputs(doc,result['input_data'],None if (result.get('homogeneous_reference_evidence') or result.get('ue_reference_evidence') or result.get('ue_family_reference_evidence')) else result.get('weak_critical_reference'))
  if not (result.get('homogeneous_reference_evidence') or result.get('ue_reference_evidence') or result.get('ue_family_reference_evidence')):strong_reference_report(doc,result.get('strong_critical_reference'))
  if result.get('inclination_evidence'):
-  doc.add_heading('Solicitações locais simultâneas',1);inclination_report(doc,historical_inclination(result,roof_nbr_inclination(result,result['inclination_evidence'])))
+  doc.add_heading('Solicitações locais simultâneas',1);inclination_report(doc,historical_inclination(result,roof_nbr.inclination(result['inclination_evidence'])))
  if not is_girt_result(result):wall_vertical_report(doc,result)
  doc.add_heading('Resultados por verificação',1)
  tab=doc.add_table(rows=1, cols=4);tab.style='Table Grid'
@@ -200,7 +202,8 @@ def word(result):
  for cell in tab.rows[0].cells:
   shd=OxmlElement('w:shd');shd.set(qn('w:fill'),'E8EEF3');cell._tc.get_or_add_tcPr().append(shd)
  for c,s in zip(tab.rows[0].cells,['Verificação','Situação','Índice','Referência']):c.text=s
- for r in display_records(rows(result)):
+ from .application import _rows
+ for r in display_records(_rows(result,roof_formatter=roof_nbr.rows)):
   row=tab.add_row();row._tr.get_or_add_trPr().append(OxmlElement('w:cantSplit'));cells=row.cells
   for c,s in zip(cells,[r['Verificação'],r['Situação'],'—' if r['Índice'] is None else f"{fmt(r['Índice'])}",r['Referência']]):c.text=display(s)
   doc.add_paragraph(r['Verificação']+' | Valor: '+r['Demanda / valor']+' | Resistência/limite: '+r['Resistência / limite'])
@@ -295,6 +298,8 @@ def batch_common_inputs(doc,result):
 
 def batch_word(result):
  """One report for selected families, retaining all per-case checks."""
+ from .roof_top_nbr_ui import _word_presenters
+ roof_nbr=_word_presenters(result)
  els_trace_readable=component_record_is_readable(result)
  doc=Document();doc.styles['Normal'].font.name='Arial';doc.styles['Normal'].font.size=Pt(10)
  for name in ['Normal','Title','Heading 1','Heading 2']:
@@ -314,8 +319,8 @@ def batch_word(result):
  ue_catalog_report(doc,result)
  deflection_scope_report(doc,result)
  gross_component_report(doc,result);aa_component_report(doc,result)
- from .study_completion import report_global
- report_global(doc,result)
+ from .study_completion import _report_global
+ _report_global(doc,result,roof_nbr_presentation=roof_nbr)
  from .point_contact import report as report_point_contact
  report_point_contact(doc,result)
  from .torsion_study_ui import report as torsion_report
@@ -356,7 +361,7 @@ def batch_word(result):
  t=doc.add_table(rows=1,cols=4);t.style='Table Grid'
  t.rows[0]._tr.get_or_add_trPr().append(OxmlElement('w:tblHeader'))
  for c,v in zip(t.rows[0].cells,['Critério','Combinação','Índice','Situação']):c.text=v
- for r in display_records(historical_rows(result,roof_nbr_rows(result,gross_component_rows(result,result['summary'])))):
+ for r in display_records(historical_rows(result,roof_nbr.rows(gross_component_rows(result,result['summary'])))):
   summary_row=t.add_row()
   summary_row._tr.get_or_add_trPr().append(OxmlElement('w:cantSplit'))
   for c,v in zip(summary_row.cells,[r['Verificação'],r['Combinação'],'—' if r['Índice'] is None else f"{fmt(r['Índice'])}",r['Situação']]):c.text=display(v)
@@ -364,9 +369,9 @@ def batch_word(result):
  for item in result['cases']:
   c=item['combination'];doc.add_heading(f"{c['id']} — {c['type']}",2)
   doc.add_paragraph(f"{measurement_text(c['expression'])} → q normal={fmt(c['q_kN_m'])} kN/m. P normal={fmt(c.get('P_N',0)/1000)} kN. Forças/efeitos superpostos antes das verificações.")
-  if item.get('evidence',{}).get('inclination'):inclination_report(doc,historical_inclination(result,roof_nbr_inclination(result,item['evidence']['inclination'],c['id'])))
+  if item.get('evidence',{}).get('inclination'):inclination_report(doc,historical_inclination(result,roof_nbr.inclination(item['evidence']['inclination'],c['id'])))
   if not is_girt_result(result):wall_vertical_report(doc,item.get('evidence',{}))
-  for row in display_records(historical_rows(result,roof_nbr_rows(result,gross_component_rows(result,item['rows']),c['id']))):
+  for row in display_records(historical_rows(result,roof_nbr.rows(gross_component_rows(result,item['rows']),c['id']))):
    index='—' if row['Índice'] is None else f"{fmt(row['Índice'])}"
    doc.add_paragraph(f"{row['Verificação']}: {row['Situação']}; índice {index}; {row['Demanda / valor']}; limite/resistência {row['Resistência / limite']}. {row['Referência']}. {row['Observação']}")
   from .point_limit import saved_exclusion

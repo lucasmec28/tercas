@@ -1,0 +1,33 @@
+{
+  "baseline_commit": "9a55de7",
+  "scope": "only Ue125x50x17x2 ri2 index26 fyb=fya300 E210000 nu0.3 gammaM0=1; no consumers",
+  "tests": "82 passed in 0.64s",
+  "command": "OPENBLAS_CORETYPE=Haswell OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONPATH=.:/workspace/shared/tercas_test_dependencies_20261106 python -m pytest -q tests/test_en_ue125_shear300.py",
+  "legacy_file_sha256": {
+    "tercas/en_ue_shear.py": "2750b899729365aa515a5506b60d8f1278a27e6d1c1d316af2a53c3838c42526",
+    "tercas/data/en_ue_shear_inventory_20261106.json": "9268b4813d95b0f7ec3ca4d978fb7ada51563642a38f6762b85505cc847881b4",
+    "tercas/data/en_ue_shear_sources_20261106.json": "38894ce700fc4df6d48d072cf764bf38945c87e440aa341bdc0f2f22f7d6c7f5"
+  },
+  "not_run": [
+    "AppTest",
+    "network application checks",
+    "full suite"
+  ],
+  "capacities_N": {
+    "strong": 42804,
+    "weak": 33408
+  },
+  "analysis_E_G_MPa_unchanged": [
+    200000,
+    77000
+  ],
+  "independent_review": {
+    "status": "accepted_for_restricted_section_shear_authority_no_blocking_findings",
+    "reviewed_commit": "560d46d682b0049b11e739afc3501e689e1b5827",
+    "reviewer": "revisar_componentes_ue125",
+    "report": "qa/en_ue125_shear300/independent_review.txt",
+    "visual_primary_inspection_by": "independent reviewer, not implementation author",
+    "no_consumer_or_whole_member_release": true
+  },
+  "documentation_follow_up_tests": "Not repeated: only QA documentation changed; pinned production artifacts unchanged."
+}

@@ -1,0 +1,101 @@
+INDEPENDENT TECHNICAL REVIEW: OWN Ue125 / fy300 EN SECTION COMPONENTS
+
+Date: 2026-11-06
+Reviewed combined commit: 5614f0de93931cb44a9746c75d807f1f5d68927d
+UI/application parent commit: 88398a7
+
+DECISION
+
+No remaining blocking finding was identified in the reviewed implementation.
+Acceptance is restricted to the stated sectional components, their source
+bindings, arithmetic readers and presentation. This is not approval of a
+member, physical first-order response, complete EN design, combined ELS,
+product/core thickness, local force introduction or actual connections.
+Publication and final release composition are separate decisions.
+
+INDEPENDENT REVIEW PERFORMED
+
+The review inspected the source, final diffs, provider contracts, tests and
+recorded QA evidence. It did not execute a solver, eigensolver, AppTest or the
+authors' test suites. No private project data was accessed for this review.
+
+The normal and shear authorities were reviewed separately before integration.
+Independent scalar Decimal calculations and segment quadrature confirmed the
+negative EN My effective-web fixed point, c0 equilibrium, capacity floor and
+the shear geometry/branch bounds. Primary EN documents were checked, including
+visual inspection of EN1993-1-3 Figure 5.1 and Table 6.1 and EN1993-1-5 Tables
+4.1/4.2. Integration review additionally checked EN13 5.4, 6.1.6 and 6.1.10,
+and the physical moment-zero definition of Le in EN15 3.1/3.2.1.
+
+CONTRACT AND MATHEMATICS
+
+- Only the exact own 134-node rounded contour at catalogue index 26 is admitted.
+  Geometry authority includes gross properties, omega and shear primitives,
+  not merely a node hash or catalogue dimensions.
+- Analysis E/G=200000/77000 MPa remains separate from resistance E=210000 MPa,
+  nu=0.3, fyb=fya=300 MPa and gammaM0=1. The previous seven/83 fy250 authorities
+  neither authorize this material nor receive changed capacities.
+- EN physical My is opposite to app-NBR My. No second sign inversion occurs.
+  The four signed effective operators retain c0 and centroid transport.
+- Sigma from effective bending plus gross B, and shear from V/Tw and opposite
+  Saint-Venant faces, share the same longitudinal and contour coordinates.
+  Signed-operator unions and tensor Bernstein controls provide sufficient
+  bounds. A control is not a physical witness; an upper bound above one is
+  inconclusive, not proof of physical failure.
+- EN6.27 uses the separately qualified signed normal floors and both shear
+  floors, N exactly zero and Mf=0. No fictitious axial capacity, T-to-V
+  conversion or T=0 prerequisite is introduced.
+- Shear-lag applicability uses exact rational moment-zero zones, not mesh
+  elements or an arbitrary split at P. Curling uses a 300 MPa panel-stress
+  bound and minimum distances over all four effective centroids. It does not
+  reuse the old gross-centroid fy250 proof or introduce an additional combined
+  N/M/B criterion.
+- ELS-only inventories cannot qualify an ELU component. High-rotation warnings,
+  first-order limitations and global/physical approval flags remain separate.
+
+FINDINGS CLOSED IN THE REVIEWED TREE
+
+1. Re-summarizing stored critical states alone did not authenticate B/T
+   coefficients. The new arithmetic replay reconstructs K*u-f without solving,
+   verifies element actions and recovered polynomials, rechecks original
+   numerical diagnostics, reactions, critical states and rotation witnesses.
+   It preserves the original numerical tolerance and physical-load interval
+   guard; neither is presented as a normative physical-rotation limit.
+2. Canonical comparisons and explicit numeric types reject bool/number aliases
+   and rehashed section/control substitutions. The complete pinned section is
+   authenticated, including before a warm-cache return.
+3. Before-P support-limit states are checked both independently and against
+   their prefix in the original critical-state inventory. Resource limits are
+   checked before allocating the arithmetic replay matrix.
+4. The applied input contract requires zero additional couples, fixed twist
+   with free assumed warping at both ends, and the original 0.05 rad warning
+   setting marked non-normative. A coherent field for different restraints,
+   additional couples or suppressed warnings cannot inherit this opt-in.
+5. The bounded read cache accepts only complete successful replays. Its key
+   covers canonical full inputs; authorities are checked before hits. RLock
+   protects cache lookup/eviction. A refreshed self-hash is not authority.
+
+RECORDED TEST EVIDENCE, EXECUTED BY THE IMPLEMENTATION AUTHORS
+
+- core.txt: 37 passed in 9.26 s.
+- hooks_focused.txt and hooks_receipt.json: 188 passed, 3 deselected in
+  114.74 s, exit code 0. The selected pass covers application, JSON/Word,
+  saved no-solver rerender, legacy readers/UI and an authentic synthetic area
+  P support-limit case.
+- The three excluded tests are area_inventory_and_support_limit_complete,
+  source_summary_limit and area_preserves_every_support_limit. They are not
+  claimed as executed in this final focused pass. The separately recorded
+  interrupted run is not counted as approved test evidence.
+- The six added stress-basis tests exercise B/Tsv/Tw/V and mixtures at both
+  faces as algebraic operator tests, not as physical member solutions.
+
+PERFORMANCE AND RELEASE LIMITS
+
+application_performance.json records one synthetic direct ELU plus one ELS:
+cold saved read 0.804724 s, warm saved read 0.046434 s, and 194697 bytes of
+dense source per ELU. These measurements do not qualify a full 40-case batch
+or a private project. Batch performance, actual-project replay, complete
+release composition and publication remain under separate evaluation.
+
+This receipt records review of the exact combined commit above. It changes
+documentation only and does not qualify subsequent code changes automatically.

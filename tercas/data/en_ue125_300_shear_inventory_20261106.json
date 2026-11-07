@@ -1,0 +1,103 @@
+{
+  "schema": "EN_Ue125_300_shear_inventory_v1",
+  "revision": "EN_Ue125_300_shear_floors_20261106_r1",
+  "method": "EN13_Table6.1_Ue125_300_unstiffened_web_and_two_rotated_flange_webs_v1",
+  "source_sha256": "551bf7034fa979d16da3d6c4a2d27e2b1a5b6a290361ac0c29abddc6fd4c3daf",
+  "entries": {
+    "26": {
+      "schema": "EN_Ue125_300_shear_reference_payload_v1",
+      "method": "EN13_Table6.1_Ue125_300_unstiffened_web_and_two_rotated_flange_webs_v1",
+      "source_binding": {
+        "catalog_index": 26,
+        "catalog_id": "planilha_v03_r31",
+        "profile_id": "OWN_PIERIN_NOMINAL_planilha_v03_r31_980dc2f8d7fbf830",
+        "nodes_sha256": "3814f4cd9fcfa474b6e3fcbd21eedb3fdee38818eca0440abb4408fd506143e2",
+        "nominal_identity": {
+          "catalog_id": "planilha_v03_r31",
+          "dimensions_mm": {
+            "h": 125,
+            "bf": 50,
+            "lip": 17,
+            "t": 2
+          },
+          "inner_radius_mm": 2,
+          "arc_segments": 32,
+          "convention": "External h/bf/lip/t and published inner radius ri; uniform thin wall on the rounded midsurface, quarter-circles approximated by chords. Origin is the intersection of the unrounded web/lower-flange midlines, x toward the open side and y upward. J=integral(t^3 ds)/3. Gross elastic geometry, not effective widths or an INSTAB reconstruction."
+        },
+        "nominal_identity_sha256": "980dc2f8d7fbf830fcdae22160f06a103c576fccccde62525824795dfe18c716",
+        "thickness_mm": 2.0,
+        "material": {
+          "E_MPa": 210000.0,
+          "nu": 0.3,
+          "fyb_MPa": 300.0,
+          "fya_MPa": 300.0,
+          "gamma_M0": 1.0
+        },
+        "method_revision": "EN_Ue125_300_shear_floors_20261106_r1"
+      },
+      "pierin_nominal_row_id": "Pierin2013_T2_planilha_v03_r31",
+      "source_sha256": "551bf7034fa979d16da3d6c4a2d27e2b1a5b6a290361ac0c29abddc6fd4c3daf",
+      "shear_capacity_geometry": {
+        "strong": {
+          "walls": 1,
+          "hw_mm": 123.0,
+          "sw_upper_mm": 123.0,
+          "lambda_upper": 0.8042706021163347,
+          "fbv_lower_MPa": 174.0,
+          "table61_branch": "lambda_le_0.83",
+          "capacity_floor_N": 42804.0,
+          "rounding": "directed_decimal_60_digits_then_integer_N_floor"
+        },
+        "weak": {
+          "walls": 2,
+          "hw_mm": 48.0,
+          "sw_upper_mm": 48.0,
+          "lambda_upper": 0.31386169838686234,
+          "fbv_lower_MPa": 174.0,
+          "table61_branch": "lambda_le_0.83",
+          "capacity_floor_N": 33408.0,
+          "rounding": "directed_decimal_60_digits_then_integer_N_floor"
+        }
+      },
+      "shear_capacity_lower_N": {
+        "strong": 42804.0,
+        "weak": 33408.0
+      },
+      "applicability": {
+        "external_b_over_t": 25.0,
+        "external_c_over_t": 8.5,
+        "external_h_over_t": 62.5,
+        "external_c_over_b": 0.34,
+        "inner_radius_mm": 2,
+        "radius_limit_mm": 56.0,
+        "core_design_thickness_assumed_mm": 2.0,
+        "recommended_core_range_mm": [
+          0.45,
+          15.0
+        ],
+        "phi_degrees": 90.0,
+        "sw_from_corner_midpoints_mm": {
+          "strong": 121.24264068711929,
+          "weak": [
+            46.24264068711929,
+            46.24264068711929
+          ]
+        },
+        "source": "EN13 3.2.4, 5.1(6), 5.2/Table5.1/Eq5.2a, 6.1.5/Fig5.1",
+        "external_dimensions_used_as_conservative_ratio_bounds": true,
+        "satisfied": true
+      },
+      "integration_conditions": [
+        "Use the same nominal identity, nodes, design thickness and fixed material.",
+        "Actual product, coating/tolerance-adjusted core thickness and material are not certified.",
+        "Separate EN6.1.6 concurrent normal/shear/torsion stress checks remain required.",
+        "Separate EN6.1.10 interaction, 6.1.7/6.1.11 where applicable, and member stability remain required.",
+        "No holes, cutouts, added web stiffeners or arbitrary contour variants are admitted by this nominal identity.",
+        "No support-stiffener, plastic, cold-work, lip or extra corner resistance is credited.",
+        "Normal-operator qualification neither grants nor follows from this shear qualification."
+      ],
+      "content_sha256": "53e5b7983e70c4676f84806a9abfa359e206927acfbea2dc367bcfda6e53c4d1"
+    }
+  },
+  "content_sha256": "b072bfc4115665444847665d33d40e523eeab694edc00f984fba28767de7bbc1"
+}

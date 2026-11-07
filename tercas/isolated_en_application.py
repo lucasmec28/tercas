@@ -48,11 +48,15 @@ def configuration(data):
 
 def reset_changed_declaration(data):
     """Keep opt-in intent, never carry physical declaration to another section."""
+    from .isolated_en_ue125_300_application import reset_changed_declaration as reset_300
+    from .isolated_en_ue_family_application import reset_changed_declaration as reset_family
+    changed_family=reset_family(data)
+    changed_300=reset_300(data)
     c=configuration(data)
     if c is not None and c['section_material_identity']!=identity(data):
         data[CHOICE]=choice(data,enabled=c['enabled'])
         return True
-    return False
+    return changed_300 or changed_family
 
 
 def _domain_reason(data,c):
@@ -109,6 +113,10 @@ def _pending(result,c,reason):
 
 def attach_dense(result,section):
     """Must precede torsion summary; preserves original demand and AISI values."""
+    from .isolated_en_ue125_300_application import attach_dense as attach_300
+    from .isolated_en_ue_family_application import CHOICE as FAMILY_CHOICE, attach_dense as attach_family
+    if FAMILY_CHOICE in result['input_data']:return attach_family(result,section)
+    result=attach_300(result,section)
     if 'ue_catalog_reference' in result['input_data']:
         from .isolated_en_ue_catalog_application import attach_dense as attach_catalog
         return attach_catalog(result,section)
@@ -173,6 +181,10 @@ def attach_dense(result,section):
 
 def finalize(result):
     """Seal only a new calculation, after the compact torsion snapshot is final."""
+    from .isolated_en_ue125_300_application import finalize as finalize_300
+    from .isolated_en_ue_family_application import CHOICE as FAMILY_CHOICE, finalize as finalize_family
+    if FAMILY_CHOICE in result['input_data']:return finalize_family(result)
+    result=finalize_300(result)
     from .isolated_en_ue_catalog_application import finalize as finalize_catalog
     result=finalize_catalog(result)
     if 'ue_catalog_reference' in result['input_data']:return result
@@ -306,6 +318,10 @@ def preserved(result):
 
 def global_context(result, *, sectional=False):
     """Inventory wording only: never inserts EN indices into NBR/H4/global sums."""
+    from .isolated_en_ue125_300_application import FIELD as EN300_FIELD, global_context as context_300
+    from .isolated_en_ue_family_application import FIELD as FAMILY_FIELD, global_context as family_context
+    if FAMILY_FIELD in result:return family_context(result,sectional=sectional)
+    if EN300_FIELD in result:return context_300(result,sectional=sectional)
     from .isolated_en_ue_catalog_application import FIELD as CATALOG_FIELD, global_context as catalog_context
     if CATALOG_FIELD in result:return catalog_context(result,sectional=sectional)
     ev=preserved(result)

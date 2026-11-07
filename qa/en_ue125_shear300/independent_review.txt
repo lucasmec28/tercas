@@ -1,0 +1,35 @@
+Independent review acceptance, 2026-11-06
+Reviewed implementation commit: 560d46d682b0049b11e739afc3501e689e1b5827
+Reviewer: revisar_componentes_ue125 (separate engineering reviewer)
+Disposition: no blocking finding for restricted shear300 authority.
+
+The reviewer, not the implementation author, visually inspected EN1993-1-3
+Figure5.1 (PDF page21), Table6.1/equation6.8 (PDF page47), equation6.10a
+(PDF page48), and the multiple-web summation rule in6.1.10.
+Primary source: https://www.phd.eng.br/wp-content/uploads/2015/12/en.1993.1.3.2006.pdf
+Page numbers above are one-based PDF pages, not printed page numbers.
+
+Independent Decimal80 results reported by the reviewer:
+Strong lambda upper: 0.8042706021163346168
+Weak lambda upper: 0.3138616983868622895
+Strong actual lambda: 0.7927796067284864817
+Weak actual lambda: 0.3023707029990141544
+Both remain in the174MPa plateau; capacities42804N and33408N.
+
+The reviewer accepted sw=hw-2*3*(1-1/sqrt(2)) for all three walls.
+Exact hw remains in the resistance multiplier; area is not improperly
+increased. Downward transitions preserve conservatism when sw is replaced
+by hw in slenderness. Material/geometry bindings, pinned hashes, rehashed
+adulteration rejection and saved reading without reconstruction were
+found coherent.
+
+Acceptance is limited to isolated section shear authority for index26,
+Ue125x50x17x2 ri2, fyb=fya300MPa, E210000MPa, nu0.3 and gammaM0=1.
+No consumer, global/member approval or torsion qualification is granted.
+Future validate_saved calls must receive the original independently
+authenticated source snapshot, never this certificate as its own evidence.
+
+This follow-up changes only QA documentation. The pinned qualification
+note, source manifest, inventory, production code and tests are unchanged.
+Tests were not repeated for this documentation-only receipt. Existing
+82-test result remains attached to the reviewed implementation commit.

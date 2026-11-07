@@ -1,0 +1,16 @@
+Family endpoint search generalization over 3512f46.
+The search function is copied unchanged from the restored Ue125/300 endpoint
+implementation. Its family observe function already uses normal_yield_limit_MPa.
+Only the family v2 witness call changes; bounds, v1, intervals and source replay
+remain unchanged. Interior controls remain nonphysical. Up to eight separate
+physical endpoints are re-evaluated, with strictly proven lower stress required.
+Tests added: synthetic q+P interior control and separate endpoint, family26/300
+comparison with Ue125/300, exact helper equivalence, parameterized yield limit,
+algebraic bound-only excess without physical proof, boolean selectors.
+No numerical tests executed: CPU reserved by integration worker. Historical
+results do not qualify these reconstructed/generalized bytes. Fresh QA pending.
+Additional pending tests: signed load scales +100 and -100 with deliberately
+large applied torque, requiring the original high-rotation warning and proving
+that normal witnesses do not approve first-order physics or global stability.
+Compare family26/300 and Ue125/300 witnesses at the same physical coordinates.
+These two additional tests have not been executed; CPU remains reserved.

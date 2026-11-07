@@ -1,0 +1,112 @@
+{
+  "schema": "Pierin_family_R10_focused_qualification_v1",
+  "source_commit_before_receipt": "9a734a6a9dfdf89995945fc997ea155be5cdd52d",
+  "base_remote_commit": "dd9812ed98022c3d3d6b2d436d69202a98647d1e",
+  "release_id": "cobertura-familia-Pierin-Leff-20261106-r10",
+  "tests": [
+    {
+      "log": "qa/recovery_current/registry_en.log",
+      "passed": 35,
+      "scope": "Documentary registry, full material/section kernel matrix and integrity"
+    },
+    {
+      "log": "qa/recovery_current/nbr_leff_word_endpoint.log",
+      "passed": 258,
+      "scope": "NBR provider, resistance lengths, Word presenters and physical endpoint witnesses"
+    },
+    {
+      "log": "qa/recovery_current/nbr_consumer_registry_ui.log",
+      "passed": 93,
+      "scope": "66 direct NBR consumer cases, integrity, UI and documentary new-study transitions"
+    },
+    {
+      "log": "qa/recovery_current/en_family_focal_and_regression.log",
+      "passed": 100,
+      "scope": "EN family integration and previous EN300 routes including UI"
+    },
+    {
+      "log": "qa/recovery_current/final_endpoint_word_legacy.log",
+      "passed": 64,
+      "scope": "Generalized signed witnesses, actual Word dispatch and legacy weak/strong consumers"
+    },
+    {
+      "log": "qa/recovery_current/final_bindings_consumers.log",
+      "passed": 132,
+      "scope": "Technical identity, NBR coverage/performance, EN family consumers and UI"
+    },
+    {
+      "log": "qa/cache_validation/focal_final.log",
+      "passed": 38,
+      "scope": "Strict successful validation cache, actual live synthetic result, aliases and mutations"
+    }
+  ],
+  "counts_overlap_do_not_sum": true,
+  "complete_repository_suite_run": false,
+  "latest_affected_paths_retested": true,
+  "runtime_versions": {
+    "python": "3.12",
+    "streamlit": "1.66.0",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "pandas": "2.2.3",
+    "python-docx": "1.2.0",
+    "mpmath": "1.3.0"
+  },
+  "BLAS": "Haswell, one thread",
+  "coverage": {
+    "documentary_complete_Ue_rows": 66,
+    "all_Ue_rows_audited": 83,
+    "EN_application_synthetic_scenario": {
+      "shear_profiles": 66,
+      "stress_profiles": 44,
+      "mv_profiles": 38,
+      "partial_profiles": 28,
+      "pending_demand_profiles": 0
+    },
+    "scenario_not_all_loads_or_materials": true
+  },
+  "limits": [
+    "Focused tests are not a full repository-suite result. Counts overlap.",
+    "Earlier integration batches preceded later presentation/binding/cache deltas; affected paths were rerun.",
+    "Documentary completeness does not grant whole-member approval.",
+    "EN branch reductions not covered by this method remain explicit.",
+    "Destabilizing load-height FLT does not yet adopt arbitrary independent effective lengths.",
+    "Large linear twist does not qualify physical first-order behavior.",
+    "Combined service, local force introduction and global approval are not completed."
+  ],
+  "private_project_data_included": false,
+  "global_approval_claimed": false,
+  "published": false,
+  "artifacts_sha256": {
+    "qa/recovery_current/EN_UE_FAMILY_APP_COVERAGE_20261106.json": "20f36ee439a3101dc517e23c9bc0b5270803e90822f1d5aa7cb7eaf8f7b59304",
+    "qa/recovery_current/EN_UE_FAMILY_MATERIAL_COVERAGE.json.gz": "d9bf4ccdc057efde6405e041a0df4c55c8cf612591d1ce90508bc2917019fdd1",
+    "qa/recovery_current/NBR_UE_FAMILY_MATERIAL_COVERAGE.json.gz": "84fc61f63121a27094880f71cf8d42cc909e917f3f60b72cc7c2e9286924ab64",
+    "qa/recovery_current/en_family_focal_and_regression.log": "b6b5cab2e4f719b36242781319304365f844a6c87e7e3ca3416a619fa450584b",
+    "qa/recovery_current/en_family_matrix.log": "fdf63c05fb1026a97e85e202ae59ae997b3a3b268ee88eb962986a005870549c",
+    "qa/recovery_current/family_coverage_final.log": "de424b5c0e8400f7286aeb99c5aebc3d1b98c6d3e9ac583a79bb609950b656bb",
+    "qa/recovery_current/final_bindings_consumers.log": "be86c09dfa2ff2321d2ba430eee9c63dc802af7c991c4734b54d0088f42bf0e3",
+    "qa/recovery_current/final_bindings_consumers.xml": "191c0359bc3b59782a901a9ab25bbbb9c16f23069688488d8aed8e96fda8387a",
+    "qa/recovery_current/final_endpoint_word_legacy.log": "afb1e1aab33b6497fce2621123658493ec774b00d2ab73f0d011bacf72dbccab",
+    "qa/recovery_current/final_endpoint_word_legacy.xml": "9025453e38318bec98b606da98fa3397aef6dc770b2f5830b4c015a49630e5bf",
+    "qa/recovery_current/nbr_consumer_registry_ui.log": "17667fb1b8cd30c56cfb36a2ed122f9ae510d271b998fd8d5f136df3929d2638",
+    "qa/recovery_current/nbr_consumer_registry_ui.xml": "a04aa5056f974b369432ea87547c29a8184965abd47e212660222a370082eaae",
+    "qa/recovery_current/nbr_leff_word_endpoint.log": "fe75ee866e652b106443bc44e017614ed90c94dd538e2fa3811ada6d1a9be9dc",
+    "qa/recovery_current/nbr_leff_word_endpoint.xml": "05f15f0d6174d1817c0f6a57c49f732808c7ef5515c9168e25c6f260426f2303",
+    "qa/recovery_current/registry_en.log": "24d4a28d8c01311bd2357ce6d4e162da1f65f80f455f2d11b237f0f631a8104b",
+    "qa/recovery_current/registry_en.xml": "3e1547e2846f2b294bda1d1e049d5b07e630066ad64587eee44f0dc91a672f29"
+  },
+  "material_coverage_archives": [
+    {
+      "path": "qa/recovery_current/EN_UE_FAMILY_MATERIAL_COVERAGE.json.gz",
+      "uncompressed_sha256": "92c0ef06f421ebeb5c3c13facfc0fa99376ef241c18d12b2537015172b322469",
+      "uncompressed_bytes": 525452,
+      "gzip_bytes": 23255
+    },
+    {
+      "path": "qa/recovery_current/NBR_UE_FAMILY_MATERIAL_COVERAGE.json.gz",
+      "uncompressed_sha256": "ec5c9be2242e9485e20a3ddec553b2f1632512ce3e54d623a188d493b717adbd",
+      "uncompressed_bytes": 268091,
+      "gzip_bytes": 4699
+    }
+  ]
+}

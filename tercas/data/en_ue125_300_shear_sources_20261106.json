@@ -1,0 +1,20 @@
+{
+  "schema": "EN_Ue125_300_shear_sources_v1",
+  "revision": "EN_Ue125_300_shear_floors_20261106_r1",
+  "qualification_note_path": "docs/EN_UE125_300_SHEAR_QUALIFICATION_20261106.txt",
+  "qualification_note_file_sha256": "a48152c551b5c0319167ac867c02259ad6bb3503d57c40de3eac448a18d92468",
+  "sources": [
+    {
+      "url": "https://www.phd.eng.br/wp-content/uploads/2015/12/en.1993.1.3.2006.pdf",
+      "text_checked_printed_pages": [
+        45,
+        46,
+        55
+      ],
+      "visual_review_this_revision": false
+    }
+  ],
+  "basis": "EN13 Table6.1 literal 0.58/0.48/0.67 times fyb300; Eq6.8/6.10a; exact hw123/48 and sw<=hw proved on own contour; walls1/2; no support stiffening credit",
+  "baseline_commit": "9a55de7",
+  "content_sha256": "551bf7034fa979d16da3d6c4a2d27e2b1a5b6a290361ac0c29abddc6fd4c3daf"
+}
