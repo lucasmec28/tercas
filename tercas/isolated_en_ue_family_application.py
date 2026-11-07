@@ -165,7 +165,7 @@ def attach_dense(result,section):
     reason=_domain(out['input_data'],c)
     if reason:out[FIELD]=_pending(out,c,reason);return out
     from .ue_catalog_reference import preserved as source_preserved
-    from .isolated_en_ue_family import calculate_many
+    from .isolated_en_ue_concurrent_candidate import calculate_many
     try:
         source=source_preserved(out)
         if source is None:raise ValueError('Fonte Ue original ausente.')
@@ -229,7 +229,7 @@ def _validate_preserved_uncached(result):
     if ev is None:return None
     from .application import fingerprint
     from .ue_catalog_reference import preserved as source_preserved
-    from .isolated_en_ue_family import validate_saved_many
+    from .isolated_en_ue_concurrent_candidate import validate_saved_many
     try:
         c=configuration(result['input_data']);base=_base(result,c)
         if (c is None or not c['enabled'] or fingerprint(result['input_data'])!=result['input_fingerprint']

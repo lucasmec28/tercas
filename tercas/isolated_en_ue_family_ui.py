@@ -32,6 +32,40 @@ def render_choice(st,data,key):
         st.caption('fyb=fya nominal declarado, sem encruamento; E resistente=210000 MPa e ν=0,3. E/G da demanda não são alterados. Ramos sem operador ficam pendentes apenas quando necessários ao caso.')
 
 
+
+def _concurrent_pending_reason(check):
+    """Describe the new sufficient guards in an already validated view.
+
+    Do not reinterpret legacy records or infer physical failure from a bound.
+    """
+    supplement=check.get('concurrent_shear_lag_supplement')
+    if not supplement or supplement.get('eligible') is not False:return None
+    reasons=supplement.get('blocking_reasons',[])
+    codes={reason.get('code') for reason in reasons}
+    messages=[]
+    for reason in reasons:
+        code=reason.get('code')
+        if code=='SIMULTANEOUS_LOCAL_D_CEILING_NOT_PROVED':
+            message=('Condição suficiente local/distorcional simultânea não demonstrada: '
+                f"soma dos tetos absolutos = {reason['stress_upper_MPa']:.2f} MPa; "
+                f"teto admissível da referência uniforme = {reason['ceiling_MPa']:.2f} MPa")
+        elif code=='UNIFORM_LOCAL_D_REFERENCE_NOT_QUALIFIED':
+            if 'SIMULTANEOUS_LOCAL_D_CEILING_NOT_PROVED' in codes:continue
+            message='Referência uniforme local/distorcional não qualificada para o campo simultâneo completo'
+        elif code=='PURE_COMPONENT_CURLING_NOT_QUALIFIED':
+            message='Condição suficiente de curling das componentes puras não demonstrada'
+            if reason.get('axes'):message+=' nos eixos '+', '.join(reason['axes'])
+        elif code=='SOURCE_SIGNED_OPERATOR_NOT_QUALIFIED':
+            message='Qualificação dos operadores resistentes por sentido da fonte não demonstrada'
+        elif code=='CONCURRENT_SHEAR_LAG_REFERENCE_NOT_QUALIFIED':
+            message='Qualificação da referência de shear lag simultâneo não demonstrada'
+        else:
+            message='Condição suficiente da referência simultânea não demonstrada'
+        if message not in messages:messages.append(message)
+    if not messages:messages.append('Condição suficiente da referência simultânea não demonstrada')
+    return '; '.join(messages)+'. Resultado inconclusivo, sem inferência de reprovação física.'
+
+
 def rows(ev):
     out=[]
     for r in ev['records']:
@@ -42,7 +76,7 @@ def rows(ev):
         row.update({'Tensões suficientes':s.get('section_stress_criteria_sufficiently_satisfied',False),
             'Teto cortante forte':v.get('strong_ratio_upper'),'Teto cortante fraco':v.get('weak_ratio_upper'),
             'Teto M–V EN6.27':m.get('index_upper'),'M–V suficiente':m.get('component_sufficient',False),
-            'Motivo':r.get('reason') or m.get('reason')})
+            'Motivo':_concurrent_pending_reason(c) or r.get('reason') or m.get('reason')})
         out.append(row)
     return out
 
@@ -59,12 +93,25 @@ def text_lines(ev):
         'Leitura autentica fórmulas/dados atuais e repete a aritmética vinculada à demanda original; não resolve novo modelo de membro.']
     normal=ev.get('normal_snapshot',{})
     if normal:lines.append('Aço declarado: '+str(normal.get('material_declaration'))+'. Conformidade de produto/ductilidade não verificada por um valor numérico de fy.')
+    if any((row.get('check') or {}).get('concurrent_shear_lag_supplement') for row in ev['records']):
+        lines.append('Os operadores-base abaixo permanecem identificados como fonte. Nos casos com shear lag simultâneo, os pisos resistentes efetivamente usados são apresentados por combinação; os pisos-base não são requalificados nem transferidos automaticamente.')
     for name,component in normal.get('components',{}).items():
         lines.append(f"{name}: piso [N·mm] {component.get('first_yield_capacity_floor')}; elegível={component['eligible']}; motivos={component.get('blocking_reasons',[])}.")
     for row in ev['records']:
         c=row.get('check')
         if not c:lines.append(row['combination_id']+': '+str(row.get('reason')));continue
         lines.append(row['combination_id']+': cortantes mínimos [N] '+str(c['shear_source_snapshot']['shear_capacity_lower_N'])+'.')
+        concurrent=c.get('concurrent_shear_lag_supplement')
+        if concurrent:
+            if concurrent.get('eligible'):
+                capacities={}
+                for key in ('pure_Mx_construction','pure_My_construction'):
+                    capacities.update(concurrent[key].get('signed_capacity_floor',{}))
+                lines.append(row['combination_id']+': shear lag simultâneo: pisos próprios consumidos em EN6.27 [N·mm] '+str(capacities)+'.')
+                lines.append('Condição suficiente local/distorcional para o campo completo: soma dos tetos absolutos de Mx, My e B = '+str(concurrent['simultaneous_normal_stress_upper_MPa'])+' MPa; teto admissível da referência uniforme = '+str(concurrent['integral_local_D_design_ceiling_MPa'])+' MPa. Sem crédito por cancelamento entre parcelas.')
+                lines.append('Cada eixo usa sua própria envoltória de perda de área e rigidez; curling é reavaliado nas componentes puras. B, cortantes e torção preservam o campo original. Não é uma seção efetiva comum, aprovação de estabilidade ou aprovação global.')
+            else:
+                lines.append(row['combination_id']+': shear lag simultâneo pendente: '+str(_concurrent_pending_reason(c))+' Os pisos isolados não autorizam índice normal ou M–V sem a prova simultânea completa.')
         lag=c.get('shear_lag_supplement')
         if lag:
             if lag['eligible']:
@@ -76,11 +123,11 @@ def text_lines(ev):
             lines.append('Histórico v2 preservado: rótulos e números pertencem à execução original e não requalificam shear lag, curling ou o projeto atual.')
         for name,criterion in c['stress']['criteria'].items():
             if 'diagnostic_index_upper_bound' in criterion:
-                lines.append(row['combination_id']+' / '+name+': tensão normativa pendente por aplicabilidade; teto apenas diagnóstico='+str(criterion['diagnostic_index_upper_bound'])+'; '+str(criterion.get('reason')))
+                lines.append(row['combination_id']+' / '+name+': tensão normativa pendente por aplicabilidade; teto apenas diagnóstico='+str(criterion['diagnostic_index_upper_bound'])+'; '+str(_concurrent_pending_reason(c) or criterion.get('reason')))
             lines.append(row['combination_id']+' / '+name+': '+criterion['criterion']+'; controle '+str(criterion.get('bound_control')))
             witness=criterion.get('physical_witness')
             if witness:lines.append('Testemunha concomitante: |σ|≥'+str(witness['absolute_sigma_lower_MPa'])+' MPa; limite '+str(witness['normal_limit_MPa'])+' MPa; localização '+str(witness['location'])+'.')
-        if not c['applicability']['qualified']:lines.append('Aplicabilidade pendente: '+c['applicability']['reason'])
+        if not c['applicability']['qualified']:lines.append('Aplicabilidade pendente: '+(_concurrent_pending_reason(c) or c['applicability']['reason']))
     return lines
 
 

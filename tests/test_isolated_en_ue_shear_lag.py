@@ -87,7 +87,14 @@ def test_inversion_and_point_jump_keep_exact_physical_zones(six):
 
 
 def test_inclined_biaxial_case_does_not_receive_pure_mx_proof():
-    r=run(data(angle=5.71));ev=app.preserved(r);check=ev['records'][0]['check'];p=check['shear_lag_supplement']
+    r=run(data(angle=5.71));ev=app.preserved(r);current=ev['records'][0]['check']
+    check=engine.calculate(current['source_demand'],normal_snapshot=ev['normal_snapshot'],
+        model_origin=ev['configuration']['model_origin'])
+    p=check['shear_lag_supplement']
+    assert 'shear_lag_supplement' not in current
+    assert current['previous_shear_lag_attempt']==p
+    assert current['concurrent_shear_lag_supplement']['eligible']
+    assert not current['whole_member_approved']
     assert not p['eligible'] and 'N=My=0' in p['blocking_reasons'][0]['detail']
     assert check['mv']['index_upper'] is None and not check['whole_member_approved']
     assert check['component_status']['stress']=='pending'

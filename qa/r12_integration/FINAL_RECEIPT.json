@@ -1,0 +1,200 @@
+{
+  "release": "componentes-Ue-shear-lag-simultaneo-20261107-r12",
+  "production_source_commit": "597a2b8cef160e98a7e3bde8a52af9a6bf4f2465",
+  "reconstruction": "Production candidate modules restored byte-for-byte from validated archive; UI diagnostics and fixture workflows replayed; four point-load fixtures freshly regenerated, not invented from prior outputs.",
+  "tests": {
+    "affected_backend_first_recovered": {
+      "tests": 299,
+      "failures": 5,
+      "errors": 0,
+      "seconds": 152.685,
+      "sha256": "a39002cb8dc4152e812e2bb1d13fbcd0c5f78e182bb6643e20bf086b49735a96"
+    },
+    "recovered_point_fixtures": {
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "seconds": 6.395,
+      "sha256": "2eb77865dfc14d37ba62b1bd31c564628086bd8054b7769eca841fd725327cba"
+    },
+    "final_ui_and_formatter": {
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "seconds": 51.855,
+      "sha256": "48047e52c64cea84442b5a788715d79e3cae6d3e25c043a3942fdab3a9db0f95"
+    },
+    "second_restore_final_combined": {
+      "tests": 303,
+      "failures": 0,
+      "errors": 0,
+      "seconds": 493.617,
+      "sha256": "5f1ddf04dcf8bae085e7e812aaefc253953b56937e545cc6a9299324db81ea81"
+    }
+  },
+  "first_recovered_failures": "Exactly five FileNotFoundError failures for four unpersisted synthetic point-load fixtures; all five subsequently passed after new generation. No production mathematics changed.",
+  "counts_overlap_do_not_sum": true,
+  "family_application_matrix": {
+    "EN_MV": 66,
+    "EN_new_concurrent": 30,
+    "EN_preserved_v3": 36,
+    "EN_shear": 66,
+    "EN_stress": 66,
+    "NBR_biaxial_computed": 66,
+    "profiles": 66,
+    "service_with_index": 66
+  },
+  "exact_comparison": {
+    "kind": "EXACT_SYNTHETIC_R11_R12_PACKET_COMPARISON",
+    "profiles": 66,
+    "packet_keys": [
+      "input_data",
+      "input_fingerprint",
+      "input_snapshot",
+      "ELS",
+      "FLT_segments",
+      "NBR_branches",
+      "section_checks",
+      "direct_self_weight_evidence",
+      "inclination_evidence",
+      "torsion_evidence",
+      "aisi_torsion_component",
+      "roof_top_load_evidence",
+      "roof_top_nbr_component",
+      "ue_catalog_reference_evidence",
+      "ue_catalog_nbr_bending_evidence",
+      "nbr_ue_family_application",
+      "isolated_combined_service_component"
+    ],
+    "packets_identical_in_all_profiles": true,
+    "original_qualified_EN_checks_identical": 36,
+    "member_solver_used": false,
+    "global_approval_inferred": false
+  },
+  "area_smoke": {
+    "calculation_seconds": 70.60104283100009,
+    "counts": {
+      "ELU_cases": 40,
+      "mv_computed_cases": 36,
+      "partial_cases": 4,
+      "pending_demand_cases": 0,
+      "shear_computed_cases": 40,
+      "stress_computed_cases": 36
+    },
+    "full_result_sha256": "f2f163a0d712870ab9a85ef90b0e1cef9087cd915b357cbd3d396421994e08b0",
+    "input_sha256": "40ed7056c3116a9daf0cef12c90cc7cad74e099e7c44b2d794e44da38fd3c670",
+    "kind": "SYNTHETIC_40_ELU_APPLICATION_NOT_USER_PROJECT",
+    "member_solvers_blocked_during_saved_replay": true,
+    "pending_cases": [
+      {
+        "id": "P_ELU_01_CENTRO",
+        "reasons": [
+          {
+            "ceiling_MPa": 35.737518729253104,
+            "code": "SIMULTANEOUS_LOCAL_D_CEILING_NOT_PROVED",
+            "detail": "The absolute simultaneous field bound exceeds the sufficient local/D design ceiling.",
+            "normative_rejection_inferred": false,
+            "stress_upper_MPa": 154.36419993306382
+          },
+          {
+            "ceiling_MPa": 35.737518729253104,
+            "code": "UNIFORM_LOCAL_D_REFERENCE_NOT_QUALIFIED",
+            "detail": "The adverse uniform As/local/D reference is not qualified for the complete simultaneous field.",
+            "normative_rejection_inferred": false,
+            "stress_upper_MPa": 154.36419993306382
+          }
+        ]
+      },
+      {
+        "id": "P_ELU_02_CENTRO",
+        "reasons": [
+          {
+            "ceiling_MPa": 35.737518729253104,
+            "code": "SIMULTANEOUS_LOCAL_D_CEILING_NOT_PROVED",
+            "detail": "The absolute simultaneous field bound exceeds the sufficient local/D design ceiling.",
+            "normative_rejection_inferred": false,
+            "stress_upper_MPa": 153.2931850778631
+          },
+          {
+            "ceiling_MPa": 35.737518729253104,
+            "code": "UNIFORM_LOCAL_D_REFERENCE_NOT_QUALIFIED",
+            "detail": "The adverse uniform As/local/D reference is not qualified for the complete simultaneous field.",
+            "normative_rejection_inferred": false,
+            "stress_upper_MPa": 153.2931850778631
+          }
+        ]
+      },
+      {
+        "id": "P_ELU_03_CENTRO",
+        "reasons": [
+          {
+            "ceiling_MPa": 35.737518729253104,
+            "code": "SIMULTANEOUS_LOCAL_D_CEILING_NOT_PROVED",
+            "detail": "The absolute simultaneous field bound exceeds the sufficient local/D design ceiling.",
+            "normative_rejection_inferred": false,
+            "stress_upper_MPa": 151.33780503852165
+          },
+          {
+            "ceiling_MPa": 35.737518729253104,
+            "code": "UNIFORM_LOCAL_D_REFERENCE_NOT_QUALIFIED",
+            "detail": "The adverse uniform As/local/D reference is not qualified for the complete simultaneous field.",
+            "normative_rejection_inferred": false,
+            "stress_upper_MPa": 151.33780503852165
+          }
+        ]
+      },
+      {
+        "id": "P_ELU_04_CENTRO",
+        "reasons": [
+          {
+            "ceiling_MPa": 35.737518729253104,
+            "code": "SIMULTANEOUS_LOCAL_D_CEILING_NOT_PROVED",
+            "detail": "The absolute simultaneous field bound exceeds the sufficient local/D design ceiling.",
+            "normative_rejection_inferred": false,
+            "stress_upper_MPa": 150.2667901833802
+          },
+          {
+            "ceiling_MPa": 35.737518729253104,
+            "code": "UNIFORM_LOCAL_D_REFERENCE_NOT_QUALIFIED",
+            "detail": "The adverse uniform As/local/D reference is not qualified for the complete simultaneous field.",
+            "normative_rejection_inferred": false,
+            "stress_upper_MPa": 150.2667901833802
+          }
+        ]
+      }
+    ],
+    "saved_replay_and_word_seconds": 32.209191727999496,
+    "support_limit_cases": [
+      "P_ELU_01_APOIO",
+      "P_ELU_02_APOIO",
+      "P_ELU_03_APOIO",
+      "P_ELU_04_APOIO"
+    ],
+    "whole_member_approved": false
+  },
+  "unchanged_original_EN_source_files": 11,
+  "global_approval": false,
+  "caveats": [
+    "Not a full repository test suite or all loading/material combinations.",
+    "66-profile family audit uses synthetic fy300, slope5.71, q+PP and explicitly declared service comparison.",
+    "Four central point-load area cases fail to prove the sufficient simultaneous ceiling; this is not physical rejection.",
+    "Weak-negative NBR, some mixed-load FLT scopes, supports/connections and global design remain separate.",
+    "No private project data or standards PDFs are included.",
+    "Execution times are not an exclusive hardware benchmark; a short external reference test overlapped the beginning of the last backend run, ending before UI tests."
+  ],
+  "initial_failed_run_archived_losslessly": {
+    "qa/r12_integration/backend_recovered.log.gz": {
+      "uncompressed_sha256": "431503fb801474bee9bf00c4225c5a51dcbc2ff63b21780b9f10d87b64cf8a81",
+      "gzip_sha256": "48dd03433684212c6eddcb742034dabd72033af0e7ac17ef3ef6dcbd6ee13057"
+    },
+    "qa/r12_integration/backend_recovered.xml.gz": {
+      "uncompressed_sha256": "a39002cb8dc4152e812e2bb1d13fbcd0c5f78e182bb6643e20bf086b49735a96",
+      "gzip_sha256": "2e6afaccaaca9c7f152c081b77c49bc67794f3a8e8e61592aefb1dd99f1320e8"
+    }
+  },
+  "status_at_receipt_creation": "VALIDATED_LOCAL_CANDIDATE_NOT_YET_PUBLISHED",
+  "recovery_count": 2,
+  "mathematical_sources_byte_identical_to_checkpoint": true,
+  "compileall_passed": true,
+  "diff_check_passed": true
+}

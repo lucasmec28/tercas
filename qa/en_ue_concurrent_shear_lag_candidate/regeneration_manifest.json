@@ -1,0 +1,26 @@
+{
+  "complete": true,
+  "current_source_sha256": {
+    "tercas/en_ue_concurrent_shear_lag_candidate.py": "7c16d65caa0d7f3332275ac2a47a529927d1dc8386c0ce425e8146c96b5fd847",
+    "tercas/en_ue_my_shear_lag_candidate.py": "e606005558e036fa3adc5aa6b61d4ac31b8a75cdec32175fce38335e278262c5",
+    "tercas/isolated_en_ue_concurrent_candidate.py": "075ac71682bea7d3f015512a8dc93d773c663a55eebb05146e95d41b94fc67c3",
+    "tests/en_ue_test_helpers.py": "0fde0cb36918aae36038d229cf54ba808d446eb52ce3824e914f647467d0ea0d",
+    "tests/test_en_ue_concurrent_shear_lag_candidate.py": "528196057550ba3571120d093b55e2068cf20ee4de8462469a09e910ec1a9530"
+  },
+  "historical_outputs_recovered": false,
+  "kind": "FRESH_SYNTHETIC_P_REGENERATION_MANIFEST",
+  "qa_file_sha256": {
+    "HISTORICAL_RECEIPT_RECONSTRUCTED.md": "f08a4c4e29640de7c88f58fa4848d59155827fb421c81a15c69edc9c4d2d10fd",
+    "P_interior.json.gz": "29e7e37c411f094d73d52047432815bd0ef77dd00a8389842e24d27e70c50c61",
+    "P_near_left.json.gz": "864275ad46e87ee107a5e66a3af130e200a48c8803235bb875dfa428ffe55d70",
+    "P_opposes_uniform.json.gz": "1e60b2fb6430e37d026b8d5dd94cfdb1104dc71182554c6ae9a38b6de054f3dd",
+    "P_reversed.json.gz": "47cf85bc5c10342d6571deef5d05470b933fc931472afe5b886f8600642a6321",
+    "RECOVERY_RECIPE.md": "6a0a4d5712fa6e0b3ef979d5ec8b3186c369f67400188a1a0e4935fe77ba6c6f",
+    "REGENERATION_RECEIPT.md": "8816769b645c32410a8b4c1e9c6d4eba4ec49b16990c59cfaf3a2ae8d64645f5",
+    "point_application.log": "26d1fd2a925acbf5001f4a0d36b3a0891f9f75f3656b19a153c3e50eb9da0d2a",
+    "point_application_summary.json": "c37baacb45664f4a6f95d8737eeaa1698a352f55f517b2b4dc04f4e1626c6bce",
+    "recovered_point_tests.log": "06a5fbb3f3f7bcae6f0e5ca708b707dfaac77fa34be7fc9f975e7cff4a4f9ebc",
+    "recovered_point_tests.xml": "2eb77865dfc14d37ba62b1bd31c564628086bd8054b7769eca841fd725327cba",
+    "run_point_application.py": "745bbba443d2ba7d57c2df85cb2896fd921debb5f46578963e2f7f7d83ee80f1"
+  }
+}

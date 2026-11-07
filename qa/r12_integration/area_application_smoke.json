@@ -1,0 +1,101 @@
+{
+  "calculation_seconds": 70.60104283100009,
+  "counts": {
+    "ELU_cases": 40,
+    "mv_computed_cases": 36,
+    "partial_cases": 4,
+    "pending_demand_cases": 0,
+    "shear_computed_cases": 40,
+    "stress_computed_cases": 36
+  },
+  "full_result_sha256": "f2f163a0d712870ab9a85ef90b0e1cef9087cd915b357cbd3d396421994e08b0",
+  "input_sha256": "40ed7056c3116a9daf0cef12c90cc7cad74e099e7c44b2d794e44da38fd3c670",
+  "kind": "SYNTHETIC_40_ELU_APPLICATION_NOT_USER_PROJECT",
+  "member_solvers_blocked_during_saved_replay": true,
+  "pending_cases": [
+    {
+      "id": "P_ELU_01_CENTRO",
+      "reasons": [
+        {
+          "ceiling_MPa": 35.737518729253104,
+          "code": "SIMULTANEOUS_LOCAL_D_CEILING_NOT_PROVED",
+          "detail": "The absolute simultaneous field bound exceeds the sufficient local/D design ceiling.",
+          "normative_rejection_inferred": false,
+          "stress_upper_MPa": 154.36419993306382
+        },
+        {
+          "ceiling_MPa": 35.737518729253104,
+          "code": "UNIFORM_LOCAL_D_REFERENCE_NOT_QUALIFIED",
+          "detail": "The adverse uniform As/local/D reference is not qualified for the complete simultaneous field.",
+          "normative_rejection_inferred": false,
+          "stress_upper_MPa": 154.36419993306382
+        }
+      ]
+    },
+    {
+      "id": "P_ELU_02_CENTRO",
+      "reasons": [
+        {
+          "ceiling_MPa": 35.737518729253104,
+          "code": "SIMULTANEOUS_LOCAL_D_CEILING_NOT_PROVED",
+          "detail": "The absolute simultaneous field bound exceeds the sufficient local/D design ceiling.",
+          "normative_rejection_inferred": false,
+          "stress_upper_MPa": 153.2931850778631
+        },
+        {
+          "ceiling_MPa": 35.737518729253104,
+          "code": "UNIFORM_LOCAL_D_REFERENCE_NOT_QUALIFIED",
+          "detail": "The adverse uniform As/local/D reference is not qualified for the complete simultaneous field.",
+          "normative_rejection_inferred": false,
+          "stress_upper_MPa": 153.2931850778631
+        }
+      ]
+    },
+    {
+      "id": "P_ELU_03_CENTRO",
+      "reasons": [
+        {
+          "ceiling_MPa": 35.737518729253104,
+          "code": "SIMULTANEOUS_LOCAL_D_CEILING_NOT_PROVED",
+          "detail": "The absolute simultaneous field bound exceeds the sufficient local/D design ceiling.",
+          "normative_rejection_inferred": false,
+          "stress_upper_MPa": 151.33780503852165
+        },
+        {
+          "ceiling_MPa": 35.737518729253104,
+          "code": "UNIFORM_LOCAL_D_REFERENCE_NOT_QUALIFIED",
+          "detail": "The adverse uniform As/local/D reference is not qualified for the complete simultaneous field.",
+          "normative_rejection_inferred": false,
+          "stress_upper_MPa": 151.33780503852165
+        }
+      ]
+    },
+    {
+      "id": "P_ELU_04_CENTRO",
+      "reasons": [
+        {
+          "ceiling_MPa": 35.737518729253104,
+          "code": "SIMULTANEOUS_LOCAL_D_CEILING_NOT_PROVED",
+          "detail": "The absolute simultaneous field bound exceeds the sufficient local/D design ceiling.",
+          "normative_rejection_inferred": false,
+          "stress_upper_MPa": 150.2667901833802
+        },
+        {
+          "ceiling_MPa": 35.737518729253104,
+          "code": "UNIFORM_LOCAL_D_REFERENCE_NOT_QUALIFIED",
+          "detail": "The adverse uniform As/local/D reference is not qualified for the complete simultaneous field.",
+          "normative_rejection_inferred": false,
+          "stress_upper_MPa": 150.2667901833802
+        }
+      ]
+    }
+  ],
+  "saved_replay_and_word_seconds": 32.209191727999496,
+  "support_limit_cases": [
+    "P_ELU_01_APOIO",
+    "P_ELU_02_APOIO",
+    "P_ELU_03_APOIO",
+    "P_ELU_04_APOIO"
+  ],
+  "whole_member_approved": false
+}
