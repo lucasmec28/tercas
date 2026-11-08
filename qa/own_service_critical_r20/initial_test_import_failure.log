@@ -1,0 +1,31 @@
+.............FF......................................................... [ 50%]
+........................................................................ [100%]
+=================================== FAILURES ===================================
+____________ test_full_calculation_json_word_and_saved_read[direct] ____________
+
+mode = 'direct'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f405ea631a0>
+
+    @pytest.mark.parametrize('mode',['direct','area'])
+    def test_full_calculation_json_word_and_saved_read(mode,monkeypatch):
+        from tercas.application import calculate,rows
+>       from tercas.batch import calculate_batch
+E       ImportError: cannot import name 'batch_rows' from 'tercas.batch' ([synthetic-checkout]/tercas/batch.py)
+
+tests/test_own_service_critical.py:102: ImportError
+_____________ test_full_calculation_json_word_and_saved_read[area] _____________
+
+mode = 'area'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f405ea602f0>
+
+    @pytest.mark.parametrize('mode',['direct','area'])
+    def test_full_calculation_json_word_and_saved_read(mode,monkeypatch):
+        from tercas.application import calculate,rows
+>       from tercas.batch import calculate_batch
+E       ImportError: cannot import name 'batch_rows' from 'tercas.batch' ([synthetic-checkout]/tercas/batch.py)
+
+tests/test_own_service_critical.py:102: ImportError
+=========================== short test summary info ============================
+FAILED tests/test_own_service_critical.py::test_full_calculation_json_word_and_saved_read[direct]
+FAILED tests/test_own_service_critical.py::test_full_calculation_json_word_and_saved_read[area]
+2 failed, 142 passed in 73.59s (0:01:13)

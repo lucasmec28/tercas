@@ -1,7 +1,8 @@
 """Versioned choice of an isolated local uniaxial deflection component.
 
 This is a model-scope change, not qualification of reduced biaxial stiffness.
-The existing scalar MSE calculation and all its guards are left unchanged.
+The scalar MSE law and its guards are retained; own contours can supply a
+separately qualified service-only Table 12(b) critical.
 No action, result, source or historical output is silently converted.
 """
 import copy
@@ -117,12 +118,27 @@ def _description(data, q, p, original_q=None, original_p=None):
         criterion_scope='declared_limit_for_isolated_local_component_only')
 
 
+def _service_law(record, block):
+    """Describe the actually consumed MLE evidence, not the default MSE law."""
+    if isinstance(block.get('service_mse_signed_evidence'),dict):
+        record.update(displacement_method='Pointwise service MSE curvature, full simply supported physical span; signed q/P including opposing actions; all stationary points compared.',
+            service_method='NBR9.8.5(b)_pointwise_MSE_signed')
+    if not isinstance(block.get('service_mle_input_evidence'),dict):return record
+    record.update(formula_source='ABNT NBR14762:2010 §9.8.5(a), MLE; §9.2.2.2 e §9.2.3',
+        effective_inertia_law='Solve sigma=abs(Mx)/Wc(sigma) on the effective section; integrate Mx/(E*Ixef(sigma)). No Ml inferred.',
+        implementation_convention='Conventional strong scalar effective widths; reduced flange/lip and proved full web; compression and tension checked against fy.',
+        displacement_method='Pointwise service MLE curvature, full simply supported physical span; signed q/P including opposing actions.',
+        service_method='NBR9.8.5(a)_pointwise_MLE',
+        effective_section_stress_qualified=isinstance(block.get('service_mle_evidence'),dict))
+    return record
+
+
 def annotate_direct(result):
     """Call only on a newly calculated raw result, before combined-ELS gates."""
     data = result['input_data']
     if not enabled(data):return
     ev = result['inclination_evidence']['ELS']
-    record = _description(data, ev['q_vector'], ev['P_vector'])
+    record = _service_law(_description(data, ev['q_vector'], ev['P_vector']), result['ELS'])
     guard = _elastic_guard(result)
     record['gross_elastic_guard'] = copy.deepcopy(guard)
     result['deflection_scope_evidence'] = record
@@ -154,6 +170,7 @@ def annotate_batch(result):
         previous = case['evidence']['ELS']['local_uniaxial_component']
         record = _description(data, previous['q_vector_N_mm'], previous['P_vector_N'],
                               combo['q_vector'], combo['P_vector'])
+        record = _service_law(record, case['evidence']['ELS'])
         record['gross_elastic_guard'] = copy.deepcopy(previous['gross_elastic_guard'])
         record['case_id'] = combo['id']
         record['point_position'] = combo.get('point_position')
@@ -201,6 +218,29 @@ def report(doc, result):
     # new calculation, read of live properties or retroactive pass/fail.
     containers = [(c['combination']['id'], c['evidence']['ELS']) for c in result.get('cases', [])
                   if c['combination']['limit_state'] == 'ELS'] if 'cases' in result else [('Direto', result['ELS'])]
+    for name, block in containers:
+        signed = block.get('service_mse_signed_evidence')
+        if isinstance(signed,dict):
+            doc.add_paragraph(str(name)+': MSE local com q/P de sentidos opostos, NBR §9.8.5(b). '+
+                'Todos os pontos estacionários são comparados; a lei Ief e o vão físico foram preservados. '+
+                f"Posição governante={signed['peak_x_mm']:.12g} mm; flecha assinada={signed['deflection_mm']:.12g} mm.")
+        mle = block.get('service_mle_evidence')
+        if isinstance(mle,dict):
+            calc=mle['calculation'];sec=calc['section_at_max_moment']
+            doc.add_paragraph(str(name)+': MLE de serviço próprio, NBR §9.8.5(a), sem Ml inferido. '+
+                f"Ief na seção de maior |M|={sec['Ixef_mm4']:.12g} mm⁴; σef={sec['stress_MPa']:.12g} MPa; resíduo={sec['residual_MPa']:.4g} MPa. "+
+                'Integração de curvatura ponto a ponto no vão físico; sem alteração ELU/FLT. Snapshot: '+mle['input']['snapshot_sha256'])
+            continue
+        if isinstance(block.get('service_mle_input_evidence'),dict):
+            doc.add_paragraph(str(name)+': MLE de serviço próprio, NBR §9.8.5(a), pendente: '+block.get('reason',str(block.get('missing',[])))+' Sem Ml inferido e sem índice conclusivo.')
+            continue
+        critical = block.get('local_critical_evidence')
+        if not isinstance(critical, dict):continue
+        formula = critical.get('formula', {})
+        doc.add_paragraph(str(name)+': Ml de serviço próprio, Tabela 12(b), exclusivo do ELS local. '+
+            (f"Ml={formula['Ml_Nmm']:.12g} Nmm; " if 'Ml_Nmm' in formula else critical['reason']+' ')+
+            f"E={critical['E_MPa']:.12g} MPa; ν={critical['formula_nu']}; Wc={critical['Wc_mm3']:.12g} mm³. "+
+            'Sem alteração dos denominadores ELU/FLT. Snapshot: '+critical['snapshot_sha256'])
     guards = [(name, block.get('local_uniaxial_component', {}).get('gross_elastic_guard'))
               for name, block in containers]
     if any(isinstance(g, dict) for _, g in guards):
@@ -260,6 +300,7 @@ def recorded_local_objective(result, raw):
         if data.get(FIELD)!=MODE or fingerprint(data)!=result.get('input_fingerprint'):return False
         expected=_description(data,record['q_vector_N_mm'],record['P_vector_N'],
             record['original_q_vector_N_mm'],record['original_P_vector_N'])
+        expected=_service_law(expected,raw)
         if any(record.get(k)!=v for k,v in expected.items()):return False
         if not isinstance(record.get('gross_elastic_guard'),dict):return False
         if result.get('schema')=='NBR14762_one_span_v1':

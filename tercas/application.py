@@ -128,6 +128,14 @@ def build_spec(data):
  'SLS':{'q_Nmm':d['q_sls'],'P_N':d['P_sls'],'x_mm':d['x_sls'],'origin':d.get('actions_origin','')},
  'segments':copy.deepcopy(segs),'ELS_limit_mm':{'value':d.get('ELS_limit_mm'),'origin':d.get('ELS_origin','')},
  'introduction':{'left':{'route':'web_connection' if d.get('left_web') is True else None,'origin':d.get('support_origin','')},'right':{'route':'web_connection' if d.get('right_web') is True else None,'origin':d.get('support_origin','')},'point':{'c_mm':d.get('patch_mm'),'origin':d.get('patch_origin','')}}}
+ from .own_service_critical import qualify as qualify_service_critical
+ service_critical=qualify_service_critical(data)
+ if service_critical is not None:
+  spec['deflection_model']=data['deflection_model']
+  spec['Ml_SLS']=service_critical
+  from .own_service_mle import qualify as qualify_service_mle
+  service_mle=qualify_service_mle(service_critical)
+  if service_mle is not None:spec['MLE_SLS']=service_mle
  from .member_application import is_girt,normal_els_limit
  if is_girt(data):spec['ELS_limit_mm']=normal_els_limit(data)
  if roof and roof['enabled'] and not is_girt(data):

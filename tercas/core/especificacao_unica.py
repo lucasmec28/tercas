@@ -35,18 +35,36 @@ def evaluate(spec):
    r['section_property_convention_pending']=selected['source_geometry_convention_unresolved'];segments.append(r)
   except (ValueError,TypeError,KeyError) as e:segments.append({'status':'invalid_inputs','reason':str(e),'segment':seg})
  out['FLT_segments']=segments
+ # Service-only critical must never change the shared ELU/FLT denominator.
+ if 'Ml_SLS' in spec:
+  from ..own_service_critical import for_spec
+  critical=for_spec(spec)
  miss=[k for k in ['E_MPa','Ix_cm4'] if value(k) is None]
- if not qualified_scalar(critical):miss.append('Ml with origin')
+ if not qualified_scalar(critical) and 'MLE_SLS' not in spec:miss.append('Ml with origin')
  if not isinstance(sls,dict) or not isinstance(sls.get('origin'),str) or not sls['origin'].strip():miss.append('SLS actions with origin')
  if miss:out['ELS']={'status':'not_evaluated','missing':miss}
  else:
   try:
-   args=model(L,value('E_MPa'),value('Ix_cm4')*1e4,critical['value'],sls['q_Nmm'],sls['P_N'],sls['x_mm']);z,d=peak(args)
-   out['ELS']={'status':'computed_bending_component','x_mm':z,'deflection_mm':d,'same_span_mm':L,'model':'Euler-Bernoulli bending with sectionwise Ief(M), explicitly clamped to Ig for rounded transition','section_property_convention_pending':selected['source_geometry_convention_unresolved'],'criterion_scope':'bending component only, not complete system ELS approval'}
+   if 'MLE_SLS' in spec:
+    from ..own_service_mle import evaluate as evaluate_service_mle
+    out['ELS']=evaluate_service_mle(spec)
+   else:
+    signed=None
+    if 'Ml_SLS' in spec and sls['q_Nmm']*sls['P_N']<0:
+     from ..nbr_service_strong_mse_signed import peak_deflection as signed_peak
+     signed=signed_peak(L_mm=L,E_MPa=value('E_MPa'),Ig_mm4=value('Ix_cm4')*1e4,Ml_Nmm=critical['value'],q_Nmm=sls['q_Nmm'],P_N=sls['P_N'],a_mm=sls['x_mm'])
+     z,d=signed['peak_x_mm'],signed['deflection_mm']
+    else:
+     args=model(L,value('E_MPa'),value('Ix_cm4')*1e4,critical['value'],sls['q_Nmm'],sls['P_N'],sls['x_mm']);z,d=peak(args)
+    out['ELS']={'status':'computed_bending_component','x_mm':z,'deflection_mm':d,'same_span_mm':L,'model':'Euler-Bernoulli bending with sectionwise Ief(M), explicitly clamped to Ig for rounded transition','section_property_convention_pending':selected['source_geometry_convention_unresolved'],'criterion_scope':'bending component only, not complete system ELS approval'}
+    if signed is not None:out['ELS']['service_mse_signed_evidence']=signed
+   d=out['ELS']['deflection_mm']
    limit=spec.get('ELS_limit_mm')
    if qualified_scalar(limit):out['ELS'].update(limit_mm=limit['value'],limit_origin=limit['origin'],index=abs(d)/limit['value'],criterion_status='meets' if abs(d)<=limit['value'] else 'fails')
    else:out['ELS'].update(criterion_status='not_evaluated',missing=['applicable ELS limit with source'])
-  except (ValueError,TypeError,KeyError) as e:out['ELS']={'status':'invalid_or_outside_implemented_domain','reason':str(e)}
+  except (ValueError,TypeError,KeyError,ArithmeticError) as e:out['ELS']={'status':'invalid_or_outside_implemented_domain','reason':str(e)}
+ if 'MLE_SLS' in spec:out['ELS']['service_mle_input_evidence']=copy.deepcopy(spec['MLE_SLS'])
+ if 'Ml_SLS' in spec:out['ELS']['local_critical_evidence']=copy.deepcopy(spec['Ml_SLS']['evidence'])
  from .ramos_genericos import calculate
  out['NBR_branches']=calculate(spec,out)
  out['remaining_checks']=['actual catalogue property convention/critical source, restraints and connection design remain as declared inputs; partial branches are explicit']

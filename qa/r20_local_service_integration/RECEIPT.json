@@ -1,0 +1,89 @@
+{
+  "base_R19_commit": "97734054fc603c16021717cd32e12c629a8fa1d6",
+  "base_R19_tree": "16503a04043ac4249957c4f4f1478c62e75a829b",
+  "tested_production_commit": "43f60be9420d458eec9ee2954da456c6a4c6c97f",
+  "additional_material_test_commit": "79f4d4c",
+  "production_code_unchanged_after_test_start": true,
+  "release": "componentes-Ue-flecha-local-familia-20261108-r20",
+  "test_suites": {
+    "backend": {
+      "tests": 258,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 95.003,
+      "original_xml_sha256": "55554b4130fab1fc6447e18ed6ec10cec02f541d2e364cad812f6f2e3add31cc",
+      "public_xml_sha256": "b9f9fd7c476cdd61c3c0bc997e86a2994a3b418e01873b130279072fecbca815"
+    },
+    "materials": {
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 36.499,
+      "original_xml_sha256": "68b787d46956b76e2cd579f566d97041b57e043f04d194d95b62ad3b29825f05",
+      "public_xml_sha256": "0cc166ad97feb9cc304c032db69ca5a9ebb9ff1d3ff2063da4de40c99c8a89eb"
+    },
+    "ui": {
+      "tests": 22,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 92.563,
+      "original_xml_sha256": "da2b90b013e05e0a813150bb800d3468164ffa0491ed30559b3fa3d687af3bd3",
+      "public_xml_sha256": "053eb045b4fb09414a406d675b69ea6c91b6e66e7309b67aa0a11c0878d44bdb"
+    }
+  },
+  "coverage": {
+    "complete_documentary_Ue_rows": 66,
+    "MSE_Table12_rows": 62,
+    "MLE_service_rows": 4,
+    "MLE_indices": [
+      79,
+      80,
+      81,
+      82
+    ],
+    "material_sweep": {
+      "pytest_tests": 3,
+      "rows_per_test": 66,
+      "fy_MPa": [
+        300,
+        350,
+        550
+      ],
+      "scope": "Synthetic low-service-load method availability; not universal approval of every load/material"
+    },
+    "default_fy250_family_sweep": true,
+    "own_catalogue_application": "isolated_purlin_only",
+    "opposing_q_P": "fresh qualified local MSE or MLE only; same-sign and historical protocols preserved"
+  },
+  "independent_review": {
+    "Table12_coherent_rehash_and_domain_rejection": true,
+    "MLE_catalogue_transplant_rejection": true,
+    "MLE_independent_quadrature_max_relative_error": 8.14e-09,
+    "scalar_material_sampling_not_continuous_proof": true,
+    "signed_MSE_static_review": true,
+    "integrated_hook_static_review": true
+  },
+  "preserved": [
+    "ELU/FLT denominators",
+    "actions and profile self-weight",
+    "physical span and effective lengths",
+    "declared limits",
+    "historical inputs and saved results"
+  ],
+  "complete_repository_suite_run": false,
+  "combined_ELS_added": false,
+  "member_homologation": false,
+  "compileall": "passed",
+  "git_diff_check": "passed",
+  "github_publication_attempted": false,
+  "hosted_R20_runtime_tested": false,
+  "latest_hosted_observation": {
+    "utc": "2026-11-08T17:03:00Z",
+    "release": "componentes-Ue-RP23-FLT-qP-20261107-r13",
+    "R19_deployment_confirmed": false
+  },
+  "author_test_counts_not_added_to_integrated_totals": true
+}

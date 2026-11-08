@@ -1,0 +1,56 @@
+{
+  "code_commit": "76e9bb8",
+  "base": "97734054",
+  "scope": "own Ue local service Table12b only",
+  "complete_family_total": 66,
+  "computed_Table12b": 62,
+  "outside_Table12b_indices": [
+    79,
+    80,
+    81,
+    82
+  ],
+  "outside_reason": "D/bw=25/300 < 0.1; Ue300x100x25 t=3.35/3.75/4.25/4.75 mm",
+  "strength_contract": "Shared Ml/Mdist, section checks, FLT_segments and NBR_branches bit-exact vs legacy per66 core cases",
+  "own_tests": {
+    "passed": 18,
+    "seconds": 19.35,
+    "code_commit": "76e9bb8",
+    "log": "final_76e9bb8.log",
+    "xml": "final_76e9bb8.xml"
+  },
+  "prior_aggregate": {
+    "passed": 142,
+    "failed": 2,
+    "reason": "Test-only import of nonexistent batch_rows; removed and both full direct/area tests subsequently passed.",
+    "log": "initial_test_import_failure.log"
+  },
+  "not_run": [
+    "UI/AppTest",
+    "network",
+    "whole repository suite"
+  ],
+  "preserved_limits": [
+    "Opposing q/P retains existing scalar restriction; no false approval",
+    "Gross elastic guard retained; effective-section stress not certified",
+    "No combined ELS or whole-member approval"
+  ],
+  "published": false,
+  "aggregate": {
+    "passed": 145,
+    "seconds": 76.19,
+    "code_commit": "caf23af",
+    "log": "aggregate_caf23af.log",
+    "xml": "aggregate_caf23af.xml",
+    "files": [
+      "test_own_service_critical.py",
+      "test_strong_critical_guard.py",
+      "test_ue_catalog_nbr_bending.py",
+      "test_uniaxial_deflection_scope.py",
+      "test_local_deflection_creation_panorama.py"
+    ]
+  },
+  "final_change": "Arithmetic revalidation and coherent-rehash rejection; all18 own tests rerun on final code including66 family rows and full direct/area/Word.",
+  "receipt_status": "historical_stage_62_table12_only",
+  "integration_note": "Historical author receipt for the isolated 62-row Table 12 service stage. Results, failures, timings and counts are preserved. The R20 integration subsequently adds MLE service for the four remaining eligible rows and opposing-load MSE on the qualified local path. This is not the final integrated R20 package receipt."
+}
