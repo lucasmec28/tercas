@@ -1,0 +1,60 @@
+{
+  "schema": "synthetic_service_gap_qa_v1",
+  "base_commit": "23de0dd535bf71f863c2ca9e2fba3ef8fa5032be",
+  "scope": "Read-only explanation of saved local/elastic sufficiency gaps; no reduced stiffness implemented",
+  "fixture_sha256": "34d7bbf54cfb18eb21548c335a6e57e5e86298e526350d05196e69c974f0cfcc",
+  "fixture_path": "tests/fixtures/isolated_service_reduced_gap_synthetic.json.gz",
+  "synthetic_only": true,
+  "generator": "qa/r18_els_gap/build_synthetic_fixture.py",
+  "runtime": {
+    "python": "3.12.14",
+    "OPENBLAS_CORETYPE": "Haswell",
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "PYTHONPATH": ".:tests:<dependency-directory>"
+  },
+  "checks": {
+    "focused_tests_passed": 157,
+    "focused_tests_failed": 0,
+    "focused_duration_seconds": 1.05,
+    "junit": "qa/r18_els_gap/focused.xml",
+    "log": "qa/r18_els_gap/focused.log",
+    "full_suite_run": false,
+    "AppTest_run": false,
+    "fixture_replay_member_solver_blocked": true,
+    "fixture_replay_scalar_MSE_blocked": true,
+    "source_field_unchanged": true,
+    "presentation_handles_saved_schema_v1_v2_v3_without_mutation": true,
+    "junit_original_sha256": "caf3566fc9c44c479012c9fd5e2bbf4de74828f5de1898eeeeff7aa453350843",
+    "junit_public_sha256": "a03e3356228a21fa1274b501d8307bb286551949da3094b9fbae6f65d7c20a83",
+    "environment_hostname_removed": true
+  },
+  "witness": {
+    "concomitant_Mx_My_B_nonzero": true,
+    "PP_at_CG": true,
+    "external_at_top": true,
+    "von_mises_upper_MPa": 200.9787821624478,
+    "fy_MPa": 250.0,
+    "elastic_field_sufficient": true,
+    "unresolved_walls": [
+      "web",
+      "top_flange"
+    ],
+    "diagnostic_gross_displacement_upper_mm": 44.5950556636258,
+    "diagnostic_ratio_upper": 0.0445950556636258,
+    "limit_mm": 1000.0,
+    "index_lower": null,
+    "index_upper": null,
+    "linear_twist_max_rad": 0.6523135468320919,
+    "linear_twist_is_not_physical_approval": true
+  },
+  "reduced_effective_section_implemented": false,
+  "combined_ELS_completed": false,
+  "published": false,
+  "independent_static_review": {
+    "reviewed_code_commit": "5ff1e67f31795a0e8574bef4b6d37721901eef76",
+    "blocking_findings": 0,
+    "scope": "diagnostic helper, authenticated UI/report hook, v1/v2/v3 reader dispatch; no independent numerical run"
+  }
+}

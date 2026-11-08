@@ -1,0 +1,72 @@
+{
+  "schema": "flt_current_reference_R18_QA_v1",
+  "date": "2026-11-08",
+  "base_commit": "23de0dd535bf71f863c2ca9e2fba3ef8fa5032be",
+  "scope": "Focused change verification; not whole-suite, physical restraint or project approval",
+  "runs": {
+    "focal": {
+      "tests": 119,
+      "failures": 0,
+      "errors": 0,
+      "seconds": 51.066,
+      "exit_code": 0,
+      "raw_junit_sha256": "bc7e973c744561eb21e09c4765602b152c88ae9e645501781bf0345aa0d42e64",
+      "sanitized_junit_sha256": "629279430db0e5c3ec90fc3ab3a549bad7d94ad73f59259b3e2db25795795c05",
+      "log_sha256": "ce8c139bac0053e2598bf627c6cf374d90410199077be4b2aec701a2acc40c2d"
+    },
+    "compatibility": {
+      "tests": 471,
+      "failures": 0,
+      "errors": 0,
+      "seconds": 154.964,
+      "exit_code": 0,
+      "raw_junit_sha256": "85e76b128060fdc34bfee9ca0392ab33d690e08e0ea20149d43da91ae9314a58",
+      "sanitized_junit_sha256": "93edda1c7565eacc2baf43f67f59d5659e031281af71fcde84eca6ebf37be8ee",
+      "log_sha256": "600002a5086ab775375b6435bb22fefd62f19b07279ef8e16fcaa2b00a5fdd21"
+    }
+  },
+  "counts_overlap": true,
+  "thread_limits": {
+    "OPENBLAS_NUM_THREADS": 1,
+    "OMP_NUM_THREADS": 1,
+    "MKL_NUM_THREADS": 1,
+    "OPENBLAS_CORETYPE": "Haswell"
+  },
+  "legacy_oracle": {
+    "actual_pre_change_snapshots": 8,
+    "accepted_unchanged": 8,
+    "schemas": [
+      "v3",
+      "v4"
+    ],
+    "solver_forbidden": true,
+    "sha256": "6d295e307695acbc32c999c67a9b40438c5e256f1e84e189414cfecda18f9c00"
+  },
+  "current_rerender_replays_Ritz": true,
+  "AppTest": {
+    "timeout_seconds": 60,
+    "import_seconds": 1.7894011939997654,
+    "calculate_with_exports_seconds": 3.2697758740005156,
+    "rerender_with_exports_seconds": 2.1384703410003567
+  },
+  "checks": {
+    "compileall": "passed",
+    "git_diff_check": "passed",
+    "independent_static_review": "no blocker identified; no independent numerical run"
+  },
+  "reference_example": {
+    "synthetic": true,
+    "catalog_index": 26,
+    "L_mm": 4100.0,
+    "Ly_mm": 4100.0,
+    "Lz_mm": 4100.0,
+    "q_external_uls_N_mm": 0.3,
+    "P_uls_N": 300.0,
+    "point_station_mm": 1537.0,
+    "angle_degrees": 5.71,
+    "old_floor_index": 1.2290808112237628,
+    "current_reference_index": 0.8579486394069836,
+    "critical_reference_is_approximate": true,
+    "whole_member_approved": false
+  }
+}

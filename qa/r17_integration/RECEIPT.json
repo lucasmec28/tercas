@@ -1,0 +1,84 @@
+{
+  "release": "componentes-Ue-P-local-ELS-giro-20261108-r17",
+  "tested_code_commit": "f92dfaa7778589f2bf6b48b888df198a492abfbc",
+  "base_published_commit": "b9f1cddf37de9b1b8533588d8719b979f71d6c2c",
+  "base_R16_tree": "d3d356a67a1e31f45d53fc620736d5ea394fb45d",
+  "scope": "Local normal point-web criterion plus authenticated ELS evidence presentation and prescribed-rotation geometry diagnostics; no global structural approval.",
+  "backend": {
+    "tests": 771,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 21.899,
+    "exit_code": 0,
+    "junit_sha256": "471c5ffd80ab4bfbe2cbad77ec581e4d66b0442b9f8fbe1a60c69c7de80eb47d",
+    "original_junit_sha256": "6703405ded368e3ebc7100b6cd5806178084d9b6535a3eb966c8c82bd16cf06d",
+    "environment_hostname_removed": true,
+    "log_sha256": "06ac2444dd368b010bf2d4ae0df90dc48c48cfc705db5910de7a6afc5ea7ecb7"
+  },
+  "ui": {
+    "tests": 12,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 41.538,
+    "exit_code": 0,
+    "junit_sha256": "637247adcb2e265c921908914052b7f06d429f06f56a6767bc70156a613aa0d6",
+    "original_junit_sha256": "ee3a168829fa15f9ce3e5e762a99db38fc555b712f200df2b546db1ad63a509e",
+    "environment_hostname_removed": true,
+    "log_sha256": "4b094bbf84aa5888a43aaa51d0e29e47fae5110d908fd050ab9d1c7f29617770"
+  },
+  "complete_family": {
+    "complete_Ue_rows": 66,
+    "yield_strengths_tested_MPa": [
+      250,
+      300
+    ],
+    "synthetic_finite_contact_cases": 132,
+    "all_cases_computed_and_replayed": true,
+    "all_load_states_or_physical_details_qualified": false
+  },
+  "independent_point_review": {
+    "NBR14762_source_sha256": "c2a01615a3ce9e2b93aeb7fee757f7bf9dd932adaefbc242e848ce813dc82407",
+    "Ue_table_rows_checked": 8,
+    "golden_FRd_N": 13402.1113023274,
+    "capacity_rehash_bypass_repaired": true,
+    "invented_M_plus_concentrated_F_interaction": false
+  },
+  "recovery": {
+    "R16_recovered_from_verified_delivery_package": true,
+    "R16_tree_identity_verified": true,
+    "R17_changes_reproduced_from_recorded_text_patches": true,
+    "lost_original_R17_git_objects_recovered": false,
+    "this_receipt_records_new_execution_after_recovery": true,
+    "previous_run_counts_not_reused_as_current_approval": true
+  },
+  "focused_only": true,
+  "full_repository_suite_run": false,
+  "synthetic_tests_only": true,
+  "private_project_data_in_release": false,
+  "historical_calculations_changed": false,
+  "physical_member_solver_changed": false,
+  "finite_rotation_equilibrium_implemented": false,
+  "source_hashes": {
+    "app.py": "771e1b67d5e343f3ffd371d646e53ebd03ae8442a291925904085d84a2645044",
+    "tercas/completion_requirements.py": "c5f4a1497aa1ca44cbc8d6368b33a2a4058c764121671945929a5bca733321b4",
+    "tercas/completion_service_evidence.py": "857b66075b05acfead97a0db40784a5d174c6f0570c8dadf390f8e1f0cbdff8a",
+    "tercas/torsion_applicability.py": "b6d42af26204b9f2a8ba1fa6134d3d017eeb4549b45937f992219f4742bb6608",
+    "tercas/rotation_geometry_diagnostic.py": "aa12827aa64b0c7d67d618408cacc6b1dd0b0c1d86efc03cb49ded526cf46613",
+    "tercas/point_web/application.py": "edd9efb9f752117bff0b0d1156f01ae3599ca0d1710e0877c4bcca3fcc9a4ed5",
+    "tercas/point_web/sources.py": "b5a1d22cd34f079ccea7012193610e178922b60260e8c42aca55fd971d9fba4c",
+    "tercas/point_web/ui.py": "7f08c4ed34647d1c144a350c2ca86000296691f6c767c91cc817dddbbea643f8",
+    "tercas/release_info.py": "6666be4abb6088e8f4aa1c1ceeda36968a50964f80cc167f22e8631bbdab7e1e",
+    "tercas/ui_cache_epoch.py": "3ec52eaf3bc626d8193712af448dd960e71eb27f15b3769d7c0efde89a473bfa"
+  },
+  "runtime": {
+    "numpy": "2.5.3",
+    "OPENBLAS_CORETYPE": "Haswell",
+    "OPENBLAS_NUM_THREADS": 1,
+    "OMP_NUM_THREADS": 1,
+    "MKL_NUM_THREADS": 1
+  },
+  "compileall_and_diff_check": "passed",
+  "production_publication_attempted": false
+}

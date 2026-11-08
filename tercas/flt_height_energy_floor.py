@@ -13,6 +13,9 @@ from .ltb_load_height import finite, action_terms
 from .ue_catalog_reference import digest
 
 SCHEMA = 'flt_height_declared_energy_floor_v1'
+SCHEMA_V2 = 'flt_height_declared_energy_floor_v2'
+POLICY_V2 = 'moment_product_energy_bound_v2'
+
 METHOD = 'Sahraei2017_energy_Cauchy_Poincare_declared_Euler_bounds'
 SCOPE = ('Piso analítico do operador resistente declarado: alturas por ação, q+P e '
          'posições reais no vão físico. Ly/Lz são hipóteses de limites inferiores '
@@ -103,7 +106,50 @@ def maximum_shear(L, loads):
                 rational_extrema=True)
 
 
-def solve_floor(*, L_mm, Ly_mm, Lz_mm, E_MPa, G_MPa, Iweak_mm4, J_mm4, Cw_mm6, actions):
+def _moment_product_bound(exact, loads):
+    """Distributional integration-by-parts bound, on the physical interval.
+
+    ||(M phi)'||² = integral(M² phi'² + q M phi²)
+                      + sum_a P_a M(a) phi(a)².
+    Opposite coincident forces are summed before taking positive parts.
+    The maxima of q*M occur at the same stations as M (q is constant).
+    """
+    L = exact['L']; q = exact['q']
+    points = {}
+    for load in loads:
+        if load['station'] is not None:
+            a = _q(load['s_mm'])
+            if 0 < a < L:
+                points[a] = points.get(a, Fraction(0)) + _q(load['P_down_N'])
+    def moment(x):
+        return q*x*(L-x)/2 + sum((p*min((L-a)*x/L, a*(L-x)/L)
+                                  for a,p in points.items()), Fraction(0))
+    cuts = sorted({Fraction(0), L} | set(points))
+    stations = set(cuts)
+    reaction = q*L/2 + sum((p*(L-a)/L for a,p in points.items()), Fraction(0))
+    if q:
+        for left,right in zip(cuts[:-1], cuts[1:]):
+            stationary = (reaction-sum((p for a,p in points.items() if a<=left),Fraction(0)))/q
+            if left < stationary < right:
+                stations.add(stationary)
+    qm_upper = max([Fraction(0)] + [q*moment(x) for x in stations])
+    uniform = qm_upper*(L/PI_LO)**2
+    point_rows = [(a,p,moment(a),max(p*moment(a),0)*a*(L-a)/L)
+                  for a,p in sorted(points.items())]
+    square = exact['M']**2 + uniform + sum((row[3] for row in point_rows),Fraction(0))
+    upper = _sqrt_upper(square)
+    return upper, dict(
+        identity='integral((M phi)_prime^2) = integral(M^2 phi_prime^2 + q M phi^2) + sum(Pa M(a) phi(a)^2)',
+        moment_square_fraction=str(exact['M']**2),
+        uniform_qM_max_positive_fraction=str(qm_upper),
+        uniform_bound_fraction=str(uniform),
+        point_bounds=[dict(station_fraction=str(a),force_fraction=str(p),moment_fraction=str(m),
+                           bound_fraction=str(b)) for a,p,m,b in point_rows],
+        B_squared_upper_fraction=str(square),B_upper_fraction=str(upper),
+        physical_span_fraction=str(L),method='derived_sufficient_bound_not_normative_coefficient')
+
+
+def solve_floor(*, L_mm, Ly_mm, Lz_mm, E_MPa, G_MPa, Iweak_mm4, J_mm4, Cw_mm6, actions, method=None):
     """Conditional analytical bound, using the whole physical load diagram.
 
     Assume EIy int(u''²)>=Ny int(u'²) and
@@ -111,6 +157,8 @@ def solve_floor(*, L_mm, Ly_mm, Lz_mm, E_MPa, G_MPa, Iweak_mm4, J_mm4, Cw_mm6, a
     Any positive end-restraint energies are included in the declared bounds;
     they are not reconstructed or inserted into the historical physical model.
     """
+    if method not in (None, POLICY_V2):
+        raise ValueError('Unknown declared energy floor policy')
     L, ly, lz, E, G, I, J, Cw = [finite(v,k,True) for k,v in (
         ('L',L_mm),('Ly',Ly_mm),('Lz',Lz_mm),('E',E_MPa),('G',G_MPa),
         ('Iweak',Iweak_mm4),('J',J_mm4),('Cw',Cw_mm6))]
@@ -121,6 +169,11 @@ def solve_floor(*, L_mm, Ly_mm, Lz_mm, E_MPa, G_MPa, Iweak_mm4, J_mm4, Cw_mm6, a
     Ny_q = E_q*I_q*(PI_LO/ly_q)**2
     T_q = G_q*J_q+E_q*Cw_q*(PI_LO/lz_q)**2
     B_q = Mq+Lq/PI_LO*Vq
+    product_witness = None
+    if method == POLICY_V2:
+        product_B, product_witness = _moment_product_bound(exact, loads)
+        product_witness['legacy_B_upper_fraction'] = str(B_q)
+        B_q = min(B_q, product_B)
     uniform_D_q = max(exact['qh'],0)*(Lq/PI_LO)**2
     point_D_q = [(station,height,station*(Lq-station)/Lq,
                   max(height,0)*station*(Lq-station)/Lq)
@@ -165,6 +218,10 @@ def solve_floor(*, L_mm, Ly_mm, Lz_mm, E_MPa, G_MPa, Iweak_mm4, J_mm4, Cw_mm6, a
         primary_torsion_assessed=False,biaxial_stability_assessed=False,
         actual_load_capacity_qualified=False,whole_member_approved=False,
         sources=[dict(url=SOURCE,location='Eq2 energy; analytical inequalities derived in this implementation')])
+    if method == POLICY_V2:
+        result.update(schema=SCHEMA_V2, method=POLICY_V2,
+                      moment_product_bound=product_witness,
+                      historical_floor_preserved_without_explicit_method=True)
     if B==0 and D==0:
         return dict(result,status='no_reference_bending_or_destabilizing_height',
             reason='Nenhuma perda de positividade por estes termos; não se declara capacidade infinita nem Me=0.')
@@ -190,12 +247,14 @@ def solve_floor(*, L_mm, Ly_mm, Lz_mm, E_MPa, G_MPa, Iweak_mm4, J_mm4, Cw_mm6, a
         reason='Piso analítico no operador condicionado às hipóteses de energia dos comprimentos resistentes; não é aprovação física nem autovalor do solver antigo.')
 
 
-def qualify_family(data, actions):
+def qualify_family(data, actions, *, method=None):
     """Bind the bound to the own contour without invoking a Me approximation."""
     from . import pierin_ue_registry as registry, ue_catalog_reference as own
     from . import roof_top_load as roof
     from .resistance_effective_lengths import configuration
     from .flt_height_effective import symmetry_proof
+    if method not in (None, POLICY_V2):
+        raise ValueError('Unknown declared energy floor policy')
     registry.select_new_study(data['catalog_index'],include_routes=False)
     section=own.section_for(data);p=section['properties']
     symmetry=symmetry_proof(section);lengths=configuration(data)
@@ -240,15 +299,19 @@ def qualify_family(data, actions):
             individual_parallel_actions_present=any(a['parallel_force']!=0 for a in loads))
         bound.update(solve_floor(L_mm=data['L_mm'],Ly_mm=ly,Lz_mm=lz,
             E_MPa=m['E_MPa'],G_MPa=m['G_MPa'],Iweak_mm4=p['Iy_weak_mm4'],
-            J_mm4=p['J_mm4'],Cw_mm6=p['Cw_mm6'],actions=actions))
+            J_mm4=p['J_mm4'],Cw_mm6=p['Cw_mm6'],actions=actions,method=method))
         bound['energy_bound_hypotheses']['declared_origin']=(
             lengths['origin'] if lengths else 'Full-span fork/free-warping reference')
+    if method == POLICY_V2:
+        bound['schema'] = SCHEMA_V2
+        bound['method'] = POLICY_V2
     bound['snapshot_sha256']=digest(bound)
     return bound
 
 
 def validate_saved(evidence,data,actions):
-    expected=qualify_family(data,actions)
+    method = POLICY_V2 if evidence.get('schema') == SCHEMA_V2 else None
+    expected=qualify_family(data,actions,method=method)
     if evidence!=expected:
         raise ValueError('Piso de energia FLT alterado ou fora das hipóteses salvas; recalcule explicitamente.')
     return copy.deepcopy(expected)

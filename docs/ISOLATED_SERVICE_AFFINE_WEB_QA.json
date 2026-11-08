@@ -1,0 +1,62 @@
+{
+  "scope": "Synthetic/source-only QA; no private project inputs or outputs",
+  "base_commit": "3e7830e23dfe1922c977e086e3eb8ad784c3513c",
+  "mechanics_schema": "isolated_service_stiffened_affine_web_combined_field_v3",
+  "tests": [
+    {
+      "group": "Scalar affine web, full66 contours, mechanics and stiffened flange",
+      "passed": 277,
+      "seconds": 9.2,
+      "member_solver_used": false,
+      "log": "ISOLATED_SERVICE_AFFINE_WEB_FOCAL.txt"
+    },
+    {
+      "group": "Combined-service consumer, saved v1/v2/v3 replay, tampering, UI and Word",
+      "passed": 35,
+      "seconds": 13.66,
+      "shared_synthetic_member_solves": 2,
+      "log": "ISOLATED_SERVICE_AFFINE_WEB_COMPONENT_FOCAL.txt"
+    }
+  ],
+  "unique_focused_tests": 312,
+  "full_repository_suite_run": false,
+  "family": {
+    "source": "pierin_ue_registry.new_study_indices",
+    "complete_rows": 66,
+    "complete_contours_checked": 66,
+    "geometry_selected_by_data_not_name": true,
+    "member_solver_used": false
+  },
+  "independent_review": {
+    "primary_source_sha256": "c2a01615a3ce9e2b93aeb7fee757f7bf9dd932adaefbc242e848ce813dc82407",
+    "full_rational_coefficient_comparisons": 12528,
+    "rational_acceptance_checks": 87,
+    "monotonicity_identity_controls": 1001,
+    "nonexact_alignment_rejected": true,
+    "numerical_overflow_extra_route_inconclusive": true,
+    "unrepresentable_scalar_diagnostic_json_finite": true,
+    "historical_gross_mle_unchanged": true,
+    "reviewed_helper_sha256": "24651c0e7af00cbb8031c68f0d712603d7b674f34ee00425c0030b562231ebc5"
+  },
+  "cold_replay": {
+    "solver_runs": 0,
+    "synthetic_v1_source_sha256": "23415549ca461795e70dd2add8dd9e352c2bc362d95f5859befd30ec15f9fcab",
+    "authentic_v1_cold_replay_unchanged": true,
+    "authentic_v2_cold_replay_unchanged": true,
+    "v3_cold_replay": true,
+    "rehashed_affine_tampering_rejected": 6,
+    "UI_Word_cold_replay_without_solver": true,
+    "runtime": {
+      "numpy": "2.5.3",
+      "OPENBLAS_CORETYPE": "Haswell",
+      "OPENBLAS_NUM_THREADS": 1,
+      "OMP_NUM_THREADS": 1,
+      "MKL_NUM_THREADS": 1
+    }
+  },
+  "historical_gross_mle_sha256": "6c55ca5d6ee5ef7c371b93963f7101fea4cb2b1426f12acff442520eb0fd03ca",
+  "no_new_solver": true,
+  "release_metadata_unchanged": true,
+  "cache_unchanged": true,
+  "publication_performed": false
+}

@@ -1,0 +1,57 @@
+{
+  "schema": "EN_Ue_shear_lag_spatial_gap_diagnostics_v1",
+  "qualification_inferred": false,
+  "production_changed": false,
+  "beta": "4/5",
+  "quartic_coefficients": [
+    "1",
+    "-1",
+    "3/2",
+    "-1",
+    "1/4"
+  ],
+  "full_plate_q_integral": "4/5",
+  "retained_bands": [
+    [
+      "0",
+      "1/4"
+    ],
+    [
+      "3/4",
+      "1"
+    ]
+  ],
+  "local_effective_area": "1/2",
+  "eq3_3_target": "2/5",
+  "naive_quartic_on_retained_area": "4231/10240",
+  "ad_hoc_normalization_needed": "4096/4231",
+  "equal_area_raw_moments": {
+    "root": [
+      "4/5",
+      "8/25",
+      "64/375"
+    ],
+    "tip": [
+      "4/5",
+      "12/25",
+      "124/375"
+    ],
+    "uniform": [
+      "4/5",
+      "2/5",
+      "4/15"
+    ]
+  },
+  "central_second_moments": {
+    "root": "16/375",
+    "tip": "16/375",
+    "uniform": "1/15"
+  },
+  "tests": [
+    "quartic_full_plate_area",
+    "quartic_retained_strip_mismatch",
+    "equal_area_different_first_moments",
+    "equal_area_different_second_moments",
+    "equal_area_different_central_second_moments"
+  ]
+}

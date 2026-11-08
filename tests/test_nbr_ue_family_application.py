@@ -54,7 +54,12 @@ def test_effective_lengths_change_reference_not_demands():
     old['input_fingerprint']=fingerprint(old['input_data']);old=own.attach_source(old)
     b=app.attach(old)[app.FIELD]
     ac=a['records'][0]['components'];bc=b['records'][0]['components']
-    assert [c['demand'] for c in ac]==[c['demand'] for c in bc]
+    # Fresh full-span q+P now uses the existing reference, while shortened
+    # resistance lengths retain a separate sufficient floor component.
+    ad={(c['route'],c['method']):c['demand'] for c in ac}
+    bd={(c['route'],c['method']):c['demand'] for c in bc}
+    assert all(ad[key]==bd[key] for key in ad.keys() & bd.keys())
+    assert bd['own_rounded_contour','FLT_height_energy_floor']==ad['own_rounded_contour','FLT_height_effective_reference']
     assert next(c for c in ac if c['method']=='FLT_reference')['capacity_Nmm']!=next(c for c in bc if c['method']=='FLT_reference')['capacity_Nmm']
     assert b['physical_span_mm']==6000.
 
@@ -128,10 +133,15 @@ def test_missing_or_disabled_roof_scheme_keeps_local_and_explicit_position_pendi
 
 
 def test_unverified_height_eigenvalue_cannot_create_new_family_capacity():
-    old=source();old['roof_top_load_evidence']={'Me_Nmm':1e99,'snapshot_sha256':'forged'}
-    row=app.attach(old)[app.FIELD]['records'][0]
-    height=next(c for c in row['components'] if c['method']=='FLT_height_effective_reference')
-    assert height['index'] is None and height['capacity_Nmm'] is None
+    old=source();expected=app.attach(old)[app.FIELD]
+    old['roof_top_load_evidence']={'Me_Nmm':1e99,'snapshot_sha256':'forged'}
+    actual=app.attach(old)[app.FIELD]
+    # The current reference is recomputed from authenticated actions/geometry;
+    # neither the fake critical value nor its claimed hash can enter capacity.
+    assert actual==expected
+    row=actual['records'][0]
+    assert row['height_source']['Me_Nmm']!=1e99
+    assert row['height_source']['elastic_reference_eligible']
 
 
 def test_completion_pipeline_includes_new_packet_without_old_denominator_changes(monkeypatch):

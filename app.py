@@ -121,6 +121,8 @@ def render_results(result,d):
   show_point_contact_results(st,result)
   from tercas.support_web.ui import render as render_support_web
   render_support_web(st,result,context="isolated")
+  from tercas.point_web.ui import render as render_point_web
+  render_point_web(st,result,context="isolated")
   c1,c2,c3=st.columns(3)
   with c1:st.download_button('Baixar memória parcial (Word)',batch_word(result) if batch else word(result),file_name='MC_terca_parcial.docx',mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
   with c2:st.download_button('Baixar estudo e resultados (JSON)',json.dumps(result,ensure_ascii=False,indent=2),file_name='terca_estudo_resultados.json',mime='application/json')

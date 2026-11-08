@@ -1,0 +1,28 @@
+{
+  "scope": "Complementary isolated-purlin support-web evidence, not global approval.",
+  "baseline_local": "1a335043f4fdf4454b450cd508f6c4eb6b53d812",
+  "baseline_published": "b9f1cddf37de9b1b8533588d8719b979f71d6c2c",
+  "tests": 506,
+  "seconds": 43.467,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "exit_code": 0,
+  "focus_only": true,
+  "independent_static_review": {
+    "reactions_from_immutable_source": true,
+    "scalar_capacity_replayed": true,
+    "technical_revision_pinned": true,
+    "metadata_reconciliation_gap_fixed": true,
+    "original_result_and_other_18_requirements_preserved": true,
+    "no_global_promotion": true,
+    "physical_declarations_not_authenticated_as_facts": true,
+    "original_JSON_required": true
+  },
+  "module_sha256": "02bac1aa8f1d50bda7e4cc42fc84f8fe0b6911f179896a51c09dca5a950cb1f5",
+  "junit_sha256": "300a9b06989d24b8bb351a24d30ccefefb891d7ce5c7936df97fab07e886daf8",
+  "source_data": "Synthetic test cases only; no private engineering project.",
+  "normative_design_complete": false,
+  "publication_attempted": false,
+  "junit_sha256_before_environment_metadata_removal": "ce63e018a754022d81590bb7d6943ad805e2442dbe6fb301c348226759d9c4a6"
+}

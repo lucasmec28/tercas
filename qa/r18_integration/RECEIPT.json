@@ -1,0 +1,79 @@
+{
+  "release": "componentes-Ue-FLT-fresco-ELS-diagnostico-20261108-r18",
+  "tested_code_commit": "fe528cc282f317b1abd1bb0adfeb0224e504f454",
+  "base_R17_commit": "23de0dd535bf71f863c2ca9e2fba3ef8fa5032be",
+  "base_R17_tree": "1aa2735ea135e0300918a6c5735bcdaa98c27705",
+  "backend": {
+    "tests": 1068,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 109.903,
+    "exit_code": 0,
+    "junit_sha256": "1ac8665e4c7e920631f7c173a42cb17f2ebadbb727df1cf4009b16b087744180",
+    "original_junit_sha256": "f96d23789193449240fd4a90c0405458bf62b9d8aa47a451790cdd6f5f616cc2",
+    "environment_hostname_removed": true,
+    "log_sha256": "e5d7c92db4d9ee3bba212e53844a699f088d0f477e42b72c0ba27b8163fc6c7d"
+  },
+  "ui": {
+    "tests": 13,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 49.647,
+    "exit_code": 0,
+    "junit_sha256": "01a330609874cee1826e900799b40f7991e0712e75770f6dd4d55c5a5ee40420",
+    "original_junit_sha256": "6737cd35e6f2794af5731027a117a7affe54ccf73351c69a81dfd219abe529c2",
+    "environment_hostname_removed": true,
+    "log_sha256": "e3aaa77e732ad529f11a44e94914c5c921b90f9237d03184785fba7d9375c4e3"
+  },
+  "scope": "Fresh selection of existing full-physical-span Ritz reference for eligible q+P inputs without a marker; read-only detailed combined-service sufficiency diagnostics.",
+  "new_physical_solver": false,
+  "reduced_combined_service_stiffness_implemented": false,
+  "large_rotation_equilibrium_implemented": false,
+  "effective_lengths_reinterpreted_as_physical_supports": false,
+  "ENV_coefficients_changed": false,
+  "historical_v3_v4_replay_preserved": true,
+  "v5_saved_reference_replays_existing_Ritz": true,
+  "v5_solver_free_read_claimed": false,
+  "focused_only": true,
+  "full_repository_suite_run": false,
+  "private_project_data_in_release": false,
+  "global_structural_approval": false,
+  "publication_attempted": false,
+  "independent_static_reviews": {
+    "FLT": "docs/FLT_REFERENCE_REVIEW_R18.md",
+    "ELS": "qa/r18_els_gap/RECEIPT.json"
+  },
+  "upstream_focals_overlap_not_summed": {
+    "FLT": [
+      119,
+      471
+    ],
+    "ELS": 157
+  },
+  "fresh_family": {
+    "complete_Ue_rows": 66,
+    "same_defined_Ritz_operator_exercised": true,
+    "all_load_or_length_states_qualified": false
+  },
+  "source_hashes": {
+    "tercas/flt_height_effective.py": "7a34910159a90e26959e9cf601f0ab7031466e7d9a7e56d1657b253257fd42fd",
+    "tercas/nbr_ue_family_application.py": "e8905d76bf9c4645a04167320a9ae6baf500e328bd6ee15ccd71c2bbdafd622e",
+    "tercas/nbr_family_panorama.py": "4bbc5ce774b7f211f3b87bfe37e9a7bb6f6a49a7c8a4fbf8a9f50911910911b2",
+    "tercas/nbr_ue_family_ui.py": "177fb269e58459a4a6689e81c444ea91bcf5d67166363cbb1aa03eeced02c328",
+    "tercas/isolated_service_diagnostics.py": "72a1f3334a873758481e16c293108fc324dddf6ff0666269cbb35b8dea9bc3a0",
+    "tercas/isolated_service_ui.py": "7a1a91b302bb6e179fe6fe9ce728b303db39d1afbf05439255b2cb08a27e2dbc",
+    "tercas/release_info.py": "a437290cc2e2222358be844473bb193113872045da4d2f884aa76641231395a7",
+    "tercas/ui_cache_epoch.py": "17bb1850ca058c6bed55561ecb898716024ece2290688fbbc7e4ce1328c72e01"
+  },
+  "runtime": {
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "OPENBLAS_CORETYPE": "Haswell",
+    "OPENBLAS_NUM_THREADS": 1,
+    "OMP_NUM_THREADS": 1,
+    "MKL_NUM_THREADS": 1
+  },
+  "compileall_and_diff_check": "passed"
+}

@@ -1,5 +1,6 @@
 """Fresh-only NBR components, bound to complete ELU actions and analytic replay.
-No global verdict, denominator replacement, eigenproblem or historical migration.
+No global verdict, denominator replacement, new eigenoperator or historical migration.
+Numerical references replay the pre-existing full-span Ritz operator.
 """
 import copy
 import math
@@ -7,7 +8,9 @@ from . import nbr_ue_family as provider
 from . import roof_top_load as roof
 
 FIELD = 'nbr_ue_family_application'
-SCHEMA = 'nbr_ue_family_application_v3_rp23_candidate'
+LEGACY_SCHEMA_V3 = 'nbr_ue_family_application_v3_rp23_candidate'
+LEGACY_SCHEMA_V4 = 'nbr_ue_family_application_v4_energy_product'
+SCHEMA = 'nbr_ue_family_application_v5_current_reference'
 SCOPE = ('Componentes de flexão NBR, não aprovação resistente/global. Contorno próprio e '
          'referência nominal publicada são alternativas distintas; índices não são somados. '
          'Interação biaxial N=0 usa capacidades próprias concomitantes e qualificadas por sinal. '
@@ -124,14 +127,16 @@ def _not_applicable_basis(component, sources):
     return None
 
 
-def _build(result):
+def _build(result, *, legacy_energy_floor=False, legacy_height_selection=False):
+    legacy_height_selection = legacy_height_selection or legacy_energy_floor
+    schema = LEGACY_SCHEMA_V3 if legacy_energy_floor else LEGACY_SCHEMA_V4 if legacy_height_selection else SCHEMA
     data = result['input_data']
     reason = _outside_domain(result)
     if reason:
         from .application import fingerprint
         if fingerprint(data) != result.get('input_fingerprint'):
             raise ValueError('NBR família: entradas divergentes.')
-        return dict(schema=SCHEMA, source_input_fingerprint=result['input_fingerprint'], scope=SCOPE,
+        return dict(schema=schema, source_input_fingerprint=result['input_fingerprint'], scope=SCOPE,
             sources=None, records=[], inventory=[], method_coverage={}, pending_reason=reason,
             status='outside_isolated_N0_domain', ignored_ELS_cases=0,
             legacy_denominators_replaced=False, whole_member_approved=False)
@@ -187,8 +192,8 @@ def _build(result):
                 reason=('Posição desestabilizante/indeterminada: FLT clássico não resolve altura.' if not supported
                         else 'FLT clássico CT/estabilizante; comprimentos resistentes declarados, Cb=1, sem benefício de altura.' if method == 'FLT_reference'
                         else None), approximate=branch.get('elastic_approximation', False)))
-        from .flt_height_effective import qualify_family, COMBINED_METHODS
-        height = qualify_family(data, acts)
+        from .flt_height_effective import qualify_family, qualify_family_fresh, COMBINED_METHODS
+        height = (qualify_family if legacy_height_selection else qualify_family_fresh)(data, acts)
         height_capacity = dict(eligible=False,status='outside_documented_height_reference',reason=height['reason'])
         if height['elastic_reference_eligible']:
             binding=height['source_binding'];material=own['source_binding']['material']
@@ -233,7 +238,9 @@ def _build(result):
         if not height_capacity.get('eligible') and pos['normal']['classification'] not in ('shear_center','stabilizing'):
             from .flt_height_nbr_floor import qualify_family as qualify_floor
             material=own['source_binding']['material']
-            energy_floor=qualify_floor(data,acts,formula_nu=material['nu'],gamma=material['gamma'])
+            from .flt_height_energy_floor import POLICY_V2
+            energy_floor=qualify_floor(data,acts,formula_nu=material['nu'],gamma=material['gamma'],
+                                       method=None if legacy_energy_floor else POLICY_V2)
             bound=energy_floor['energy_floor']['source_binding']
             if (bound['nodes_sha256']!=own['source_binding']['nodes_sha256']
                 or bound['material']!={k:material[k] for k in ('E_MPa','G_MPa','fy_MPa')}):
@@ -290,7 +297,7 @@ def _build(result):
                 count['not_applicable_basis'] = basis
             else:
                 count['pending_cases'] += 1
-    return dict(schema=SCHEMA, source_input_fingerprint=result['input_fingerprint'], scope=SCOPE,
+    return dict(schema=schema, source_input_fingerprint=result['input_fingerprint'], scope=SCOPE,
         method_coverage=coverage, sources=sources, records=records, pending_reason=pending,
         inventory=copy.deepcopy(combos), ignored_ELS_cases=sum(c['limit_state'] == 'ELS' for c in combos),
         legacy_denominators_replaced=False, whole_member_approved=False,
@@ -306,7 +313,7 @@ def attach(result):
 
 
 def preserved(result):
-    """Replay sources, inventory and extrema; opted-in mixed loads also replay Ritz."""
+    """Replay sources, inventory and extrema; numerical references also replay Ritz."""
     saved = result.get(FIELD)
     if saved is None:
         return None
@@ -316,6 +323,10 @@ def preserved(result):
     if saved.get('schema') == 'nbr_ue_family_application_v2':
         from .nbr_ue_family_application_v2 import preserved as preserved_v2
         return preserved_v2(result)
-    if not _eligible(result['input_data']) or saved != _build(result):
+    schema = saved.get('schema')
+    if (schema not in (LEGACY_SCHEMA_V3, LEGACY_SCHEMA_V4, SCHEMA)
+            or not _eligible(result['input_data'])
+            or saved != _build(result, legacy_energy_floor=schema == LEGACY_SCHEMA_V3,
+                               legacy_height_selection=schema in (LEGACY_SCHEMA_V3, LEGACY_SCHEMA_V4))):
         raise ValueError('NBR família: componentes, fontes, ações, casos ou aritmética divergentes; recalcule explicitamente.')
     return copy.deepcopy(saved)

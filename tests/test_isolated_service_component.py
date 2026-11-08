@@ -157,3 +157,61 @@ def test_outside_isolated_purlin_choice_stays_inactive(kind):
     else:r['input_data']['three_girt_model']={'enabled':True}
     assert c.attach_dense(r,s)==r and c.finalize(r)==r
     assert c.saved(r) is None
+
+
+def test_saved_v1_replays_unchanged_without_new_stiffener_route(current):
+    from tercas import isolated_service_mechanics as mechanics
+    old=copy.deepcopy(current);packet=old[c.FIELD]
+    for row,item in zip(packet['records'],packet['inventory']):
+        row['comparison']=mechanics.calculate(row['source_dense'],packet['dimensions'],
+            old['input_data']['properties']['fy_MPa'],packet['configuration'],item['limit_mm'],
+            schema=mechanics.LEGACY_SCHEMA)
+    old=c.finalize(old);before=copy.deepcopy(old);c._REPLAY_CACHE.clear()
+    with patch('tercas.torsion_vlasov.vlasov.solve_member',side_effect=AssertionError('no solver')), \
+         patch.object(mechanics,'_refine_stiffened_flanges',side_effect=AssertionError('no historical upgrade')):
+        assert c.saved(old)==old[c.FIELD]
+    assert old==before
+    assert all(row['comparison']['schema']==mechanics.LEGACY_SCHEMA for row in old[c.FIELD]['records'])
+
+
+@pytest.mark.parametrize('field',['common','lip','inertia','schema'])
+def test_refined_proof_tampering_fails_even_after_rehash(current,field):
+    altered=copy.deepcopy(current);row=altered[c.FIELD]['records'][0]
+    proof=row['comparison']['gross_screen']['walls'][3]['edge_stiffener']
+    if field=='common':proof['common_compression_upper_MPa']+=1
+    elif field=='lip':proof['adjacent_lip_full_under_common_majorant']=False
+    elif field=='inertia':proof['comparison']['Is_mm4']*=2
+    else:row['comparison']['schema']='invented_service_version'
+    rehash(altered);c._REPLAY_CACHE.clear()
+    with patch('tercas.torsion_vlasov.vlasov.solve_member',side_effect=AssertionError('no solver')):
+        with pytest.raises(ValueError):c.saved(altered)
+
+
+def test_saved_v2_replays_unchanged_without_affine_web_upgrade(current):
+    from tercas import isolated_service_mechanics as mechanics
+    previous=copy.deepcopy(current);packet=previous[c.FIELD]
+    for row,item in zip(packet['records'],packet['inventory']):
+        row['comparison']=mechanics.calculate(row['source_dense'],packet['dimensions'],
+            previous['input_data']['properties']['fy_MPa'],packet['configuration'],item['limit_mm'],
+            schema=mechanics.STIFFENED_SCHEMA)
+    previous=c.finalize(previous);before=copy.deepcopy(previous);c._REPLAY_CACHE.clear()
+    with patch('tercas.torsion_vlasov.vlasov.solve_member',side_effect=AssertionError('no solver')), \
+         patch('tercas.isolated_service_web.refine_web',side_effect=AssertionError('no historical upgrade')):
+        assert c.saved(previous)==previous[c.FIELD]
+    assert previous==before
+    assert all(row['comparison']['schema']==mechanics.STIFFENED_SCHEMA for row in previous[c.FIELD]['records'])
+
+
+@pytest.mark.parametrize('field',['endpoint','residual','psi','coverage','width','sufficient'])
+def test_affine_proof_tampering_fails_even_after_rehash(current,field):
+    altered=copy.deepcopy(current);row=altered[c.FIELD]['records'][0]
+    proof=row['comparison']['gross_screen']['walls'][2]['affine_web']
+    if field=='endpoint':proof['corrected_endpoint_upper_MPa'][0]+=1
+    elif field=='residual':proof['residual_after_upper_MPa']=-1000.
+    elif field=='psi':proof['psi']=.25
+    elif field=='coverage':proof['web_segment_indices']=[]
+    elif field=='width':proof['comparison_width_upper_mm']/=2
+    else:proof['sufficient']=not proof['sufficient']
+    rehash(altered);c._REPLAY_CACHE.clear()
+    with patch('tercas.torsion_vlasov.vlasov.solve_member',side_effect=AssertionError('no solver')):
+        with pytest.raises(ValueError,match='aritmética'):c.saved(altered)

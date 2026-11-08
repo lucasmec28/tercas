@@ -1,0 +1,12 @@
+{
+  "base_commit": "e0c8c40da4548575836e16bccf948f28a7d76d9a",
+  "scope": "presentation only; synthetic saved-reader fixtures",
+  "result": "44 passed in 4.91s",
+  "solver_execution": "blocked in tests",
+  "schema_change": false,
+  "saved_result_mutation": false,
+  "source_sha256": {
+    "tercas/torsion_applicability.py": "98b9fd9ddb75afb2bd2a6f1e4e097bfee06afb1628d238051679a7419074c181",
+    "tests/test_torsion_applicability.py": "84690928a95b23c30c12bbd171944c349cb5cfd422cac14e294949681e2b1558"
+  }
+}

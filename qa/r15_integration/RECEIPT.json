@@ -1,0 +1,54 @@
+{
+  "release": "componentes-Ue-FLT-energia-efetiva-20261107-r15",
+  "baseline_remote": "b9f1cddf37de9b1b8533588d8719b979f71d6c2c",
+  "baseline_tree": "e43342ea73007614aa132eac4cf3857bd02b5ba3",
+  "tested_code_commit": "58ab3321bbfe54b8e50fdbeb7d200cfc74411daf",
+  "scope": "Cumulative R14 local support-web completion plus versioned sufficient FLT energy bound; no global structural approval.",
+  "backend": {
+    "tests": 916,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 186.342,
+    "exit_code": 0,
+    "junit_sha256": "18725fdca0689b5ac2945d7498c88e9a3faae109f89693f8e888691fc494a1ed",
+    "log_sha256": "cad308e63474c62a06c735517d62074d677fe55e82803336f705c85bcad0eb26",
+    "junit_sha256_before_environment_metadata_removal": "f9fc9c8f7afca15d74cb3e9ae02bb631a1e90ec6a5870073078fe3095628d695"
+  },
+  "ui": {
+    "tests": 14,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 88.584,
+    "exit_code": 0,
+    "junit_sha256": "c62f7856095e9e0433bd82798cb98be8340bd094445bb08c715ef95e240c68e7",
+    "log_sha256": "2184324d5f7b9568ef0d441cedcf428f65cfc2a22bd6aac75989a223f9fc7e19",
+    "junit_sha256_before_environment_metadata_removal": "6e2d1daba4b997238cf738d9af1a6c4830e510a2bcd52f6f2033ecc9ce39a246"
+  },
+  "focused_only": true,
+  "full_repository_suite_run": false,
+  "synthetic_tests_only": true,
+  "private_project_data_in_release": false,
+  "independent_mathematical_review": {
+    "distributional_identity_and_jump_sign": true,
+    "four_exact_rational_integral_checks": true,
+    "units_and_mixed_loads": true,
+    "same_declared_Euler_bounds": true,
+    "physical_supports_inferred": false,
+    "exact_physical_eigenvalue_claimed": false
+  },
+  "legacy_policy": "Saved v3 replays v1; fresh v4 uses v2; original result and demand retained.",
+  "source_hashes": {
+    "tercas/flt_height_energy_floor.py": "7d0887e2eccbee33a76d8f23e4603ce189420dd9ab1d1008820f945a309be0ef",
+    "tercas/flt_height_nbr_floor.py": "7e89e5a1a4c51e7cff61e500613cbd4de061be628182b48cc3d9b56787f37079",
+    "tercas/nbr_ue_family_application.py": "890670d3d469e291bff37af457cde23a67e22107b46ec628fe88d9c274eaf201",
+    "tercas/nbr_family_panorama.py": "135a5b316f27fc716bfef8989858e2e3d58675e0a1ccb4801df6a359a30ea2c6",
+    "tercas/support_web/completion.py": "02bac1aa8f1d50bda7e4cc42fc84f8fe0b6911f179896a51c09dca5a950cb1f5",
+    "tercas/support_web/ui.py": "6fb0cf2590d7e7f37cac03434b61cb7d9fe495d99b5fd8600f1b1a9d2e9aefe7",
+    "tercas/release_info.py": "058ccdd1c4fb990642403273d86a2503dee27fd6b696ecb2583e6aaf0413354d",
+    "tercas/ui_cache_epoch.py": "8fe28e35d213fcd291de940ed06ec7d60f4d431c80a1a3fb88ff5ba780dafab8"
+  },
+  "compileall_and_diff_check": "passed",
+  "production_publication_attempted": false
+}

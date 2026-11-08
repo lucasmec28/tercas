@@ -1,0 +1,4 @@
+FLT_ENERGY_V2_UI_SECONDS={"Aplicar entradas do arquivo": 2.143705256003159, "Calcular verifica\u00e7\u00f5es dispon\u00edveis": 3.7011182269998244, "rerender": 2.476820570002019}
+FLT_MIXED_UI_TIMINGS_SECONDS={"catalog_index": 0, "timings": {"Adotar FLT q+P para novo c\u00e1lculo": 2.0244090060004964, "Aplicar entradas do arquivo": 2.2071255250011745, "Calcular verifica\u00e7\u00f5es dispon\u00edveis": 4.023755959999107, "Restaurar estudo preservado": 3.7892032700001437, "rerender_with_Word_JSON": 7.082087102000514}}
+FLT_MIXED_UI_TIMINGS_SECONDS={"catalog_index": 26, "timings": {"Adotar FLT q+P para novo c\u00e1lculo": 2.0985661890008487, "Aplicar entradas do arquivo": 2.769858068000758, "Calcular verifica\u00e7\u00f5es dispon\u00edveis": 9.256895090999024, "Restaurar estudo preservado": 4.448218286001065, "rerender_with_Word_JSON": 3.7438590679994377}}
+14 passed in 88.59s (0:01:28)

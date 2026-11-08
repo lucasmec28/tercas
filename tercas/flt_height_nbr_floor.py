@@ -191,10 +191,14 @@ def resistance_at_floor(index, *, material, Me_lower_bound_Nmm):
         physical_resistance_bound=False,whole_member_approved=False)
 
 
-def qualify_family(data, actions, *, formula_nu=.3, gamma=1.1, energy_evidence=None):
+def qualify_family(data, actions, *, formula_nu=.3, gamma=1.1, energy_evidence=None, method=None):
     """Fresh bridge or fully replayed supplied energy certificate; no cache trust."""
-    bound=(energy.qualify_family(data,actions) if energy_evidence is None else
+    if method not in (None, energy.POLICY_V2):
+        raise ValueError('Unknown declared energy floor policy')
+    bound=(energy.qualify_family(data,actions,method=method) if energy_evidence is None else
            energy.validate_saved(energy_evidence,data,actions))
+    if method == energy.POLICY_V2 and bound.get('schema') != energy.SCHEMA_V2:
+        raise ValueError('Supplied energy evidence differs from requested method')
     out=dict(schema=SCHEMA,scope=SCOPE,energy_floor=bound,
         catalog_index=data['catalog_index'],physical_span_mm=data['L_mm'],
         energy_hypotheses=copy.deepcopy(bound.get('energy_bound_hypotheses')),
@@ -228,12 +232,15 @@ def qualify_family(data, actions, *, formula_nu=.3, gamma=1.1, energy_evidence=N
                 status='sufficient_under_declared_operator' if sufficient else 'inconclusive_floor_exceeded',
                 reason=('Solicitação forte não excede o piso NBR condicional demonstrado.' if sufficient else
                     'Solicitação acima de um piso suficiente não prova reprovação; requer referência resistente mais precisa.'))
+    if bound['schema'] == energy.SCHEMA_V2:
+        out['schema'] = 'flt_height_declared_energy_nbr_floor_v2'
     out['snapshot_sha256']=digest(out)
     return out
 
 
 def validate_saved(evidence,data,actions,*,formula_nu=.3,gamma=1.1):
-    expected=qualify_family(data,actions,formula_nu=formula_nu,gamma=gamma)
+    method = energy.POLICY_V2 if evidence.get('schema') == 'flt_height_declared_energy_nbr_floor_v2' else None
+    expected=qualify_family(data,actions,formula_nu=formula_nu,gamma=gamma,method=method)
     if evidence!=expected:
         raise ValueError('Piso resistente/hipóteses/testemunhas alterados; recalcule explicitamente.')
     return copy.deepcopy(expected)

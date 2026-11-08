@@ -1,0 +1,15 @@
+Monothread: OPENBLAS_CORETYPE=Haswell; OPENBLAS_NUM_THREADS=1; OMP_NUM_THREADS=1; MKL_NUM_THREADS=1.
+PYTHONPATH includes the checkout, tests and installed test dependencies.
+
+python -m pytest -q \
+ tests/test_flt_energy_moment_product.py tests/test_flt_height_energy_floor.py tests/test_flt_height_nbr_floor.py \
+ tests/test_nbr_family_height_integration.py tests/test_nbr_family_floor_consumer.py tests/test_nbr_family_mv_consumer.py \
+ tests/test_nbr_family_panorama.py tests/test_nbr_family_word_dispatch.py tests/test_nbr_ue_family_application.py \
+ tests/test_global_verification.py tests/test_isolated_en_panorama.py tests/test_completion_requirements.py \
+ tests/test_isolated_service_panorama.py tests/test_support_web_completion.py tests/test_support_web_application.py \
+ tests/test_support_web_sources.py tests/test_support_web_mechanics.py tests/test_release_info.py \
+ --junitxml=qa/r15_integration/backend.xml \
+
+python -m pytest -q -s tests/test_ui_flt_energy_product.py tests/test_ui_support_web_completion.py \
+ tests/test_ui_support_web.py tests/test_ui_cache_epoch.py tests/test_ui_flt_combined_height.py \
+ --junitxml=qa/r15_integration/ui.xml \

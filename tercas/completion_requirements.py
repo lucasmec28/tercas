@@ -141,11 +141,15 @@ def show(st,result):
     try:r=saved(result)
     except (ValueError,TypeError,KeyError) as exc:st.warning(str(exc));return
     if r is None:return
+    from .completion_service_evidence import presentation
+    evidence,error=presentation(result)
     with st.expander('Requisitos para concluir a terça isolada',expanded=False):
         st.caption(r['scope'])
         for row in r['records']:
             st.markdown('**'+row['label']+'**: '+row['condition_and_minimum_data'])
-        if result.get('isolated_combined_service_component') is None:
+            for message in evidence.get(row['id'],[]):st.caption('Evidência calculada/salva: '+message)
+        if error:st.warning(error)
+        if not evidence:
             for message in r['service_preparation']['missing']:st.caption(message)
         else:st.caption('Preparação normativa preservada. Respostas efetivamente calculadas e pendências específicas constam do componente ELS combinado abaixo.')
 
@@ -154,13 +158,18 @@ def report(doc,result):
     try:r=saved(result)
     except (ValueError,TypeError,KeyError) as exc:doc.add_paragraph(str(exc));return
     if r is None:return
+    from .completion_service_evidence import presentation
+    evidence,error=presentation(result)
     doc.add_heading('Requisitos para concluir a terça isolada',1)
     doc.add_paragraph(r['scope'])
     for row in r['records']:
         doc.add_paragraph(row['label']+' ('+row['source']+'): '+row['condition_and_minimum_data']+
-            ' Evidência consolidada: '+row['evidence_state']+'.')
-    if result.get('isolated_combined_service_component') is None:
-        doc.add_paragraph('Preparação de serviço: nenhuma combinação fornecida foi alterada e nenhum novo deslocamento foi calculado.')
+            (' Evidência ELS autenticada detalhada a seguir.' if row['id'] in evidence else
+             ' Evidência no inventário salvo: '+row['evidence_state']+'.'))
+        for message in evidence.get(row['id'],[]):doc.add_paragraph(message)
+    if error:doc.add_paragraph(error)
+    if not evidence:
+        doc.add_paragraph('Preparação de serviço salva: não altera combinações fornecidas e não contém deslocamentos calculados.')
         for message in r['service_preparation']['missing']:doc.add_paragraph(message)
     else:
         doc.add_paragraph('Preparação normativa preservada; respostas e pendências efetivamente calculadas estão no componente ELS combinado, sem alterar a matriz fornecida.')

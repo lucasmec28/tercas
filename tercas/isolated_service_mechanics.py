@@ -14,7 +14,10 @@ from .torsion_vlasov.yield_envelope import _member_polynomials
 from .torsion_vlasov.section import verify_section
 from .biaxial_gross import tensor_beam as beam
 
-SCHEMA='isolated_service_gross_combined_field_v1'
+LEGACY_SCHEMA='isolated_service_gross_combined_field_v1'
+STIFFENED_SCHEMA='isolated_service_stiffened_combined_field_v2'
+SCHEMA='isolated_service_stiffened_affine_web_combined_field_v3'
+SCHEMAS=(LEGACY_SCHEMA,STIFFENED_SCHEMA,SCHEMA)
 
 
 def number(x,name,positive=False):
@@ -69,14 +72,16 @@ def _flat_ids(section,d):
     return groups,widths
 
 
-def gross_screen(demand,dimensions,fy_MPa):
+def gross_screen(demand,dimensions,fy_MPa,*,schema=SCHEMA):
     """Outward Bernstein bounds of full N=0 Mx+My+B and V+T on exterior faces.
 
     All five flats are checked under uniform compression dominance (web AA
-    k=4; flanges/lips AL k=.43 without stiffener credit). Bends are retained
+    k=4; lips AL k=.43; v2 also uses the existing §9.2.3 flange law).
+    v3 adds the Table5 affine AA web majorant with complete residual checks. Bends are retained
     in the declared thin-wall MLE convention and included in elastic checking.
     An inconclusive sufficient comparator is never labelled a resistance fail.
     """
+    if schema not in SCHEMAS:raise ValueError('Unknown combined-service arithmetic version')
     d=_validate(demand,dimensions);s=demand['section'];p=s['properties'];t=d['t']
     fy=number(fy_MPa,'fy',True);E=number(demand['E_MPa'],'E',True)
     pol,identities=_member_polynomials(demand);groups,widths=_flat_ids(s,d)
@@ -93,12 +98,13 @@ def gross_screen(demand,dimensions,fy_MPa):
            outer(pol['Tw']/p['Cw_mm6'],st[:,2,:]))/t
     const=I(np.column_stack([np.ones(len(xy.lo)-1),np.zeros((len(xy.lo)-1,2))]))
     sv=outer(pol['Tsv']*t/p['J_mm4'],const)
-    compression=[0.]*5;absolute=0.;vm_upper=0.
+    compression=[0.]*5;absolute=0.;vm_upper=0.;compression_fields=[]
     for face in (-1,1):
         pos=xy[:-1]+normals*(face*t/2)
         xm=stack([pos[:,0],delta[:,0]],axis=-1);ym=stack([pos[:,1],delta[:,1]],axis=-1)
         sigma=outer(pol['Mx'],mx_x*xm+mx_y*ym)+outer(pol['My'],my_x*xm+my_y*ym)+outer(pol['B']/p['Cw_mm6'],w)
         sigma=elevate_bernstein(power_to_bernstein(sigma),-1,2)
+        if schema==SCHEMA:compression_fields.append(-sigma)
         tau=elevate_bernstein(power_to_bernstein(flow-face*sv),-2,3)
         absolute=max(absolute,float(np.max(sigma.abs().hi)))
         squared=sigma.square()+tau.square()*3
@@ -113,7 +119,7 @@ def gross_screen(demand,dimensions,fy_MPa):
         walls.append(dict(name=name,width_mm=width,k=k,compression_upper_MPa=max(0.,upper),
                           integral_limit_lower_MPa=threshold,sufficient=max(0.,upper)<=threshold))
     sufficient=bool(walls and len(walls)==5 and all(r['sufficient'] for r in walls) and vm_upper<=fy)
-    return dict(schema='NBR14762_service_MLE_complete_normal_gross_sufficient_v1',
+    result=dict(schema='NBR14762_service_MLE_complete_normal_gross_sufficient_v1',
         source='NBR14762:2010 §9.8.5(a), §§9.2.2/9.2.3; sufficient uniform-compression comparison, not a new code formula',
         E_MPa=E,fy_MPa=fy,walls=walls,max_abs_normal_upper_MPa=absolute,
         von_mises_upper_MPa=vm_upper,elastic_field_sufficient=vm_upper<=fy,
@@ -121,6 +127,64 @@ def gross_screen(demand,dimensions,fy_MPa):
         source_piece_count=len(identities),source_section_segments=len(s['nodes_xy_mm'])-1,
         scope='Sufficient local-normal MLE and elastic-field check in the declared gross polynomial model. Does not certify member stability or physical first-order applicability.',
         failed_sufficient_screen_is_physical_failure=False)
+    if schema in (STIFFENED_SCHEMA,SCHEMA):_refine_stiffened_flanges(result,d)
+    if schema==SCHEMA:
+        from .isolated_service_web import refine_web
+        refine_web(result,s,d,groups[2],compression_fields)
+    return result
+
+
+def _refine_stiffened_flanges(screen,dimensions):
+    """Use the existing §9.2.3 scalar law on the SAME combined stress bound.
+
+    The common uniform compression dominates both flange and adjacent lip.
+    The lip must stay fully effective even under that common majorant before
+    its unmodified Is may enter the flange proof. The original AL route is
+    independently retained; no inconclusive sufficient result becomes a fail.
+    """
+    from decimal import localcontext
+    from .biaxial_gross.gross_mle import D,GUARD,LIMIT,PRECISION,number as decimal,unpack
+    from .isolated_service_stiffener import flange_uniform_comparator
+    walls=screen['walls'];E=screen['E_MPa'];d=dimensions
+    for flange_index,lip_index in ((1,0),(3,4)):
+        wall,lip=walls[flange_index],walls[lip_index]
+        common=max(wall['compression_upper_MPa'],lip['compression_upper_MPa'])
+        proof=dict(method='NBR14762_9_2_3_uniform_flange_and_adjacent_lip_majorant_v1',
+            common_compression_upper_MPa=common,adjacent_lip_name=lip['name'],
+            adjacent_lip_full_under_common_majorant=False,adjacent_lip_lambda_diagnostic=None,
+            source_stresses='Same outward Mx+My+B bounds on both exterior faces over the full physical span',
+            comparison=None,sufficient=False,reason=None,
+            numeric_contract='70-digit decimal, exact binary inputs, 1e-20 inward acceptance guard')
+        try:
+            with localcontext() as ctx:
+                ctx.prec=PRECISION
+                t=decimal(d['t'],'thickness');ri=decimal(d['ri_mm'],'radius')
+                nominal_lip=decimal(d['lip'],'nominal lip')
+                width=decimal(d['bf'],'nominal flange')-2*ri-2*t
+                lip_width=nominal_lip-ri-t
+                elastic=decimal(E,'E');sigma=decimal(common,'combined compression')
+                # Derive widths BEFORE rounding to binary64; no favourable
+                # pre-rounded Is or slenderness can enter the 1e-20 guard.
+                lip_lambda=lip_width/t/D('.95')*(sigma/(elastic*D('.43'))).sqrt()
+                lip_full=lip_lambda<=LIMIT*(1-GUARD)
+                comparison=flange_uniform_comparator(width,t,nominal_lip,lip_width,elastic,sigma)
+                proof['adjacent_lip_lambda_diagnostic']=float(lip_lambda*(1+GUARD))
+                proof['adjacent_lip_full_under_common_majorant']=lip_full
+                proof['comparison']=unpack(comparison)
+                proof['sufficient']=bool(lip_full and comparison['full_wall_sufficient'])
+        except ValueError as exc:
+            # The old no-stiffener branch may still prove full effectiveness.
+            # A limitation of the extra comparator is not normative rejection.
+            proof['reason']=str(exc)
+        wall['uniform_unstiffened_sufficient']=wall['sufficient']
+        wall['edge_stiffener']=proof
+        wall['sufficient']=bool(wall['sufficient'] or proof['sufficient'])
+    screen['schema']='NBR14762_service_MLE_stiffened_complete_normal_sufficient_v2'
+    screen['gross_local_normal_sufficient']=bool(
+        all(w['sufficient'] for w in walls) and screen['elastic_field_sufficient'])
+    screen['source']='NBR14762:2010 §9.8.5(a), §§9.2.2/9.2.3; sufficient combined-stress uniform comparison with existing edge-stiffener law, not a new code formula'
+    screen['effective_reduced_section_calculated']=False
+    screen['inconclusive_means_only_this_sufficient_method_unresolved']=True
 
 
 def _fraction(x):return F(number(x,'polynomial input'))
@@ -213,15 +277,15 @@ def displacement_field(demand,point_xy_from_CG_mm,projection_xy):
     return rows
 
 
-def calculate(demand,dimensions,fy_MPa,configuration,limit_mm):
-    screen=gross_screen(demand,dimensions,fy_MPa)
+def calculate(demand,dimensions,fy_MPa,configuration,limit_mm,*,schema=SCHEMA):
+    screen=gross_screen(demand,dimensions,fy_MPa,schema=schema)
     field=displacement_field(demand,configuration['point_xy_from_CG_mm'],configuration['projection_xy'])
     env=envelope(field);limit=number(limit_mm,'service limit',True)
     lo=_outward(F(env['abs_displacement_lower_mm'])/F(limit),False)
     hi=_outward(F(env['abs_displacement_upper_mm'])/F(limit),True)
     state=('within_declared_linear_model' if hi<=1 else 'above_declared_linear_model' if lo>1 else 'numerical_boundary_inconclusive')
     if not screen['gross_local_normal_sufficient']:state='gross_MLE_sufficient_condition_inconclusive'
-    return dict(schema=SCHEMA,combination_id=demand['combination_id'],limit_state='ELS',
+    return dict(schema=schema,combination_id=demand['combination_id'],limit_state='ELS',
         source_section_sha256=demand['section']['content_sha256'],source_length_mm=demand['length_mm'],
         gross_screen=screen,envelope=env,limit_mm=limit,criterion_status=state,
         index_upper=hi if screen['gross_local_normal_sufficient'] else None,

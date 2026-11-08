@@ -1,0 +1,149 @@
+{
+  "release": "componentes-Ue-ELS-enrijecido-20261107-r16",
+  "baseline_remote": "b9f1cddf37de9b1b8533588d8719b979f71d6c2c",
+  "baseline_tree": "e43342ea73007614aa132eac4cf3857bd02b5ba3",
+  "previous_local_release": "e0c8c40da4548575836e16bccf948f28a7d76d9a",
+  "tested_code_commit": "38afa3c40641029f9a817cc81b1030da0ab0fc72",
+  "scope": "Combined ELS sufficient gross-section screen using existing stiffened-flange and affine-web comparators; read-only explanation of H4 first-yield obstruction. Cumulative package includes R14/R15. No physical or global structural approval.",
+  "backend": {
+    "tests": 576,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 26.879,
+    "exit_code": 0,
+    "junit_sha256": "66f9e588abad97973a64ee65218f9b3e4b54abae63f58ccf83b86ce71b1e1429",
+    "log_sha256": "32136507fa8ee8b49bbd3d02d6d83b614c84a03f420c3856bd96f06cc0cd6e51",
+    "junit_sha256_before_environment_metadata_removal": "f804aa0cf3eacb58459cd0b4cbc90fea232a8ec49a772368b350078428830efa"
+  },
+  "ui": {
+    "tests": 11,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 62.588,
+    "exit_code": 0,
+    "junit_sha256": "38273beca5c38b89e6391b8dd305ac694407e7bd989c5b38a958fc1909ae7c5a",
+    "log_sha256": "0a30f995d65af8c40f8ba3ac535b7ab2883594a159ecee426bb45c45f4c7a643",
+    "junit_sha256_before_environment_metadata_removal": "560c016d21132ea47e7a186f93d71cc47749da9c25375e20539db89cced0de51"
+  },
+  "focused_only": true,
+  "full_repository_suite_run": false,
+  "synthetic_tests_only": true,
+  "private_project_data_in_release": false,
+  "runtime": {
+    "OPENBLAS_CORETYPE": "Haswell",
+    "OPENBLAS_NUM_THREADS": 1,
+    "OMP_NUM_THREADS": 1,
+    "MKL_NUM_THREADS": 1,
+    "numpy": "2.5.3"
+  },
+  "cold_replay": {
+    "v1": {
+      "file_sha256": "23415549ca461795e70dd2add8dd9e352c2bc362d95f5859befd30ec15f9fcab",
+      "saved_packet_equal": true,
+      "source_unchanged": true,
+      "member_solve_used": false,
+      "historical_upgrade_used": false,
+      "Word_and_rows_read": true,
+      "mechanics_schema": "isolated_service_gross_combined_field_v1"
+    },
+    "v2": {
+      "file_sha256": "39ec360aab0f94239432f87469b0a72f8f481abd67e5f4b68fea5fed8120b117",
+      "saved_packet_equal": true,
+      "source_unchanged": true,
+      "member_solve_used": false,
+      "historical_upgrade_used": false,
+      "Word_and_rows_read": true,
+      "mechanics_schema": "isolated_service_stiffened_combined_field_v2"
+    },
+    "v3": {
+      "file_sha256": "3180e5ab3b1e5bcee2450526cddf47a7847ecdc872bfd9d80e8330304d16db5e",
+      "saved_packet_equal": true,
+      "source_unchanged": true,
+      "member_solve_used": false,
+      "historical_upgrade_used": false,
+      "Word_and_rows_read": true,
+      "mechanics_schema": "isolated_service_stiffened_affine_web_combined_field_v3"
+    }
+  },
+  "independent_reviews": {
+    "stiffened_flange_scalar_checks": 140,
+    "monotonic_Ia_checks": 10001,
+    "affine_web_rational_decisions": 87,
+    "affine_web_rational_coefficient_inequalities": 12528,
+    "complete_family_contours_checked": 66,
+    "new_solver_or_physical_restraint": false
+  },
+  "source_hashes": {
+    "tercas/isolated_service_stiffener.py": "adb1f4dcb5c7a80eee63b08b2781b4830b5ab9e86458cb116ddb3f4e57889c4b",
+    "tercas/isolated_service_web.py": "24651c0e7af00cbb8031c68f0d712603d7b674f34ee00425c0030b562231ebc5",
+    "tercas/isolated_service_mechanics.py": "dfa429337a4a4333404ed5147c2e5a74c349e985dcca8a707137d908a374e87c",
+    "tercas/isolated_service_component.py": "648386143076ed443977b8ad6c8055c4370ad8714967ab1d2ebce7e685d7df95",
+    "tercas/isolated_service_ui.py": "bbd909720608398557b76bbec9ee450f1546504160c71bbac7c5a897399f1824",
+    "tercas/torsion_applicability.py": "98b9fd9ddb75afb2bd2a6f1e4e097bfee06afb1628d238051679a7419074c181",
+    "tercas/release_info.py": "26e4fe25ce2e5b0beea663e5c1b9c9eb1734c173c8ae0fc174243f7abdeafa38",
+    "tercas/ui_cache_epoch.py": "4e8de6eb90b442c1a065976cf908cec7af8bc4451c4b36cae8e548e03d7241f1"
+  },
+  "legacy_policy": "Explicit v1/v2/v3 arithmetic dispatch; historical results never upgraded by opening them. Physical demand, displacements and rotations not changed.",
+  "known_limits": [
+    "Reduced effective combined service stiffness is not calculated when the sufficient gross-section screen is inconclusive.",
+    "Physical first-order applicability and large rotations are not qualified by these sectional comparisons.",
+    "Point, direction, reference and service criterion remain explicit project choices.",
+    "G8.1/H4 explanation neither computes missing flexural capacities nor qualifies an alternative inelastic resistance."
+  ],
+  "compileall_and_diff_check": "passed",
+  "production_publication_attempted": false,
+  "public_receipt_sanitization": [
+    {
+      "path": "qa/g81_h4_bound/results.xml",
+      "original_sha256": "5d9fb996ba6ce7526a20e9c0fd43dd85102c7ecef24a46870ab12f8c022954b6",
+      "public_sha256": "3579bc08f06e9726c3a67e6d8987adc81cb1ab058febdb3658aaf5fb9f66b7ff",
+      "removed_attribute": "hostname",
+      "test_records_unchanged": true
+    },
+    {
+      "path": "qa/r14_integration/combined.xml",
+      "original_sha256": "ce63e018a754022d81590bb7d6943ad805e2442dbe6fb301c348226759d9c4a6",
+      "public_sha256": "300a9b06989d24b8bb351a24d30ccefefb891d7ce5c7936df97fab07e886daf8",
+      "removed_attribute": "hostname",
+      "test_records_unchanged": true
+    },
+    {
+      "path": "qa/r15_integration/backend.xml",
+      "original_sha256": "f9fc9c8f7afca15d74cb3e9ae02bb631a1e90ec6a5870073078fe3095628d695",
+      "public_sha256": "18725fdca0689b5ac2945d7498c88e9a3faae109f89693f8e888691fc494a1ed",
+      "removed_attribute": "hostname",
+      "test_records_unchanged": true
+    },
+    {
+      "path": "qa/r15_integration/ui.xml",
+      "original_sha256": "6e2d1daba4b997238cf738d9af1a6c4830e510a2bcd52f6f2033ecc9ce39a246",
+      "public_sha256": "c62f7856095e9e0433bd82798cb98be8340bd094445bb08c715ef95e240c68e7",
+      "removed_attribute": "hostname",
+      "test_records_unchanged": true
+    },
+    {
+      "path": "qa/support_web_completion/tests.xml",
+      "original_sha256": "bf7dbd03be2dccd9c92c3aa8cf6f15165fb918b5cc66b4d9be32c0d7f4061364",
+      "public_sha256": "e14496e74c64dc0944f70cd094d4ccc77f471dddc1ae720a15eb66724822ea43",
+      "removed_attribute": "hostname",
+      "test_records_unchanged": true
+    },
+    {
+      "path": "qa/r16_integration/backend.xml",
+      "original_sha256": "f804aa0cf3eacb58459cd0b4cbc90fea232a8ec49a772368b350078428830efa",
+      "public_sha256": "66f9e588abad97973a64ee65218f9b3e4b54abae63f58ccf83b86ce71b1e1429",
+      "removed_attribute": "hostname",
+      "test_records_unchanged": true
+    },
+    {
+      "path": "qa/r16_integration/ui.xml",
+      "original_sha256": "560c016d21132ea47e7a186f93d71cc47749da9c25375e20539db89cced0de51",
+      "public_sha256": "38273beca5c38b89e6391b8dd305ac694407e7bd989c5b38a958fc1909ae7c5a",
+      "removed_attribute": "hostname",
+      "test_records_unchanged": true
+    }
+  ],
+  "post_test_code_changes": false
+}

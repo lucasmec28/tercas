@@ -5,8 +5,8 @@ TITLE = 'NBR — componentes da família Ue completa'
 ROUTES = {'published_nominal_reference': 'Referência nominal publicada', 'own_rounded_contour': 'Contorno próprio'}
 NOTE = ('Referência publicada: Wx de catálogo + críticos Pierin inalterados, sem identidade de contorno comprovada. '
         'Contorno próprio: métodos e limites explícitos. Em avaliações v3, lacunas locais de My negativo usam RP23-01 Eq28–30, aproximação publicada com curva NBR; MLE tem prioridade. ri/t=1 não herda a precisão da amostra nem garantia conservadora. Na referência documental nova, FLT com altura e FLT clássico '
-        'usam os comprimentos resistentes declarados; esforços mantêm L físico. Casos antigos conservam seu método. '
-        'Nos novos estudos, q+P usa o Ritz existente somente com Ly=Lz=L e projeção paralela elegível; alturas individuais são preservadas. '
+        'usam os comprimentos resistentes declarados; esforços mantêm L físico. Na referência ENV, Ly/L e Lz/L são adotados como fatores equivalentes kz/kw; não comprovam fixidez física. Casos antigos conservam seu método. '
+        'Nos cálculos v5, a referência q+P existente é selecionada também ao recalcular entradas sem marcador: Ritz somente com Ly=Lz=L e projeção paralela elegível, preservando alturas individuais. Ler um histórico não o atualiza. '
         'Pisos resistentes por energia/aproximação: índice acima de 1 é inconclusivo, não reprovação. '
         'Índice parcial não é aprovação resistente/global. Denominadores antigos não são alterados.')
 

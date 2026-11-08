@@ -1,0 +1,51 @@
+{
+  "scope": "Synthetic/source-only QA; no private project inputs or outputs",
+  "base_commit": "e0c8c40da4548575836e16bccf948f28a7d76d9a",
+  "tests": [
+    {
+      "group": "Mechanics, component, panorama, member, UI, pinned biaxial and preparation",
+      "passed": 312,
+      "seconds": 148.98,
+      "log": "ISOLATED_SERVICE_STIFFENER_FOCAL_R16.txt"
+    },
+    {
+      "group": "Final scalar guards, all 66 source contours, and UI reread after presentation edit",
+      "passed": 91,
+      "seconds": 31.67,
+      "log": "ISOLATED_SERVICE_STIFFENER_FAMILY_UI_R16.txt"
+    }
+  ],
+  "unique_focused_tests": 382,
+  "full_repository_suite_run": false,
+  "family": {
+    "source": "pierin_ue_registry.new_study_indices",
+    "complete_rows": 66,
+    "contours_checked": 66,
+    "in_edge_stiffener_domain": 66,
+    "outside_domain": 0,
+    "D_over_b_min": 0.2796420581655481,
+    "D_over_b_max": 0.6390977443609023,
+    "low_compression_sufficient": 66,
+    "extreme_compression_blocked": 66,
+    "member_solver_used": false,
+    "geometry_selected_by_data_not_name": true
+  },
+  "independent_review": {
+    "primary_source_sha256": "c2a01615a3ce9e2b93aeb7fee757f7bf9dd932adaefbc242e848ce813dc82407",
+    "existing_scalar_law_exact_comparisons": 140,
+    "Ia_monotone_upper_checks": 10001,
+    "legacy_synthetic_field_byte_parity": 7,
+    "conceptual_blockers": false
+  },
+  "legacy_oracle": {
+    "base_commit": "e0c8c40da4548575836e16bccf948f28a7d76d9a",
+    "base_snapshot_sha256": "23415549ca461795e70dd2add8dd9e352c2bc362d95f5859befd30ec15f9fcab",
+    "base_result_unchanged": true,
+    "source_member_solve_blocked": true,
+    "refined_stiffener_route_blocked": true,
+    "comparison_bytes_equal": true,
+    "gross_screen_bytes_equal": true,
+    "comparison_sha256": "35de43f3b85254af857559417f8541fceba1f5afb0c9546670b36220403ec421"
+  },
+  "publication_performed": false
+}

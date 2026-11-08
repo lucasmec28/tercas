@@ -14,6 +14,7 @@ from .ltb_load_height import action_terms, finite, maximum_moment
 from .ue_catalog_reference import digest
 
 SCHEMA = 'flt_height_effective_documentary_reference_v1'
+FRESH_SCHEMA = 'flt_height_current_reference_v2'
 METHOD = 'ENV1993_1992_AnnexF_table_F12_zj_zero'
 SOURCES = [
     dict(id='ENV1993-1-1:1992', location='Annex F, F.1.2(2)-(5), F.2/F.4, Table F.1.2 rows 1 and 3',
@@ -278,7 +279,10 @@ def qualify_family(data, actions):
     Saved opt-in results replay the numerical operator as well as all source
     bindings. Legacy inputs without the marker never enter the solver.
     """
-    marker = data.get(COMBINED_FIELD)
+    return _qualify_family_with_marker(data, actions, data.get(COMBINED_FIELD))
+
+
+def _qualify_family_with_marker(data, actions, marker):
     if marker is not None and marker not in COMBINED_METHODS:
         raise ValueError('Método FLT q+P não reconhecido; recalcule com declaração válida.')
     evidence = _documentary_family(data, actions)
@@ -341,9 +345,43 @@ def qualify_family(data, actions):
     return _finish(evidence)
 
 
+def qualify_family_fresh(data, actions):
+    """Select the existing current reference for an explicit fresh calculation.
+
+    No input token is inserted, no historical result is promoted, and an explicit
+    v1/v2 marker retains its declared version. All old geometry, load, length and
+    convergence guards remain in the same qualifier. The numerical reference is
+    still neither an exact critical value nor a guaranteed lower bound.
+    """
+    input_marker = data.get(COMBINED_FIELD)
+    selected = COMBINED_METHOD if input_marker is None else input_marker
+    evidence = _qualify_family_with_marker(data, actions, selected)
+    evidence.pop('snapshot_sha256', None)
+    evidence.update(schema=FRESH_SCHEMA,
+        fresh_reference_selection=dict(
+            policy='current_defined_reference_on_fresh_calculation_v1',
+            input_method_marker=input_marker, selected_combined_method=selected,
+            input_marker_added=False, historical_result_migrated=False,
+            explicitly_declared_version_preserved=input_marker is not None))
+    if 'combined_method_declared' in evidence:
+        evidence['combined_method_declared'] = input_marker is not None
+    if evidence['method'] == METHOD:
+        evidence['length_interpretation'] = (
+            'Ly/L and Lz/L are adopted as equivalent kz/kw factors of the '
+            'approximate ENV reference. A factor 0.5 represents the corresponding '
+            'ideal resistant restraint assumption, not proof or inference of '
+            'physical end fixity, a new support, or a change to the physical span.')
+    return _finish(evidence)
+
+
 def validate_saved(evidence, data, actions):
     """Recheck contour, coefficients, actions, material, lengths and arithmetic."""
-    expected = qualify_family(data, actions)
+    if evidence.get('schema') == FRESH_SCHEMA:
+        expected = qualify_family_fresh(data, actions)
+    elif evidence.get('schema') == SCHEMA:
+        expected = qualify_family(data, actions)
+    else:
+        raise ValueError('Schema da referência FLT não reconhecido.')
     if evidence != expected:
         raise ValueError('Referência FLT com altura/comprimentos divergente; recalcule explicitamente.')
     return copy.deepcopy(expected)

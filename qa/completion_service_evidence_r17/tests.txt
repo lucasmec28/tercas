@@ -1,0 +1,4 @@
+Historical execution before environment renewal; current recovery requires independent rerun.
+........................................................................ [ 67%]
+...................................                                      [100%]
+107 passed in 1.39s

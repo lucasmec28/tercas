@@ -224,7 +224,7 @@ def _replay_saved(row,summary,dimensions,fy,c,limit):
         records=[dict(analysis=dense)]))['records'][0]['analysis']
     if compact!=summary['analysis']:
         raise ValueError('Polinômios de serviço não reproduzem a fonte compacta salva.')
-    expected=mechanics.calculate(dense,dimensions,fy,c,limit)
+    expected=mechanics.calculate(dense,dimensions,fy,c,limit,schema=row['comparison']['schema'])
     if row['comparison']!=expected:
         raise ValueError('Crivo/envelope salvo não reproduz a aritmética do campo concomitante.')
     if len(_REPLAY_CACHE)>=128:_REPLAY_CACHE.clear()
@@ -266,7 +266,7 @@ def saved(result):
             if check is not None:raise ValueError('Resultado não calculado não pode apresentar índice.')
             continue
         if not isinstance(check,dict) or any(check.get(k) is not False for k in FALSE_FLAGS):raise ValueError('Comparação linear não é aprovação física.')
-        if (check.get('schema')!=mechanics.SCHEMA or check.get('combination_id')!=row['id'] or check.get('limit_state')!='ELS'
+        if (check.get('schema') not in mechanics.SCHEMAS or check.get('combination_id')!=row['id'] or check.get('limit_state')!='ELS'
             or check.get('limit_mm')!=item['limit_mm'] or check.get('source_point_xy_from_CG_mm')!=c['point_xy_from_CG_mm']
             or check.get('source_projection_xy')!=c['projection_xy']):raise ValueError('Critério ou ponto de serviço divergente.')
         summary=row['supplementary_summary'] if row['kind']=='supplementary_suction' else next((r for r in source if (r.get('combination_id'),r.get('limit_state'))==(row['id'],'ELS')),None)
@@ -306,7 +306,16 @@ def saved(result):
                 raise ValueError('Aritmética do crivo MLE salvo divergente.')
         if len(walls)!=5 or len({r['name'] for r in walls})!=5:raise ValueError('Crivo de cinco paredes incompleto.')
         for wall in walls:
-            if wall['sufficient'] is not (wall['compression_upper_MPa']<=wall['integral_limit_lower_MPa']):raise ValueError('Crivo local salvo inconsistente.')
+            base=wall['compression_upper_MPa']<=wall['integral_limit_lower_MPa']
+            if check['schema'] in (mechanics.STIFFENED_SCHEMA,mechanics.SCHEMA) and 'flange' in wall['name']:
+                if wall.get('uniform_unstiffened_sufficient') is not base:
+                    raise ValueError('Crivo AL de referência salvo inconsistente.')
+                base=bool(base or wall['edge_stiffener']['sufficient'])
+            if check['schema']==mechanics.SCHEMA and wall['name']=='web':
+                if wall.get('uniform_k4_sufficient') is not base:
+                    raise ValueError('Crivo AA uniforme de referência salvo inconsistente.')
+                base=bool(base or wall['affine_web']['sufficient'])
+            if wall['sufficient'] is not base:raise ValueError('Crivo local salvo inconsistente.')
         sufficient=bool(all(w['sufficient'] for w in walls) and screen['von_mises_upper_MPa']<=screen['fy_MPa'])
         if screen['gross_local_normal_sufficient'] is not sufficient:raise ValueError('Crivo conjunto salvo divergente.')
         env=check['envelope'];lo=env['abs_displacement_lower_mm'];hi=env['abs_displacement_upper_mm']

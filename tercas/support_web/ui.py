@@ -71,3 +71,29 @@ def render(st,result,context='isolated'):
         st.dataframe(display_rows(saved),hide_index=True)
         st.download_button('Baixar verificação local dos apoios (JSON)',json.dumps(saved,ensure_ascii=False,indent=2),file_name='alma_apoios_resultado.json',mime='application/json',key=prefix+'_json')
         st.download_button('Baixar memória local dos apoios (Word)',word(result,saved),file_name='MC_alma_apoios.docx',mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document',key=prefix+'_word')
+        # Explicit new sidecar only; existing v1 downloads/readers are unchanged.
+        from ..completion_requirements import FIELD as COMPLETION_FIELD
+        if COMPLETION_FIELD in result:
+            from . import completion
+            extra_key=base+'_completion_saved'
+            envelope=st.session_state.get(extra_key)
+            if envelope is not None and (envelope.get('source_fingerprint')!=identity or envelope.get('assessment')!=saved):
+                st.session_state.pop(extra_key,None);envelope=None
+            if st.button('Consolidar evidência local no fechamento',key=prefix+'_completion'):
+                try:
+                    envelope=completion.build(result,saved)
+                    st.session_state[extra_key]=envelope
+                except (ValueError,TypeError,KeyError,ArithmeticError) as exc:
+                    st.session_state.pop(extra_key,None);envelope=None
+                    st.warning('Fechamento complementar não consolidado: '+str(exc))
+            if envelope is not None:
+                try:
+                    current=completion.saved(result,envelope)
+                    document=completion.word(result,current)
+                except (ValueError,TypeError,KeyError,ArithmeticError) as exc:
+                    st.session_state.pop(extra_key,None);st.warning(str(exc));return
+                st.caption(completion.SCOPE)
+                st.caption(completion.PERSISTENCE)
+                st.caption('Reações e resistência reconciliadas por verificação escalar. Detalhes físicos continuam hipóteses declaradas. O resultado original e as demais pendências permanecem preservados.')
+                st.download_button('Baixar fechamento complementar (JSON)',json.dumps(current,ensure_ascii=False,indent=2),file_name='fechamento_complementar.json',mime='application/json',key=prefix+'_completion_json')
+                st.download_button('Baixar fechamento complementar (Word)',document,file_name='fechamento_complementar.docx',mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document',key=prefix+'_completion_word')

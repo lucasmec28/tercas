@@ -10,7 +10,9 @@ def controls(st,data,key):
     with st.expander('ELS combinado: deslocamento no ponto de serviço',expanded=False):
         st.caption('Flexão biaxial e torção no mesmo campo linear, com crivo MLE suficiente das cinco paredes. Seleção opcional explícita; não altera a flecha uniaxial já escolhida.')
         enabled=st.checkbox('Calcular deslocamento combinado no ponto declarado',value=bool(raw and raw['enabled']),key=key+'_enabled')
-        if raw is None and not enabled:return
+        if raw is None and not enabled:
+            st.caption('Método disponível, ainda não escolhido: ponto, direção e critério precisam ser declarados para calcular. Isso é diferente de uma rotina de cálculo ausente.')
+            return
         out=copy.deepcopy(raw) if raw else c.blank_choice()
         if raw is None:
             # Reuse the already selected nominal model, visibly and editably.
@@ -19,7 +21,9 @@ def controls(st,data,key):
                 section_for(data);out['nominal_intact_section_declared']=True
             except (ValueError,TypeError,KeyError,OSError):pass
         out['enabled']=enabled;data[c.CHOICE]=out
-        if not enabled:return
+        if not enabled:
+            st.caption('Método disponível, ainda não escolhido: ponto, direção e critério precisam ser declarados para calcular. Isso é diferente de uma rotina de cálculo ausente.')
+            return
         st.caption('Requer contorno próprio Ue e demanda Vlasov do mesmo vão. O índice exibido é condicional ao campo linear; não é aprovação física de grande giro.')
         point=st.selectbox('Ponto do deslocamento', ['Não selecionado','CG','Ponto da linha de carga no topo','Coordenadas explícitas a partir do CG'],
             index=({'CG':1,'Ponto da linha de carga no topo':2}.get(out['point_label'],3 if out['point_label'] else 0)),key=key+'_point')
@@ -57,6 +61,8 @@ def controls(st,data,key):
         out['criterion']=st.selectbox('Critério de deslocamento',choices,index=choices.index(out['criterion']),format_func=lambda v:names[v],key=key+'_criterion')
         if out['criterion']=='nbr_A1_pair':
             st.caption('Notas e/f: o caso de sucção é calculado separadamente, sem PP/CP e sem alterar a matriz fornecida. Defina a parcela de deslocamento e confira as combinações raras selecionadas. Empoçamento permanece avaliação própria da cobertura.')
+            if data.get('load_mode')=='area' and 'ELS rara' not in data.get('selected_types',[]):
+                st.warning('A seleção atual não inclui ELS rara. O par da Tabela A.1 ficará pendente nesse ramo; combinações frequentes não serão substituídas por raras. Para comparar as ELS já selecionadas, declare o limite correspondente à parcela e direção escolhidas.')
         if out['criterion']=='declared_limit':out['limit_mm']=st.number_input('Limite declarado [mm]',value=out['limit_mm'],min_value=0.,format='%.6f',key=key+'_limit')
         out['criterion_origin']=st.text_input('Parcela do deslocamento, aplicação e origem do critério',value=out['criterion_origin'],key=key+'_criterion_origin')
         out['nominal_intact_section_declared']=st.checkbox('Adotar a seção nominal íntegra, sem furos ou recortes, neste modelo de serviço',value=out['nominal_intact_section_declared'],key=key+'_intact')
@@ -78,7 +84,14 @@ def rows(record):
                 'Deslocamento: limite superior [mm]':check['envelope']['abs_displacement_upper_mm'],
                 'Limite [mm]':check['limit_mm'],'Índice superior no campo linear':check['index_upper'],
                 'Índice inferior no campo linear':check['index_lower'],
-                'x testemunha [mm]':check['envelope']['witness']['station_mm']})
+                'x testemunha [mm]':check['envelope']['witness']['station_mm'],
+                'Rigidez de serviço':({c.mechanics.SCHEMA:'MLE suficiente; mesas §9.2.3 e alma afim Tabela 5 avaliadas',
+                    c.mechanics.STIFFENED_SCHEMA:'MLE suficiente; comparador de mesas §9.2.3 avaliado',
+                    c.mechanics.LEGACY_SCHEMA:'MLE suficiente: comparação sem crédito do enrijecedor'}[check['schema']])})
+            if not check['gross_screen']['gross_local_normal_sufficient']:
+                row['Rigidez de serviço']='Condição suficiente inconclusiva; propriedades efetivas reduzidas não calculadas'
+                from .isolated_service_diagnostics import explain
+                row.update(explain(check))
         out.append(row)
     return out
 
@@ -92,7 +105,7 @@ def show(st,result):
     if record['missing']:st.warning('; '.join(record['missing']))
     st.caption('Ponto: '+record['configuration']['point_label']+'. Direção: '+record['configuration']['direction_label']+'. Corda dos extremos físicos do mesmo ponto.')
     if record['records']:st.dataframe(rows(record),hide_index=True)
-    st.caption('Limite superior ≤1 é suficiente no campo linear; limite inferior >1 demonstra excesso nesse campo. Crivo MLE inconclusivo deixa índice ausente, sem concluir falha física. Nenhum limite angular normativo foi criado.')
+    st.caption('Crivo suficiente é uma rota de cálculo, não uma exigência normativa de seção integral. Inconclusivo não exige automaticamente um solver novo. Limite superior ≤1 é suficiente no campo linear; limite inferior >1 demonstra excesso nesse campo. Crivo MLE inconclusivo deixa índice ausente, sem concluir falha física. Nenhum limite angular normativo foi criado.')
 
 
 def report(doc,result):

@@ -26,6 +26,39 @@ def _rotation(phi, warning, numerics):
     return abs(phi), warning, limit
 
 
+def _h4_first_yield_excess(evidence, computed):
+    """Read-only lower-bound consequence, only with an explicit N=0 domain.
+
+    Missing historical domain/capacity fields do not acquire new conclusions.
+    This does not build H4, supply flexural denominators or change a snapshot.
+    """
+    cap = evidence.get('bimoment_capacity')
+    if not isinstance(cap, dict) or cap.get('option') != 'Bn=By; no inelastic Bp option':
+        return 0
+    eligible = []
+    for r in computed:
+        a = r.get('AISI_analysis')
+        if (r.get('limit_state') == 'ELU' and r['G81']['ratio'] > 1
+                and isinstance(a, dict) and _finite(a.get('axial_force_N'))
+                and a['axial_force_N'] == 0 and type(a.get('analysis_order')) is int
+                and a['analysis_order'] == 1):
+            eligible.append(r)
+    if not eligible:
+        return 0
+    if (any(not _finite(cap.get(k)) or cap[k] <= 0
+            for k in ('By_Nmm2', 'Bn_Nmm2', 'Ba_Nmm2'))
+            or cap.get('phi_B') != .90 or cap['Bn_Nmm2'] != cap['By_Nmm2']
+            or cap['Ba_Nmm2'] != .90 * cap['By_Nmm2']):
+        raise ValueError('Opção de primeiro escoamento G8.1 salva inconsistente.')
+    for r in eligible:
+        g = r['G81']
+        if (not _finite(g.get('B_Nmm2')) or g.get('Ba_Nmm2') != cap['Ba_Nmm2']
+                or not math.isclose(g['ratio'], abs(g['B_Nmm2']) / cap['Ba_Nmm2'],
+                                    rel_tol=1e-12, abs_tol=1e-12)):
+            raise ValueError('Parcela de bimomento G8.1 salva inconsistente.')
+    return len(eligible)
+
+
 def aisi_lines(evidence):
     """Called only after the existing AISI snapshot reader validates its hashes."""
     computed = [r for r in evidence['records'] if r.get('G81') is not None]
@@ -51,6 +84,14 @@ def aisi_lines(evidence):
         'É uma comparação condicional da demanda linear com a resistência AISI ao bimomento, '
         'não comprovação de ruptura física nem reprovação global NBR. '
         'O diagnóstico acima de 1 permanece visível mesmo com a aplicabilidade da análise pendente.']
+    h4_excess = _h4_first_yield_excess(evidence, computed)
+    if h4_excess:
+        cases = 'caso ELU' if h4_excess == 1 else 'casos ELU'
+        lines.append(f'Em {h4_excess} {cases} com N=0, a parcela de bimomento já impede '
+            'atender H4 sob a mesma demanda linear e opção G8.1 de primeiro escoamento: '
+            'a soma de parcelas não negativas dá H4 ≥ |B|/Ba > 1. Completar Max/May '
+            'não elimina esse excesso. Isso não é cálculo completo de H4, não prova '
+            'ruptura física e não descarta uma alternativa inelástica devidamente qualificada.')
     if warnings:
         lines.append(f'{warnings} casos AISI também têm aviso de giro na sua própria análise. '
             'A interpretação física de G8.1/H4 permanece indisponível nesta primeira ordem. '
@@ -114,6 +155,14 @@ def _saved_lines(result):
         'Esse valor é resultado da linearização, não previsão do giro físico. '+
         ('Com o aviso ativo, a interpretação física da resposta linear fica indisponível. ' if warnings else '')+
         'Triagem salva: '+', '.join(number(v) for v in limits)+' rad; não é limite normativo nem critério de ruptura.']
+    # Pure geometry only: never call the saved force reader from this reader.
+    from .rotation_geometry_diagnostic import normalized_rotation_difference
+    distance = normalized_rotation_difference(maximum)
+    lines.append('Distância geométrica entre rotação finita prescrita e sua linearização: '
+        +number(distance)+' vezes o raio ao centro de cisalhamento, para |φ| = '
+        +number(maximum)+' rad. É o máximo normalizado correspondente ao campo linear salvo, '
+        'independente da orientação do ponto; não é erro estimado da resposta física nem limite de aceitação. '
+        'Não corrige deslocamento, torque ou equilíbrio e não calcula flecha relativa à corda.')
     if all(r[3]['analysis_domain'].get('intermediate_braces') is False for r in rows):
         lengths = sorted({r[3]['length_mm'] for r in rows})
         if not all(_finite(v) and v > 0 for v in lengths):
