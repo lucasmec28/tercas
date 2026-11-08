@@ -25,7 +25,7 @@ def imported(monkeypatch,data):
     payload=json.dumps(data).encode()
     monkeypatch.setattr(st,'file_uploader',lambda *args,**kwargs:SimpleNamespace(size=len(payload),getvalue=lambda:payload))
     a=new_app()
-    assert FIELD not in a.session_state.last_input
+    assert a.session_state.last_input[FIELD]==MODE
     button(a,'Aplicar entradas do arquivo').click().run(timeout=30)
     assert not a.exception
     return a
@@ -33,13 +33,13 @@ def imported(monkeypatch,data):
 
 def test_fresh_session_and_explicit_example_default_only_new_inputs():
     a=new_app()
-    assert FIELD not in a.session_state.base and not checkbox(a).value
+    assert a.session_state.base[FIELD]==MODE and checkbox(a).value
     checkbox(a).check().run(timeout=30);a.run(timeout=30)
     assert a.session_state.last_input[FIELD]==MODE
     checkbox(a).uncheck().run(timeout=30)
     assert FIELD not in a.session_state.last_input and not checkbox(a).value
     button(a,'Carregar exemplo didático').click().run(timeout=30)
-    assert a.session_state.base==activate_combined(activate_PP(example())) and not checkbox(a).value
+    assert a.session_state.base==activate(activate_combined(activate_PP(example()))) and checkbox(a).value
 
 
 @pytest.mark.parametrize('kind',['generic','ue','family'])
@@ -88,9 +88,10 @@ def test_unknown_legacy_choice_remains_inspection_not_default(monkeypatch):
     assert not a.number_input
 
 
-def test_own_plain_U_loader_is_outside_new_default_scope():
+def test_own_plain_U_loader_preserves_its_frozen_scalar_scope():
     a=new_app()
     button(a,'Carregar referência de cálculo').click().run(timeout=30)
     assert not a.exception
-    assert a.session_state.last_input==activate_combined(activate_PP(homogeneous.load_reference('U100')))
+    assert a.session_state.last_input==activate_PP(homogeneous.load_reference('U100'))
     assert FIELD not in a.session_state.last_input
+    assert not button(a,'Calcular verificações disponíveis').disabled

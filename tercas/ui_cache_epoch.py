@@ -3,7 +3,7 @@
 This session marker is not evidence of a runtime build or of physical validity.
 It never enters input JSON, calculated snapshots, or historical Word records.
 """
-EPOCH = 'active_ui_caches_Ue_fresh_FLT_ELS_diagnostics_20261108_r18'
+EPOCH = 'active_ui_caches_Ue_local_deflection_creation_fix_20261108_r19'
 KEY = 'calculation_cache_epoch'
 ACTIVE_KEYS = ('result', 'catalog_scan_state', 'three_girt_warping_result')
 

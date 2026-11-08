@@ -85,12 +85,22 @@ def _records(result):
     for key,label,source,suffix,note in DEFINITIONS:
         selected=[r for r in checks if suffix and
                   (r.get('id')==suffix or r.get('id','').endswith(':'+suffix))]
+        local_objective = (key=='service_displacement' and bool(selected)
+            and all(r.get('status')=='not_applicable' and r.get('trace',{}).get('criterion_scope')
+                    =='outside_requested_local_deflection_objective' for r in selected))
+        if local_objective:
+            label='ELS combinado adicional — fora do objetivo solicitado'
+            source='Escopo declarado: local_uniaxial_component_v1'
+            note=('O critério escolhido verifica somente a vertical local da terça, normal à cobertura. '
+                  'Não requer escolher ponto torsional ou calcular resultante/vertical global. '
+                  'ELS combinado permanece análise adicional opcional; não há aprovação integral do membro.')
         counts={s:sum(r.get('status')==s for r in selected)
                 for s in ('meets','fails','pending','not_applicable')}
         records.append(dict(id=key,label=label,source=source,condition_and_minimum_data=note,
             evidence_ids=[r['id'] for r in selected],listed_component_counts=counts,
             evidence_state='listed_components' if selected else 'not_consolidated',
-            requirement_state=('outside_member_design_scope' if key=='connections' else
+            requirement_state=('outside_requested_local_deflection_objective' if local_objective else
+                'outside_member_design_scope' if key=='connections' else
                 'declared_N_zero_scope' if key=='axial_scope' and selected and
                     counts['not_applicable']==len(selected) else 'closure_not_qualified'),
             not_consolidated_is_not_normative_inapplicability=True))
@@ -150,7 +160,7 @@ def show(st,result):
             for message in evidence.get(row['id'],[]):st.caption('Evidência calculada/salva: '+message)
         if error:st.warning(error)
         if not evidence:
-            for message in r['service_preparation']['missing']:st.caption(message)
+            for message in _preparation_messages(r):st.caption(message)
         else:st.caption('Preparação normativa preservada. Respostas efetivamente calculadas e pendências específicas constam do componente ELS combinado abaixo.')
 
 
@@ -170,6 +180,18 @@ def report(doc,result):
     if error:doc.add_paragraph(error)
     if not evidence:
         doc.add_paragraph('Preparação de serviço salva: não altera combinações fornecidas e não contém deslocamentos calculados.')
-        for message in r['service_preparation']['missing']:doc.add_paragraph(message)
+        for message in _preparation_messages(r):doc.add_paragraph(message)
     else:
         doc.add_paragraph('Preparação normativa preservada; respostas e pendências efetivamente calculadas estão no componente ELS combinado, sem alterar a matriz fornecida.')
+
+
+def _preparation_messages(record):
+    """Presentation only: preserve the saved plan and historical wording."""
+    local = any(r.get('requirement_state')=='outside_requested_local_deflection_objective'
+                for r in record['records'])
+    for message in record['service_preparation']['missing']:
+        combined = message in (
+            'Ponto, direção e referência/corda dos deslocamentos relevantes.',
+            'Rigidez de serviço compatível com o campo combinado conforme §9.8.5.')
+        yield ('Somente se for solicitada a análise combinada adicional: '+message
+               if local and combined else message)

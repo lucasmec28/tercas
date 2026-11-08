@@ -1,0 +1,48 @@
+{
+  "base_R18_tree": "8f050e54987aa1e74c5d7e124409e064f999173e",
+  "remote_R18_commit_verified": "cecb9f06778de51ec7588e637abb19ef21c20532",
+  "tested_code_commit": "47a720a5742f750df2e939945b51401de9655a85",
+  "source_commit_before_receipts": "08122422769154379887013633321a944d34a82d",
+  "scope": "One-axis local deflection objective for fresh Ue studies; own-reference creation compatibility repair. No resistant equations, numerical solvers, load components or limit changes.",
+  "test_suites": {
+    "backend": {
+      "tests": 1261,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "seconds": 160.025,
+      "original_xml_sha256": "da30a4b39291ec7016bac8cf1bc69b29ab7d1542e7b7fbdd599eba9e990f60e2",
+      "public_xml_sha256": "08161993c152dd3575e0e7f0ac770cb146e65b3a565117cd022c527a4b542ce7"
+    },
+    "ui": {
+      "tests": 30,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "seconds": 116.097,
+      "original_xml_sha256": "6bd414856ce429f2492d7987bc6dea2aa17ae29a40da8b4d43726ba8dc2404df",
+      "public_xml_sha256": "582f3d6721cf07f15a8e7da92eded180e51eed8cf3be7f80c9245e35e2ff454a"
+    }
+  },
+  "independent_review": {
+    "local_scope_hardening_tests": 38,
+    "independent_adversarial_probes": 14,
+    "UI_or_network_run_by_reviewer": false,
+    "scope": "Malformed/minimal evidence cannot exclude optional combined scope. Complete transplanted scope evidence can only change optional classification in the tested adversarial case; no mechanical index/approval promotion."
+  },
+  "historical_inputs_and_saved_results_migrated": false,
+  "new_combined_effective_service_or_large_rotation_model": false,
+  "R19_research_components_included": false,
+  "complete_repository_suite_run": false,
+  "compileall": "passed",
+  "git_diff_check": "passed",
+  "github_publication_attempted": false,
+  "hosted_R19_runtime_tested": false,
+  "latest_runtime_observation": {
+    "utc": "2026-11-08T16:29:24Z",
+    "release": "componentes-Ue-RP23-FLT-qP-20261107-r13",
+    "R18_deployment_confirmed": false
+  },
+  "worker_test_counts_not_added_to_integration_total": true,
+  "source_code_files_unchanged_after_test_start": true
+}

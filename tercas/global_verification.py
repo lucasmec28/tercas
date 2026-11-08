@@ -374,7 +374,19 @@ def _case_records(result, combination, evidence, *, batch, warnings=(), case_com
                 local_uniaxial_component=deepcopy(raw.get('local_uniaxial_component')),
                 deflection_scope_evidence=deepcopy(result.get('deflection_scope_evidence'))),
             disqualify=not compatible))
-        if raw.get('component_schema') in ('own_Ue_gross_biaxial_component_snapshot_v1','own_Ue_isolated_girt_gross_biaxial_component_snapshot_v1'):
+        # A saved local-component calculation defines the requested objective.
+        # Do not infer this from an input token on a historical result. Optional
+        # combined-service requests retain their own coverage/pending markers.
+        from .deflection_scope import MODE as LOCAL_MODE, recorded_local_objective
+        if recorded_local_objective(result, raw) and not conflict:
+            records.append(check(prefix+'combined_ELS_scope', limit_state=state,
+                source='Escopo declarado: '+LOCAL_MODE, qualified=True, not_applicable=True,
+                reason='ELS combinado fora do objetivo solicitado de flecha local. '
+                       'Análise adicional opcional; sua ausência não é pendência normativa deste critério. '
+                       'Esta delimitação não aprova o membro nem comprova deslocamento torsional nulo.',
+                trace=dict(trace, criterion_scope='outside_requested_local_deflection_objective',
+                           physical_ELS_approval=False, whole_member_approved=False)))
+        elif raw.get('component_schema') in ('own_Ue_gross_biaxial_component_snapshot_v1','own_Ue_isolated_girt_gross_biaxial_component_snapshot_v1'):
             records.append(_pending(prefix+'combined_ELS_scope',state,
                 ('Componente flexional biaxial integral qualificada no campo/contorno registrado; ' if gross_record and raw.get('qualified_gross_flexural_component') else 'Componente flexional biaxial ainda inconclusiva ou sem registro válido; ')+
                 'ELS físico completo permanece pendente, inclusive torção/empenamento e aplicabilidade da primeira ordem.', trace))

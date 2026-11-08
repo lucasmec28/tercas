@@ -1,4 +1,4 @@
-"""Explicit opt-in to an isolated local uniaxial deflection component.
+"""Versioned choice of an isolated local uniaxial deflection component.
 
 This is a model-scope change, not qualification of reduced biaxial stiffness.
 The existing scalar MSE calculation and all its guards are left unchanged.
@@ -22,7 +22,9 @@ TEXT = ('Flecha uniaxial isolada no eixo local solicitado: vertical local da ter
         'de torção/empenamento ficam fora deste modelo reduzido. O índice confronta somente '
         'a componente isolada com o limite declarado; não aprova ELS completo ou o elemento. '
         'Se a própria tensão elástica bruta excede fy, a flecha fica apenas diagnóstica. '
-        'Essa guarda do aplicativo não verifica as tensões da seção efetiva.')
+        'Essa guarda do aplicativo não verifica as tensões da seção efetiva. '
+        'ELS combinado é uma análise adicional opcional, fora deste objetivo de flecha; '
+        'sua ausência não constitui pendência normativa deste critério declarado.')
 
 ELASTIC_GUARD_SCOPE = (
     'Guarda de consistência adotada pelo aplicativo, não nova prescrição da NBR: '
@@ -213,7 +215,7 @@ def report(doc, result):
 
 
 def render_choice(st, data, key):
-    """Optional in a staged copy; no automatic time-triggered activation."""
+    """Explicit control; defaults apply only through named creation actions."""
     if isinstance(data.get('three_girt_model'), dict) and data['three_girt_model'].get('enabled'):
         st.caption('Flecha uniaxial isolada inativa no diagnóstico 3D. A opção armazenada não altera rigidez, vínculos ou resultados do conjunto de três travessas.')
         return False
@@ -238,3 +240,31 @@ def render_choice(st, data, key):
                 from .aa_component_ui import render_choice as render_aa_choice
                 render_aa_choice(st,data,key+'_aa')
     return active
+
+
+def recorded_local_objective(result, raw):
+    """Conservative scope proof from a fresh/bound snapshot, never input alone.
+
+    No mechanical calculations or historical upgrades. Invalid optional service
+    configurations are not treated as an absent request.
+    """
+    from .application import fingerprint
+    from .isolated_service_component import configuration
+    data=result.get('input_data', {})
+    record=raw.get('local_uniaxial_component')
+    summary=result.get('deflection_scope_evidence')
+    if not isinstance(record,dict) or not isinstance(summary,dict):return False
+    try:
+        cfg=configuration(data)
+        if cfg is not None and cfg['enabled']:return False
+        if data.get(FIELD)!=MODE or fingerprint(data)!=result.get('input_fingerprint'):return False
+        expected=_description(data,record['q_vector_N_mm'],record['P_vector_N'],
+            record['original_q_vector_N_mm'],record['original_P_vector_N'])
+        if any(record.get(k)!=v for k,v in expected.items()):return False
+        if not isinstance(record.get('gross_elastic_guard'),dict):return False
+        if result.get('schema')=='NBR14762_one_span_v1':
+            return summary==record
+        return (result.get('schema')=='tercas_batch_results_v1'
+            and summary==dict(schema=MODE,text=TEXT,scope='per_case_isolated_local_uniaxial_component',
+                combined_ELS_approved=False,whole_member_approved=False,total_displacement_evaluated=False))
+    except (ValueError,TypeError,KeyError):return False

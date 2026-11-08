@@ -16,7 +16,7 @@ def loader(st, revision, load):
         st.caption(SCOPE)
         angle = st.selectbox('Exemplo sintético Ue100', (0, 5, -5),
                             format_func=lambda v: f'{v:+g}° · 58 combinações', key=f'ue_ref_angle_loader_{revision}')
-        st.caption('Abre novo estudo sintético próprio de 4 m, separado do catálogo e das referências U. Não converte nem requalifica automaticamente entradas existentes. Inclinação e ações podem ser editadas depois; ELS biaxial continua pendente.')
+        st.caption('Abre novo estudo sintético próprio de 4 m, separado do catálogo e das referências U. Não converte nem requalifica automaticamente entradas existentes. Inclinação e ações podem ser editadas depois. O novo estudo verifica a flecha vertical local; ELS combinado é adicional opcional.')
         if st.button('Carregar referência própria Ue100', key=f'ue_ref_load_{revision}'):
             try:new = for_new_study(load_reference('Ue100', angle))
             except (ValueError, OSError, KeyError) as exc:st.error('Referência não carregada: ' + str(exc))
