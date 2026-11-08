@@ -13,7 +13,8 @@ def for_new_study(data):
     from .direct_self_weight import activate as activate_direct_PP
     from .flt_height_effective import activate_combined
     from . import ue_reference, ue_family_reference, homogeneous_reference
-    out = activate_direct_PP(data)
+    from .support_scope import activate as exclude_local_supports
+    out = exclude_local_supports(activate_direct_PP(data))
     # Frozen own-reference consumers do not implement the catalogue FLT
     # contract. Do not inject it or erase an incompatible imported declaration:
     # their unchanged source gates must still reject any supplied extra marker.

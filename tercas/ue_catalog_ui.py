@@ -15,23 +15,35 @@ def adopt_combined_for_calculation(state, data, load):
     state[HISTORY] = history
 
 
+def preserve_then_load(state,changed,load):
+    """Explicit contour adoption keeps the earlier durable study restorable."""
+    from .pierin_ue_registry_ui import HISTORY, _snapshot
+    history=list(state.get(HISTORY,[]))+[_snapshot(state)]
+    load(changed)
+    state[HISTORY]=history
+
+
 def render_choice(st,data,key,load):
     from .catalogs import catalog_entry
     network=data.get('three_girt_model',{})
-    if (data.get('member_application','purlin')!='purlin' or not isinstance(network,dict)
-        or network.get('enabled') or catalog_entry(data['catalog_index'])['family']!='Ue'):
+    if (not isinstance(network,dict) or network.get('enabled') or catalog_entry(data['catalog_index'])['family']!='Ue'):
         return
     with st.expander('Contorno próprio Ue do catálogo',expanded=claims_reference(data)):
-        st.caption('Substitui em conjunto as propriedades geométricas e a massa. Mantém material e ações digitadas; PP será calculado uma vez no CG, ações externas no topo escolhido. Os críticos antigos ficam apenas na auditoria.')
-        st.caption(SCOPE)
+        st.caption('Substitui em conjunto as propriedades geométricas e a massa. Mantém material e ações digitadas; PP calculado uma única vez. Os críticos antigos ficam apenas na auditoria.')
+        from .ue_catalog_reference import scope_for
+        from .load_application_policy import adopt, active, applies_to_new
+        st.caption(scope_for(adopt(data)))
         if claims_reference(data):
             try:validate(data);st.success('Contorno próprio Ue aplicado às entradas atuais.')
             except (ValueError,TypeError,KeyError) as exc:st.warning(str(exc))
         if st.button('Reaplicar contorno próprio Ue' if claims_reference(data) else 'Aplicar contorno próprio Ue',key=key+'_apply'):
-            try:changed=activate(data)
+            try:changed=activate(adopt(data))
             except (ValueError,TypeError,KeyError) as exc:st.error(str(exc))
-            else:load(changed);st.rerun()
-        if claims_reference(data):
+            else:
+                preserve_then_load(st.session_state,changed,load)
+                st.rerun()
+        if (claims_reference(data) and data.get('member_application','purlin')=='purlin'
+                and not (active(data) or applies_to_new(data))):
             from .flt_height_effective import COMBINED_FIELD, COMBINED_METHOD
             from .pierin_ue_registry import select_new_study
             try:
@@ -44,7 +56,9 @@ def render_choice(st,data,key,load):
                 if st.button('Adotar FLT q+P para novo cálculo', key=key+'_combined'):
                     adopt_combined_for_calculation(st.session_state, data, load)
                     st.rerun()
-
+    if claims_reference(data) and data.get('member_application')=='wall_girt':
+        from .wall_girt_isolated import render_choice as render_girt_lines
+        render_girt_lines(st,data,key+'_girt_lines')
 
 
 def show(st,result):

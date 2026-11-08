@@ -58,7 +58,8 @@ def test_independent_sharp_channel_integrals(a,b,t):
 
 def test_seven_frozen_sections_bit_identical_to_published_base(tmp_path):
     path=tmp_path/'original_section.py'
-    path.write_bytes(subprocess.check_output(['git','show','89785b61c2b01a7d5ec350b00c10fc5e9bc8e90d:tercas/torsion_vlasov/section.py']))
+    from historical_section_oracle import load as historical_section_bytes
+    path.write_bytes(historical_section_bytes())
     spec=importlib.util.spec_from_file_location('tercas.torsion_vlasov.original_section',path)
     module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
     files=sorted((Path(__file__).parents[1]/'tercas/data/torsion_profiles').glob('*.json'))

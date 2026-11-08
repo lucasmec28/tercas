@@ -12,6 +12,7 @@ from .serviceability_plan import prepare, SOURCE_SHA256
 
 FIELD = 'completion_requirements'
 SCHEMA = 'isolated_purlin_completion_requirements_v1'
+SCOPED_SCHEMA = 'isolated_purlin_completion_requirements_v2_support_scope'
 # IDs are fixed independently of observed numerical checks. None means there is
 # no consolidated producer for that requirement, not normative inapplicability.
 DEFINITIONS = (
@@ -75,14 +76,28 @@ def _eligible(result):
 
 
 def _source(result):
-    return {k:result.get(k) for k in ('schema','input_data','input_fingerprint',
+    out={k:result.get(k) for k in ('schema','input_data','input_fingerprint',
             'load_bundle','global_verification','model_domain_evidence')}
+    from .support_scope import EVIDENCE
+    if EVIDENCE in result:out[EVIDENCE]=result[EVIDENCE]
+    return out
 
 
 def _records(result):
     checks=result.get('global_verification',{}).get('checks',[])
+    from .support_scope import saved as saved_support_scope, STATE, TEXT
+    support_scope=saved_support_scope(result)
     records=[]
     for key,label,source,suffix,note in DEFINITIONS:
+        if key=='support_web' and support_scope is not None:
+            records.append(dict(id=key,label='Apoios locais — fora do escopo por decisão do usuário',
+                source=support_scope['source'],condition_and_minimum_data=TEXT,
+                evidence_ids=[],listed_component_counts={s:0 for s in ('meets','fails','pending','not_applicable')},
+                evidence_state=STATE,requirement_state=STATE,
+                not_consolidated_is_not_normative_inapplicability=True,
+                blocks_listed_scope_completion=False,index=None,
+                support_approved=False,normative_exemption=False))
+            continue
         selected=[r for r in checks if suffix and
                   (r.get('id')==suffix or r.get('id','').endswith(':'+suffix))]
         local_objective = (key=='service_displacement' and bool(selected)
@@ -109,8 +124,10 @@ def _records(result):
 
 def build(result):
     if not _eligible(result):return None
-    return dict(schema=SCHEMA,source_sha256=digest(_source(result)),normative_source_sha256=SOURCE_SHA256,
-        required_ids=list(REQUIRED_IDS),records=_records(result),service_preparation=prepare(result),
+    from .support_scope import saved as saved_support_scope
+    scoped=saved_support_scope(result) is not None
+    return dict(schema=SCOPED_SCHEMA if scoped else SCHEMA,source_sha256=digest(_source(result)),normative_source_sha256=SOURCE_SHA256,
+        required_ids=[k for k in REQUIRED_IDS if not (scoped and k=='support_web')],records=_records(result),service_preparation=prepare(result),
         **{k:False for k in _FALSE_FLAGS},
         scope=SCOPE, exclusions=list(EXCLUSIONS))
 
@@ -126,13 +143,15 @@ def saved(result):
     """Validate source inventory and limit arithmetic only; no history upgrade or solve."""
     record=result.get(FIELD)
     if record is None:return None
-    if (not isinstance(record,dict) or record.get('schema')!=SCHEMA or not _eligible(result)
+    from .support_scope import saved as saved_support_scope
+    scoped=saved_support_scope(result) is not None
+    if (not isinstance(record,dict) or record.get('schema')!=(SCOPED_SCHEMA if scoped else SCHEMA) or not _eligible(result)
             or record.get('source_sha256')!=digest(_source(result))
             or record.get('normative_source_sha256')!=SOURCE_SHA256
             or record.get('scope')!=SCOPE or record.get('exclusions')!=list(EXCLUSIONS)
             or record.get('snapshot_sha256')!=digest({k:v for k,v in record.items() if k!='snapshot_sha256'})
             or any(record.get(k) is not False for k in _FALSE_FLAGS)
-            or record.get('required_ids')!=list(REQUIRED_IDS)
+            or record.get('required_ids')!=[k for k in REQUIRED_IDS if not (scoped and k=='support_web')]
             or [r.get('id') for r in record.get('records',[])]!=list(REQUIRED_IDS)
             or record.get('records')!=_records(result)):
         raise ValueError('Inventário salvo incompleto, alterado ou de outra fonte; nenhum histórico requalificado.')

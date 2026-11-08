@@ -193,11 +193,12 @@ def resistance_at_floor(index, *, material, Me_lower_bound_Nmm):
 
 def qualify_family(data, actions, *, formula_nu=.3, gamma=1.1, energy_evidence=None, method=None):
     """Fresh bridge or fully replayed supplied energy certificate; no cache trust."""
-    if method not in (None, energy.POLICY_V2):
+    if method not in (None, energy.POLICY_V2, energy.POLICY_V3):
         raise ValueError('Unknown declared energy floor policy')
     bound=(energy.qualify_family(data,actions,method=method) if energy_evidence is None else
            energy.validate_saved(energy_evidence,data,actions))
-    if method == energy.POLICY_V2 and bound.get('schema') != energy.SCHEMA_V2:
+    requested_schema = {energy.POLICY_V2: energy.SCHEMA_V2, energy.POLICY_V3: energy.SCHEMA_V3}.get(method)
+    if requested_schema is not None and bound.get('schema') != requested_schema:
         raise ValueError('Supplied energy evidence differs from requested method')
     out=dict(schema=SCHEMA,scope=SCOPE,energy_floor=bound,
         catalog_index=data['catalog_index'],physical_span_mm=data['L_mm'],
@@ -234,12 +235,15 @@ def qualify_family(data, actions, *, formula_nu=.3, gamma=1.1, energy_evidence=N
                     'Solicitação acima de um piso suficiente não prova reprovação; requer referência resistente mais precisa.'))
     if bound['schema'] == energy.SCHEMA_V2:
         out['schema'] = 'flt_height_declared_energy_nbr_floor_v2'
+    if bound['schema'] == energy.SCHEMA_V3:
+        out['schema'] = 'flt_height_declared_energy_nbr_floor_v3'
     out['snapshot_sha256']=digest(out)
     return out
 
 
 def validate_saved(evidence,data,actions,*,formula_nu=.3,gamma=1.1):
-    method = energy.POLICY_V2 if evidence.get('schema') == 'flt_height_declared_energy_nbr_floor_v2' else None
+    method = {'flt_height_declared_energy_nbr_floor_v2': energy.POLICY_V2,
+              'flt_height_declared_energy_nbr_floor_v3': energy.POLICY_V3}.get(evidence.get('schema'))
     expected=qualify_family(data,actions,formula_nu=formula_nu,gamma=gamma,method=method)
     if evidence!=expected:
         raise ValueError('Piso resistente/hipóteses/testemunhas alterados; recalcule explicitamente.')

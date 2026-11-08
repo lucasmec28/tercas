@@ -122,6 +122,8 @@ def _calculate_batch(data, *, _calculate_case=None):
  result={'model_domain_evidence':copy.deepcopy(common_spec['model_domain_evidence']),'common_input_snapshot':common_snapshot,'strong_critical_reference':qualify(data)[1],'weak_sense_assumption':u_evidence(data),'weak_critical_reference':reference_for_inputs(data),'schema':'tercas_batch_results_v1','version':VERSION,'project':data['project'],'synthetic':data['synthetic'],'input_fingerprint':fingerprint(data),'input_data':copy.deepcopy(data),'load_bundle':bundle,'cases':cases,'whole_member_approved':False,'summary':governing(cases)}
  from .deflection_scope import annotate_batch
  annotate_batch(result)
+ from .support_scope import annotate as annotate_support_scope
+ annotate_support_scope(result)
  return result
 
 def governing(cases):

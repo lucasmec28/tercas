@@ -38,16 +38,22 @@ def calculate(spec,base):
  bf0=v('bf')+(v('lip') if family=='Ue' else 0)
  result['shear_lag_domain']={'status':'not_triggered_by_length' if isinstance(L,(int,float)) and L>=30*bf0 else 'actual_free_flange_width_needed_to_decide_9_4','L_mm':L,'bf0_upper_bound_mm':bf0,'scope':'sufficient length screen using nominal width upper bound; failing bound is NOT proof shear lag required'}
  intro=spec.get('introduction') if isinstance(spec.get('introduction'),dict) else {};result['supports']={}
+ from ..support_scope import enabled as supports_excluded, decision as support_scope_decision
+ excluded_supports=supports_excluded(spec)
  for name in ['left','right']:
   s=intro.get(name) if isinstance(intro.get(name),dict) else {}
-  result['supports'][name]=support(s.get('route'),s.get('origin'))
+  result['supports'][name]=support_scope_decision() if excluded_supports else support(s.get('route'),s.get('origin'))
  patch=intro.get('point') if isinstance(intro.get('point'),dict) else {}
  try:
   if not patch or not isinstance(patch.get('origin'),str) or not patch['origin'].strip():raise ValueError('point patch geometry and origin missing')
   if not good(patch.get('c_mm')):raise ValueError('Comprimento de contato da carga concentrada ausente ou inválido (é necessário um valor finito e positivo). Introdução local permanece pendente; nenhum comprimento foi presumido.')
   c=patch['c_mm'];x=u['x_mm'];h=v('h')-2*(v('ri_mm')+v('t'));dist=min(x-c/2,L-x-c/2)
   if not all(good(a) for a in [c,h,fy,u['P_N']]) or dist<=1.5*h:raise ValueError('outside isolated internal positive patch subset')
-  if any(s['status']!='stiffener_exception_9_5_1' for s in result['supports'].values()):raise ValueError('current patch subset needs declared end-web connections; flange contacts need separate geometry')
+  # The P adapter still needs its declared geometry. This is not a support
+  # resistance check or an exemption recorded for the excluded end supports.
+  declared_ends=all(isinstance(intro.get(n),dict) and intro[n].get('route')=='web_connection'
+   and isinstance(intro[n].get('origin'),str) and intro[n]['origin'].strip() for n in ('left','right'))
+  if not declared_ends:raise ValueError('current patch subset needs declared end-web connections; flange contacts need separate geometry')
   cap=frd(h=h,t=v('t'),ri=v('ri_mm'),c=c,fy=fy,end_distance=dist,opposite_clear_distance=dist,connected=False,lip=family=='Ue')
   result['point']={'status':'computed','FRd_N':cap,'force_N':u['P_N'],'index':u['P_N']/cap,'patch_mm':[x-c/2,x+c/2],'origin':patch['origin']}
  except (ValueError,TypeError,KeyError) as e:result['point']={'status':'not_evaluated','reason':str(e)}

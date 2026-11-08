@@ -29,34 +29,36 @@ def app_for(automatic):
     return app,data
 
 
-def test_separated_direct_manual_panel_points_to_existing_top_route():
+def test_current_direct_panel_does_not_require_manual_line_adoption():
     app,before=app_for(True)
-    next(w for w in app.checkbox if w.label=='Analisar torção Vlasov (diagnóstico elástico)').check().run(timeout=30)
-    assert not app.exception
-    assert any('Para calcular torção no modo direto com PP automático' in w.value for w in app.info)
-    assert any('não é necessário para a rota direta automática' in w.value for w in app.caption)
-    assert not any('Diagnóstico de torção pendente no modo direto' in w.value for w in app.warning)
+    assert not app.checkbox and not app.selectbox and not app.number_input
+    assert not app.info and not app.warning and not app.caption
     assert app.session_state.data[FIELD]==MODE
-    assert {k:v for k,v in app.session_state.data.items() if k!=TORSION_FIELD}==before
-    snapshot=copy.deepcopy(app.session_state.data)
+    assert app.session_state.data==before
     app.run(timeout=30)
-    assert not app.exception and app.session_state.data==snapshot
+    assert not app.exception and app.session_state.data==before
 
 
-def test_legacy_manual_warning_and_input_meaning_are_preserved():
+def test_legacy_direct_PP_meaning_is_not_converted_by_rendering():
     app,before=app_for(False)
-    next(w for w in app.checkbox if w.label=='Analisar torção Vlasov (diagnóstico elástico)').check().run(timeout=30)
-    assert not app.exception and FIELD not in app.session_state.data
-    assert any('Diagnóstico de torção pendente no modo direto' in w.value for w in app.warning)
-    assert not any('Para calcular torção no modo direto com PP automático' in w.value for w in app.info)
-    assert {k:v for k,v in app.session_state.data.items() if k!=TORSION_FIELD}==before
+    assert FIELD not in app.session_state.data
+    assert not app.checkbox and not app.selectbox and not app.number_input
+    assert app.session_state.data==before
+    app.run(timeout=30)
+    assert not app.exception and app.session_state.data==before
 
 
-def test_selecting_top_scheme_uses_existing_automatic_route_without_manual_toggle():
+def test_saved_top_and_manual_lines_are_inactive_but_preserved():
+    from tercas.roof_top_load import choice
+    from tercas.torsion_study import blank_choice
     app,before=app_for(True)
-    next(w for w in app.selectbox if w.label=='Esquema da carga da cobertura').select('web_midplane').run(timeout=30)
-    assert not app.exception
-    assert not any(w.label=='Analisar torção Vlasov (diagnóstico elástico)' for w in app.checkbox)
-    assert any('Modo direto separado: PP no CG' in w.value for w in app.caption)
-    assert TORSION_FIELD not in app.session_state.data
-    assert {k:v for k,v in app.session_state.data.items() if k!='roof_top_load'}==before
+    before['roof_top_load']=choice('flange_midwidth')
+    before[TORSION_FIELD]=blank_choice()
+    before[TORSION_FIELD]['load_lines']['CP']={
+        'declared':True,'xy_from_CG_mm':[12.,34.],'origin':'synthetic historical line'}
+    app.session_state.data=copy.deepcopy(before)
+    for _ in range(2):
+        app.run(timeout=30)
+        assert not app.exception and app.session_state.data==before
+        assert not app.checkbox and not app.selectbox and not app.number_input
+        assert not app.info and not app.warning and not app.caption

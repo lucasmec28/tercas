@@ -115,6 +115,8 @@ def _validate(demand, config):
             warping_end_condition=demand['configuration']['warping_end_condition'],
             warping_condition_origin=demand['configuration']['warping_condition_origin'],
             include_green=True,brace_self_weight=c['brace_self_weight'],brace_weight_factor=case['brace_weight_factor'],nodal_loads=[])
+        from ..load_application_policy import active as ct_active,FIELD as CT_FIELD,MODE as CT_MODE
+        if ct_active(data):expected_inputs[CT_FIELD]=CT_MODE
         if model['inputs']!=expected_inputs:
             raise ValueError('Solved model inputs differ from current case/configuration')
         g81=model.get('G81_demand_inputs')

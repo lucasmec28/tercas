@@ -1,0 +1,49 @@
+ESCOPO LOCAL DOS APOIOS — decisão do usuário, 08/11/2026
+
+A política outside_app_by_user_decision_v1 retira do escopo ativo as
+verificações locais de apoio/introdução das reações nas extremidades. O
+engenheiro as tratará no cálculo das ligações. Não é aprovação de apoio nem
+dispensa da NBR. O app não dimensiona ligações.
+
+Alcance exato:
+- Novas entradas criadas pela UI recebem local_support_verification_scope.
+- Cada clique de novo cálculo na UI adota a decisão também em entradas
+  antigas mediante cópia. O estudo anterior é arquivado; base, last_input e
+  resultado corrente usam o mesmo payload. Abrir/restaurar/exportar não
+  adiciona marcadores. Não há opção de reativar apoio no novo cálculo.
+- Novo cálculo registra local_support_scope_evidence ligado às entradas.
+- NBR_branches.supports não avalia nem registra exceção §9.5.1: usa o estado
+  outside_scope_by_user_decision, index=null, normative_exemption=false.
+- Painel support_web é somente leitura em todos os resultados, inclusive
+  históricos. Não oferece criação, edição, cálculo ou consolidação local.
+  Avaliações e fechamentos já salvos continuam exportáveis sem recalcular
+  resistência. Leitores antigos de replay ficam fora desse caminho da UI.
+  calculate e nova consolidação rejeitam o escopo excluído.
+- O checklist v2 mantém a decisão para auditoria, mas remove support_web de
+  required_ids. Compatibilidade dos vínculos/modelo continua em seu escopo.
+- Panorama 7DOF remove somente support_force_introduction dos critérios;
+  registra a decisão separadamente, sem atribuir not_applicable/meets.
+- JSON e Word levam versão, origem, exclusão e ausência de aprovação.
+
+Preservado:
+- Reações, forças de extremidade, deslocamentos, vínculos e solver.
+- Cortante da barra, interações M–V/N–M–V e introdução de forças interiores.
+- P real dentro do vão e suas condições próprias de contato/Anexo D.
+  Na rota antiga de P, a declaração de geometria das extremidades continua
+  condição do domínio do contato interior, não uma verificação do apoio.
+- Limite matemático P_APOIO, sua reação e camada de cisalhamento não mudam.
+- support_web.sources e mechanics permanecem disponíveis para leitura
+  histórica e uso próprio por point_web; helper compartilhado não implica
+  verificação ativa dos apoios.
+- Todos os leitores e resultados anteriores sem a política permanecem
+  históricos, sem migração no abrir/exportar. Schemas v1 não são regravados.
+
+Qualificação: 103 testes focados passaram em 7,76 s (1 thread), incluindo
+invariância direta/lote e física 7DOF, P interior, histórico, JSON/Word,
+checklist e painel informativo. Preparo dos editores congelados exige QA
+complementar após integração da política comum da UI.
+Nenhuma publicação/deploy ou aprovação global é inferida.
+
+Fechamento da interface: 69 testes de leitura/exportação, histórico, fonte
+divergente, corrupção, integração e preservação dos validadores anteriores
+passaram. A leitura histórica não requalifica resistência nem condições reais.

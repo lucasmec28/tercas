@@ -17,7 +17,11 @@ def test_current_girt_UI_saved_G81_and_input_change(monkeypatch):
     widget(app,'button','Calcular três travessas Vlasov e G8.1').click();run(app)
     assert RESULT_KEY in app.session_state
     saved=copy.deepcopy(app.session_state[RESULT_KEY]);assert len(saved['cases'])==19
-    assert saved['G81_component_attached'] and app.session_state.last_input==d
+    from tercas.current_calculation_inputs import prepare
+    from tercas.pierin_ue_registry_ui import HISTORY
+    assert saved['G81_component_attached'] and app.session_state.last_input==prepare(d)
+    assert app.session_state[HISTORY][0]['last_input']==d
+    assert not any('Linha externa' in w.label for w in app.number_input)
     def forbidden(*args,**kwargs):raise AssertionError('Viewing/exporting must not solve structural demand')
     monkeypatch.setattr(network,'solve',forbidden)
     run(app);assert app.session_state[RESULT_KEY]==saved
@@ -27,6 +31,8 @@ def test_current_girt_UI_saved_G81_and_input_change(monkeypatch):
     doc=Document(BytesIO(word(saved,1)))
     text='\n'.join(p.text for p in doc.paragraphs)+'\n'+'\n'.join(c.text for t in doc.tables for row in t.rows for c in row.cells)
     assert 'G8.1' in text and 'N+M+B' in text and saved['input_fingerprint'] in text
-    widget(app,'number_input','Linha externa Y a partir do CG Vlasov [mm]').set_value(8.);run(app)
+    widget(app,'number_input','Permanente do fechamento [kgf/m²]').set_value(d['area_inputs']['permanent_kgf_m2']+1.);run(app)
     assert RESULT_KEY not in app.session_state
-    assert app.session_state.last_input==d
+    expected=prepare(d);expected['area_inputs']['permanent_kgf_m2']+=1.
+    assert app.session_state.last_input==expected
+    assert app.session_state[HISTORY][0]['last_input']==d

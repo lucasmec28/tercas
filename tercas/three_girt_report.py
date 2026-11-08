@@ -49,6 +49,8 @@ def word(result,selected=0):
  d.add_heading('Diagnóstico elástico de três travessas',0)
  from .study_completion import report_global
  report_global(d,result)
+ from .support_scope import report as report_support_scope
+ report_support_scope(d,result)
  d.add_paragraph('Memória parcial de solicitações e deslocamentos para Lucas. Este documento não verifica resistência das travessas, tirantes, cantoneiras ou ligações e não conclui atendimento de ELS. Não há aprovação global.',style='Normal')
  d.add_paragraph('Projeto: '+str(result['project'])+'\nPerfil das três travessas: '+catalog_labels()[result['input_data']['catalog_index']])
  if result.get('synthetic'):d.add_paragraph('CASO SINTÉTICO OU DIDÁTICO. Não é projeto ou produto validado.').runs[0].bold=True

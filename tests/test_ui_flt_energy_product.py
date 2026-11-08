@@ -12,7 +12,7 @@ from en_ue_test_helpers import inputs
 from tercas.resistance_effective_lengths import declare
 
 
-def test_import_calculate_export_and_reopen_v2_energy(monkeypatch):
+def test_import_calculate_export_and_reopen_current_energy(monkeypatch):
     data=inputs(0,angle=4.,L=3600.)
     data.update(q_uls=.32,q_sls=.18,P_uls=240.,P_sls=140.,x_uls=1800.,x_sls=1800.)
     data=declare(data,Lx_mm=1800.,Ly_mm=1800.,Lz_mm=2400.,origin='Synthetic independent lengths')
@@ -32,7 +32,7 @@ def test_import_calculate_export_and_reopen_v2_energy(monkeypatch):
     from tercas.nbr_ue_family_application import FIELD,SCHEMA
     assert result[FIELD]['schema']==SCHEMA
     bound=result[FIELD]['records'][0]['height_energy_floor']
-    assert bound['schema']=='flt_height_declared_energy_nbr_floor_v2'
+    assert bound['schema']=='flt_height_declared_energy_nbr_floor_v3'
     assert bound['energy_floor']['Ly_used_mm']==1800.
     assert bound['energy_floor']['Lz_used_mm']==2400.
     assert bound['energy_floor']['physical_span_mm']==3600.
@@ -41,4 +41,4 @@ def test_import_calculate_export_and_reopen_v2_energy(monkeypatch):
     assert doc.tables
     start=time.perf_counter();app.run(timeout=120);timings['rerender']=time.perf_counter()-start
     assert not app.exception and app.session_state.result==result
-    print('FLT_ENERGY_V2_UI_SECONDS='+json.dumps(timings,sort_keys=True))
+    print('FLT_ENERGY_CURRENT_UI_SECONDS='+json.dumps(timings,sort_keys=True))

@@ -28,7 +28,8 @@ def beam_matrix(L,s,load,mode):
 
 
 def solve(model,mode='exact',subdivisions=1):
-    inp=model['inputs'];s=inp['section'];L=inp['L_mm'];physical=[0.]+inp['attachment_x_mm']+[L]
+    from ..load_application_policy import active as ct_active
+    inp=model['inputs'];ct=ct_active(inp);s=inp['section'];L=inp['L_mm'];physical=[0.]+inp['attachment_x_mm']+[L]
     xs=[]
     for a,b in zip(physical,physical[1:]):xs.extend(np.linspace(a,b,subdivisions+1)[:-1])
     xs.append(L);xs=np.array(xs);columns=len(xs);xyz=np.array([[x,y,0.] for y in (inp['upper_gap_mm'],0.,-inp['lower_gap_mm']) for x in xs]);nd=7*len(xyz)
@@ -51,7 +52,12 @@ def solve(model,mode='exact',subdivisions=1):
         delta=xyz[nb]+cb['arm_mm']-xyz[na]-ca['arm_mm'];ell=float(np.linalg.norm(delta));n=delta/ell
         beta=np.r_[-n@A,n@B];ids=np.r_[np.arange(7*na,7*na+7),np.arange(7*nb,7*nb+7)];mat=old['material'];k=mat['E_MPa']*mat['A_mm2']/ell
         add(ids,k*np.outer(beta,beta));weight=mat['mass_kg_m']*ell/1000*9.80665*inp['brace_weight_factor'] if inp['brace_self_weight'] else 0.
-        wF=np.array([0.,-weight/2,0.]);w=np.r_[A.T@wF,B.T@wF];f[ids]+=w;physical_nodal[ids]+=w
+        wF=np.array([0.,-weight/2,0.])
+        # Load eccentricity is independent of the actual connection kinematics.
+        # Transverse weight has no axial component and hence no sectorial work.
+        W=point_map(dict(arm_mm=[0.,s['sc_y_mm'],s['sc_z_mm']],omega_mm2=0.)) if ct else None
+        w=np.r_[(W if ct else A).T@wF,(W if ct else B).T@wF]
+        f[ids]+=w;physical_nodal[ids]+=w
         bars.append(dict(id=old['id'],a=na,b=nb,ids=ids,k=k,beta=beta,connections=copy.deepcopy(old['connections']),direction=n,self_weight_N=weight))
     for load in inp['nodal_loads']:
         na=remap(load['node']);f[7*na:7*na+7]+=load['values'];physical_nodal[7*na:7*na+7]+=load['values']

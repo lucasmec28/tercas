@@ -26,7 +26,8 @@ def evaluate(spec):
         raise ValueError('Snapshot MLE de serviço incompatível com contorno/material e escopo consumidos.')
     binding=ev['source_binding']
     packet=own._source(binding['catalog_index'])
-    identity=own._identity(packet,binding['catalog_index'])
+    identity=own._identity(packet,binding['catalog_index'],
+        'wall_girt' if binding.get('schema')==own.GIRT_SCHEMA else 'purlin')
     if (any(binding.get(k)!=v for k,v in identity.items())
             or critical['evidence']['geometric_properties']!=own._properties(packet)):
         raise ValueError('Identidade geométrica MLE divergente do contorno próprio utilizado.')

@@ -78,10 +78,12 @@ def _domain(data,c):
     if not c['intact_section_model_declared'] or not c['model_origin'].strip():
         return 'Adote explicitamente seção nominal intacta, sem furos/recortes, e registre a origem do modelo.'
     net=data.get('three_girt_model',{})
-    if not isinstance(net,dict) or net.get('enabled') or data.get('member_application','purlin')!='purlin':
-        return 'Componente exclusiva do vão isolado de terça; rede/travessa não coberta.'
+    if not isinstance(net,dict) or net.get('enabled'):
+        return 'Componente exclusiva do vão isolado; rede não coberta.'
     marker=data.get('ue_catalog_reference')
-    if not isinstance(marker,dict) or marker.get('schema')!='ue_catalog_reference_v1':
+    from .ue_catalog_reference import SCHEMA as PURLIN_SCHEMA, GIRT_SCHEMA
+    expected_schema=GIRT_SCHEMA if data.get('member_application','purlin')=='wall_girt' else PURLIN_SCHEMA
+    if not isinstance(marker,dict) or marker.get('schema')!=expected_schema:
         return 'Ativação explícita do contorno próprio Ue de catálogo necessária.'
     from .pierin_ue_registry import select_new_study
     from .en_ue_family_kernel import material as check_material
@@ -127,7 +129,15 @@ def _pending(result,c,reason):
 def _validate_source_contract(summary,data):
     from .roof_top_load import configuration as roof_configuration
     roof=roof_configuration(data)
-    if not roof or not roof['enabled'] or roof['end_restraint']!='fork_free_warping':
+    from .load_application_policy import active as ct_active,torsion_choice
+    ct=ct_active(data)
+    if data.get('member_application')=='wall_girt':
+        from .torsion_study import configuration, SUPPORTS
+        from .wall_girt_isolated import SCHEMA as GIRT_SCHEMA
+        c=torsion_choice(data) if ct else configuration(data)
+        if not c or not c['enabled'] or c['schema']!=GIRT_SCHEMA or c['support_hypothesis']!=SUPPORTS:
+            raise ValueError('Contrato próprio de garfos da travessa com empenamento livre requerido.')
+    elif not ct and (not roof or not roof['enabled'] or roof['end_restraint']!='fork_free_warping'):
         raise ValueError('Contrato original de garfos com empenamento livre requerido.')
     numerics=summary.get('numerics',{});domain=summary.get('analysis_domain',{})
     if (type(numerics.get('rotation_warning_rad')) not in (int,float)

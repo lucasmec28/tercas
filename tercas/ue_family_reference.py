@@ -19,7 +19,7 @@ THICKNESSES = (1.5, 2., 2.25, 2.65, 3., 3.35)
 FIELD = 'ue_family_reference'
 VERSION = 'own_Ue100_six_scalar_components_app_v1'
 REPORTING_VERSION = 'own_Ue100_six_self_contained_snapshot_v1'
-EDITABLE = {'direct_load_basis', 'project', 'actions_origin', 'load_mode', 'area_inputs', 'selected_types',
+EDITABLE = {'load_application_policy', 'local_support_verification_scope', 'direct_load_basis', 'project', 'actions_origin', 'load_mode', 'area_inputs', 'selected_types',
             'q_uls', 'q_sls', 'P_uls', 'P_sls', 'x_uls', 'x_sls',
             'q_parallel_uls', 'q_parallel_sls', 'P_parallel_uls', 'P_parallel_sls',
             'deflection_model', 'torsion_model', 'point_contact', 'roof_top_load', 'isolated_en_stress_model', 'isolated_combined_service'}
@@ -319,7 +319,8 @@ def _evidence(data):
         raise ValueError('Lote desativado: '+'; '.join(state['reasons'] or state['action_errors'] or ['ative explicitamente.']))
     ref=reference(data['properties']['t'],data['L_mm'])
     from .application import fingerprint
-    return dict(schema=VERSION,reporting_version=REPORTING_VERSION,reference_id=ref['id'],scope=SCOPE,input_sha256=fingerprint(data),
+    from .load_application_policy import source_scope
+    return dict(schema=VERSION,reporting_version=REPORTING_VERSION,reference_id=ref['id'],scope=source_scope(data,SCOPE),input_sha256=fingerprint(data),
         source_documents=copy.deepcopy(data['ue_family_sources']),model=ref['model'],
         global_criticals=ref['global_criticals'],signed_scalar_capacities=ref['resistances_exterior_primary'],
         source_record=ref['source_record'],strength_formula_source='NBR14762:2010 §9.8.2, §9.9 N=0; source copy supplied by user',
@@ -441,6 +442,13 @@ def report(doc,result):
             ' Nmm; mínimo='+format(c['MRd_Nmm'],'.15g')+' Nmm.')
     if not result.get('deflection_scope_evidence') and 'gross_biaxial_component_evidence' not in result and 'aa_web_component_evidence' not in result:
         doc.add_paragraph('ELS forte uniaxial: somente critério parcial quando as ações locais reais q e P paralelas forem nulas. Estados biaxiais permanecem sem índice ELS por rigidez combinada pendente. Não se transfere evidência de outra seção, carga ou comprimento.')
-    doc.add_paragraph('N=0 e torque primário imposto=0 apenas nesta componente matemática. PP físico no CG pode ser excêntrico ao centro de cisalhamento. Torção/empenamento físico, introdução local, ligações e aprovação global permanecem pendentes.')
+    from .load_application_policy import active as ct_active
+    if not ct_active(result.get('input_data',{})):
+        doc.add_paragraph('N=0 e torque primário imposto=0 apenas nesta componente matemática. PP físico no CG pode ser excêntrico ao centro de cisalhamento. Torção/empenamento físico, introdução local, ligações e aprovação global permanecem pendentes.')
     doc.add_paragraph('Fontes da emissão: '+json.dumps(r['source_documents'],ensure_ascii=False,sort_keys=True))
     doc.add_paragraph('SHA-256 das entradas desta referência: '+r['input_sha256'])
+
+
+def scope_for(data):
+    from .load_application_policy import source_scope
+    return source_scope(data,SCOPE)

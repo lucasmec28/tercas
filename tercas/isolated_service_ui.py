@@ -25,19 +25,33 @@ def controls(st,data,key):
             st.caption('Método disponível, ainda não escolhido: ponto, direção e critério precisam ser declarados para calcular. Isso é diferente de uma rotina de cálculo ausente.')
             return
         st.caption('Requer contorno próprio Ue e demanda Vlasov do mesmo vão. O índice exibido é condicional ao campo linear; não é aprovação física de grande giro.')
-        point=st.selectbox('Ponto do deslocamento', ['Não selecionado','CG','Ponto da linha de carga no topo','Coordenadas explícitas a partir do CG'],
-            index=({'CG':1,'Ponto da linha de carga no topo':2}.get(out['point_label'],3 if out['point_label'] else 0)),key=key+'_point')
+        from .load_application_policy import active as loads_at_CT, applies_to_new, for_calculation
+        ct=loads_at_CT(data) or applies_to_new(data)
+        top='Ponto da linha de carga no topo'
+        points=['Não selecionado','CG','CT' if ct else top,'Coordenadas explícitas a partir do CG']
+        # A saved service point is an observation coordinate, not a load line.
+        # Keep its original coordinates when the new applied-load model changes.
+        if ct and out['point_label']==top:points.append(top)
+        selected=points.index(out['point_label']) if out['point_label'] in points else (3 if out['point_label'] else 0)
+        point=st.selectbox('Ponto do deslocamento',points,index=selected,
+            format_func=lambda value:'Ponto de serviço salvo (topo)' if ct and value==top else value,
+            key=key+('_point_ct' if ct else '_point'))
         if point=='CG':out['point_xy_from_CG_mm']=[0.,0.];out['point_label']=point
-        elif point=='Ponto da linha de carga no topo':
+        elif point=='CT' or (point==top and not ct):
             try:
-                from .roof_top_load import geometry
-                g=geometry(data)
+                if point=='CT':
+                    from .load_application_policy import geometry
+                else:
+                    from .roof_top_load import geometry
+                g=geometry(for_calculation(data) if point=='CT' else data)
                 if not g['coherent_torsion_section']:raise ValueError('Contorno próprio necessário.')
                 out['point_xy_from_CG_mm']=[g['x_from_CG_mm'],g['y_from_CG_mm']];out['point_label']=point
             except (ValueError,TypeError,KeyError) as exc:
                 out['point_xy_from_CG_mm']=[None,None];out['point_label']=point;st.caption(str(exc))
+        elif point==top:
+            pass  # Historical service coordinate preserved, not moved to CT.
         elif point=='Coordenadas explícitas a partir do CG':
-            out['point_label']=st.text_input('Identificação do ponto de serviço',value=out['point_label'] if out['point_label'] not in ('CG','Ponto da linha de carga no topo') else '',key=key+'_point_label')
+            out['point_label']=st.text_input('Identificação do ponto de serviço',value=out['point_label'] if out['point_label'] not in ('CG','CT','Ponto da linha de carga no topo') else '',key=key+'_point_label')
             for i,axis in enumerate(('x para abertura','y para cima')):
                 out['point_xy_from_CG_mm'][i]=st.number_input('Ponto: '+axis+' a partir do CG [mm]',value=out['point_xy_from_CG_mm'][i],format='%.6f',key=key+'_point_'+str(i))
         else:out['point_label']='';out['point_xy_from_CG_mm']=[None,None]

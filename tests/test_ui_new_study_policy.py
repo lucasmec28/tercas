@@ -6,6 +6,7 @@ from types import SimpleNamespace
 import pytest
 import streamlit as st
 from streamlit.testing.v1 import AppTest
+from tercas.support_scope import activate as exclude_supports
 from tercas.direct_self_weight import activate as activate_PP
 from tercas.flt_height_effective import activate_combined
 from tercas.deflection_scope import FIELD,MODE,LABEL,activate
@@ -39,7 +40,7 @@ def test_fresh_session_and_explicit_example_default_only_new_inputs():
     checkbox(a).uncheck().run(timeout=30)
     assert FIELD not in a.session_state.last_input and not checkbox(a).value
     button(a,'Carregar exemplo didático').click().run(timeout=30)
-    assert a.session_state.base==activate(activate_combined(activate_PP(example()))) and checkbox(a).value
+    assert a.session_state.base==exclude_supports(activate(activate_combined(activate_PP(example())))) and checkbox(a).value
 
 
 @pytest.mark.parametrize('kind',['generic','ue','family'])
@@ -92,6 +93,6 @@ def test_own_plain_U_loader_preserves_its_frozen_scalar_scope():
     a=new_app()
     button(a,'Carregar referência de cálculo').click().run(timeout=30)
     assert not a.exception
-    assert a.session_state.last_input==activate_PP(homogeneous.load_reference('U100'))
+    assert a.session_state.last_input==exclude_supports(activate_PP(homogeneous.load_reference('U100')))
     assert FIELD not in a.session_state.last_input
     assert not button(a,'Calcular verificações disponíveis').disabled

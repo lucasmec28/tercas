@@ -25,6 +25,8 @@ def word(result,selected=0,assessment=None):
     d.add_paragraph('Estudo: '+result['input_data']['project'])
     if result['input_data'].get('synthetic'):d.add_paragraph('CASO DE QA SINTÉTICO. Não é um projeto físico validado.')
     cfg=result['configuration'];data=result['input_data'];g=cfg['three_girt']
+    from ..support_scope import report as report_support_scope
+    report_support_scope(d,result)
     d.add_heading('Entradas e hipóteses salvas',1)
     d.add_paragraph(f"L = {data['L_mm']:.2f} mm; distância entre eixos = {data['area_inputs']['spacing_m']*1000:.2f} mm; linhas interiores = {g['tie_count']}. Mesma seção atual nas três travessas. Continuidade preservada; barras bilaterais, primeira ordem.")
     d.add_paragraph('Empenamento: '+str(cfg['warping_end_condition'])+'. '+cfg['warping_condition_origin'])

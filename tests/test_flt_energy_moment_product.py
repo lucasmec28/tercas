@@ -144,7 +144,7 @@ def test_existing_independent_full_energy_trial_against_new_bound(monkeypatch,ly
     test_independent_trial_functions_satisfy_energy_bound(ly,lz)
 
 
-def test_fresh_imported_inputs_use_v2_but_saved_v3_replays_v1(monkeypatch):
+def test_fresh_imported_inputs_use_v3_floor_but_saved_v3_replays_v1(monkeypatch):
     from test_nbr_family_height_integration import source
     from tercas import nbr_ue_family_application as application
     from tercas.application import fingerprint
@@ -167,7 +167,7 @@ def test_fresh_imported_inputs_use_v2_but_saved_v3_replays_v1(monkeypatch):
     previous=old[application.FIELD]['records'][0]['height_energy_floor']
     current=fresh[application.FIELD]['records'][0]['height_energy_floor']
     assert previous['schema']=='flt_height_declared_energy_nbr_floor_v1'
-    assert current['schema']=='flt_height_declared_energy_nbr_floor_v2'
+    assert current['schema']=='flt_height_declared_energy_nbr_floor_v3'
     assert current['MRd_lower_bound_Nmm']>=previous['MRd_lower_bound_Nmm']
     assert current['maximum_reference_moment_Nmm']==previous['maximum_reference_moment_Nmm']
     assert fresh['input_data']==old['input_data']

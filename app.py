@@ -23,6 +23,9 @@ from tercas.ue_catalog_reference import FIELD as UE_CATALOG_FIELD, EVIDENCE as U
 from tercas.ue_family_ui import loader as ue_family_loader, render as render_ue_family
 from tercas.ux_inputs import CB_LABELS,cb_code,flange_segments,whole_span
 from tercas.new_study_policy import for_new_study, initialize_session
+from tercas.current_calculation_inputs import (prepare as prepare_current_calculation,
+ preserve_policy_choices, begin_calculation)
+from tercas.load_application_policy import active as loads_at_CT
 from tercas.pierin_ue_registry_ui import render as render_new_pierin_ue_study
 from tercas.point_contact_ui import render as render_point_contact, show_saved_results as show_point_contact_results
 
@@ -325,10 +328,10 @@ b=copy.deepcopy(st.session_state.base);r=st.session_state.revision
 last=st.session_state.get('last_input',b)
 for key in ['load_mode','area_inputs','selected_types','ELS_down_denominator','ELS_up_denominator','q_uls','P_uls','x_uls','q_sls','P_sls','x_sls','actions_origin','ELS_limit_mm','ELS_origin']:
  b[key]=copy.deepcopy(last[key])
-for key in ['isolated_combined_service','isolated_en_ue_family_model','isolated_en_ue125_300_model','direct_load_basis','roof_top_load','point_contact','isolated_en_ue_catalog_model','isolated_en_stress_model','torsion_model','deflection_model','member_application','wall_els','wall_tie_study','three_girt_model','weak_catalog','weak_axis','model_domain','u_panel_condition','inclination','q_parallel_uls','q_parallel_sls','P_parallel_uls','P_parallel_sls']:
+for key in ['load_application_policy','local_support_verification_scope','isolated_combined_service','isolated_en_ue_family_model','isolated_en_ue125_300_model','direct_load_basis','roof_top_load','point_contact','isolated_en_ue_catalog_model','isolated_en_stress_model','torsion_model','deflection_model','member_application','wall_els','wall_tie_study','three_girt_model','weak_catalog','weak_axis','model_domain','u_panel_condition','inclination','q_parallel_uls','q_parallel_sls','P_parallel_uls','P_parallel_sls']:
  if key in last:b[key]=copy.deepcopy(last[key])
-d=copy.deepcopy(b)
 try:
+ d=prepare_current_calculation(b)
  domain=domain_evidence(d)
  if domain['conflict']:st.warning(domain['conflict'])
 except ValueError as exc:st.error(str(exc));st.stop()
@@ -364,6 +367,10 @@ if girt:
  if three_girt or 'three_girt_model' in b:
   d['three_girt_model']=copy.deepcopy(b.get('three_girt_model',{}));d['three_girt_model']['enabled']=three_girt
  if three_girt:st.warning('Os campos de resistência/FLT do vão isolado ficam armazenados, mas INATIVOS no sistema 3D. Esta seleção não libera resistência, torção com empenamento ou conclusão ELS.')
+
+# The selected member model is part of the current calculation payload.
+try:d=prepare_current_calculation(d)
+except (ValueError,TypeError,KeyError) as exc:st.error(str(exc));st.stop()
 
 # Switching away from a 3D diagnostic reactivates the stored manual contract.
 # Stop before any strength/material widget can rewrite it. Preserve the last
@@ -571,7 +578,10 @@ else:
    st.caption('Uso atual: '+pierin_U_use_label(strong_ref)+'. Ml informado acima é preservado; valor de referência não substitui silenciosamente entrada legada/manual.')
    if strong_ref.get('reason'):st.warning(strong_ref['reason'])
   elif strong_ref['status']=='not_tabulated':st.caption(strong_ref['reason']+' A rota Tabela 12 permanece quando válida.')
-  if roof_top_load_enabled(d):
+  if loads_at_CT(d):
+   # Legacy line/domain declarations stay persisted and inactive.
+   pass
+  elif roof_top_load_enabled(d):
    # Hidden widget values are otherwise removed by Streamlit on the next run.
    domain_value=st.session_state.get(f'domain_{r}')
    d['route_domain']=(domain_value.startswith('Eixo') if isinstance(domain_value,str) else st.session_state.get(f'roof_legacy_domain_{r}',b['route_domain']))
@@ -714,6 +724,9 @@ render_point_contact(st,d,f'point_contact_{r}',disabled=three_girt)
 from tercas.ue_catalog_ui import render_choice as render_ue_catalog_choice
 render_ue_catalog_choice(st,d,f'ue_catalog_{r}',load)
 
+# Rendering/importing/restoring does not adopt a new calculation policy.
+# Only the calculate/scan click below commits the prepared current-model copy.
+d=preserve_policy_choices(d,b)
 st.session_state['last_input']=copy.deepcopy(d)
 try:
  if three_girt:
@@ -738,8 +751,9 @@ with scan_col:scan_clicked=st.button('Calcular todas as seções do catálogo',d
 if claims_ue_catalog(d):st.caption('Comparação genérica do catálogo inativa nesta referência própria. Selecione outro Ue e aplique seu contorno explicitamente; fontes/capacidades não são transferidas por nome.')
 if three_girt:st.caption('Comparação resistente do catálogo indisponível no sistema 3D: não há índices qualificados para ordenar aprovação. Trocar perfil exige redocumentar SC/linhas das conexões.')
 if calculate_clicked:
- st.session_state.pop('result',None)
  try:
+  d=begin_calculation(st.session_state,d);token=fingerprint(d)
+  st.session_state.pop('result',None)
   with st.spinner('Calculando o caso informado…'):
    if three_girt:
     from tercas.three_girt_application import calculate as calculate_three_girts
@@ -764,6 +778,7 @@ if 'catalog_scan_history' in st.session_state:
 if scan_clicked:
  if token is None:st.error('Complete as entradas antes de comparar o catálogo.')
  else:
+  d=begin_calculation(st.session_state,d);token=fingerprint(d)
   st.session_state.catalog_scan_state=dict(model_domain_version=DOMAIN_VERSION,fingerprint=token,inputs=copy.deepcopy(d),rows=[],next_index=0,running=True,cancelled=False,elapsed_seconds=0.)
 
 @st.fragment(run_every=0.5 if st.session_state.get('catalog_scan_state',{}).get('running') else None)

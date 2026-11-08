@@ -1,0 +1,94 @@
+{
+  "release": "componentes-Ue-cargas-CT-escopo-apoios-20261108-r21",
+  "created_utc": "2026-11-08T18:22:58.110535+00:00",
+  "tested_production_commit": "17c96bcc070599929c4f7d9a8a8067bc3b73df21",
+  "tested_tree": "347d73ac7a94339f0582119a36f0905bf20e2be0",
+  "base_local_commit": "5a681a12a7e632ddca58a3dccce30a8bf6944555",
+  "base_remote_commit": "821e524e5d61dd6e8bfa0c6d4493679e66578df5",
+  "final_integrated_backend": {
+    "tests": "676",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "194.730"
+  },
+  "final_integrated_ui_remaining": {
+    "tests": "30",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "194.802"
+  },
+  "earlier_ui_focused": {
+    "tests": "33",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "58.459",
+    "source": "2672877 plus test-only 1ec52ff, runtime changes since then covered by the final integrated suite and UI"
+  },
+  "earlier_integrated_mechanics_scope": {
+    "tests": "169",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "44.290"
+  },
+  "counting_rule": "Suites overlap; do not sum counts as unique tests. No complete repository-wide pass is claimed.",
+  "runtime_dependencies_local": {
+    "python": "3.12.14",
+    "pytest": "9.1.1",
+    "streamlit": "1.65.0",
+    "numpy": "2.5.3",
+    "scipy": "1.17.0",
+    "pandas": "2.2.3",
+    "python-docx": "1.2.0",
+    "mpmath": "1.3.0"
+  },
+  "deployment_pins_difference": "requirements.txt retains Streamlit 1.66.0 and NumPy 2.3.5. Hosted runtime verification is separate from local QA.",
+  "numeric_runtime": "OPENBLAS_CORETYPE=Haswell; OPENBLAS_NUM_THREADS=OMP_NUM_THREADS=MKL_NUM_THREADS=1",
+  "review": "Independent static review of CT mechanics, historical boundaries, support exclusion, zero-torsion applicability, archive flow and legacy direct totals: no remaining code blocker identified. Reviewer did not run the tests.",
+  "earlier_failures_and_resolution": [
+    "Initial foundation:1006 passed/1 failed. Warm saved NBR Word reader reopened source. Same failure reproduced on R20. Content-bound warm cache repaired and retested; a cold first read still revalidates its canonical sources rather than claiming fully offline replay.",
+    "Two earlier UI assertions expected a removed inactive-torsion caption; updated current-editor expectations passed, while historical reader tests were retained.",
+    "New UI import assertion incorrectly equated normalized editor input with literal imported input. Identical normalization reproduced on baseline; test corrected, then33/33 passed.",
+    "One new mechanics assertion treated a maximum-absolute witness as unsigned. Its signed T_CG value was negative and nonzero; assertion corrected to abs(value)>0. The final mechanics/scope run169/169 and final integrated run passed.",
+    "Current CT direct girt with legacy total loads initially called the separated PP producer incorrectly. Fixed to preserve scalar results and return explicit pending demand;10 focused tests and the final integrated UI/backend passed."
+  ],
+  "scope": "66 complete own-contour Ue rows for isolated purlins and wall girts; current applied forces at CT; physical network connections retained; local end-support resistance outside app scope; interior concentrated actions and member shear retained; local one-direction service only; historical results not migrated.",
+  "not_claimed": [
+    "project validation",
+    "structural homologation",
+    "universal domain coverage",
+    "network family66 resistance release",
+    "hosted deployment at time of receipt"
+  ],
+  "data": "Synthetic tests only. No project file or primary copyrighted standard PDF redistributed.",
+  "artifact_sha256": {
+    "support_ui_readonly_final.log": "79d30805bafa0960b67810611fe3f84bb0b5967c457e1a3e11a1a0a8174a6ddd",
+    "support_ui_readonly_final.xml": "99f1e1153ae78c77b47708d97cd81c56e286aa17163790548fd53388f1281007",
+    "ct_ui_remaining_17c96bc.xml": "4134848e0bf76fec95e4f64294e60082d3a4dc651982249c5288fb280e5b500c",
+    "ct_ui_focused_fixed.xml": "3fd9ad444e61bf31a03f32fdf2feee6a9f9346bdc7275c28a123d088c70d9575",
+    "ct_mechanics_scope_final.xml": "ba1ae6924d506cf2ace3d6df8957c40406f78646c8cf0c8904478c26be74904c",
+    "final_focused.xml": "455739be0a8d746ba7d91c8a7c36c82cc0976d28c60c811822a66d216d7f96da",
+    "ct_ui_remaining_17c96bc.log": "4b55ac867ab67e3ecc7a78c9cc0c2ee211327eba64b7ccfd5575bcf6aad47148",
+    "final_focused.log": "69a2a6aee6bb11accfa09d6abcbff131335f116aec269edddacb800646b2bfda",
+    "ct_mechanics_scope_final.log": "a13f1e6f230722f0720bef45d0b91117ff44ad967a013c83cd4efd0a87091cc4",
+    "ct_ui_focused_fixed.log": "1f3b21508cdef934d7d1f6510a48ee709c282d90377697257b44e2761ad17111"
+  },
+  "final_support_ui_revision": {
+    "production_commit": "a370560baf60b0014e46602de3ee424242109d58",
+    "tests": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "69",
+      "time": "119.270",
+      "timestamp": "2026-11-08T15:35:09.978022-03:00",
+      "hostname": "907c7156a971"
+    },
+    "change": "Removed all creation, editing and consolidation actions for local support checks, including historical source results. Saved records and complementary envelopes remain readable/exportable without bearing-formula evaluation. Existing strict replay APIs retained outside the UI.",
+    "independent_static_review": "Final hash reviewed; no finding. Reviewer did not execute tests."
+  }
+}

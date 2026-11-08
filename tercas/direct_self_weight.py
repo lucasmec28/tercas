@@ -39,6 +39,7 @@ def evidence(data):
     if not active(data): return None
     from .member_application import is_girt
     from .inclination_adapter import configuration
+    own_girt = data.get('ue_catalog_reference',{}).get('schema')=='ue_catalog_wall_girt_reference_v1'
     mass = number(data['properties']['mass_kg_m'], 'Massa linear do perfil', True)
     qg = mass * 9.80665 / 1000.
     pp = {'normal': 0., 'parallel': qg} if is_girt(data) else self_weight(mass, configuration(data)[1]['radians'])
@@ -50,10 +51,12 @@ def evidence(data):
         states[suffix] = {'factor': factor, 'external_q_N_mm': entered,
             'profile_PP_q_N_mm': added,
             'total_q_N_mm': {axis: entered[axis]+added[axis] for axis in pp}}
+    from .load_application_policy import active as ct_active
+    ct=ct_active(data)
     return {'schema': MODE, 'mass_kg_m': mass, 'gravity_m_s2': 9.80665,
             'profile_characteristic_weight_N_mm': qg,
-            'PP_application': 'centroid', 'external_application': 'selected_top_load_line',
-            'user_actions_rotated': False, 'states': states, 'scope': TEXT}
+            'PP_application': 'shear_center' if ct else 'centroid', 'external_application': 'shear_center' if ct else 'declared_local_action_lines' if own_girt else 'selected_top_load_line',
+            'user_actions_rotated': False, 'states': states, 'scope': ('Ações externas e peso próprio separados; fatores 1,25 ELU e 1,0 ELS.' if ct else TEXT.replace('no topo selecionado','nas linhas locais declaradas') if own_girt else TEXT)}
 
 
 def calculation_inputs(data):
@@ -68,12 +71,21 @@ def calculation_inputs(data):
     return out
 
 
+def input_text(data):
+    from .load_application_policy import active, applies_to_new
+    if active(data) or applies_to_new(data):
+        return ('Valores digitados sem o peso próprio do perfil. O programa soma PP '
+                'pela massa da seção: 1,25 no ELU e 1,0 no ELS. '
+                'Ações digitadas já locais, sem nova rotação.')
+    return TEXT
+
+
 def render(st, data, key):
     if data.get('load_mode') != 'direct': return
     if selected(data):
-        st.caption(TEXT)
+        st.caption(input_text(data))
     else:
         st.warning(LEGACY)
         if st.checkbox('Já retirei o PP das cargas: adotar inclusão automática', value=False, key=key):
             data[FIELD] = MODE
-            st.caption(TEXT)
+            st.caption(input_text(data))

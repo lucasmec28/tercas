@@ -1,0 +1,115 @@
+Isolated own-Ue wall-girt adapter, development checkpoint (not homologation)
+
+Baseline: R20 5a681a12a7e632ddca58a3dccce30a8bf6944555.
+No source authority, normative formula or historical purlin snapshot changed.
+
+Implemented contracts
+- ue_catalog_wall_girt_reference_v1 binds the exact catalogue nominal geometry,
+  material and properties to wall_girt. A purlin marker fails after an application
+  toggle until explicit re-adoption; old inputs are not edited in place.
+- wall_girt_isolated_vlasov_choice_v1 uses the existing torsion_model container,
+  manual load_lines records, origin, declared flag and xy_from_CG_mm. The earlier
+  purlin declaration remains inactive until the girt choice and each line are
+  explicitly adopted. EXTERNAL denotes the already-combined direct q, P its
+  own independent line. Area mode keeps CP, winds and their existing factors.
+- Coordinates remain in the own contour reference: +x from web toward opening
+  (vertically down with mouth down), +y horizontally right. Positive normal
+  is horizontally left. Forces are [parallel,-normal]. Coordinates are offsets
+  from CG, not offsets from shear centre; the solver retains the distinct SC.
+- PP is once at CG, exclusively parallel/vertical. Since CG and SC share y,
+  its cross product torque is zero (roundoff aside), not a blanket no-torque
+  assumption. A normal force at its independently declared line retains torque.
+- Physical span and explicitly adopted ideal forks/free warping govern the
+  isolated Vlasov model. No physical support is inferred from Ly/Lz or ties.
+  All declared local forces, including parallel forces, remain in demand.
+- The roof_top_load choice is preserved but inactive on the girt. No façade
+  contact point, top face, sheeting stiffness or sheeting restraint is inferred.
+
+Connected calculation scope
+- Direct PP-separated and area actions feed the existing single-member Vlasov
+  kernel; member_id is WALL_GIRT and each action has its declared local line.
+- G8.1 consumes the same contour/bimoment as before. H4 remains unavailable
+  without independently eligible denominators; no certificate is borrowed.
+- The complete-family EN consumer uses its existing own nominal provider,
+  material and signed operators with explicit intact-section adoption. Source
+  replay checks local forces, each manual line, member identity and original
+  free-warping fork contract. It is a section-component result, not EN member
+  stability or physical first-order qualification.
+- R20 horizontal local ELS uses normal force and strong-axis Ix only. All 66
+  complete Ue rows are connected: 62 Table12(b)/MSE and four own service MLE.
+  Vertical weak response remains a gross diagnostic; combined ELS remains
+  optional and is not a new prerequisite for the requested horizontal criterion.
+- NBR family/FLT application consumer still explicitly rejects girt: it needs
+  a dedicated per-action height/arm adapter using the manual lines and its
+  source replay, rather than roof_top_load.geometry. The section-only methods
+  exist; this is an application adapter boundary, not a claimed normative gap.
+  Legacy CT/no-primary-torque route_domain is cleared in the consumed spec so
+  eccentric lines cannot accidentally retain an old CT conclusion.
+
+Three-member network: mapped, not changed or solved in this checkpoint
+- three_girt_warping.application.frame_section already verifies A/I/J/Cw from
+  section_for, rotates the same contour (Y=-x, Z=-y), and transmits SC/omega.
+  current_configuration already collects explicit connection offsets/material
+  points or declared no-bimoment resultants. network.solve keeps upper, middle,
+  lower members and all braces; verification_scope selects middle only later.
+- A network-specific catalogue adoption is needed: the isolated source guard
+  intentionally rejects three_girt_model.enabled and must not be removed alone.
+- three_girt_en_normal.application._profile_and_section still opens the frozen
+  Ue100 files by thickness and PINS. Its section builder, centroid transport for
+  compression and branch coverage must receive the complete-family provider,
+  including axial compression/tension operators, not a renamed frozen profile.
+- three_girt_axial.application._validate accepts only old single/family reference
+  evidence and scalar capacities. A catalogue-bound axial/bending provider and
+  replay are required before admitting new source identities.
+- three_girt_uniaxial.application.properties reads Ml_Nmm. New own-contour
+  adoption deliberately clears this legacy critical; connect own service Ml/MLE
+  instead. The present independent-beam alternative is not network deflection.
+- No member was removed, no tie or connection resistance expanded, no network
+  certificate transplanted, and no global approval is provided.
+
+Normative trace
+The reused R20 local service adapters cite NBR14762:2010 9.8.5, 9.2.2.2,
+9.2.3, Table5 and Table12(b); supplied primary PDF SHA256
+c2a01615a3ce9e2b93aeb7fee757f7bf9dd932adaefbc242e848ce813dc82407.
+This delta changes application binding and coordinate adapters, not those laws.
+
+Verification receipts for this isolated-adapter branch
+- 66 complete profiles: 62 MSE + four MLE horizontal local service results,
+  source/application invalidation, direct vectors and PP: initial four tests
+  passed in 11.20 s. A later focused regression also covered the independent
+  torque cross-product and authenticated height-action API.
+- Direct and area full fresh flows, Vlasov + G8.1 + EN family + saved replay:
+  two tests passed in 30.77 s, exit 0 (qa/wall_girt_own/solver.log).
+- Actual Streamlit app: local controls, calculation, and rerender without
+  solver: one test passed in 7.80 s, exit 0 (qa/wall_girt_own/ui.log).
+- Focused current/historical regression: 246 passed, 91 deselected, one failed
+  fixture lookup in 59.36 s, exit 1. The failing test is
+  tests/test_ue_catalog_recovery.py::test_seven_frozen_sections_bit_identical_to_published_base.
+  It requests git show 89785b61c2b01a7d5ec350b00c10fc5e9bc8e90d:tercas/torsion_vlasov/section.py,
+  which is unavailable in this clone. The expectation was not changed and the
+  failure is not reported as a pass. Independently, section.py and all seven
+  frozen JSON contours are byte-identical to the supplied R20 baseline;
+  hashes are in qa/wall_girt_own/baseline_source_bytes.json.
+- These are focused checks, not the entire repository suite, physical
+  validation, certification, network qualification or deployment.
+- Final scalar rerun after the legacy PP-description and restorable-history
+  fixes: 38 passed, three deselected, 9.22 s, exit 0. Includes the authenticated
+  direct/area arm API and old-girt load-basis preservation; see final_scalar.log.
+
+Historical fixture recovery, separate follow-up run
+The exact original section.py from commit
+89785b61c2b01a7d5ec350b00c10fc5e9bc8e90d was subsequently recovered from its
+published repository source and packaged only as a test fixture with provenance.
+Size: 9170 bytes. Git blob SHA1: 37371fb0e43790c11f32c16e23ea41949182546d.
+SHA256: a0fbb76a1051879aa67446586a2100e6015344a9b636826321ecc1af5d4f3797.
+The test prefers git show; only an absent object/path permits the pinned fixture
+fallback. Both routes verify byte length, SHA256, Git blob SHA1 and source
+metadata. Other Git errors and changed bytes remain errors. No commit or
+production source is fabricated or modified.
+The original seven-section comparison plus four loader tests passed in a new
+run: five passed, 0.43 s, exit 0 (historical_oracle_recovered.log).
+This new receipt resolves the fixture blocker; it does not rewrite the earlier
+246-pass/one-failed execution or claim that full regression was rerun.
+This document contains technical scope and synthetic test evidence only, with
+no customer, site, private project or personal identifiers. The fixture's public
+source URL is retained exclusively for reproducible technical provenance.

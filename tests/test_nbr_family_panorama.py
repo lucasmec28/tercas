@@ -62,3 +62,11 @@ def test_model_domain_conflict_keeps_all_current_records_pending(monkeypatch):
     records,binding=p.apply(result,old())
     current=[r for r in records if r['id'] in binding['record_ids']]
     assert all(r['status']=='pending' for r in current)
+
+
+def test_current_consumer_schema_not_silently_dropped(monkeypatch):
+    result=packet(monkeypatch)
+    result[app.FIELD]['schema']=app.SCHEMA
+    records,binding=p.apply(result,old())
+    assert binding is not None
+    assert any(r['id'].endswith(':FLT:family') for r in records)

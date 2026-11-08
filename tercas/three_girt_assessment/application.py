@@ -56,14 +56,16 @@ def _load_binding(d,case):
     else:raise ValueError('Unknown saved loading mode')
     if case['combined_girt_PP_N_mm']!=pp or case['brace_weight_factor']!=factor or case['model']['inputs']['brace_weight_factor']!=factor:
         raise ValueError('Saved self-weight bookkeeping differs')
-    ey=g['load_y_from_CG_mm'];ez=g['load_z_from_CG_mm']
+    from ..load_application_policy import active as ct_active
+    ct=ct_active(data);section=case['model']['inputs']['section']
+    ey=section['sc_y_mm'] if ct else g['load_y_from_CG_mm'];ez=section['sc_z_mm'] if ct else g['load_z_from_CG_mm']
     expected=[]
     for weight in (.5,1.,.5):
         y=-weight*(parallel-pp);z=-weight*normal
         expected.append(dict(q_y_N_mm=y-pp,q_z_N_mm=z,load_y_from_CG_mm=0.,load_z_from_CG_mm=0.,
-            distributed_torque_CG_N=ey*z-ez*y,
+            distributed_torque_CG_N=ey*z-ez*(y-pp) if ct else ey*z-ez*y,
             components=[dict(id='external',q_y_N_mm=y,q_z_N_mm=z,y_from_CG_mm=ey,z_from_CG_mm=ez),
-                dict(id='girt_PP',q_y_N_mm=-pp,q_z_N_mm=0.,y_from_CG_mm=0.,z_from_CG_mm=0.)]))
+                dict(id='girt_PP',q_y_N_mm=-pp,q_z_N_mm=0.,y_from_CG_mm=ey if ct else 0.,z_from_CG_mm=ez if ct else 0.)]))
     if case['loads']!=expected:raise ValueError('Saved combination differs from resolved girt loads')
 
 
@@ -76,7 +78,9 @@ def validate_demand(d):
     if d.get('coverage_complete') is not True or not d.get('cases'):raise ValueError('Demand coverage incomplete')
     if any(d.get(k) is not False for k in ('physical_conditions_verified','resistance_qualified','ELS_qualified','whole_member_approved')):raise ValueError('Original demand scope was promoted')
     cfg=d['configuration'];g=cfg['three_girt'];L=d['input_data']['L_mm']
-    if cfg.get('enabled') is not True or any(g.get(k) is not True for k in ('geometry_declared','axial_bars_declared','connections_declared','load_line_declared')):raise ValueError('Current model declarations missing')
+    from ..load_application_policy import active as ct_active
+    required=('geometry_declared','axial_bars_declared','connections_declared')+(() if ct_active(d['input_data']) else ('load_line_declared',))
+    if cfg.get('enabled') is not True or any(g.get(k) is not True for k in required):raise ValueError('Current model declarations missing')
     if not _finite(L) or L<=0:raise ValueError('Invalid physical span')
     bundle=d.get('load_bundle')
     expected=bundle.get('combinations',[]) if isinstance(bundle,dict) else [dict(id='DIRETO_ELU',limit_state='ELU'),dict(id='DIRETO_ELS',limit_state='ELS')]
@@ -90,6 +94,8 @@ def validate_demand(d):
         if (m.get('source_input_fingerprint')!=d['input_fingerprint'] or m.get('first_order') is not True
             or m.get('bilateral_bars') is not True or m.get('diagnostics',{}).get('passed') is not True):raise ValueError('Current demand checks missing')
         inp=m['inputs'];s=inp['section']
+        from ..load_application_policy import FIELD as CT_FIELD
+        if inp.get(CT_FIELD)!=d['input_data'].get(CT_FIELD):raise ValueError('Saved applied-load model differs')
         _load_binding(d,case)
         stations=([L*j/(g['tie_count']+1) for j in range(1,g['tie_count']+1)] if g['position_mode']=='uniform' else g['positions_mm'])
         if inp['attachment_x_mm']!=stations or len(stations)!=g['tie_count']:raise ValueError('Saved physical stations/configuration differ')
@@ -419,6 +425,8 @@ def assess(d):
     try:
         original=fingerprint(d)
         validate_demand(d)
+        from ..support_scope import saved as saved_support_scope
+        support_scope=saved_support_scope(d)
     except (ValueError,TypeError,KeyError,ArithmeticError,AttributeError,IndexError) as exc:
         records=[item('saved_demand_integrity',reason=str(exc))]
         result=aggregate([r['id'] for r in records],records,inventory_qualified=True)
@@ -456,6 +464,8 @@ def assess(d):
     records+=er+sr+_safe_records('applicability_reader','MODEL',lambda:_applicability(d,nbr))
     for state in ('ELU','ELS'):
         if not any(c['combination']['limit_state']==state for c in d['cases']):records.append(item('missing_limit_state:'+state,state,reason='Nenhuma combinação '+state+' avaliada.'))
+    from ..support_scope import apply_inventory as apply_support_scope
+    records,support_scope=apply_support_scope(d,records)
     result=aggregate([r['id'] for r in records],records,inventory_qualified=True)
     result.update(assessment_schema=CENTRAL_SCHEMA if central(d) else SCHEMA,source_result_sha256=original,source_input_fingerprint=d['input_fingerprint'],
         groups=groups,whole_member_approved=False,current_adapter_can_approve=False,numerical_results_changed=False,
@@ -465,6 +475,9 @@ def assess(d):
     from ..global_verification import display_summary
     result['display_summary']=display_summary(result)
     result[cp.ASSESSMENT_REVISION]=cp.SCHEMA
+    if support_scope is not None:
+        result['local_support_scope_exclusion']=support_scope
+        result['excluded_scope'].append(support_scope['reason'])
     if central(d):
         for group in result['groups']:group['scope']='Somente travessa central. '+group['scope']
         result['verification_scope']=copy.deepcopy(d['verification_scope'])
@@ -480,6 +493,8 @@ def saved_assessment(d,a):
     if a.get('source_result_sha256')!=fingerprint(d):raise ValueError('Saved inventory belongs to another result')
     if a.get('whole_member_approved') is not False or a.get('current_adapter_can_approve') is not False or a.get('numerical_results_changed') is not False:
         raise ValueError('Saved inventory exceeds qualified scope')
+    from ..support_scope import validate_saved_inventory
+    validate_saved_inventory(d,a)
     expected_schema=CENTRAL_SCHEMA if central(d) else SCHEMA
     if a['assessment_schema']!=expected_schema:raise ValueError('Saved inventory schema differs from demand scope')
     if a['assessment_schema']==CENTRAL_SCHEMA and a.get('verification_scope')!=d['verification_scope']:

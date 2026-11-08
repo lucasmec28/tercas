@@ -1,0 +1,38 @@
+{
+  "baseline_commit": "5a681a12a7e632ddca58a3dccce30a8bf6944555",
+  "note": "Direct R20 byte comparison, not substitute success for unavailable historical git object test.",
+  "files": [
+    {
+      "file": "tercas/torsion_vlasov/section.py",
+      "baseline_and_current_sha256": "28bf452fd1ccb4e7836735b55693ad0f531fced1e544e38865436a11f9852c60"
+    },
+    {
+      "file": "tercas/data/torsion_profiles/ue100x50x17_t3.00.json",
+      "baseline_and_current_sha256": "e45b3298a2a95cca875b558269046090751e3bff2fa1b9dfae3cc0c1a2a97919"
+    },
+    {
+      "file": "tercas/data/torsion_profiles/ue100x50x17_t2.00.json",
+      "baseline_and_current_sha256": "fde5d287a73df9adf1b9ab3e392d7207c3423acb7a8894de5553d402cc7aef90"
+    },
+    {
+      "file": "tercas/data/torsion_profiles/ue100x50x17_t2.65.json",
+      "baseline_and_current_sha256": "40aada8e49914bb1384c8ac205d8035225d5c033e1e76de8fa65f022ebdd99f1"
+    },
+    {
+      "file": "tercas/data/torsion_profiles/ue100x50x17_t2.25.json",
+      "baseline_and_current_sha256": "8db5d3c4a037e01e665860c1ad8878bab01330cc07fc4165f74a40c0862ec562"
+    },
+    {
+      "file": "tercas/data/torsion_profiles/ue100x50x17_t1.50.json",
+      "baseline_and_current_sha256": "9a30115583275a30ab25eb8c782398a8aa5d547b8272743da9cd2f8342f880d4"
+    },
+    {
+      "file": "tercas/data/torsion_profiles/ue100x50x17_t1.20.json",
+      "baseline_and_current_sha256": "f74d3f941e59af0bceb3a2fdae414e8aa479b14b16cbe284c1dff3f3e816b005"
+    },
+    {
+      "file": "tercas/data/torsion_profiles/ue100x50x17_t3.35.json",
+      "baseline_and_current_sha256": "f1e9676c843459bcb7c14341a32ab10cc90c8ab6765e056fe9bcd47e3b58dd05"
+    }
+  ]
+}

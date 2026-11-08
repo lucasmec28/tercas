@@ -538,7 +538,8 @@ def build_global_verification(result):
             records.append(_pending('missing_limit_state:'+state, state,
                 'Nenhuma combinação '+state+' avaliada; filtro não é dispensa desse estado limite.'))
     from .isolated_en_panorama import POLICY, torsion_record
-    records.append(torsion_record(en_context,torsion_reason,conflict=bool(model_domain.get('conflict')) or model_domain.get('status')!='fixed_model_domain'))
+    from .isolated_ct_torsion import FIELD as CT_FIELD, POLICY as CT_POLICY, eligible as ct_eligible
+    records.append(torsion_record(en_context,torsion_reason,ct_result=result,conflict=bool(model_domain.get('conflict')) or model_domain.get('status')!='fixed_model_domain'))
     from .nbr_family_panorama import apply as apply_family, BINDING as FAMILY_BINDING
     records,family_binding=apply_family(result,records)
     # The new family criteria replace only their authenticated own-contour
@@ -547,13 +548,17 @@ def build_global_verification(result):
     if family_binding is not None:roof_component=None
     from .isolated_service_panorama import apply as apply_service, BINDING as SERVICE_BINDING
     records,service_binding=apply_service(result,records)
+    from .support_scope import apply_inventory as apply_support_scope
+    records,support_scope=apply_support_scope(result,records)
     summary = aggregate([r['id'] for r in records], records, inventory_qualified=True)
+    if support_scope is not None:summary['local_support_scope_exclusion']=support_scope
     summary.update(whole_member_approved=False, torsion_warping_qualified=False,
                    sectional_conditions_policy=POLICY, approved_within_declared_checklist=False,
                    current_adapter_can_approve=False, source_result_schema=schema,
                    source_input_fingerprint=result.get('input_fingerprint'),
                    combined_ELS_approved=False,
                    numerical_results_changed=False)
+    if ct_eligible(result):summary[CT_FIELD]=CT_POLICY
     summary['display_summary']=display_summary(summary)
     if en_context is not None:summary['isolated_EN_binding']=en_context['binding']
     if family_binding is not None:summary[FAMILY_BINDING]=family_binding

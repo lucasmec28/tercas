@@ -167,6 +167,8 @@ def word(result):
  from .ue_catalog_ui import report as ue_catalog_report
  ue_catalog_report(doc,result)
  deflection_scope_report(doc,result)
+ from .support_scope import report as report_support_scope
+ report_support_scope(doc,result)
  gross_component_report(doc,result);aa_component_report(doc,result)
  from .study_completion import _report_global
  _report_global(doc,result,roof_nbr_presentation=roof_nbr)
@@ -318,6 +320,8 @@ def batch_word(result):
  from .ue_catalog_ui import report as ue_catalog_report
  ue_catalog_report(doc,result)
  deflection_scope_report(doc,result)
+ from .support_scope import report as report_support_scope
+ report_support_scope(doc,result)
  gross_component_report(doc,result);aa_component_report(doc,result)
  from .study_completion import _report_global
  _report_global(doc,result,roof_nbr_presentation=roof_nbr)

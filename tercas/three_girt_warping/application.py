@@ -238,6 +238,8 @@ def _export(run,combination,source_fingerprint):
 def calculate(data,config,*,verification_scope=None):
     """Run on current eligible own-Ue wall inputs and a SEPARATE explicit opt-in."""
     from ..torsion_study import section_for
+    from ..support_scope import enabled as support_scope_enabled, annotate as annotate_support_scope
+    support_scope_enabled(data)
     if not isinstance(config,dict) or set(config)!=set(defaults()):raise ValueError('Exact 3D warping configuration fields required')
     if config['enabled'] is not True:raise ValueError('3D warping supplement requires explicit opt-in')
     if data.get('member_application')!='wall_girt':raise ValueError('Explicit wall_girt application required')
@@ -257,6 +259,7 @@ def calculate(data,config,*,verification_scope=None):
         from ..three_girt_scope import SCHEMA as SCOPE_SCHEMA, record
         if verification_scope!=SCOPE_SCHEMA:raise ValueError('Unknown verification scope')
         out['verification_scope']=record(digest)
+    annotate_support_scope(out)
     missing=out['missing']
     if config['section_orientation']!=ORIENTATION:missing.append('Declarar orientação boca para baixo: Y=-x_R01, Z=-y_R01, omega preservado.')
     if config['warping_end_condition'] not in ('free_assumed','restrained_assumed'):missing.append('Declarar empenamento livre ou impedido nos seis extremos; rx fixo não define psi.')
@@ -279,6 +282,8 @@ def calculate(data,config,*,verification_scope=None):
             attachment_x_mm=c['resolved_positions_mm'],section=copy.deepcopy(s),blue=c['blue'],green=c['green'],loads=row['loads'],
             connections=connections,warping_end_condition=config['warping_end_condition'],warping_condition_origin=config['warping_condition_origin'],
             include_green=True,brace_self_weight=c['brace_self_weight'],brace_weight_factor=row['brace_weight_factor'],nodal_loads=[])
+        from ..load_application_policy import active as ct_active,FIELD as CT_FIELD,MODE as CT_MODE
+        if ct_active(data):inp[CT_FIELD]=CT_MODE
         run=network.solve(_model(inp),'exact',1)
         result=_export(run,row['combination'],digest)
         out['cases'].append(dict(row,model=result))

@@ -31,8 +31,8 @@ SCOPE = ('Torção de Vlasov, GJ + ECw, conforme mecânica do Anexo A do manual 
 
 
 def scope_for(data):
-    from .ue_catalog_reference import claims_reference, SCOPE as own_scope
-    return own_scope if claims_reference(data) else SCOPE
+    from .ue_catalog_reference import claims_reference, scope_for as own_scope
+    return own_scope(data) if claims_reference(data) else SCOPE
 
 
 def configuration(data):
@@ -40,11 +40,13 @@ def configuration(data):
     if FIELD not in data:return None
     c = data[FIELD]
     if (not isinstance(c, dict) or set(c) != {'schema','enabled','support_hypothesis','load_lines'}
-            or c.get('schema') != SCHEMA or type(c.get('enabled')) is not bool
+            or c.get('schema') not in (SCHEMA,'wall_girt_isolated_vlasov_choice_v1') or type(c.get('enabled')) is not bool
             or c.get('support_hypothesis') != SUPPORTS):
         raise ValueError('Modelo de torção desconhecido ou incompleto; entradas não convertidas.')
+    if c['schema']!=SCHEMA and data.get('member_application')!='wall_girt':
+        raise ValueError('Declaração local da travessa não se transfere à terça.')
     records = c['load_lines']
-    if not isinstance(records, dict) or set(records)-set(ROLES):
+    if not isinstance(records, dict) or set(records)-set((*ROLES,'EXTERNAL') if c['schema']=='wall_girt_isolated_vlasov_choice_v1' else ROLES):
         raise ValueError('Papéis das linhas de carga de torção inválidos.')
     for role, record in records.items():
         if (not isinstance(record, dict) or set(record) != {'declared','xy_from_CG_mm','origin'}
@@ -65,6 +67,8 @@ def blank_choice():
 
 def automatic_roof_choice(data):
     """Effective model choice, never a mutation of stored manual load lines."""
+    from .load_application_policy import active as ct_active,torsion_choice,has_contour
+    if ct_active(data):return torsion_choice(data) if has_contour(data) else None
     from .roof_top_load import enabled as roof_enabled,geometry
     if not roof_enabled(data) or data.get('member_application','purlin')!='purlin':return None
     from .ue_family_reference import claims_reference as family_claims
@@ -113,17 +117,39 @@ def attach(result):
     if c is None or not c['enabled']:return copy.deepcopy(result)
     data = result['input_data']
     from .ue_catalog_reference import claims_reference as catalog_claims
-    if catalog_claims(data) and automatic is None:
+    if catalog_claims(data) and automatic is None and data.get('member_application','purlin')=='purlin':
         out=copy.deepcopy(result)
         out['torsion_evidence']=pending_evidence(result,
             'Contorno próprio Ue: o adaptador de ações exige o esquema do topo ativo. Linhas manuais anteriores permanecem armazenadas, mas não substituem esse esquema.')
         out['torsion_evidence']['scope_pt']=scope_for(data)
         return out
     if data.get('member_application','purlin')=='wall_girt':
-        out=copy.deepcopy(result)
-        out['torsion_evidence']=pending_evidence(result,
-            'Declarações de torção preservadas, mas inativas na travessa isolada: o adaptador Vlasov publicado nesta candidata é exclusivo da terça. Nenhuma linha, giro ou torção nula foi inferida para o fechamento.')
-        return out
+        from .load_application_policy import active as ct_active,has_contour
+        if not catalog_claims(data) and not (ct_active(data) and has_contour(data)):
+            out=copy.deepcopy(result)
+            out['torsion_evidence']=pending_evidence(result,'Adote explicitamente o contorno próprio de travessa; referências antigas não são convertidas.')
+            return out
+        from .wall_girt_isolated import SCHEMA as GIRT_CHOICE_SCHEMA
+        if c['schema']!=GIRT_CHOICE_SCHEMA:
+            out=copy.deepcopy(result)
+            out['torsion_evidence']=pending_evidence(result,'Adote explicitamente as linhas locais e garfos da travessa; declaração anterior da terça permanece inativa.')
+            return out
+        if data.get('load_mode')=='direct':
+            if ct_active(data):
+                from .direct_torsion import active as direct_ct_active, attach as attach_direct_ct
+                if not direct_ct_active(data):
+                    out=copy.deepcopy(result)
+                    out['torsion_evidence']=pending_evidence(result,
+                        'Cargas diretas informadas como totais combinados: o adaptador de demanda '
+                        'Vlasov exige ações externas e PP separados. Os totais e os cálculos '
+                        'escalares foram preservados, sem decomposição automática.')
+                    out['torsion_evidence'].update(
+                        reason_code='direct_totals_without_separated_actions',
+                        pending_model_cases=2, scope_pt=scope_for(data))
+                    return out
+                return attach_direct_ct(result,c)
+            from .wall_girt_isolated import attach_direct
+            return attach_direct(result,c)
     from . import direct_torsion
     if automatic is not None and direct_torsion.active(data):
         return direct_torsion.attach(result, automatic)
@@ -144,13 +170,15 @@ def attach(result):
         return out
     section = section_for(data)
     from .torsion_vlasov.adapter import attach_torsion_evidence, load_lines_from_cg, summarize_torsion_evidence
-    complete_lines = {k:r for k,r in c['load_lines'].items() if r['declared']
+    complete_lines = {k:r for k,r in c['load_lines'].items() if k in ROLES and r['declared']
         and r['origin'].strip() and all(v is not None for v in r['xy_from_CG_mm'])}
-    lines = load_lines_from_cg(section, complete_lines)
+    from .load_application_policy import active as ct_active, lines as ct_lines, MODE as CT_MODE
+    lines = ct_lines(section,('PP',*ROLES)) if ct_active(data) else load_lines_from_cg(section, complete_lines)
     supports = {side:dict(twist='fixed',warping='free_assumed',origin=
         'Hipótese R01 da referência própria: garfo ideal, empenamento livre; não comprova ligação real.')
         for side in ('left','right')}
     out = attach_torsion_evidence(result, section=section, load_lines=lines, supports=supports)
+    if ct_active(data):out['torsion_evidence']['load_application_policy']=CT_MODE
     from .aisi_torsion_component import attach_dense
     from .ue_catalog_reference import claims_reference as catalog_claims, attach_resistance
     out = attach_resistance(out, section) if catalog_claims(data) else attach_dense(out, section)
@@ -163,6 +191,7 @@ def attach(result):
     if automatic is not None:
         out['torsion_evidence']['load_line_choice_source']='automatic_selected_roof_scheme'
         out['torsion_evidence']['stored_manual_choice_preserved']=configuration(data)
+    if ct_active(data):out['torsion_evidence']['load_line_choice_source']='versioned_applied_load_model'
     out['torsion_evidence']['scope_pt'] = scope_for(data)
     out['whole_member_approved'] = False
     return out

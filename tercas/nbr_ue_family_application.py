@@ -10,7 +10,9 @@ from . import roof_top_load as roof
 FIELD = 'nbr_ue_family_application'
 LEGACY_SCHEMA_V3 = 'nbr_ue_family_application_v3_rp23_candidate'
 LEGACY_SCHEMA_V4 = 'nbr_ue_family_application_v4_energy_product'
-SCHEMA = 'nbr_ue_family_application_v5_current_reference'
+LEGACY_SCHEMA_V5 = 'nbr_ue_family_application_v5_current_reference'
+SCHEMA = 'nbr_ue_family_application_v6_direct_curvature'
+GIRT_SCHEMA = 'nbr_ue_wall_girt_application_v1'
 SCOPE = ('Componentes de flexão NBR, não aprovação resistente/global. Contorno próprio e '
          'referência nominal publicada são alternativas distintas; índices não são somados. '
          'Interação biaxial N=0 usa capacidades próprias concomitantes e qualificadas por sinal. '
@@ -23,12 +25,14 @@ def _eligible(data):
     return claims_reference(data) and data.get('catalog_index') in new_study_indices()
 
 
-def _outside_domain(result):
+def _outside_domain(result, *, allow_wall_girt=False):
     data = result['input_data']
     network = data.get('three_girt_model', {})
     if not isinstance(network, dict) or (network and type(network.get('enabled')) is not bool):
         return 'Modelo de três travessas malformado; nenhuma reconstrução de viga isolada N=0 autorizada.'
-    if network.get('enabled') or data.get('member_application', 'purlin') != 'purlin':
+    from .wall_girt_isolated import active as own_girt_active
+    isolated_girt = allow_wall_girt and own_girt_active(data)
+    if network.get('enabled') or (data.get('member_application', 'purlin') != 'purlin' and not isolated_girt):
         return 'Rede/travessa com ações próprias e possível força axial: consumidor de cobertura isolada N=0 não aplicado.'
     if result.get('schema') not in ('NBR14762_one_span_v1', 'tercas_batch_results_v1'):
         return 'Resultado não identificado como viga isolada N=0; ações e componentes existentes preservados.'
@@ -127,11 +131,16 @@ def _not_applicable_basis(component, sources):
     return None
 
 
-def _build(result, *, legacy_energy_floor=False, legacy_height_selection=False):
+def _build(result, *, legacy_energy_floor=False, legacy_height_selection=False, legacy_product_floor=False, allow_wall_girt=False):
     legacy_height_selection = legacy_height_selection or legacy_energy_floor
-    schema = LEGACY_SCHEMA_V3 if legacy_energy_floor else LEGACY_SCHEMA_V4 if legacy_height_selection else SCHEMA
+    schema = LEGACY_SCHEMA_V3 if legacy_energy_floor else LEGACY_SCHEMA_V4 if legacy_height_selection else LEGACY_SCHEMA_V5 if legacy_product_floor else SCHEMA
     data = result['input_data']
-    reason = _outside_domain(result)
+    from .load_application_policy import active as ct_active, NBR_SCHEMA, NBR_GIRT_SCHEMA
+    ct=ct_active(data)
+    if allow_wall_girt:
+        schema = GIRT_SCHEMA
+    if ct:schema=NBR_GIRT_SCHEMA if allow_wall_girt else NBR_SCHEMA
+    reason = _outside_domain(result, allow_wall_girt=allow_wall_girt)
     if reason:
         from .application import fingerprint
         if fingerprint(data) != result.get('input_fingerprint'):
@@ -143,7 +152,15 @@ def _build(result, *, legacy_energy_floor=False, legacy_height_selection=False):
     combos, bundle, pending = _inventory(result)
     from .resistance_effective_lengths import configuration
     lengths = configuration(data)
-    if roof.enabled(data):
+    if ct:
+        from .load_application_policy import geometry as ct_geometry
+        geo=ct_geometry(data)
+    elif allow_wall_girt:
+        from .ue_catalog_reference import section_for
+        section = section_for(data); props = section['properties']
+        geo = dict(CG_xy_mm=props['centroid_xy_mm'], SC_xy_mm=props['shear_center_xy_mm'],
+                   nodes_sha256=section['nodes_sha256'])
+    elif roof.enabled(data):
         geo = roof.geometry(data)
     else:
         from .ue_catalog_reference import section_for
@@ -157,7 +174,10 @@ def _build(result, *, legacy_energy_floor=False, legacy_height_selection=False):
     for combo in combos:
         if combo['limit_state'] != 'ELU':
             continue
-        if bundle is None:
+        if allow_wall_girt:
+            from .wall_girt_isolated import height_actions
+            acts = height_actions(data, bundle, combo)
+        elif bundle is None:
             from .direct_roof_separated import actions
             acts = actions(combo, geo, include_parallel=True)[0]
         else:
@@ -172,7 +192,7 @@ def _build(result, *, legacy_energy_floor=False, legacy_height_selection=False):
                                load_position=aggregate_position)
     sources = attached[provider.FIELD]
     own, nominal = sources['own_rounded_contour'], sources['published_nominal_reference']
-    if roof.enabled(data) and own['source_binding']['nodes_sha256'] != geo.get('nodes_sha256'):
+    if (allow_wall_girt or roof.enabled(data)) and own['source_binding']['nodes_sha256'] != geo.get('nodes_sha256'):
         raise ValueError('NBR família: contorno resistente e posição das ações divergentes.')
     records = []
     for combo, acts in action_inventory:
@@ -193,7 +213,9 @@ def _build(result, *, legacy_energy_floor=False, legacy_height_selection=False):
                         else 'FLT clássico CT/estabilizante; comprimentos resistentes declarados, Cb=1, sem benefício de altura.' if method == 'FLT_reference'
                         else None), approximate=branch.get('elastic_approximation', False)))
         from .flt_height_effective import qualify_family, qualify_family_fresh, COMBINED_METHODS
-        height = (qualify_family if legacy_height_selection else qualify_family_fresh)(data, acts)
+        height = (dict(status='not_selected_in_current_load_model',elastic_reference_eligible=False,
+            actions=copy.deepcopy(acts),reason='Expressão NBR de Me utilizada nesta aplicação.')
+            if ct else (qualify_family if legacy_height_selection else qualify_family_fresh)(data, acts))
         height_capacity = dict(eligible=False,status='outside_documented_height_reference',reason=height['reason'])
         if height['elastic_reference_eligible']:
             binding=height['source_binding'];material=own['source_binding']['material']
@@ -208,7 +230,8 @@ def _build(result, *, legacy_energy_floor=False, legacy_height_selection=False):
             else:
                 height_capacity.update(status=('computed_full_span_numerical_height_NBR_reference'
                     if height['method'] in COMBINED_METHODS else 'computed_documentary_height_NBR_reference'),reason=height['reason'])
-        parts.append(_component('own_rounded_contour','FLT_height_effective_reference',height_capacity,strong,approximate=True))
+        if not ct:
+            parts.append(_component('own_rounded_contour','FLT_height_effective_reference',height_capacity,strong,approximate=True))
         distortional_floor=None
         conventional_distortion=own['strong']['distortional']
         unresolved_Lcr=conventional_distortion.get('elastic_reference',{}).get('Lcrd_mm')
@@ -235,12 +258,12 @@ def _build(result, *, legacy_energy_floor=False, legacy_height_selection=False):
                 physical_resistance_bound=False,floor_exceeded_means='inconclusive_not_failed')
             parts.append(component)
         energy_floor=None
-        if not height_capacity.get('eligible') and pos['normal']['classification'] not in ('shear_center','stabilizing'):
+        if not ct and not height_capacity.get('eligible') and pos['normal']['classification'] not in ('shear_center','stabilizing'):
             from .flt_height_nbr_floor import qualify_family as qualify_floor
             material=own['source_binding']['material']
-            from .flt_height_energy_floor import POLICY_V2
+            from .flt_height_energy_floor import POLICY_V2, POLICY_V3
             energy_floor=qualify_floor(data,acts,formula_nu=material['nu'],gamma=material['gamma'],
-                                       method=None if legacy_energy_floor else POLICY_V2)
+                                       method=None if legacy_energy_floor else POLICY_V2 if (legacy_height_selection or legacy_product_floor) else POLICY_V3)
             bound=energy_floor['energy_floor']['source_binding']
             if (bound['nodes_sha256']!=own['source_binding']['nodes_sha256']
                 or bound['material']!={k:material[k] for k in ('E_MPa','G_MPa','fy_MPa')}):
@@ -265,6 +288,8 @@ def _build(result, *, legacy_energy_floor=False, legacy_height_selection=False):
                     reason='Posição individual desestabilizante/indeterminada no eixo fraco.' if not supported else None,
                     approximate=branches[method].get('elastic_approximation', False)))
         for component in parts:
+            if ct and component['route']=='own_rounded_contour' and component['method']=='FLT_reference':
+                component['reason']='NBR14762 §9.8.2.2; comprimentos resistentes declarados, Cb=1.'
             axis=component['demand']['axis'];gate=shear_lag['axes'][axis]
             if component['demand']['Msd_Nmm']>0 and not gate['qualified']:
                 component.update(unqualified_diagnostic_index=component['index'],index=None,
@@ -297,23 +322,29 @@ def _build(result, *, legacy_energy_floor=False, legacy_height_selection=False):
                 count['not_applicable_basis'] = basis
             else:
                 count['pending_cases'] += 1
+    from .ue_catalog_reference import source_binding as application_source_binding
     return dict(schema=schema, source_input_fingerprint=result['input_fingerprint'], scope=SCOPE,
         method_coverage=coverage, sources=sources, records=records, pending_reason=pending,
         inventory=copy.deepcopy(combos), ignored_ELS_cases=sum(c['limit_state'] == 'ELS' for c in combos),
         legacy_denominators_replaced=False, whole_member_approved=False,
-        resistance_lengths=lengths, physical_span_mm=data['L_mm'])
+        resistance_lengths=lengths, physical_span_mm=data['L_mm'],
+        **({'application_source_binding': application_source_binding(data)} if allow_wall_girt else {}))
 
 
 def attach(result):
     if not _eligible(result['input_data']):
         return result
     out = copy.deepcopy(result)
-    out[FIELD] = _build(result)
+    from .wall_girt_isolated import active as own_girt_active
+    out[FIELD] = _build(out, allow_wall_girt=own_girt_active(out['input_data']))
+    # Register only after the producer has built the detached packet successfully.
+    from . import nbr_family_validation_cache as cache
+    cache.remember(cache.key(out))
     return out
 
 
-def preserved(result):
-    """Replay sources, inventory and extrema; numerical references also replay Ritz."""
+def _preserved_uncached(result):
+    """Cold ingress: unchanged versioned source, arithmetic and Ritz replay."""
     saved = result.get(FIELD)
     if saved is None:
         return None
@@ -324,9 +355,33 @@ def preserved(result):
         from .nbr_ue_family_application_v2 import preserved as preserved_v2
         return preserved_v2(result)
     schema = saved.get('schema')
-    if (schema not in (LEGACY_SCHEMA_V3, LEGACY_SCHEMA_V4, SCHEMA)
+    from .load_application_policy import NBR_SCHEMAS, NBR_GIRT_SCHEMA
+    if (schema not in (LEGACY_SCHEMA_V3, LEGACY_SCHEMA_V4, LEGACY_SCHEMA_V5, SCHEMA, GIRT_SCHEMA, *NBR_SCHEMAS)
             or not _eligible(result['input_data'])
             or saved != _build(result, legacy_energy_floor=schema == LEGACY_SCHEMA_V3,
-                               legacy_height_selection=schema in (LEGACY_SCHEMA_V3, LEGACY_SCHEMA_V4))):
+                               legacy_height_selection=schema in (LEGACY_SCHEMA_V3, LEGACY_SCHEMA_V4),
+                               legacy_product_floor=schema == LEGACY_SCHEMA_V5,
+                               allow_wall_girt=schema in (GIRT_SCHEMA,NBR_GIRT_SCHEMA))):
         raise ValueError('NBR família: componentes, fontes, ações, casos ou aritmética divergentes; recalcule explicitamente.')
     return copy.deepcopy(saved)
+
+
+
+def preserved(result):
+    """Reuse same-session validated content; cold reads still replay sources.
+
+    Actual current bytes of every reconstruction input and the complete saved
+    packet form the key. A changed value, including a recomputed selfhash,
+    never inherits another packet's success. No failed replay is remembered.
+    """
+    from . import nbr_family_validation_cache as cache
+    # One detached view is used for the token, replay and returned snapshot.
+    # A caller alias changing after capture cannot replace validated content.
+    view=copy.deepcopy(result)
+    token=cache.key(view)
+    if cache.contains(token):
+        return copy.deepcopy(view[FIELD])
+    saved=_preserved_uncached(view)
+    if saved is not None and cache.key(view)==token:
+        cache.remember(token)
+    return saved

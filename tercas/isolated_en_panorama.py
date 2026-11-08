@@ -92,8 +92,12 @@ def secondary_record(prefix, state, ev, trace, *, context=None, conflict=False):
         'Condição seccional para os dois cortantes e interação N/M/V ainda não demonstrada por registro EN íntegro e suficiente desta combinação; nenhuma ação ausente foi zerada.', trace)
 
 
-def torsion_record(context, reason, *, conflict=False):
+def torsion_record(context, reason, *, conflict=False, ct_result=None):
     from .global_verification import check, _pending
+    if ct_result is not None and not conflict:
+        from .isolated_ct_torsion import record
+        no_demand = record(ct_result)
+        if no_demand is not None:return no_demand
     section = (context or {}).get('sectional', {})
     if section.get('joint_sufficient') is True and not conflict:
         return check('torsion_warping', limit_state='MODEL', source=STRESS_SOURCE,
@@ -113,6 +117,12 @@ def validate_saved(result, context):
     from .global_verification import aggregate, display_summary
     summary = result.get('global_verification', {})
     policy = summary.get('sectional_conditions_policy')
+    from .isolated_ct_torsion import FIELD as CT_FIELD, POLICY as CT_POLICY, eligible as ct_eligible
+    ct_policy = summary.get(CT_FIELD)
+    if ct_policy is not None and (ct_policy != CT_POLICY or not ct_eligible(result)):
+        raise ValueError('Política torsional CT incompatível com a fonte isolada.')
+    if ct_policy is not None and policy != POLICY:
+        raise ValueError('Política torsional CT sem panorama versionado.')
     checks = summary.get('checks', [])
     if summary.get('source_result_schema') in ('NBR14762_one_span_v1', 'tercas_batch_results_v1') and any(
             k in summary and summary[k] is not False for k in ('whole_member_approved',
@@ -139,7 +149,8 @@ def validate_saved(result, context):
     domain = result.get('model_domain_evidence', {})
     conflict = bool(domain.get('conflict')) or domain.get('status') != 'fixed_model_domain'
     actual = by_id.get('torsion_warping')
-    expected = torsion_record(context, context['reason'] if context else DEFAULT_TORSION_REASON, conflict=conflict)
+    expected = torsion_record(context, context['reason'] if context else DEFAULT_TORSION_REASON, conflict=conflict,
+        ct_result=result if ct_policy == CT_POLICY else None)
     if actual != expected:raise ValueError('Estado seccional torsional do panorama diverge da fonte EN salva.')
     if result.get('schema') == 'NBR14762_one_span_v1':
         cases = [('DIRECT_ELU', result.get('inclination_evidence', {}).get('ELU', {}))]

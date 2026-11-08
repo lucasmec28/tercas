@@ -26,7 +26,9 @@ def rows(evidence):
     return out
 
 
-def text_lines(ev):
+def text_lines(ev,data=None):
+    from .load_application_policy import active
+    ct=active(data or {})
     lines=[SCOPE,LIMITS,ev['load_basis'],ev['resistance_basis'],ev['implemented_domain']]
     from .torsion_applicability import aisi_lines
     lines[1:1]=aisi_lines(ev)
@@ -54,14 +56,14 @@ def text_lines(ev):
                 lines.append('P direto conserva a posição interior informada; P não nulo exatamente no apoio permanece fora da entrada direta. '
                              'Não é reinterpretado como limite a→0+ nem como força móvel.')
             if ev.get('ue_catalog_source_binding'):
-                lines.append('Mcre, Ma,piso e H4 permanecem pendentes neste complemento para o contorno Ue próprio; não foram herdados de outra seção. PP, topo e torque da demanda foram preservados.')
+                lines.append('Mcre, Ma,piso e H4 permanecem pendentes neste complemento para o contorno Ue próprio; não foram herdados de outra seção. '+('Ações e torque da demanda foram preservados.' if ct else 'PP, topo e torque da demanda foram preservados.'))
             else:
-                lines.append('Mcre e Ma,piso calculados para cada ELU, em material nominal AISI, sem usar Me/MRd NBR e sem novo Cb. PP permanece no CG; forças externas no topo. Torque primário e avisos preservados. Flexão fraca real mantém H4 pendente; não se transfere o denominador fraco no CT.')
+                lines.append('Mcre e Ma,piso calculados para cada ELU, em material nominal AISI, sem usar Me/MRd NBR e sem novo Cb. '+('Ações e torque da demanda preservados. ' if ct else 'PP permanece no CG; forças externas no topo. Torque primário e avisos preservados. ')+'Flexão fraca real mantém H4 pendente; não se transfere o denominador fraco no CT.')
             lines.append('Geometria, linha de aplicação e garfos são hipóteses explícitas do esquema, não comprovação das ligações/forças reais. '
                 + ('P conserva sua posição direta exata.' if source.get('direct_load_basis') else 'P conserva posições prescritas e limite analítico no apoio; não se declara envelope móvel.')
                 + ' A escolha física do esquema existente basta; nenhum Me ou Cb é solicitado.')
         else:
-            lines.append('As excentricidades declaradas geram torque em relação ao centro de cisalhamento na configuração inicial. As forças mantêm direção fixa. Mcre dos denominadores é de flexão pura Cb=1, não um crítico do campo misto com altura de carga; efeitos geométricos de altura/Wagner não estão incluídos.')
+            lines.append(('As forças mantêm direção fixa. ' if ct else 'As excentricidades declaradas geram torque em relação ao centro de cisalhamento na configuração inicial. As forças mantêm direção fixa. ')+'Mcre dos denominadores é de flexão pura Cb=1, não um crítico do campo misto com altura de carga; efeitos geométricos de altura/Wagner não estão incluídos.')
         lines.append('Primeira ordem racional, membro isolado N=0: não há efeitos P–δ/P–Δ de força axial. Não declara certificação estrutural C1.2/C1.3. '+
             'O aviso de giro do diagnóstico existente permanece triagem, não limite normativo adicional.')
     lines.append(str(ev['G81_computed_cases'])+' casos ELU com G8.1; '+str(ev['H4_computed_cases'])+' com H4; '+str(ev['pending_cases'])+' pendentes. ELS não é verificado por H4.')
@@ -85,7 +87,7 @@ def show(st,result):
         return
     if ev is None:return
     st.subheader('Verificação complementar de flexão e empenamento — critério AISI 2024')
-    lines=text_lines(ev)
+    lines=text_lines(ev,result.get('input_data',{}))
     st.warning(lines[0])
     from .torsion_applicability import aisi_lines
     notices=aisi_lines(ev)
@@ -105,7 +107,7 @@ def report(doc,result):
         return
     if ev is None:return
     doc.add_heading('Verificação complementar de flexão e empenamento — critério AISI 2024',1)
-    for line in text_lines(ev):doc.add_paragraph(line)
+    for line in text_lines(ev,result.get('input_data',{})):doc.add_paragraph(line)
     for row in rows(ev):
         doc.add_paragraph(' | '.join(k+': '+(('Sim' if v else 'Não') if isinstance(v,bool) else fmt(v) if isinstance(v,(int,float)) else str(v)) for k,v in row.items() if v is not None))
     doc.add_paragraph('Fonte primária: '+ev['reference'])

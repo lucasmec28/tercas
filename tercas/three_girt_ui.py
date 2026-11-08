@@ -1,4 +1,4 @@
-from .direct_self_weight import active as direct_PP_active, TEXT as DIRECT_PP_TEXT
+from .direct_self_weight import active as direct_PP_active, input_text as direct_PP_text
 """UI for an explicitly separate 3D diagnostic; never renders legacy pass rows."""
 import copy
 import html
@@ -12,7 +12,9 @@ LEVEL_LABEL={'upper':'Superior','middle':'Central','lower':'Inferior'}
 
 
 def render_configuration(st,d,b,revision,num,txt):
+ from .load_application_policy import active as loads_at_CT
  c=defaults();c.update(copy.deepcopy(b.get('three_girt_model',{})));c['enabled']=True
+ ct=loads_at_CT(d)
  st.subheader('Sistema 3D — três travessas contínuas e barras axiais')
  st.warning('Diagnóstico de solicitações e deslocamentos brutos, sem aprovação resistente ou ELS. O sistema 3D substitui a análise de vão isolado nesta seleção; a resistência N=0 e o estudo de molas não serão executados nem misturados.')
  st.caption('Seis extremos: três translações e torção impedidas; rotações de flexão livres. Não se presume restrição de empenamento. Barras lineares em tração/compressão, primeira ordem, sem resistência de tirantes/cantoneiras. Sem crédito da telha.')
@@ -42,17 +44,18 @@ def render_configuration(st,d,b,revision,num,txt):
    m['origin']=txt('Origem do perfil / E — '+title,'three_'+color+'_origin',m['origin'])
   c['axial_bars_declared']=st.checkbox('Adoto barras redondas e cantoneiras articuladas axiais, tração e compressão, sem rigidez de flexão',value=c['axial_bars_declared'],key=f'three_axial_{revision}')
   st.caption('Essa declaração é uma hipótese, não valida flambagem, rigidez real ou ligações. Barras comprimidas serão mostradas, sem resistência verificada.')
- with st.expander('Centro de cisalhamento, linha de carga e ligações — obrigatórios',expanded=True):
+ with st.expander('Centro de cisalhamento e ligações — obrigatórios' if ct else 'Centro de cisalhamento, linha de carga e ligações — obrigatórios',expanded=True):
   st.caption('Referência global: X de A para B; Y para cima; Z para a direita na vista A→B. Todas as excentricidades são medidas a partir do centroide. x0 bruto do catálogo não é transferido com sinal presumido.')
   cols=st.columns(2)
   with cols[0]:c['sc_y_mm']=num('CG → centro de cisalhamento: componente Y','three_sc_y',c['sc_y_mm'],'mm')
   with cols[1]:c['sc_z_mm']=num('CG → centro de cisalhamento: componente Z','three_sc_z',c['sc_z_mm'],'mm')
   c['sc_origin']=txt('Origem e convenção do centro de cisalhamento','three_sc_origin',c['sc_origin'])
-  cols=st.columns(2)
-  with cols[0]:c['load_y_from_CG_mm']=num('Linha das ações externas: Y a partir do CG','three_load_y',c['load_y_from_CG_mm'],'mm')
-  with cols[1]:c['load_z_from_CG_mm']=num('Linha das ações externas: Z a partir do CG','three_load_z',c['load_z_from_CG_mm'],'mm')
-  st.caption('Nesta fase, vento e permanente externo compartilham a linha acima; se forem diferentes, o modelo não representa o caso sem uma redução equivalente documentada. PP da travessa atua sempre no CG, separado do torque externo.')
-  c['load_line_declared']=st.checkbox('Declaro a linha das cargas externas e a separação do PP no centroide',value=c['load_line_declared'],key=f'three_load_line_{revision}')
+  if not ct:
+   cols=st.columns(2)
+   with cols[0]:c['load_y_from_CG_mm']=num('Linha das ações externas: Y a partir do CG','three_load_y',c['load_y_from_CG_mm'],'mm')
+   with cols[1]:c['load_z_from_CG_mm']=num('Linha das ações externas: Z a partir do CG','three_load_z',c['load_z_from_CG_mm'],'mm')
+   st.caption('Nesta fase, vento e permanente externo compartilham a linha acima; se forem diferentes, o modelo não representa o caso sem uma redução equivalente documentada. PP da travessa atua sempre no CG, separado do torque externo.')
+   c['load_line_declared']=st.checkbox('Declaro a linha das cargas externas e a separação do PP no centroide',value=c['load_line_declared'],key=f'three_load_line_{revision}')
   labels={'concentric':'Conexões concêntricas ao CG — idealização explícita','common_arm':'Mesmo braço rígido em todas as extremidades das barras','individual':'Braços individuais por barra — avançado'}
   c['connection_mode']=st.selectbox('Pontos das ligações',list(labels),format_func=labels.get,index=list(labels).index(c['connection_mode']),key=f'three_connection_mode_{revision}')
   if c['connection_mode']=='common_arm':
@@ -75,7 +78,7 @@ def render_configuration(st,d,b,revision,num,txt):
  st.caption('PP nodal é uma idealização: não representa flexão local da barra pelo próprio peso. Nas três travessas, 0.5/1/0.5 incide sobre vento e CP por área, incluindo peso da telha/revestimento; PP próprio do perfil de cada travessa fica integral.')
  if not c['brace_self_weight']:st.warning('PP das barras/cantoneiras foi excluído deste diagnóstico; ausência não significa dispensa normativa.')
  if d['load_mode']=='direct':
-  if direct_PP_active(d):st.caption(DIRECT_PP_TEXT)
+  if direct_PP_active(d):st.caption(direct_PP_text(d))
   else:st.caption('A carga central já combinada deve incluir seu PP. Informe abaixo a parcela PP já contida nela; não é uma segunda soma. Nos extremos usa-se 0.5×(q central−PP)+PP. PP das barras é adicional, com fator próprio explicitamente declarado.')
   for state,label in [('uls','ELU'),('sls','ELS')]:
    if not direct_PP_active(d):

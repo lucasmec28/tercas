@@ -47,7 +47,7 @@ UNAXIAL_ELS_STATUS = ('Componente forte uniaxial: q e P paralelos locais reais i
 ELS_POLICY = ('Qualificação por ações locais reais de cada estado: somente q_parallel=P_parallel=0 '
               'permite o critério parcial forte uniaxial. Outros estados ficam pendentes por rigidez '
               'combinada; os 34 estados MLE de 4 m não são transferidos automaticamente.')
-EDITABLE = {'direct_load_basis', 'project', 'actions_origin', 'load_mode', 'area_inputs', 'selected_types',
+EDITABLE = {'load_application_policy', 'local_support_verification_scope', 'direct_load_basis', 'project', 'actions_origin', 'load_mode', 'area_inputs', 'selected_types',
             'q_uls', 'q_sls', 'P_uls', 'P_sls', 'x_uls', 'x_sls',
             'q_parallel_uls', 'q_parallel_sls', 'P_parallel_uls', 'P_parallel_sls',
             'deflection_model', 'torsion_model', 'point_contact', 'roof_top_load', 'isolated_en_stress_model', 'isolated_combined_service'}
@@ -244,8 +244,9 @@ def _evidence(data):
     from .flexural_components import selected as gross_selected, scope_text as gross_scope_text
     gross=gross_selected(data)
     from .application import fingerprint
+    from .load_application_policy import source_scope
     return dict(schema=VERSION, reporting_version=REPORTING_VERSION, reference_id=ID,
-        scope=SCOPE, frozen_scope=FROZEN,
+        scope=source_scope(data,SCOPE), frozen_scope=FROZEN,
         distortion_note=(TRACE_NOTE.split(' A evidência MLE')[0] if isolated or gross else TRACE_NOTE),
         ELS_status=(TEXT if isolated else gross_scope_text(data) if gross else ELS_POLICY),
         input_sha256=fingerprint(data), source_documents=copy.deepcopy(data['ue_source_documents']),
@@ -372,3 +373,8 @@ def report(doc, result):
     if record['input_sha256'] != result.get('input_fingerprint'):
         doc.add_paragraph('SHA-256 das entradas da referência: ' + record['input_sha256'])
     doc.add_paragraph('Sem aprovação global, física, de ELS completo ou de torção. Evidência ELS de casos específicos não transferida.')
+
+
+def scope_for(data):
+    from .load_application_policy import source_scope
+    return source_scope(data,SCOPE)

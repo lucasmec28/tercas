@@ -120,7 +120,7 @@ def element_response(element,x_mm):
 
 def solve_three_girts(*,L_mm,upper_gap_mm,lower_gap_mm,attachment_x_mm,section,
                       blue,green,loads,axial_restraint,connection_offsets=None,
-                      include_green=True,brace_self_weight=False,brace_weight_factor=1.):
+                      include_green=True,brace_self_weight=False,brace_weight_factor=1.,load_application_policy=None):
     """Three parallel continuous girders plus the declared axial-bar topology.
 
     section: A_mm2,I_strong_mm4,I_weak_mm4,J_mm4,E_MPa,G_MPa,sc_y_mm,sc_z_mm,
@@ -137,6 +137,9 @@ def solve_three_girts(*,L_mm,upper_gap_mm,lower_gap_mm,attachment_x_mm,section,
     connected girt CGs. No sectorial warping displacement is represented. brace_weight_factor multiplies
     the characteristic bar selfweight explicitly (e.g. PP coefficient of each combination).
     """
+    from .load_application_policy import MODE as CT_MODE
+    if load_application_policy not in (None,CT_MODE):raise ValueError('Unknown applied-load model')
+    ct=load_application_policy==CT_MODE
     L=_finite(L_mm,'L',True);up=_finite(upper_gap_mm,'upper gap',True);low=_finite(lower_gap_mm,'lower gap',True)
     if not isinstance(attachment_x_mm,(list,tuple)) or len(attachment_x_mm)>20:raise ValueError('Use 0 to 20 attachment x coordinates')
     interior=[_finite(x,'attachment x') for x in attachment_x_mm]
@@ -196,7 +199,10 @@ def solve_three_girts(*,L_mm,upper_gap_mm,lower_gap_mm,attachment_x_mm,section,
         k=m['E_MPa']*m['A_mm2']/ell*np.outer(B,B);K[np.ix_(ids,ids)]+=k
         weight=m['mass_kg_m']*ell/1000*9.80665*weight_factor if brace_self_weight else 0.
         if weight:
-            force=np.array([0.,-weight/2,0.]);f[6*a:6*a+6]+=_arm(ra).T@force;f[6*b:6*b+6]+=_arm(rb).T@force
+            force=np.array([0.,-weight/2,0.])
+            load_arm=np.array([0.,s['sc_y_mm'],s['sc_z_mm']]) if ct else None
+            f[6*a:6*a+6]+=_arm(load_arm if ct else ra).T@force
+            f[6*b:6*b+6]+=_arm(load_arm if ct else rb).T@force
         bars.append(dict(id=name,kind=kind,a=a,b=b,ids=ids,B=B,length_mm=ell,direction=n,arms=[ra,rb],material=m,self_weight_N=weight))
     fixed=[]
     for row in range(3):
@@ -207,7 +213,8 @@ def solve_three_girts(*,L_mm,upper_gap_mm,lower_gap_mm,attachment_x_mm,section,
     base=dict(model='three_girts_3d_Saint_Venant_diagnostic_v1',status='not_solved',
               axes='X longitudinal; Y up; Z normal; right-handed rotations',
               inputs=dict(L_mm=L,upper_gap_mm=up,lower_gap_mm=low,attachment_x_mm=interior,section=s,blue=blue,green=green,
-                          loads=loads,axial_restraint=axial_restraint,connection_offsets=offsets,include_green=include_green,brace_self_weight=brace_self_weight,brace_weight_factor=weight_factor),
+                          loads=loads,axial_restraint=axial_restraint,connection_offsets=offsets,include_green=include_green,brace_self_weight=brace_self_weight,brace_weight_factor=weight_factor,
+                          **({'load_application_policy':CT_MODE} if ct else {})),
               physical_conditions_verified=False,warping_qualified=False,resistance_qualified=False,whole_member_approved=False,
               boundary_conditions=dict(fixed_dofs=[dict(node=i//6,dof=DOFS[i%6]) for i in fixed],
                                        bending_end_rotations='free',interior_girt_rotations='continuous',warping='NOT represented; end twist fixity does not specify warping'),

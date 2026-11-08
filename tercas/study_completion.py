@@ -53,6 +53,8 @@ def show_global(st, result):
         validate_NBR_family_global(result)
         from .isolated_service_panorama import validate_saved as validate_service_global
         validate_service_global(result)
+        from .support_scope import validate_saved_inventory
+        validate_saved_inventory(result,record)
     except (ValueError,TypeError,KeyError) as exc:
         st.warning('Panorama não exibido: '+str(exc));return
     message = record['display_summary']
@@ -91,6 +93,8 @@ def _report_global(doc,result,roof_nbr_presentation=None):
         validate_NBR_family_global(result)
         from .isolated_service_panorama import validate_saved as validate_service_global
         validate_service_global(result)
+        from .support_scope import validate_saved_inventory
+        validate_saved_inventory(result,record)
     except (ValueError,TypeError,KeyError) as exc:
         doc.add_paragraph('Panorama não exibido: '+str(exc));return
     doc.add_heading('Estado conjunto das verificações',1)

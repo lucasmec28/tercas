@@ -61,10 +61,12 @@ def render_span(st, data, revision, load):
 
 def render(st, data, revision, load, render_results, render_import):
     data = copy.deepcopy(data)
+    from .current_calculation_inputs import prepare
+    from .load_application_policy import source_scope
     state = assess(data)
     if not state['active']:raise ValueError('O editor restrito exige referência ativa revalidada.')
     st.subheader('Referência própria Ue100 — R01, 209 nós')
-    st.warning(SCOPE)
+    st.warning(source_scope(prepare(data), SCOPE))
     st.caption(FROZEN)
     st.caption('Ações sintéticas e identificação editáveis; vão somente pela prévia e aplicação explícita abaixo. Não há seletor de painel nem crédito de travamento.')
     if st.button('Encerrar modo referência (inspeção)', key=f'ue_ref_exit_{revision}'):
@@ -158,8 +160,10 @@ def render(st, data, revision, load, render_results, render_import):
     with c2:st.button('Calcular todas as seções do catálogo', disabled=True)
     st.caption('Comparação genérica do catálogo indisponível neste modo: os dados próprios não se transferem a outra seção.')
     if clicked:
-        st.session_state.pop('result', None)
         try:
+            from .current_calculation_inputs import begin_calculation
+            data = begin_calculation(st.session_state, data)
+            st.session_state.pop('result', None)
             with st.spinner('Calculando a referência própria…'):
                 from .study_completion import complete_result
                 st.session_state.result = complete_result(calculate_reference(data))

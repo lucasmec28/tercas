@@ -52,6 +52,8 @@ def diagram(section, records):
 
 
 def render_choice(st,data,key):
+    from .load_application_policy import active, applies_to_new
+    if active(data) or applies_to_new(data):return
     c=configuration(data)
     from .roof_top_load import enabled as roof_top_enabled
     if data.get('member_application','purlin')=='purlin' and roof_top_enabled(data):
@@ -83,9 +85,8 @@ def render_choice(st,data,key):
             st.warning('Linhas automáticas de torção pendentes: '+str(exc))
         return
     if data.get('member_application','purlin')=='wall_girt':
-        st.caption('Torção da terça inativa na travessa isolada. Declarações armazenadas preservadas; não significam torção nula nem vínculo comprovado.')
-        if c is not None:
-            with st.expander('Declarações torsionais armazenadas, inativas',expanded=False):st.json(c)
+        from .wall_girt_isolated import render_choice
+        render_choice(st,data,key)
         return
     with st.expander('Torção da terça — linhas de carga e método',expanded=False):
         st.caption(SCOPE)
@@ -191,7 +192,7 @@ def report(doc,result):
     choice=evidence.get('choice_snapshot',{}).get('load_lines',{})
     if evidence.get('direct_load_basis'):
         doc.add_paragraph(evidence['direct_self_weight']['scope'])
-        choice={'EXTERNAL':choice['CP'],'P':choice['P']}
+        choice={'EXTERNAL':choice['EXTERNAL'] if 'EXTERNAL' in choice else choice['CP'],'P':choice['P']}
     for role,record in choice.items():
         doc.add_paragraph(role+': '+('linha declarada' if record['declared'] else 'não informada')+
             '; [x,y] a partir do CG [mm]=['+', '.join('não informado' if v is None else fmt(v) for v in record['xy_from_CG_mm'])+']; origem: '+record['origin'])

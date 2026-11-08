@@ -39,11 +39,15 @@ def configuration(data):
 
 
 def enabled(data):
+    from .load_application_policy import active as ct_active
+    if ct_active(data):return False
     c=configuration(data)
     return bool(c and c['enabled'])
 
 
 def geometry(data):
+    from .load_application_policy import active as ct_active, geometry as ct_geometry
+    if ct_active(data):return ct_geometry(data)
     c=configuration(data)
     if c is None:raise ValueError('Selecione o esquema de aplicação no topo.')
     from .catalogs import catalog_entry
@@ -220,12 +224,17 @@ def _actions(bundle,combo,geo, *, include_parallel=False):
     if not include_parallel:
         for a in acts:
             a.pop('q_parallel_N_mm',None);a.pop('P_parallel_N',None)
+    if geo.get('load_application_policy'):
+        for a in acts:a.update(height_above_SC_mm=0.,x_from_SC_mm=0.,load_line_source=geo['source'])
     return acts,parallel
 
 
 def attach(result):
     """Only for a fresh explicit calculation; rendering never calls this function."""
-    data=result['input_data'];c=configuration(data)
+    data=result['input_data']
+    from .load_application_policy import active as ct_active
+    if ct_active(data):return result
+    c=configuration(data)
     if c is None or not c['enabled']:return result
     from .application import fingerprint
     if result.get('input_fingerprint')!=fingerprint(data):raise ValueError('Resultado de cobertura desatualizado.')

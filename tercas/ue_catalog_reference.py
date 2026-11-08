@@ -10,6 +10,7 @@ import math
 
 FIELD='ue_catalog_reference'
 SCHEMA='ue_catalog_reference_v1'
+GIRT_SCHEMA='ue_catalog_wall_girt_reference_v1'
 EVIDENCE='ue_catalog_reference_evidence'
 DENSITY_KG_M3=7850.
 MATERIAL_KEYS=('E_MPa','G_MPa','fy_MPa','fu_MPa')
@@ -22,6 +23,14 @@ SCOPE=('Contorno próprio nominal Ue da linha exata de Pierin, com cantos arredo
        'derivados juntos. PP no CG e ações externas no topo selecionado. '
        'Demanda elástica de Vlasov e componente G8.1; nenhum crítico tabelado, '
        'operador efetivo ou denominador H4 é herdado. Sem aprovação global.')
+
+
+def scope_for(data):
+    from .load_application_policy import active as ct_active
+    if ct_active(data):return SCOPE.replace('PP no CG e ações externas no topo selecionado. ','')
+    if data.get('member_application','purlin')=='wall_girt':
+        return SCOPE.replace('ações externas no topo selecionado', 'ações externas em linhas locais explicitamente declaradas; boca para baixo, +x local para baixo, +y local para a direita').replace('Demanda elástica de Vlasov', 'Demanda elástica de Vlasov somente com linhas/vínculos explícitos')
+    return SCOPE
 
 
 def digest(value):
@@ -37,8 +46,10 @@ def _isolated(data):
     network=data.get('three_girt_model',{})
     if not isinstance(network,dict):
         raise ValueError('Modelo de três travessas malformado; não converter em terça isolada.')
-    if data.get('member_application','purlin')!='purlin' or network.get('enabled'):
-        raise ValueError('Contorno Ue próprio exclusivo da terça isolada nesta etapa.')
+    from .member_application import member_kind
+    member_kind(data)
+    if network.get('enabled'):
+        raise ValueError('Contorno Ue próprio isolado não substitui a rede de três travessas.')
 
 
 def _source(index):
@@ -70,9 +81,9 @@ def _properties(packet):
         J_mm4=p['J_mm4'],Cw_mm6=p['Cw_mm6'])
 
 
-def _identity(packet,index):
+def _identity(packet,index,application='purlin'):
     n=packet['nominal_identity'];s=packet['section']
-    return dict(schema=SCHEMA,catalog_index=index,catalog_id=n['catalog_id'],
+    return dict(schema=GIRT_SCHEMA if application=='wall_girt' else SCHEMA,catalog_index=index,catalog_id=n['catalog_id'],
         geometry_schema=packet['schema'],nominal_identity_sha256=packet['nominal_identity_sha256'],
         nodes_sha256=s['nodes_sha256'],section_profile_id=s['profile_id'])
 
@@ -83,7 +94,8 @@ def _domain(data,*,activation=False):
     domain=evidence(data)
     if domain['conflict']:raise ValueError(domain['conflict'])
     from .roof_top_load import enabled
-    if activation and not enabled(data):raise ValueError('Selecione primeiro o esquema de carga no topo.')
+    from .load_application_policy import active as ct_active
+    if activation and not ct_active(data) and data.get('member_application','purlin')=='purlin' and not enabled(data):raise ValueError('Selecione primeiro o esquema de carga no topo.')
     if data.get('load_mode')=='direct':
         from .direct_self_weight import active
         if activation and not active(data):
@@ -102,6 +114,8 @@ def activate(data):
     else:
         keys=('properties','property_origin','Ml_Nmm','Mdist_Nmm','critical_origin','weak_axis','weak_catalog')+OLD_REFERENCE_FIELDS
         superseded={k:copy.deepcopy(data[k]) for k in keys if k in data}
+        if data.get('member_application')=='wall_girt' and 'torsion_model' in data:
+            superseded['torsion_model']=copy.deepcopy(data['torsion_model'])
     out['properties'].update(own)
     out['property_origin']='Contorno próprio nominal Ue; propriedades geométricas calculadas juntas; material original preservado.'
     for key in OLD_REFERENCE_FIELDS:out.pop(key,None)
@@ -110,7 +124,7 @@ def activate(data):
     wc=data.get('weak_catalog',{})
     out['weak_catalog']={k:copy.deepcopy(wc[k]) for k in ('Lx_mm',) if isinstance(wc,dict) and k in wc}
     out['model_domain']=version
-    out[FIELD]=dict(_identity(packet,data['catalog_index']),geometric_properties=own,properties_sha256=digest(own),
+    out[FIELD]=dict(_identity(packet,data['catalog_index'],data.get('member_application','purlin')),geometric_properties=own,properties_sha256=digest(own),
         material=mat,material_sha256=digest(mat),density_kg_m3=DENSITY_KG_M3,
         superseded_section_inputs=superseded,old_criticals_inactive=True,whole_member_approved=False)
     from .isolated_en_application import reset_changed_declaration
@@ -130,7 +144,7 @@ def validate(data):
     if data.get('model_domain')!=version:raise ValueError('Domínio do contorno próprio alterado; reaplique explicitamente.')
     if any(key in data for key in OLD_REFERENCE_FIELDS):
         raise ValueError('Referências antigas e contorno próprio não podem coexistir.')
-    packet=_source(data['catalog_index']);expected=_identity(packet,data['catalog_index']);marker=data[FIELD]
+    packet=_source(data['catalog_index']);expected=_identity(packet,data['catalog_index'],data.get('member_application','purlin'));marker=data[FIELD]
     fields=set(expected)|{'geometric_properties','properties_sha256','material','material_sha256',
         'density_kg_m3','superseded_section_inputs','old_criticals_inactive','whole_member_approved'}
     if not isinstance(marker,dict) or set(marker)!=fields:
@@ -174,7 +188,7 @@ def attach_source(result):
     if fingerprint(data)!=result.get('input_fingerprint'):raise ValueError('Resultado de contorno próprio desatualizado.')
     marker=data[FIELD];out=copy.deepcopy(result)
     ev=dict(schema='ue_catalog_reference_evidence_v1',source_input_fingerprint=result['input_fingerprint'],
-        source_binding=_binding(marker),scope=SCOPE,
+        source_binding=_binding(marker),scope=scope_for(data),
         geometric_properties=copy.deepcopy(marker['geometric_properties']),
         catalogue_comparison=copy.deepcopy(packet['catalogue_comparison']),
         superseded_section_inputs=copy.deepcopy(marker['superseded_section_inputs']),
@@ -190,7 +204,7 @@ def preserved(result):
     from .application import fingerprint
     data=result['input_data'];marker=data.get(FIELD)
     if (not isinstance(ev,dict) or not isinstance(marker,dict) or ev.get('schema')!='ue_catalog_reference_evidence_v1'
-        or marker.get('schema')!=SCHEMA or marker.get('catalog_index')!=data.get('catalog_index')
+        or marker.get('schema')!=(GIRT_SCHEMA if data.get('member_application','purlin')=='wall_girt' else SCHEMA) or marker.get('catalog_index')!=data.get('catalog_index')
         or marker.get('density_kg_m3')!=DENSITY_KG_M3
         or result.get('input_fingerprint')!=fingerprint(data)
         or ev.get('source_input_fingerprint')!=result.get('input_fingerprint')

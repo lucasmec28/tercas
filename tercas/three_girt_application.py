@@ -108,12 +108,13 @@ def configuration(data):
 
 
 def readiness(data,c):
+ from .load_application_policy import active as ct_active
  missing=[]
  for key,label in [('geometry_declared','Declarar que distância entre travessas é também a distância entre eixos superior–central e central–inferior, com mesma seção/vão.'),
                    ('axial_bars_declared','Declarar idealização axial articulada T/C das barras redondas e cantoneiras.'),
                    ('connections_declared','Declarar posição/idealização das ligações e dos apoios.'),
                    ('load_line_declared','Declarar posição das cargas em relação ao centroide.')]:
-  if not c[key]:missing.append(label)
+  if not c[key] and not (key=='load_line_declared' and ct_active(data)):missing.append(label)
  if not c['origin'].strip():missing.append('Informar origem/hipótese do modelo físico.')
  if c['sc_y_mm'] is None or c['sc_z_mm'] is None or not c['sc_origin'].strip():missing.append('Informar vetor CG→centro de cisalhamento e sua origem; x0 do catálogo não recebe sinal automático.')
  if data.get('load_mode')=='direct':
@@ -126,14 +127,16 @@ def readiness(data,c):
 
 def load_cases(data,c):
  """Half EXTERNAL tributary actions; full PP of each equal girt and every bar."""
+ from .load_application_policy import active as ct_active
+ ct=ct_active(data)
  def vectors(normal,parallel,pp):
-  out=[];ey=c['load_y_from_CG_mm'];ez=c['load_z_from_CG_mm']
+  out=[];ey=c['sc_y_mm'] if ct else c['load_y_from_CG_mm'];ez=c['sc_z_mm'] if ct else c['load_z_from_CG_mm']
   for factor in (.5,1.,.5):
    ext_y=-factor*(parallel-pp);ext_z=-factor*normal;pp_y=-pp
    out.append(dict(q_y_N_mm=ext_y+pp_y,q_z_N_mm=ext_z,load_y_from_CG_mm=0.,load_z_from_CG_mm=0.,
-                   distributed_torque_CG_N=ey*ext_z-ez*ext_y,
+                   distributed_torque_CG_N=ey*ext_z-ez*(ext_y+pp_y) if ct else ey*ext_z-ez*ext_y,
                    components=[dict(id='external',q_y_N_mm=ext_y,q_z_N_mm=ext_z,y_from_CG_mm=ey,z_from_CG_mm=ez),
-                               dict(id='girt_PP',q_y_N_mm=pp_y,q_z_N_mm=0.,y_from_CG_mm=0.,z_from_CG_mm=0.)]))
+                               dict(id='girt_PP',q_y_N_mm=pp_y,q_z_N_mm=0.,y_from_CG_mm=ey if ct else 0.,z_from_CG_mm=ez if ct else 0.)]))
   return out
  if data.get('load_mode')=='area':
   from .batch import area_bundle
@@ -182,9 +185,13 @@ def calculate(data):
              topology_note='Verticais em cada linha; diagonais azuis dos extremos superiores à primeira/última linha central. Para n≠2 é extensão declarada do croqui; n=0 sem barras.',
              load_distribution='CP por área inclui o peso da telha/revestimento e demais permanentes informados, sem PP do perfil. Fatores de CP e vento superior/central/inferior = 0.5/1/0.5; PP de cada travessa integral aplicado no CG; ações externas na linha declarada. PP das barras, se ativo, integral e ponderado pelo coeficiente PP; metade em cada extremidade da barra. Nenhuma parcela é duplicada.',
              legacy_route_used=False)
+ from .load_application_policy import active as ct_active
+ if ct_active(data):result['load_distribution']='Fatores externos superior/central/inferior = 0.5/1/0.5; PP de cada travessa integral. PP das barras ponderado uma vez e dividido entre suas extremidades.'
  from .model_domain import evidence as domain_evidence
  result['model_domain_evidence']=domain_evidence(data)
  if result['model_domain_evidence']['conflict']:result['limitations'].append(result['model_domain_evidence']['conflict'])
+ from .support_scope import annotate as annotate_support_scope
+ annotate_support_scope(result)
  missing=readiness(data,c)
  if missing:result.update(reason='Premissas explícitas pendentes; não calculado.',missing=missing);return result
  p=data['properties'];spacing=_number(data['area_inputs']['spacing_m'],'Distância entre travessas',positive=True)*1000
@@ -196,7 +203,8 @@ def calculate(data):
  for row in lc:
   model=solve_three_girts(L_mm=data['L_mm'],upper_gap_mm=spacing,lower_gap_mm=spacing,attachment_x_mm=c['resolved_positions_mm'],
                          section=s,blue=c['blue'],green=c['green'],loads=row['loads'],axial_restraint='both_ends',
-                         connection_offsets=c['resolved_offsets'],include_green=True,brace_self_weight=c['brace_self_weight'],brace_weight_factor=row['brace_weight_factor'])
+                         connection_offsets=c['resolved_offsets'],include_green=True,brace_self_weight=c['brace_self_weight'],brace_weight_factor=row['brace_weight_factor'],
+                         **({'load_application_policy':data['load_application_policy']} if ct_active(data) else {}))
   result['cases'].append(dict(row,model=model))
  result['status']='conditional_elastic_diagnostic' if all(x['model']['status']=='conditional_elastic_diagnostic' for x in result['cases']) else 'not_solved'
  if result['status']=='not_solved':result['reason']='Ao menos uma combinação não passou o gate numérico; consultar cada caso. Não existe fallback para vão livre.'

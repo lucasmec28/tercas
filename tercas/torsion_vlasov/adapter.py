@@ -65,6 +65,12 @@ def _vec(raw, name):
 
 
 def _line(lines,name,section):
+    from ..load_application_policy import MODE
+    rec=lines.get(name,{})
+    if rec.get('load_application_policy')==MODE:
+        xy=section['properties']['shear_center_xy_mm']
+        if rec.get('xy_mm')!=xy:raise ValueError('Linha diverge do modelo de aplicação registrado.')
+        return list(xy),rec['origin']
     if name=='PP':
         xy=section['properties']['centroid_xy_mm']
         if name in lines and not np.allclose(lines[name].get('xy_mm'),xy,rtol=0,atol=1e-12):
@@ -83,8 +89,12 @@ def _check_snapshot(result,section):
     if result.get('schema')!='tercas_batch_results_v1':
         raise ValueError('This adapter requires an already calculated area batch; no direct-load decomposition inferred')
     data=result['input_data']
-    if data.get('member_application','purlin')!='purlin':
-        raise ValueError('Do not substitute a single purlin for the three-girt system')
+    from ..load_application_policy import active as ct_active,has_contour
+    if data.get('member_application','purlin')!='purlin' and not (ct_active(data) and has_contour(data)):
+        from ..ue_catalog_reference import validate, GIRT_SCHEMA, FIELD
+        if data.get(FIELD,{}).get('schema')!=GIRT_SCHEMA:
+            raise ValueError('Explicit isolated wall-girt contour adoption required')
+        validate(data)
     if fingerprint(data)!=result.get('input_fingerprint'):
         raise ValueError('Stale result/input fingerprint')
     if data.get('model_domain')!='cladding_actions_only_20261103_r1':
@@ -217,7 +227,7 @@ inferred and no case is quietly dropped. P_APOIO preserves its limit layer.
         try:
             r=solve_member(section=section,length_mm=data['L_mm'],E_MPa=data['properties']['E_MPa'],
                 G_MPa=data['properties']['G_MPa'],actions=acts,supports=supports,
-                combination_id=combo['id'],limit_state=combo['limit_state'],member_id='PURLIN',
+                combination_id=combo['id'],limit_state=combo['limit_state'],member_id='WALL_GIRT' if data.get('member_application','purlin')=='wall_girt' else 'PURLIN',
                 action_accounting_origin='Existing batch components and factors; PP counted once; no new combination',
                 elements_per_interval=elements_per_interval)
         except NumericalQualificationError as exc:

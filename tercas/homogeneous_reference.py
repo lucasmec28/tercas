@@ -43,7 +43,7 @@ TRACE_NOTE = ('Rastreabilidade M–V no limite junto ao apoio: NBR_branches.MV.r
 EDITABLE = {'direct_load_basis', 'project', 'actions_origin', 'load_mode', 'area_inputs', 'selected_types',
             'q_uls', 'q_sls', 'P_uls', 'P_sls', 'x_uls', 'x_sls',
             'q_parallel_uls', 'q_parallel_sls', 'P_parallel_uls', 'P_parallel_sls'}
-OPTIONAL = {FIELD, 'model_domain', 'member_application'}
+OPTIONAL = {FIELD, 'load_application_policy', 'model_domain', 'member_application', 'local_support_verification_scope'}
 DIRECT_OPTIONAL = {'q_parallel_uls', 'q_parallel_sls', 'P_parallel_uls', 'P_parallel_sls'}
 
 
@@ -112,6 +112,9 @@ def _action_errors(data, expected):
 def _editor_errors(data, expected):
     """Shape/complete data only. Recoverable values stay in the restricted UI."""
     errors = []
+    from .load_application_policy import active as ct_active
+    try:ct_active(data)
+    except ValueError as exc:errors.append(str(exc))
     from .deflection_scope import enabled as uniaxial_component_enabled
     from .torsion_study import configuration as torsion_configuration
     from .point_contact import configuration as point_contact_configuration
@@ -120,6 +123,9 @@ def _editor_errors(data, expected):
     try:torsion_configuration(data)
     except ValueError as exc:errors.append(str(exc))
     try:uniaxial_component_enabled(data)
+    except ValueError as exc:errors.append(str(exc))
+    from .support_scope import enabled as support_scope_enabled
+    try:support_scope_enabled(data)
     except ValueError as exc:errors.append(str(exc))
     missing = (EDITABLE - DIRECT_OPTIONAL - {'direct_load_basis'}) - set(data)
     if missing:errors.append('Campos de ações/identificação ausentes: ' + ', '.join(sorted(missing)))
@@ -205,6 +211,8 @@ def evidence(data):
         from .homogeneous_lengths import evidence as length_evidence, scope_text, FROZEN_SCOPE, REPORTING_VERSION as LENGTH_REPORT_VERSION
         record.update(reporting_version=LENGTH_REPORT_VERSION,scope=scope_text(SCOPE),frozen_scope=FROZEN_SCOPE,
                       global_length_derivation=length_evidence(data,source(state['reference_id'])))
+    from .load_application_policy import source_scope
+    record['scope']=source_scope(data,record['scope'])
     return record
 
 
@@ -255,3 +263,8 @@ def report(doc, result):
                       'com o vetor próprio integral; cada resultado mantém suas pendências. '
                       'Esta identificação não aprova o perfil comercial nem o elemento.')
 
+
+
+def scope_for(data):
+    from .load_application_policy import source_scope
+    return source_scope(data,SCOPE)

@@ -166,7 +166,13 @@ def _documentary_family(data, actions):
         whole_member_approved=False)
     # Unknown load heights are a method gap, not silently zero. The existing
     # caller can still present local/distortional components independently.
-    if not roof.enabled(data):
+    from .girt_flt_adapter import is_girt, qualify as qualify_girt_actions
+    if is_girt(data):
+        evidence['girt_action_binding'] = qualify_girt_actions(data, actions)
+        if not evidence['girt_action_binding']['eligible']:
+            evidence['reason'] = evidence['girt_action_binding']['reason']
+            return _finish(evidence)
+    elif not roof.enabled(data):
         evidence['reason'] = 'Posição de aplicação não adotada: modelo de cobertura ausente ou desabilitado.'
         return _finish(evidence)
     try:
@@ -287,6 +293,11 @@ def _qualify_family_with_marker(data, actions, marker):
         raise ValueError('Método FLT q+P não reconhecido; recalcule com declaração válida.')
     evidence = _documentary_family(data, actions)
     if marker is None or evidence['elastic_reference_eligible']:
+        return evidence
+    from .girt_flt_adapter import is_girt
+    if is_girt(data):
+        # No roof geometry impersonation. Existing documentary/piso routes
+        # are qualified independently; this delta does not qualify girt Ritz.
         return evidence
     # A missing height, asymmetric contour, or effective restraint factor is
     # never repaired by inventing physical fixity in the sine-basis operator.

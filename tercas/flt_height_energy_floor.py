@@ -15,6 +15,8 @@ from .ue_catalog_reference import digest
 SCHEMA = 'flt_height_declared_energy_floor_v1'
 SCHEMA_V2 = 'flt_height_declared_energy_floor_v2'
 POLICY_V2 = 'moment_product_energy_bound_v2'
+SCHEMA_V3 = 'flt_height_declared_energy_floor_v3'
+POLICY_V3 = 'direct_curvature_energy_bound_v3'
 
 METHOD = 'Sahraei2017_energy_Cauchy_Poincare_declared_Euler_bounds'
 SCOPE = ('Piso analítico do operador resistente declarado: alturas por ação, q+P e '
@@ -157,7 +159,7 @@ def solve_floor(*, L_mm, Ly_mm, Lz_mm, E_MPa, G_MPa, Iweak_mm4, J_mm4, Cw_mm6, a
     Any positive end-restraint energies are included in the declared bounds;
     they are not reconstructed or inserted into the historical physical model.
     """
-    if method not in (None, POLICY_V2):
+    if method not in (None, POLICY_V2, POLICY_V3):
         raise ValueError('Unknown declared energy floor policy')
     L, ly, lz, E, G, I, J, Cw = [finite(v,k,True) for k,v in (
         ('L',L_mm),('Ly',Ly_mm),('Lz',Lz_mm),('E',E_MPa),('G',G_MPa),
@@ -170,10 +172,25 @@ def solve_floor(*, L_mm, Ly_mm, Lz_mm, E_MPa, G_MPa, Iweak_mm4, J_mm4, Cw_mm6, a
     T_q = G_q*J_q+E_q*Cw_q*(PI_LO/lz_q)**2
     B_q = Mq+Lq/PI_LO*Vq
     product_witness = None
-    if method == POLICY_V2:
+    if method in (POLICY_V2, POLICY_V3):
         product_B, product_witness = _moment_product_bound(exact, loads)
         product_witness['legacy_B_upper_fraction'] = str(B_q)
         B_q = min(B_q, product_B)
+    direct_witness = None
+    if method == POLICY_V3:
+        # Udirect=(Ly/pi)||u''||, rather than U=||u'||. Both majorants
+        # separately bound the ORIGINAL energy; select one, never add them.
+        # Bdirect=Mmax*L/Ly implies Bdirect²/Ny=Mmax² L²/(pi² EIy).
+        direct_B = Mq*Lq/ly_q
+        direct_witness = dict(
+            direct_B_upper_fraction=str(direct_B),
+            product_B_upper_fraction=str(B_q),
+            selected='direct_curvature' if direct_B < B_q else 'moment_product',
+            direct_coordinate='Udirect=(Ly/pi)*norm(u_second_derivative)',
+            direct_lateral_hypothesis='K_lateral >= EIy integral(u_second_derivative^2); nonnegative added restraint energy',
+            inequality='abs(integral(M u_second_derivative phi)) <= Mmax*(Lphysical/pi)*norm(u_second_derivative)*norm(phi_prime)',
+            origin='Derived Cauchy/Poincare bound on Sahraei2017 Eq2; not a published normative coefficient')
+        B_q = min(B_q, direct_B)
     uniform_D_q = max(exact['qh'],0)*(Lq/PI_LO)**2
     point_D_q = [(station,height,station*(Lq-station)/Lq,
                   max(height,0)*station*(Lq-station)/Lq)
@@ -218,10 +235,13 @@ def solve_floor(*, L_mm, Ly_mm, Lz_mm, E_MPa, G_MPa, Iweak_mm4, J_mm4, Cw_mm6, a
         primary_torsion_assessed=False,biaxial_stability_assessed=False,
         actual_load_capacity_qualified=False,whole_member_approved=False,
         sources=[dict(url=SOURCE,location='Eq2 energy; analytical inequalities derived in this implementation')])
-    if method == POLICY_V2:
+    if method in (POLICY_V2, POLICY_V3):
         result.update(schema=SCHEMA_V2, method=POLICY_V2,
                       moment_product_bound=product_witness,
                       historical_floor_preserved_without_explicit_method=True)
+    if method == POLICY_V3:
+        result.update(schema=SCHEMA_V3, method=POLICY_V3,
+                      direct_curvature_bound=direct_witness)
     if B==0 and D==0:
         return dict(result,status='no_reference_bending_or_destabilizing_height',
             reason='Nenhuma perda de positividade por estes termos; não se declara capacidade infinita nem Me=0.')
@@ -253,7 +273,7 @@ def qualify_family(data, actions, *, method=None):
     from . import roof_top_load as roof
     from .resistance_effective_lengths import configuration
     from .flt_height_effective import symmetry_proof
-    if method not in (None, POLICY_V2):
+    if method not in (None, POLICY_V2, POLICY_V3):
         raise ValueError('Unknown declared energy floor policy')
     registry.select_new_study(data['catalog_index'],include_routes=False)
     section=own.section_for(data);p=section['properties']
@@ -272,9 +292,14 @@ def qualify_family(data, actions, *, method=None):
         section_properties={k:p[k] for k in ('Ix_strong_mm4','Iy_weak_mm4','J_mm4','Cw_mm6')},
         strong_symmetry=symmetry,actions=copy.deepcopy(actions),whole_member_approved=False)
     reason=None
-    if not roof.enabled(data):
+    from .girt_flt_adapter import is_girt, qualify as qualify_girt_actions
+    if is_girt(data):
+        bound['girt_action_binding']=qualify_girt_actions(data,actions)
+        if not bound['girt_action_binding']['eligible']:
+            reason=bound['girt_action_binding']['reason']
+    elif not roof.enabled(data):
         reason='Posição de carga não adotada: esquema de cobertura ausente ou desabilitado.'
-    elif not symmetry['qualified']:
+    if reason is None and not symmetry['qualified']:
         reason='Simetria forte/zj=0 não demonstrados no contorno próprio.'
     if reason is None:
         try:
@@ -302,15 +327,15 @@ def qualify_family(data, actions, *, method=None):
             J_mm4=p['J_mm4'],Cw_mm6=p['Cw_mm6'],actions=actions,method=method))
         bound['energy_bound_hypotheses']['declared_origin']=(
             lengths['origin'] if lengths else 'Full-span fork/free-warping reference')
-    if method == POLICY_V2:
-        bound['schema'] = SCHEMA_V2
-        bound['method'] = POLICY_V2
+    if method in (POLICY_V2, POLICY_V3):
+        bound['schema'] = SCHEMA_V3 if method == POLICY_V3 else SCHEMA_V2
+        bound['method'] = method
     bound['snapshot_sha256']=digest(bound)
     return bound
 
 
 def validate_saved(evidence,data,actions):
-    method = POLICY_V2 if evidence.get('schema') == SCHEMA_V2 else None
+    method = {SCHEMA_V2: POLICY_V2, SCHEMA_V3: POLICY_V3}.get(evidence.get('schema'))
     expected=qualify_family(data,actions,method=method)
     if evidence!=expected:
         raise ValueError('Piso de energia FLT alterado ou fora das hipóteses salvas; recalcule explicitamente.')

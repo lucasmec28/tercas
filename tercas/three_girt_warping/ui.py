@@ -1,5 +1,5 @@
 from ..three_girt_scope import members as verification_members, central, NOTICE
-from ..direct_self_weight import active as direct_PP_active, TEXT as DIRECT_PP_TEXT
+from ..direct_self_weight import active as direct_PP_active
 """Saved-result UI. Solver runs only on its explicit calculation button."""
 import copy,json
 from .application import calculate,current_configuration,material_point,attach_g81,fingerprint
@@ -72,17 +72,16 @@ def render_panel(st,data,revision,disabled=False):
     prefix='three_warping_'+str(revision)
     if not st.checkbox(LABEL,value=False,key=prefix+'_enabled'):
         st.session_state.pop(RESULT_KEY,None);return
+    from ..current_calculation_inputs import prepare, begin_calculation
     with st.expander('Modelo das três travessas com empenamento',expanded=True):
         st.caption('Modelo adicional de primeira ordem: três travessas contínuas iguais, distância entre eixos igual à distância atual entre travessas. Barras azuis e verdes bilaterais, sem resistência; sem rigidez da telha. Não altera a verificação isolada armazenada.')
         c=copy.deepcopy(st.session_state.get(prefix+'_legacy',data.get('three_girt_model',legacy_defaults())))
-        c.update(enabled=True,geometry_declared=True,axial_bars_declared=True,connections_declared=True,load_line_declared=True)
+        c.update(enabled=True,geometry_declared=True,axial_bars_declared=True,connections_declared=True)
         c['origin']=st.text_input('Origem ou hipótese do modelo Vlasov 3D',value=c.get('origin') or 'Hipótese explícita do complemento: três travessas iguais e barras bilaterais; não levantamento físico.',key=prefix+'_origin')
         c['tie_count']=st.number_input('Linhas interiores de tirantes Vlasov',min_value=0,max_value=20,value=c['tie_count'],step=1,key=prefix+'_count')
         positions=st.text_input('Posições X em mm separadas por vírgula (vazio = uniformes)',value='' if c['position_mode']=='uniform' else ','.join(str(v) for v in c['positions_mm']),key=prefix+'_positions')
         c['position_mode']='custom' if positions.strip() else 'uniform'
-        c['load_y_from_CG_mm']=st.number_input('Linha externa Y a partir do CG Vlasov [mm]',value=float(c['load_y_from_CG_mm']),key=prefix+'_load_y')
-        c['load_z_from_CG_mm']=st.number_input('Linha externa Z a partir do CG Vlasov [mm]',value=float(c['load_z_from_CG_mm']),key=prefix+'_load_z')
-        st.caption('A linha acima é hipótese editável comum às ações externas. PP integral de cada perfil fica no CG; ações externas superior/central/inferior recebem 0,5/1/0,5. PP das barras é adicional e ponderado uma vez.')
+        st.caption('PP integral de cada perfil; ações externas superior/central/inferior recebem 0,5/1/0,5. PP das barras é adicional e ponderado uma vez.')
         c['brace_self_weight']=st.checkbox('Incluir peso próprio dos tirantes e cantoneiras Vlasov',value=c['brace_self_weight'],key=prefix+'_weight')
         if data.get('load_mode')=='direct':
             for state in ('uls','sls'):
@@ -100,7 +99,7 @@ def render_panel(st,data,revision,disabled=False):
                 point=material_point(sec,seg,par,c['origin']);c['connection_mode']='individual';c['connection_offsets']={name:[point['arm_mm'],point['arm_mm']] for name,*_ in topology(c['tie_count'])}
             elif c['connection_mode']=='individual' and set(c['connection_offsets'])!={name for name,*_ in topology(c['tie_count'])}:
                 raise ValueError('A nova quantidade requer redocumentar os braços individuais ou selecionar ponto material comum.')
-            cfg=current_configuration(data,c);cfg['warping_end_condition']=warping;cfg['warping_condition_origin']=origin
+            cfg=current_configuration(prepare(data),c);cfg['warping_end_condition']=warping;cfg['warping_condition_origin']=origin
             st.session_state[prefix+'_legacy']=copy.deepcopy(c)
             from ..three_girt_axial.ui import controls as nbr_controls
             nbr_config=nbr_controls(st,data,fingerprint(dict(data=data,config=cfg)),prefix)
@@ -129,6 +128,10 @@ def render_panel(st,data,revision,disabled=False):
             st.download_button('Baixar entradas e hipóteses Vlasov 3D (JSON)',json.dumps(dict(input_data=data,configuration=cfg),ensure_ascii=False,indent=2),file_name='tres_travessas_vlasov_entradas.json',mime='application/json')
             st.caption(NOTICE+' O novo cálculo registra este escopo; resultados históricos não são convertidos.')
             if st.button('Calcular três travessas Vlasov e G8.1',disabled=disabled,key=prefix+'_calculate'):
+                data=begin_calculation(st.session_state,data)
+                demand_fingerprint=fingerprint(dict(data=data,config=cfg))
+                for requested in (nbr_config,en_normal_config,service_config,uniaxial_config):
+                    if requested is not None:requested['demand_input_fingerprint']=demand_fingerprint
                 st.session_state.pop(RESULT_KEY,None)
                 from ..three_girt_scope import SCHEMA as SCOPE_SCHEMA
                 result=calculate(data,cfg,verification_scope=SCOPE_SCHEMA)

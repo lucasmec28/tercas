@@ -26,23 +26,19 @@ def _selected_direct():
     data = copy.deepcopy(app.session_state.data)
     data['load_mode'] = 'direct'
     data['inclination']['value'] = 5.
+    data[FIELD]=choice('web_midplane')
     app.session_state.data = data
-    next(w for w in app.selectbox if w.label == LABEL).set_value('web_midplane').run()
+    app.run()
     assert not app.exception
     return app
 
 
-def test_direct_scheme_has_no_extra_fields_and_explicit_limited_assumptions():
-    app = _selected_direct()
-    assert len(app.selectbox) == 1
-    assert not app.number_input and not app.checkbox
-    text = '\n'.join(w.value for w in app.caption)
-    for phrase in ('PP já incluído', 'Nenhum PP é quantificado ou adicionado',
-                   'normal do PP não negativa', 'inclusive zero', 'mesmo momento fletor',
-                   'sem ações paralelas ocultas', 'gravidade ou sucção', 'H4 permanecem pendentes'):
-        assert phrase in text
-    assert not any('Pendente no modo direto' in w.value for w in app.warning)
-    assert any('inclinação, isoladamente, não impede' in w.value for w in app.info)
+def test_current_direct_editor_keeps_saved_top_choice_inactive_without_new_controls():
+    app=_selected_direct()
+    assert not app.selectbox and not app.number_input and not app.checkbox
+    assert not app.caption and not app.info and not app.warning
+    assert app.session_state.data[FIELD]==choice('web_midplane')
+    assert app.session_state.data['inclination']['value']==5.
 
 
 def test_direct_area_round_trip_does_not_change_q_or_p_or_other_inputs():

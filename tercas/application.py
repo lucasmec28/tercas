@@ -49,6 +49,8 @@ def finite(x):return isinstance(x,(int,float)) and not isinstance(x,bool) and ma
 
 def build_spec(data):
  if not isinstance(data,dict):raise ValueError('O arquivo deve conter um objeto de entradas JSON.')
+ from .support_scope import enabled as supports_excluded, FIELD as SUPPORT_SCOPE
+ supports_excluded(data)
  from .ue_catalog_reference import validate as validate_ue_catalog
  validate_ue_catalog(data)
  from .roof_top_load import configuration as roof_configuration
@@ -128,6 +130,7 @@ def build_spec(data):
  'SLS':{'q_Nmm':d['q_sls'],'P_N':d['P_sls'],'x_mm':d['x_sls'],'origin':d.get('actions_origin','')},
  'segments':copy.deepcopy(segs),'ELS_limit_mm':{'value':d.get('ELS_limit_mm'),'origin':d.get('ELS_origin','')},
  'introduction':{'left':{'route':'web_connection' if d.get('left_web') is True else None,'origin':d.get('support_origin','')},'right':{'route':'web_connection' if d.get('right_web') is True else None,'origin':d.get('support_origin','')},'point':{'c_mm':d.get('patch_mm'),'origin':d.get('patch_origin','')}}}
+ if supports_excluded(data):spec[SUPPORT_SCOPE]=data[SUPPORT_SCOPE]
  from .own_service_critical import qualify as qualify_service_critical
  service_critical=qualify_service_critical(data)
  if service_critical is not None:
@@ -137,12 +140,19 @@ def build_spec(data):
   service_mle=qualify_service_mle(service_critical)
   if service_mle is not None:spec['MLE_SLS']=service_mle
  from .member_application import is_girt,normal_els_limit
- if is_girt(data):spec['ELS_limit_mm']=normal_els_limit(data)
+ if is_girt(data):
+  spec['ELS_limit_mm']=normal_els_limit(data)
+  from .wall_girt_isolated import active as own_girt_active
+  if own_girt_active(data):spec['route_domain']=None
  if roof and roof['enabled'] and not is_girt(data):
   # A selected physical top-load model cannot simultaneously claim the old
   # CT/no-primary-torque applicability. Keep the stored user choice unchanged.
   spec['route_domain']=None
   spec['roof_top_load']=copy.deepcopy(roof)
+ from .load_application_policy import active as ct_active
+ if ct_active(data):
+  spec['route_domain']='strong_symmetry_CT_no_primary_torsion'
+  spec.pop('roof_top_load',None)
  return spec
 
 def calculate(data):
@@ -209,6 +219,8 @@ def _calculate(data):
   result['member_application']='wall_girt'
   if not uniaxial_component_enabled(data):add_vertical_studies(result)
  annotate_direct(result)
+ from .support_scope import annotate as annotate_support_scope
+ annotate_support_scope(result)
  return result
 
 STATUS={'not_evaluated':'Não avaliado','invalid_inputs':'Entrada inválida','FLT_not_evaluated':'Não avaliado','route_domain_not_declared':'Domínio não informado','computed':'Calculado','computed_bending_component':'Componente de flexão calculada','computed_from_supplied_inputs':'Calculado com dados informados','computed_fixed_load_position':'Calculado na posição informada','computed_from_supplied_effective_lengths':'Calculado com comprimentos informados','not_applicable':'Não aplicável','exempt_Table14':'Dispensado pela Tabela 14 (eixo forte)','stiffener_exception_9_5_1':'Exceção de enrijecedor §9.5.1','outside_implemented_family':'Fora da versão','invalid_or_outside_implemented_domain':'Entrada inválida ou fora do domínio'}

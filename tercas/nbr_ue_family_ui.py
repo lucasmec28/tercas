@@ -11,6 +11,25 @@ NOTE = ('Referência publicada: Wx de catálogo + críticos Pierin inalterados, 
         'Índice parcial não é aprovação resistente/global. Denominadores antigos não são alterados.')
 
 
+GIRT_NOTE = ('Travessa isolada: forças e linhas locais por ação autenticadas no mesmo contorno/material; PP uma vez no CG. '
+    'O esquema da cobertura não é utilizado. FLT clássico CT/estabilizante, referência ENV forte no domínio tabulado e piso energético condicional são rotas distintas. '
+    'Ritz com altura para travessa não está qualificado nesta versão. Ly/Lz permanecem comprimentos resistentes, sem criar apoios nem alterar o vão físico. '
+    'O piso energético depende das hipóteses declaradas de energia e não certifica os vínculos reais; índice acima de 1 é inconclusivo. '
+    'Linhas desconhecidas mantêm pendência. Torção primária, estabilidade biaxial e aprovação global não são demonstradas por essas componentes. '
+    'Referência nominal publicada e contorno próprio permanecem separados; os métodos locais/distorcionais retêm suas aproximações e limites.')
+
+
+def application_note(evidence):
+    from .nbr_ue_family_application import GIRT_SCHEMA
+    from .load_application_policy import NBR_SCHEMAS
+    if evidence['schema'] in NBR_SCHEMAS:
+        return ('Componentes NBR por eixo e sinal, com propriedades do mesmo contorno e comprimentos resistentes declarados. '
+            'Solicitações mantêm o vão físico; comprimentos resistentes não criam apoios. '
+            'Referência nominal publicada e contorno próprio permanecem separados. '
+            'Os métodos locais/distorcionais retêm suas aproximações e limites.')
+    return GIRT_NOTE if evidence['schema']==GIRT_SCHEMA else NOTE
+
+
 def rows(evidence):
     return [dict(Combinação=r['combination_id'], Fonte=ROUTES[c['route']], Método=c['method'],
         Eixo={'normal': 'forte', 'parallel': 'fraco'}[c['demand']['axis']], Sinal=c['demand']['sign'] or 'ambos',
@@ -62,7 +81,7 @@ def show(st, result):
         return
     st.subheader(TITLE)
     st.caption(SCOPE)
-    st.caption(NOTE)
+    st.caption(application_note(evidence))
     if evidence['pending_reason']:
         st.warning(evidence['pending_reason'])
     st.caption(coverage_summary(evidence))
@@ -84,7 +103,7 @@ def report(doc, result):
         return
     doc.add_heading(TITLE, 1)
     doc.add_paragraph(SCOPE)
-    doc.add_paragraph(NOTE)
+    doc.add_paragraph(application_note(evidence))
     doc.add_paragraph(coverage_summary(evidence))
     if evidence['pending_reason']:
         doc.add_paragraph(evidence['pending_reason'])

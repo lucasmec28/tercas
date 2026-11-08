@@ -90,6 +90,8 @@ def diagram(g, data):
 
 
 def render_choice(st, data, key):
+    from .load_application_policy import active, applies_to_new
+    if active(data) or applies_to_new(data):return
     current = configuration(data)
     if data.get('member_application', 'purlin') != 'purlin':
         if current is not None:st.caption('Modelo de carga no topo da cobertura inativo nesta aplicação; configuração armazenada preservada.')

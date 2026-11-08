@@ -10,6 +10,8 @@ def combinations(data):
     ev = evidence(data)
     if ev is None: raise ValueError('Convenção explícita sem PP necessária para separação.')
     effective = calculation_inputs(data)
+    from .load_application_policy import active as ct_active, DIRECT_BASIS
+    ct=ct_active(data)
     out = []
     for state, suffix in (('ELU','uls'), ('ELS','sls')):
         trace = ev['states'][suffix]
@@ -22,7 +24,8 @@ def combinations(data):
             q_vector=copy.deepcopy(trace['total_q_N_mm']), P_vector=dict(normal=p,parallel=pp),
             external_q_vector=copy.deepcopy(trace['external_q_N_mm']),
             profile_PP_q_vector=copy.deepcopy(trace['profile_PP_q_N_mm']),
-            profile_PP_factor=trace['factor'], load_basis=BASIS, source=TEXT))
+            profile_PP_factor=trace['factor'],
+            load_basis=DIRECT_BASIS if ct else 'direct_external_declared_lines_profile_PP_CG' if data.get('ue_catalog_reference',{}).get('schema')=='ue_catalog_wall_girt_reference_v1' else BASIS, source=ev['scope']))
     return out
 
 
@@ -47,4 +50,6 @@ def actions(combo, geo, *, include_parallel=False):
     if not include_parallel:
         for a in acts:
             a.pop('q_parallel_N_mm',None);a.pop('P_parallel_N',None)
+    if geo.get('load_application_policy'):
+        for a in acts:a.update(height_above_SC_mm=0.,x_from_SC_mm=0.,load_line_source=geo['source'])
     return acts,parallel

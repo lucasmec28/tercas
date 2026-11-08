@@ -147,15 +147,21 @@ def _validate_case(summary,expected,data):
     if summary['length_mm']!=data['L_mm']:raise ValueError('Comprimento da demanda difere da entrada original.')
     from .roof_top_load import configuration as roof_configuration
     roof=roof_configuration(data)
-    if roof is None or not roof['enabled']:raise ValueError('Linha de topo original não está ativa.')
+    if data.get('member_application','purlin')=='wall_girt':
+        from .wall_girt_isolated import validate_case
+        return validate_case(summary,expected,data)
+    from .load_application_policy import active as ct_active
+    ct=ct_active(data)
+    if not ct and (roof is None or not roof['enabled']):raise ValueError('Linha de topo original não está ativa.')
     cg=summary['section']['properties']['centroid_xy_mm'];p=data['properties']
     if not math.isclose(cg[1],(p['h']-p['t'])/2,rel_tol=2e-12,abs_tol=1e-9):
         raise ValueError('Centróide vertical não pertence ao contorno Ue simétrico original.')
-    target=[0. if roof['load_line']=='web_midplane' else (p['bf']-p['t'])/2,p['h']-p['t']/2]
+    target=[0. if (roof or {}).get('load_line')=='web_midplane' else (p['bf']-p['t'])/2,p['h']-p['t']/2]
     top=[cg[j]+(target[j]-cg[j]) for j in (0,1)]
     actual=[]
     for a in summary['loads']:
-        if a['application_xy_mm']!=(cg if a['name']=='PP' else top):
+        expected_line=summary['section']['properties']['shear_center_xy_mm'] if ct else cg if a['name']=='PP' else top
+        if a['application_xy_mm']!=expected_line:
             raise ValueError('PP deve permanecer no CG e ações externas na linha superior original.')
         row=dict(name=a['name'],kind=a['kind'],vector=a['q_xy_N_mm' if a['kind']=='uniform' else 'force_xy_N'])
         if a['kind']=='point':row.update(s_mm=a['s_mm'],existing_point_position=a['existing_point_position'])

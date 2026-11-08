@@ -60,6 +60,9 @@ def _configuration(result, config, src):
 
 def calculate(result, config):
     """Evaluate only the local component after source adapter validation."""
+    from ..support_scope import saved as saved_scope
+    if saved_scope(result) is not None:
+        raise ValueError('Verificação local dos apoios fora do escopo por decisão do usuário; nenhum índice calculado.')
     src=sources.extract(result)
     cfg=_configuration(result,config,src)
     if not src['supports']:
