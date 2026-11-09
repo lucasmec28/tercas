@@ -1,0 +1,142 @@
+{
+  "schema": "NBR_shear_lag_R22_contract_diagnostics_v1",
+  "source": {
+    "title": "ABNT NBR 14762:2010, 9.4 and Table 7",
+    "sha256": "c2a01615a3ce9e2b93aeb7fee757f7bf9dd932adaefbc242e848ce813dc82407",
+    "pdf_pages_one_based": [
+      38,
+      39
+    ],
+    "printed_pages": [
+      32,
+      33
+    ],
+    "visually_verified": true,
+    "source_document_redistributed": false
+  },
+  "printed_table_nodes": [
+    {
+      "L_over_bf0": "6",
+      "factor": "11/20"
+    },
+    {
+      "L_over_bf0": "8",
+      "factor": "67/100"
+    },
+    {
+      "L_over_bf0": "10",
+      "factor": "73/100"
+    },
+    {
+      "L_over_bf0": "12",
+      "factor": "39/50"
+    },
+    {
+      "L_over_bf0": "14",
+      "factor": "41/50"
+    },
+    {
+      "L_over_bf0": "16",
+      "factor": "43/50"
+    },
+    {
+      "L_over_bf0": "18",
+      "factor": "89/100"
+    },
+    {
+      "L_over_bf0": "20",
+      "factor": "91/100"
+    },
+    {
+      "L_over_bf0": "25",
+      "factor": "24/25"
+    },
+    {
+      "L_over_bf0": "30",
+      "factor": "1"
+    }
+  ],
+  "interpolation_or_extrapolation_used": false,
+  "conditional_geometry": {
+    "synthetic_external_dimensions_mm": {
+      "h": "200",
+      "bf": "75",
+      "lip": "20",
+      "t": "2",
+      "ri": "3"
+    },
+    "physical_span_mm": "2700",
+    "coordinate_distances_exact_but_normative_mapping_not_qualified": true,
+    "coordinates_mm": {
+      "inner_web_face_x": "1",
+      "outer_lip_face_x": "74",
+      "flange_flat_start_x": "4",
+      "flange_flat_end_x": "69"
+    },
+    "conditional_widths": {
+      "existing_external_upper_bound": {
+        "width_mm": "95",
+        "thirty_times_width_mm": "2850",
+        "physical_span_over_assumed_width": "540/19",
+        "span_ge_thirty_times_assumed_width": false
+      },
+      "unqualified_face_distance_plus_nominal_lip": {
+        "width_mm": "93",
+        "thirty_times_width_mm": "2790",
+        "physical_span_over_assumed_width": "900/31",
+        "span_ge_thirty_times_assumed_width": false
+      },
+      "unqualified_flat_width_plus_nominal_lip": {
+        "width_mm": "85",
+        "thirty_times_width_mm": "2550",
+        "physical_span_over_assumed_width": "540/17",
+        "span_ge_thirty_times_assumed_width": true
+      }
+    },
+    "none_of_the_proposals_is_an_exact_bf0_certificate": true
+  },
+  "same_area_counterexample": {
+    "synthetic_sharp_line_model_not_production_contour": true,
+    "distributions_are_not_engineering_methods": true,
+    "ratio": "20",
+    "factor_at_printed_node": "91/100",
+    "removed_developed_length_per_flange_assembly_mm": "171/20",
+    "gross": {
+      "area_mm2": "780",
+      "centroid_y_mm": "0",
+      "Ix_mm4": "4984000"
+    },
+    "distributions": {
+      "remove_equal_area_from_horizontal_flats": {
+        "area_mm2": "3729/5",
+        "centroid_y_mm": "0",
+        "Ix_mm4": "4642000"
+      },
+      "remove_equal_area_from_vertical_lip_tips": {
+        "area_mm2": "3729/5",
+        "centroid_y_mm": "0",
+        "Ix_mm4": "9481787663/2000"
+      },
+      "uniform_assembly_weight_counterexample_only": {
+        "area_mm2": "3729/5",
+        "centroid_y_mm": "0",
+        "Ix_mm4": "4655440"
+      }
+    },
+    "same_area_and_y_centroid_do_not_determine_Ix": true,
+    "no_uniform_beta_method_is_adopted": true
+  },
+  "horizontal_flat_x_placement_irrelevant_to_scalar_Ix": true,
+  "blind_double_reduction_example_mm": {
+    "local_width": "70",
+    "shear_lag_width": "80",
+    "minimum_width_cap": "70",
+    "blind_product": "56"
+  },
+  "production_files_changed": false,
+  "production_eligibility_extended": false,
+  "bf0_exact_mapping_qualified": false,
+  "reduced_resistance_qualified": false,
+  "historical_replay_changed": false,
+  "whole_member_approved": false
+}

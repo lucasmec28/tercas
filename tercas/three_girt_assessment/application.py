@@ -150,6 +150,8 @@ def _en(d,c,error):
     if c is None:return [item('EN:section_stresses','ELU',source=source,reason=error or 'Componente seccional EN não calculada; não se presume resistência N+M+B ou cisalhamento nula.')]
     from ..three_girt_en_normal.application import verification_members
     from ..three_girt_en_normal import centroid_policy as cp
+    from ..three_girt_en_normal import snapshot_policy as sp
+    authenticated=sp.certified(c)
     checked_members=verification_members(c,d)
     expected=[r for r in _beam_inventory(d,'ELU') if r[1] in checked_members]
     if not expected:return [item('EN:ELU_inventory','ELU',source=source,reason='Nenhum intervalo ELU avaliado.') ]
@@ -169,6 +171,7 @@ def _en(d,c,error):
             bound=normal if key=='normal' else shear.get(key) if shear else None
             trace=dict(member_id=level,coverage_complete=complete,component_schema=c['schema'],
                 source_component_sha256=c['content_sha256'],criterion_scope='declared_EN_section_model_only',
+                decision_authentication=dict(schema=sp.SCHEMA,authenticated=authenticated),
                 centroid_shift_policy=centroid)
             if bound is not None:
                 lo=bound.get('index_lower_witness');hi=bound.get('index_upper_bound')
@@ -179,8 +182,8 @@ def _en(d,c,error):
                 saved_lower=None if witness is None else (witness.get('index') if c['schema']=='three_girt_EN_normal_shear_interaction_integral_v2' else witness.get('index_lower_witness'))
                 if witness is not None and (saved_lower!=lo or witness.get('girt')!=level or not _finite(witness.get('index')) or witness['index']<lo):
                     raise ValueError('EN concomitant lower witness differs')
-                fail=lo is not None and lo>1
-                passed=complete and shear is not None and shear.get('complete') is True and _finite(hi) and 0<=hi<=1 and centroid['qualified']
+                fail=authenticated and lo is not None and lo>1
+                passed=authenticated and complete and shear is not None and shear.get('complete') is True and _finite(hi) and 0<=hi<=1 and centroid['qualified']
                 qualified_upper=max(hi,centroid['original_index_upper_bound'] or 0.) if passed else None
                 index=lo if fail else qualified_upper
                 trace.update(index_lower_witness=lo,index_upper_bound=hi,
@@ -190,13 +193,13 @@ def _en(d,c,error):
                         'full_interval_upper_bound_with_original_centroid_scenario' if passed and centroid['required_segments'] else
                         'full_interval_upper_bound' if passed else 'inconclusive_bound')
                 out.append(item('EN:'+level+':'+key,'ELU',source=source,index=index,qualified=fail or passed,trace=trace,
-                    reason='' if fail or passed else centroid['reason'] or 'Cobertura de seção ou limite numérico inconclusivo; máximo parcial não foi promovido.'))
+                    reason='' if fail or passed else (sp.NOTICE if not authenticated else centroid['reason']) or 'Cobertura de seção ou limite numérico inconclusivo; máximo parcial não foi promovido.'))
             elif key=='normal':
                 w=r.get('complete_envelope') or r.get('partial_maximum');index=w.get('normal_index') if w else None
-                qualified=_finite(index) and index>=0 and ((complete and centroid['qualified']) or index>1)
+                qualified=authenticated and _finite(index) and index>=0 and ((complete and centroid['qualified']) or index>1)
                 trace['witness']=copy.deepcopy(w)
                 out.append(item('EN:'+level+':normal','ELU',source=source,index=index,qualified=qualified,trace=trace,
-                    reason='' if qualified else centroid['reason'] or 'Envelope normal parcial ou ausente.'))
+                    reason='' if qualified else (sp.NOTICE if not authenticated else centroid['reason']) or 'Envelope normal parcial ou ausente.'))
             else:out.append(item('EN:'+level+':'+key,'ELU',source=source,trace=trace,reason='Snapshot histórico sem este critério; não recalculado.'))
     return out
 
@@ -502,7 +505,26 @@ def saved_assessment(d,a):
     if d.get('EN_normal_N_M_B_component') is not None:
         from ..three_girt_en_normal import centroid_policy as cp
         en,error=_read(d,'three_girt_en_normal','EN_normal_N_M_B_component')
-        if en is not None:cp.verify_assessment(en,a,members(d))
-        elif any(row['id'].startswith('EN:') and row['status']=='meets' for row in a['checks']):
+        if en is not None:
+            cp.verify_assessment(en,a,members(d))
+            expected=_en(d,en,None)
+            actual=[r for r in a['checks'] if r['id'].startswith('EN:')]
+            groups=[g for g in a['groups'] if g['id']=='EN_section']
+            expected_group=_group('EN_section','Tensões seccionais EN N/M/B, cisalhamento e interação',expected,
+                'Critérios seccionais no modelo EN declarado; não são projeto integral NBR/EN.')
+            if central(d):expected_group['scope']='Somente travessa central. '+expected_group['scope']
+            if (fingerprint(actual)!=fingerprint(expected) or len(groups)!=1
+                or fingerprint(groups[0])!=fingerprint(expected_group)):
+                raise ValueError('Saved EN inventory decisions differ from authenticated source; rebuild the panorama explicitly')
+        elif any(row['id'].startswith('EN:') and row['status'] in ('meets','fails') for row in a['checks']):
             raise ValueError('Saved EN inventory source is no longer usable: '+str(error))
+    # Summary counters and banners must reflect the authenticated checks too.
+    from ..global_verification import display_summary
+    expected=aggregate([r['id'] for r in a['checks']],a['checks'],inventory_qualified=True)
+    for key in ('status','counts','complete','failed_ids','pending_ids','maximum_available_check','maximum_is_global_utilization'):
+        if fingerprint(a.get(key))!=fingerprint(expected[key]):
+            raise ValueError('Saved inventory summary differs from its checks')
+    expected['current_adapter_can_approve']=False
+    if a.get('display_summary')!=display_summary(expected):
+        raise ValueError('Saved inventory banner differs from its checks')
     return a

@@ -1,0 +1,116 @@
+{
+  "schema": "tercas_R22_integrated_QA_v1",
+  "date_utc": "2026-11-08",
+  "base_local_commit": "332e478cd1b26323974475dfa1fcf14327ccd216",
+  "base_remote_commit": "6e00d8873fb63719ec6bae3643250354f1a013b4",
+  "tested_commit": "b6ac803af1e9c3181cf9223f484c3839eecc0b4d",
+  "subsequent_changes": "Documentation and docstring only; no executable change",
+  "synthetic_data_only": true,
+  "tests": [
+    {
+      "name": "backend",
+      "tests": 590,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 105.267,
+      "junit_sha256": "aa13f998739934fb66572905974419fc7c033d2e44f298ec3d51db688ed988e9",
+      "log_sha256": "7f77dcebba424b6039d78b7338673d97c830dfbe255781397d2d4896e84d6598"
+    },
+    {
+      "name": "ui",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 97.214,
+      "junit_sha256": "c25efede4709eb54334a3157977de4ea91f957b4316f32ea67e06e2b9419cd9a",
+      "log_sha256": "9b3d7fdd1f893d1cd943170cc35b57e83c04f8bd3d63c3c5ed84bafead76fef4"
+    }
+  ],
+  "python": "3.12.14",
+  "packages": {
+    "pytest": "9.1.1",
+    "streamlit": "1.65.0",
+    "numpy": "2.5.3",
+    "scipy": "1.17.0",
+    "pandas": "2.2.3",
+    "python-docx": "1.2.0",
+    "mpmath": "1.3.0"
+  },
+  "threads": {
+    "OPENBLAS_CORETYPE": "Haswell",
+    "OPENBLAS_NUM_THREADS": 1,
+    "OMP_NUM_THREADS": 1,
+    "MKL_NUM_THREADS": 1
+  },
+  "checks": {
+    "compileall": true,
+    "git_diff_check": true,
+    "full_repository_suite": false,
+    "hosted_smoke": false,
+    "publication_started": false
+  },
+  "source_sha256": {
+    "tercas/load_application_policy.py": "3ab97f92e0eca9defc145c3ff0a707f1ab23ca9b66a8d5c50d4c40d3ff46ad47",
+    "tercas/nbr_family_mv.py": "b651ab2947a38e26337e13144befdd049f405a660a79dfc686ef021143e18e70",
+    "tercas/nbr_family_panorama.py": "e7d4449454e57e4898338e9673ab4cd18aef9a74ec6ac4a6a430e24aa278f4c0",
+    "tercas/nbr_ue_family_application.py": "3a0fa8dba8ed17d4b39537bcad7c9a06386e9c5a269f196adc1025641eec3228",
+    "tercas/nbr_ue_family_ui.py": "1205b5f1e6a42d2f4c99dbad86cc92cd37581eca0a85825b7560db8f6c780999",
+    "tercas/nbr_ue_shear_lag_strong.py": "d7f085cc5cd691ad0f1f22254fb565b24fb72ad7353cbe3462b0af2c9a276027",
+    "tercas/release_info.py": "89751e63f008d1cd3370e567c6702c1188df5c0393080a8a67caa951ca6c7b4c",
+    "tercas/three_girt_assessment/application.py": "ec71d494370c77f85dfdb5d3b68432607ee6784aa0c49bdd4782d2582dbbde8d",
+    "tercas/three_girt_en_normal/application.py": "e70f55f524fcab44888082add6fb7fa706200c0443d3352731e300a772f67a91",
+    "tercas/three_girt_en_normal/bound_certificate.py": "2339e5c18d371613f13d3a48d1111b64fbb565b5df28f569e0f36f54c9861fb5",
+    "tercas/three_girt_en_normal/centroid_policy.py": "da3cc09bd1e8e68d8979c19e84c442511d37a4ec297851b6b4bfbac40b5c778a",
+    "tercas/three_girt_en_normal/en1993_normal_components.py": "24acb50bc68bb7ea1c1d187bc3ecf79881098c8afab6fc6ad8858b9957149c88",
+    "tercas/three_girt_en_normal/replay_cache.py": "f7d837a2b85da9cafb46aabc5be8757b8e5afbba37e0ee6dfd9f6c0df063fb22",
+    "tercas/three_girt_en_normal/report.py": "e81f7848069b631d303f5072f73d66c32b57e9e8fa810a3ce30623f477fd7f44",
+    "tercas/three_girt_en_normal/shear_interaction.py": "c4936ff6baa3c1523abc415b9f8936cf09f287744b0e37258be5ca4c027b2628",
+    "tercas/three_girt_en_normal/snapshot_certificate.py": "a6fdebbcc15cc430dc60d759de84de96e71f512a58b3d01088b0f0625806bfec",
+    "tercas/three_girt_en_normal/snapshot_policy.py": "b7dc758afee044aadd343124bef2c0c6dd99685ebea191928e2945b132dba32f",
+    "tercas/three_girt_en_normal/ui.py": "96da466e761d7078f58f53b8f04dd4da6072f2660fbb176c0835f1c81c154c66",
+    "tercas/three_girt_en_normal/witness_certificate.py": "08dccc599d490ccd7b69bae81b4362465cf3161c59289dd799181662ade797d6",
+    "tercas/ui_cache_epoch.py": "ef0c7f8649496b23fcd1738521a6c2c4a340a074974261f538e2876a4783ae92",
+    "tests/data/EN_snapshot_synthetic_CT_v5.json": "8e10da07fbcaa34d5af5b8c0bb63d20e2c48992fc47ffdac465b8e90504db9d3",
+    "tests/en_scalar_stress_oracle.py": "3cf7eca8078a48e720cc0fced5a44b342e578fe7dce14b2329112bb7ba9f2ebe",
+    "tests/test_en_interval_bound_certificate.py": "6043e3b1ed4c1d070bb5a0fb373a6880c892bb78cf9c56b2bac441e603a7b5f5",
+    "tests/test_en_snapshot_authentication.py": "e4501ba6ce04d26bf10f77782a54b6e820e219231c60db6df49fb60d4fb08c2c",
+    "tests/test_nbr_shear_lag_r22_review.py": "a8f15a75994735d3da011147f9c4edc0078a673cd490891b065dcee42f9a0caf",
+    "tests/test_nbr_strong_shear_lag_consumer.py": "7eaa3f3332cf4a93dca22f763eb456081c2d3fe3cd23ecd1111139505851de15",
+    "tests/test_nbr_ue_shear_lag_strong.py": "9503cebad7d819b93b3ce024b843a3c6bae4c58bdb11c6b6dd2c318a546d02e5",
+    "tests/test_release_info.py": "abcbaa43cba0c5fb070ec18c308874c64acb1ed46a83e12ee52cde2a9de88bd6",
+    "tests/test_roof_release_composition.py": "05c6098b6a833ba0cc39d448e290d625a41b514fa53f0d997d12d47ddf2c2d6a",
+    "tests/test_three_girt_assessment.py": "51ef7904f39e4f88826c52bce96d07270c4007ea24278bb95f75ae420ecac420",
+    "tests/test_three_girt_en_middle_calculation.py": "4029091961eafc1ae0b86cb6fca8dca1b8a2bf79ac1e0f0c62bad89ddf114b7d",
+    "tests/test_three_girt_en_normal_application.py": "7140ed40812bf6dfe1162297c5b6ebb18b758b23170956d3cac41db2153f940a",
+    "tests/test_ui_three_girt_en_normal.py": "a44827c14cbf64af9630afc0cdbf4b0d2d05dabb729b052545c61541ba8ddb9e"
+  },
+  "scope": [
+    "NBR strong reference width and span dispensation for the existing 66 nominal Ue rows",
+    "Seven-profile EN persisted-result integrity and bounded replay performance",
+    "Historical input/result preservation, current CT policy, read-only support scope"
+  ],
+  "excluded": [
+    "Table 7 reduced shear-lag section",
+    "Activation of the 66-profile network EN candidate",
+    "Global structural approval",
+    "New combined ELS or local support verification"
+  ],
+  "performance": {
+    "scenario": "Synthetic 1.20 mm central EN plus local service UI",
+    "timeout_seconds_per_app_run": 60,
+    "final_worker_test_seconds": 65.72,
+    "baseline_peak_RSS_KiB": 329340,
+    "candidate_peak_RSS_KiB": 535340,
+    "arithmetic_cache_retained_bytes": 25569552,
+    "arithmetic_cache_entries": 150656,
+    "arithmetic_cache_limit": 196608,
+    "semantic_cache_retained_bytes": 477,
+    "semantic_cache_entries": 1,
+    "semantic_cache_limit": 4,
+    "hosting_memory_fit_verified": false
+  },
+  "warning": "Four expected overflow warnings belong to the explicit failed-arithmetic cache test; errors were not cached.",
+  "status": "Local candidate validated within listed checks; not published or homologated by this receipt"
+}

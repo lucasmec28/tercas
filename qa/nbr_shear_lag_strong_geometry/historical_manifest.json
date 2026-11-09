@@ -1,0 +1,30 @@
+{
+  "roof": {
+    "file": "roof_r21_ct.json.gz",
+    "sha256": "0b51d0e4372952e9dc8f2e9f5fdbf65d84d2470b80d018f9aa2ad435128d34cc",
+    "producer_commit": "332e478cd1b26323974475dfa1fcf14327ccd216",
+    "schema": "nbr_ue_family_application_v7_all_actions_CT",
+    "synthetic": true
+  },
+  "girt": {
+    "file": "girt_r21_ct.json.gz",
+    "sha256": "22d05619e8225b46a54fe89ee3c64921d1f6a79bc08a88437e81671a11c632e8",
+    "producer_commit": "332e478cd1b26323974475dfa1fcf14327ccd216",
+    "schema": "nbr_ue_wall_girt_application_v2_all_actions_CT",
+    "synthetic": true
+  },
+  "roof_no_CT": {
+    "file": "roof_no_CT_r21.json.gz",
+    "sha256": "dc1ed31a45789783e07846592f8dcd3659b526049d5753b14460499c8b82bd86",
+    "producer_commit": "332e478cd1b26323974475dfa1fcf14327ccd216",
+    "schema": "nbr_ue_family_application_v6_direct_curvature",
+    "synthetic": true
+  },
+  "girt_no_CT": {
+    "file": "girt_no_CT_r21.json.gz",
+    "sha256": "f593bde8b2d1253863060acc94330c9ab5133920b5b45de39c348291053a6c66",
+    "producer_commit": "332e478cd1b26323974475dfa1fcf14327ccd216",
+    "schema": "nbr_ue_wall_girt_application_v1",
+    "synthetic": true
+  }
+}

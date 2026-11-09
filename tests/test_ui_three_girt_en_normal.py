@@ -12,7 +12,13 @@ from tercas.three_girt_warping import network
 
 def test_EN_opt_in_coexists_and_changes_invalidate(monkeypatch):
     d=apply(load_reference(2.65,4000.,5.),'wall_girt')
-    app=imported(monkeypatch,d);widget(app,'checkbox',WARPING).check();run(app)
+    app=imported(monkeypatch,d)
+    assert app.session_state.last_input==d  # Import does not migrate legacy input.
+    from tercas.current_calculation_inputs import prepare
+    adopted=prepare(d)
+    assert set(adopted).difference(d)=={'load_application_policy','local_support_verification_scope'}
+    assert {k:v for k,v in adopted.items() if k not in ('load_application_policy','local_support_verification_scope')}==d
+    widget(app,'checkbox',WARPING).check();run(app)
     assert widget(app,'checkbox',LABEL).value is False
     widget(app,'checkbox',LABEL).check();run(app)
     widget(app,'checkbox',MODEL_LABEL).check()
@@ -30,7 +36,7 @@ def test_EN_opt_in_coexists_and_changes_invalidate(monkeypatch):
     assert app.session_state[RESULT_KEY]==original
     widget(app,'text_input','Origem ou hipótese da seção nominal EN').set_value('Changed model declaration');run(app)
     assert RESULT_KEY not in app.session_state
-    assert app.session_state.last_input==d
+    assert app.session_state.last_input==adopted
 
 
 def test_EN_missing_declaration_preserves_demand_and_NBR(monkeypatch):

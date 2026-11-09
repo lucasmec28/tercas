@@ -14,7 +14,10 @@ from docx import Document
 from tercas import isolated_en_application as en
 from tercas import isolated_en_ue_catalog_application as catalog_en
 from tercas import roof_top_nbr as nbr, roof_top_load as roof
-from tercas import deflection_scope
+from tercas import deflection_scope, direct_self_weight, load_application_policy
+from tercas import isolated_ct_torsion, ue_family_reference
+from tercas.current_calculation_inputs import prepare
+from tercas.pierin_ue_registry_ui import HISTORY
 from tercas.application import calculate
 from tercas.study_completion import complete_result
 from tercas.release_info import RELEASE_CAPTION
@@ -29,7 +32,7 @@ def own_declared():
     return data
 
 
-def assert_own_result(result):
+def assert_historical_own_result(result):
     ev = nbr.preserved(result)
     row = ev['records'][0]
     assert row['index'] == pytest.approx(.2637128303218076, rel=2e-12)
@@ -45,11 +48,65 @@ def assert_own_result(result):
     for key in ('ELU:DIRECT_ELU:secondary_shear_scope', 'torsion_warping'):
         assert checks[key]['index'] is None
         assert 'EN' in checks[key]['source']
-    assert set(summary['pending_ids']) == {'ELS:DIRECT_ELS:combined_ELS_scope'}
+    assert_local_service_and_no_global_approval(result)
+
+
+def assert_local_service_and_no_global_approval(result):
+    summary = result['global_verification']
+    checks = {item['id']: item for item in summary['checks']}
+    local = result['ELS']['local_uniaxial_component']
+    assert local['schema'] == deflection_scope.MODE
+    assert local['bending_axis'] == 'local_X_strong'
+    assert local['displacement_axis'] == 'local_normal_roof_vertical'
+    assert local['parallel_actions_removed_from_strength'] is False
+    assert result['ELS']['criterion_status'] == 'meets'
+    assert result['ELS']['index'] > 0
+    # This explicitly requested local objective does not require optional ELS.
+    # No historical snapshot is migrated: both producer lanes record the scope.
+    combined = checks['ELS:DIRECT_ELS:combined_ELS_scope']
+    assert combined['status'] == 'not_applicable' and combined['index'] is None
+    assert combined['trace']['criterion_scope'] == 'outside_requested_local_deflection_objective'
+    assert not summary['pending_ids']
     assert result['whole_member_approved'] is False
     assert summary['whole_member_approved'] is False
     assert summary['approved_within_declared_checklist'] is False
     assert result['combined_ELS_approved'] is False
+
+
+def assert_current_own_result(result, imported):
+    assert result['input_data'] == prepare(imported)
+    assert load_application_policy.active(result['input_data'])
+    assert result['input_data'][roof.FIELD] == imported[roof.FIELD]
+    assert not roof.enabled(result['input_data'])
+    assert nbr.FIELD not in result and roof.preserved(result) is None
+    # This is the frozen seven-profile family, not the 66-section consumer.
+    own = result['ue_family_reference_evidence']
+    expected = ue_family_reference.evidence(imported)
+    assert own['global_criticals'] == expected['global_criticals']
+    assert own['signed_scalar_capacities'] == expected['signed_scalar_capacities']
+    assert own['reference_id'] == expected['reference_id']
+    pp = result['direct_self_weight_evidence']
+    assert pp['PP_application'] == pp['external_application'] == 'shear_center'
+    assert pp['states'] == direct_self_weight.evidence(imported)['states']
+    assert [pp['states'][s]['factor'] for s in ('uls', 'sls')] == [1.25, 1.0]
+    assert result['inclination_evidence']['ELU']['q_vector']['parallel'] != 0
+    checks = {item['id']: item for item in result['global_verification']['checks']}
+    assert 'ELU:DIRECT_ELU:FLT_height' not in checks
+    for key in ('ELU:DIRECT_ELU:FLT:1', 'ELU:DIRECT_ELU:biaxial'):
+        assert checks[key]['status'] == 'meets'
+        assert checks[key]['index'] > 0 and 'NBR14762' in checks[key]['source']
+    assert checks['ELU:DIRECT_ELU:FLT:1']['index'] == result['FLT_segments'][0]['index']
+    assert checks['ELU:DIRECT_ELU:biaxial']['index'] == result['inclination_evidence']['ELU']['biaxial']['governing']['index']
+    assert en.preserved(result)['computed_cases'] == 1
+    en.validate_saved_global(result)
+    nbr.validate_saved_global(result)
+    shear = checks['ELU:DIRECT_ELU:secondary_shear_scope']
+    assert shear['status'] == 'meets' and shear['index'] is None and 'EN' in shear['source']
+    # Exact zero demand at CT is applicability, never a torsional capacity.
+    assert checks['torsion_warping'] == isolated_ct_torsion.record(result)
+    assert checks['torsion_warping']['status'] == 'not_applicable'
+    assert checks['torsion_warping']['index'] is None
+    assert_local_service_and_no_global_approval(result)
 
 
 @pytest.mark.parametrize('angle', [5., -5.])
@@ -68,7 +125,8 @@ def test_catalog_parallel_load_stays_partial_without_breaking_independent_EN(ang
     assert next(c for c in result['global_verification']['checks'] if c['id'] == 'torsion_warping')['status'] == 'pending'
 
 
-def test_real_app_own_five_degrees_combines_all_scopes_and_replays(monkeypatch):
+@pytest.mark.parametrize('lane', ['historical_top', 'current_CT'])
+def test_real_app_own_five_degrees_combines_all_scopes_and_replays(monkeypatch, lane):
     import streamlit as st
     from streamlit.testing.v1 import AppTest
     data = own_declared()
@@ -84,16 +142,31 @@ def test_real_app_own_five_degrees_combines_all_scopes_and_replays(monkeypatch):
     app = AppTest.from_file(str(Path(__file__).resolve().parents[1] / 'app.py')).run(timeout=30)
     button = lambda label: next(w for w in app.button if w.label == label)
     button('Aplicar entradas do arquivo').click().run(timeout=30)
-    button('Calcular verificações disponíveis').click().run(timeout=60)
+    assert not app.exception and app.session_state.last_input == data
+    if lane == 'historical_top':
+        # Replay the unmarked producer lane without today's calculate click.
+        historical = complete_result(calculate(data))
+        assert not load_application_policy.active(historical['input_data'])
+        app.session_state.result = copy.deepcopy(historical)
+        app.run(timeout=60)
+    else:
+        button('Calcular verificações disponíveis').click().run(timeout=60)
     assert not app.exception
     assert any(w.value == RELEASE_CAPTION for w in app.caption)
     result = copy.deepcopy(app.session_state.result)
-    assert_own_result(result)
+    if lane == 'historical_top':
+        assert result == historical
+        assert_historical_own_result(result)
+    else:
+        assert_current_own_result(result, data)
+        assert app.session_state[HISTORY][0]['last_input'] == data
     assert json.loads(downloads['Baixar estudo e resultados (JSON)']) == result
     doc = Document(io.BytesIO(downloads['Baixar memória parcial (Word)']))
     text = '\n'.join(p.text for p in doc.paragraphs)
     assert result['global_verification']['display_summary'] in text
-    assert 'não constituem aprovação global' in text.lower()
+    assert 'conclusão global fora do escopo' in text.lower()
+    assert deflection_scope.TEXT in text
+    assert result['input_fingerprint'] in text
     assert 'não conclui o estado limite completo' in text.lower()
     assert 'elu: aprovado' not in text.lower() and 'checklist declarado concluído' not in text.lower()
     def forbidden(*a, **k):
@@ -101,6 +174,8 @@ def test_real_app_own_five_degrees_combines_all_scopes_and_replays(monkeypatch):
     monkeypatch.setattr(roof, 'refined', forbidden)
     monkeypatch.setattr(nbr, 'flt_mse', forbidden)
     monkeypatch.setattr('tercas.direct_torsion.solve_member', forbidden)
+    monkeypatch.setattr('tercas.application.evaluate', forbidden)
+    monkeypatch.setattr('tercas.torsion_study.attach', forbidden)
     app.run(timeout=60)
     assert not app.exception and app.session_state.result == result
-    assert app.session_state.last_input == data
+    assert app.session_state.last_input == (data if lane == 'historical_top' else prepare(data))

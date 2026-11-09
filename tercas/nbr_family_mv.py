@@ -317,10 +317,15 @@ def build(record, sources, span_mm):
             MRd_local_Nmm=mr if usable else None, VRd_squared_exact=capacity['VRd_squared_exact'])
     gate = record.get('shear_lag_applicability')
     if gate is not None:
-        from .nbr_ue_shear_lag import validate_saved as validate_gate
-        validate_gate(gate, physical_span_mm=span_mm,
+        from . import nbr_ue_shear_lag as lag
+        from . import nbr_ue_shear_lag_strong as strong_lag
+        lag_geometry = {}
+        if gate.get('schema') == strong_lag.SCHEMA:
+            lag = strong_lag
+            lag_geometry['inner_radius_mm'] = binding['nominal_identity']['inner_radius_mm']
+        lag.validate_saved(gate, physical_span_mm=span_mm,
             external_dimensions_mm=binding['nominal_identity']['dimensions_mm'],
-            actions=record['actions'], member_model='isolated_simply_supported')
+            actions=record['actions'], member_model='isolated_simply_supported', **lag_geometry)
     gate_qualified = strong_zero or (gate is not None and gate['axes']['normal']['qualified'] is True)
     missing = ([] if calculation else ['own_rounded_contour:local_9.8.2.1'])
     if not gate_qualified:

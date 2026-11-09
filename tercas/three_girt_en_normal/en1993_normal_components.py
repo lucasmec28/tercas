@@ -1096,7 +1096,11 @@ def build_component_sections(profile, *, fyb_MPa=250., fya_MPa=250., E_MPa=21000
 
 
 def verify_component_sections(certificate):
-    """Reject a modified cached certificate, including eligibility/coefficients."""
+    """Check schema/self-hash only, not independent operator authority.
+
+    The v6 reader separately binds the complete certificate to the local
+    qualified-reference registry, even without optional EN6.27 records.
+    """
     candidate = copy.deepcopy(certificate); expected = candidate.pop("content_sha256",None)
     if candidate.get("schema") not in (SCHEMA, MY150_SCHEMA, AXIAL_SCHEMA, PREVIOUS_SCHEMA, LEGACY_SCHEMA) or expected != _canonical_sha(candidate):
         raise ValueError("EN normal-component certificate changed; rebuild from frozen geometry")

@@ -104,7 +104,8 @@ def fake_en(d,lo=.2,hi=.4,complete=True):
         bound=dict(index_lower_witness=lo,index_upper_bound=hi,witness=dict(girt=g,index=lo,index_lower_witness=lo))
         members[g]=dict(ELU_segments=sum(r['girt']==g for r in rows),complete_segments=sum(r['girt']==g and r['complete'] for r in rows),
             complete=complete,shear_interaction=dict(complete=complete,normal=copy.deepcopy(bound),shear=copy.deepcopy(bound),interaction=copy.deepcopy(bound)))
-    return dict(schema='synthetic_saved_bound_contract',content_sha256='fixture',rows=rows,per_member=members,
+    # Unit-only stand-in for an already authenticated reader result.
+    return dict(schema='three_girt_EN_normal_shear_certified_v6',content_sha256='fixture',rows=rows,per_member=members,
         component_sections=dict(components=dict(N_compression=dict(centroid_shift_from_gross_mm=[0.,0.]))))
 
 @pytest.mark.parametrize('lo,hi,complete,status',[(.2,.4,True,'meets'),(.2,.4,False,'pending'),(.9,1.1,True,'pending'),(1.1,1.3,True,'fails'),(1.1,None,False,'fails')])

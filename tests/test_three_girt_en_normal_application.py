@@ -79,7 +79,7 @@ def test_no_network_or_NBR_capacity_calculation(demand,monkeypatch):
     def forbidden(*args,**kwargs):raise AssertionError('Not part of the EN normal calculation')
     monkeypatch.setattr(network,'solve',forbidden)
     monkeypatch.setattr(nbr,'_capacities',forbidden)
-    assert a.calculate(demand,config(demand))['schema']==a.SCHEMA
+    assert a.calculate(demand,config(demand))['schema']==a.CERTIFIED_SCHEMA
 
 
 @pytest.mark.parametrize('t',[1.2,1.5])

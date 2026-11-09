@@ -2,6 +2,7 @@
 from ..three_girt_scope import view, central, NOTICE
 from .application import reference_configuration,saved_component
 from . import centroid_policy as cp
+from . import snapshot_policy as sp
 LABEL='Incluir tensões normais e cisalhamento pela EN'
 MODEL_LABEL='Declarar modelo de seção nominal intacta, sem furos ou recortes'
 LEVELS={'upper':'Superior','middle':'Central','lower':'Inferior'}
@@ -26,7 +27,8 @@ def controls(st,data,demand_fingerprint,prefix):
 
 def rows(component):
     records=[]
-    labels={'within_1_by_full_interval_upper_bound':'Dentro do limite pelo limite superior',
+    labels={sp.PENDING:'Histórico: decisão não autenticada; solicitar novo cálculo',
+        'within_1_by_full_interval_upper_bound':'Dentro do limite pelo limite superior',
         'above_1_at_concomitant_state':'Excesso normal em estado concomitante',
         'above_1_at_checked_state_full_envelope_incomplete':'Excesso normal em estado verificado; envelope parcial',
         'incomplete_section_branch_coverage':'Parcial: falta ramo de seção efetiva',
@@ -58,6 +60,7 @@ def render_saved(st,demand):
     if demand.get('EN_normal_N_M_B_error'):st.warning('Componente normal EN não calculada: '+demand['EN_normal_N_M_B_error'])
     c=view(saved_component(demand),demand)
     if c is None:return
+    if not sp.certified(c):st.warning(sp.NOTICE)
     st.subheader('Componente normal N+M+B pelo critério EN')
     has_shear=any('shear_interaction' in row for row in c['per_member'].values())
     st.warning('Resultado condicionado ao modelo de seção declarado. Cobertura incompleta de seção efetiva impede conclusão integral; estabilidade da barra e aplicabilidade da primeira ordem permanecem separadas.' if has_shear else 'Resultado histórico somente normal. Cisalhamento e interação sigma–tau não foram calculados neste snapshot.')
@@ -84,7 +87,8 @@ def render_saved(st,demand):
 
 
 def shear_rows(component):
-    labels={'within_1_by_full_interval_upper_bound':'Dentro do limite pelo limite superior',
+    labels={sp.PENDING:'Histórico: decisão não autenticada; solicitar novo cálculo',
+        'within_1_by_full_interval_upper_bound':'Dentro do limite pelo limite superior',
         'above_1_at_concomitant_state':'Excesso em estado concomitante',
         'above_1_at_checked_state_full_envelope_incomplete':'Excesso verificado; cobertura parcial',
         'incomplete_section_branch_coverage':'Parcial: falta ramo de seção efetiva',

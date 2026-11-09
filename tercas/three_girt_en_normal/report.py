@@ -2,10 +2,12 @@
 from ..three_girt_scope import view, central, NOTICE
 from .application import saved_component,SCHEMA
 from . import centroid_policy as cp
+from . import snapshot_policy as sp
 from .ui import LEVELS
 from ..three_girt_report import _table
 
 CRITERIA={
+    sp.PENDING:"histórico: decisão não autenticada; solicitar novo cálculo",
     'within_1_by_full_interval_upper_bound':'atende pelo limite superior no recorte',
     'above_1_at_concomitant_state':'excesso em estado físico concomitante',
     'above_1_at_checked_state_full_envelope_incomplete':'excesso verificado, com cobertura parcial',
@@ -21,6 +23,7 @@ def append(document,demand):
             document.add_paragraph('Componente normal EN não calculada: '+demand['EN_normal_N_M_B_error'])
         return
     d=document;d.add_page_break();d.add_heading('Componente normal N Mx My B pela EN',1)
+    if not sp.certified(c):d.add_paragraph(sp.NOTICE)
     d.add_paragraph('Verificação complementar EN1993-1-3:2006 §6.1.6 da tensão normal, nas faces do modelo de parede fina facetada. Não é aprovação integral EN ou NBR. A cobertura dos ramos efetivos é indicada abaixo; estabilidade, validade da primeira ordem, ruptura líquida e ELS continuam separados.')
     d.add_paragraph('Modelo declarado: '+c['configuration']['section_model_origin']+'. Seção nominal intacta, sem furos/recortes nas regiões representadas. Esta declaração não dimensiona ligações nem comprova a geometria/material real.')
     mat=c['component_sections']['material']
@@ -57,7 +60,7 @@ def append(document,demand):
         if has_bounds:d.add_paragraph('Decisão normal com cobertura normativa: '+CRITERIA[cp.decision(c,member,'normal',item['normal']['criterion'])]+'. Os índices apresentados são arredondados; a decisão usa os valores completos salvos.')
         w=item['complete_envelope'] or item['partial_maximum']
         if w:
-            if item['observed_normal_exceedance'] and not item['complete']:
+            if sp.certified(c) and item['observed_normal_exceedance'] and not item['complete']:
                 d.add_paragraph('A testemunha abaixo já excede o limite normal em um estado elegível. O máximo permanece PARCIAL: não é envelope completo, nem conclusão global de segurança da barra.')
             s=w['concomitant_7DOF_state'];p=w['section_fiber'];v=w['stress_contributions_MPa']
             d.add_paragraph(f"{w['combination_id']}; trecho {w['segment_id']}; x = {w['x_mm']:.4f} mm, lado {w['side']}; segmento de parede {p['segment_index']}, extremo {p['endpoint']}, face {p['thickness_face_sign']:+d}. sigma = {w['sigma_MPa']:.6f} MPa; índice = {w['normal_index']:.6f}.")
@@ -145,7 +148,7 @@ def _append_shear(d,c):
         values=item['shear_interaction']
         decisions=[name+': '+('sem ramo elegível' if values[key] is None else CRITERIA[cp.decision(c,level,key,values[key]['criterion'])]) for key,name in (('shear','cisalhamento'),('interaction','interação'))]
         d.add_paragraph(LEVELS[level]+'; '+'; '.join(decisions)+'.')
-    d.add_paragraph('A testemunha é um estado físico concomitante do modelo. A coluna Testemunha usa seu limite inferior conservador quando disponível. O limite superior é um majorante numérico de todo o intervalo e de todas as faces, não uma combinação física de máximos. Só cobertura completa com limite superior ≤ 1 e cobertura de EN6.1.3(3), quando aplicável, demonstra atendimento do critério no modelo. O limite inferior de uma testemunha > 1 comprova excesso mesmo com cobertura parcial; limite não decidido não vira atendimento.')
+    d.add_paragraph(('No registro histórico, os valores abaixo são observações salvas, sem autenticação atual. ' if not sp.certified(c) else '')+'A testemunha é um estado físico concomitante do modelo. A coluna Testemunha usa seu limite inferior conservador quando disponível. O limite superior é um majorante numérico de todo o intervalo e de todas as faces, não uma combinação física de máximos. Só cobertura completa com limite superior ≤ 1 e cobertura de EN6.1.3(3), quando aplicável, demonstra atendimento do critério no modelo. O limite inferior de uma testemunha > 1 comprova excesso mesmo com cobertura parcial; limite não decidido não vira atendimento.')
     d.add_paragraph('As tensões são recuperadas em ambas as faces e no interior das paredes, não só nas fibras extremas da tensão normal. Envoltória de Bernstein quadrática na parede, com faixas analíticas dos campos hiperbólicos ao longo do vão. Subdivisão apenas quando necessária à decisão. Majorante numérico em binary64 com margem de arredondamento proporcional às magnitudes, não certificado formal de aritmética intervalar. O modelo de parede fina facetada não é um sólido curvo exato.')
     for level,item in c['per_member'].items():
         row=item['shear_interaction']['interaction']

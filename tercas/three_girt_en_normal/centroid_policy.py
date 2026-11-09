@@ -181,6 +181,9 @@ def qualification(component,member,criterion):
 
 
 def decision(component,member,criterion,saved_criterion):
+    from . import snapshot_policy
+    authenticated=snapshot_policy.decision(component,saved_criterion)
+    if authenticated==snapshot_policy.PENDING:return authenticated
     gate=qualification(component,member,criterion)
     failed=saved_criterion is not None and saved_criterion.startswith('above_1')
     return PENDING if not failed and not gate['qualified'] else saved_criterion
@@ -192,6 +195,8 @@ def verify_assessment(component,assessment,members):
     Retiring a stale sidecar does not rewrite or recalculate its mechanical
     source. A newly requested panorama reads the same saved stress numbers.
     """
+    from . import snapshot_policy
+    snapshot_policy.verify_assessment(component,assessment,members)
     affected={row['girt'] for row in component['rows'] if row['girt'] in members
               and required(row,component['component_sections'])}
     if not affected:return

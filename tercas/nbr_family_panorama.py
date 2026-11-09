@@ -11,10 +11,10 @@ BINDING='NBR_family_binding'
 
 
 def _build(result):
-    from .nbr_ue_family_application import FIELD, SCHEMA, GIRT_SCHEMA, preserved, _not_applicable_basis
+    from .nbr_ue_family_application import FIELD, SCHEMA, GIRT_SCHEMA, LEGACY_SCHEMA_V6, LEGACY_GIRT_SCHEMA_V1, preserved, _not_applicable_basis
     from .load_application_policy import NBR_SCHEMAS
     raw=result.get(FIELD)
-    if not isinstance(raw,dict) or raw.get('schema') not in ('nbr_ue_family_application_v2','nbr_ue_family_application_v3_rp23_candidate','nbr_ue_family_application_v4_energy_product','nbr_ue_family_application_v5_current_reference',SCHEMA,GIRT_SCHEMA,*NBR_SCHEMAS):
+    if not isinstance(raw,dict) or raw.get('schema') not in ('nbr_ue_family_application_v2','nbr_ue_family_application_v3_rp23_candidate','nbr_ue_family_application_v4_energy_product','nbr_ue_family_application_v5_current_reference',SCHEMA,GIRT_SCHEMA,LEGACY_SCHEMA_V6,LEGACY_GIRT_SCHEMA_V1,*NBR_SCHEMAS):
         return [],None
     packet=preserved(result)
     rows=packet['records']

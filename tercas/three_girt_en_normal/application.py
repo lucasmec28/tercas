@@ -24,8 +24,11 @@ LEGACY_SCHEMA='three_girt_EN_normal_N_M_B_integral_v1'
 LEGACY_SHEAR_SCHEMA='three_girt_EN_normal_shear_interaction_integral_v2'
 LEGACY_EFFECTIVE_SCHEMA='three_girt_EN_normal_shear_effective_sections_v3'
 SCHEMA='three_girt_EN_normal_shear_signed_union_v4'
-CENTRAL_SCHEMA='three_girt_EN_middle_normal_shear_signed_union_v5'
-SIGNED_UNION_SCHEMAS=(SCHEMA,CENTRAL_SCHEMA)
+LEGACY_CENTRAL_SCHEMA='three_girt_EN_middle_normal_shear_signed_union_v5'
+CENTRAL_SCHEMA='three_girt_EN_middle_normal_shear_certified_v6'
+CERTIFIED_SCHEMA='three_girt_EN_normal_shear_certified_v6'
+CENTRAL_SCHEMAS=(LEGACY_CENTRAL_SCHEMA,CENTRAL_SCHEMA)
+SIGNED_UNION_SCHEMAS=(SCHEMA,LEGACY_CENTRAL_SCHEMA,CENTRAL_SCHEMA,CERTIFIED_SCHEMA)
 CONFIG_SCHEMA='three_girt_EN_normal_N_M_B_choice_v1'
 REQUEST='EN_normal_N_M_B_requested_configuration'
 ERROR='EN_normal_N_M_B_error'
@@ -485,11 +488,12 @@ def calculate(demand,config):
                         bound=si.envelope(section,polys,coefficients,torsion,total_torque,beam['length_mm'],
                             left=interval['left'],right=interval['right'],normal_limit_MPa=limit,
                             witness_evaluator=propose if len(branches)>1 else None,bounds_only_tiny=True,
-                            prepared_fields=prepared_fields_cache[operator_key])
+                            prepared_fields=prepared_fields_cache[operator_key],certify_bounds=True)
                         _recover_branch_witnesses(bound,evaluate,limit)
                         branch_results.append(bound)
                         details.append(dict(component_keys=selected,
-                            index_upper_bounds={k:bound[k]['index_upper_bound'] for k in ('normal','shear','interaction')}))
+                            index_upper_bounds={k:bound[k]['index_upper_bound'] for k in ('normal','shear','interaction')},
+                            bound_certificate=bound['bound_certificate']))
                     normal=_normal_aggregate([r['normal'] for r in branch_results],True)
                     piece.update(normal=normal,maximum_absolute=normal['witness'],normal_criterion=normal['criterion'],
                         shear_interaction=si.aggregate(branch_results,True),branch_count=len(branches),branches=details,
@@ -523,7 +527,7 @@ def calculate(demand,config):
             blocking_components=sorted({k for r in rr for k in r['blocking_components']}),
             observed_normal_exceedance=bool(normal['index_lower_witness'] is not None and normal['index_lower_witness']>1),
             normal_criterion=normal['criterion'])
-    result=dict(schema=CENTRAL_SCHEMA if verification.central(demand) else SCHEMA,
+    result=dict(schema=CENTRAL_SCHEMA if verification.central(demand) else CERTIFIED_SCHEMA,
         status='computed_conditional_EN_normal_shear_interaction',
         branch_policy='union_of_required_signed_coefficients',
         normal_envelope_semantics='Physical lower witness and separate numerical upper bound; compatibility maximum aliases are not exact maxima',
@@ -550,8 +554,26 @@ def calculate(demand,config):
     result['limits'].append('EN6.1.3(3): yield-calculated axial centroid shifts cannot receive favourable credit. A separately versioned sufficient bound covers original unshifted stresses; absent or undecided coverage remains pending. Original-scenario bounds have no physical witness. Saved corrected numerical envelopes are unchanged.')
     from ..three_girt_en_mv import populate as populate_mv
     populate_mv(demand,result,profile=profile)
+    # New v6 snapshots use their native JSON representation immediately.
+    # This preserves every serialized binary64 number and its digest while
+    # preventing NumPy scalar aliases in the persisted-reader cache boundary.
+    result=_native_new_snapshot(result)
     result['content_sha256']=fingerprint(result)
     return result
+
+
+
+def _native_new_snapshot(value):
+    kind=type(value)
+    if kind is dict:
+        for key,entry in value.items():value[key]=_native_new_snapshot(entry)
+        return value
+    if kind is list:
+        for i,entry in enumerate(value):value[i]=_native_new_snapshot(entry)
+        return value
+    if kind is tuple:return [_native_new_snapshot(entry) for entry in value]
+    if kind in (str,int,float,bool) or value is None:return value
+    return json.loads(json.dumps(value,ensure_ascii=False,allow_nan=False))
 
 
 def attach(demand,config):
@@ -559,14 +581,17 @@ def attach(demand,config):
         raise ValueError('Attach EN normal before the NBR snapshot so both independent source hashes remain intact')
     source=copy.deepcopy(demand);source.pop(FIELD,None)
     component=calculate(source,config);source[FIELD]=component
-    return source
+    # Only a newly requested calculation creates this saved JSON boundary.
+    # Existing demand/component hashes already use this exact representation.
+    # The caller's source is untouched; readers never migrate old snapshots.
+    return _native_new_snapshot(source)
 
 
 
 def verification_members(component,demand):
     """Versioned resistance coverage; never infer a new scope for old files."""
     selected=verification.members(demand)
-    if component['schema']==CENTRAL_SCHEMA:
+    if component['schema'] in CENTRAL_SCHEMAS:
         if selected!=('middle',) or component.get(verification.FIELD)!=demand[verification.FIELD]:
             raise ValueError('Saved central EN verification scope differs from demand')
         return selected
@@ -582,7 +607,7 @@ def _verify_saved_coverage(component,demand):
     expected=[(case['combination']['id'],beam['girt'],beam['id'],beam['x_start_mm'],beam['x_end_mm'])
               for case in demand['cases'] if case['combination']['limit_state']=='ELU'
               for beam in case['model']['beams'] if beam['girt'] in selected]
-    if component['schema']==CENTRAL_SCHEMA and not expected:
+    if component['schema'] in CENTRAL_SCHEMAS and not expected:
         raise ValueError('Saved central EN requires nonempty ELU coverage')
     actual=[(row['combination_id'],row['girt'],row['segment_id'],row['x_start_mm'],row['x_end_mm'])
             for row in component['rows']]
@@ -670,7 +695,7 @@ def _validate_saved_bound(bound,complete):
     if not complete and low is not None and low>1:expected='above_1_at_checked_state_full_envelope_incomplete'
     if bound['criterion']!=expected:raise ValueError('Saved bound criterion changed')
 
-def saved_component(demand):
+def _saved_component_uncached(demand):
     component=demand.get(FIELD)
     if component is None:return None
     if not isinstance(component,dict) or component.get('schema') not in (LEGACY_SCHEMA,LEGACY_SHEAR_SCHEMA,LEGACY_EFFECTIVE_SCHEMA,*SIGNED_UNION_SCHEMAS):raise ValueError('Unknown saved EN normal component')
@@ -681,20 +706,122 @@ def saved_component(demand):
         any(component.get(k) is not False for k in FALSE_FLAGS)):
         raise ValueError('Saved EN normal source/scope changed')
     _verify_saved_coverage(component,demand)
-    if component['schema']==CENTRAL_SCHEMA:
+    if component['schema'] in (*CENTRAL_SCHEMAS,CERTIFIED_SCHEMA):
         # Hashes do not replace the physical coverage/identity checks. Reading
         # uses saved fields only, with no solver or section recalculation.
         from ..three_girt_assessment.application import validate_demand
         validate_demand(demand)
     verify_component_sections(component['component_sections'])
     if component['schema'] in (LEGACY_EFFECTIVE_SCHEMA,*SIGNED_UNION_SCHEMAS):_verify_saved_action_references(component,demand)
+    if component['schema'] in (CENTRAL_SCHEMA,CERTIFIED_SCHEMA):
+        from .snapshot_certificate import verify
+        verify(component,demand)
     cp.verify(component)
     from ..three_girt_en_mv import validate_component as validate_mv
     validate_mv(component,demand)
     return component
 
 
+
+VALIDATION_CACHE_REVISION='EN_complete_snapshot_operator_authority_validation_v2'
+
+
+def _validation_payload(component,source,authority=None):
+    """Own native-JSON values, without tuple/numpy/key coercion aliases."""
+    active=set()
+    def native(value):
+        kind=type(value)
+        if kind in (str,int,bool) or value is None:return
+        if kind is float:
+            if not math.isfinite(value):raise ValueError('Nonfinite EN validation source')
+            return
+        if kind not in (dict,list):raise ValueError('Native JSON EN validation source required')
+        if id(value) in active:raise ValueError('Cyclic EN validation source')
+        active.add(id(value))
+        if kind is dict:
+            if any(type(key) is not str for key in value):raise ValueError('String JSON keys required')
+            for entry in value.values():native(entry)
+        else:
+            for entry in value:native(entry)
+        active.remove(id(value))
+    owned=dict(component=component,source=source,authority=authority);native(owned)
+    # Preserve traversal order as part of the actual JSON key: binary64
+    # mechanical recovery can depend on the original summation order.
+    return json.dumps(owned,sort_keys=False,ensure_ascii=False,allow_nan=False,separators=(',',':')).encode('utf8')
+
+
+def _validate_owned_snapshot(revision,payload,profile_bytes,owned=None):
+    if revision!=VALIDATION_CACHE_REVISION:raise ValueError('Unknown EN validation revision')
+    # A private deepcopy preserves harmless internal aliases. The exact bytes
+    # of that same owned object form the key and are checked again on success.
+    if owned is None:owned=json.loads(payload)
+    if _validation_payload(owned['component'],owned['source'],owned.get('authority'))!=payload:
+        raise ValueError('EN owned snapshot changed before validation')
+    demand=dict(owned['source']);demand[FIELD]=owned['component']
+    _saved_component_uncached(demand)
+    if _validation_payload(owned['component'],owned['source'],owned.get('authority'))!=payload:
+        raise ValueError('EN owned snapshot changed during validation')
+    return True  # Immutable success only; exceptions never enter the cache.
+
+
+from . import replay_cache as _rc
+_SEMANTIC_CACHE=_rc.SuccessCache(4)
+
+
+def _validated_snapshot(revision,payload,profile_bytes,owned=None):
+    if revision!=VALIDATION_CACHE_REVISION:raise ValueError('Unknown EN validation revision')
+    key=_rc.key(revision,payload,profile_bytes);saved=_SEMANTIC_CACHE.get(key)
+    if saved is not _rc.MISSING:return saved
+    result=_validate_owned_snapshot(revision,payload,profile_bytes,owned)
+    if result is not True:raise ValueError('EN validation did not establish success')
+    _SEMANTIC_CACHE.put(key,result)
+    return result
+
+_validated_snapshot.__wrapped__=_validate_owned_snapshot
+_validated_snapshot.cache_clear=_SEMANTIC_CACHE.clear
+_validated_snapshot.cache_info=_SEMANTIC_CACHE.info
+_validated_snapshot.retained_bytes=_SEMANTIC_CACHE.retained_bytes
+
+
+
+def _verify_reference_sources(data):
+    # Same dispatch as torsion_study.section_for, with real source gates on
+    # every read. Warm semantic success cannot hide a changed source file.
+    from .. import ue_catalog_reference as catalog,ue_family_reference as family,ue_reference as single
+    if catalog.claims_reference(data):catalog.validate(data)
+    elif family.claims_reference(data):family.gate()
+    elif single.claims_reference(data):single.gate()
+    else:raise ValueError('Current own Ue source required for certified EN')
+
+
+def saved_component(demand):
+    component=demand.get(FIELD)
+    if not isinstance(component,dict) or component.get('schema') not in (CENTRAL_SCHEMA,CERTIFIED_SCHEMA):
+        return _saved_component_uncached(demand)
+    source=mechanical_source(demand)
+    _verify_reference_sources(source['input_data'])
+    from ..en_interaction_capacity_reference import qualified_reference
+    authority=qualified_reference(source['input_data']['properties']['t'],component['component_sections']['content_sha256'])
+    owned=copy.deepcopy(dict(component=component,source=source,authority=authority))
+    payload=_validation_payload(owned['component'],owned['source'],owned['authority'])
+    # Check real installed source bytes every time, including on a warm cache.
+    # A declared digest or unchanged object identity never bypasses this gate.
+    from ..torsion_study import PINS
+    thickness=source['input_data']['properties']['t']
+    if type(thickness) not in (int,float) or thickness not in PINS:
+        raise ValueError('Unqualified EN thickness')
+    path=Path(__file__).resolve().parents[1]/'data'/'torsion_profiles'/f'ue100x50x17_t{thickness:.2f}.json'
+    profile_bytes=path.read_bytes()
+    if hashlib.sha256(profile_bytes).hexdigest()!=PINS[thickness]:raise ValueError('Pinned EN profile changed')
+    _validated_snapshot(VALIDATION_CACHE_REVISION,payload,profile_bytes,owned)
+    current=demand.get(FIELD);current_source=mechanical_source(demand)
+    current_authority=qualified_reference(current_source['input_data']['properties']['t'],current['component_sections']['content_sha256'])
+    if _validation_payload(current,current_source,current_authority)!=payload:
+        raise ValueError('EN snapshot changed during validation')
+    return current
+
 def summary(result):
+    from . import snapshot_policy as sp
     out=dict(schema=result['schema'],ELU_combinations=result['ELU_combinations'],
         ELS_combinations_excluded=result['ELS_combinations_excluded'],normal_limit_MPa=result['normal_limit_MPa'],
         members={name:{k:copy.deepcopy(v) for k,v in row.items() if k not in ('complete_envelope','partial_maximum')}
@@ -702,11 +829,13 @@ def summary(result):
                'partial_normal_index':None if row['partial_maximum'] is None else row['partial_maximum']['normal_index'],
                cp.FIELD:{key:cp.qualification(result,name,key) for key in ('normal','interaction')}}
             for name,row in result['per_member'].items()},**{k:False for k in FALSE_FLAGS})
+    out['decision_authentication']=dict(schema=sp.SCHEMA,authenticated=sp.certified(result),
+        reason='' if sp.certified(result) else sp.NOTICE)
     for name,row in out['members'].items():
         row['normal_criterion']=cp.decision(result,name,'normal',row['normal_criterion'])
         if row.get('normal'):row['normal']['criterion']=row['normal_criterion']
         if row.get('shear_interaction'):
-            for key in ('normal','interaction'):
+            for key in ('normal','shear','interaction'):
                 if row['shear_interaction'].get(key):
                     bound=row['shear_interaction'][key]
                     bound['criterion']=cp.decision(result,name,key,bound['criterion'])

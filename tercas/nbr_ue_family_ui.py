@@ -20,14 +20,19 @@ GIRT_NOTE = ('Travessa isolada: forças e linhas locais por ação autenticadas 
 
 
 def application_note(evidence):
-    from .nbr_ue_family_application import GIRT_SCHEMA
-    from .load_application_policy import NBR_SCHEMAS
+    from .nbr_ue_family_application import SCHEMA, GIRT_SCHEMA, LEGACY_GIRT_SCHEMA_V1
+    from .load_application_policy import NBR_SCHEMAS, NBR_SCHEMA, NBR_GIRT_SCHEMA
     if evidence['schema'] in NBR_SCHEMAS:
-        return ('Componentes NBR por eixo e sinal, com propriedades do mesmo contorno e comprimentos resistentes declarados. '
+        note = ('Componentes NBR por eixo e sinal, com propriedades do mesmo contorno e comprimentos resistentes declarados. '
             'Solicitações mantêm o vão físico; comprimentos resistentes não criam apoios. '
             'Referência nominal publicada e contorno próprio permanecem separados. '
             'Os métodos locais/distorcionais retêm suas aproximações e limites.')
-    return GIRT_NOTE if evidence['schema']==GIRT_SCHEMA else NOTE
+    else:
+        note = GIRT_NOTE if evidence['schema'] in (GIRT_SCHEMA, LEGACY_GIRT_SCHEMA_V1) else NOTE
+    if evidence['schema'] in (SCHEMA, GIRT_SCHEMA, NBR_SCHEMA, NBR_GIRT_SCHEMA):
+        note += (' Shear lag: referência forte bf0 = bf externo − t + lip nominal; eixo fraco conserva o majorante. '
+                 'A dispensa usa L físico. Redução da seção pela Tabela 7 permanece pendente quando necessária.')
+    return note
 
 
 def rows(evidence):

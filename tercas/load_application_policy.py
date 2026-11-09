@@ -8,9 +8,11 @@ import copy
 
 FIELD = 'load_application_policy'
 MODE = 'all_actions_at_shear_center_v1_20261108'
-NBR_SCHEMA = 'nbr_ue_family_application_v7_all_actions_CT'
-NBR_GIRT_SCHEMA = 'nbr_ue_wall_girt_application_v2_all_actions_CT'
-NBR_SCHEMAS = (NBR_SCHEMA, NBR_GIRT_SCHEMA)
+LEGACY_NBR_SCHEMA = 'nbr_ue_family_application_v7_all_actions_CT'
+LEGACY_NBR_GIRT_SCHEMA = 'nbr_ue_wall_girt_application_v2_all_actions_CT'
+NBR_SCHEMA = 'nbr_ue_family_application_v8_all_actions_CT_strong_shear_lag_geometry'
+NBR_GIRT_SCHEMA = 'nbr_ue_wall_girt_application_v3_all_actions_CT_strong_shear_lag_geometry'
+NBR_SCHEMAS = (NBR_SCHEMA, NBR_GIRT_SCHEMA, LEGACY_NBR_SCHEMA, LEGACY_NBR_GIRT_SCHEMA)
 ORIGIN = 'Versioned applied-load model'
 DIRECT_BASIS = 'direct_external_and_profile_PP_at_shear_center_v1'
 

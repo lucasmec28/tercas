@@ -79,7 +79,7 @@ def pair(request):
 def test_exact_central_result_and_full_source_are_unchanged(pair):
     old,new,old_en,new_en,old_metrics,new_metrics=pair
     assert new==dict(old,verification_scope=scope.record(old['input_fingerprint']))
-    assert new_en['schema']==en.CENTRAL_SCHEMA and old_en['schema']==en.SCHEMA
+    assert new_en['schema']==en.CENTRAL_SCHEMA and old_en['schema']==en.CERTIFIED_SCHEMA
     assert new_en[scope.FIELD]==new[scope.FIELD] and scope.FIELD not in old_en
     assert new_en['rows']==[r for r in old_en['rows'] if r['girt']=='middle']
     assert new_en['per_member']=={'middle':old_en['per_member']['middle']}
@@ -106,7 +106,12 @@ def test_new_snapshot_read_display_assessment_and_word_do_not_recalculate(pair,m
         monkeypatch.setattr(module,name,forbidden)
     before=en.fingerprint(demand)
     restored=json.loads(json.dumps(demand,allow_nan=False))
-    assert en.saved_component(restored) is restored[en.FIELD]
+    from tercas.three_girt_en_normal import bound_certificate as bc
+    bc.hyperbolic.cache_clear();bc.field_bernstein.cache_clear();bc._stress_bound_cached.cache_clear()
+    assert en.saved_component(restored) is restored[en.FIELD]  # Cold proof cache.
+    assert en.saved_component(restored) is restored[en.FIELD]  # Warm proof cache.
+    assert any(abs(r['normal']['witness']['concomitant_7DOF_state']['B_equilibrium_Nmm2'])>0
+               for r in restored[en.FIELD]['rows'] if r['normal']['witness'])
     assert en.fingerprint(restored[en.FIELD])==en.fingerprint(demand[en.FIELD])
     result=assessment.assess(restored)
     checks=next(g for g in result['groups'] if g['id']=='EN_section')['checks']

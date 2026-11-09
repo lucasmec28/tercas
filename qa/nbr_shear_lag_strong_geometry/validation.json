@@ -1,0 +1,70 @@
+{
+  "schema": "NBR_strong_shear_lag_geometry_validation_v1",
+  "base_commit": "332e478cd1b26323974475dfa1fcf14327ccd216",
+  "date": "2026-11-08",
+  "scope": "Candidate exact nominal strong-reference geometry and span dispensation; no Table 7 reduction",
+  "threads_per_numerical_backend": 1,
+  "synthetic_data_only": true,
+  "tests": [
+    {
+      "files": [
+        "tests/test_nbr_ue_shear_lag_strong.py",
+        "tests/test_nbr_strong_shear_lag_consumer.py",
+        "tests/test_nbr_ue_shear_lag.py",
+        "tests/test_nbr_shear_lag_r22_review.py"
+      ],
+      "passed": 262,
+      "failed": 0,
+      "seconds": 6.19,
+      "final_focused_run": true
+    },
+    {
+      "files": [
+        "tests/test_nbr_family_validation_cache.py",
+        "tests/test_girt_nbr_family_66_scalar.py",
+        "tests/test_load_application_policy.py",
+        "tests/test_nbr_strong_shear_lag_consumer.py",
+        "tests/test_nbr_shear_lag_r22_review.py"
+      ],
+      "passed": 262,
+      "failed": 0,
+      "seconds": 76.5,
+      "note": "Before adding two pre-CT historical tests, covered in final focused run"
+    }
+  ],
+  "source_sha256": {
+    "tercas/nbr_ue_shear_lag_strong.py": "d7f085cc5cd691ad0f1f22254fb565b24fb72ad7353cbe3462b0af2c9a276027",
+    "tercas/nbr_ue_family_application.py": "3a0fa8dba8ed17d4b39537bcad7c9a06386e9c5a269f196adc1025641eec3228",
+    "tercas/nbr_family_mv.py": "b651ab2947a38e26337e13144befdd049f405a660a79dfc686ef021143e18e70",
+    "tercas/nbr_family_panorama.py": "e7d4449454e57e4898338e9673ab4cd18aef9a74ec6ac4a6a430e24aa278f4c0",
+    "tercas/nbr_ue_family_ui.py": "1205b5f1e6a42d2f4c99dbad86cc92cd37581eca0a85825b7560db8f6c780999",
+    "tercas/load_application_policy.py": "3ab97f92e0eca9defc145c3ff0a707f1ab23ca9b66a8d5c50d4c40d3ff46ad47"
+  },
+  "historical_oracles": "historical_manifest.json",
+  "historical_snapshots_generated_by_unmodified_base": true,
+  "untouched": [
+    "physical demand and span",
+    "PP factors",
+    "NBR capacity producer",
+    "EN modules",
+    "v1 shear-lag primitive"
+  ],
+  "not_run": [
+    "full repository suite",
+    "heavy stability matrix",
+    "browser QA",
+    "publication"
+  ],
+  "independent_geometry_review": {
+    "status": "accepted_static_and_visual_no_blockers",
+    "changes_requested": false,
+    "scope": "Nominal geometry, governing NBR source, dimensional AISI corroboration, boundaries, weak-axis invariance and historical schemas"
+  },
+  "whole_member_approved": false,
+  "test_count_accounting": {
+    "two_reported_runs_total_executions": 524,
+    "overlapping_test_cases": 36,
+    "distinct_passed_test_cases": 488,
+    "note": "The consumer had 10 tests in the 76.50 s run and 12 in the final 6.19 s run. The 10 common consumer cases plus 26 review diagnostics overlap. Final union collection confirms 488 distinct cases."
+  }
+}

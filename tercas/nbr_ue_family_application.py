@@ -11,8 +11,10 @@ FIELD = 'nbr_ue_family_application'
 LEGACY_SCHEMA_V3 = 'nbr_ue_family_application_v3_rp23_candidate'
 LEGACY_SCHEMA_V4 = 'nbr_ue_family_application_v4_energy_product'
 LEGACY_SCHEMA_V5 = 'nbr_ue_family_application_v5_current_reference'
-SCHEMA = 'nbr_ue_family_application_v6_direct_curvature'
-GIRT_SCHEMA = 'nbr_ue_wall_girt_application_v1'
+LEGACY_SCHEMA_V6 = 'nbr_ue_family_application_v6_direct_curvature'
+LEGACY_GIRT_SCHEMA_V1 = 'nbr_ue_wall_girt_application_v1'
+SCHEMA = 'nbr_ue_family_application_v8_strong_shear_lag_geometry'
+GIRT_SCHEMA = 'nbr_ue_wall_girt_application_v3_strong_shear_lag_geometry'
 SCOPE = ('Componentes de flexão NBR, não aprovação resistente/global. Contorno próprio e '
          'referência nominal publicada são alternativas distintas; índices não são somados. '
          'Interação biaxial N=0 usa capacidades próprias concomitantes e qualificadas por sinal. '
@@ -131,15 +133,18 @@ def _not_applicable_basis(component, sources):
     return None
 
 
-def _build(result, *, legacy_energy_floor=False, legacy_height_selection=False, legacy_product_floor=False, allow_wall_girt=False):
+def _build(result, *, legacy_energy_floor=False, legacy_height_selection=False, legacy_product_floor=False, allow_wall_girt=False, legacy_shear_lag=False):
+    legacy_shear_lag = legacy_shear_lag or legacy_energy_floor or legacy_height_selection or legacy_product_floor
     legacy_height_selection = legacy_height_selection or legacy_energy_floor
-    schema = LEGACY_SCHEMA_V3 if legacy_energy_floor else LEGACY_SCHEMA_V4 if legacy_height_selection else LEGACY_SCHEMA_V5 if legacy_product_floor else SCHEMA
+    schema = LEGACY_SCHEMA_V3 if legacy_energy_floor else LEGACY_SCHEMA_V4 if legacy_height_selection else LEGACY_SCHEMA_V5 if legacy_product_floor else LEGACY_SCHEMA_V6 if legacy_shear_lag else SCHEMA
     data = result['input_data']
-    from .load_application_policy import active as ct_active, NBR_SCHEMA, NBR_GIRT_SCHEMA
+    from .load_application_policy import (active as ct_active, NBR_SCHEMA, NBR_GIRT_SCHEMA,
+        LEGACY_NBR_SCHEMA, LEGACY_NBR_GIRT_SCHEMA)
     ct=ct_active(data)
     if allow_wall_girt:
-        schema = GIRT_SCHEMA
-    if ct:schema=NBR_GIRT_SCHEMA if allow_wall_girt else NBR_SCHEMA
+        schema = LEGACY_GIRT_SCHEMA_V1 if legacy_shear_lag else GIRT_SCHEMA
+    if ct:
+        schema = (LEGACY_NBR_GIRT_SCHEMA if allow_wall_girt else LEGACY_NBR_SCHEMA) if legacy_shear_lag else (NBR_GIRT_SCHEMA if allow_wall_girt else NBR_SCHEMA)
     reason = _outside_domain(result, allow_wall_girt=allow_wall_girt)
     if reason:
         from .application import fingerprint
@@ -197,10 +202,14 @@ def _build(result, *, legacy_energy_floor=False, legacy_height_selection=False, 
     records = []
     for combo, acts in action_inventory:
         pos = {axis: _position(acts, axis) for axis in ('normal', 'parallel')}
-        from .nbr_ue_shear_lag import assess as shear_lag_assess, MEMBER_MODEL
-        shear_lag=shear_lag_assess(physical_span_mm=data['L_mm'],
+        from . import nbr_ue_shear_lag as shear_lag_method
+        lag_geometry = {}
+        if not legacy_shear_lag:
+            from . import nbr_ue_shear_lag_strong as shear_lag_method
+            lag_geometry['inner_radius_mm'] = own['source_binding']['nominal_identity']['inner_radius_mm']
+        shear_lag=shear_lag_method.assess(physical_span_mm=data['L_mm'],
             external_dimensions_mm=own['source_binding']['nominal_identity']['dimensions_mm'],
-            actions=acts,member_model=MEMBER_MODEL)
+            actions=acts,member_model=shear_lag_method.MEMBER_MODEL,**lag_geometry)
         strong = _demand(combo, data['L_mm'], 'normal')
         parts = []
         for method, branch in nominal['strong'].items():
@@ -355,13 +364,14 @@ def _preserved_uncached(result):
         from .nbr_ue_family_application_v2 import preserved as preserved_v2
         return preserved_v2(result)
     schema = saved.get('schema')
-    from .load_application_policy import NBR_SCHEMAS, NBR_GIRT_SCHEMA
-    if (schema not in (LEGACY_SCHEMA_V3, LEGACY_SCHEMA_V4, LEGACY_SCHEMA_V5, SCHEMA, GIRT_SCHEMA, *NBR_SCHEMAS)
+    from .load_application_policy import NBR_SCHEMAS, NBR_SCHEMA, NBR_GIRT_SCHEMA, LEGACY_NBR_GIRT_SCHEMA
+    if (schema not in (LEGACY_SCHEMA_V3, LEGACY_SCHEMA_V4, LEGACY_SCHEMA_V5, LEGACY_SCHEMA_V6, LEGACY_GIRT_SCHEMA_V1, SCHEMA, GIRT_SCHEMA, *NBR_SCHEMAS)
             or not _eligible(result['input_data'])
             or saved != _build(result, legacy_energy_floor=schema == LEGACY_SCHEMA_V3,
                                legacy_height_selection=schema in (LEGACY_SCHEMA_V3, LEGACY_SCHEMA_V4),
                                legacy_product_floor=schema == LEGACY_SCHEMA_V5,
-                               allow_wall_girt=schema in (GIRT_SCHEMA,NBR_GIRT_SCHEMA))):
+                               allow_wall_girt=schema in (GIRT_SCHEMA,LEGACY_GIRT_SCHEMA_V1,NBR_GIRT_SCHEMA,LEGACY_NBR_GIRT_SCHEMA),
+                               legacy_shear_lag=schema not in (SCHEMA,GIRT_SCHEMA,NBR_SCHEMA,NBR_GIRT_SCHEMA))):
         raise ValueError('NBR família: componentes, fontes, ações, casos ou aritmética divergentes; recalcule explicitamente.')
     return copy.deepcopy(saved)
 

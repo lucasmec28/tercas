@@ -116,7 +116,7 @@ def _tiny_interval_magnitude(polynomial,weight,field,left,right):
 
 
 def envelope(section,polynomials,coefficients,torsion,total_torque,L_mm,*,left=0.,right=1.,
-             normal_limit_MPa=250.,max_refinements=2048,index_tolerance=1e-5,witness_evaluator=None,bounds_only_tiny=False,prepared_fields=None):
+             normal_limit_MPa=250.,max_refinements=2048,index_tolerance=1e-5,witness_evaluator=None,bounds_only_tiny=False,prepared_fields=None,certify_bounds=False):
     """Complete section/span bounds, refining only undecided inequalities.
 
     A within-limit verdict requires the upper bound <=1. An above-limit
@@ -144,7 +144,7 @@ def envelope(section,polynomials,coefficients,torsion,total_torque,L_mm,*,left=0
     if not math.isfinite(normal_limit_MPa) or normal_limit_MPa<=0:raise ValueError('Positive normal limit required')
     rows,tw=prepared_fields if prepared_fields is not None else section_fields(section,polynomials,coefficients,torsion,total_torque,L_mm)
     limits={'normal':normal_limit_MPa,'shear':normal_limit_MPa/math.sqrt(3),'interaction':1.1*normal_limit_MPa}
-    heaps={key:[] for key in limits};active={};counter=0
+    heaps={key:[] for key in limits};active={};counter=0;leaf_paths={}
     best={key:None for key in limits}
     witnessed_upper={key:0. for key in limits}
     discarded_witnesses=0
@@ -165,6 +165,20 @@ def envelope(section,polynomials,coefficients,torsion,total_torque,L_mm,*,left=0
             return eps128*max(1.,scale)
         return pad
     sigma_pad=roundoff_padding(torsion);tau_pad=roundoff_padding(tw)
+
+    def certify(result,paths):
+        if not certify_bounds:return result
+        from . import bound_certificate as bc
+        proof=dict(schema=bc.SCHEMA,faces=[dict(segment_index=r['segment_index'],face=r['face'],
+            paths=sorted(paths.get((r['segment_index'],r['face']),['']))) for r in rows])
+        upper=bc.verify(proof,rows,tw,torsion,left,right,normal_limit_MPa)
+        result['bound_certificate']=proof
+        for key in limits:
+            record=result[key];hi=max(record['index_upper_bound'],upper[key]);low=record['index_lower_witness']
+            record.update(index_upper_bound=hi,bound_gap=None if low is None else hi-low,
+                criterion='above_1_at_concomitant_state' if low is not None and low>1 else
+                    'within_1_by_full_interval_upper_bound' if hi<=1 else 'unresolved_numerical_bound')
+        return result
 
     if bounds_only_tiny and right-left<=32*math.ulp(1.):
         # Vectorized full-face Bernstein controls. No fabricated lower state:
@@ -206,7 +220,7 @@ def envelope(section,polynomials,coefficients,torsion,total_torque,L_mm,*,left=0
                 partial_index_upper_bound=None,bound_gap=None,physical_witness_upper_adjustment=0.,
                 criterion='within_1_by_full_interval_upper_bound' if hi<=1 else 'unresolved_numerical_bound',
                 bound_is_not_a_concomitant_state=True)
-        return result
+        return certify(result,{})
 
     extrema_cache={}
     def cached_extrema(polynomial,weight,field,left,right):
@@ -217,7 +231,7 @@ def envelope(section,polynomials,coefficients,torsion,total_torque,L_mm,*,left=0
             extrema_cache[key]=f.stress_extrema(list(polynomial),float(weight),field,left,right)
         return extrema_cache[key]
 
-    def add(row,x0,x1,u0,u1,depth):
+    def add(row,x0,x1,u0,u1,depth,path=""):
         nonlocal counter,discarded_witnesses
         sb=_bernstein(row['sigma'],u0,u1);wb=_bernstein(row['omega'],u0,u1)
         omega_scale=sum(abs(row['omega']))
@@ -311,7 +325,7 @@ def envelope(section,polynomials,coefficients,torsion,total_torque,L_mm,*,left=0
         # Outward pad covers binary64 arithmetic, NOT model/physical error.
         upper={k:math.nextafter(v+64*np.finfo(float).eps*max(1.,v),math.inf) for k,v in upper.items()}
         if not all(math.isfinite(v) and v>=0 for v in upper.values()):raise ArithmeticError('Nonfinite upper bound')
-        counter+=1;active[counter]=(row,x0,x1,u0,u1,depth)
+        counter+=1;active[counter]=(row,x0,x1,u0,u1,depth);leaf_paths[counter]=path
         for key in limits:heapq.heappush(heaps[key],(-upper[key],counter))
 
     def bounds():
@@ -329,16 +343,16 @@ def envelope(section,polynomials,coefficients,torsion,total_torque,L_mm,*,left=0
         if not undecided or refined>=max_refinements:break
         if all(upper[k]-lower(k)<=index_tolerance for k in undecided):break
         key=max(undecided,key=lambda k:upper[k]-lower(k))
-        _,cell_id=heaps[key][0];row,x0,x1,u0,u1,depth=active.pop(cell_id)
+        _,cell_id=heaps[key][0];row,x0,x1,u0,u1,depth=active.pop(cell_id);path=leaf_paths[cell_id]
         # Alternate x/u; every unresolved rectangle shrinks in both directions.
         if depth%2==0:
             mid=(x0+x1)/2
             if mid in (x0,x1):active[cell_id]=(row,x0,x1,u0,u1,depth);break
-            add(row,x0,mid,u0,u1,depth+1);add(row,mid,x1,u0,u1,depth+1)
+            add(row,x0,mid,u0,u1,depth+1,path+"0");add(row,mid,x1,u0,u1,depth+1,path+"1")
         else:
             mid=(u0+u1)/2
             if mid in (u0,u1):active[cell_id]=(row,x0,x1,u0,u1,depth);break
-            add(row,x0,x1,u0,mid,depth+1);add(row,x0,x1,mid,u1,depth+1)
+            add(row,x0,x1,u0,mid,depth+1,path+"0");add(row,x0,x1,mid,u1,depth+1,path+"1")
         refined+=1
     upper=bounds()
     result=dict(schema=SCHEMA,full_interval_covered=True,section_facets=len(rows)//2,
@@ -365,7 +379,10 @@ def envelope(section,polynomials,coefficients,torsion,total_torque,L_mm,*,left=0
             criterion='above_1_at_concomitant_state' if low is not None and low>1 else
                 'within_1_by_full_interval_upper_bound' if hi<=1 else 'unresolved_numerical_bound',
             bound_is_not_a_concomitant_state=True)
-    return result
+    paths={}
+    for cell_id,(row,*_) in active.items():
+        paths.setdefault((row['segment_index'],row['face']),[]).append(leaf_paths[cell_id])
+    return certify(result,paths)
 
 
 def aggregate(records,complete):
