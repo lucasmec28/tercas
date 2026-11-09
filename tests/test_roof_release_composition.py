@@ -163,6 +163,17 @@ def test_real_app_own_five_degrees_combines_all_scopes_and_replays(monkeypatch, 
     assert json.loads(downloads['Baixar estudo e resultados (JSON)']) == result
     doc = Document(io.BytesIO(downloads['Baixar memória parcial (Word)']))
     text = '\n'.join(p.text for p in doc.paragraphs)
+    if lane == 'current_CT':
+        from tercas.torsion_applicability import NO_TORSIONAL_DEMAND
+        assert any(w.value == NO_TORSIONAL_DEMAND for w in app.info)
+        assert NO_TORSIONAL_DEMAND in text
+        assert 'Aplicabilidade da análise de primeira ordem não estabelecida' not in text
+        assert 'Interpretação física: Adequação da primeira ordem não estabelecida' not in text
+        # AISI has its own analysis. A CT proof for the NBR operator does not
+        # remove its separate G8.1/H4 interpretation notice.
+        assert 'Interpretação física G8.1/H4: Adequação da primeira ordem não estabelecida' in text
+    else:
+        assert 'Aplicabilidade da análise de primeira ordem não estabelecida' in text
     assert result['global_verification']['display_summary'] in text
     assert 'conclusão global fora do escopo' in text.lower()
     assert deflection_scope.TEXT in text

@@ -11,7 +11,8 @@ from tercas.application import fingerprint
 APP=str(Path(__file__).resolve().parents[1]/'app.py')
 FIXTURE=Path(__file__).parent/'data/legacy_ief_cache_r3.json'
 
-@pytest.mark.parametrize('old',(None,'old_epoch'))
+@pytest.mark.parametrize('old',(None,'old_epoch',
+    'active_ui_caches_Ue_EN_certificates_strong_width_20261108_r22'))
 def test_migration_changes_only_three_active_caches_and_epoch(old):
     state={'base':{'custom':'base'},'last_input':{'custom':'input'},'revision':9,
            'widget_key':17.,'custom_steel_draft':{'value':None},'length_draft_values_9':{'Lx':None},
@@ -28,6 +29,10 @@ def test_migration_changes_only_three_active_caches_and_epoch(old):
     state['three_girt_warping_result']={'new_3D':2}
     current=copy.deepcopy(state)
     assert not refresh(state) and state==current
+
+
+def test_r23_epoch_identifies_only_CT_presentation():
+    assert EPOCH == 'active_ui_caches_CT_presentation_20261109_r23'
 
 
 def test_empty_session_initializes_epoch_without_notification_or_extra_inputs():

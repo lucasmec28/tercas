@@ -1,0 +1,135 @@
+{
+  "schema": "tercas_R23_CT_presentation_QA_v1",
+  "release_id": "apresentacao-CT-textos-20261109-r23",
+  "release_date": "2026-11-09",
+  "base_local_commit": "ffd294aafc931333344b187ef142eaff904dbff7",
+  "base_local_tree": "c24b5063479afca0f5148261519d05d215a60efb",
+  "base_remote_commit_supplied_by_integrator": "6e1a68171866778076af33ae35ba1dfca091b822",
+  "remote_rechecked_by_this_worker": false,
+  "inherited_presentation_commit": "dfd038cce5fb622fcd36a5613604b9867ed940fa",
+  "tested_code_commit": "b4be8dd9a091259c37d7ab00309470afc1746cb7",
+  "subsequent_changes": "Only this receipt and the release document QA result; executable and test hashes remain identical.",
+  "scope": [
+    "CT/PP inclination text only under the existing CT policy",
+    "Authenticated saved zero CT torsion shown consistently in screen and Word",
+    "Visible release identifier and one-time rotation of the existing three active UI caches"
+  ],
+  "excluded": [
+    "New Nc, network, warping, material, Aef or Ndist development",
+    "Changes to resistance formulas or normative source bindings",
+    "Historical result migration or global approval flags",
+    "Full repository suite, hosted smoke, browser session, publication or deployment"
+  ],
+  "tests": {
+    "command": "python -m pytest -q tests/test_direct_evidence_policy.py tests/test_ct_torsion_notice.py tests/test_roof_release_composition.py tests/test_ui_roof_catalog_positive.py tests/test_release_info.py tests/test_ui_cache_epoch.py --junitxml=focal.xml",
+    "passed": 61,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds_reported": 54.1,
+    "seconds_junit": 54.099,
+    "started_utc": "2026-11-09T03:15:41Z",
+    "finished_utc": "2026-11-09T03:16:36Z",
+    "CPU_released_before_start": true,
+    "exit_code": 0,
+    "junit_sha256": "7bda24b00d7f8542f0ec95552bd9259760744b065d677e45638ecc5842336d9b",
+    "log_sha256": "ee4f9ffd75a8ab13458440159e2ee745d2f722b50a9c4b9c2d6470b6f2592152"
+  },
+  "previous_QA_not_added_to_new_count": {
+    "integrated_presentation": {
+      "passed": 51,
+      "seconds": 41.88
+    },
+    "PP_author": {
+      "passed": 62,
+      "subtests_passed": 3,
+      "UI_passed": 1
+    },
+    "CT_notice_author": {
+      "passed": 221,
+      "UI_passed": 2
+    },
+    "coverage_overlaps": true
+  },
+  "environment": {
+    "python": "3.12.14",
+    "packages": {
+      "pytest": "9.1.1",
+      "streamlit": "1.65.0",
+      "numpy": "2.5.3",
+      "scipy": "1.17.0",
+      "pandas": "2.2.3",
+      "python-docx": "1.2.0",
+      "mpmath": "1.3.0"
+    },
+    "threads": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "BLIS_NUM_THREADS": "1",
+      "OPENBLAS_CORETYPE": "Haswell"
+    },
+    "PYTHONPATH": ".:tests:/workspace/scratch/200bd23c4a9b/connections_audit/test_dependencies"
+  },
+  "preservation": {
+    "base_tracked_files": 1435,
+    "unchanged_base_files": 1426,
+    "deleted_base_files": 0,
+    "production_files_changed": [
+      "tercas/inclination_adapter.py",
+      "tercas/release_info.py",
+      "tercas/torsion_applicability.py",
+      "tercas/torsion_study_ui.py",
+      "tercas/ui_cache_epoch.py"
+    ],
+    "all_other_baseline_files_unchanged": true,
+    "protected_subtree_git_object_ids": {
+      "tercas/data": "5edb2dea66e45dd6b79e2f3fc6a1319cb4c1a163",
+      "tercas/core": "72dcfafd6ca24f89fc3687ca44064065fb6d7bd5",
+      "tercas/_en_ue_family_r10": "29355abef9eba63363abe50ebd106dcab8e0d2f7",
+      "tercas/aa_bundle": "a4fb74e95501141dd80e48ae3c84efee7bed861b",
+      "tercas/aisi_research": "cc5dfcedb03f3cf27cb7eccb4186fe99267fc523",
+      "tercas/aisi_weak_sources": "efb2ea99bf4d38a6b45a1b13e7382fe485a0da89",
+      "tercas/three_girt_axial": "6e6dc2121655cdc2f3ddb87fb2b091a8dc29cb99",
+      "tercas/three_girt_en_normal": "6feaf12b52a609219fc0c924117fe2b898f60d64",
+      "tercas/three_girt_warping": "09270be3c90efdf107269bfa7e4f611f2618ffba",
+      "experimental_fsm": "159e17a16a57016333738676d368986e94feee09",
+      "tests/data": "5247e1d4ae872a454943f0aefb290e7f20be7d57"
+    },
+    "no_new_resistant_or_normative_sources": true,
+    "no_normative_hash_updates": true
+  },
+  "data_review": {
+    "synthetic_QA_only": true,
+    "private_case_loaded": false,
+    "new_real_project_data": false,
+    "changed_files_and_repository_legacy_cache_fixture_scanned": true,
+    "company_identifier_or_private_case_label_matches": 0,
+    "historical_fixture_unchanged": true
+  },
+  "checks": {
+    "source_and_test_hashes_unchanged_after_QA": true,
+    "py_compile_affected_metadata_and_tests": true,
+    "git_diff_check": true,
+    "full_repository_suite": false,
+    "new_browser": false,
+    "publication_started": false,
+    "structural_approval": false,
+    "Nc_released": false
+  },
+  "source_sha256": {
+    "tercas/inclination_adapter.py": "76611c2503e140c322912040edb5277ea43db8b7f16b22ae521c817d26412d6c",
+    "tercas/release_info.py": "a0d16d437658ec767aae72456932e8b23c84b4e7836878d477333673a9f9f1a1",
+    "tercas/torsion_applicability.py": "7939ed16dbb9325820b06a3ccb5abd7583c86d3a630efb7eaf8725d47fc8899c",
+    "tercas/torsion_study_ui.py": "41ca46b8b9698696c725d5051a5235b1041a0a55ed6c0d4e6cb93fa0badf790d",
+    "tercas/ui_cache_epoch.py": "65502dc3b923ce006e3ec5afa4063358112c34b210c08628453c5d2510c64b83",
+    "tests/test_ct_torsion_notice.py": "6920673fdfab5fcf74de861b626498565498af4be433e3f32e84fdcba2f33171",
+    "tests/test_direct_evidence_policy.py": "532e9001013d987c0516c4d143153ef128b07e71e7a37b7c689e9e9a47f2db9b",
+    "tests/test_release_info.py": "87484c40ea71160b6d55bd5989b01fd4b7c1714a8a565c0b6e254995b3dd4f01",
+    "tests/test_roof_release_composition.py": "feac57784f87953477179214585c8cd451f4045fc60f08275583ce244723f245",
+    "tests/test_ui_cache_epoch.py": "251ac76c48d3ba8fe5d90291845e48fa8a18831cefd1228ab4b2e40308b09db7",
+    "tests/test_ui_roof_catalog_positive.py": "63604e6dba0a41d5997405f7feb7f8f3f6621aaf42037cdc7607a04da65b5119"
+  },
+  "status": "Local presentation-only candidate prepared for integrator review; not published or homologated."
+}

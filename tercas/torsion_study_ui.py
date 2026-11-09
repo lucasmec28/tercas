@@ -143,7 +143,7 @@ def show_result(st,result):
     if not isinstance(evidence,dict):return
     st.subheader('Torção de Vlasov — diagnóstico separado')
     from .torsion_applicability import show as show_applicability
-    show_applicability(st,result)
+    applicability=show_applicability(st,result)
     st.warning(evidence.get('scope_pt',SCOPE))
     if evidence.get('reason'):st.warning(evidence['reason'])
     st.caption(str(evidence.get('computed_cases',0))+' combinações calculadas; '+str(evidence.get('pending_model_cases',0))+' pendentes de dados. '+
@@ -152,14 +152,16 @@ def show_result(st,result):
         st.error(str(evidence['pending_numerical_cases'])+' combinações não passaram na qualificação numérica. Não foram omitidas nem liberadas como demanda válida.')
     records=evidence.get('records',[])
     if records:
-        st.dataframe(display_frame(summary_rows(evidence)),hide_index=True,width='stretch')
+        st.dataframe(display_frame(summary_rows(evidence,applicability=applicability)),hide_index=True,width='stretch')
     with st.expander('Premissas, reações e estados de torção preservados',expanded=False):
         if result.get('schema')=='tercas_three_girt_results_v1' or result.get('input_data',{}).get('member_application','purlin')!='purlin':st.json(evidence)
         elif result.get('schema')=='NBR14762_one_span_v1':st.caption('Consulte os dados salvos em “Exibir memória numérica salva do caso direto” ou no arquivo JSON, sem novo cálculo.')
         else:st.caption('A memória completa está preservada no arquivo JSON. Em “Memória numérica e rastreabilidade”, selecione explicitamente uma combinação para consultar seus dados salvos de torção, sem novo cálculo.')
 
 
-def summary_rows(evidence):
+def summary_rows(evidence, *, applicability=None):
+    from .torsion_applicability import NO_TORSIONAL_DEMAND
+    no_torsion = bool(applicability and applicability.get('torsion_not_requested'))
     rows=[]
     for r in evidence.get('records',[]):
         a=r.get('analysis');row={'Caso':r['combination_id'],'Estado':r['limit_state'],
@@ -168,7 +170,8 @@ def summary_rows(evidence):
             maximum=a['max_abs_phi']
             row.update({'|giro| [rad]':abs(maximum['phi_rad']),'x do giro [mm]':maximum['x_mm'],
                         'Giro elevado (triagem)':a['small_rotation_warning'],
-                        'Interpretação física':('Indisponível nesta primeira ordem: aviso de giro' if a['small_rotation_warning'] else 'Adequação da primeira ordem não estabelecida')})
+                        'Interpretação física':('Indisponível nesta primeira ordem: aviso de giro' if a['small_rotation_warning'] else
+                            NO_TORSIONAL_DEMAND if no_torsion else 'Adequação da primeira ordem não estabelecida')})
             envelopes=a.get('field_envelopes',{})
             for field,label,scale in [('Tsv_Nmm','|Tsv| [kN·m]',1e6),('Tw_Nmm','|Tw| [kN·m]',1e6),('B_Nmm2','|B| [kN·m²]',1e9)]:
                 if envelopes.get(field):row[label]=abs(envelopes[field]['maximum_absolute']['value'])/scale
@@ -182,7 +185,7 @@ def report(doc,result):
     if not isinstance(evidence,dict):return
     doc.add_heading('Torção de Vlasov — demanda elástica separada',1)
     from .torsion_applicability import report as report_applicability
-    report_applicability(doc,result)
+    applicability=report_applicability(doc,result)
     doc.add_paragraph(evidence.get('scope_pt',SCOPE))
     if evidence.get('reason'):doc.add_paragraph(evidence['reason'])
     doc.add_paragraph('Combinações calculadas: '+str(evidence.get('computed_cases',0))+'. Pendentes de dados: '+str(evidence.get('pending_model_cases',0))+'. '+
@@ -196,7 +199,7 @@ def report(doc,result):
     for role,record in choice.items():
         doc.add_paragraph(role+': '+('linha declarada' if record['declared'] else 'não informada')+
             '; [x,y] a partir do CG [mm]=['+', '.join('não informado' if v is None else fmt(v) for v in record['xy_from_CG_mm'])+']; origem: '+record['origin'])
-    for row in summary_rows(evidence):
+    for row in summary_rows(evidence,applicability=applicability):
         doc.add_paragraph(' | '.join(k+': '+(fmt(v) if isinstance(v,(int,float)) and not isinstance(v,bool) else str(v)) for k,v in row.items()))
     doc.add_paragraph('Os extremos listados pertencem a componentes diferentes; não são somados nem constituem uma interação resistente. '+
         'Giros elevados limitam a interpretação da primeira ordem. O aviso 0,05 rad não é limite normativo. '+

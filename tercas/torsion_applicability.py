@@ -7,6 +7,25 @@ import math
 
 from .report_audit import technical_number as number
 
+NO_TORSIONAL_DEMAND = 'Torção não solicitada no modelo linear calculado.'
+
+
+def _saved_ct_zero(result):
+    """Use an existing CT conclusion, never add one to a historical panorama.
+
+    This says nothing about FLT, interaction or first-order adequacy. Their
+    saved criteria and every approval flag remain independent and unchanged.
+    """
+    from .isolated_ct_torsion import FIELD, POLICY, record
+    summary = result.get('global_verification')
+    if (not isinstance(summary, dict) or summary.get(FIELD) != POLICY
+            or summary.get('source_result_schema') != result.get('schema')
+            or summary.get('source_input_fingerprint') != result.get('input_fingerprint')):
+        return False
+    saved = [r for r in summary.get('checks', []) if r.get('id') == 'torsion_warping']
+    expected = record(result)
+    return expected is not None and saved == [expected]
+
 
 def _finite(value):
     try:
@@ -148,6 +167,7 @@ def _saved_lines(result):
     maximum = max(r[0] for r in rows)
     warnings = sum(r[1] for r in rows)
     limits = sorted({r[2] for r in rows})
+    no_torsion = not warnings and _saved_ct_zero(result)
     lines = ['Aplicabilidade da análise de primeira ordem não estabelecida. '+
         (f'{warnings} de {len(rows)} combinações têm aviso de pequeno giro. '
          if warnings else 'Nenhum aviso de giro nas combinações salvas; isso não valida a primeira ordem. ')+
@@ -155,6 +175,8 @@ def _saved_lines(result):
         'Esse valor é resultado da linearização, não previsão do giro físico. '+
         ('Com o aviso ativo, a interpretação física da resposta linear fica indisponível. ' if warnings else '')+
         'Triagem salva: '+', '.join(number(v) for v in limits)+' rad; não é limite normativo nem critério de ruptura.']
+    if no_torsion:
+        lines[0] = NO_TORSIONAL_DEMAND
     # Pure geometry only: never call the saved force reader from this reader.
     from .rotation_geometry_diagnostic import normalized_rotation_difference
     distance = normalized_rotation_difference(maximum)
@@ -172,7 +194,10 @@ def _saved_lines(result):
             'de estabilidade não criam vínculos nem encurtam este modelo de torção.')
     if aisi is not None:
         lines.extend(aisi_lines(aisi))
-    return dict(warning=bool(warnings), lines=lines)
+    notice = dict(warning=bool(warnings), lines=lines)
+    if no_torsion:
+        notice['torsion_not_requested'] = True
+    return notice
 
 
 def saved_notice(result):
@@ -188,9 +213,11 @@ def saved_notice(result):
 def show(st, result):
     notice = saved_notice(result)
     if notice is not None:
-        (st.error if notice['warning'] else st.warning)(notice['lines'][0])
+        (st.info if notice.get('torsion_not_requested') else
+         st.error if notice['warning'] else st.warning)(notice['lines'][0])
         for line in notice['lines'][1:]:
             st.warning(line)
+    return notice
 
 
 def report(doc, result):
@@ -198,3 +225,4 @@ def report(doc, result):
     if notice is not None:
         for line in notice['lines']:
             doc.add_paragraph(line)
+    return notice

@@ -87,6 +87,13 @@ def test_current_catalogue_CT_result_keeps_forces_and_new_snapshot_readonly(monk
     text='\n'.join(p.text for p in Document(io.BytesIO(downloads['Baixar memória parcial (Word)'])).paragraphs)
     assert CURRENT_TITLE in text and result['input_fingerprint'] in text
     assert any(w.value==CURRENT_TITLE for w in app.subheader)
+    pp_scope=result['direct_self_weight_evidence']['scope']
+    for item in result['inclination_evidence'].values():
+        assert item['convention'].endswith(pp_scope)
+        assert item['convention'] in text
+        assert any(w.value==item['convention'] for w in app.caption)
+    assert 'O programa soma PP no CG' not in text
+    assert 'Demais cargas no topo selecionado' not in text
     def fail(*args,**kwargs):raise AssertionError('Replay called structural solver')
     monkeypatch.setattr(roof,'refined',fail);monkeypatch.setattr(nbr,'flt_mse',fail)
     monkeypatch.setattr('tercas.torsion_study.attach',fail)

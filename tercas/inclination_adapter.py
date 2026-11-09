@@ -57,14 +57,18 @@ def evidence(data,q,p,a):
  return out
 
 def direct_evidence(data):
- from .direct_self_weight import active,calculation_inputs,TEXT
- auto=active(data);data=calculation_inputs(data)
+ from .direct_self_weight import active,calculation_inputs,TEXT,evidence as pp_evidence
+ from .load_application_policy import active as ct_active
+ auto=active(data)
+ # Unmarked historical calculations keep their original literal convention.
+ pp_text=pp_evidence(data)['scope'] if auto and ct_active(data) else TEXT
+ data=calculation_inputs(data)
  result={}
  for state,key in [('ELU','uls'),('ELS','sls')]:
   q={'normal':data['q_'+key],'parallel':number(data.get('q_parallel_'+key,0.),'q paralelo')}
   p={'normal':data['P_'+key],'parallel':number(data.get('P_parallel_'+key,0.),'P paralelo')}
   result[state]=evidence(data,q,p,data['x_'+key])
-  result[state]['convention']+=(' '+TEXT if auto else ' Modo direto: cargas já locais e combinadas; não há rotação nem PP automático.')
+  result[state]['convention']+=(' '+pp_text if auto else ' Modo direto: cargas já locais e combinadas; não há rotação nem PP automático.')
  return result
 
 def pending_rows(ev,state):
